@@ -1,0 +1,22 @@
+// max-width ----- "If [screen width] is less than or equal to [specified #], then do {...}"
+
+// min-width means "If [screen width] is greater than or equal to [specified #], then do {...}" 
+
+@media all and ( max-height: 900px ) {
+	footer{
+		display:none;
+	}
+}
+
+
+@media all and ( max-width: 750px ) {
+
+}
+
+@media all and ( max-width: 550px ) {
+
+}
+
+@media all and ( max-width: 400px ) {
+
+}

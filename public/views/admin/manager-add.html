@@ -1,0 +1,12 @@
+<div ng-controller = "MgrCtrl as Ctrl2">
+    <div class="majorPageHeading">Add Manager</div>
+    <div class="container500px">
+	    <form class="short-form" name="Ctrl2.FormA" data-ng-submit="Ctrl2.submitManager()" novalidate >
+			<label>First name<input data-ng-class="{error:Ctrl2.FormA.T1.$invalid&&invalid}" name="T1" type="text" ng-model="Ctrl2.T1" required></label>
+			<label>Last name<input data-ng-class="{error:Ctrl2.FormA.T2.$invalid&&invalid}" name="T2" type="text" ng-model="Ctrl2.T2" required></label>
+			<label>User Name<input data-ng-class="{error:Ctrl2.FormA.T3.$invalid&&invalid}" name="T3" type="text" ng-model="Ctrl2.T3" required></label>
+			<label>PIN<input data-ng-class="{error:Ctrl2.FormA.T4.$invalid&&invalid}" name="T4" type="text" ng-model="Ctrl2.T4" required></label>
+			<button type="submit" class="button small radius">Submit</button>
+		</form>
+    </div>
+</div>

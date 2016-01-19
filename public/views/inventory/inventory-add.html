@@ -1,0 +1,134 @@
+<div class="inventory" ng-controller="InvtCtrl as Ctrl2">
+    <div class="majorPageHeading">Add Inventory</div>
+    <select ng-model="Ctrl2.S1" ng-options="c.label for c in Ctrl2.optionsS1" ng-change="Ctrl2.selectCategory()" required></select>
+    	
+    <div ng-show="Ctrl2.showForm===0">
+    	<h4>Membranes</h4>
+		<div class="hrule"></div>
+		<form class="short-form" name="Ctrl2.FormA" data-ng-submit="Ctrl2.submitMembrane()" novalidate >
+			<label>Manufacturer<select ng-model="Ctrl2.selectorC" ng-options="c.label for c in Ctrl2.manufacturerOptions" required></select></label>
+			<label>Type<input data-ng-class="{error:Ctrl2.FormA.T1.$invalid&&invalid}" name="T1" type="text" ng-model="Ctrl2.T1" required></label>
+			<label>Width (inches)<input data-ng-class="{error:Ctrl2.FormA.T2.$invalid&&invalid}" name="T2" type="text" ng-model="Ctrl2.T2" required></label>
+			<label>Length (feet)<input data-ng-class="{error:Ctrl2.FormA.T3.$invalid&&invalid}" name="T3" type="text" ng-model="Ctrl2.T3" required></label>
+			<label>SqFt/Roll<input data-ng-class="{error:Ctrl2.FormA.T5.$invalid&&invalid}" name="T5" type="text" ng-model="Ctrl2.T5" required></label>
+			<label>Rolls/Pallet<input data-ng-class="{error:Ctrl2.FormA.T6.$invalid&&invalid}" name="T6" type="text" ng-model="Ctrl2.T6" required></label>
+			<label>Weight Per Roll<input data-ng-class="{error:Ctrl2.FormA.T7.$invalid&&invalid}" name="T7" type="text" ng-model="Ctrl2.T7" required></label>
+			<label>Price<input data-ng-class="{error:Ctrl2.FormA.T4.$invalid&&invalid}" name="T4" type="text" ng-model="Ctrl2.T4" required></label>
+			<button type="submit" class="button small radius">Submit</button>
+		</form>
+	</div>
+
+    <div ng-show="Ctrl2.showForm===1">
+    	<h4>Protection and Walkway Materials</h4>
+    	<div class="hrule"></div>
+		<form class="short-form" name="Ctrl2.FormB" data-ng-submit="Ctrl2.submitForm(1)" novalidate >
+			<label>Manufacturer<select ng-model="Ctrl2.selectorC" ng-options="c.label for c in Ctrl2.manufacturerOptions" required></select></label>
+			<label>Item<input data-ng-class="{error:Ctrl2.FormB.T1.$invalid&&invalid}" name="T1" type="text" ng-model="Ctrl2.T1" required></label>
+			<label>Description<input data-ng-class="{error:Ctrl2.FormB.T2.$invalid&&invalid}" name="T2" type="text" ng-model="Ctrl2.T2" required></label>
+			<div class="formInlineItems">
+				<label>Qty</label>
+				<input data-ng-class="{error:Ctrl2.FormA.T3.$invalid&&invalid}" name="T3" type="text" ng-model="Ctrl2.T3" placeholder="#" required>
+				<label>Per</label>
+				<select ng-model="Ctrl2.selectorA" ng-options="c.label for c in Ctrl2.unitOptions" required></select>
+				<label>Price</label>
+				<input data-ng-class="{error:Ctrl2.FormA.T4.$invalid&&invalid}" name="T4" type="text" ng-model="Ctrl2.T4" required>
+			</div>
+			<button type="submit" class="button small radius">Submit</button>
+		</form>
+    </div>
+
+    <div ng-show="Ctrl2.showForm===2">
+    	<h4>Flashing and Stripping Materials</h4>
+    	<div class="hrule"></div>
+		<form class="short-form" name="Ctrl2.FormC" data-ng-submit="Ctrl2.submitForm(2)" novalidate >
+			<label>Manufacturer<select ng-model="Ctrl2.selectorC" ng-options="c.label for c in Ctrl2.manufacturerOptions" required></select></label>
+			<label>Item<input data-ng-class="{error:Ctrl2.FormC.T1.$invalid&&invalid}" name="T1" type="text" ng-model="Ctrl2.T1" required></label>
+			<label>Description<input data-ng-class="{error:Ctrl2.FormC.T2.$invalid&&invalid}" name="T2" type="text" ng-model="Ctrl2.T2" required></label>
+			<div class="formInlineItems">
+				<label>Qty</label>
+				<input data-ng-class="{error:Ctrl2.FormA.T3.$invalid&&invalid}" name="T3" type="text" ng-model="Ctrl2.T3" placeholder="#" required>
+				<label>Per</label>
+				<select ng-model="Ctrl2.selectorA" ng-options="c.label for c in Ctrl2.unitOptions" required></select>
+				<label>Price</label>
+				<input data-ng-class="{error:Ctrl2.FormA.T4.$invalid&&invalid}" name="T4" type="text" ng-model="Ctrl2.T4" required>
+			</div>
+			<button type="submit" class="button small radius">Submit</button>
+		</form>
+    </div>
+
+    <div ng-show="Ctrl2.showForm===3">
+    	<h4>Edge Materials</h4>
+    	<div class="hrule"></div>
+		<form class="short-form" name="Ctrl2.FormD" data-ng-submit="Ctrl2.submitForm(3)" novalidate >
+			<label>Manufacturer<select ng-model="Ctrl2.selectorC" ng-options="c.label for c in Ctrl2.manufacturerOptions" required></select></label>
+			<label>Item<input data-ng-class="{error:Ctrl2.FormD.T1.$invalid&&invalid}" name="T1" type="text" ng-model="Ctrl2.T1" required></label>
+			<label>Description<input data-ng-class="{error:Ctrl2.FormD.T2.$invalid&&invalid}" name="T2" type="text" ng-model="Ctrl2.T2" required></label>
+			<div class="formInlineItems">
+				<label>Qty</label>
+				<input data-ng-class="{error:Ctrl2.FormA.T3.$invalid&&invalid}" name="T3" type="text" ng-model="Ctrl2.T3" placeholder="#" required>
+				<label>Per</label>
+				<select ng-model="Ctrl2.selectorA" ng-options="c.label for c in Ctrl2.unitOptions" required></select>
+				<label>Price</label>
+				<input data-ng-class="{error:Ctrl2.FormA.T4.$invalid&&invalid}" name="T4" type="text" ng-model="Ctrl2.T4" required>
+			</div>
+			<button type="submit" class="button small radius">Submit</button>
+		</form>
+    </div>
+
+    <div ng-show="Ctrl2.showForm===4">
+    	<h4>Adhesives and Sealants</h4>
+    	<div class="hrule"></div>
+		<form class="short-form" name="Ctrl2.FormE" data-ng-submit="Ctrl2.submitForm(4)" novalidate >
+			<label>Manufacturer<select ng-model="Ctrl2.selectorC" ng-options="c.label for c in Ctrl2.manufacturerOptions" required></select></label>
+			<label>Item<input data-ng-class="{error:Ctrl2.FormE.T1.$invalid&&invalid}" name="T1" type="text" ng-model="Ctrl2.T1" required></label>
+			<label>Description<input data-ng-class="{error:Ctrl2.FormE.T2.$invalid&&invalid}" name="T2" type="text" ng-model="Ctrl2.T2" required></label>
+			<div class="formInlineItems">
+				<label>Qty</label>
+				<input data-ng-class="{error:Ctrl2.FormA.T3.$invalid&&invalid}" name="T3" type="text" ng-model="Ctrl2.T3" placeholder="#" required>
+				<label>Per</label>
+				<select ng-model="Ctrl2.selectorA" ng-options="c.label for c in Ctrl2.unitOptions" required></select>
+				<label>Price</label>
+				<input data-ng-class="{error:Ctrl2.FormA.T4.$invalid&&invalid}" name="T4" type="text" ng-model="Ctrl2.T4" required>
+			</div>
+			<button type="submit" class="button small radius">Submit</button>
+		</form>
+    </div>
+
+    <div ng-show="Ctrl2.showForm===5">
+    	<h4>Fasteners</h4>
+    	<div class="hrule"></div>
+		<form class="short-form" name="Ctrl2.FormF" data-ng-submit="Ctrl2.submitForm(5)" novalidate >
+			<label>Manufacturer<select ng-model="Ctrl2.selectorC" ng-options="c.label for c in Ctrl2.manufacturerOptions" required></select></label>
+			<label>Item<input data-ng-class="{error:Ctrl2.FormF.T1.$invalid&&invalid}" name="T1" type="text" ng-model="Ctrl2.T1" required></label>
+			<label>Description<input data-ng-class="{error:Ctrl2.FormF.T2.$invalid&&invalid}" name="T2" type="text" ng-model="Ctrl2.T2" required></label>
+			<div class="formInlineItems">
+				<label>Qty</label>
+				<input data-ng-class="{error:Ctrl2.FormA.T3.$invalid&&invalid}" name="T3" type="text" ng-model="Ctrl2.T3" placeholder="#" required>
+				<label>Per</label>
+				<select ng-model="Ctrl2.selectorA" ng-options="c.label for c in Ctrl2.unitOptions" required></select>
+				<label>Price</label>
+				<input data-ng-class="{error:Ctrl2.FormA.T4.$invalid&&invalid}" name="T4" type="text" ng-model="Ctrl2.T4" required>
+			</div>
+			<button type="submit" class="button small radius">Submit</button>
+		</form>
+    </div>
+
+    <div ng-show="Ctrl2.showForm===6">
+    	<h4>Insulation and Cover-Board</h4>
+    	<div class="hrule"></div>
+		<form class="short-form" name="Ctrl2.FormG" data-ng-submit="Ctrl2.submitForm(6)" novalidate >
+			<label>Manufacturer<select ng-model="Ctrl2.selectorC" ng-options="c.label for c in Ctrl2.manufacturerOptions" required></select></label>
+			<label>Item<input data-ng-class="{error:Ctrl2.FormG.T1.$invalid&&invalid}" name="T1" type="text" ng-model="Ctrl2.T1" required></label>
+			<label>Description<input data-ng-class="{error:Ctrl2.FormG.T2.$invalid&&invalid}" name="T2" type="text" ng-model="Ctrl2.T2" required></label>
+			<div class="formInlineItems">
+				<label>Qty</label>
+				<input data-ng-class="{error:Ctrl2.FormA.T3.$invalid&&invalid}" name="T3" type="text" ng-model="Ctrl2.T3" placeholder="#" required>
+				<label>Per</label>
+				<select ng-model="Ctrl2.selectorA" ng-options="c.label for c in Ctrl2.unitOptions" required></select>
+				<label>Price</label>
+				<input data-ng-class="{error:Ctrl2.FormA.T4.$invalid&&invalid}" name="T4" type="text" ng-model="Ctrl2.T4" required>
+			</div>
+			<button type="submit" class="button small radius">Submit</button>
+		</form>
+    </div>
+</div>

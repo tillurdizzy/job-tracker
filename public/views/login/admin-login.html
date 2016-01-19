@@ -1,0 +1,22 @@
+<div class="spacerTopLeft login clearfix">
+    <div class="majorPageHeading">Admin Log In</div>
+    <div class="loginForm" ng-if="!requestSuccess"> 
+        <form name="loginForm" data-ng-submit="submitLoginForm()" novalidate>
+            <div>
+                <label>User Name</label>
+                <input data-ng-class="{error:loginForm.username.$invalid&&submissionInvalid}" name="username" type="text" placeholder="User Name" ng-model="_username" required>
+               
+                <label>Pin #</label>
+                <input  data-ng-class="{error:loginForm.pin.$invalid&&submissionInvalid}" name="pin" type="text" placeholder="PIN 4 Digits" ng-model="_pin" required>
+                <button type="submit" class="button small radius">Submit</button>
+          </div>
+        </form>
+        <p class="attention" data-ng-show="loginSuccess===false">Did not find a match for Username and PIN.</p>
+        <p class="attention" data-ng-show="submissionInvalid">Please complete both fields.</p>
+    </div>
+
+    <div ng-if="requestSuccess">
+        <h4>Logged in as {{displayname}}</h4>
+        <button type="button" class="button small radius" ng-click="continueBtn()">Continue</button>
+    </div>
+</div>

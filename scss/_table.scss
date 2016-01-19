@@ -1,0 +1,64 @@
+
+	
+#jobs-table-container{
+	width:621px;
+}
+.jobs-table{
+	min-height:100px;
+	.title{
+		height: 1.4em;
+		background-color: $title-bar-color;
+	}
+
+	h2{
+		color:#FFFFFF;
+		font-size: 1em;
+		margin-left: .5em;
+		font-weight: 700;
+	}
+
+	table{
+	    table-layout: fixed;
+	    width: 600px;
+	}
+
+	th, td{
+	    border: 1px solid black;
+	    overflow: hidden;
+	    //padding:.35em .6em;
+	}
+
+	.tbl-btn{
+		margin:0;
+		
+	}
+	#tbl-width-190{
+		width:190px;
+	}
+
+	#tbl-width-70{
+		width:70px;
+	}
+	#tbl-width-100{
+		width:100px;
+	}
+	#tbl-width-170{
+		width:170px;
+	}
+
+	
+}
+
+
+#editForm{
+	.btnContainer{
+		width:350px;
+		height:80px;
+		border-radius:10px;
+		
+		button{
+			float:left;
+			margin-right: 1em;
+		}
+	}
+}
