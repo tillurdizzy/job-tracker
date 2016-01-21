@@ -2827,7 +2827,7 @@ body {
   font-family: 'Jaldi', sans-serif; }
 
 .page {
-  width: 700px; }
+  width: 648px; }
   .page .page-title-bar {
     height: 40px;
     background-color: #2199e8;
@@ -2836,9 +2836,9 @@ body {
       color: #FFFFFF;
       font-size: 1.5em;
       font-weight: 600;
-      line-height: 1.5em;
-      text-align: middle;
-      margin-left: .5em; }
+      line-height: 40px;
+      vertical-align: middle;
+      margin: 0 0 0 .5em; }
 
 .view-container {
   margin: 1.5em; }
@@ -2876,7 +2876,7 @@ footer {
       padding: 0 0.4rem 0 0.8rem; }
 
 #jobs-table-container {
-  width: 621px; }
+  width: 600px; }
 
 .jobs-table {
   min-height: 100px; }
@@ -2886,8 +2886,10 @@ footer {
   .jobs-table h2 {
     color: #FFFFFF;
     font-size: 1em;
-    margin-left: .5em;
-    font-weight: 700; }
+    margin: 0 0 0 .5em;
+    font-weight: 700;
+    line-height: 1.4em;
+    vertical-align: middle; }
   .jobs-table table {
     table-layout: fixed;
     width: 600px; }

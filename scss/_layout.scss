@@ -8,7 +8,7 @@ body{
 
 
 .page{
-  width:700px;
+  width:648px;
   .page-title-bar{
     height:40px;
     background-color:$title-bar-color;
@@ -17,9 +17,9 @@ body{
       color:#FFFFFF;
       font-size:1.5em;
       font-weight: 600;
-      line-height: 1.5em;
-      text-align: middle;
-      margin-left: .5em;
+      line-height: 40px;
+      vertical-align: middle;
+      margin:0 0 0 .5em;
     }
   }
 }

@@ -53,26 +53,26 @@ app.config(function($stateProvider, $urlRouterProvider) {
 			url: "/jobs",
 			templateUrl:"views/jobs/jobs.html"
 		})
-		.state('jobs.edit', {
+		.state('edit', {
 			url: "/edit",
 			templateUrl:"views/jobs/edit.html"
 		})
-		.state('jobs.edit.status', {
-			url: "/editstatus",
+		.state('edit.status', {
+			url: "/status",
 			templateUrl:"views/jobs/edit-status.html"
 		})
 
-		.state('jobs.edit.details', {
-			url: "/editdetails",
+		.state('edit.details', {
+			url: "/details",
 			templateUrl:"views/jobs/edit-details.html"
 		})
 
-		.state('jobs.edit.proposalShingle', {
+		.state('edit.proposalShingle', {
 			url: "/proposalshingle",
 			templateUrl:"views/jobs/proposal/proposal-shingle.html"
 		})
 
-		.state('jobs.newjob', {
+		.state('newjob', {
 			url: "/newjob",
 			templateUrl:"views/jobs/prospect-form.html"
 		})

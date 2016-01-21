@@ -7,6 +7,8 @@ app.service('SharedSrvc',[function sharedVars(){
 
 	// Session Vars - will usually remain unchanged for user's session
 	self.managerID = "";
+	self.managerClients = [];
+	self.managerProperties = [];
 
 	//Database vars
 	self.jobList = [];//unfiltered, unsorted directly from database
@@ -52,6 +54,26 @@ app.service('SharedSrvc',[function sharedVars(){
 				case "Active": self.status_3.push(self.jobList[i]);break;
 				case "Complete": self.status_4.push(self.jobList[i]);break;
 			};
+		};
+	};
+
+	self.setManagerClients = function(c){
+		var allClients = c;
+		self.managerClients = [];
+		for (var i = 0; i < allClients.length; i++) {
+			if(allClients[i].manager == self.managerID){
+				self.managerClients.push(allClients[i]);
+			}
+		};
+	};
+
+	self.setManagerProperties = function(p){
+		var allProperties = p;
+		self.managerProperties = [];
+		for (var i = 0; i < allProperties.length; i++) {
+			if(allProperties[i].manager == self.managerID){
+				self.managerProperties.push(allProperties[i]);
+			}
 		};
 	};
 

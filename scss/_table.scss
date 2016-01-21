@@ -1,7 +1,7 @@
 
 	
 #jobs-table-container{
-	width:621px;
+	width:600px;
 }
 .jobs-table{
 	min-height:100px;
@@ -13,8 +13,10 @@
 	h2{
 		color:#FFFFFF;
 		font-size: 1em;
-		margin-left: .5em;
+		margin: 0 0 0 .5em;
 		font-weight: 700;
+		line-height: 1.4em;
+		vertical-align: middle;
 	}
 
 	table{

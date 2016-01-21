@@ -15,12 +15,25 @@ app.service('evoDb',['$http','$q','SharedSrvc',function eventQueries($http,$q,Sh
 	self.sendEmail = function(dataObj){
 		$http({method: 'POST', url: 'js/php/sendEmail.php',data:dataObj});
 	};
-	
-	// Called from Home.New Prospect
-	self.putProspect = function(dataObj){
+
+	self.putClient = function(dataObj){
 		dataObj.manager = self.managerID;
 		var deferred = $q.defer();
-		$http({method: 'POST', url: 'js/php/putProspect.php',data:dataObj}).
+		$http({method: 'POST', url: 'js/php/putClient.php',data:dataObj}).
+		success(function(data, status, headers, config) {
+     		deferred.resolve(data);
+	    }).
+	    error(function(data, status, headers, config) {
+			deferred.reject(data);
+	    });
+	    return deferred.promise;
+	};
+	
+	
+	self.putProperty = function(dataObj){
+		dataObj.manager = self.managerID;
+		var deferred = $q.defer();
+		$http({method: 'POST', url: 'js/php/putProperty.php',data:dataObj}).
 		success(function(data, status, headers, config) {
      		deferred.resolve(data);
 	    }).
@@ -65,10 +78,45 @@ app.service('evoDb',['$http','$q','SharedSrvc',function eventQueries($http,$q,Sh
 			deferred.reject(data);
 	    });
 	    return deferred.promise;
-	}
+	};
+
+	self.getClients = function(){
+		var deferred = $q.defer();
+		$http({method: 'POST', url: 'js/php/getClients.php'}).
+		success(function(data, status) {
+			if(typeof data != 'string'){
+				self.lastResult = data;
+				S.setManagerClients(data);
+     			deferred.resolve(data);
+     		}else{
+				deferred.resolve(false);
+     		}
+	    }).
+		error(function(data, status, headers, config) {
+			deferred.reject(false);
+	    });
+	    return deferred.promise; //return the data
+	};
+
+	self.getProperties = function(){
+		var deferred = $q.defer();
+		$http({method: 'POST', url: 'js/php/getProperties.php'}).
+		success(function(data, status) {
+			if(typeof data != 'string'){
+				self.lastResult = data;
+				S.setManagerProperties(data);
+     			deferred.resolve(data);
+     		}else{
+				deferred.resolve(false);
+     		}
+	    }).
+		error(function(data, status, headers, config) {
+			deferred.reject(false);
+	    });
+	    return deferred.promise; //return the data
+	};
 
 	// Called from Jobs to populate  lists of manager's jobs
-	// 
 	self.getManagerJobsList = function(){
 		if(S.managerID === ""){
 			S.setManagerID("3","Admin");
