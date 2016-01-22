@@ -19,7 +19,7 @@ $city = mysqli_real_escape_string($con,$data->city);
 $state = mysqli_real_escape_string($con,$data->state);
 $zip = mysqli_real_escape_string($con,$data->zip);
 
-$query = "INSERT INTO property(manager,client,name,street,city,state,zip)
+$query = "INSERT INTO properties(manager,client,name,street,city,state,zip)
 VALUES(
 '" . $manager . "', " .
 "'" . $client . "', " .

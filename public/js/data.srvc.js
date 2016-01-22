@@ -7,6 +7,7 @@ app.service('evoDb',['$http','$q','SharedSrvc',function eventQueries($http,$q,Sh
 	self.managerID = "";
 	var S = SharedSrvc;
 
+
 	self.setManagerID = function(id){
 		self.managerID = id;
 		self.managerName = "Admin";
@@ -80,7 +81,9 @@ app.service('evoDb',['$http','$q','SharedSrvc',function eventQueries($http,$q,Sh
 	    return deferred.promise;
 	};
 
-	self.getClients = function(){
+	
+
+	self.getAllClients = function(){
 		var deferred = $q.defer();
 		$http({method: 'POST', url: 'js/php/getClients.php'}).
 		success(function(data, status) {
@@ -98,7 +101,28 @@ app.service('evoDb',['$http','$q','SharedSrvc',function eventQueries($http,$q,Sh
 	    return deferred.promise; //return the data
 	};
 
-	self.getProperties = function(){
+
+	self.getManagerClients = function(){
+		var dataObj = {manager:S.managerID};
+		var deferred = $q.defer();
+		$http({method: 'POST', url: 'js/php/getClientsByManager.php',data:dataObj}).
+		success(function(data, status) {
+			if(typeof data != 'string'){
+				self.lastResult = data;
+				self.getManagerProperties();
+				S.setManagerClients(data);
+     			deferred.resolve(data);
+     		}else{
+				deferred.resolve(false);
+     		}
+	    }).
+		error(function(data, status, headers, config) {
+			deferred.reject(false);
+	    });
+	    return deferred.promise; //return the data
+	};
+
+	self.getAllProperties = function(){
 		var deferred = $q.defer();
 		$http({method: 'POST', url: 'js/php/getProperties.php'}).
 		success(function(data, status) {
@@ -116,8 +140,28 @@ app.service('evoDb',['$http','$q','SharedSrvc',function eventQueries($http,$q,Sh
 	    return deferred.promise; //return the data
 	};
 
-	// Called from Jobs to populate  lists of manager's jobs
-	self.getManagerJobsList = function(){
+	self.getManagerProperties = function(){
+		var dataObj = {manager:S.managerID};
+		var deferred = $q.defer();
+		$http({method: 'POST', url: 'js/php/getPropertiesByManager.php',data:dataObj}).
+		success(function(data, status) {
+			if(typeof data != 'string'){
+				self.lastResult = data;
+				S.setManagerProperties(data);
+     			deferred.resolve(data);
+     		}else{
+				deferred.resolve(false);
+     		}
+	    }).
+		error(function(data, status, headers, config) {
+			deferred.reject(false);
+	    });
+	    return deferred.promise; //return the data
+	};
+
+	// Triggered every time viewContentLoaded on Job Summary page
+	// When successful, will trigger getManagerClients, which will then trigger getManagerProperties
+	self.getManagerJobs = function(){
 		if(S.managerID === ""){
 			S.setManagerID("3","Admin");
 		}
@@ -127,7 +171,8 @@ app.service('evoDb',['$http','$q','SharedSrvc',function eventQueries($http,$q,Sh
 		success(function(data, status) {
 			if(typeof data != 'string'){
 				self.lastResult = data;
-				S.setRawData(data);
+				self.getManagerClients();
+				S.setManagerJobsList(data);
      			deferred.resolve(data);
      		}else{
 				deferred.resolve(false);

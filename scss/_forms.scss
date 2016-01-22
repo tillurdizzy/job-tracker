@@ -1,0 +1,69 @@
+.shingle-input-form{
+	width:310px;
+	height:450px;
+	float:left;
+	input{
+		padding:.2rem;
+		margin:0 0 .5rem 0;
+		height:30px;
+		width:50px;
+		display:inline-block;
+	}
+
+	label{
+		font-size: .8em;
+		font-weight:700;
+		width:70px;
+		line-height:30px;
+		display:inline-block;
+		text-align: right;
+		float:left;
+		padding-right:4px;
+		margin:0 0 .5rem 0;
+	}
+
+	.leftCol{
+		width:150px;
+		float:left;
+		margin:0;
+	}
+	.rightCol{
+		display:inline-block;
+		margin:0;
+		padding:0;
+		width:130px;
+		float:right;
+		input{
+			float:right;
+		}
+	}
+}
+
+.edit-form{
+
+}
+
+.text-block-display{
+	margin:0;
+	color:#000000;
+	h4{
+		margin:0;
+		font-size: 1.2em;
+		font-family:  'Jaldi', sans-serif;
+	}
+}
+
+.form-container{
+	float:left;
+	display:inline-block;
+	height:450px;
+}
+
+.result-materials{
+	margin-left:50px;
+	display:inline-block;
+	width:500px;
+	height:auto;
+	
+	padding-left:15px;
+}

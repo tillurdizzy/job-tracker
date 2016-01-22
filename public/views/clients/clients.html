@@ -1,3 +1,31 @@
-<div class="page" ng-controller="">
+<div class="page" ng-controller="ClientsCtrl as Ctrl">
     <div class="page-title-bar"><h2>Clients</h2></div>
+     <h4>Manager:{{Ctrl.managerName}}</h4>
+    <div id="jobs-table-container">
+        <div class="jobs-table">
+            <div class="title"><h2>Clients</h2></div>
+            <div>
+                <table st-table="Ctrl.clients" class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th id="tbl-width-70">Edit</th>
+                            <th id="tbl-width-190">Company</th>
+                            <th id="tbl-width-190">Contact</th>
+                            <th id="tbl-width-190">Mobile</th>
+         
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="row in Ctrl.clients">
+                            <td><button ng-click="Ctrl.editJob($index)" type="button" class="button tbl-btn">Edit</button></td>
+                            <td>{{row.company}}</td>
+                            <td>{{row.contact}}</td>
+                            <td>{{row.phone_cell}}</td>
+                 
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>
