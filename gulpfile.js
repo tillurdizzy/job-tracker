@@ -28,12 +28,6 @@ gulp.task('jsbundle',function(){
 	return gulp.src([
 		'bower_components/modernizr/modernizr.js',
 		'bower_components/jquery/dist/jquery.min.js',
-		'scss/foundation-sites/dist/foundation.min.js',
-		/*'scss/foundation-sites/js/foundation/foundation.topbar.js',
-		'scss/foundation-sites/js/foundation/foundation.offcanvas.js',
-		'scss/foundation-sites/js/foundation/foundation.interchange.js',
-		'scss/foundation-sites/js/foundation/foundation.alert.js',
-		'scss/foundation-sites/js/foundation/foundation.equalizer.js',*/
 		'bower_components/angular/angular.min.js',
 		'bower_components/angular-sanitize/angular-sanitize.min.js',
 		'bower_components/angular-ui-router/release/angular-ui-router.min.js',

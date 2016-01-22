@@ -1,0 +1,53 @@
+
+/// Padding inside buttons.
+$button-padding: 0.85em 1em !default;
+
+/// Margin around buttons.
+$button-margin: 0 0 1em 0 !default;
+
+/// Default fill for buttons. Can either be `solid` or `hollow`.
+$button-fill: solid !default;
+
+/// Default background color for buttons.
+$button-background: $primary-color !default;
+
+/// Background color on hover for buttons.
+$button-background-hover: scale-color($button-background, $lightness: -15%) !default;
+
+/// Font color for buttons.
+$button-color: #fff !default;
+
+/// Font color for buttons, if the background is light.
+$button-color-alt: #000 !default;
+
+/// Border radius for buttons, defaulted to global-radius.
+$button-radius: 0 !default;
+
+/// Sizes for buttons.
+/// @type Map
+$button-sizes: (
+  tiny: 0.6rem,
+  small: 0.75rem,
+  default: 0.9rem,
+  large: 1.25rem,
+) !default;
+
+/// opacity for a disabled button.
+$button-opacity-disabled: 0.25 !default;
+
+
+button{
+	display: inline-block;
+	text-align: center;
+	line-height: 1;
+	cursor: pointer;
+	transition: background-color 0.25s ease-out, color 0.25s ease-out;
+	vertical-align: middle;
+	border: 1px solid transparent;
+	padding: $button-padding;
+	margin:$button-margin;
+	background-color: $button-background;
+	color: $button-color;
+	overflow: visible;
+}
+
