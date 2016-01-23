@@ -12,6 +12,11 @@ app.service('evoDb',['$http','$q','SharedSrvc',function eventQueries($http,$q,Sh
 		self.managerID = id;
 		self.managerName = "Admin";
 	};
+
+	self.logOut = function(){
+		self.managerID = "";
+		self.managerName = "";
+	};
 	
 	self.sendEmail = function(dataObj){
 		$http({method: 'POST', url: 'js/php/sendEmail.php',data:dataObj});

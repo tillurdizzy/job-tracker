@@ -1,0 +1,25 @@
+<div class="overview">
+	<div class="title"><h2>{{title}}</h2></div>
+	<div>	
+		<table st-table="myData" class="table table-striped">
+			<thead>
+			<tr>
+				<th id="tbl-width-70">Date</th>
+				<th id="tbl-width-170">Name</th>
+				<th id="tbl-width-170">Address</th>
+				<th id="tbl-width-100">City</th>
+				<th id="tbl-width-70">Edit</th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr ng-repeat="row in myData">
+				<td>{{row.date0 | date:MM-dd}}</td>
+				<td>{{row.name}}</td>
+				<td>{{row.address}}</td>
+				<td>{{row.city}}</td>
+				<td><button ng-click="editJob($index)" type="button" class="button tbl-btn">Edit</button></td>
+			</tr>
+			</tbody>
+		</table>
+	</div>
+</div>

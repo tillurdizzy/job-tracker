@@ -1,6 +1,4 @@
-$title-bar-color:$primary-color;
-$section-header-color:#0463A1;
-$button-background:#FF0000;
+
 
 body{
 	font-family:  'Jaldi', sans-serif;
@@ -9,16 +7,17 @@ body{
 
 
 .page{
-  width:648px;
+  width:100%;
   .page-title-bar{
-    height:40px;
-    background-color:$title-bar-color;
-    margin-bottom: 1em;
+    height:36px;
+    width:100%;
+    background-color:$section-header-bkg;
+    margin-bottom: .8em;
     h2{
       color:#FFFFFF;
-      font-size:1.5em;
-      font-weight: 600;
-      line-height: 40px;
+      font-size:1.2em;
+      font-weight: 400;
+      line-height: 36px;
       vertical-align: middle;
       margin:0 0 0 .5em;
     }
@@ -26,11 +25,11 @@ body{
 
   .section-header{
     height:24px;
-    background-color:$section-header-color;
+    background-color:$section-header-bkg;
     h2{
       color:#FFFFFF;
       font-size:1em;
-      font-weight: 600;
+      font-weight: 400;
       line-height: 24px;
       vertical-align: middle;
       margin:0 0 0 .3em;
@@ -38,8 +37,23 @@ body{
   }
 }
 
+.top-bar{
+  height:45px;
+  width:100%;
+  display:flex;
+  background-color: $top-bar-bkg;
+  h1{
+    color:#fff;
+    line-height:45px;
+    vertical-align: middle;
+    margin:0 0 0 .5em;
+    padding:0;
+  }
+}
+
 .view-container{
-  margin:1.5em;
+  width:100%;
+
 }
 
 

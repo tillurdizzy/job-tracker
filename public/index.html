@@ -11,37 +11,38 @@
         <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700italic' rel='stylesheet' type='text/css'/>
         <link href='http://fonts.googleapis.com/css?family=Jaldi:400,700' rel='stylesheet' type='text/css'/>
         <link rel="stylesheet" href="css/app.css"/>
+        <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
     </head>
     <body ng-app="MyApp">
 
-        <div class="off-canvas-wrapper">
-            <div class="off-canvas-wrapper-inner" data-off-canvas-wrapper>
-                <div class="off-canvas position-left" id="offCanvasLeft" data-off-canvas>
-                    <ul class="vertical menu" data-drilldown><!-- start of the drilldown multi level menu -->
-                    <li><a ui-sref="login">Log In / Out</a></li>
-                    <li><a ui-sref="jobs">Jobs</a></li>
-                    <li><a ui-sref="clients">Clients</a></li>
-                    <li><a ui-sref="properties">Properties</a></li>
-                    <li><a ui-sref="reports">Reports</a></li>
-                </ul>
+        <div id="site-wrapper" ng-controller="OffCanvasCtrl as Ctrl">
+            <div class="top-bar">
+                <button ng-click="Ctrl.toggleNav()">MENU</button>
+                <h1>Evolution Roofing Job Tracker</h1>
             </div>
-            <div class="off-canvas-content" data-off-canvas-content>
-                <div class="title-bar">
-                    <div class="title-bar-left">
-                        <button class="menu-icon" type="button" data-open="offCanvasLeft"></button>
-                        <span class="title-bar-title">Evolution Roofing Job Tracker</span>
-                    </div>
+            
+            <div id="site-canvas">
+                <div id="off-canvas-menu" ng-class="Ctrl.menuOpen ? 'off-canvas-show' : 'off-canvas-hide'">
+                    <div><button ng-click="Ctrl.menuClick('login')">Log In / Out</button></div>
+                    <div><button ng-click="Ctrl.menuClick('jobs')">Jobs Summary</button></div>
+                    <div><button ng-click="Ctrl.menuClick('clients')">Clients</button></div>
+                    <div><button ng-click="Ctrl.menuClick('properties')">Properties</button></div>
+                    <div><button ng-click="Ctrl.menuClick('reports')">Reports</button></div>
                 </div>
-                <!-- APP Content !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
-                <div ui-view class="view-container"></div>
+                <div class="canvas-slider" ng-class="!Ctrl.menuOpen ? 'canvas-slide-false' : 'canvas-slide-true'">
+                    <!-- APP Content !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
+                    <div ui-view class="view-container" ></div>
+                </div>
+                <!-- #site-canvas -->
             </div>
-        </div>
+        <!-- #site-wrapper -->
     </div>
    
 
     <!--Custom JS-->
     <script src="myApp.js"></script>
     <!--Controllers-->
+    <script src="views/offcanvas.ctrl.js"></script>
     <script src="views/login/login.ctrl.js"></script>
     <script src="views/jobs/jobs.ctrl.js"></script>
     <script src="views/clients/clients.ctrl.js"></script>
@@ -57,8 +58,6 @@
     <script src="views/jobs/proposals/shingle.srvc.js"></script>
     <!--Directives-->
     <script src="js/directives/hrule.dir.js"></script>
-    <script>
-            $(document).foundation();
-    </script>
+
 </body>
 </html>

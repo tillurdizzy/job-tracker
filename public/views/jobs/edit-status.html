@@ -1,0 +1,11 @@
+<div class="short-form"> 
+ <h4>Status Change</h4>
+    <form name="Ctrl.B" data-ng-submit="Ctrl.submitStatusChange()" novalidate>
+        <div class="col-left">
+            <label>Job Status</label>
+            <select id="selectorS3" ng-model="Ctrl.S3" ng-options="c.label for c in Ctrl.optionsS3" required></select>
+            <button type="submit" class="button small radius">Submit</button>
+      </div>
+    </form>
+    <p class="attention" data-ng-show="invalid">Please complete both fields.</p>
+</div>

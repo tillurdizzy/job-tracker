@@ -1,5 +1,21 @@
 
-$primary-color:#2199E8;
-$title-bar-color:$primary-color;
-$section-header-color:#0463A1;
-$button-background:#FF0000;
+//Define colors
+$base-color:#0463A1;
+$base-lighter:#0984D4;
+$base-lighter-X2:#2D8FCF;
+$base-darker:#035082;
+$base-darker-X2:#023d63;
+
+$primary-button-up:$base-color;
+$primary-button-over:$base-lighter;
+
+$hilite-green:#00AF5B;
+
+// Assign colors
+$title-bar-bkg:$base-color;
+$top-bar-bkg:$base-darker;
+$section-header-bkg:$base-color;
+$button-background:$primary-button-up;
+$off-canvas-bkg:$base-darker;
+$off-canvas-btn-bkg:$base-darker;
+$off-canvas-btn-bdr:$base-lighter;

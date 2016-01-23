@@ -1,0 +1,28 @@
+<div ng-controller="JobsCtrl as Ctrl" class="page">
+    <div class="page-title-bar"><h2>Jobs Summary</h2></div>
+    <h4>Manager:{{Ctrl.managerName}}</h4>
+    <div id="jobs-table-container">
+        <div class="jobs-table">
+            <div>
+                <table st-table="Ctrl.jobs" class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th id="tbl-width-70">Details</th>
+                            <th id="tbl-width-190">Client</th>
+                            <th id="tbl-width-190">Property</th>
+                            <th id="tbl-width-100">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="row in Ctrl.jobs">
+                            <td><button ng-click="Ctrl.editJob($index)" type="button" class="button tbl-btn">Show</button></td>
+                            <td>{{row.clientName}}</td>
+                            <td>{{row.propertyName}}</td>
+                            <td>{{row.status}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

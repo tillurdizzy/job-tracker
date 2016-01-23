@@ -12,6 +12,7 @@ app.service('SharedSrvc',[function sharedVars(){
 	self.fullJobList = [];
 
 	// Manager vars
+	self.loggedIn = false;
 	self.managerID = "";
 	self.managerName = "";
 	self.managerJobs = [];
@@ -30,6 +31,16 @@ app.service('SharedSrvc',[function sharedVars(){
 	self.setManagerID = function(id,n){
 		self.managerID = id;
 		self.managerName = n;
+		self.loggedIn = true;
+	};
+
+	self.logOut = function(){
+		self.managerID = "";
+		self.managerName = "";
+		self.loggedIn = false;
+		self.managerJobs = [];
+		self.managerClients = [];
+		self.managerProperties = [];
 	};
 
 	//Called when job is selected from Jobs Summary table

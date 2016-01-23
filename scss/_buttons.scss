@@ -3,16 +3,16 @@
 $button-padding: 0.85em 1em !default;
 
 /// Margin around buttons.
-$button-margin: 0 0 1em 0 !default;
+$button-margin: 0 !default;
 
 /// Default fill for buttons. Can either be `solid` or `hollow`.
 $button-fill: solid !default;
 
 /// Default background color for buttons.
-$button-background: $primary-color !default;
+$button-background: $primary-button-up !default;
 
 /// Background color on hover for buttons.
-$button-background-hover: scale-color($button-background, $lightness: -15%) !default;
+$button-hover-color: scale-color($button-background, $lightness: -15%) !default;
 
 /// Font color for buttons.
 $button-color: #fff !default;
@@ -23,8 +23,11 @@ $button-color-alt: #000 !default;
 /// Border radius for buttons, defaulted to global-radius.
 $button-radius: 0 !default;
 
+button:focus {
+    outline: none;
+}
+
 /// Sizes for buttons.
-/// @type Map
 $button-sizes: (
   tiny: 0.6rem,
   small: 0.75rem,
@@ -36,7 +39,7 @@ $button-sizes: (
 $button-opacity-disabled: 0.25 !default;
 
 
-button{
+button, .button{
 	display: inline-block;
 	text-align: center;
 	line-height: 1;
@@ -50,4 +53,17 @@ button{
 	color: $button-color;
 	overflow: visible;
 }
+
+button:hover, button:focus, .button:hover, .button:focus {
+    background-color: $button-hover-color; }
+
+button.large, .button.large {
+    padding: 1.125rem 2.25rem 1.1875rem 2.25rem;
+    font-size: 1.25rem; }
+button.small, .button.small {
+    padding: 0.8rem 1.2rem 0.9rem 1.2rem;
+    font-size: 0.8125rem; }
+button.tiny, .button.tiny {
+    padding: 0.625rem 1.25rem 0.6875rem 1.25rem;
+    font-size: 0.6875rem; }
 

@@ -7,7 +7,6 @@ cgi-bin/
 *.mp4
 *.mov
 vendors/
-jobs/
 *.psd
 
 

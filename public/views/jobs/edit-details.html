@@ -1,0 +1,42 @@
+<div class="short-form"> 
+    <h4>Details</h4>
+    <form name="Ctrl.A" data-ng-submit="Ctrl.submitForm()" novalidate>
+        <div class="col-left">
+            <label>Property Name</label>
+            <input data-ng-class="{error:A.T1.$invalid&&invalid}" name="T1" type="text" ng-model="Ctrl.T1" required>
+
+            <label>Property Type</label>
+            <select id="selectorS1" ng-model="Ctrl.S1" ng-options="c.label for c in Ctrl.optionsS1" required></select>
+
+            <label>Roof Type</label>
+            <select id="selectorS2" ng-model="Ctrl.S2" ng-options="c.label for c in Ctrl.optionsS2" required></select>
+           
+            <label>Street</label>
+            <input  data-ng-class="{error:A.T2.$invalid&&invalid}" name="T2" type="text" ng-model="Ctrl.T2" required>
+
+            <label>City</label>
+            <input  data-ng-class="{error:A.T3.$invalid&&invalid}" name="T3" type="text" ng-model="Ctrl.T3" required>
+
+			<label>State</label>
+            <input  data-ng-class="{error:A.T4.$invalid&&invalid}" name="T4" type="text" ng-model="Ctrl.T4" required>
+
+			<label>Zip</label>
+            <input  data-ng-class="{error:A.T5.$invalid&&invalid}" name="T5" type="text" ng-model="Ctrl.T5" required>
+
+            <label>Contact</label>
+            <input  data-ng-class="{error:A.T6.$invalid&&invalid}" name="T6" type="text" ng-model="Ctrl.T6" required>
+
+            <label>Phone</label>
+            <input  data-ng-class="{error:A.T7.$invalid&&invalid}" name="T7" type="text" ng-model="Ctrl.T7" required>
+
+            <label>Email</label>
+            <input  data-ng-class="{error:A.T8.$invalid&&invalid}" name="T8" type="text" ng-model="Ctrl.T8" required>
+
+            <button type="submit" class="button small radius">Submit</button>
+      </div>
+    </form>
+    <p class="attention" data-ng-show="invalid">Please complete both fields.</p>
+    <div id="completeMessage">
+        
+    </div>
+</div>
