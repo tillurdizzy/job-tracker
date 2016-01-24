@@ -4,6 +4,7 @@ app.controller('JobsCtrl',['$location','$state','evoDb','$scope','SharedSrvc',fu
 	var DB =  evoDb;
 	var ME = this;
 	var S = SharedSrvc;
+	ME.controllerName = "JobsCtrl";
 	ME.managerID = DB.managerID;
 	ME.managerName = DB.managerName;
 

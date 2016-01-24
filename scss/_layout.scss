@@ -8,11 +8,16 @@ body{
 
 .page{
   width:100%;
+
+  h4{
+    //Used every page for sub title manager name or other
+    margin-bottom: 10px;
+  }
   .page-title-bar{
     height:36px;
     width:100%;
     background-color:$section-header-bkg;
-    margin-bottom: .8em;
+    margin-bottom: .7em;
     h2{
       color:#FFFFFF;
       font-size:1.2em;
@@ -53,7 +58,6 @@ body{
 
 .view-container{
   width:100%;
-
 }
 
 
