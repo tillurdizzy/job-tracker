@@ -6,11 +6,16 @@ app.service('evoDb',['$http','$q','SharedSrvc',function eventQueries($http,$q,Sh
 	self.ME = "evoDB: ";
 	self.managerID = "";
 	var S = SharedSrvc;
-
+	var serverAvailable = false;
 
 	self.setManagerID = function(id){
 		self.managerID = id;
 		self.managerName = "Admin";
+	};
+
+	self.logOut = function(){
+		self.managerID = "";
+		self.managerName = "";
 	};
 	
 	self.sendEmail = function(dataObj){

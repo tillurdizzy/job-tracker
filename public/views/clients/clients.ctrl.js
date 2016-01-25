@@ -1,6 +1,6 @@
 'use strict';
 
-app.controller('ClientsCtrl',['$location','$state','evoDb','$scope','SharedSrvc',function ($location,$state,evoDb,$scope,SharedSrvc) {
+app.controller('ClientsCtrl',['$state','evoDb','SharedSrvc',function ($state,evoDb,SharedSrvc) {
 	var DB =  evoDb;
 	var ME = this;
 	var S = SharedSrvc;

@@ -1,0 +1,37 @@
+<div class="page" data-ng-controller="EditFormCtrl as Ctrl">
+    <div class="page-title-bar"><h2>Job Details</h2></div>
+
+    <div class="section-header">
+        <h2>Client</h2>
+    </div>
+    <div class="text-block-display">
+        
+    </div>
+    <div class="section-header">
+        <h2>Property</h2>
+    </div>
+    <div  class="text-block-display">
+        <h4>{{Ctrl.T1}}</h4>
+        <h4>{{Ctrl.T2}}</h4>
+        <h4>{{Ctrl.T3}}, {{Ctrl.T4}}  {{Ctrl.T5}}</h4>
+    </div>
+    <div class="section-header">
+        <h2>Job Status</h2>
+    </div>
+    <div class="text-block-display">
+         <h4>{{Ctrl.jobStatus}}</h4>
+    </div>
+    <horiz-rule margintop="15px" marginbottom="5px"></horiz-rule>
+    <div style="width:300px;">
+        <button type="button" class="button small radius" ng-click="Ctrl.backToHome()">Cancel</button>
+        <h6>Select action below.</h6>
+        <select id="editMode" ng-model="Ctrl.selectedMode" ng-options="c.label for c in Ctrl.editModes" ng-change="Ctrl.selectEditMode()"></select>
+    </div>
+    <horiz-rule margintop="5px" marginbottom="15px"></horiz-rule>
+  
+    <div ui-view>
+        
+    </div>
+</div>
+
+<div class="spacerMed"></div>
