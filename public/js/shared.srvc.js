@@ -43,16 +43,47 @@ app.service('SharedSrvc',[function sharedVars(){
 		self.managerProperties = [];
 	};
 
-	//Called when job is selected from Jobs Summary table
+	//Called from their rrespective Summary Tables
 	self.selectJob = function(obj){
 		self.selectedJobObj = obj;
+		self.setClientByID(self.selectedJobObj.client);
+		self.setPropertyByID(self.selectedJobObj.property);
 	};
+
 	self.selectClient = function(obj){
 		self.selectedClientObj = obj;
 	};
+
 	self.selectProperty = function(obj){
 		self.selectedPropertyObj = obj;
-	}
+	};
+
+	self.setJobByID = function(id){
+		for (var i = 0; i < self.managerJobs.length; i++) {
+			if(self.managerJobs[i].PRIMARY_ID == id){
+				self.selectedJobObj = self.managerJobs[i];
+				break;
+			}
+		};
+	};
+
+	self.setClientByID = function(id){
+		for (var i = 0; i < self.managerClients.length; i++) {
+			if(self.managerClients[i].PRIMARY_ID == id){
+				self.selectedClientObj = self.managerClients[i];
+				break;
+			}
+		};
+	};
+
+	self.setPropertyByID = function(id){
+		for (var i = 0; i < self.managerProperties.length; i++) {
+			if(self.managerProperties[i].PRIMARY_ID == id){
+				self.selectedPropertyObj = self.managerProperties[i];
+				break;
+			}
+		};
+	};
 
 	// Triggered every time viewContentLoaded on Job Summary page
 	// Jobs, Clients and Properties will always be refreshed together in that order

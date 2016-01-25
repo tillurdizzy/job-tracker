@@ -15,11 +15,11 @@ app.controller('JobsCtrl',['$location','$state','evoDb','$scope','SharedSrvc',fu
 	ME.newJobForm = false;
 	ME.invalid = false;
 
-	ME.editJob = function(ndx){
+	ME.showDetails = function(ndx){
 		var jobObj = ME.jobs[ndx];
 		// Send job selection to shared
 		S.selectJob(jobObj);
-		$state.transitionTo("edit");
+		$state.transitionTo("jobDetails");
 	};
 
 	

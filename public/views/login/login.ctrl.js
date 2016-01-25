@@ -10,7 +10,7 @@ app.controller('LoginCtrl',['$scope','$state','evoDb','SharedSrvc',function ($sc
 
     $scope.displayname="";
 
-    var serverAvailable = false;
+    var serverAvailable = true;
 
     $scope.continueBtn = function(){
         $state.transitionTo("jobs");

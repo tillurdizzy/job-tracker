@@ -10,5 +10,8 @@ class jobVO{
 	var $dateContract;// contract
 	var $dateActive;// active
 	var $dateComplete;// complete
+	// Not from database - added in shared Service
+	var $propertyName;
+	var $clientName;
 }
 ?>

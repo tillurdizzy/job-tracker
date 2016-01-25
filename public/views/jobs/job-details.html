@@ -1,0 +1,65 @@
+<div class="page" data-ng-controller="JobDetailsCtrl as Ctrl">
+    <div class="page-title-bar"><h2>Job Details</h2></div>
+
+    <div class="section-header">
+        <h2>Client</h2>
+    </div>
+    <div class="text-block-display">
+        <h4>{{Ctrl.selectedClientObj.company}}</h4>
+        <h3>{{Ctrl.selectedClientObj.street}}</h3>
+        <h3>{{Ctrl.selectedClientObj.city + ", " + Ctrl.selectedClientObj.state + " " + Ctrl.selectedClientObj.zip}}</h3>
+        <h4>Contact Information:</h4>
+        <h3>{{Ctrl.selectedClientObj.name_first + " " + Ctrl.selectedClientObj.name_last}}</h3>
+        <h3>{{Ctrl.selectedClientObj.phone_cell}}</h3>
+        <h3>{{Ctrl.selectedClientObj.email}}</h3>
+    </div>
+    <div class="spacerMed"></div>
+    <div class="section-header">
+        <h2>Property</h2>
+    </div>
+    <div  class="text-block-display">
+        <h4>{{Ctrl.selectedPropertyObj.name}}</h4>
+        <h3>{{Ctrl.selectedPropertyObj.street}}</h3>
+        <h3>{{Ctrl.selectedPropertyObj.city + ", " + Ctrl.selectedPropertyObj.state + " " + Ctrl.selectedPropertyObj.zip}}</h3>
+        <h3>Class: {{Ctrl.selectedPropertyObj.class}}</h3>
+        <h3>Roof type: {{Ctrl.selectedPropertyObj.roof}}</h3>
+        <h3>Description: {{Ctrl.selectedPropertyObj.description}}</h3>
+    </div>
+    <div class="spacerMed"></div>
+    <div class="section-header">
+        <h2>Job Status</h2>
+    </div>
+    <div class="status-table">
+            <div>
+                <table class="table-striped">
+                    <thead>
+                        <tr>
+                            <th id="tbl-width-70">Event</th>
+                            <th id="tbl-width-70">Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Proposal</td>
+                            <td>{{Ctrl.jobStatus[0]}}</td>
+                        </tr>
+                        <tr>
+                            <td>Contract</td>
+                            <td>{{Ctrl.jobStatus[1]}}</td>
+                        </tr>
+                        <tr>
+                            <td>Working</td>
+                            <td>{{Ctrl.jobStatus[2]}}</td>
+                        </tr>
+                        <tr>
+                            <td>Complete</td>
+                            <td>{{Ctrl.jobStatus[3]}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    <button type="button" class="button" ng-click="Ctrl.backToList()">Back</button>
+</div>
+
+<div class="spacerMed"></div>

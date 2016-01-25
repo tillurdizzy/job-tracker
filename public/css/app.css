@@ -520,6 +520,118 @@ button.tiny, .button.tiny {
 .canvas-slide-false {
   left: 0; }
 
+table {
+  margin-bottom: 1em;
+  border-radius: 0;
+  border: 1px solid #999999;
+  background-color: #fff; }
+  table caption {
+    font-weight: 700;
+    padding: 0.5em; }
+  table thead,
+  table tfoot {
+    background: smart-scale(#fff, 2.5%);
+    color: #000; }
+    table thead tr,
+    table tfoot tr {
+      background: transparent; }
+    table thead th,
+    table thead td,
+    table tfoot th,
+    table tfoot td {
+      padding: 0.5em;
+      font-weight: 700;
+      text-align: left; }
+  table tbody tr:nth-child(even) {
+    background-color: smart-scale(#fff, 5%); }
+  table tbody th,
+  table tbody td {
+    padding: 0.5em; }
+
+.table-scroll {
+  display: block;
+  width: 100%;
+  overflow-x: auto; }
+
+.table-striped tbody tr:nth-child(odd) {
+  background-color: #eee; }
+
+#jobs-table-container {
+  width: 600px; }
+
+.jobs-table {
+  min-height: 100px; }
+  .jobs-table .title {
+    height: 1.4em;
+    background-color: #0463A1; }
+  .jobs-table h2 {
+    color: #FFFFFF;
+    font-size: 1em;
+    margin: 0 0 0 .5em;
+    font-weight: 700;
+    line-height: 1.4em;
+    vertical-align: middle; }
+  .jobs-table table {
+    table-layout: fixed;
+    width: 600px; }
+  .jobs-table th, .jobs-table td {
+    border: 1px solid black;
+    overflow: hidden; }
+  .jobs-table .tbl-btn {
+    margin: 0; }
+  .jobs-table #tbl-width-190 {
+    width: 190px; }
+  .jobs-table #tbl-width-70 {
+    width: 70px; }
+  .jobs-table #tbl-width-100 {
+    width: 100px; }
+  .jobs-table #tbl-width-170 {
+    width: 170px; }
+
+#editForm .btnContainer {
+  width: 350px;
+  height: 80px;
+  border-radius: 10px; }
+  #editForm .btnContainer button {
+    float: left;
+    margin-right: 1em; }
+
+table {
+  margin-bottom: 1em;
+  border-radius: 0;
+  border: 1px solid #999999;
+  background-color: #fff; }
+  table caption {
+    font-weight: 700;
+    padding: 0.5em; }
+  table thead,
+  table tfoot {
+    background: smart-scale(#fff, 2.5%);
+    color: #000; }
+    table thead tr,
+    table tfoot tr {
+      background: transparent; }
+    table thead th,
+    table thead td,
+    table tfoot th,
+    table tfoot td {
+      padding: 0.5em;
+      font-weight: 700;
+      text-align: left; }
+  table tbody tr:nth-child(even) {
+    background-color: smart-scale(#fff, 5%); }
+  table tbody th,
+  table tbody td {
+    padding: 0.5em; }
+
+.table-scroll {
+  display: block;
+  width: 100%;
+  overflow-x: auto; }
+
+.table-striped tbody tr:nth-child(odd) {
+  background-color: #eee; }
+
 #jobs-table-container {
   width: 600px; }
 
@@ -561,9 +673,21 @@ button.tiny, .button.tiny {
     margin-right: 1em; }
 
 .login-form {
+  margin-left: 1em;
   width: 150px; }
+  .login-form label {
+    font-size: 1em;
+    font-weight: 700; }
+  .login-form input {
+    padding: .2rem;
+    margin: 0 0 .5rem 0;
+    height: 36px;
+    width: 150px;
+    font-size: 1.3em;
+    display: inline-block;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 8px; }
   .login-form .button {
-    margin-top: 10px; }
+    margin-top: 1.5em; }
   .login-form .login-error {
     font-size: .9em;
     color: #FF0000; }
@@ -628,11 +752,21 @@ button.tiny, .button.tiny {
       float: right; }
 
 .text-block-display {
-  margin: 0;
+  margin: 10px 0;
   color: #000000; }
   .text-block-display h4 {
     margin: 0;
+    padding: 0;
     font-size: 1.2em;
+    line-height: 1;
+    font-weight: 700;
+    font-family: 'Jaldi', sans-serif; }
+  .text-block-display h3 {
+    margin: 0;
+    padding: 0;
+    font-size: 1.1em;
+    line-height: 1;
+    font-weight: 400;
     font-family: 'Jaldi', sans-serif; }
 
 .form-container {

@@ -1,5 +1,5 @@
 'use strict';
-var app = angular.module('MyApp', ['ui.router','ngSanitize']);
+var app = angular.module('MyApp', ['ui.router','ngSanitize','smart-table']);
 
 app.config(function($stateProvider, $urlRouterProvider) {
  	
@@ -53,9 +53,9 @@ app.config(function($stateProvider, $urlRouterProvider) {
 			url: "/jobs",
 			templateUrl:"views/jobs/jobs.html"
 		})
-		.state('edit', {
-			url: "/edit",
-			templateUrl:"views/jobs/edit.html"
+		.state('jobDetails', {
+			url: "/jobDetails",
+			templateUrl:"views/jobs/job-details.html"
 		})
 		.state('edit.status', {
 			url: "/status",
