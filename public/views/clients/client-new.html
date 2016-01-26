@@ -1,0 +1,169 @@
+<div ng-controller="NewClientCtrl as Ctrl" class="page">
+    <div class="page-title-bar"><h2>New Job</h2></div>
+    <div class="mobile-input">
+        <div class="mobile-input-item" ng-show="Ctrl.inputField == 'company'">
+            <h3>Company*</h3>
+            <input name="T1" type="text" ng-model="Ctrl.T1"/>
+            
+            <div class="page-nav">
+                <div class="page-nav-left">
+                </div>
+                <div class="input-errors"></div>
+                <div class="page-nav-right">
+                    <i ng-click="Ctrl.inputField='firstName'" class="fa fa-arrow-circle-right fa-3x"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="mobile-input-item" ng-show="Ctrl.inputField == 'firstName'">
+            <h3>Contact First Name*</h3>
+            <input name="T2" type="text" ng-model="Ctrl.T2"/>
+            <div class="page-nav">
+                <div class="page-nav-left">
+                	<i ng-click="Ctrl.inputField='company'" class="fa fa-arrow-circle-right fa-3x"></i>
+                </div>
+                <div class="input-errors">{{Ctrl.errorMsg}}</div>
+                <div class="page-nav-right">
+                    <i ng-click="Ctrl.inputField='lastName'" class="fa fa-arrow-circle-right fa-3x"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="mobile-input-item" ng-show="Ctrl.inputField == 'lastName'">
+            <h3>Contact Last Name*</h3>
+            <input name="T3" type="text" ng-model="Ctrl.T3"/>
+            <div class="page-nav">
+                <div class="page-nav-left">
+                	<i ng-click="Ctrl.inputField='firstName'" class="fa fa-arrow-circle-right fa-3x"></i>
+                </div>
+                <div class="input-errors"></div>
+                <div class="page-nav-right">
+                    <i ng-click="Ctrl.inputField='street'" class="fa fa-arrow-circle-right fa-3x"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="mobile-input-item" ng-show="Ctrl.inputField == 'street'">
+            <h3>Street Address*</h3>
+            <input name="T4" type="text" ng-model="Ctrl.T4"/>
+            <div class="page-nav">
+                <div class="page-nav-left">
+                	<i ng-click="Ctrl.inputField='lastName'" class="fa fa-arrow-circle-right fa-3x"></i>
+                </div>
+                <div class="input-errors"></div>
+                <div class="page-nav-right">
+                    <i ng-click="Ctrl.inputField='city'" class="fa fa-arrow-circle-right fa-3x"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="mobile-input-item" ng-show="Ctrl.inputField == 'city'">
+            <h3>City*</h3>
+            <input name="T5" type="text" ng-model="Ctrl.T5"/>
+            <div class="page-nav">
+                <div class="page-nav-left">
+                	<i ng-click="Ctrl.inputField='lastName'" class="fa fa-arrow-circle-right fa-3x"></i>
+                </div>
+                <div class="input-errors"></div>
+                <div class="page-nav-right">
+                    <i ng-click="Ctrl.inputField='state'" class="fa fa-arrow-circle-right fa-3x"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="mobile-input-item" ng-show="Ctrl.inputField == 'state'">
+            <h3>State*</h3>
+            <input name="T6" type="text" ng-model="Ctrl.T6"/>
+            <div class="page-nav">
+                <div class="page-nav-left">
+                	<i ng-click="Ctrl.inputField='lastName'" class="fa fa-arrow-circle-right fa-3x"></i>
+                </div>
+                <div class="input-errors"></div>
+                <div class="page-nav-right">
+                    <i ng-click="Ctrl.inputField='zip'" class="fa fa-arrow-circle-right fa-3x"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="mobile-input-item" ng-show="Ctrl.inputField == 'zip'">
+            <h3>Zip*</h3>
+            <input name="T7" type="text" ng-model="Ctrl.T7"/>
+            <div class="page-nav">
+                <div class="page-nav-left">
+                	<i ng-click="Ctrl.inputField='lastName'" class="fa fa-arrow-circle-right fa-3x"></i>
+                </div>
+               <div class="input-errors"></div>
+                <div class="page-nav-right">
+                    <i ng-click="Ctrl.inputField='bus'" class="fa fa-arrow-circle-right fa-3x"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="mobile-input-item" ng-show="Ctrl.inputField == 'mobile'">
+            <h3>Contact's Mobile Phone*</h3>
+            <input name="T8" type="text" ng-model="Ctrl.T8"/>
+            <div class="page-nav">
+                <div class="page-nav-left">
+                	<i ng-click="Ctrl.inputField='lastName'" class="fa fa-arrow-circle-right fa-3x"></i>
+                </div>
+                <div class="input-errors"></div>
+                <div class="page-nav-right">
+                    <i ng-click="Ctrl.inputField='bus'" class="fa fa-arrow-circle-right fa-3x"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="mobile-input-item" ng-show="Ctrl.inputField == 'bus'">
+            <h3>Company Phone</h3>
+            <input name="T9" type="text" ng-model="Ctrl.T9"/>
+            <div class="page-nav">
+                <div class="page-nav-left">
+                	<i ng-click="Ctrl.inputField='lastName'" class="fa fa-arrow-circle-right fa-3x"></i>
+                </div>
+               <div class="input-errors"></div>
+                <div class="page-nav-right">
+                    <i ng-click="Ctrl.inputField='bus'" class="fa fa-arrow-circle-right fa-3x"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="mobile-input-item" ng-show="Ctrl.inputField == 'email'">
+            <h3>Contact's Email</h3>
+            <input name="T10" type="text" ng-model="Ctrl.T10"/>
+            <div class="page-nav">
+                <div class="page-nav-left">
+                	<i ng-click="Ctrl.inputField='lastName'" class="fa fa-arrow-circle-right fa-3x"></i>
+                </div>
+                <div class="input-errors"></div>
+                <div class="page-nav-right">
+                    <i ng-click="Ctrl.inputField='bus'" class="fa fa-arrow-circle-right fa-3x"></i>
+                </div>
+            </div>
+        </div>
+
+         <div class="mobile-input-item" ng-show="Ctrl.inputField == 'email'">
+            <h3>Review and Submit</h3>
+           <div class="text-block-display">
+                <h3>Company Information:</h3>
+                <h4>{{Ctrl.T1}}</h4>
+                <h4>{{Ctrl.selectedClientObj.T4}}</h3>
+                <h4>{{Ctrl.selectedClientObj.T5 + ", " + Ctrl.selectedClientObj.T6 + " " + Ctrl.selectedClientObj.T7}}</h3>
+                <h3>Contact Information:</h3>
+                <h4>{{Ctrl.T2 + " " + Ctrl.T3}}</h4>
+                <h4>Cell: {{Ctrl.T8}}</h4>
+                <h4>Bus: {{Ctrl.T9}}</h4>
+                <h4>Email: {{Ctrl.T10}}</h4>
+            </div>
+            <div class="page-nav">
+                <div class="page-nav-left">
+                    <i ng-click="Ctrl.inputField='lastName'" class="fa fa-arrow-circle-right fa-3x"></i>
+                </div>
+                <div class="input-errors"></div>
+                <div class="page-nav-right">
+                   <button type="button" ng-click="submitForm">Submit</button>
+                </div>
+            </div>
+        </div>
+
+	</div>
+</div>

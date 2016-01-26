@@ -71,14 +71,11 @@ app.config(function($stateProvider, $urlRouterProvider) {
 			url: "/details",
 			templateUrl:"views/clients/client-details.html"
 		})
-		.state('clientForms', {
-			url: "/clientForms",
-			templateUrl:"views/clients/clientforms.html"
+		.state('addNewClient', {
+			url: "/client-new",
+			templateUrl:"views/clients/client-new.html"
 		})
-		.state('clientForms.Add', {
-			url: "/clientAdd",
-			templateUrl:"views/clients/client-form-add.html"
-		})
+		
 
 		.state('properties', {
 			url: "/properties",
@@ -87,6 +84,10 @@ app.config(function($stateProvider, $urlRouterProvider) {
 		.state('properties.details', {
 			url: "/details",
 			templateUrl:"views/properties/property-details.html"
+		})
+		.state('addNewProperty', {
+			url: "/property-new",
+			templateUrl:"views/properties/property-new.html"
 		})
 
 		.state('proposal', {
