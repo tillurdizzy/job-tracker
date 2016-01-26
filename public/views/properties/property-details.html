@@ -1,13 +1,15 @@
-<div  class="text-block-display">
-    <h4>{{Ctrl.selectedProperty.client}}</h4>
-    <h4>{{Ctrl..selectedProperty.name}}</h4>
-    <h4>{{Ctrl.selectedProperty.street}}</h4>
-    <h4>{{Ctrl.selectedProperty.city}}, {{Ctrl.selectedProperty.street}} {{Ctrl.selectedProperty.zip}}</h4>
-    <h4>{{Ctrl.selectedProperty.city}}</h4>
-    <h4>{{Ctrl.selectedProperty.class}}</h4>
-    <h4>{{Ctrl.selectedProperty.roof}}</h4>
-    <h4>{{Ctrl.selectedProperty.description}}</h4>
-    <h4>{{Ctrl.selectedProperty.layers}}</h4>
+<div class="section-header">
+    <h2>Property Details</h2>
 </div>
 
-<a ui-sref="properties"><button>Back</button></a>
+<div  class="text-block-display">
+    <h3>{{Ctrl.selectedPropertyObj.name}}</h3>
+    <h3>{{Ctrl.selectedPropertyObj.street}}</h3>
+    <h3>{{Ctrl.selectedPropertyObj.city + ", " + Ctrl.selectedPropertyObj.state + " " + Ctrl.selectedPropertyObj.zip}}</h3>
+    <h3>Class: {{Ctrl.selectedPropertyObj.class}}</h3>
+    <h3>Roof type: {{Ctrl.selectedPropertyObj.roof}}</h3>
+    <h3>Layers: {{Ctrl.selectedPropertyObj.layers}}</h3>
+    <h3>Description: {{Ctrl.selectedPropertyObj.description}}</h3>
+</div>
+
+<button type="button" class="button" ng-click="Ctrl.backToList()">Back</button>

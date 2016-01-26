@@ -17,10 +17,10 @@ define( "DATABASE_PASSWORD", "SaDie9954!");
 define( "DATABASE_NAME", "evo-jobtrack");
 */
 
-define( "DATABASE_SERVER", "tillurdizzy.db.10253438.hostedresource.com");
-define( "DATABASE_USERNAME", "tillurdizzy");
-define( "DATABASE_PASSWORD", "SaDie9954!");
-define( "DATABASE_NAME", "evo-jobtrack");
+define( "DATABASE_SERVER", "jobtracker.db.10253438.hostedresource.com");
+define( "DATABASE_USERNAME", "jobtracker");
+define( "DATABASE_PASSWORD", "Sadie9954!");
+define( "DATABASE_NAME", "jobtracker");
 
 $con = mysqli_connect(DATABASE_SERVER, DATABASE_USERNAME, DATABASE_PASSWORD,DATABASE_NAME) or die ('ERROR!!!');
 

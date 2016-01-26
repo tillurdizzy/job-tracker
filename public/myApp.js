@@ -57,29 +57,19 @@ app.config(function($stateProvider, $urlRouterProvider) {
 			url: "/jobDetails",
 			templateUrl:"views/jobs/job-details.html"
 		})
-		.state('edit.status', {
-			url: "/status",
-			templateUrl:"views/jobs/edit-status.html"
-		})
-
-		.state('edit.details', {
-			url: "/details",
-			templateUrl:"views/jobs/edit-details.html"
-		})
-
-		.state('edit.proposalShingle', {
-			url: "/proposalshingle",
-			templateUrl:"views/jobs/proposal/proposal-shingle.html"
-		})
-
-		.state('newjob', {
+		
+		.state('addNewJob', {
 			url: "/newjob",
-			templateUrl:"views/jobs/prospect-form.html"
+			templateUrl:"views/jobs/job-new.html"
 		})
-
+		
 		.state('clients', {
 			url: "/clients",
 			templateUrl:"views/clients/clients.html"
+		})
+		.state('clients.details', {
+			url: "/details",
+			templateUrl:"views/clients/client-details.html"
 		})
 		.state('clientForms', {
 			url: "/clientForms",
@@ -95,7 +85,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
 			templateUrl:"views/properties/properties.html"
 		})
 		.state('properties.details', {
-			url: "/properties",
+			url: "/details",
 			templateUrl:"views/properties/property-details.html"
 		})
 

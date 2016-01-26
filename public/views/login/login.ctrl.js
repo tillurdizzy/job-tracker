@@ -45,6 +45,7 @@ app.controller('LoginCtrl',['$scope','$state','evoDb','SharedSrvc',function ($sc
                         $scope.requestSuccess = true;
                         $scope.clearForm();
                         $scope.displayname = result[0].name_first + " " + result[0].name_last; 
+                        $scope.getManagerJobs();
                     }else{
                         $scope.loginSuccess = false;
                     }
@@ -60,10 +61,24 @@ app.controller('LoginCtrl',['$scope','$state','evoDb','SharedSrvc',function ($sc
                 $scope.displayname = "Admin Testing";
                 S.setManagerID(3,"Admin Testing");
                 DB.setManagerID(3);
+                $scope.getManagerJobs();
             }
         }else{
             $scope.submissionInvalid = true;// triggers form errors to show 
         };
+    };
+
+    $scope.getManagerJobs = function(){
+        var result = DB.getManagerJobs()
+        .then(function(result){
+            if(result != false){
+                console.log("Successful getting job data");
+            }else{
+              ME.dataError("LoginCtrl-getManagerJobs()-1",result); 
+            }
+        },function(error){
+            ME.dataError("LoginCtrl-getManagerJobs()-2",result);
+        });
     };
 
     $scope.dataError = function(){

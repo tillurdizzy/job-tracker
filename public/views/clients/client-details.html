@@ -1,0 +1,13 @@
+<div class="section-header">
+    <h2>Client Details</h2>
+</div>
+<div class="text-block-display">
+    <h4>{{Ctrl.selectedClientObj.company}}</h4>
+    <h3>{{Ctrl.selectedClientObj.street}}</h3>
+    <h3>{{Ctrl.selectedClientObj.city + ", " + Ctrl.selectedClientObj.state + " " + Ctrl.selectedClientObj.zip}}</h3>
+    <h4>Contact Information:</h4>
+    <h3>{{Ctrl.selectedClientObj.name_first + " " + Ctrl.selectedClientObj.name_last}}</h3>
+    <h3>{{Ctrl.selectedClientObj.phone_cell}}</h3>
+    <h3>{{Ctrl.selectedClientObj.email}}</h3>
+</div>
+<button type="button" class="button" ng-click="Ctrl.backToList()">Back</button>

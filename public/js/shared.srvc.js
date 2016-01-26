@@ -94,6 +94,7 @@ app.service('SharedSrvc',[function sharedVars(){
 		self.managerProperties = [];
 		self.managerJobs = [];
 		self.managerJobs = d;
+		parseJobDates();
 	};
 
 
@@ -155,6 +156,39 @@ app.service('SharedSrvc',[function sharedVars(){
 			var thisProperty = returnProperty(propID);
 			self.managerJobs[i].propertyName = thisProperty;
 		};
+	};
+
+
+	// Using angular filter instead
+	var parseJobDates = function(){
+		for (var i = 0; i < self.managerJobs.length; i++) {
+			var d = self.managerJobs[i].dateProposal;
+			if(d == "0"){
+				self.managerJobs[i].dateProposal = "";
+			}
+			
+			d = self.managerJobs[i].dateContract;
+			if(d == "0"){
+				self.managerJobs[i].dateContract = "";
+			}
+			
+			d = self.managerJobs[i].dateActive;
+			if(d == "0"){
+				self.managerJobs[i].dateActive = "";
+			}
+			
+			d = self.managerJobs[i].dateComplete;
+			if(d == "0"){
+				self.managerJobs[i].dateComplete = "";
+			}
+			
+		}
+	};
+
+	var convertDateToString = function(m){
+		var dateStr = ""
+		var d = new Date(m);
+		return dateStr;
 	};
 
 	

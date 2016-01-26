@@ -10,6 +10,7 @@
         <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,800,600' rel='stylesheet' type='text/css'/>
         <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700italic' rel='stylesheet' type='text/css'/>
         <link href='http://fonts.googleapis.com/css?family=Jaldi:400,700' rel='stylesheet' type='text/css'/>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"/>
         <link rel="stylesheet" href="css/app.css"/>
         <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
     </head>
@@ -23,13 +24,22 @@
             
             <div id="site-canvas">
                 <div id="off-canvas-menu" ng-class="Ctrl.menuOpen ? 'off-canvas-show' : 'off-canvas-hide'">
+                    <div class="label"><h3>IDENTITY</h3></div>
                     <div><button ng-click="Ctrl.menuClick('login')">Log In / Out</button></div>
+                    <div class="label"><h3>JOBS</h3></div>
                     <div><button ng-click="Ctrl.menuClick('jobs')">Jobs Summary</button></div>
-                    <div><button ng-click="Ctrl.menuClick('clients')">Clients</button></div>
-                    <div><button ng-click="Ctrl.menuClick('properties')">Properties</button></div>
-                    <div><button ng-click="Ctrl.menuClick('reports')">Reports</button></div>
+                    <div><button ng-click="Ctrl.menuClick('addNewJob')">Add New Job</button></div>
+                    <div class="label"><h3>CLIENTS</h3></div>
+                    <div><button ng-click="Ctrl.menuClick('clients')">Client List</button></div>
+                    <div><button ng-click="Ctrl.menuClick('addNewClient')">Add New Client</button></div>
+                    <div class="label"><h3>PROPERTIES</h3></div>
+                    <div><button ng-click="Ctrl.menuClick('properties')">Property List</button></div>
+                    <div><button ng-click="Ctrl.menuClick('addNewProperty')">Add New Property</button></div>
+                    <div class="label"><h3>REPORTS</h3></div>
+                    <div><button>Coming soon...</button></div>
                 </div>
-                <div class="canvas-slider" ng-class="!Ctrl.menuOpen ? 'canvas-slide-false' : 'canvas-slide-true'">
+                <!-- <div class="canvas-slider" ng-class="!Ctrl.menuOpen ? 'canvas-slide-false' : 'canvas-slide-true'"> -->
+                <div class="canvas-slider" class="canvas-slide-false">
                     <!-- APP Content !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
                     <div ui-view class="view-container"></div>
                 </div>
@@ -46,17 +56,17 @@
     <script src="views/login/login.ctrl.js"></script>
     <script src="views/jobs/jobs.ctrl.js"></script>
     <script src="views/clients/clients.ctrl.js"></script>
-    <script src="views/clients/client-form.ctrl.js"></script>
+   
     <script src="views/inventory/inventory.ctrl.js"></script>
     <script src="views/properties/properties.ctrl.js"></script>
-    <script src="views/properties/property-form.ctrl.js"></script>
-    <script src="views/jobs/job-details.ctrl.js"></script>
-    <script src="views/jobs/proposals/shingle.ctrl.js"></script>
+   
+    <script src="views/jobs/job-new.ctrl.js"></script>
+   
     <!--Services-->
     <script src="js/data.srvc.js"></script>
     <script src="js/inventory.srvc.js"></script>
     <script src="js/shared.srvc.js"></script>
-    <script src="js/shared-admin.srvc.js"></script>
+    
     <script src="views/jobs/proposals/shingle.srvc.js"></script>
     <!--Directives-->
     <script src="js/directives/hrule.dir.js"></script>

@@ -7,16 +7,19 @@ app.controller('PropertiesCtrl',['$state','evoDb','SharedSrvc',function ($state,
 	ME.controllerName = "PropertiesCtrl";
 	ME.managerID = S.managerID;
 	ME.managerName = S.managerName;
-	ME.selectedProperty = {};
+	ME.selectedPropertyObj = {};
 
 	// data vars
-	ME.properties = S.managerClients;
+	ME.properties = S.managerProperties;
 
-	
 	ME.showDetails = function(ndx){
-		ME.selectedProperty = ME.properties[ndx];
-		S.selectProperty(ME.selectedProperty);
-		$state.transitionTo("detailsProperty");
+		ME.selectedPropertyObj = ME.properties[ndx];
+		S.selectProperty(ME.selectedPropertyObj);
+		$state.transitionTo("properties.details");
 	};
+
+	ME.backToList = function(){
+      $state.transitionTo("properties");
+    };
 
  }]);

@@ -10,16 +10,22 @@ app.controller('ClientsCtrl',['$state','evoDb','SharedSrvc',function ($state,evo
 
 	// data vars
 	ME.clients = S.managerClients;
+	ME.selectedClientObj = {};
+
 
 	//form vars
 	ME.newJobForm = false;
 	ME.invalid = false;
 
 	ME.editClient = function(ndx){
-		var clientObj = ME.clients[ndx];
+		ME.selectedClientObj = ME.clients[ndx];
 		// Send job selection to shared
-		S.selectClient(clientObj);
-		$state.transitionTo("editClient");
+		S.selectClient(ME.selectedClientObj);
+		$state.transitionTo("clients.details");
 	};
+
+	ME.backToList = function(){
+      $state.transitionTo("clients");
+    };
 
  }]);

@@ -71,9 +71,9 @@ app.controller('JobsCtrl',['$location','$state','evoDb','$scope','SharedSrvc',fu
 		console.log(loc + " : " + error);
 	};
 
-	$scope.$watch('$viewContentLoaded', function() {
+	/*$scope.$watch('$viewContentLoaded', function() {
  		ME.getManagerJobs();
-    });
+    });*/
 
     $scope.$watch( function () { return S.managerJobs; }, function ( jobs ) {
 	  ME.jobs = jobs;

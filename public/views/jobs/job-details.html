@@ -23,6 +23,7 @@
         <h3>{{Ctrl.selectedPropertyObj.city + ", " + Ctrl.selectedPropertyObj.state + " " + Ctrl.selectedPropertyObj.zip}}</h3>
         <h3>Class: {{Ctrl.selectedPropertyObj.class}}</h3>
         <h3>Roof type: {{Ctrl.selectedPropertyObj.roof}}</h3>
+        <h3>Layers: {{Ctrl.selectedPropertyObj.layers}}</h3>
         <h3>Description: {{Ctrl.selectedPropertyObj.description}}</h3>
     </div>
     <div class="spacerMed"></div>
@@ -41,19 +42,19 @@
                     <tbody>
                         <tr>
                             <td>Proposal</td>
-                            <td>{{Ctrl.jobStatus[0]}}</td>
+                            <td>{{Ctrl.selectedJobObj.dateProposal | date:'MM/dd/yyyy'}}</td>
                         </tr>
                         <tr>
                             <td>Contract</td>
-                            <td>{{Ctrl.jobStatus[1]}}</td>
+                            <td>{{Ctrl.selectedJobObj.dateContract | date:'MM/dd/yyyy'}}</td>
                         </tr>
                         <tr>
-                            <td>Working</td>
-                            <td>{{Ctrl.jobStatus[2]}}</td>
+                            <td>Active</td>
+                            <td>{{Ctrl.selectedJobObj.dateActive | date:'MM/dd/yyyy'}}</td>
                         </tr>
                         <tr>
                             <td>Complete</td>
-                            <td>{{Ctrl.jobStatus[3]}}</td>
+                            <td>{{Ctrl.selectedJobObj.dateComplete | date:'MM/dd/yyyy'}}</td>
                         </tr>
                     </tbody>
                 </table>

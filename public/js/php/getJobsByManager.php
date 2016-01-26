@@ -19,7 +19,7 @@ define( "DATABASE_NAME", "evo-jobtrack");
 
 define( "DATABASE_SERVER", "jobtracker.db.10253438.hostedresource.com");
 define( "DATABASE_USERNAME", "jobtracker");
-define( "DATABASE_PASSWORD", "SaDie9954!");
+define( "DATABASE_PASSWORD", "Sadie9954!");
 define( "DATABASE_NAME", "jobtracker");
 
 //connect to the database.

@@ -78,3 +78,39 @@
 	
 	padding-left:15px;
 }
+
+.mobile-input{
+	padding:15px;
+	width:550px;
+}
+
+.mobile-input-item{
+	input{
+	    padding:.2rem;
+	    margin:0 0 .5rem 0;
+	    height:36px;
+	    width:500px;
+	    font-size: 1.3em;
+	    display:inline-block;
+	    box-shadow: rgba(0,0,0, 0.1) 0px 0px 8px; 
+	}
+	
+}
+
+@media all and ( max-width: 640px ) {
+	.mobile-input{
+		padding:15px;
+		width:100%;
+	}
+	.mobile-input-item{
+		input{
+		    padding:.2rem;
+		    margin:0 0 .5rem 0;
+		    height:36px;
+		    width:100%;
+		    font-size: 1.3em;
+		    display:inline-block;
+		    box-shadow: rgba(0,0,0, 0.1) 0px 0px 8px; 
+	  	}
+	}
+}
