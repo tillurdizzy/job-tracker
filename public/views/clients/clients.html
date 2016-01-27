@@ -1,8 +1,8 @@
 <div class="page" ng-controller="ClientsCtrl as Ctrl">
     <div class="page-title-bar"><h2>Clients</h2></div>
-    <h4>Manager: {{Ctrl.managerName}}</h4>
     <div ui-view>
         <div id="jobs-table-container">
+            <button ng-click="Ctrl.refreshList()" type="button" class="button">Refresh List</button>
             <div class="jobs-table">
                 <div>
                     <table st-table="Ctrl.clients" class="table table-striped">

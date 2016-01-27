@@ -3,24 +3,34 @@
 app.controller('JobsCtrl',['$location','$state','evoDb','$scope','SharedSrvc',function ($location,$state,evoDb,$scope,SharedSrvc) {
 	var DB =  evoDb;
 	var ME = this;
-	var S = SharedSrvc;
+	ME.S = SharedSrvc;
 	ME.controllerName = "JobsCtrl";
 	ME.managerID = DB.managerID;
 	ME.managerName = DB.managerName;
 
 	// data vars
-	ME.jobs = S.managerJobs;
+	ME.jobs = ME.S.managerJobs;
+	ME.selectedJobObj = ME.S.selectedJobObj;
+    ME.selectedClientObj = ME.S.selectedClientObj;
+    ME.selectedPropertyObj = ME.S.selectedPropertyObj;
+    ME.jobStatus = [];
 
 	//form vars
 	ME.newJobForm = false;
 	ME.invalid = false;
 
 	ME.showDetails = function(ndx){
-		var jobObj = ME.jobs[ndx];
+		ME.selectedJobObj = ME.jobs[ndx];
 		// Send job selection to shared
-		S.selectJob(jobObj);
-		$state.transitionTo("jobDetails");
+		ME.S.selectJob(ME.selectedJobObj);
+		ME.selectedClientObj = ME.S.selectedClientObj;
+    	ME.selectedPropertyObj = ME.S.selectedPropertyObj;
+		$state.transitionTo("jobs.details");
 	};
+
+	 ME.backToList = function(){
+      $state.transitionTo("jobs");
+    };
 
 	
 	// Get all jobs for current manager
@@ -75,7 +85,7 @@ app.controller('JobsCtrl',['$location','$state','evoDb','$scope','SharedSrvc',fu
  		ME.getManagerJobs();
     });*/
 
-    $scope.$watch( function () { return S.managerJobs; }, function ( jobs ) {
+    $scope.$watch( function () { return ME.S.managerJobs; }, function ( jobs ) {
 	  ME.jobs = jobs;
 	});
 

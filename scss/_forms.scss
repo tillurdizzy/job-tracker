@@ -43,6 +43,16 @@
 
 }
 
+.input-msg{
+	color:#000000;
+}
+
+.input-error{
+	color:#C72750;
+}
+
+
+
 .text-block-display{
 	margin:10px 0;
 	color:#000000;
@@ -80,37 +90,36 @@
 }
 
 .mobile-input{
-	padding:15px;
+	padding:10px;
 	width:550px;
 }
 
 .mobile-input-item{
+	padding:0 5px;
 	input{
 	    padding:.2rem;
 	    margin:0 0 .5rem 0;
 	    height:36px;
-	    width:500px;
+	    width:100%;
 	    font-size: 1.3em;
 	    display:inline-block;
 	    box-shadow: rgba(0,0,0, 0.1) 0px 0px 8px; 
 	}
+	h3{
+		margin-bottom: 4px;
+	}
 	
 }
 
-@media all and ( max-width: 640px ) {
+@media all and ( max-width: 550px ) {
 	.mobile-input{
-		padding:15px;
 		width:100%;
 	}
 	.mobile-input-item{
+	
 		input{
-		    padding:.2rem;
-		    margin:0 0 .5rem 0;
-		    height:36px;
-		    width:100%;
-		    font-size: 1.3em;
-		    display:inline-block;
-		    box-shadow: rgba(0,0,0, 0.1) 0px 0px 8px; 
+		   
 	  	}
 	}
+
 }

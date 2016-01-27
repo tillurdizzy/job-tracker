@@ -1,6 +1,6 @@
 'use strict';
 
-app.controller('ClientsCtrl',['$state','evoDb','SharedSrvc',function ($state,evoDb,SharedSrvc) {
+app.controller('ClientsCtrl',['$scope','$state','evoDb','SharedSrvc',function ($scope,$state,evoDb,SharedSrvc) {
 	var DB =  evoDb;
 	var ME = this;
 	var S = SharedSrvc;
@@ -12,11 +12,6 @@ app.controller('ClientsCtrl',['$state','evoDb','SharedSrvc',function ($state,evo
 	ME.clients = S.managerClients;
 	ME.selectedClientObj = {};
 
-
-	//form vars
-	ME.newJobForm = false;
-	ME.invalid = false;
-
 	ME.editClient = function(ndx){
 		ME.selectedClientObj = ME.clients[ndx];
 		// Send job selection to shared
@@ -24,8 +19,30 @@ app.controller('ClientsCtrl',['$state','evoDb','SharedSrvc',function ($state,evo
 		$state.transitionTo("clients.details");
 	};
 
+	ME.refreshList = function(){
+		ME.getManagerJobs();
+	};
+
+	// Triggers all 3 data queries (Clients, Properties, Jobs)
+	ME.getManagerJobs = function(){
+        var result = DB.getManagerJobs()
+        .then(function(result){
+            if(result != false){
+                console.log("Successful getting job data");
+            }else{
+              ME.dataError("ClientsCtrl-getManagerJobs()-1",result); 
+            }
+        },function(error){
+            ME.dataError("ClientsCtrl-getManagerJobs()-2",result);
+        });
+    };
+
 	ME.backToList = function(){
       $state.transitionTo("clients");
     };
+
+    $scope.$on('data-refreshed', function() {
+     	ME.clients = S.managerClients;
+    });
 
  }]);

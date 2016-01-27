@@ -1,11 +1,10 @@
 'use strict';
-app.controller('NewClientCtrl',['$state','evoDb','SharedSrvc',function ($state,evoDb,SharedSrvc) {
+app.controller('NewPropertyCtrl',['$state','evoDb','SharedSrvc',function ($state,evoDb,SharedSrvc) {
 
-	var DB = evoDb;
-	var Me = this;
+    var DB = evoDb;
+    var Me = this;
     var S = SharedSrvc;
     Me.managerName = S.managerName;
-    // Form elements
    
     Me.T1="";
     Me.T2="";
@@ -17,10 +16,13 @@ app.controller('NewClientCtrl',['$state','evoDb','SharedSrvc',function ($state,e
     Me.T8="";
     Me.T9="";
     Me.T10="";
+    Me.T11="";
    
+    var numFields = 11;
     Me.inputField = "T1";
-    Me.inputMsg = "Field 1 of 10";
+    Me.inputMsg = "Field 1 of " + numFields;
     Me.isError = false;
+   
   
     Me.submitT1=function(){
         Me.inputMsg = "";
@@ -30,7 +32,7 @@ app.controller('NewClientCtrl',['$state','evoDb','SharedSrvc',function ($state,e
             Me.inputMsg = "This field cannot be blank.";
         }else{
             Me.inputField="T2";
-            Me.inputMsg = "Field 2 of 10";
+            Me.inputMsg = "Field 2 of " + numFields;
         };
     };
 
@@ -42,7 +44,7 @@ app.controller('NewClientCtrl',['$state','evoDb','SharedSrvc',function ($state,e
             Me.inputMsg = "This field cannot be blank.";
         }else{
             Me.inputField="T3";
-            Me.inputMsg = "Field 3 of 10";
+            Me.inputMsg = "Field 3 of " + numFields;
         }
     };
 
@@ -54,7 +56,7 @@ app.controller('NewClientCtrl',['$state','evoDb','SharedSrvc',function ($state,e
             Me.inputMsg = "This field cannot be blank.";
         }else{
             Me.inputField="T4";
-            Me.inputMsg = "Field 4 of 10";
+            Me.inputMsg = "Field 4 of " + numFields;
         }
     };
 
@@ -66,7 +68,7 @@ app.controller('NewClientCtrl',['$state','evoDb','SharedSrvc',function ($state,e
             Me.inputMsg = "This field cannot be blank.";
         }else{
             Me.inputField="T5";
-            Me.inputMsg = "Field 5 of 10";
+            Me.inputMsg = "Field 5 of " + numFields;
         }
     };
 
@@ -78,7 +80,7 @@ app.controller('NewClientCtrl',['$state','evoDb','SharedSrvc',function ($state,e
             Me.inputMsg = "This field cannot be blank.";
         }else{
             Me.inputField="T6";
-            Me.inputMsg = "Field 6 of 10";
+            Me.inputMsg = "Field 6 of " + numFields;
         }
     };
 
@@ -90,7 +92,7 @@ app.controller('NewClientCtrl',['$state','evoDb','SharedSrvc',function ($state,e
             Me.inputMsg = "This field cannot be blank.";
         }else{
             Me.inputField="T7";
-            Me.inputMsg = "Field 7 of 10";
+            Me.inputMsg = "Field 7 of " + numFields;
         }
     };
 
@@ -102,7 +104,7 @@ app.controller('NewClientCtrl',['$state','evoDb','SharedSrvc',function ($state,e
             Me.inputMsg = "This field cannot be blank.";
         }else{
             Me.inputField="T8";
-            Me.inputMsg = "Field 8 of 10";
+            Me.inputMsg = "Field 8 of " + numFields;
         }
     };
 
@@ -114,7 +116,7 @@ app.controller('NewClientCtrl',['$state','evoDb','SharedSrvc',function ($state,e
             Me.inputMsg = "This field cannot be blank.";
         }else{
             Me.inputField="T9";
-            Me.inputMsg = "Field 9 of 10";
+            Me.inputMsg = "Field 9 of " + numFields;
         }
     };
 
@@ -126,7 +128,7 @@ app.controller('NewClientCtrl',['$state','evoDb','SharedSrvc',function ($state,e
             Me.inputMsg = "This field cannot be blank.";
         }else{
             Me.inputField="T10";
-            Me.inputMsg = "Field 10 of 10";
+            Me.inputMsg = "Field 10 of " + numFields;
         }
     };
 

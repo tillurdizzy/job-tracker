@@ -67,3 +67,13 @@ button.tiny, .button.tiny {
     padding: 0.625rem 1.25rem 0.6875rem 1.25rem;
     font-size: 0.6875rem; }
 
+.nav-btn{
+	transition: $secondary-color 0.25s ease-out, color 0.25s ease-out;
+    background-color: $secondary-color;
+    margin:10px 0;
+ }
+
+.nav-btn:hover, .nav-btn:focus {
+    background-color: $secondary-darker; 
+}
+

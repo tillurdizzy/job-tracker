@@ -58,11 +58,11 @@ body{
     height:45px;
     width:80px;
     padding:0;
-    transition: #048F7B 0.25s ease-out, color 0.25s ease-out;
-    background-color: #048F7B;
+    transition: $secondary-color 0.25s ease-out, color 0.25s ease-out;
+    background-color: $secondary-color;
   }
   button:hover, button:focus, .button:hover, .button:focus {
-    background-color: #025C4F; }
+    background-color: $secondary-darker; }
 }
 
 .view-container{

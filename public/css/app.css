@@ -480,6 +480,14 @@ button.tiny, .button.tiny {
   padding: 0.625rem 1.25rem 0.6875rem 1.25rem;
   font-size: 0.6875rem; }
 
+.nav-btn {
+  transition: #048F7B 0.25s ease-out, color 0.25s ease-out;
+  background-color: #048F7B;
+  margin: 10px 0; }
+
+.nav-btn:hover, .nav-btn:focus {
+  background-color: #025C4F; }
+
 #site-wrapper {
   position: relative;
   overflow: hidden;
@@ -580,7 +588,9 @@ table {
   background-color: #eee; }
 
 #jobs-table-container {
-  width: 600px; }
+  width: 500px; }
+  #jobs-table-container button {
+    margin-bottom: 10px; }
 
 .status-table {
   margin: 10px 0 0 10px; }
@@ -659,7 +669,9 @@ table {
   background-color: #eee; }
 
 #jobs-table-container {
-  width: 600px; }
+  width: 500px; }
+  #jobs-table-container button {
+    margin-bottom: 10px; }
 
 .status-table {
   margin: 10px 0 0 10px; }
@@ -780,6 +792,12 @@ table {
     .shingle-input-form .rightCol input {
       float: right; }
 
+.input-msg {
+  color: #000000; }
+
+.input-error {
+  color: #C72750; }
+
 .text-block-display {
   margin: 10px 0;
   color: #000000; }
@@ -811,22 +829,11 @@ table {
   padding-left: 15px; }
 
 .mobile-input {
-  padding: 15px;
+  padding: 10px;
   width: 550px; }
 
-.mobile-input-item input {
-  padding: .2rem;
-  margin: 0 0 .5rem 0;
-  height: 36px;
-  width: 500px;
-  font-size: 1.3em;
-  display: inline-block;
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 8px; }
-
-@media all and (max-width: 640px) {
-  .mobile-input {
-    padding: 15px;
-    width: 100%; }
+.mobile-input-item {
+  padding: 0 5px; }
   .mobile-input-item input {
     padding: .2rem;
     margin: 0 0 .5rem 0;
@@ -834,7 +841,13 @@ table {
     width: 100%;
     font-size: 1.3em;
     display: inline-block;
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 8px; } }
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 8px; }
+  .mobile-input-item h3 {
+    margin-bottom: 4px; }
+
+@media all and (max-width: 550px) {
+  .mobile-input {
+    width: 100%; } }
 
 @media all and (max-height: 900px) {
   footer {

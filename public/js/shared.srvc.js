@@ -1,6 +1,6 @@
 'use strict';
 
-app.service('SharedSrvc',[function sharedVars(){
+app.service('SharedSrvc',['$rootScope',function sharedVars($rootScope){
 	var self = this;
 	
 	self.myID = "SharedVars: ";
@@ -24,7 +24,6 @@ app.service('SharedSrvc',[function sharedVars(){
 	self.selectedClientObj = {};
 	self.selectedPropertyObj = {};
 	
-
 	// Methods
 
 	//Called after successful Log In
@@ -43,7 +42,7 @@ app.service('SharedSrvc',[function sharedVars(){
 		self.managerProperties = [];
 	};
 
-	//Called from their rrespective Summary Tables
+	//Called from their respective Summary Tables
 	self.selectJob = function(obj){
 		self.selectedJobObj = obj;
 		self.setClientByID(self.selectedJobObj.client);
@@ -85,9 +84,9 @@ app.service('SharedSrvc',[function sharedVars(){
 		};
 	};
 
-	// Triggered every time viewContentLoaded on Job Summary page
+
 	// Jobs, Clients and Properties will always be refreshed together in that order
-	// When Properties is set, we can go ahead and collate every time
+	// This is the first of 3 calls from DB as each one is completed
 	self.setManagerJobsList = function(d){
 		// Reset all 3 lists
 		self.managerClients = [];
@@ -96,18 +95,6 @@ app.service('SharedSrvc',[function sharedVars(){
 		self.managerJobs = d;
 		parseJobDates();
 	};
-
-
-	self.setAllClients = function(c){
-		self.fullClientList = c;	
-	};
-	self.setAllProperties = function(c){
-		self.fullPropertyList = c;	
-	};
-	self.setAllJobs = function(c){
-		self.fullJobsList = c;	
-	};
-
 
 	self.setManagerClients = function(c){
 		var arr = c;
@@ -129,6 +116,19 @@ app.service('SharedSrvc',[function sharedVars(){
 		// Collate Jobs with their Client and Property
 		collateLists();
 	};
+
+
+
+	self.setAllClients = function(c){
+		self.fullClientList = c;	
+	};
+	self.setAllProperties = function(c){
+		self.fullPropertyList = c;	
+	};
+	self.setAllJobs = function(c){
+		self.fullJobsList = c;	
+	};
+
 
 	var returnCompany = function(id){
 		for (var i = 0; i < self.managerClients.length; i++) {
@@ -156,6 +156,7 @@ app.service('SharedSrvc',[function sharedVars(){
 			var thisProperty = returnProperty(propID);
 			self.managerJobs[i].propertyName = thisProperty;
 		};
+		$rootScope.$broadcast("data-refreshed");
 	};
 
 
@@ -191,6 +192,18 @@ app.service('SharedSrvc',[function sharedVars(){
 		return dateStr;
 	};
 
+	self.roofTypes = [
+		{label:"Flat",id:0},
+		{label:"Pitched",id:1}];
+
+	self.compositionOptions = [
+		{label:"Composition over plywood deck",id:0},
+		{label:"Composition over wood shingles",id:1}];
+
+	self.compositionLayers = [
+		{label:"1",id:1},{label:"2",id:2},{label:"3",id:3},{label:"4",id:4},{label:"5",id:5},
+		{label:"6",id:6},{label:"7",id:7},{label:"8",id:8},{label:"9",id:9},{label:"10",id:10},
+		{label:"11",id:11},{label:"12",id:12}];
 	
 
 	

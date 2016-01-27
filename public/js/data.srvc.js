@@ -164,7 +164,7 @@ app.service('evoDb',['$http','$q','SharedSrvc',function eventQueries($http,$q,Sh
 	    return deferred.promise; //return the data
 	};
 
-	// Triggered every time viewContentLoaded on Job Summary page
+	// Triggered after successful log in and wheever user chooses Refresh data buttons
 	// When successful, will trigger getManagerClients, which will then trigger getManagerProperties
 	self.getManagerJobs = function(){
 		if(S.managerID === ""){

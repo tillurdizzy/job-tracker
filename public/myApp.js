@@ -53,8 +53,8 @@ app.config(function($stateProvider, $urlRouterProvider) {
 			url: "/jobs",
 			templateUrl:"views/jobs/jobs.html"
 		})
-		.state('jobDetails', {
-			url: "/jobDetails",
+		.state('jobs.details', {
+			url: "/details",
 			templateUrl:"views/jobs/job-details.html"
 		})
 		
