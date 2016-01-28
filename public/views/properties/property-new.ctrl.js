@@ -5,29 +5,33 @@ app.controller('NewPropertyCtrl',['$state','evoDb','SharedSrvc',function ($state
     var Me = this;
     var S = SharedSrvc;
     Me.managerName = S.managerName;
+    Me.clientList = S.managerClients;
    
-    Me.T1="";
+    Me.T1=Me.clientList[0];
     Me.T2="";
     Me.T3="";
-    Me.T4="";
-    Me.T5="Houston";
-    Me.T6="TX";
-    Me.T7="";
-    Me.T8="";
-    Me.T9="";
-    Me.T10="";
-    Me.T11="";
+    Me.T4="Houston";
+    Me.T5="TX";
+    Me.T6="";
+    Me.T7=1;
+    Me.T8="Commercial";
+    Me.T9="Flat";
+    Me.T10="0";
+    Me.T11=1;
    
     var numFields = 11;
     Me.inputField = "T1";
     Me.inputMsg = "Field 1 of " + numFields;
     Me.isError = false;
+
+    
+   
    
   
     Me.submitT1=function(){
         Me.inputMsg = "";
         Me.isError = false;
-        if(Me.T1==""){//company
+        if(Me.T1==""){//company/client
             Me.isError = true;
             Me.inputMsg = "This field cannot be blank.";
         }else{
@@ -36,7 +40,7 @@ app.controller('NewPropertyCtrl',['$state','evoDb','SharedSrvc',function ($state
         };
     };
 
-    Me.submitT2=function(){//first name
+    Me.submitT2=function(){//bldg name
         Me.inputMsg = "";
         Me.isError = false;
         if(Me.T2==""){
@@ -48,7 +52,7 @@ app.controller('NewPropertyCtrl',['$state','evoDb','SharedSrvc',function ($state
         }
     };
 
-    Me.submitT3=function(){//last name
+    Me.submitT3=function(){//street
         Me.inputMsg = "";
         Me.isError = false;
         if(Me.T3==""){
@@ -60,7 +64,7 @@ app.controller('NewPropertyCtrl',['$state','evoDb','SharedSrvc',function ($state
         }
     };
 
-    Me.submitT4=function(){//street
+    Me.submitT4=function(){//city
         Me.inputMsg = "";
         Me.isError = false;
        if(Me.T4==""){
@@ -72,7 +76,7 @@ app.controller('NewPropertyCtrl',['$state','evoDb','SharedSrvc',function ($state
         }
     };
 
-    Me.submitT5=function(){//city
+    Me.submitT5=function(){//state
         Me.inputMsg = "";
         Me.isError = false;
        if(Me.T5==""){
@@ -84,7 +88,7 @@ app.controller('NewPropertyCtrl',['$state','evoDb','SharedSrvc',function ($state
         }
     };
 
-    Me.submitT6=function(){//state
+    Me.submitT6=function(){//zip
         Me.inputMsg = "";
         Me.isError = false;
        if(Me.T6==""){
@@ -99,7 +103,7 @@ app.controller('NewPropertyCtrl',['$state','evoDb','SharedSrvc',function ($state
     Me.submitT7=function(){
         Me.inputMsg = "";
         Me.isError = false;
-        if(Me.T7==""){//zip
+        if(Me.T7==""){//class
             Me.isError = true;
             Me.inputMsg = "This field cannot be blank.";
         }else{
@@ -144,22 +148,35 @@ app.controller('NewPropertyCtrl',['$state','evoDb','SharedSrvc',function ($state
         }
     };
 
+    Me.submitT11=function(){
+        Me.inputMsg = "";
+        Me.isError = false;
+       if(Me.T10==""){//email
+            Me.isError = true;
+            Me.inputMsg = "This field cannot be blank.";
+        }else{
+            Me.inputField="SUBMIT";
+            Me.inputMsg = "";
+        }
+    };
+
   
     Me.submitForm = function(){
         Me.isError = false;
         var dataObj = {};
         dataObj.manager = S.manager;
-        dataObj.company = Me.T1;
-        dataObj.name_first = Me.T2;
-        dataObj.name_last = Me.T3;
-        dataObj.street = Me.T4;
-        dataObj.city = Me.T5;
-        dataObj.state = Me.T6;
-        dataObj.zip = Me.T7;
-        dataObj.phone_cell = Me.T8;
-        dataObj.phone_bus = Me.T9;
-        dataObj.email = Me.T10;
-        var result = DB.putClient(dataObj)
+        dataObj.client = Me.T1;
+        dataObj.name = Me.T2;
+        dataObj.street = Me.T3;
+        dataObj.city = Me.T4;
+        dataObj.state = Me.T5;
+        dataObj.zip = Me.T6;
+        dataObj.levels = Me.T7;
+        dataObj.class = Me.T8;
+        dataObj.roof = Me.T9;
+        dataObj.description = Me.T10;
+        dataObj.layers = Me.T11;
+        var result = DB.putProperty(dataObj)
         .then(function(result){
             if(result != false){
                Me.inputField="SUCCESS";
@@ -178,16 +195,17 @@ app.controller('NewPropertyCtrl',['$state','evoDb','SharedSrvc',function ($state
     };
 
     Me.clearForm = function(){
-        Me.T1 = "";
-        Me.T2 = "";
-        Me.T3 = "";
-        Me.T4 = "";
-        Me.T5 = "";
-        Me.T6 = "";
-        Me.T7 = "";
-        Me.T8 = "";
-        Me.T9 = "";
-        Me.T10 = "";
+        Me.T1=Me.clientList[0];
+        Me.T2="";
+        Me.T3="";
+        Me.T4="Houston";
+        Me.T5="TX";
+        Me.T6="";
+        Me.T7="1";
+        Me.T8="Commercial";
+        Me.T9="Flat";
+        Me.T10="0";
+        Me.T11="1";
         Me.isError = false;
         Me.inputField="T1";
     };

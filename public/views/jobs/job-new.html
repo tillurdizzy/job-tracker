@@ -1,41 +1,76 @@
 <div ng-controller="NewJobCtrl as Ctrl" class="page">
     <div class="page-title-bar"><h2>New Job</h2></div>
     <div class="mobile-input">
-        <div class="mobile-input-item" ng-show="Ctrl.inputField == 'name'">
-            <h3>Property</h3>
-            <input name="T1" type="text" ng-model="Ctrl.T1"/>
+        <div class="mobile-input-item" ng-show="Ctrl.inputField == 'S1'">
+            <div class="input-label">
+                <div><h3>Client</h3></div>
+                <div><button type="button" ng-click="Ctrl.goNewClient()">New Client</button></div>
+            </div>
+            
+            <select id="selectClient" ng-model="Ctrl.S1" ng-options="c.company for c in Ctrl.clientList" ng-change="Ctrl.filterProperties()">
+            </select>
             <div class="page-nav">
                 <div class="page-nav-left">
                 </div>
-                <div></div>
+                <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">
+                    {{Ctrl.inputMsg}}
+                </div>
                 <div class="page-nav-right">
-                    <i ng-click="Ctrl.inputField='street'" class="fa fa-arrow-circle-right fa-3x"></i>
+                    <i ng-click="Ctrl.submitS1();" class="fa fa-arrow-circle-right fa-3x">
+                    </i>
                 </div>
             </div>
         </div>
 
-            <label>Property Name</label>
-            <input data-ng-class="{error:A.T1.$invalid&&invalid}" name="T1" type="text" ng-model="Ctrl.T1" required/>
-            <label>Street</label>
-            <input  data-ng-class="{error:A.T2.$invalid&&invalid}" name="T2" type="text" ng-model="Ctrl.T2" required/>
-            <label>City</label>
-            <input  data-ng-class="{error:A.T3.$invalid&&invalid}" name="T3" type="text" ng-model="Ctrl.T3" required/>
-            <label>State</label>
-            <input  data-ng-class="{error:A.T4.$invalid&&invalid}" name="T4" type="text" ng-model="Ctrl.T4" required/>
-            <label>Zip</label>
-            <input  data-ng-class="{error:A.T5.$invalid&&invalid}" name="T5" type="text" ng-model="Ctrl.T5" required/>
-            <label>Class</label>
-            <select id="selectorS1" ng-model="Ctrl.S1" ng-options="c.label for c in Ctrl.optionsS1" required></select>
-            <label>Roof Type</label>
-    <select id="selectorS2" ng-model="Ctrl.S2" ng-options="c.label for c in Ctrl.optionsS2" required></select>
-    <div ng-show="Ctrl.roofType == 'pitched'">
-        <label>Existing Installation</label>
-    <select id="selectorS3" ng-model="Ctrl.S3" ng-options="c.label for c in Ctrl.optionsS3" required></select>
-    <label>Layers</label>
-<select id="selectorS4" ng-model="Ctrl.S4" ng-options="c.label for c in Ctrl.optionsS4" required></select>
- </div>
-  </div>
-</div>
+        <div class="mobile-input-item" ng-show="Ctrl.inputField=='S2'">
+            <div class="input-label">
+                <div><h3>Property</h3></div>
+                <div><button type="button" ng-click="Ctrl.goNewProperty()">New Property</button></div>
+            </div>
+            <select id="selectProperty" ng-model="Ctrl.S2" ng-options="c.name for c in Ctrl.propertyOptions">
+            </select>
+            <div class="page-nav">
+                <div class="page-nav-left">
+                </div>
+                <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">
+                    {{Ctrl.inputMsg}}
+                </div>
+                <div class="page-nav-right">
+                    <i ng-click="Ctrl.submitS2();" class="fa fa-arrow-circle-right fa-3x">
+                    </i>
+                </div>
+            </div>
+        </div>
 
+        <div class="mobile-input-item" ng-show="Ctrl.inputField == 'REVIEW'">
+            <h3>Review and Submit</h3>
+            <div class="text-block-display">
+                <h4>Client:</h4>
+                <h3>{{Ctrl.S1.company}}</h3>
+                <h4>Property:</h4>
+                <h3>{{Ctrl.S2.name}}</h3>
+                <h4>Status:</h4>
+                <h3>{{Ctrl.T1}}</h3>
+            </div>
+            <div class="page-nav">
+                <div class="page-nav-left">
+                    <i ng-click="Ctrl.inputField='T10'" class="fa fa-arrow-circle-left fa-3x"></i>
+                </div>
+                <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">{{Ctrl.inputMsg}}</div>
+                <div class="page-nav-right">
+                    <button type="button" ng-click="Ctrl.submitForm()">Submit</button>
+                </div>
+            </div>
+        </div>
+        <div class="mobile-input-item" ng-show="Ctrl.inputField == 'SUCCESS'">
+            <h3>Success!</h3>
+            <p>{{Ctrl.S2.name}} has been added as a job proposal for {{Ctrl.S1.company}}.</p>
+        </div>
 
+        <div class="mobile-input-item" ng-show="Ctrl.inputField == 'ERROR'">
+            <h3>Oops!  An error occured saving the data.</h3>
+            <p>Try again later or click below to reset and try again now.</p>
+            <button type="button" ng-click="Ctrl.clearForm()">Reset</button>
+        </div>
+    </div>
 </div>

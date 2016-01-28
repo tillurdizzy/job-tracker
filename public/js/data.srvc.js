@@ -49,6 +49,19 @@ app.service('evoDb',['$http','$q','SharedSrvc',function eventQueries($http,$q,Sh
 	    return deferred.promise;
 	};
 
+	self.putJob = function(dataObj){
+		dataObj.manager = self.managerID;
+		var deferred = $q.defer();
+		$http({method: 'POST', url: 'js/php/putJob.php',data:dataObj}).
+		success(function(data, status, headers, config) {
+     		deferred.resolve(data);
+	    }).
+	    error(function(data, status, headers, config) {
+			deferred.reject(data);
+	    });
+	    return deferred.promise;
+	};
+
 	self.putManager = function(dataObj){
 		var deferred = $q.defer();
 		$http({method: 'POST', url: 'js/php/putManager.php',data:dataObj}).

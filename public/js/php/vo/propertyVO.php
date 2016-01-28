@@ -8,7 +8,8 @@ class propertyVO{
 	var $city;
 	var $state;
 	var $zip;
-	var $class;//Residential of commercial
+	var $levels;
+	var $class;//Residential or commercial
 	var $roof;// Flat or pitched
 	var $description;//ex: Composition over plywood deck
 	var $layers;

@@ -5,7 +5,7 @@ class jobVO{
 	var $property;// ID
 	var $client;// ID
 	var $manager;
-	var $status;//prospect; proposal; contract; active; complete
+	var $status;//proposal; contract; active; complete
 	var $dateProposal;// proposal
 	var $dateContract;// contract
 	var $dateActive;// active

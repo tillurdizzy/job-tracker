@@ -2,19 +2,15 @@
 ini_set('display_errors', 'On');
 error_reporting(E_ALL | E_STRICT);
 $data = json_decode(file_get_contents("php://input"));
-define( "DATABASE_SERVER", "localhost");
-define( "DATABASE_USERNAME", "root");
-define( "DATABASE_PASSWORD", "");
-define( "DATABASE_NAME", "roofingtracker");
+
 /*define( "DATABASE_USERNAME", "evo-danny");
 define( "DATABASE_PASSWORD", "SaDie9954!");
 define( "DATABASE_NAME", "evo-jobtrack");*/
 
-/*
-define( "DATABASE_SERVER", "tillurdizzy.db.10253438.hostedresource.com");
-define( "DATABASE_USERNAME", "tillurdizzy");
-define( "DATABASE_PASSWORD", "SaDie9954!");
-define( "DATABASE_NAME", "evo-jobtrack");*/
+define( "DATABASE_SERVER", "jobtracker.db.10253438.hostedresource.com");
+define( "DATABASE_USERNAME", "jobtracker");
+define( "DATABASE_PASSWORD", "Sadie9954!");
+define( "DATABASE_NAME", "jobtracker");
 
 $con = mysqli_connect(DATABASE_SERVER, DATABASE_USERNAME, DATABASE_PASSWORD,DATABASE_NAME) or die ('cannot reach database');
 

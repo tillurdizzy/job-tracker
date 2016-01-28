@@ -2,7 +2,7 @@
     <div class="page-title-bar"><h2>Add New Client</h2></div>
     <div class="mobile-input">
         <div class="mobile-input-item" ng-show="Ctrl.inputField == 'T1'">
-            <h3>Company*</h3>
+            <h3>Company</h3>
             <input name="T1" type="text" ng-model="Ctrl.T1"/>
             <div class="page-nav">
                 <div class="page-nav-left">
@@ -14,11 +14,11 @@
             </div>
         </div>
         <div class="mobile-input-item" ng-show="Ctrl.inputField == 'T2'">
-            <h3>Contact First Name*</h3>
+            <h3>Contact First Name</h3>
             <input name="T2" type="text" ng-model="Ctrl.T2"/>
             <div class="page-nav">
                 <div class="page-nav-left">
-                    <i ng-click="Ctrl.inputField='company'" class="fa fa-arrow-circle-left fa-3x"></i>
+                    <i ng-click="Ctrl.inputField='T1'" class="fa fa-arrow-circle-left fa-3x"></i>
                 </div>
                 <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">{{Ctrl.inputMsg}}</div>
                 <div class="page-nav-right">
@@ -27,11 +27,11 @@
             </div>
         </div>
         <div class="mobile-input-item" ng-show="Ctrl.inputField == 'T3'">
-            <h3>Contact Last Name*</h3>
+            <h3>Contact Last Name</h3>
             <input name="T3" type="text" ng-model="Ctrl.T3"/>
             <div class="page-nav">
                 <div class="page-nav-left">
-                    <i ng-click="Ctrl.inputField='firstName'" class="fa fa-arrow-circle-left fa-3x"></i>
+                    <i ng-click="Ctrl.inputField='T2'" class="fa fa-arrow-circle-left fa-3x"></i>
                 </div>
                 <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">{{Ctrl.inputMsg}}</div>
                 <div class="page-nav-right">
@@ -40,11 +40,11 @@
             </div>
         </div>
         <div class="mobile-input-item" ng-show="Ctrl.inputField == 'T4'">
-            <h3>Street Address*</h3>
+            <h3>Street Address</h3>
             <input name="T4" type="text" ng-model="Ctrl.T4"/>
             <div class="page-nav">
                 <div class="page-nav-left">
-                    <i ng-click="Ctrl.inputField='lastName'" class="fa fa-arrow-circle-left fa-3x"></i>
+                    <i ng-click="Ctrl.inputField='T3'" class="fa fa-arrow-circle-left fa-3x"></i>
                 </div>
                 <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">{{Ctrl.inputMsg}}</div>
                 <div class="page-nav-right">
@@ -53,11 +53,11 @@
             </div>
         </div>
         <div class="mobile-input-item" ng-show="Ctrl.inputField == 'T5'">
-            <h3>City*</h3>
+            <h3>City</h3>
             <input name="T5" type="text" ng-model="Ctrl.T5"/>
             <div class="page-nav">
                 <div class="page-nav-left">
-                    <i ng-click="Ctrl.inputField='lastName'" class="fa fa-arrow-circle-left fa-3x"></i>
+                    <i ng-click="Ctrl.inputField='T4'" class="fa fa-arrow-circle-left fa-3x"></i>
                 </div>
                 <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">{{Ctrl.inputMsg}}</div>
                 <div class="page-nav-right">
@@ -66,11 +66,11 @@
             </div>
         </div>
         <div class="mobile-input-item" ng-show="Ctrl.inputField == 'T6'">
-            <h3>State*</h3>
+            <h3>State</h3>
             <input name="T6" type="text" ng-model="Ctrl.T6"/>
             <div class="page-nav">
                 <div class="page-nav-left">
-                    <i ng-click="Ctrl.inputField='lastName'" class="fa fa-arrow-circle-left fa-3x"></i>
+                    <i ng-click="Ctrl.inputField='T5'" class="fa fa-arrow-circle-left fa-3x"></i>
                 </div>
                 <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">{{Ctrl.inputMsg}}</div>
                 <div class="page-nav-right">
@@ -79,11 +79,11 @@
             </div>
         </div>
         <div class="mobile-input-item" ng-show="Ctrl.inputField == 'T7'">
-            <h3>Zip*</h3>
-            <input name="T7" type="text" ng-model="Ctrl.T7"/>
+            <h3>Zip</h3>
+            <input name="T7" type="tel" ng-model="Ctrl.T7"/>
             <div class="page-nav">
                 <div class="page-nav-left">
-                    <i ng-click="Ctrl.inputField='lastName'" class="fa fa-arrow-circle-left fa-3x"></i>
+                    <i ng-click="Ctrl.inputField='T6'" class="fa fa-arrow-circle-left fa-3x"></i>
                 </div>
                 <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">{{Ctrl.inputMsg}}</div>
                 <div class="page-nav-right">
@@ -92,11 +92,11 @@
             </div>
         </div>
         <div class="mobile-input-item" ng-show="Ctrl.inputField == 'T8'">
-            <h3>Contact's Mobile Phone*</h3>
-            <input name="T8" type="text" ng-model="Ctrl.T8"/>
+            <h3>Contact's Mobile Phone</h3>
+            <input name="T8" type="tel" ng-model="Ctrl.T8"/>
             <div class="page-nav">
                 <div class="page-nav-left">
-                    <i ng-click="Ctrl.inputField='lastName'" class="fa fa-arrow-circle-left fa-3x"></i>
+                    <i ng-click="Ctrl.inputField='T7'" class="fa fa-arrow-circle-left fa-3x"></i>
                 </div>
                 <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">{{Ctrl.inputMsg}}</div>
                 <div class="page-nav-right">
@@ -106,10 +106,10 @@
         </div>
         <div class="mobile-input-item" ng-show="Ctrl.inputField == 'T9'">
             <h3>Company Phone</h3>
-            <input name="T9" type="text" ng-model="Ctrl.T9"/>
+            <input name="T9" type="tel" ng-model="Ctrl.T9"/>
             <div class="page-nav">
                 <div class="page-nav-left">
-                    <i ng-click="Ctrl.inputField='lastName'" class="fa fa-arrow-circle-left fa-3x"></i>
+                    <i ng-click="Ctrl.inputField='T8'" class="fa fa-arrow-circle-left fa-3x"></i>
                 </div>
                 <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">{{Ctrl.inputMsg}}</div>
                 <div class="page-nav-right">
@@ -119,10 +119,10 @@
         </div>
         <div class="mobile-input-item" ng-show="Ctrl.inputField == 'T10'">
             <h3>Contact's Email</h3>
-            <input name="T10" type="text" ng-model="Ctrl.T10"/>
+            <input name="T10" type="email" ng-model="Ctrl.T10"/>
             <div class="page-nav">
                 <div class="page-nav-left">
-                    <i ng-click="Ctrl.inputField='lastName'" class="fa fa-arrow-circle-left fa-3x"></i>
+                    <i ng-click="Ctrl.inputField='T9'" class="fa fa-arrow-circle-left fa-3x"></i>
                 </div>
                 <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">{{Ctrl.inputMsg}}</div>
                 <div class="page-nav-right">
@@ -145,7 +145,7 @@
             </div>
             <div class="page-nav">
                 <div class="page-nav-left">
-                    <i ng-click="Ctrl.inputField='lastName'" class="fa fa-arrow-circle-left fa-3x"></i>
+                    <i ng-click="Ctrl.inputField='T10'" class="fa fa-arrow-circle-left fa-3x"></i>
                 </div>
                 <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">{{Ctrl.inputMsg}}</div>
                 <div class="page-nav-right">

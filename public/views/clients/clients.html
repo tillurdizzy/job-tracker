@@ -2,7 +2,7 @@
     <div class="page-title-bar"><h2>Clients</h2></div>
     <div ui-view>
         <div id="jobs-table-container">
-            <button ng-click="Ctrl.refreshList()" type="button" class="button">Refresh List</button>
+            <button ng-click="Ctrl.DB.getManagerJobs()" type="button" class="button">Refresh List</button>
             <div class="jobs-table">
                 <div>
                     <table st-table="Ctrl.clients" class="table table-striped">

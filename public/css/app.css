@@ -759,39 +759,6 @@ table {
     .inventory .short-form .formInlineItems select, .inventory .short-form .formInlineItems input {
       margin: 0; }
 
-.shingle-input-form {
-  width: 310px;
-  height: 450px;
-  float: left; }
-  .shingle-input-form input {
-    padding: .2rem;
-    margin: 0 0 .5rem 0;
-    height: 30px;
-    width: 50px;
-    display: inline-block; }
-  .shingle-input-form label {
-    font-size: .8em;
-    font-weight: 700;
-    width: 70px;
-    line-height: 30px;
-    display: inline-block;
-    text-align: right;
-    float: left;
-    padding-right: 4px;
-    margin: 0 0 .5rem 0; }
-  .shingle-input-form .leftCol {
-    width: 150px;
-    float: left;
-    margin: 0; }
-  .shingle-input-form .rightCol {
-    display: inline-block;
-    margin: 0;
-    padding: 0;
-    width: 130px;
-    float: right; }
-    .shingle-input-form .rightCol input {
-      float: right; }
-
 .input-msg {
   color: #000000; }
 
@@ -834,14 +801,55 @@ table {
 
 .mobile-input-item {
   padding: 0 5px; }
-  .mobile-input-item input {
+  .mobile-input-item input[type="text"] {
     padding: .2rem;
-    margin: 0 0 .5rem 0;
-    height: 36px;
+    margin: 0 0 10px 0;
+    padding: 2px 4px;
     width: 100%;
-    font-size: 1.3em;
+    font-size: 28px;
     display: inline-block;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 8px; }
+  .mobile-input-item select {
+    padding: .2rem;
+    margin: 0 0 10px 0;
+    padding: 2px 4px;
+    width: 100%;
+    font-size: 28px;
+    display: inline-block;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 8px; }
+  .mobile-input-item input[type="number tel"] {
+    display: inline-block;
+    margin: 0 0 10px 0;
+    padding: 2px 4px;
+    width: 30%;
+    font-size: 28px;
+    display: inline-block;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 8px; }
+  .mobile-input-item div {
+    margin: 0 0 0.75em 0; }
+  .mobile-input-item input[type="radio"] {
+    display: none; }
+  .mobile-input-item input[type="radio"] + label {
+    color: #292321;
+    font-size: 28px; }
+  .mobile-input-item input[type="radio"] + label span {
+    display: inline-block;
+    width: 36px;
+    height: 36px;
+    margin: -1px 4px 10px 0 0;
+    vertical-align: middle;
+    cursor: pointer;
+    border-radius: 50%; }
+  .mobile-input-item input[type="radio"] + label span {
+    background-color: #292321; }
+  .mobile-input-item input[type="radio"]:checked + label span {
+    background-color: #CC3300; }
+  .mobile-input-item input[type="radio"] + label span,
+  .mobile-input-item input[type="radio"]:checked + label span {
+    -webkit-transition: background-color 0.4s linear;
+    -o-transition: background-color 0.4s linear;
+    -moz-transition: background-color 0.4s linear;
+    transition: background-color 0.4s linear; }
   .mobile-input-item h3 {
     margin-bottom: 4px; }
 

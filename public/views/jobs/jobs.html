@@ -3,6 +3,7 @@
 
     <div ui-view>
         <div id="jobs-table-container">
+        <button ng-click="Ctrl.DB.getManagerJobs()" type="button" class="button">Refresh List</button>
             <div class="jobs-table">
                 <div>
                     <table st-table="Ctrl.jobs" class="table-striped">

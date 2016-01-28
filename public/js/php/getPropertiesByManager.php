@@ -3,12 +3,7 @@ ini_set('display_errors', 'On');
 error_reporting(E_ALL | E_STRICT);
 $data = json_decode(file_get_contents("php://input"));
 require_once ('vo/propertyVO.php');
-/*
-define( "DATABASE_SERVER", "localhost");
-define( "DATABASE_USERNAME", "root");
-define( "DATABASE_PASSWORD", "");
-define( "DATABASE_NAME", "roofingtracker");
-*/
+
 
 /*
 define( "DATABASE_SERVER", "tillurdizzy.db.10253438.hostedresource.com");

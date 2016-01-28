@@ -1,4 +1,5 @@
 <?php
+//Just makes an entry into the jobs_details table using the ID auto-created from the jobs_list table.
 ini_set('display_errors', 'On');
 error_reporting(E_ALL | E_STRICT);
 $data = json_decode(file_get_contents("php://input"));
@@ -6,29 +7,23 @@ define( "DATABASE_SERVER", "jobtracker.db.10253438.hostedresource.com");
 define( "DATABASE_USERNAME", "jobtracker");
 define( "DATABASE_PASSWORD", "Sadie9954!");
 define( "DATABASE_NAME", "jobtracker");
-/*define( "DATABASE_USERNAME", "evo-danny");
-define( "DATABASE_PASSWORD", "SaDie9954!");
-define( "DATABASE_NAME", "evo-jobtrack");*/
-
 
 $con = mysqli_connect(DATABASE_SERVER, DATABASE_USERNAME, DATABASE_PASSWORD,DATABASE_NAME) or die ('ERROR!!!');
+$jobNumber = mysqli_real_escape_string($con,$data->jobNumber);
 $manager = mysqli_real_escape_string($con,$data->manager);
+$property = mysqli_real_escape_string($con,$data->property);
 $client = mysqli_real_escape_string($con,$data->client);
-$name = mysqli_real_escape_string($con,$data->name);
-$street = mysqli_real_escape_string($con,$data->street);
-$city = mysqli_real_escape_string($con,$data->city);
-$state = mysqli_real_escape_string($con,$data->state);
-$zip = mysqli_real_escape_string($con,$data->zip);
+$status = mysqli_real_escape_string($con,$data->status);
+$dateProposal = mysqli_real_escape_string($con,$data->dateProposal);
 
-$query = "INSERT INTO properties(manager,client,name,street,city,state,zip)
+$query = "INSERT INTO jobs_list(jobNumber,manager,property,client,status,dateProposal)
 VALUES(
-'" . $manager . "', " .
+'" . $jobNumber . "', " .
+"'" . $manager . "', " .
+"'" . $property . "', " .
 "'" . $client . "', " .
-"'" . $name . "', " .
-"'" . $street . "', " .
-"'" . $city . "', " .
-"'" . $state . "', " .
-"'" . $zip . "')";
+"'" . $status . "', " .
+"'" . $dateProposal . "')";
 $qry_res = mysqli_query($con,$query);
 if ($qry_res) {
 	$last_id = mysqli_insert_id($con);
@@ -36,7 +31,7 @@ if ($qry_res) {
 	$jsn = json_encode($arr);
 	echo($jsn);
 } else {
-	$arr = array('msg' => "Fail", 'result' => $qry_res,'params' => $manager);
+	$arr = array('msg' => "Error inserting record", 'result' => $qry_res,'params' => $jobNumber);
 	$jsn = json_encode($arr);
 	echo($jsn);
 }

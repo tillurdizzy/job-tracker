@@ -2,6 +2,7 @@
     <div class="page-title-bar"><h2>Properties</h2></div>
     <div ui-view>
     	<div id="jobs-table-container">
+    	<button ng-click="Ctrl.DB.getManagerJobs()" type="button" class="button">Refresh List</button>
 	        <div class="jobs-table">
 	            <div>
 	                <table st-table="Ctrl.properties" class="table table-striped">

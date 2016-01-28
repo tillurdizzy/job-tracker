@@ -1,180 +1,344 @@
 <div ng-controller="NewPropertyCtrl as Ctrl" class="page">
-    <div class="page-title-bar"><h2>Add New Property</h2></div>
+    <div class="page-title-bar">
+        <h2>
+            Add New Property
+        </h2>
+    </div>
     <div class="mobile-input">
         <div class="mobile-input-item" ng-show="Ctrl.inputField == 'T1'">
-            <h3>Client</h3>
-            <input name="T1" type="text" ng-model="Ctrl.T1"/>
+            <h3>
+                Client
+            </h3>
+            <select id="selectClient" ng-model="Ctrl.T1" ng-options="c.company for c in Ctrl.clientList">
+            </select>
             <div class="page-nav">
                 <div class="page-nav-left">
                 </div>
-                <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">{{Ctrl.inputMsg}}</div>
+                <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">
+                    {{Ctrl.inputMsg}}
+                </div>
                 <div class="page-nav-right">
-                    <i ng-click="Ctrl.submitT1();" class="fa fa-arrow-circle-right fa-3x"></i>
+                    <i ng-click="Ctrl.submitT1();" class="fa fa-arrow-circle-right fa-3x">
+                    </i>
                 </div>
             </div>
         </div>
         <div class="mobile-input-item" ng-show="Ctrl.inputField == 'T2'">
-            <h3>Name*</h3>
-            <input name="T2" type="text" ng-model="Ctrl.T2"/>
+            <h3>
+                Property or Building Name
+            </h3>
+            <input name="T2" type="text" ng-model="Ctrl.T2" placeholder="Name"/>
             <div class="page-nav">
                 <div class="page-nav-left">
-                    <i ng-click="Ctrl.inputField='company'" class="fa fa-arrow-circle-left fa-3x"></i>
+                    <i ng-click="Ctrl.inputField='T1'" class="fa fa-arrow-circle-left fa-3x">
+                    </i>
                 </div>
-                <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">{{Ctrl.inputMsg}}</div>
+                <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">
+                    {{Ctrl.inputMsg}}
+                </div>
                 <div class="page-nav-right">
-                    <i ng-click="Ctrl.submitT2();" class="fa fa-arrow-circle-right fa-3x"></i>
+                    <i ng-click="Ctrl.submitT2();" class="fa fa-arrow-circle-right fa-3x">
+                    </i>
                 </div>
             </div>
         </div>
-        <div class="mobile-input-item" ng-show="Ctrl.inputField == 'T3'">
-            <h3>Street Address*</h3>
+        <div class="mobile-input-item" ng-show="Ctrl.inputField=='T3'">
+            <h3>
+                Street Address
+            </h3>
             <input name="T3" type="text" ng-model="Ctrl.T3"/>
             <div class="page-nav">
                 <div class="page-nav-left">
-                    <i ng-click="Ctrl.inputField='firstName'" class="fa fa-arrow-circle-left fa-3x"></i>
+                    <i ng-click="Ctrl.inputField='T2'" class="fa fa-arrow-circle-left fa-3x">
+                    </i>
                 </div>
-                <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">{{Ctrl.inputMsg}}</div>
+                <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">
+                    {{Ctrl.inputMsg}}
+                </div>
                 <div class="page-nav-right">
-                    <i ng-click="Ctrl.submitT3();" class="fa fa-arrow-circle-right fa-3x"></i>
+                    <i ng-click="Ctrl.submitT3();" class="fa fa-arrow-circle-right fa-3x">
+                    </i>
                 </div>
             </div>
         </div>
         <div class="mobile-input-item" ng-show="Ctrl.inputField == 'T4'">
-            <h3>City*</h3>
+            <h3>
+                City
+            </h3>
             <input name="T4" type="text" ng-model="Ctrl.T4"/>
             <div class="page-nav">
                 <div class="page-nav-left">
-                    <i ng-click="Ctrl.inputField='lastName'" class="fa fa-arrow-circle-left fa-3x"></i>
+                    <i ng-click="Ctrl.inputField='T3'" class="fa fa-arrow-circle-left fa-3x">
+                    </i>
                 </div>
-                <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">{{Ctrl.inputMsg}}</div>
+                <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">
+                    {{Ctrl.inputMsg}}
+                </div>
                 <div class="page-nav-right">
-                    <i ng-click="Ctrl.submitT4();" class="fa fa-arrow-circle-right fa-3x"></i>
+                    <i ng-click="Ctrl.submitT4();" class="fa fa-arrow-circle-right fa-3x">
+                    </i>
                 </div>
             </div>
         </div>
         <div class="mobile-input-item" ng-show="Ctrl.inputField == 'T5'">
-            <h3>State*</h3>
+            <h3>
+                State
+            </h3>
             <input name="T5" type="text" ng-model="Ctrl.T5"/>
             <div class="page-nav">
                 <div class="page-nav-left">
-                    <i ng-click="Ctrl.inputField='lastName'" class="fa fa-arrow-circle-left fa-3x"></i>
+                    <i ng-click="Ctrl.inputField='T4'" class="fa fa-arrow-circle-left fa-3x">
+                    </i>
                 </div>
-                <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">{{Ctrl.inputMsg}}</div>
+                <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">
+                    {{Ctrl.inputMsg}}
+                </div>
                 <div class="page-nav-right">
-                    <i ng-click="Ctrl.submitT5();" class="fa fa-arrow-circle-right fa-3x"></i>
+                    <i ng-click="Ctrl.submitT5();" class="fa fa-arrow-circle-right fa-3x">
+                    </i>
                 </div>
             </div>
         </div>
         <div class="mobile-input-item" ng-show="Ctrl.inputField == 'T6'">
-            <h3>Zip*</h3>
+            <h3>
+                Zip
+            </h3>
             <input name="T6" type="text" ng-model="Ctrl.T6"/>
             <div class="page-nav">
                 <div class="page-nav-left">
-                    <i ng-click="Ctrl.inputField='lastName'" class="fa fa-arrow-circle-left fa-3x"></i>
+                    <i ng-click="Ctrl.inputField='T5'" class="fa fa-arrow-circle-left fa-3x">
+                    </i>
                 </div>
-                <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">{{Ctrl.inputMsg}}</div>
+                <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">
+                    {{Ctrl.inputMsg}}
+                </div>
                 <div class="page-nav-right">
-                    <i ng-click="Ctrl.submitT6();" class="fa fa-arrow-circle-right fa-3x"></i>
+                    <i ng-click="Ctrl.submitT6();" class="fa fa-arrow-circle-right fa-3x">
+                    </i>
                 </div>
             </div>
         </div>
         <div class="mobile-input-item" ng-show="Ctrl.inputField == 'T7'">
-            <h3>Levels (stories)</h3>
-            <input name="T7" type="text" ng-model="Ctrl.T7"/>
+            <h3>
+                Levels (stories)
+            </h3>
+            <input type="tel" ng-model="Ctrl.T7" min="1" max="30"/>
             <div class="page-nav">
                 <div class="page-nav-left">
-                    <i ng-click="Ctrl.inputField='lastName'" class="fa fa-arrow-circle-left fa-3x"></i>
+                    <i ng-click="Ctrl.inputField='T6'" class="fa fa-arrow-circle-left fa-3x">
+                    </i>
                 </div>
-                <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">{{Ctrl.inputMsg}}</div>
+                <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">
+                    {{Ctrl.inputMsg}}
+                </div>
                 <div class="page-nav-right">
-                    <i ng-click="Ctrl.submitT7();" class="fa fa-arrow-circle-right fa-3x"></i>
+                    <i ng-click="Ctrl.submitT7();" class="fa fa-arrow-circle-right fa-3x">
+                    </i>
                 </div>
             </div>
         </div>
         <div class="mobile-input-item" ng-show="Ctrl.inputField == 'T8'">
-            <h3>Class*</h3>
-            <input name="T8" type="text" ng-model="Ctrl.T8"/>
+            <h3>
+                Class
+            </h3>
+            <div class="radio-btns">
+                <div>
+                    <input type="radio" id="radio01" value="Commercial" ng-model="Ctrl.T8"/>
+                    <label for="radio01">
+                        <span>
+                        </span>
+                        Commercial
+                    </label>
+                </div>
+                <div>
+                    <input type="radio" id="radio02" value="Residential" ng-model="Ctrl.T8"/>
+                    <label for="radio02">
+                        <span>
+                        </span>
+                        Residential
+                    </label>
+                </div>
+            </div>
             <div class="page-nav">
                 <div class="page-nav-left">
-                    <i ng-click="Ctrl.inputField='lastName'" class="fa fa-arrow-circle-left fa-3x"></i>
+                    <i ng-click="Ctrl.inputField='T7'" class="fa fa-arrow-circle-left fa-3x">
+                    </i>
                 </div>
-                <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">{{Ctrl.inputMsg}}</div>
+                <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">
+                    {{Ctrl.inputMsg}}
+                </div>
                 <div class="page-nav-right">
-                    <i ng-click="Ctrl.submitT8();" class="fa fa-arrow-circle-right fa-3x"></i>
+                    <i ng-click="Ctrl.submitT8();" class="fa fa-arrow-circle-right fa-3x">
+                    </i>
                 </div>
             </div>
         </div>
         <div class="mobile-input-item" ng-show="Ctrl.inputField == 'T9'">
-            <h3>Roof Type</h3>
-            <input name="T9" type="text" ng-model="Ctrl.T9"/>
+            <h3>
+                Roof Type
+            </h3>
+            <div class="radio-btns">
+                <div>
+                    <input type="radio" id="radio03" value="Flat" ng-model="Ctrl.T9"/>
+                    <label for="radio03">
+                        <span>
+                        </span>
+                        Flat</label>
+                </div>
+                <div>
+                    <input type="radio" id="radio04" value="Pitched" ng-model="Ctrl.T9"/>
+                    <label for="radio04">
+                        <span>
+                        </span>
+                        Pitched
+                    </label>
+                </div>
+            </div>
             <div class="page-nav">
                 <div class="page-nav-left">
-                    <i ng-click="Ctrl.inputField='lastName'" class="fa fa-arrow-circle-left fa-3x"></i>
+                    <i ng-click="Ctrl.inputField='T8'" class="fa fa-arrow-circle-left fa-3x">
+                    </i>
                 </div>
-                <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">{{Ctrl.inputMsg}}</div>
+                <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">
+                    {{Ctrl.inputMsg}}
+                </div>
                 <div class="page-nav-right">
-                    <i ng-click="Ctrl.submitT9();" class="fa fa-arrow-circle-right fa-3x"></i>
+                    <i ng-click="Ctrl.submitT9();" class="fa fa-arrow-circle-right fa-3x">
+                    </i>
                 </div>
             </div>
         </div>
         <div class="mobile-input-item" ng-show="Ctrl.inputField == 'T10'">
-            <h3>Description</h3>
-            <input name="T10" type="text" ng-model="Ctrl.T10"/>
+            <h3>
+                Description
+            </h3>
+            <div class="radio-btns">
+                <div>
+                    <input type="radio" id="radio05" value="Composition over plywood deck" ng-model="Ctrl.T10"/>
+                    <label for="radio05">
+                        <span>
+                        </span>
+                        Composition over plywood deck</label>
+                </div>
+                <div>
+                    <input type="radio" id="radio06" value="Composition over wood shingles" ng-model="Ctrl.T10"/>
+                    <label for="radio06">
+                        <span>
+                        </span>
+                        Composition over wood shingles
+                    </label>
+                </div>
+            </div>
+
             <div class="page-nav">
                 <div class="page-nav-left">
-                    <i ng-click="Ctrl.inputField='lastName'" class="fa fa-arrow-circle-left fa-3x"></i>
+                    <i ng-click="Ctrl.inputField='T9'" class="fa fa-arrow-circle-left fa-3x">
+                    </i>
                 </div>
-                <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">{{Ctrl.inputMsg}}</div>
+                <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">
+                    {{Ctrl.inputMsg}}
+                </div>
                 <div class="page-nav-right">
-                    <i ng-click="Ctrl.submitT10();" class="fa fa-arrow-circle-right fa-3x"></i>
+                    <i ng-click="Ctrl.submitT10();" class="fa fa-arrow-circle-right fa-3x">
+                    </i>
                 </div>
             </div>
         </div>
         <div class="mobile-input-item" ng-show="Ctrl.inputField == 'T11'">
-            <h3>Layers</h3>
-            <input name="T11" type="text" ng-model="Ctrl.T11"/>
+            <h3>
+                Layers
+            </h3>
+            <input type="tel" ng-model="Ctrl.T11" min="1" max="5"/>
             <div class="page-nav">
                 <div class="page-nav-left">
-                    <i ng-click="Ctrl.inputField='lastName'" class="fa fa-arrow-circle-left fa-3x"></i>
+                    <i ng-click="Ctrl.inputField='T10'" class="fa fa-arrow-circle-left fa-3x">
+                    </i>
                 </div>
-                <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">{{Ctrl.inputMsg}}</div>
+                <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">
+                    {{Ctrl.inputMsg}}
+                </div>
                 <div class="page-nav-right">
-                    <i ng-click="Ctrl.submitT10();" class="fa fa-arrow-circle-right fa-3x"></i>
+                    <i ng-click="Ctrl.submitT10();" class="fa fa-arrow-circle-right fa-3x">
+                    </i>
                 </div>
             </div>
         </div>
         <div class="mobile-input-item" ng-show="Ctrl.inputField == 'SUBMIT'">
-            <h3>Review and Submit</h3>
+            <h3>
+                Review and Submit
+            </h3>
             <div class="text-block-display">
-                <h4>Property Information:</h4>
-                <h3>{{Ctrl.T1}}</h3>
-                <h3>{{Ctrl.T4}}</h3>
-                <h3>{{Ctrl.T5 + ", " + Ctrl.T6 + " " + Ctrl.T7}}</h3>
-                <h4>Roof Description:</h4>
-                <h3>{{Ctrl.T2 + " " + Ctrl.T3}}</h3>
-                <h3>Cell: {{Ctrl.T8}}</h3>
-                <h3>Bus: {{Ctrl.T9}}</h3>
-                <h3>Email: {{Ctrl.T10}}</h3>
+                <h4>
+                    Client:
+                </h4>
+                <h3>
+                    {{Ctrl.T1.company}}
+                </h3>
+                <h4>
+                    Address:
+                </h4>
+                <h3>
+                    {{Ctrl.T2}}
+                </h3>
+                <h3>
+                    {{Ctrl.T3}}
+                </h3>
+                <h3>
+                    {{Ctrl.T4 + ", " + Ctrl.T5 + " " + Ctrl.T6}}
+                </h3>
+                <h4>
+                    Class:
+                </h4>
+                <h3>
+                    {{Ctrl.T8}}
+                </h3>
+                <h4>
+                    Roof Description:
+                </h4>
+               
+                <h3>
+                    Type: {{Ctrl.T9}}
+                </h3>
+                <h3>
+                    Description: {{Ctrl.T10}}
+                </h3>
+                <h3>
+                    Layers: {{Ctrl.T11}}
+                </h3>
             </div>
             <div class="page-nav">
                 <div class="page-nav-left">
-                    <i ng-click="Ctrl.inputField='lastName'" class="fa fa-arrow-circle-left fa-3x"></i>
+                    <i ng-click="Ctrl.inputField='T11'" class="fa fa-arrow-circle-left fa-3x">
+                    </i>
                 </div>
-                <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">{{Ctrl.inputMsg}}</div>
+                <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">
+                    {{Ctrl.inputMsg}}
+                </div>
                 <div class="page-nav-right">
-                    <button type="button" ng-click="Ctrl.submitForm()">Submit</button>
+                    <button type="button" ng-click="Ctrl.submitForm()">
+                        Submit
+                    </button>
                 </div>
             </div>
         </div>
         <div class="mobile-input-item" ng-show="Ctrl.inputField == 'SUCCESS'">
-            <h3>Success!</h3>
-            <p>{{Ctrl.T1}} has been added as a client.</p>
+            <h3>
+                Success!
+            </h3>
+            <p>
+                {{Ctrl.T3}} has been added as a property for {{Ctrl.T1.company}}.
+            </p>
         </div>
-
         <div class="mobile-input-item" ng-show="Ctrl.inputField == 'ERROR'">
-            <h3>Oops!  An error occured saving the data.</h3>
-            <p>Try again later or click below to reset and try again now.</p>
-            <button type="button" ng-click="Ctrl.clearForm()">Reset</button>
+            <h3>
+                Oops!  An error occured saving the data.
+            </h3>
+            <p>
+                Try again later or click below to reset and try again now.
+            </p>
+            <button type="button" ng-click="Ctrl.clearForm()">
+                Reset
+            </button>
         </div>
     </div>
 </div>
