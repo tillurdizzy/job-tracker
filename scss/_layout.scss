@@ -42,6 +42,58 @@ body{
   }
 }
 
+$status-item-height:32px;
+
+.status-container{
+  width:100%;
+
+  .status-item{
+    background-color: #cdcdcd;
+    height:$status-item-height;
+    width:100%;
+    display:flex;
+    margin:3px 0 0 0;
+
+    h4{
+      line-height: $status-item-height;
+      vertical-align: middle;
+      padding:0;
+      margin:0 0 0 3px;
+    }
+    h3{
+      line-height: $status-item-height;
+      vertical-align: middle;
+      padding:0;
+      margin:0 0 0 3px;
+    }
+    .button{
+      border:0;
+      padding:8px 16px;
+      width:80px;
+    }
+
+  }
+
+  .status-item-title{
+    background-color: $tertiary-color;
+    color:#fff;
+    width:100px;
+   
+    height:$status-item-height;
+
+  }
+
+  .status-item-date{
+    width:100px;
+    height:$status-item-height;
+    color:#000000;
+  }
+
+  .status-item-update{
+    height:$status-item-height;
+  }
+}
+
 .top-bar{
   height:45px;
   width:100%;

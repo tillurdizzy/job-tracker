@@ -8,7 +8,7 @@ app.controller('NewJobCtrl',['$scope','$state','evoDb','SharedSrvc',function ($s
     Me.managerName = S.managerName;
     Me.clientList = S.managerClients;
     Me.propertyList = S.managerProperties;
-    Me.numFields = 2;
+    var numFields = 2;
     Me.inputMsg = "Field 1 of " + numFields;
     // Form elements
     Me.S1 = Me.clientList[0];
@@ -16,7 +16,6 @@ app.controller('NewJobCtrl',['$scope','$state','evoDb','SharedSrvc',function ($s
     Me.T1;
     Me.T2;
     
-   
 
     Me.submitS1 = function(){
         Me.inputMsg = "";
@@ -27,6 +26,7 @@ app.controller('NewJobCtrl',['$scope','$state','evoDb','SharedSrvc',function ($s
         }else{
             Me.inputField="S2";
             Me.inputMsg = "Field 2 of " + numFields;
+            S.selectedClientObj = S1;
         };
    };
 
@@ -37,11 +37,12 @@ app.controller('NewJobCtrl',['$scope','$state','evoDb','SharedSrvc',function ($s
             Me.isError = true;
             Me.inputMsg = "This field cannot be blank.";
         }else{
-            Me.T1 = "Proposal";
+            Me.T1 = "Prospect";
             var d = new Date();
             Me.T2 = d.valueOf();
             Me.inputField="REVIEW";
             Me.inputMsg = "";
+            S.selectedPropertyObj = S2;
         };
    };
 
@@ -60,7 +61,6 @@ app.controller('NewJobCtrl',['$scope','$state','evoDb','SharedSrvc',function ($s
         Me.clearForm();
     };
 
-   
     Me.submitForm = function(){
         Me.isError = false;
         var dataObj = {};
@@ -92,6 +92,15 @@ app.controller('NewJobCtrl',['$scope','$state','evoDb','SharedSrvc',function ($s
 
     Me.goNewProperty = function(){
         $state.transitionTo("addNewProperty");
+    };
+
+     Me.goProposal =  function(){
+        if(Me.S2.roof == "Pitched"){
+            $state.transitionTo("proposalNewPitched");
+        }else{
+            $state.transitionTo("proposalNewFlat");
+        }
+        
     };
 
     

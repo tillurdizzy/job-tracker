@@ -64,7 +64,8 @@
         </div>
         <div class="mobile-input-item" ng-show="Ctrl.inputField == 'SUCCESS'">
             <h3>Success!</h3>
-            <p>{{Ctrl.S2.name}} has been added as a job proposal for {{Ctrl.S1.company}}.</p>
+            <p>{{Ctrl.S2.name}} has been added as a job prospect for {{Ctrl.S1.company}}.</p>
+            <button type="button" ng-click="Ctrl.goProposal()">Create Proposal</button>
         </div>
 
         <div class="mobile-input-item" ng-show="Ctrl.inputField == 'ERROR'">

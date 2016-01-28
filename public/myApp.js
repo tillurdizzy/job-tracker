@@ -90,9 +90,14 @@ app.config(function($stateProvider, $urlRouterProvider) {
 			templateUrl:"views/properties/property-new.html"
 		})
 
-		.state('proposal', {
+		.state('proposalNewPitched', {
 			url: "/proposal",
-			templateUrl:"views/forms/proposal.html"
+			templateUrl:"views/forms/proposal-new-pitched.html"
+		})
+
+		.state('proposalNewFlat', {
+			url: "/proposal",
+			templateUrl:"views/forms/proposal-new-flat.html"
 		})
 
 		.state('reports', {

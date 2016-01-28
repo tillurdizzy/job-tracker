@@ -412,6 +412,40 @@ body {
       vertical-align: middle;
       margin: 0 0 0 .3em; }
 
+.status-container {
+  width: 100%; }
+  .status-container .status-item {
+    background-color: #cdcdcd;
+    height: 32px;
+    width: 100%;
+    display: flex;
+    margin: 3px 0 0 0; }
+    .status-container .status-item h4 {
+      line-height: 32px;
+      vertical-align: middle;
+      padding: 0;
+      margin: 0 0 0 3px; }
+    .status-container .status-item h3 {
+      line-height: 32px;
+      vertical-align: middle;
+      padding: 0;
+      margin: 0 0 0 3px; }
+    .status-container .status-item .button {
+      border: 0;
+      padding: 8px 16px;
+      width: 80px; }
+  .status-container .status-item-title {
+    background-color: #AE1616;
+    color: #fff;
+    width: 100px;
+    height: 32px; }
+  .status-container .status-item-date {
+    width: 100px;
+    height: 32px;
+    color: #000000; }
+  .status-container .status-item-update {
+    height: 32px; }
+
 .top-bar {
   height: 45px;
   width: 100%;
@@ -523,7 +557,7 @@ button.tiny, .button.tiny {
   #off-canvas-menu button {
     padding: 1px 2px 1px 2px;
     width: 100%;
-    height: 36px;
+    height: 48px;
     margin: 1px 0 0 0;
     border: 1px solid #0984D4;
     background-color: #035082; }
@@ -817,11 +851,11 @@ table {
     font-size: 28px;
     display: inline-block;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 8px; }
-  .mobile-input-item input[type="number tel"] {
+  .mobile-input-item input[type="tel"] {
     display: inline-block;
     margin: 0 0 10px 0;
     padding: 2px 4px;
-    width: 30%;
+    width: 100%;
     font-size: 28px;
     display: inline-block;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 8px; }
@@ -830,7 +864,7 @@ table {
   .mobile-input-item input[type="radio"] {
     display: none; }
   .mobile-input-item input[type="radio"] + label {
-    color: #292321;
+    color: #DDDDDD;
     font-size: 28px; }
   .mobile-input-item input[type="radio"] + label span {
     display: inline-block;
@@ -841,7 +875,7 @@ table {
     cursor: pointer;
     border-radius: 50%; }
   .mobile-input-item input[type="radio"] + label span {
-    background-color: #292321; }
+    background-color: #DDDDDD; }
   .mobile-input-item input[type="radio"]:checked + label span {
     background-color: #CC3300; }
   .mobile-input-item input[type="radio"] + label span,

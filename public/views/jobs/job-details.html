@@ -17,7 +17,7 @@
 <div class="section-header">
     <h2>Property</h2>
 </div>
-<div  class="text-block-display">
+<div class="text-block-display">
     <h4>{{Ctrl.selectedPropertyObj.name}}</h4>
     <h3>{{Ctrl.selectedPropertyObj.street}}</h3>
     <h3>{{Ctrl.selectedPropertyObj.city + ", " + Ctrl.selectedPropertyObj.state + " " + Ctrl.selectedPropertyObj.zip}}</h3>
@@ -28,37 +28,39 @@
 </div>
 <div class="spacerMed"></div>
 <div class="section-header">
-    <h2>Job Status</h2>
+    <h2>Status</h2>
 </div>
-<div class="status-table">
-    <div>
-        <table class="table-striped">
-            <thead>
-                <tr>
-                    <th id="tbl-width-70">Event</th>
-                    <th id="tbl-width-70">Date</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Proposal</td>
-                    <td>{{Ctrl.selectedJobObj.dateProposal | date:'MM/dd/yyyy'}}</td>
-                </tr>
-                <tr>
-                    <td>Contract</td>
-                    <td>{{Ctrl.selectedJobObj.dateContract | date:'MM/dd/yyyy'}}</td>
-                </tr>
-                <tr>
-                    <td>Active</td>
-                    <td>{{Ctrl.selectedJobObj.dateActive | date:'MM/dd/yyyy'}}</td>
-                </tr>
-                <tr>
-                    <td>Complete</td>
-                    <td>{{Ctrl.selectedJobObj.dateComplete | date:'MM/dd/yyyy'}}</td>
-                </tr>
-            </tbody>
-        </table>
+<div class="text-block-display">
+<div class="status-container">
+    <div class="status-item">
+        <div class="status-item-title"><h4>PROSPECT</h4></div>
+        <div class="status-item-date"><h3>{{Ctrl.selectedJobObj.dateProspect | date:'MM/dd/yyyy'}}</h3></div>
     </div>
+
+    <div class="status-item">
+        <div class="status-item-title"><h4>PROPOSAL</h4></div>
+        <div class="status-item-date"><h3>{{Ctrl.selectedJobObj.dateProposal | date:'MM/dd/yyyy'}}</h3></div>
+        <div class="status-item-update"><a ui-sref="job.proposal" class="button">Update</a></div>
+    </div>
+
+    <div class="status-item">
+        <div class="status-item-title"><h4>CONTRACT</h4></div>
+        <div class="status-item-date"><h3>{{Ctrl.selectedJobObj.dateContract | date:'MM/dd/yyyy'}}</h3></div>
+        <div class="status-update"><a ui-sref="job.contract" class="button">Update</a></div>
+    </div>
+
+    <div class="status-item">
+        <div class="status-item-title"><h4>ACTIVE</h4></div>
+        <div class="status-item-date"><h3>{{Ctrl.selectedJobObj.dateActive | date:'MM/dd/yyyy'}}</h3></div>
+        <div class="status-update"><a ui-sref="job.contract" class="button">Update</a></div>
+    </div>
+
+    <div class="status-item">
+        <div class="status-item-title"><h4>COMPLETE</h4></div>
+        <div class="status-item-date"><h3>{{Ctrl.selectedJobObj.dateComplete | date:'MM/dd/yyyy'}}</h3></div>
+        <div class="status-update"><a ui-sref="job.contract" class="button">Update</a></div>
+    </div>
+</div>
 </div>
 <button type="button" class="button nav-btn" ng-click="Ctrl.backToList()">Back</button>
 <div class="spacerMed"></div>
