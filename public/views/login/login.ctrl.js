@@ -11,6 +11,7 @@ app.controller('LoginCtrl',['$scope','$state','evoDb','SharedSrvc',function ($sc
     $scope.displayname="";
 
     var serverAvailable = true;
+    $scope.dataRefreshed = false;
 
     $scope.continueBtn = function(){
         $state.transitionTo("jobs");
@@ -41,8 +42,9 @@ app.controller('LoginCtrl',['$scope','$state','evoDb','SharedSrvc',function ($sc
                 .then(function(result){
                     if(result != false){
                         // DB sets Shared Srvc var for login
+                        $scope.dataRefreshed = false;// control display of spinning icon
                         $scope.loginSuccess=true;
-                        $scope.requestSuccess = true;
+                        $scope.requestSuccess = true;// this var changes the stage
                         $scope.clearForm();
                         $scope.displayname = result[0].name_first + " " + result[0].name_last; 
                         $scope.getManagerJobs();
@@ -72,6 +74,7 @@ app.controller('LoginCtrl',['$scope','$state','evoDb','SharedSrvc',function ($sc
         var result = DB.getManagerJobs()
         .then(function(result){
             if(result != false){
+                $scope.dataRefreshed = true;
                 console.log("Successful getting job data");
             }else{
               ME.dataError("LoginCtrl-getManagerJobs()-1",result); 
@@ -92,14 +95,16 @@ app.controller('LoginCtrl',['$scope','$state','evoDb','SharedSrvc',function ($sc
 
     var checkForLogIn = function(){
         var login = S.loggedIn;
+        $scope.dataRefreshed = S.dataRefreshed;
         if (login===true) {
             $scope.loginSuccess=true;
             $scope.requestSuccess = true;
+            $scope.displayname=S.managerName;
         };
-    }
+    };
 
     $scope.$watch('$viewContentLoaded', function() {
-       checkForLogIn()
+       checkForLogIn();
     });
 	
 

@@ -13,6 +13,7 @@ app.service('SharedSrvc',['$rootScope',function sharedVars($rootScope){
 
 	// Manager vars
 	self.loggedIn = false;
+	self.dataRefreshed = false;
 	self.managerID = "";
 	self.managerName = "";
 	self.managerJobs = [];
@@ -41,6 +42,7 @@ app.service('SharedSrvc',['$rootScope',function sharedVars($rootScope){
 		self.managerClients = [];
 		self.managerProperties = [];
 	};
+
 
 	//Called from their respective Summary Tables
 	self.selectJob = function(obj){
@@ -89,6 +91,7 @@ app.service('SharedSrvc',['$rootScope',function sharedVars($rootScope){
 	// This is the first of 3 calls from DB as each one is completed
 	self.setManagerJobsList = function(d){
 		// Reset all 3 lists
+		self.dataRefreshed = false;
 		self.managerClients = [];
 		self.managerProperties = [];
 		self.managerJobs = [];
@@ -156,6 +159,7 @@ app.service('SharedSrvc',['$rootScope',function sharedVars($rootScope){
 			var thisProperty = returnProperty(propID);
 			self.managerJobs[i].propertyName = thisProperty;
 		};
+		self.dataRefreshed = true;
 		$rootScope.$broadcast("data-refreshed");
 	};
 

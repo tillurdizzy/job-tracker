@@ -4,7 +4,7 @@ app.controller('NewJobCtrl',['$scope','$state','evoDb','SharedSrvc',function ($s
 	var DB = evoDb;
 	var Me = this;
     var S = SharedSrvc;
-    Me.inputField = "S1";
+    Me.inputField = "INFO";
     Me.managerName = S.managerName;
     Me.clientList = S.managerClients;
     Me.propertyList = S.managerProperties;
@@ -26,7 +26,7 @@ app.controller('NewJobCtrl',['$scope','$state','evoDb','SharedSrvc',function ($s
         }else{
             Me.inputField="S2";
             Me.inputMsg = "Field 2 of " + numFields;
-            S.selectedClientObj = S1;
+            S.selectedClientObj = Me.S1;
         };
    };
 
@@ -42,7 +42,7 @@ app.controller('NewJobCtrl',['$scope','$state','evoDb','SharedSrvc',function ($s
             Me.T2 = d.valueOf();
             Me.inputField="REVIEW";
             Me.inputMsg = "";
-            S.selectedPropertyObj = S2;
+            S.selectedPropertyObj = Me.S2;
         };
    };
 
@@ -100,7 +100,6 @@ app.controller('NewJobCtrl',['$scope','$state','evoDb','SharedSrvc',function ($s
         }else{
             $state.transitionTo("proposalNewFlat");
         }
-        
     };
 
     

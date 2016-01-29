@@ -1,29 +1,10 @@
 <div ng-controller="JobsCtrl as Ctrl" class="page">
     <div class="page-title-bar"><h2>Jobs Summary</h2></div>
-
     <div ui-view>
-        <div id="jobs-table-container">
-        <button ng-click="Ctrl.DB.getManagerJobs()" type="button" class="button">Refresh List</button>
-            <div class="jobs-table">
-                <div>
-                    <table st-table="Ctrl.jobs" class="table-striped">
-                        <thead>
-                            <tr>
-                                <th id="tbl-width-70">Details</th>
-                                <th st-sort="propertyName">Property</th>
-                                <th st-sort="status" id="tbl-width-100">Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr ng-repeat="row in Ctrl.jobs">
-                                <td><button ng-click="Ctrl.showDetails($index)" type="button" class="button tbl-btn">Show</button></td>
-                                <td>{{row.propertyName}}</td>
-                                <td>{{row.status}}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+        <button ng-click="Ctrl.getManagerJobs()" type="button" class="button">Refresh List</button>
+        <div class="list-container">
+            <div job-item id="{{e.PRIMARY_ID}}" status="{{e.status}}" details="Ctrl.showDetails"
+                property="{{e.propertyName}}" ng-repeat="e in Ctrl.jobs"></div> 
         </div>
     </div>
 </div>

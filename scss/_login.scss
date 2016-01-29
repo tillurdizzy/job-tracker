@@ -1,19 +1,19 @@
 
 .login-form{
   margin-left: 1em;
-	width:150px;
+	width:300px;
   label{
     font-size: 1em;
     font-weight: 700;
+    display:block;
   }
 
-  input{
-    padding:.2rem;
+  input[type="text"]{
+    padding:2px;
     margin:0 0 .5rem 0;
-    height:36px;
-    width:150px;
-    font-size: 1.3em;
-    display:inline-block;
+    height:28px;
+    width:120px;
+    display:block;
     box-shadow: rgba(0,0,0, 0.1) 0px 0px 8px; 
   }
 	.button{

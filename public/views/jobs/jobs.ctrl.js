@@ -19,8 +19,14 @@ app.controller('JobsCtrl',['$location','$state','evoDb','$scope','SharedSrvc',fu
 	ME.newJobForm = false;
 	ME.invalid = false;
 
-	ME.showDetails = function(ndx){
-		ME.selectedJobObj = ME.jobs[ndx];
+	ME.showDetails = function(ndxStr){
+		var ndx = Number(ndxStr);
+		for (var i = 0; i < ME.jobs.length; i++) {
+			if(ME.jobs[i].PRIMARY_ID == ndx){
+				ME.selectedJobObj = ME.jobs[i];
+			}
+		};
+		
 		// Send job selection to shared
 		ME.S.selectJob(ME.selectedJobObj);
 		ME.selectedClientObj = ME.S.selectedClientObj;

@@ -161,6 +161,7 @@ app.controller('NewClientCtrl',['$state','evoDb','SharedSrvc',function ($state,e
         .then(function(result){
             if(result != false){
                Me.inputField="SUCCESS";
+               ME.getManagerProperties();
             }else{
                 Me.dataError();
             }                 
@@ -187,7 +188,24 @@ app.controller('NewClientCtrl',['$state','evoDb','SharedSrvc',function ($state,e
         Me.T9 = "";
         Me.T10 = "";
         Me.isError = false;
-        Me.inputField="T1";
+        Me.inputField="INFO";
+    };
+
+    ME.getManagerProperties = function(){
+        var result = DB.getManagerProperties()
+        .then(function(result){
+            if(result != false){
+                // Don't do anything here
+            }else{
+              ME.dataError("NewClientCtrl-getManagerProperties()-1",result); 
+            }
+        },function(error){
+            ME.dataError("NewClientCtrl-getManagerProperties()-2",result);
+        });
+    };
+
+    ME.dataError = function(loc,error){
+        console.log(loc + " : " + error);
     };
 
 

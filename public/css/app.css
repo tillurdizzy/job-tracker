@@ -446,6 +446,31 @@ body {
   .status-container .status-item-update {
     height: 32px; }
 
+.job-summary-item {
+  display: flex;
+  height: 32px;
+  margin-top: 3px;
+  background-color: #cccccc; }
+  .job-summary-item button {
+    height: 32px;
+    width: 100px;
+    padding: 0;
+    transition: #048F7B 0.25s ease-out, color 0.25s ease-out;
+    background-color: #048F7B; }
+  .job-summary-item button:hover, .job-summary-item button:focus, .job-summary-item .button:hover, .job-summary-item .button:focus {
+    background-color: #025C4F; }
+  .job-summary-item .stage {
+    height: 32px;
+    margin-left: 5px;
+    background-color: #AE1616;
+    color: #fff;
+    width: 100px;
+    height: 32px; }
+  .job-summary-item .prop {
+    height: 32px;
+    margin-left: 5px;
+    vertical-align: middle; }
+
 .top-bar {
   height: 45px;
   width: 100%;
@@ -474,13 +499,9 @@ body {
   flex-direction: column; }
 
 .page-nav {
-  margin: 1em 0 2em 0;
-  height: 30px;
   width: 100%;
   display: flex;
   justify-content: space-between; }
-  .page-nav i {
-    cursor: pointer; }
 
 button:focus {
   outline: none; }
@@ -749,17 +770,17 @@ table {
 
 .login-form {
   margin-left: 1em;
-  width: 150px; }
+  width: 300px; }
   .login-form label {
     font-size: 1em;
-    font-weight: 700; }
-  .login-form input {
-    padding: .2rem;
+    font-weight: 700;
+    display: block; }
+  .login-form input[type="text"] {
+    padding: 2px;
     margin: 0 0 .5rem 0;
-    height: 36px;
-    width: 150px;
-    font-size: 1.3em;
-    display: inline-block;
+    height: 28px;
+    width: 120px;
+    display: block;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 8px; }
   .login-form .button {
     margin-top: 1.5em; }
@@ -890,6 +911,10 @@ table {
 @media all and (max-width: 550px) {
   .mobile-input {
     width: 100%; } }
+
+.list-container {
+  width: 100%;
+  max-width: 640px; }
 
 @media all and (max-height: 900px) {
   footer {

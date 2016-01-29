@@ -1,7 +1,24 @@
 <div ng-controller="NewJobCtrl as Ctrl" class="page">
     <div class="page-title-bar"><h2>New Job</h2></div>
     <div class="mobile-input">
-        <div class="mobile-input-item" ng-show="Ctrl.inputField == 'S1'">
+        <div class="mobile-input-item" ng-show="Ctrl.inputField=='INFO'">
+            <h3>Instructions</h3>
+            <div class="text-block-display">
+                <h4>What is a Job?</h4>
+                <p>A Job simply consists of one of your Clients matched with one your Properties.</p>
+                <p>Before creating a new Job, you should already have the Client and the Property created.</p>
+                <h4>Job Stage</h4>
+                <p>All new Jobs are created with the Stage of 'Prospect', and progresses through successive stages as follows:</p>
+                <ul>
+                    <li>Proposal - Bid and Scope of Work have been created and submitted to client.</li>
+                    <li>Contract - Bid and Scope of Work have been approved and accepted by client, and initial payment has been received.</li>
+                    <li>Active - Materials have been delivered and a crew is on the job site.</li>
+                    <li>Complete - All payments has been received.</li>
+                </ul>
+            </div>
+            <div><button type="button" ng-click="Ctrl.inputField='S1'">Continue</button></div>
+        </div>
+        <div class="mobile-input-item" ng-show="Ctrl.inputField=='S1'">
             <div class="input-label">
                 <div><h3>Client</h3></div>
                 <div><button type="button" ng-click="Ctrl.goNewClient()">New Client</button></div>

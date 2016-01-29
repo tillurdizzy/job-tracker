@@ -94,6 +94,40 @@ $status-item-height:32px;
   }
 }
 
+.job-summary-item{
+  display:flex;
+  height:$status-item-height;
+  margin-top: 3px;
+  background-color:#cccccc;
+  button{
+    height:$status-item-height;
+    width:100px;
+    padding:0;
+    transition: $secondary-color 0.25s ease-out, color 0.25s ease-out;
+    background-color: $secondary-color;
+  }
+  button:hover, button:focus, .button:hover, .button:focus {
+    background-color: $secondary-darker; }
+  .stage{
+    
+    height:$status-item-height;
+    margin-left:5px;
+    background-color: $tertiary-color;
+    color:#fff;
+    width:100px;
+   
+    height:$status-item-height;
+  }
+
+  .prop{
+    
+    height:$status-item-height;
+    margin-left:5px;
+    vertical-align: middle;
+  }
+
+}
+
 .top-bar{
   height:45px;
   width:100%;
@@ -121,29 +155,15 @@ $status-item-height:32px;
   width:100%;
 }
 
-
-
 .flex-column{
   display: flex;
   flex-direction: column;
 }
 
 .page-nav{
-  margin:1em 0 2em 0;
-  height:30px;
   width:100%;
   display:flex;
   justify-content:space-between;
-  i{
-    cursor:pointer;
-  }
-  .page-nav-left{
-
-  }
-
-  .page-nav-right{
-    
-  }
 }
 
 
