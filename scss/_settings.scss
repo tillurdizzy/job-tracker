@@ -1,20 +1,28 @@
 
 //Define colors
+
+//Blue
 $base-color:#0463A1;
 $base-lighter:#0984D4;
 $base-lighter-X2:#2D8FCF;
 $base-darker:#035082;
 $base-darker-X2:#023d63;
 
-$primary-button-up:$base-color;
-$primary-button-over:$base-lighter;
+//Green
+$secondary-color:#048F7B;
+$secondary-darker:#024d42;
+$scondary-lighter:#06d1b4;
+
+//Red
+$tertiary-color:#AE1616;
+$tertiary-darker:#901212;
+$tertiary-lighter:#db1c1c;
 
 $hilite-green:#00AF5B;
 
-$secondary-color:#048F7B;
-$secondary-darker:#025C4F;
+$primary-button-up:$secondary-color;
+$primary-button-over:$scondary-lighter;
 
-$tertiary-color:#AE1616;
 
 // Assign colors
 $title-bar-bkg:$base-color;
@@ -46,6 +54,13 @@ h3{
 h4{
 	font-size: 1em;
 	font-weight: 600;
+	padding:0;
+	margin:0;
+	font-family: 'Open Sans', sans-serif;}
+
+h5{
+	font-size: .9em;
+	font-weight: 700;
 	padding:0;
 	margin:0;
 	font-family: 'Open Sans', sans-serif;}

@@ -69,7 +69,7 @@ app.controller('NewJobCtrl',['$scope','$state','evoDb','SharedSrvc',function ($s
         dataObj.client = Me.S1.PRIMARY_ID;
         dataObj.property = Me.S2.PRIMARY_ID;
         dataObj.status = Me.T1;
-        dataObj.dateProposal = Me.T2;
+        dataObj.dateProspect = Me.T2;
         var result = DB.putJob(dataObj)
         .then(function(result){
             if(result != false){

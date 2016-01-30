@@ -23,6 +23,7 @@ while ($row = mysqli_fetch_object($result)) {
 	$oneVO->client = $row->client;
 	$oneVO->manager = $row->manager;
 	$oneVO->status = $row->status;
+	$oneVO->dateProspect = $row->dateProspect;
 	$oneVO->dateProposal = $row->dateProposal;
 	$oneVO->dateContract = $row->dateContract;
 	$oneVO->dateActive = $row->dateActive;

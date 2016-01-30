@@ -7,11 +7,12 @@
 	color:#C72750;
 }
 
-
-
 .text-block-display{
 	margin:10px 0;
 	color:#000000;
+	p{
+		margin:6px 0 0 0;
+	}
 	h4{
 		margin:0;
 		padding:0;
@@ -28,6 +29,11 @@
 		font-weight: 400;
 		font-family:  'Jaldi', sans-serif;
 	}
+
+	ul{
+		margin:8px 0;
+		padding:0 0 0 20px;
+	}
 }
 
 .form-container{
@@ -41,13 +47,13 @@
 	display:inline-block;
 	width:500px;
 	height:auto;
-	
 	padding-left:15px;
 }
 
 .mobile-input{
 	padding:10px;
-	width:550px;
+	width:100%;
+	box-sizing: border-box;
 }
 
 $rb-off: #DDDDDD;
@@ -59,6 +65,7 @@ $bottom-margin:10px;
 
 .mobile-input-item{
 	padding:0 5px;
+	box-sizing: border-box;
 	input[type="text"]{
 	    padding:.2rem;
 	    margin:0 0 $bottom-margin 0;
@@ -67,6 +74,7 @@ $bottom-margin:10px;
 	    font-size: $input-font-size;
 	    display:inline-block;
 	    box-shadow: rgba(0,0,0, 0.1) 0px 0px 8px; 
+	    box-sizing: border-box;
 	}
 	select{
 		padding:.2rem;
@@ -76,6 +84,7 @@ $bottom-margin:10px;
 	    font-size: $input-font-size;
 	    display:inline-block;
 	    box-shadow: rgba(0,0,0, 0.1) 0px 0px 8px; 
+	    box-sizing: border-box;
 	}
 
 	input[type="tel"] {
@@ -86,6 +95,7 @@ $bottom-margin:10px;
 	    font-size: $input-font-size;
 	    display:inline-block;
 	    box-shadow: rgba(0,0,0, 0.1) 0px 0px 8px; 
+	    box-sizing: border-box;
 	}
 	div {
   		margin:0 0 0.75em 0;

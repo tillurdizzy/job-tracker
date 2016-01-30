@@ -26,16 +26,12 @@
                 <div id="off-canvas-menu" ng-class="Ctrl.menuOpen ? 'off-canvas-show' : 'off-canvas-hide'">
                     <div class="label"><h3>IDENTITY</h3></div>
                     <div><button ng-click="Ctrl.menuClick('login')">Log In / Out</button></div>
-                    <div class="label"><h3>JOBS</h3></div>
-                    <div><button ng-click="Ctrl.menuClick('jobs')">Jobs Summary</button></div>
-                    <div><button ng-click="Ctrl.menuClick('addNewJob')">Add New Job</button></div>
-                    <div class="label"><h3>CLIENTS</h3></div>
+                    <div class="label"><h3>LISTS</h3></div>
+                    <div><button ng-click="Ctrl.menuClick('jobs')">Jobs List</button></div>
                     <div><button ng-click="Ctrl.menuClick('clients')">Client List</button></div>
-                    <div><button ng-click="Ctrl.menuClick('addNewClient')">Add New Client</button></div>
-                    <div class="label"><h3>PROPERTIES</h3></div>
                     <div><button ng-click="Ctrl.menuClick('properties')">Property List</button></div>
-                    <div><button ng-click="Ctrl.menuClick('addNewProperty')">Add New Property</button></div>
-                    
+                    <div class="label"><h3>INVENTORY</h3></div>
+                    <div><button>Coming soon...</button></div>
                     <div class="label"><h3>REPORTS</h3></div>
                     <div><button>Coming soon...</button></div>
                 </div>
@@ -47,7 +43,7 @@
                 <!-- #site-canvas -->
             </div>
         <!-- #site-wrapper -->
-    </div>
+        </div>
    
 
     <!--Custom JS-->
@@ -57,6 +53,7 @@
     <script src="views/login/login.ctrl.js"></script>
     <script src="views/jobs/jobs.ctrl.js"></script>
     <script src="views/clients/clients.ctrl.js"></script>
+    <script src="views/jobs/proposals/proposal.ctrl.js"></script>
    
     <script src="views/inventory/inventory.ctrl.js"></script>
     <script src="views/properties/properties.ctrl.js"></script>
@@ -74,6 +71,9 @@
     <!--Directives-->
     <script src="js/directives/hrule.dir.js"></script>
     <script src="js/directives/job.dir.js"></script>
+    <script src="js/directives/client.dir.js"></script>
+    <script src="js/directives/property.dir.js"></script>
+    <script src="js/directives/space.dir.js"></script>
 
 </body>
 </html>

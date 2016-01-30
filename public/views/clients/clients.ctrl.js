@@ -12,9 +12,16 @@ app.controller('ClientsCtrl',['$scope','$state','evoDb','SharedSrvc',function ($
 	ME.clients = S.managerClients;
 	ME.selectedClientObj = {};
 
-	ME.editClient = function(ndx){
-		ME.selectedClientObj = ME.clients[ndx];
-		// Send job selection to shared
+	ME.showDetails = function(ndxStr){
+		var ndx = Number(ndxStr);
+		for (var i = 0; i < ME.clients.length; i++) {
+			if(ME.clients[i].PRIMARY_ID == ndx){
+				ME.selectedClientObj = ME.clients[i];
+				continue;
+			}
+		};
+		
+		// Send client selection to shared
 		S.selectClient(ME.selectedClientObj);
 		$state.transitionTo("clients.details");
 	};
@@ -39,6 +46,10 @@ app.controller('ClientsCtrl',['$scope','$state','evoDb','SharedSrvc',function ($
 
 	ME.backToList = function(){
       $state.transitionTo("clients");
+    };
+
+    ME.goNewClient = function(){
+      $state.transitionTo("addNewClient");
     };
 
     $scope.$on('data-refreshed', function() {

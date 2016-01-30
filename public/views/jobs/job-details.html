@@ -33,32 +33,32 @@
 <div class="text-block-display">
 <div class="status-container">
     <div class="status-item">
-        <div class="status-item-title"><h4>PROSPECT</h4></div>
+        <div class="status-item-title"><h4>Prospect</h4></div>
         <div class="status-item-date"><h3>{{Ctrl.selectedJobObj.dateProspect | date:'MM/dd/yyyy'}}</h3></div>
     </div>
 
     <div class="status-item">
-        <div class="status-item-title"><h4>PROPOSAL</h4></div>
+        <div class="status-item-title"><h4>Proposal</h4></div>
         <div class="status-item-date"><h3>{{Ctrl.selectedJobObj.dateProposal | date:'MM/dd/yyyy'}}</h3></div>
-        <div class="status-item-update"><a ui-sref="job.proposal" class="button">Update</a></div>
+        <div class="status-item-update"><a ui-sref="proposal" class="button">Update</a></div>
     </div>
 
     <div class="status-item">
-        <div class="status-item-title"><h4>CONTRACT</h4></div>
+        <div class="status-item-title"><h4>Contract</h4></div>
         <div class="status-item-date"><h3>{{Ctrl.selectedJobObj.dateContract | date:'MM/dd/yyyy'}}</h3></div>
-        <div class="status-update"><a ui-sref="job.contract" class="button">Update</a></div>
+       
     </div>
 
     <div class="status-item">
-        <div class="status-item-title"><h4>ACTIVE</h4></div>
+        <div class="status-item-title"><h4>Active</h4></div>
         <div class="status-item-date"><h3>{{Ctrl.selectedJobObj.dateActive | date:'MM/dd/yyyy'}}</h3></div>
-        <div class="status-update"><a ui-sref="job.contract" class="button">Update</a></div>
+        
     </div>
 
     <div class="status-item">
-        <div class="status-item-title"><h4>COMPLETE</h4></div>
+        <div class="status-item-title"><h4>Complete</h4></div>
         <div class="status-item-date"><h3>{{Ctrl.selectedJobObj.dateComplete | date:'MM/dd/yyyy'}}</h3></div>
-        <div class="status-update"><a ui-sref="job.contract" class="button">Update</a></div>
+       
     </div>
 </div>
 </div>

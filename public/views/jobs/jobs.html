@@ -1,7 +1,12 @@
 <div ng-controller="JobsCtrl as Ctrl" class="page">
     <div class="page-title-bar"><h2>Jobs Summary</h2></div>
     <div ui-view>
-        <button ng-click="Ctrl.getManagerJobs()" type="button" class="button">Refresh List</button>
+        <div class="page-nav">
+            <button ng-click="Ctrl.getManagerJobs()" type="button" class="button">Refresh List</button>
+            <div></div>
+            <button ng-click="Ctrl.goNewJob()" type="button" class="button">New Job</button>
+        </div>
+       
         <div class="list-container">
             <div job-item id="{{e.PRIMARY_ID}}" status="{{e.status}}" details="Ctrl.showDetails"
                 property="{{e.propertyName}}" ng-repeat="e in Ctrl.jobs"></div> 

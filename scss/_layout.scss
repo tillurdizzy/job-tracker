@@ -4,7 +4,9 @@ body{
 	font-family:  'Jaldi', sans-serif;
 }
 
-
+.bold{
+  font-weight: 700;
+}
 
 .page{
   width:100%;
@@ -75,12 +77,15 @@ $status-item-height:32px;
   }
 
   .status-item-title{
-    background-color: $tertiary-color;
-    color:#fff;
+    background-color: #3a3a3a;
     width:100px;
-   
     height:$status-item-height;
-
+    h4{
+      color:#fff;
+      line-height:$status-item-height;
+      vertical-align: middle;
+      margin-left: 4px;
+    }
   }
 
   .status-item-date{
@@ -94,39 +99,51 @@ $status-item-height:32px;
   }
 }
 
+$summary-item-height:42px;
+
 .job-summary-item{
   display:flex;
-  height:$status-item-height;
-  margin-top: 3px;
+  height:$summary-item-height;
+  margin-top: 6px;
   background-color:#cccccc;
   button{
-    height:$status-item-height;
-    width:100px;
+    height:$summary-item-height;
+    width:105px;
     padding:0;
     transition: $secondary-color 0.25s ease-out, color 0.25s ease-out;
     background-color: $secondary-color;
   }
   button:hover, button:focus, .button:hover, .button:focus {
     background-color: $secondary-darker; }
+
   .stage{
-    
-    height:$status-item-height;
+    height:$summary-item-height;
     margin-left:5px;
     background-color: $tertiary-color;
     color:#fff;
     width:100px;
-   
-    height:$status-item-height;
+    h4{
+      width:100px;
+      line-height:$summary-item-height;
+      vertical-align: middle;
+      text-align: center;
+    }
   }
 
   .prop{
-    
-    height:$status-item-height;
+    height:$summary-item-height;
     margin-left:5px;
-    vertical-align: middle;
+    overflow: hidden;
+    h4{
+      margin-left:5px;
+      line-height:$summary-item-height;
+      vertical-align: middle;
+    }
   }
 
 }
+
+
 
 .top-bar{
   height:45px;
@@ -152,7 +169,7 @@ $status-item-height:32px;
 }
 
 .view-container{
-  width:100%;
+  max-width:640px;
 }
 
 .flex-column{

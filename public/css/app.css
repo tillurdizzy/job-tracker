@@ -385,6 +385,9 @@ p {
 body {
   font-family: 'Jaldi', sans-serif; }
 
+.bold {
+  font-weight: 700; }
+
 .page {
   width: 100%; }
   .page h4 {
@@ -435,10 +438,14 @@ body {
       padding: 8px 16px;
       width: 80px; }
   .status-container .status-item-title {
-    background-color: #AE1616;
-    color: #fff;
+    background-color: #3a3a3a;
     width: 100px;
     height: 32px; }
+    .status-container .status-item-title h4 {
+      color: #fff;
+      line-height: 32px;
+      vertical-align: middle;
+      margin-left: 4px; }
   .status-container .status-item-date {
     width: 100px;
     height: 32px;
@@ -448,28 +455,36 @@ body {
 
 .job-summary-item {
   display: flex;
-  height: 32px;
-  margin-top: 3px;
+  height: 42px;
+  margin-top: 6px;
   background-color: #cccccc; }
   .job-summary-item button {
-    height: 32px;
-    width: 100px;
+    height: 42px;
+    width: 105px;
     padding: 0;
     transition: #048F7B 0.25s ease-out, color 0.25s ease-out;
     background-color: #048F7B; }
   .job-summary-item button:hover, .job-summary-item button:focus, .job-summary-item .button:hover, .job-summary-item .button:focus {
-    background-color: #025C4F; }
+    background-color: #024d42; }
   .job-summary-item .stage {
-    height: 32px;
+    height: 42px;
     margin-left: 5px;
     background-color: #AE1616;
     color: #fff;
-    width: 100px;
-    height: 32px; }
+    width: 100px; }
+    .job-summary-item .stage h4 {
+      width: 100px;
+      line-height: 42px;
+      vertical-align: middle;
+      text-align: center; }
   .job-summary-item .prop {
-    height: 32px;
+    height: 42px;
     margin-left: 5px;
-    vertical-align: middle; }
+    overflow: hidden; }
+    .job-summary-item .prop h4 {
+      margin-left: 5px;
+      line-height: 42px;
+      vertical-align: middle; }
 
 .top-bar {
   height: 45px;
@@ -489,10 +504,10 @@ body {
     transition: #048F7B 0.25s ease-out, color 0.25s ease-out;
     background-color: #048F7B; }
   .top-bar button:hover, .top-bar button:focus, .top-bar .button:hover, .top-bar .button:focus {
-    background-color: #025C4F; }
+    background-color: #024d42; }
 
 .view-container {
-  width: 100%; }
+  max-width: 640px; }
 
 .flex-column {
   display: flex;
@@ -516,12 +531,12 @@ button, .button {
   border: 1px solid transparent;
   padding: 0.85em 1em;
   margin: 0;
-  background-color: #0463A1;
+  background-color: #048F7B;
   color: #fff;
   overflow: visible; }
 
 button:hover, button:focus, .button:hover, .button:focus {
-  background-color: #035489; }
+  background-color: #037a69; }
 
 button.large, .button.large {
   padding: 1.125rem 2.25rem 1.1875rem 2.25rem;
@@ -541,7 +556,7 @@ button.tiny, .button.tiny {
   margin: 10px 0; }
 
 .nav-btn:hover, .nav-btn:focus {
-  background-color: #025C4F; }
+  background-color: #024d42; }
 
 #site-wrapper {
   position: relative;
@@ -823,6 +838,8 @@ table {
 .text-block-display {
   margin: 10px 0;
   color: #000000; }
+  .text-block-display p {
+    margin: 6px 0 0 0; }
   .text-block-display h4 {
     margin: 0;
     padding: 0;
@@ -837,6 +854,9 @@ table {
     line-height: 1;
     font-weight: 400;
     font-family: 'Jaldi', sans-serif; }
+  .text-block-display ul {
+    margin: 8px 0;
+    padding: 0 0 0 20px; }
 
 .form-container {
   float: left;
@@ -852,10 +872,12 @@ table {
 
 .mobile-input {
   padding: 10px;
-  width: 550px; }
+  width: 100%;
+  box-sizing: border-box; }
 
 .mobile-input-item {
-  padding: 0 5px; }
+  padding: 0 5px;
+  box-sizing: border-box; }
   .mobile-input-item input[type="text"] {
     padding: .2rem;
     margin: 0 0 10px 0;
@@ -863,7 +885,8 @@ table {
     width: 100%;
     font-size: 28px;
     display: inline-block;
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 8px; }
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 8px;
+    box-sizing: border-box; }
   .mobile-input-item select {
     padding: .2rem;
     margin: 0 0 10px 0;
@@ -871,7 +894,8 @@ table {
     width: 100%;
     font-size: 28px;
     display: inline-block;
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 8px; }
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 8px;
+    box-sizing: border-box; }
   .mobile-input-item input[type="tel"] {
     display: inline-block;
     margin: 0 0 10px 0;
@@ -879,7 +903,8 @@ table {
     width: 100%;
     font-size: 28px;
     display: inline-block;
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 8px; }
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 8px;
+    box-sizing: border-box; }
   .mobile-input-item div {
     margin: 0 0 0.75em 0; }
   .mobile-input-item input[type="radio"] {

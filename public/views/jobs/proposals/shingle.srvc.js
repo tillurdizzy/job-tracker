@@ -267,7 +267,7 @@ app.service('ShingleSrvc',['$http','$q','SharedSrvc',function shingleStuff($http
 	};
 
 
-
+	
 	var getData = function(){
 		var deferred = $q.defer();
 		$http({method: 'POST', url: 'js/php/getShingleInvt.php'}).

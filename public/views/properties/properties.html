@@ -1,29 +1,16 @@
 <div class="page" ng-controller="PropertiesCtrl as Ctrl">
     <div class="page-title-bar"><h2>Properties</h2></div>
     <div ui-view>
-    	<div id="jobs-table-container">
-    	<button ng-click="Ctrl.getManagerJobs()" type="button" class="button">Refresh List</button>
-	        <div class="jobs-table">
-	            <div>
-	                <table st-table="Ctrl.properties" class="table table-striped">
-	                    <thead>
-	                        <tr>
-	                            <th id="tbl-width-70">Details</th>
-	                            <th id="tbl-width-190">Name</th>
-	                            <th id="tbl-width-190">Address</th>
-	                            
-	                        </tr>
-	                    </thead>
-	                    <tbody>
-	                        <tr ng-repeat="row in Ctrl.properties">
-	                            <td><button ng-click="Ctrl.showDetails($index)" type="button" class="button tbl-btn">Show</button></td>
-	                            <td>{{row.name}}</td>
-	                            <td>{{row.street + ", " + row.city}}</td>
-	                        </tr>
-	                    </tbody>
-	                </table>
-	            </div>
-	        </div>
-	    </div>
+    	<div class="page-nav">
+    		<button ng-click="Ctrl.getManagerJobs()" type="button" class="button">Refresh List</button>
+    		<div></div>
+    		<button ng-click="Ctrl.goNewProperty()" type="button" class="button">New Property</button>
+    	</div>
+    	<div class="list-container">
+            <div property-item id="{{e.PRIMARY_ID}}" name="{{e.name}}" details="Ctrl.showDetails"
+                address="{{e.street + ', ' + e.city}}" ng-repeat="e in Ctrl.properties">
+            </div> 
+        </div>
+	    
     </div>
 </div>

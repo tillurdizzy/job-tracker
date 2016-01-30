@@ -2,193 +2,201 @@
 app.controller('NewClientCtrl',['$state','evoDb','SharedSrvc',function ($state,evoDb,SharedSrvc) {
 
 	var DB = evoDb;
-	var Me = this;
+	var ME = this;
     var S = SharedSrvc;
-    Me.managerName = S.managerName;
+    ME.managerName = S.managerName;
     // Form elements
    
-    Me.T1="";
-    Me.T2="";
-    Me.T3="";
-    Me.T4="";
-    Me.T5="Houston";
-    Me.T6="TX";
-    Me.T7="";
-    Me.T8="";
-    Me.T9="";
-    Me.T10="";
+    ME.T1="";
+    ME.T2="";
+    ME.T3="";
+    ME.T4="";
+    ME.T5="Houston";
+    ME.T6="TX";
+    ME.T7="";
+    ME.T8="";
+    ME.T9="";
+    ME.T10="";
    
-    Me.inputField = "T1";
-    Me.inputMsg = "Field 1 of 10";
-    Me.isError = false;
+    var currentFieldNum = "1";
+    var numFields = "10";
+    ME.inputField = "T1";
+    ME.inputMsg = "Field 1 of 10";
+    ME.isError = false;
+
+    ME.goPrevious = function(num){
+        currentFieldNum = num;
+        ME.inputField="T" + num;
+        ME.inputMsg = "Field " + num +  " of " + numFields;
+    }
   
-    Me.submitT1=function(){
-        Me.inputMsg = "";
-        Me.isError = false;
-        if(Me.T1==""){//company
-            Me.isError = true;
-            Me.inputMsg = "This field cannot be blank.";
+    ME.submitT1=function(){
+        ME.inputMsg = "";
+        ME.isError = false;
+        if(ME.T1==""){//company
+            ME.isError = true;
+            ME.inputMsg = "This field cannot be blank.";
         }else{
-            Me.inputField="T2";
-            Me.inputMsg = "Field 2 of 10";
+            ME.inputField="T2";
+            ME.inputMsg = "Field 2 of " + numFields;;
         };
     };
 
-    Me.submitT2=function(){//first name
-        Me.inputMsg = "";
-        Me.isError = false;
-        if(Me.T2==""){
-            Me.isError = true;
-            Me.inputMsg = "This field cannot be blank.";
+    ME.submitT2=function(){//first name
+        ME.inputMsg = "";
+        ME.isError = false;
+        if(ME.T2==""){
+            ME.isError = true;
+            ME.inputMsg = "This field cannot be blank.";
         }else{
-            Me.inputField="T3";
-            Me.inputMsg = "Field 3 of 10";
+            ME.inputField="T3";
+            ME.inputMsg = "Field 3 of " + numFields;;
         }
     };
 
-    Me.submitT3=function(){//last name
-        Me.inputMsg = "";
-        Me.isError = false;
-        if(Me.T3==""){
-            Me.isError = true;
-            Me.inputMsg = "This field cannot be blank.";
+    ME.submitT3=function(){//last name
+        ME.inputMsg = "";
+        ME.isError = false;
+        if(ME.T3==""){
+            ME.isError = true;
+            ME.inputMsg = "This field cannot be blank.";
         }else{
-            Me.inputField="T4";
-            Me.inputMsg = "Field 4 of 10";
+            ME.inputField="T4";
+            ME.inputMsg = "Field 4 of " + numFields;;
         }
     };
 
-    Me.submitT4=function(){//street
-        Me.inputMsg = "";
-        Me.isError = false;
-       if(Me.T4==""){
-            Me.isError = true;
-            Me.inputMsg = "This field cannot be blank.";
+    ME.submitT4=function(){//street
+        ME.inputMsg = "";
+        ME.isError = false;
+       if(ME.T4==""){
+            ME.isError = true;
+            ME.inputMsg = "This field cannot be blank.";
         }else{
-            Me.inputField="T5";
-            Me.inputMsg = "Field 5 of 10";
+            ME.inputField="T5";
+            ME.inputMsg = "Field 5 of " + numFields;;
         }
     };
 
-    Me.submitT5=function(){//city
-        Me.inputMsg = "";
-        Me.isError = false;
-       if(Me.T5==""){
-            Me.isError = true;
-            Me.inputMsg = "This field cannot be blank.";
+    ME.submitT5=function(){//city
+        ME.inputMsg = "";
+        ME.isError = false;
+       if(ME.T5==""){
+            ME.isError = true;
+            ME.inputMsg = "This field cannot be blank.";
         }else{
-            Me.inputField="T6";
-            Me.inputMsg = "Field 6 of 10";
+            ME.inputField="T6";
+            ME.inputMsg = "Field 6 of " + numFields;;
         }
     };
 
-    Me.submitT6=function(){//state
-        Me.inputMsg = "";
-        Me.isError = false;
-       if(Me.T6==""){
-            Me.isError = true;
-            Me.inputMsg = "This field cannot be blank.";
+    ME.submitT6=function(){//state
+        ME.inputMsg = "";
+        ME.isError = false;
+       if(ME.T6==""){
+            ME.isError = true;
+            ME.inputMsg = "This field cannot be blank.";
         }else{
-            Me.inputField="T7";
-            Me.inputMsg = "Field 7 of 10";
+            ME.inputField="T7";
+            ME.inputMsg = "Field 7 of 10";
         }
     };
 
-    Me.submitT7=function(){
-        Me.inputMsg = "";
-        Me.isError = false;
-        if(Me.T7==""){//zip
-            Me.isError = true;
-            Me.inputMsg = "This field cannot be blank.";
+    ME.submitT7=function(){
+        ME.inputMsg = "";
+        ME.isError = false;
+        if(ME.T7==""){//zip
+            ME.isError = true;
+            ME.inputMsg = "This field cannot be blank.";
         }else{
-            Me.inputField="T8";
-            Me.inputMsg = "Field 8 of 10";
+            ME.inputField="T8";
+            ME.inputMsg = "Field 8 of 10";
         }
     };
 
-    Me.submitT8=function(){
-        Me.inputMsg = "";
-        Me.isError = false;
-        if(Me.T8==""){//mobile phone
-            Me.isError = true;
-            Me.inputMsg = "This field cannot be blank.";
+    ME.submitT8=function(){
+        ME.inputMsg = "";
+        ME.isError = false;
+        if(ME.T8==""){//mobile phone
+            ME.isError = true;
+            ME.inputMsg = "This field cannot be blank.";
         }else{
-            Me.inputField="T9";
-            Me.inputMsg = "Field 9 of 10";
+            ME.inputField="T9";
+            ME.inputMsg = "Field 9 of 10";
         }
     };
 
-    Me.submitT9=function(){
-        Me.inputMsg = "";
-        Me.isError = false;
-        if(Me.T9==""){//business phone
-            Me.isError = true;
-            Me.inputMsg = "This field cannot be blank.";
+    ME.submitT9=function(){
+        ME.inputMsg = "";
+        ME.isError = false;
+        if(ME.T9==""){//business phone
+            ME.isError = true;
+            ME.inputMsg = "This field cannot be blank.";
         }else{
-            Me.inputField="T10";
-            Me.inputMsg = "Field 10 of 10";
+            ME.inputField="T10";
+            ME.inputMsg = "Field 10 of 10";
         }
     };
 
-    Me.submitT10=function(){
-        Me.inputMsg = "";
-        Me.isError = false;
-       if(Me.T10==""){//email
-            Me.isError = true;
-            Me.inputMsg = "This field cannot be blank.";
+    ME.submitT10=function(){
+        ME.inputMsg = "";
+        ME.isError = false;
+       if(ME.T10==""){//email
+            ME.isError = true;
+            ME.inputMsg = "This field cannot be blank.";
         }else{
-            Me.inputField="SUBMIT";
-            Me.inputMsg = "";
+            ME.inputField="SUBMIT";
+            ME.inputMsg = "";
         }
     };
 
   
-    Me.submitForm = function(){
-        Me.isError = false;
+    ME.submitForm = function(){
+        ME.isError = false;
         var dataObj = {};
         dataObj.manager = S.manager;
-        dataObj.company = Me.T1;
-        dataObj.name_first = Me.T2;
-        dataObj.name_last = Me.T3;
-        dataObj.street = Me.T4;
-        dataObj.city = Me.T5;
-        dataObj.state = Me.T6;
-        dataObj.zip = Me.T7;
-        dataObj.phone_cell = Me.T8;
-        dataObj.phone_bus = Me.T9;
-        dataObj.email = Me.T10;
+        dataObj.company = ME.T1;
+        dataObj.name_first = ME.T2;
+        dataObj.name_last = ME.T3;
+        dataObj.street = ME.T4;
+        dataObj.city = ME.T5;
+        dataObj.state = ME.T6;
+        dataObj.zip = ME.T7;
+        dataObj.phone_cell = ME.T8;
+        dataObj.phone_bus = ME.T9;
+        dataObj.email = ME.T10;
         var result = DB.putClient(dataObj)
         .then(function(result){
             if(result != false){
-               Me.inputField="SUCCESS";
+               ME.inputField="SUCCESS";
                ME.getManagerProperties();
             }else{
-                Me.dataError();
+                ME.dataError();
             }                 
         },function(error){
-            Me.dataError();
+            ME.dataError();
         });
     };
 
-    Me.dataError = function(){
-        Me.inputField="ERROR";
-        Me.isError = true;
-        Me.inputMsg = "Submit Error.  Try again.";
+    ME.dataError = function(){
+        ME.inputField="ERROR";
+        ME.isError = true;
+        ME.inputMsg = "Submit Error.  Try again.";
     };
 
-    Me.clearForm = function(){
-        Me.T1 = "";
-        Me.T2 = "";
-        Me.T3 = "";
-        Me.T4 = "";
-        Me.T5 = "";
-        Me.T6 = "";
-        Me.T7 = "";
-        Me.T8 = "";
-        Me.T9 = "";
-        Me.T10 = "";
-        Me.isError = false;
-        Me.inputField="INFO";
+    ME.clearForm = function(){
+        ME.T1 = "";
+        ME.T2 = "";
+        ME.T3 = "";
+        ME.T4 = "";
+        ME.T5 = "";
+        ME.T6 = "";
+        ME.T7 = "";
+        ME.T8 = "";
+        ME.T9 = "";
+        ME.T10 = "";
+        ME.isError = false;
+        ME.inputField="INFO";
     };
 
     ME.getManagerProperties = function(){

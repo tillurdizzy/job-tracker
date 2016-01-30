@@ -1,6 +1,6 @@
 'use strict';
 
-app.controller('PropertiesCtrl',['$state','evoDb','SharedSrvc',function ($state,evoDb,SharedSrvc) {
+app.controller('PropertiesCtrl',['$scope','$state','evoDb','SharedSrvc',function ($scope,$state,evoDb,SharedSrvc) {
 	var DB =  evoDb;
 	var ME = this;
 	var S = SharedSrvc;
@@ -12,14 +12,26 @@ app.controller('PropertiesCtrl',['$state','evoDb','SharedSrvc',function ($state,
 	// data vars
 	ME.properties = S.managerProperties;
 
-	ME.showDetails = function(ndx){
-		ME.selectedPropertyObj = ME.properties[ndx];
+	ME.showDetails = function(ndxStr){
+		var ndx = Number(ndxStr);
+		for (var i = 0; i < ME.properties.length; i++) {
+			if(ME.properties[i].PRIMARY_ID == ndx){
+				ME.selectedPropertyObj = ME.properties[i];
+				continue;
+			}
+		};
+		
+		// Send client selection to shared
 		S.selectProperty(ME.selectedPropertyObj);
 		$state.transitionTo("properties.details");
 	};
 
 	ME.backToList = function(){
       $state.transitionTo("properties");
+    };
+    
+    ME.goNewProperty = function(){
+      $state.transitionTo("addNewProperty");
     };
 
     ME.getManagerJobs = function(){

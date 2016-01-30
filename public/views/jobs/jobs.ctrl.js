@@ -15,9 +15,6 @@ app.controller('JobsCtrl',['$location','$state','evoDb','$scope','SharedSrvc',fu
     ME.selectedPropertyObj = ME.S.selectedPropertyObj;
     ME.jobStatus = [];
 
-	//form vars
-	ME.newJobForm = false;
-	ME.invalid = false;
 
 	ME.showDetails = function(ndxStr){
 		var ndx = Number(ndxStr);
@@ -36,6 +33,10 @@ app.controller('JobsCtrl',['$location','$state','evoDb','$scope','SharedSrvc',fu
 
 	 ME.backToList = function(){
       $state.transitionTo("jobs");
+    };
+
+    ME.goNewJob = function(){
+      $state.transitionTo("addNewJob");
     };
 
 	

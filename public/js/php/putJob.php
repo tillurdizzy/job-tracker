@@ -14,16 +14,16 @@ $manager = mysqli_real_escape_string($con,$data->manager);
 $property = mysqli_real_escape_string($con,$data->property);
 $client = mysqli_real_escape_string($con,$data->client);
 $status = mysqli_real_escape_string($con,$data->status);
-$dateProposal = mysqli_real_escape_string($con,$data->dateProposal);
+$dateProspect = mysqli_real_escape_string($con,$data->dateProspect);
 
-$query = "INSERT INTO jobs_list(jobNumber,manager,property,client,status,dateProposal)
+$query = "INSERT INTO jobs_list(jobNumber,manager,property,client,status,dateProspect)
 VALUES(
 '" . $jobNumber . "', " .
 "'" . $manager . "', " .
 "'" . $property . "', " .
 "'" . $client . "', " .
 "'" . $status . "', " .
-"'" . $dateProposal . "')";
+"'" . $dateProspect . "')";
 $qry_res = mysqli_query($con,$query);
 if ($qry_res) {
 	$last_id = mysqli_insert_id($con);

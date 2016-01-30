@@ -2,7 +2,7 @@
     <div class="page-title-bar"><h2>Add New Client</h2></div>
     <div class="mobile-input">
         <div class="mobile-input-item" ng-show="Ctrl.inputField == 'T1'">
-            <h3>Company</h3>
+            <h3>Company Name</h3>
             <input name="T1" type="text" ng-model="Ctrl.T1"/>
             <div class="page-nav">
                 <div class="page-nav-left">
@@ -18,7 +18,7 @@
             <input name="T2" type="text" ng-model="Ctrl.T2"/>
             <div class="page-nav">
                 <div class="page-nav-left">
-                    <i ng-click="Ctrl.inputField='T1'" class="fa fa-arrow-circle-left fa-3x"></i>
+                    <i ng-click="Ctrl.goPrevious('1')" class="fa fa-arrow-circle-left fa-3x"></i>
                 </div>
                 <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">{{Ctrl.inputMsg}}</div>
                 <div class="page-nav-right">
@@ -31,7 +31,7 @@
             <input name="T3" type="text" ng-model="Ctrl.T3"/>
             <div class="page-nav">
                 <div class="page-nav-left">
-                    <i ng-click="Ctrl.inputField='T2'" class="fa fa-arrow-circle-left fa-3x"></i>
+                    <i ng-click="Ctrl.goPrevious('2')" class="fa fa-arrow-circle-left fa-3x"></i>
                 </div>
                 <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">{{Ctrl.inputMsg}}</div>
                 <div class="page-nav-right">
@@ -44,7 +44,7 @@
             <input name="T4" type="text" ng-model="Ctrl.T4"/>
             <div class="page-nav">
                 <div class="page-nav-left">
-                    <i ng-click="Ctrl.inputField='T3'" class="fa fa-arrow-circle-left fa-3x"></i>
+                    <i ng-click="Ctrl.goPrevious('3')" class="fa fa-arrow-circle-left fa-3x"></i>
                 </div>
                 <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">{{Ctrl.inputMsg}}</div>
                 <div class="page-nav-right">
@@ -57,7 +57,7 @@
             <input name="T5" type="text" ng-model="Ctrl.T5"/>
             <div class="page-nav">
                 <div class="page-nav-left">
-                    <i ng-click="Ctrl.inputField='T4'" class="fa fa-arrow-circle-left fa-3x"></i>
+                    <i ng-click="Ctrl.goPrevious('4')" class="fa fa-arrow-circle-left fa-3x"></i>
                 </div>
                 <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">{{Ctrl.inputMsg}}</div>
                 <div class="page-nav-right">
@@ -70,7 +70,7 @@
             <input name="T6" type="text" ng-model="Ctrl.T6"/>
             <div class="page-nav">
                 <div class="page-nav-left">
-                    <i ng-click="Ctrl.inputField='T5'" class="fa fa-arrow-circle-left fa-3x"></i>
+                    <i ng-click="Ctrl.goPrevious('5')" class="fa fa-arrow-circle-left fa-3x"></i>
                 </div>
                 <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">{{Ctrl.inputMsg}}</div>
                 <div class="page-nav-right">
@@ -83,7 +83,7 @@
             <input name="T7" type="tel" ng-model="Ctrl.T7"/>
             <div class="page-nav">
                 <div class="page-nav-left">
-                    <i ng-click="Ctrl.inputField='T6'" class="fa fa-arrow-circle-left fa-3x"></i>
+                    <i ng-click="Ctrl.goPrevious('6')" class="fa fa-arrow-circle-left fa-3x"></i>
                 </div>
                 <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">{{Ctrl.inputMsg}}</div>
                 <div class="page-nav-right">
@@ -96,7 +96,7 @@
             <input name="T8" type="tel" ng-model="Ctrl.T8"/>
             <div class="page-nav">
                 <div class="page-nav-left">
-                    <i ng-click="Ctrl.inputField='T7'" class="fa fa-arrow-circle-left fa-3x"></i>
+                    <i ng-click="Ctrl.goPrevious('7')" class="fa fa-arrow-circle-left fa-3x"></i>
                 </div>
                 <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">{{Ctrl.inputMsg}}</div>
                 <div class="page-nav-right">
@@ -109,7 +109,7 @@
             <input name="T9" type="tel" ng-model="Ctrl.T9"/>
             <div class="page-nav">
                 <div class="page-nav-left">
-                    <i ng-click="Ctrl.inputField='T8'" class="fa fa-arrow-circle-left fa-3x"></i>
+                    <i ng-click="Ctrl.goPrevious('8')" class="fa fa-arrow-circle-left fa-3x"></i>
                 </div>
                 <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">{{Ctrl.inputMsg}}</div>
                 <div class="page-nav-right">
@@ -122,7 +122,7 @@
             <input name="T10" type="email" ng-model="Ctrl.T10"/>
             <div class="page-nav">
                 <div class="page-nav-left">
-                    <i ng-click="Ctrl.inputField='T9'" class="fa fa-arrow-circle-left fa-3x"></i>
+                    <i ng-click="Ctrl.goPrevious('9')" class="fa fa-arrow-circle-left fa-3x"></i>
                 </div>
                 <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">{{Ctrl.inputMsg}}</div>
                 <div class="page-nav-right">
@@ -145,7 +145,7 @@
             </div>
             <div class="page-nav">
                 <div class="page-nav-left">
-                    <i ng-click="Ctrl.inputField='T10'" class="fa fa-arrow-circle-left fa-3x"></i>
+                    <i ng-click="Ctrl.goPrevious('10')" class="fa fa-arrow-circle-left fa-3x"></i>
                 </div>
                 <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">{{Ctrl.inputMsg}}</div>
                 <div class="page-nav-right">
