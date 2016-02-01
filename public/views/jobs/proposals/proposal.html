@@ -17,8 +17,9 @@
             <h2>Materials</h2>
         </div>
         <div class="list-container">
-            <div job-item id="{{e.PRIMARY_ID}}" status="{{e.status}}" details="Ctrl.showDetails"
-                property="{{e.propertyName}}" ng-repeat="e in Ctrl.jobs"></div> 
+            <div material-item id="{{e.PRIMARY_ID}}" code="{{e.Code}}" item="{{e.Item}}" qty="{{e.Qty}}" price="{{e.Price}}" unit="{{e.Unit}}" 
+            details="Ctrl.showEdit" details="Ctrl.submitEdit"
+            ng-repeat="e in Ctrl.jobMaterials"></div> 
         </div>
     </div>
 </div>

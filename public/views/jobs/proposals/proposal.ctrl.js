@@ -15,21 +15,11 @@ app.controller('ProposalCtrl',['$location','$state','evoDb','$scope','SharedSrvc
     ME.selectedClientObj = S.selectedClientObj;
     ME.selectedPropertyObj = S.selectedPropertyObj;
     ME.proposalDate = ME.selectedJobObj.dateProposal;
+    ME.jobMaterials = [];
 
-
-	ME.showDetails = function(ndxStr){
+	ME.submitEdit = function(ndx){
 		var ndx = Number(ndxStr);
-		for (var i = 0; i < ME.jobs.length; i++) {
-			if(ME.jobs[i].PRIMARY_ID == ndx){
-				ME.selectedJobObj = ME.jobs[i];
-			}
-		};
 		
-		// Send job selection to shared
-		S.selectJob(ME.selectedJobObj);
-		ME.selectedClientObj = S.selectedClientObj;
-    	ME.selectedPropertyObj = S.selectedPropertyObj;
-		$state.transitionTo("jobs.details");
 	};
 
 	ME.backToList = function(){
@@ -38,22 +28,20 @@ app.controller('ProposalCtrl',['$location','$state','evoDb','$scope','SharedSrvc
 
 	
 	var initPage = function(){
-		if(ME.proposalDate > 0){
-
-		}
+		getJobMaterials();
 	};
 
-	ME.getManagerProperties = function(){
-		var result = DB.getManagerProperties()
+	var getJobMaterials = function(){
+		var result = DB.getJobMaterials()
         .then(function(result){
             if(result != false){
             	// DB sent the data to the SharedSrvc
 				// Don't do anything here
             }else{
-              ME.dataError("JobsCtrl-getManagerProperties()-1",result); 
+              ME.dataError("ProposalCtrl-getJobMaterials()-1",result); 
             }
         },function(error){
-            ME.dataError("JobsCtrl-getManagerProperties()-2",result);
+            ME.dataError("ProposalCtrl-getJobMaterials()-2",result);
         });
 	};
 
@@ -62,9 +50,7 @@ app.controller('ProposalCtrl',['$location','$state','evoDb','$scope','SharedSrvc
 	};
 
 
-    $scope.$watch( function () { return S.managerJobs; }, function ( jobs ) {
-	  ME.jobs = jobs;
-	});
+   
 
 	initPage();
 

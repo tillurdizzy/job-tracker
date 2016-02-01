@@ -3,7 +3,7 @@ app.service('ShingleSrvc',['$http','$q','SharedSrvc',function shingleStuff($http
 	var self = this;
 	self.ME = "ShingleSrvc: ";
 	var S = SharedSrvc;
-	
+	self.jobMaterials = [];
 
 	// Form items
 	self.FIELD;
@@ -267,8 +267,8 @@ app.service('ShingleSrvc',['$http','$q','SharedSrvc',function shingleStuff($http
 	};
 
 
-	
-	var getData = function(){
+
+	var getInventory = function(){
 		var deferred = $q.defer();
 		$http({method: 'POST', url: 'js/php/getShingleInvt.php'}).
 		success(function(data, status) {
@@ -285,7 +285,7 @@ app.service('ShingleSrvc',['$http','$q','SharedSrvc',function shingleStuff($http
 	};
 
 	var initService = function(){
-		var rawData = getData()
+		var rawData = getInventory()
 		.then(function(rawData){
             if(rawData != false){
                processInventory(rawData);
@@ -296,6 +296,8 @@ app.service('ShingleSrvc',['$http','$q','SharedSrvc',function shingleStuff($http
         },function(error){
            
         });
+
+
 	};
 
 	initService();

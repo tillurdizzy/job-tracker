@@ -228,6 +228,30 @@ app.service('evoDb',['$http','$q','SharedSrvc',function eventQueries($http,$q,Sh
 	    return deferred.promise;
 	}
 
+	self.getJobMaterials = function(jobIDObj){
+		var deferred = $q.defer();
+		$http({method: 'POST', url: 'js/php/getJobMaterials.php',data:jobIDObj}).
+		success(function(data, status, headers, config) {
+     		deferred.resolve(data);
+	    }).
+	    error(function(data, status, headers, config) {
+			deferred.reject(data);
+	    });
+	    return deferred.promise;
+	}
+
+	self.updateMaterialsItem = function(primaryIDObj){
+		var deferred = $q.defer();
+		$http({method: 'POST', url: 'js/php/updateMaterialsItem.php',data:primaryIDObj}).
+		success(function(data, status, headers, config) {
+     		deferred.resolve(data);
+	    }).
+	    error(function(data, status, headers, config) {
+			deferred.reject(data);
+	    });
+	    return deferred.promise;
+	}
+
 	
 	return self;
 }]);
