@@ -15,7 +15,7 @@ app.controller('ProposalCtrl',['$location','$state','evoDb','$scope','SharedSrvc
     ME.selectedClientObj = S.selectedClientObj;
     ME.selectedPropertyObj = S.selectedPropertyObj;
     ME.proposalDate = ME.selectedJobObj.dateProposal;
-    ME.jobMaterials = [];
+    ME.jobInput = [];
 
 	ME.submitEdit = function(ndx){
 		var ndx = Number(ndxStr);
@@ -28,29 +28,25 @@ app.controller('ProposalCtrl',['$location','$state','evoDb','$scope','SharedSrvc
 
 	
 	var initPage = function(){
-		getJobMaterials();
+		getJobInput();
 	};
 
-	var getJobMaterials = function(){
-		var result = DB.getJobMaterials()
-        .then(function(result){
-            if(result != false){
-            	// DB sent the data to the SharedSrvc
-				// Don't do anything here
+	var getJobInput = function(){
+		var jobData = SRVC.getJobInput()
+		.then(function(jobData){
+            if(jobData != false){
+               ME.jobInput = jobData;
             }else{
-              ME.dataError("ProposalCtrl-getJobMaterials()-1",result); 
+               
             }
         },function(error){
-            ME.dataError("ProposalCtrl-getJobMaterials()-2",result);
+           
         });
 	};
-
+		
 	ME.dataError = function(loc,error){
 		console.log(loc + " : " + error);
 	};
-
-
-   
 
 	initPage();
 

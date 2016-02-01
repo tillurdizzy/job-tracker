@@ -2,7 +2,7 @@
 ini_set('display_errors', 'On');
 error_reporting(E_ALL | E_STRICT);
 $data = json_decode(file_get_contents("php://input"));
-require_once ('vo/propertyVO.php');
+require_once ('vo/shingleItemsVO.php');
 
 define( "DATABASE_SERVER", "jobtracker.db.10253438.hostedresource.com");
 define( "DATABASE_USERNAME", "jobtracker");
@@ -10,24 +10,16 @@ define( "DATABASE_PASSWORD", "Sadie9954!");
 define( "DATABASE_NAME", "jobtracker");
 //connect to the database.
 $con = mysqli_connect(DATABASE_SERVER, DATABASE_USERNAME, DATABASE_PASSWORD,DATABASE_NAME) or die ('ERROR!!!');
-$query = sprintf("SELECT * FROM property");
+$id = mysqli_real_escape_string($con,$data->id);
+//Can use either PRIMARY_ID or JobNumber; both should be unique
+$query = sprintf("SELECT * FROM shingle_input_items");
 $result = mysqli_query($con,$query);
 $resultValueObjects = array();
 while ($row = mysqli_fetch_object($result)) {
-	$oneVO = new propertyVO();
+	$oneVO = new shingleItemsVO();
 	$oneVO->PRIMARY_ID = $row->PRIMARY_ID;
-	$oneVO->manager = $row->manager;
-	$oneVO->client = $row->client;
-	$oneVO->name = $row->name;
-	$oneVO->street = $row->street;
-	$oneVO->city = $row->city;
-	$oneVO->state = $row->state;
-	$oneVO->zip = $row->zip;
-	$oneVO->class = $row->class;
-	$oneVO->roof = $row->roof;
-	$oneVO->description = $row->description;
-	$oneVO->layers = $row->layers;
-	
+	$oneVO->item = $row->item;
+	$oneVO->code = $row->code;
 	array_push( $resultValueObjects, $oneVO );
 }
 echo json_encode($resultValueObjects);
