@@ -379,6 +379,13 @@ h4 {
   margin: 0;
   font-family: 'Open Sans', sans-serif; }
 
+h5 {
+  font-size: .9em;
+  font-weight: 700;
+  padding: 0;
+  margin: 0;
+  font-family: 'Open Sans', sans-serif; }
+
 p {
   font-size: .9em; }
 
@@ -940,6 +947,45 @@ table {
 .list-container {
   width: 100%;
   max-width: 640px; }
+  .list-container .job-items-container {
+    display: flex;
+    margin: 4px 0 0 0;
+    height: 36px; }
+    .list-container .job-items-container .job-item-name {
+      height: 36px;
+      width: 150px;
+      background-color: #3a3a3a;
+      color: #fff;
+      margin: 0 4px 0 0;
+      padding-left: 3px; }
+      .list-container .job-items-container .job-item-name h4 {
+        width: 100px;
+        line-height: 36px;
+        vertical-align: middle;
+        text-align: center; }
+    .list-container .job-items-container .job-item-qty {
+      height: 36px;
+      width: 60px;
+      background-color: #5a5a5a;
+      color: #000;
+      margin: 0 4px 0 0; }
+    .list-container .job-items-container .job-item-input {
+      width: 50px;
+      height: 36px;
+      margin: 0 4px 0 0; }
+      .list-container .job-items-container .job-item-input input[type="tel"] {
+        height: 36px;
+        display: inline-block;
+        width: 46px; }
+    .list-container .job-items-container .job-item-icon {
+      height: 36px;
+      width: 80px;
+      margin: 0 0 0 4px;
+      cursor: pointer;
+      background-color: #048F7B; }
+      .list-container .job-items-container .job-item-icon i {
+        vertical-align: middle;
+        horizontal-align: center; }
 
 @media all and (max-height: 900px) {
   footer {

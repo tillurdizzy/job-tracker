@@ -5,7 +5,7 @@ app.service('ShingleSrvc',['$http','$q','SharedSrvc',function shingleStuff($http
 	var S = SharedSrvc;
 
 	// Shingle materials inventory
-	self.roofMaterials = [];
+	self.jobMaterials = [];
 	// Field input items
 	self.inputFields = [];
 	// Specific job data
@@ -24,6 +24,7 @@ app.service('ShingleSrvc',['$http','$q','SharedSrvc',function shingleStuff($http
 		var deferred = $q.defer();
 		$http({method: 'POST', url: 'js/php/getShingleItems.php'}).
 		success(function(data, status) {
+			console.log(data);
 			if(typeof data != 'string' && data.length > 0){
      			deferred.resolve(data);
 			}else{
@@ -40,6 +41,7 @@ app.service('ShingleSrvc',['$http','$q','SharedSrvc',function shingleStuff($http
 		var deferred = $q.defer();
 		$http({method: 'POST', url: 'js/php/getShingleInvt.php'}).
 		success(function(data, status) {
+			console.log(data);
 			if(typeof data != 'string' && data.length > 0){
      			deferred.resolve(data);
 			}else{
@@ -52,9 +54,9 @@ app.service('ShingleSrvc',['$http','$q','SharedSrvc',function shingleStuff($http
 	    return deferred.promise;
 	};
 
-	var getJobInput = function(){
+	self.getJobInput = function(){
 		var deferred = $q.defer();
-		$http({method: 'POST', url: 'js/php/getJobInputShingle.php'}).
+		$http({method: 'POST', url: 'js/php/getJobInput.php'}).
 		success(function(data, status) {
 			if(typeof data != 'string' && data.length > 0){
      			deferred.resolve(data);
@@ -76,6 +78,7 @@ app.service('ShingleSrvc',['$http','$q','SharedSrvc',function shingleStuff($http
 		.then(function(fields){
             if(fields != false){
                self.inputFields = fields;
+               console.log("getShingleItems");
             }else{
                
             }
@@ -87,7 +90,8 @@ app.service('ShingleSrvc',['$http','$q','SharedSrvc',function shingleStuff($http
 		var invtData = getInventory()
 		.then(function(invtData){
             if(invtData != false){
-               self.roofMaterials = invtData;
+               self.jobMaterials = invtData;
+               console.log("getInventory");
                setProps();
             }else{
                
@@ -95,11 +99,9 @@ app.service('ShingleSrvc',['$http','$q','SharedSrvc',function shingleStuff($http
         },function(error){
            
         });
-
-       
 	};
 
-	// Need 3 DB calls on init
+	// Need 2 DB calls on init, and one called from Ctrl
 	// 1. List of shingle inventory items (generic)
 	// 2. List of shingle input field items (generic)
 	// 3. List of inputs for this job (job-specific)

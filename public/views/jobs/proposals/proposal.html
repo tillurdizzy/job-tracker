@@ -14,12 +14,12 @@
             <h3>Description: {{Ctrl.selectedPropertyObj.description}}</h3>
         </div>
         <div class="section-header">
-            <h2>Materials</h2>
+            <h2>Roof Description</h2>
         </div>
         <div class="list-container">
-            <div material-item id="{{e.PRIMARY_ID}}" code="{{e.Code}}" item="{{e.Item}}" qty="{{e.Qty}}" price="{{e.Price}}" unit="{{e.Unit}}" 
-            details="Ctrl.showEdit" details="Ctrl.submitEdit"
-            ng-repeat="e in Ctrl.jobMaterials"></div> 
+            <div job-input-item id="{{e.PRIMARY_ID}}" code="{{e.code}}" item="{{e.item}}" qty="{{e.qty}}" unit="{{e.unit}}" 
+            submit="Ctrl.submitItemQty"
+            ng-repeat="e in Ctrl.jobInputFields"></div> 
         </div>
     </div>
 </div>
