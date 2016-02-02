@@ -959,28 +959,33 @@ table {
       margin: 0 4px 0 0;
       padding-left: 3px; }
       .list-container .job-items-container .job-item-name h4 {
-        width: 100px;
         line-height: 36px;
         vertical-align: middle;
-        text-align: center; }
+        text-align: left; }
     .list-container .job-items-container .job-item-qty {
       height: 36px;
       width: 60px;
-      background-color: #5a5a5a;
+      background-color: #3a3a3a;
       color: #000;
       margin: 0 4px 0 0; }
+      .list-container .job-items-container .job-item-qty h3 {
+        color: #f2ce10;
+        line-height: 36px;
+        vertical-align: middle;
+        text-align: center; }
     .list-container .job-items-container .job-item-input {
       width: 50px;
       height: 36px;
       margin: 0 4px 0 0; }
       .list-container .job-items-container .job-item-input input[type="tel"] {
-        height: 36px;
+        height: 32px;
         display: inline-block;
         width: 46px; }
     .list-container .job-items-container .job-item-icon {
-      height: 36px;
-      width: 80px;
+      height: 28px;
+      width: 40px;
       margin: 0 0 0 4px;
+      padding: 2px 2px;
       cursor: pointer;
       background-color: #048F7B; }
       .list-container .job-items-container .job-item-icon i {
