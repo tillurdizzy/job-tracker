@@ -54,9 +54,10 @@ app.service('ShingleSrvc',['$http','$q','SharedSrvc',function shingleStuff($http
 	    return deferred.promise;
 	};
 
-	self.getJobInput = function(){
+	self.getJobInput = function(id){
+		var dataObj = {job_id:id};
 		var deferred = $q.defer();
-		$http({method: 'POST', url: 'js/php/getJobInput.php'}).
+		$http({method: 'POST', url: 'js/php/getJobInput.php',data:dataObj}).
 		success(function(data, status) {
 			if(typeof data != 'string' && data.length > 0){
      			deferred.resolve(data);

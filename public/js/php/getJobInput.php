@@ -11,9 +11,9 @@ define( "DATABASE_NAME", "jobtracker");
 //connect to the database.
 $con = mysqli_connect(DATABASE_SERVER, DATABASE_USERNAME, DATABASE_PASSWORD,DATABASE_NAME) or die ('ERROR!!!');
 $job_id = mysqli_real_escape_string($con,$data->job_id);
-//Can use either PRIMARY_ID or JobNumber; both should be unique
-$query = sprintf("SELECT * FROM jobs_items WHERE job_id = '".$job_id."'");
-$result = mysqli_query($con,$query);
+
+$query = sprintf("SELECT * FROM job_items WHERE job_id = '".$job_id."'");
+$result = mysqli_query($con,$query)or die(mysqli_error($con));
 $resultValueObjects = array();
 while ($row = mysqli_fetch_object($result)) {
 	$oneVO = new jobItemsVO();

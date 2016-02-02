@@ -194,24 +194,38 @@ $job-item-height:36px;
 		      	vertical-align: middle;
 		      	text-align: center;
 			}
+		}
 
+		.job-item-unit{
+			height:$job-item-height;
+			width:100px;
+			background-color: #3a3a3a;
+			color:#000;
+			margin:0 4px 0 0;
+			padding:0 0 0 4px;
+			h3{
+				color:#f2ce10;
+				line-height:$job-item-height;
+		      	vertical-align: middle;
+		      	text-align: left;
+			}
 		}
 		.job-item-input{
 			width:50px;
 			height:$job-item-height;
 			margin:0 4px 0 0;
 			input[type="tel"] {
-				height:28px;
+				height:30px;
 	    		display:inline-block;
 	    		width:44px;
 	    		text-align: right;
 			}
 		}
 		.job-item-icon{
-			height:28px;
+			height:31px;
 			width:40px;
 			margin: 0 0 0 4px;
-			padding:2px 2px;
+			padding:2px 8px;
 			cursor: pointer;
 			background-color: $secondary-color;
 			i{

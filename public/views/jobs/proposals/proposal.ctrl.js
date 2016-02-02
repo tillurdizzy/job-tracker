@@ -37,6 +37,7 @@ app.controller('ProposalCtrl',['$location','$state','evoDb','$scope','SharedSrvc
     	// Place any recorded Qty from jobInput into jobInputFields for view display
     	for (var i = 0; i < ME.jobInputFields.length; i++) {
     		var itemCode = ME.jobInputFields[i].code;
+    		ME.jobInputFields[i].qty = "0";
     		for (var x = 0; x < ME.jobInput.length; x++) {
     			if(ME.jobInput[x].item_code == itemCode){
     				ME.jobInputFields[i].qty = ME.jobInput[x].qty;
@@ -47,18 +48,18 @@ app.controller('ProposalCtrl',['$location','$state','evoDb','$scope','SharedSrvc
 
 	
 	var initPage = function(){
+		ME.jobInputFields = ME.SRVC.inputFields.slice(0);
 		getJobInput();
-		ME.jobInputFields = ME.SRVC.inputFields;
 	};
 
 	var getJobInput = function(){
 		var jobData = ME.SRVC.getJobInput(ME.selectedJobObj.PRIMARY_ID)
 		.then(function(jobData){
-            if(jobData != false){
+            if(jobData != false){// false just meaqns there were no records found
                ME.jobInput = jobData;
                assembleFeed();
             }else{
-               
+               assembleFeed();
             }
         },function(error){
            

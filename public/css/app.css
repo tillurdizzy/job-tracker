@@ -444,6 +444,8 @@ body {
       border: 0;
       padding: 8px 16px;
       width: 80px; }
+    .status-container .status-item a {
+      text-decoration: none; }
   .status-container .status-item-title {
     background-color: #3a3a3a;
     width: 100px;
@@ -792,20 +794,24 @@ table {
 
 .login-form {
   margin-left: 1em;
-  width: 300px; }
+  display: flex; }
   .login-form label {
     font-size: 1em;
     font-weight: 700;
     display: block; }
+  .login-form form {
+    display: flex;
+    align-items: flex-end; }
+    .login-form form div {
+      margin-right: 6px; }
   .login-form input[type="text"] {
     padding: 2px;
-    margin: 0 0 .5rem 0;
     height: 28px;
     width: 120px;
-    display: block;
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 8px; }
+    display: block; }
   .login-form .button {
-    margin-top: 1.5em; }
+    height: 36px;
+    padding: 4px 10px; }
   .login-form .login-error {
     font-size: .9em;
     color: #FF0000; }
@@ -973,19 +979,32 @@ table {
         line-height: 36px;
         vertical-align: middle;
         text-align: center; }
+    .list-container .job-items-container .job-item-unit {
+      height: 36px;
+      width: 100px;
+      background-color: #3a3a3a;
+      color: #000;
+      margin: 0 4px 0 0;
+      padding: 0 0 0 4px; }
+      .list-container .job-items-container .job-item-unit h3 {
+        color: #f2ce10;
+        line-height: 36px;
+        vertical-align: middle;
+        text-align: left; }
     .list-container .job-items-container .job-item-input {
       width: 50px;
       height: 36px;
       margin: 0 4px 0 0; }
       .list-container .job-items-container .job-item-input input[type="tel"] {
-        height: 32px;
+        height: 30px;
         display: inline-block;
-        width: 46px; }
+        width: 44px;
+        text-align: right; }
     .list-container .job-items-container .job-item-icon {
-      height: 28px;
+      height: 31px;
       width: 40px;
       margin: 0 0 0 4px;
-      padding: 2px 2px;
+      padding: 2px 8px;
       cursor: pointer;
       background-color: #048F7B; }
       .list-container .job-items-container .job-item-icon i {

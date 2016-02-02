@@ -5,6 +5,7 @@ app.directive('jobInputItem',[function () {
         id:'@',
         code:'@',
         item:'@',
+        unit:'@',
         qty:'@',
         submit:'&'
       },

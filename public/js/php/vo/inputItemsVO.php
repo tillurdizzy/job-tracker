@@ -4,5 +4,6 @@ class inputItemsVO{
 	var $item;
 	var $code;
 	var $unit;
+	var $qty;
 }
 ?>
