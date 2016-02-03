@@ -10,14 +10,29 @@ app.directive('jobInputItem',[function () {
         submit:'&'
       },
       controller:function($scope){
-        $scope.inputNum = 0;
-        
-        $scope.submit = function(){
-          var obj = {};
-          obj.code =  $scope.code;
-          obj.qty = $scope.inputNum;
-          scope.qty = Number(scope.qty) + Number($scope.inputNum);
-          $scope.submit()(obj);
+        $scope.inputNum = "";
+        $scope.editMode = false;
+
+        $scope.submitEdit = function(){
+          $scope.editMode = false;
+          var userInput = $scope.inputNum;
+          var validate = isNaN(Number($scope.inputNum));
+          if(validate){// input is not a number
+            userInput = "0";
+            $scope.inputNum = "0";
+          }else{
+            var obj = {};
+            obj.itemCode =  $scope.code;
+            obj.qty = userInput;
+            $scope.qty = userInput;
+            $scope.submit()(obj);
+          }
+        }
+
+
+
+        $scope.toggleEdit = function(){
+          $scope.editMode = !$scope.editMode;
         }
       },
       templateUrl:'js/directives/jobItem.tpl.html',

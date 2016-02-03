@@ -19,6 +19,11 @@ app.controller('ProposalCtrl',['$location','$state','evoDb','$scope','SharedSrvc
     ME.jobInputFields = ME.SRVC.inputFields;
     ME.jobItemFeed = [];
 
+    //pricing
+    ME.materialsCost = "0.00";
+    ME.laborCost = "0.00";
+    ME.totalCost = "0.00";
+
 
 	ME.submitEdit = function(ndx){
 		var ndx = Number(ndxStr);
@@ -29,8 +34,26 @@ app.controller('ProposalCtrl',['$location','$state','evoDb','$scope','SharedSrvc
     };
 
     // Called from Directive
-    ME.submitItemQty = function(dataObj){
-
+    ME.submitItemQty = function(dObj){
+    	
+    	var itemCode = dObj.itemCode;
+    	// Decide whether to create new entry or update
+    	var itemExists = false;
+    	for (var x = 0; x < ME.jobInput.length; x++) {
+    		if(ME.jobInput[x].item_code == itemCode){
+    			itemExists = true;
+    			continue;
+    		}
+    	}
+    	var dataObj = {};
+    	dataObj.job_id = ME.selectedJobObj.PRIMARY_ID;
+    	dataObj.item_code = dObj.itemCode;
+    	dataObj.qty = dObj.qty;
+    	if(itemExists == true){
+    		ME.SRVC.updateJobItem(dataObj);
+    	}else{
+    		ME.SRVC.insertJobItem(dataObj);
+    	}
     };
 
     var assembleFeed = function(){

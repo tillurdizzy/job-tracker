@@ -71,6 +71,39 @@ app.service('ShingleSrvc',['$http','$q','SharedSrvc',function shingleStuff($http
 	    return deferred.promise;
 	};
 
+	self.updateJobItem = function(dataObj){
+		var deferred = $q.defer();
+		$http({method: 'POST', url: 'views/jobs/proposals/http/updateJobItem.php',data:dataObj}).
+		success(function(data, status) {
+			if(typeof data != 'string' && data.length > 0){
+     			deferred.resolve(data);
+			}else{
+				deferred.resolve(false);
+			}
+	    }).
+		error(function(data, status, headers, config) {
+			deferred.reject(data);
+	    });
+	    return deferred.promise;
+	}
+
+	self.insertJobItem = function(dataObj){
+		var dataObj = {job_id:id};
+		var deferred = $q.defer();
+		$http({method: 'POST', url: 'views/jobs/proposals/http/insertJobItem.php',data:dataObj}).
+		success(function(data, status) {
+			if(typeof data != 'string' && data.length > 0){
+     			deferred.resolve(data);
+			}else{
+				deferred.resolve(false);
+			}
+	    }).
+		error(function(data, status, headers, config) {
+			deferred.reject(data);
+	    });
+	    return deferred.promise;
+	}
+
 	
 
 	var initService = function(){

@@ -16,17 +16,13 @@ body{
     margin-bottom: 10px;
   }
   .page-title-bar{
-    height:36px;
     width:100%;
-    background-color:$section-header-bkg;
     margin-bottom: .7em;
     h2{
-      color:#FFFFFF;
-      font-size:1.2em;
-      font-weight: 400;
-      line-height: 36px;
-      vertical-align: middle;
-      margin:0 0 0 .5em;
+      color:#000000;
+      font-size:1.7em;
+      font-weight: 700;
+      line-height: 1;
     }
   }
 
@@ -36,7 +32,7 @@ body{
     h2{
       color:#FFFFFF;
       font-size:1em;
-      font-weight: 400;
+      font-weight: 700;
       line-height: 24px;
       vertical-align: middle;
       margin:0 0 0 .3em;
@@ -146,7 +142,13 @@ $summary-item-height:42px;
 
 }
 
-
+.hrule{
+  border-top: 1px solid #000000;
+  width:100%;
+  clear:both;
+  content:'';
+  display:block;
+}
 
 .top-bar{
   height:45px;
@@ -172,7 +174,7 @@ $summary-item-height:42px;
 }
 
 .view-container{
-  max-width:640px;
+  max-width:800px;
 }
 
 .flex-column{
@@ -181,6 +183,12 @@ $summary-item-height:42px;
 }
 
 .page-nav{
+  width:100%;
+  display:flex;
+  justify-content:space-between;
+}
+
+.flex-space-between{
   width:100%;
   display:flex;
   justify-content:space-between;

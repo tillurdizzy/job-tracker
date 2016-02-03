@@ -4,20 +4,23 @@
         <form name="loginForm" data-ng-submit="submitLoginForm()" novalidate>
             <div>
                 <label>User Name</label>
-                <input data-ng-class="{error:loginForm.username.$invalid&&submissionInvalid}" name="username" type="text" placeholder="User Name" ng-model="_username" required>
+                <input name="username" type="text" placeholder="User Name" ng-model="_username" required>
             </div>
             <div>
                 <label>Pin #</label>
-                <input  data-ng-class="{error:loginForm.pin.$invalid&&submissionInvalid}" name="pin" type="text" placeholder="PIN 4 Digits" ng-model="_pin" required>
+                <input style="width:60px;" name="pin" type="text" placeholder="PIN" ng-model="_pin" required>
              </div>
              <div>
                 <button type="submit" class="button">Submit</button>
             </div>
         </form>
-        <p class="attention" data-ng-show="loginSuccess===false">Did not find a match for Username and PIN.</p>
-        <p class="attention" data-ng-show="submissionInvalid">Please complete both fields.</p>
+        
     </div>
-
+    <div style="margin-left:1em;">
+        <p class="login-attention" data-ng-show="loginSuccess===false">Did not find a match for Username and PIN.</p>
+        <p class="login-attention" data-ng-show="submissionInvalid">Please complete both fields.</p>
+    </div>
+    
     <div class="login-status" ng-if="requestSuccess">
         <h4>Logged in as {{displayname}}</h4>
         <div ng-show="!dataRefreshed">

@@ -69,8 +69,9 @@ button.tiny, .button.tiny {
 
 .nav-btn{
 	transition: $secondary-color 0.25s ease-out, color 0.25s ease-out;
-    background-color: $secondary-color;
-    margin:10px 0;
+  background-color: $secondary-color;
+  margin:10px 0;
+  width:100px;
  }
 
 .nav-btn:hover, .nav-btn:focus {

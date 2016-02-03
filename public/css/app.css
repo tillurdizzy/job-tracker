@@ -400,24 +400,20 @@ body {
   .page h4 {
     margin-bottom: 10px; }
   .page .page-title-bar {
-    height: 36px;
     width: 100%;
-    background-color: #0463A1;
     margin-bottom: .7em; }
     .page .page-title-bar h2 {
-      color: #FFFFFF;
-      font-size: 1.2em;
-      font-weight: 400;
-      line-height: 36px;
-      vertical-align: middle;
-      margin: 0 0 0 .5em; }
+      color: #000000;
+      font-size: 1.7em;
+      font-weight: 700;
+      line-height: 1; }
   .page .section-header {
     height: 24px;
     background-color: #0463A1; }
     .page .section-header h2 {
       color: #FFFFFF;
       font-size: 1em;
-      font-weight: 400;
+      font-weight: 700;
       line-height: 24px;
       vertical-align: middle;
       margin: 0 0 0 .3em; }
@@ -495,6 +491,13 @@ body {
       line-height: 42px;
       vertical-align: middle; }
 
+.hrule {
+  border-top: 1px solid #000000;
+  width: 100%;
+  clear: both;
+  content: '';
+  display: block; }
+
 .top-bar {
   height: 45px;
   width: 100%;
@@ -516,13 +519,18 @@ body {
     background-color: #024d42; }
 
 .view-container {
-  max-width: 640px; }
+  max-width: 800px; }
 
 .flex-column {
   display: flex;
   flex-direction: column; }
 
 .page-nav {
+  width: 100%;
+  display: flex;
+  justify-content: space-between; }
+
+.flex-space-between {
   width: 100%;
   display: flex;
   justify-content: space-between; }
@@ -562,7 +570,8 @@ button.tiny, .button.tiny {
 .nav-btn {
   transition: #048F7B 0.25s ease-out, color 0.25s ease-out;
   background-color: #048F7B;
-  margin: 10px 0; }
+  margin: 10px 0;
+  width: 100px; }
 
 .nav-btn:hover, .nav-btn:focus {
   background-color: #024d42; }
@@ -807,17 +816,21 @@ table {
   .login-form input[type="text"] {
     padding: 2px;
     height: 28px;
-    width: 120px;
+    width: 100px;
     display: block; }
+  .login-form .pin-input {
+    width: 80px; }
   .login-form .button {
     height: 36px;
     padding: 4px 10px; }
-  .login-form .login-error {
-    font-size: .9em;
-    color: #FF0000; }
-  .login-form .login-attention {
-    font-size: .9em;
-    color: #FF0000; }
+
+.login-error {
+  font-size: .9em;
+  color: #FF0000; }
+
+.login-attention {
+  font-size: .9em;
+  color: #FF0000; }
 
 .inventory {
   width: 500px; }
@@ -951,12 +964,12 @@ table {
     width: 100%; } }
 
 .list-container {
-  width: 100%;
-  max-width: 640px; }
+  width: 100%; }
   .list-container .job-items-container {
     display: flex;
     margin: 4px 0 0 0;
-    height: 36px; }
+    height: 36px;
+    background-color: #B9E3FF; }
     .list-container .job-items-container .job-item-name {
       height: 36px;
       width: 150px;
@@ -992,24 +1005,35 @@ table {
         vertical-align: middle;
         text-align: left; }
     .list-container .job-items-container .job-item-input {
-      width: 50px;
+      width: 60px;
       height: 36px;
-      margin: 0 4px 0 0; }
+      margin: 0 4px 0 0;
+      padding: 1px 9px;
+      box-sizing: border-box; }
       .list-container .job-items-container .job-item-input input[type="tel"] {
-        height: 30px;
+        height: 28px;
         display: inline-block;
-        width: 44px;
-        text-align: right; }
+        width: 40px;
+        text-align: right;
+        font-size: 20px; }
     .list-container .job-items-container .job-item-icon {
       height: 31px;
-      width: 40px;
-      margin: 0 0 0 4px;
+      width: 32px;
+      margin: 0 4px 0 0;
       padding: 2px 8px;
       cursor: pointer;
       background-color: #048F7B; }
       .list-container .job-items-container .job-item-icon i {
-        vertical-align: middle;
-        horizontal-align: center; }
+        vertical-align: middle; }
+    .list-container .job-items-container .job-item-icon-check {
+      height: 31px;
+      width: 32px;
+      margin: 0 4px 0 0;
+      padding: 2px 8px;
+      cursor: pointer;
+      background-color: #D4511A; }
+      .list-container .job-items-container .job-item-icon-check i {
+        vertical-align: middle; }
 
 @media all and (max-height: 900px) {
   footer {
