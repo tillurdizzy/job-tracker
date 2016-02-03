@@ -22,7 +22,7 @@ app.service('ShingleSrvc',['$http','$q','SharedSrvc',function shingleStuff($http
 
 	var getShingleItems = function(){
 		var deferred = $q.defer();
-		$http({method: 'POST', url: 'js/php/getShingleItems.php'}).
+		$http({method: 'POST', url: 'views/jobs/proposals/http/getShingleItems.php'}).
 		success(function(data, status) {
 			console.log(data);
 			if(typeof data != 'string' && data.length > 0){
@@ -37,27 +37,12 @@ app.service('ShingleSrvc',['$http','$q','SharedSrvc',function shingleStuff($http
 	    return deferred.promise;
 	};
 
-	var getInventory = function(){
-		var deferred = $q.defer();
-		$http({method: 'POST', url: 'js/php/getShingleInvt.php'}).
-		success(function(data, status) {
-			console.log(data);
-			if(typeof data != 'string' && data.length > 0){
-     			deferred.resolve(data);
-			}else{
-				deferred.resolve(false);
-			}
-	    }).
-		error(function(data, status, headers, config) {
-			deferred.reject(data);
-	    });
-	    return deferred.promise;
-	};
+	
 
 	self.getJobInput = function(id){
 		var dataObj = {job_id:id};
 		var deferred = $q.defer();
-		$http({method: 'POST', url: 'js/php/getJobInput.php',data:dataObj}).
+		$http({method: 'POST', url: 'views/jobs/proposals/http/getJobInput.php',data:dataObj}).
 		success(function(data, status) {
 			if(typeof data != 'string' && data.length > 0){
      			deferred.resolve(data);
@@ -88,7 +73,6 @@ app.service('ShingleSrvc',['$http','$q','SharedSrvc',function shingleStuff($http
 	}
 
 	self.insertJobItem = function(dataObj){
-		var dataObj = {job_id:id};
 		var deferred = $q.defer();
 		$http({method: 'POST', url: 'views/jobs/proposals/http/insertJobItem.php',data:dataObj}).
 		success(function(data, status) {
