@@ -9,9 +9,9 @@ define( "DATABASE_PASSWORD", "Sadie9954!");
 define( "DATABASE_NAME", "jobtracker");
 
 $con = mysqli_connect(DATABASE_SERVER, DATABASE_USERNAME, DATABASE_PASSWORD,DATABASE_NAME) or die ('cannot reach database');
-$job_id = mysqli_real_escape_string($con,$data->job_id);
-$item_code = mysqli_real_escape_string($con,$data->item_code);
-$qty = mysqli_real_escape_string($con,$data->qty);
+$job_id = mysqli_real_escape_string($con,$data->ID);
+$item_code = mysqli_real_escape_string($con,$data->Code);
+$qty = mysqli_real_escape_string($con,$data->Qty);
 
 $query = "UPDATE job_items SET 
 qty='".$qty."'

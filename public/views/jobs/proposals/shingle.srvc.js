@@ -1,30 +1,20 @@
 'use strict';
-app.service('ShingleSrvc',['$http','$q','SharedSrvc',function shingleStuff($http,$q,SharedSrvc){
+app.service('ShingleSrvc',['$http','$q','SharedSrvc',function shingleJobForm($http,$q,SharedSrvc){
+	// This service provides DB interaction for a Shingle Job Proposal
+
 	var self = this;
 	self.ME = "ShingleSrvc: ";
 	var S = SharedSrvc;
 
-	// Shingle materials inventory
-	self.jobMaterials = [];
 	// Field input items
 	self.inputFields = [];
 	// Specific job data
 	self.jobInput = [];
 
-
-	// Add some properties that are not included in database
-	var setProps = function(){
-		for (var i = 0; i < self.jobMaterials.length; i++) {
-			self.jobMaterials[i].Total = 0;
-			self.jobMaterials[i].Tax = 0;
-		};
-	};
-
-	var getShingleItems = function(){
+	var getShingleIntputFields = function(){
 		var deferred = $q.defer();
-		$http({method: 'POST', url: 'views/jobs/proposals/http/getShingleItems.php'}).
+		$http({method: 'POST', url: 'views/jobs/proposals/http/getShingleFields.php'}).
 		success(function(data, status) {
-			console.log(data);
 			if(typeof data != 'string' && data.length > 0){
      			deferred.resolve(data);
 			}else{
@@ -37,10 +27,11 @@ app.service('ShingleSrvc',['$http','$q','SharedSrvc',function shingleStuff($http
 	    return deferred.promise;
 	};
 
-	
-
-	self.getJobInput = function(id){
-		var dataObj = {job_id:id};
+	// Retrieve input from a proposal in progress or complete
+	// Called from ProposalCtrl
+	self.getJobInput = function(){
+		var dataObj = {};
+		dataObj.ID = S.selectedJobObj.PRIMARY_ID;
 		var deferred = $q.defer();
 		$http({method: 'POST', url: 'views/jobs/proposals/http/getJobInput.php',data:dataObj}).
 		success(function(data, status) {
@@ -56,6 +47,8 @@ app.service('ShingleSrvc',['$http','$q','SharedSrvc',function shingleStuff($http
 	    return deferred.promise;
 	};
 
+	// Updates a field to the DB
+	// Called from ProposalCtrl
 	self.updateJobItem = function(dataObj){
 		var deferred = $q.defer();
 		$http({method: 'POST', url: 'views/jobs/proposals/http/updateJobItem.php',data:dataObj}).
@@ -71,7 +64,7 @@ app.service('ShingleSrvc',['$http','$q','SharedSrvc',function shingleStuff($http
 	    });
 	    return deferred.promise;
 	}
-
+	// Inserts a field to the DB
 	self.insertJobItem = function(dataObj){
 		var deferred = $q.defer();
 		$http({method: 'POST', url: 'views/jobs/proposals/http/insertJobItem.php',data:dataObj}).
@@ -89,28 +82,13 @@ app.service('ShingleSrvc',['$http','$q','SharedSrvc',function shingleStuff($http
 	}
 
 	
-
 	var initService = function(){
-		// 2. List of shingle input field items (generic)
-		var fields = getShingleItems()
-		.then(function(fields){
-            if(fields != false){
-               self.inputFields = fields;
-               console.log("getShingleItems");
-            }else{
-               
-            }
-        },function(error){
-           
-        });
-
-		//1. List of shingle inventory items (generic)
-		var invtData = getInventory()
-		.then(function(invtData){
-            if(invtData != false){
-               self.jobMaterials = invtData;
-               console.log("getInventory");
-               setProps();
+		// List of shingle input field items (generic)
+		var fields = getShingleIntputFields()
+		.then(function(result){
+            if(result != false){
+               self.inputFields = result;
+               console.log("getShingleIntputFields");
             }else{
                
             }
@@ -119,10 +97,6 @@ app.service('ShingleSrvc',['$http','$q','SharedSrvc',function shingleStuff($http
         });
 	};
 
-	// Need 2 DB calls on init, and one called from Ctrl
-	// 1. List of shingle inventory items (generic)
-	// 2. List of shingle input field items (generic)
-	// 3. List of inputs for this job (job-specific)
 
 	initService();
 

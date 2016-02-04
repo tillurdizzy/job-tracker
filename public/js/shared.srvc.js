@@ -202,7 +202,8 @@ app.service('SharedSrvc',['$rootScope',function sharedVars($rootScope){
 
 	self.compositionOptions = [
 		{label:"Composition over plywood deck",id:0},
-		{label:"Composition over wood shingles",id:1}];
+		{label:"Composition over deck low slope",id:1},
+		{label:"Composition over wood shingles",id:2}];
 
 	self.compositionLayers = [
 		{label:"1",id:1},{label:"2",id:2},{label:"3",id:3},{label:"4",id:4},{label:"5",id:5},

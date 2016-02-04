@@ -35,16 +35,12 @@
                 <div><h4>{{Ctrl.totalCost}}</h4></div>
             </div>
         </div>
-        <div class="text-block-display"  ng-if="">
-            <h4>Please provide the Roof Description below to create a bid.</h4>
-            <h3></h3>
-            
-        </div>
+       
         <div class="section-header">
             <h2>Roof Description</h2>
         </div>
         <div class="list-container">
-            <div job-input-item id="{{e.PRIMARY_ID}}" code="{{e.code}}" item="{{e.item}}" qty="{{e.qty}}" unit="{{e.unit}}" 
+            <div job-input-item id="{{e.PRIMARY_ID}}" code="{{e.Code}}" item="{{e.Item}}" qty="{{e.Qty}}" unit="{{e.Unit}}" 
             submit="Ctrl.submitItemQty"
             ng-repeat="e in Ctrl.jobInputFields"></div> 
         </div>

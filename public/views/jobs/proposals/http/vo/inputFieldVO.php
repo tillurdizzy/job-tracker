@@ -1,8 +1,9 @@
 <?php
-class jobItemsVO{
+class inputFieldVO{
 	var $PRIMARY_ID;
-	var $ID;
+	var $Item;
 	var $Code;
+	var $Unit;
 	var $Qty;
 }
 ?>

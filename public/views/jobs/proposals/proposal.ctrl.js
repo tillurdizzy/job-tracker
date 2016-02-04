@@ -1,6 +1,6 @@
 'use strict';
 
-app.controller('ProposalCtrl', ['$state', 'evoDb', 'SharedSrvc', 'ShingleSrvc', 'ShingleCalcs', function($state, evoDb, SharedSrvc, ShingleSrvc, ShingleCalcs) {
+app.controller('ProposalCtrl', ['$state','evoDb','SharedSrvc','ShingleSrvc','ShingleCalcs', function($state,evoDb,SharedSrvc,ShingleSrvc,ShingleCalcs) {
     var DB = evoDb;
     var ME = this;
     var S = SharedSrvc;
@@ -43,16 +43,16 @@ app.controller('ProposalCtrl', ['$state', 'evoDb', 'SharedSrvc', 'ShingleSrvc', 
         // Decide whether to create new entry or update
         var itemExists = false;
         for (var x = 0; x < ME.jobInput.length; x++) {
-            if (ME.jobInput[x].item_code == itemCode) {
-                ME.jobInput[x] qty = dObj.qty;
+            if (ME.jobInput[x].Code == itemCode) {
+                ME.jobInput[x].Qty = dObj.qty;
                 itemExists = true;
                 continue;
             }
         }
         var dataObj = {};
-        dataObj.job_id = ME.selectedJobObj.PRIMARY_ID;
-        dataObj.item_code = dObj.itemCode;
-        dataObj.qty = dObj.qty;
+        dataObj.ID = ME.selectedJobObj.PRIMARY_ID;
+        dataObj.Code = dObj.itemCode;
+        dataObj.Qty = dObj.qty;
         ME.jobInput.push(dataObj);
         if (itemExists == true) {
             ME.SRVC.updateJobItem(dataObj);
@@ -67,11 +67,11 @@ app.controller('ProposalCtrl', ['$state', 'evoDb', 'SharedSrvc', 'ShingleSrvc', 
     var assembleFeed = function() {
         // Place any recorded Qty from jobInput into jobInputFields for view display
         for (var i = 0; i < ME.jobInputFields.length; i++) {
-            var itemCode = ME.jobInputFields[i].code;
-            ME.jobInputFields[i].qty = "0";
+            var itemCode = ME.jobInputFields[i].Code;
+            ME.jobInputFields[i].Qty = "0";
             for (var x = 0; x < ME.jobInput.length; x++) {
-                if (ME.jobInput[x].item_code == itemCode) {
-                    ME.jobInputFields[i].qty = ME.jobInput[x].qty;
+                if (ME.jobInput[x].Code == itemCode) {
+                    ME.jobInputFields[i].Qty = ME.jobInput[x].Qty;
                 }
             };
         };
@@ -80,13 +80,13 @@ app.controller('ProposalCtrl', ['$state', 'evoDb', 'SharedSrvc', 'ShingleSrvc', 
 
 
     var initPage = function() {
-        ME.CALCS.resetService();
+        CALCS.resetService();
         ME.jobInputFields = ME.SRVC.inputFields.slice(0);
         getJobInput();
     };
 
     var getJobInput = function() {
-        var jobData = ME.SRVC.getJobInput(ME.selectedJobObj.PRIMARY_ID)
+        var jobData = ME.SRVC.getJobInput()
             .then(function(jobData) {
                 if (jobData != false) { // false just meaqns there were no records found
                     ME.jobInput = jobData;
