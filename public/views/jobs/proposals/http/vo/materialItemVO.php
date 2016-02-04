@@ -8,6 +8,7 @@ class materialItemVO{
 	var $Qty;
 	var $Unit;
 	var $Price;
+	var $Amt;
 	var $Total;
 	var $Tax;
 }

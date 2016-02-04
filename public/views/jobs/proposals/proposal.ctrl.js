@@ -18,12 +18,17 @@ app.controller('ProposalCtrl', ['$state','evoDb','SharedSrvc','ShingleSrvc','Shi
     ME.selectedClientObj = S.selectedClientObj;
     ME.selectedPropertyObj = S.selectedPropertyObj;
     ME.proposalDate = ME.selectedJobObj.dateProposal;
+
+    // These 2 lists basically tracking the same data... user input of roof elements.
+    // jobInput is how items inserted and retrieved from database... only includes items with non-zero values and has job ID
+    // jobInputFields includes ALL fields and used for repeat on the view and to pass to CALCS for pricing calculations
     ME.jobInput = [];
     ME.jobInputFields = ME.SRVC.inputFields;
-    ME.jobItemFeed = [];
+    ME.jobMaterials = [];
+   
 
     //pricing
-    ME.materialsCost = "0.00";
+    ME.materialsCost = CALCS.runningTotal;
     ME.laborCost = "0.00";
     ME.totalCost = "0.00";
 
@@ -38,9 +43,9 @@ app.controller('ProposalCtrl', ['$state','evoDb','SharedSrvc','ShingleSrvc','Shi
 
     // Called from Directive
     ME.submitItemQty = function(dObj) {
-        // 1. Update database
         var itemCode = dObj.itemCode;
-        // Decide whether to create new entry or update
+
+        // Update item in jobInput list IF it already exists
         var itemExists = false;
         for (var x = 0; x < ME.jobInput.length; x++) {
             if (ME.jobInput[x].Code == itemCode) {
@@ -49,33 +54,39 @@ app.controller('ProposalCtrl', ['$state','evoDb','SharedSrvc','ShingleSrvc','Shi
                 continue;
             }
         }
+        // Create data object
         var dataObj = {};
         dataObj.ID = ME.selectedJobObj.PRIMARY_ID;
         dataObj.Code = dObj.itemCode;
         dataObj.Qty = dObj.qty;
-        ME.jobInput.push(dataObj);
+
+        // Insert or update in DB
+        // Push to jobInput if did not already exist
         if (itemExists == true) {
             ME.SRVC.updateJobItem(dataObj);
         } else {
+            ME.jobInput.push(dataObj);
             ME.SRVC.insertJobItem(dataObj);
         }
 
         // Update pricing
-        CALCS.updatePrices(ME.jobInput);
+       mergeInputLists();
     };
 
-    var assembleFeed = function() {
+    var mergeInputLists = function() {
         // Place any recorded Qty from jobInput into jobInputFields for view display
         for (var i = 0; i < ME.jobInputFields.length; i++) {
             var itemCode = ME.jobInputFields[i].Code;
-            ME.jobInputFields[i].Qty = "0";
+            ME.jobInputFields[i].Qty = 0;
             for (var x = 0; x < ME.jobInput.length; x++) {
                 if (ME.jobInput[x].Code == itemCode) {
                     ME.jobInputFields[i].Qty = ME.jobInput[x].Qty;
+                    continue;
                 }
             };
         };
-        CALCS.updatePrices(ME.jobInput);
+        ME.jobMaterials = CALCS.updatePrices(ME.jobInputFields);
+        ME.materialsCost = CALCS.runningTotal;
     };
 
 
@@ -90,9 +101,9 @@ app.controller('ProposalCtrl', ['$state','evoDb','SharedSrvc','ShingleSrvc','Shi
             .then(function(jobData) {
                 if (jobData != false) { // false just meaqns there were no records found
                     ME.jobInput = jobData;
-                    assembleFeed();
+                    mergeInputLists();
                 } else {
-                    assembleFeed();
+                    mergeInputLists();
                 }
             }, function(error) {
 

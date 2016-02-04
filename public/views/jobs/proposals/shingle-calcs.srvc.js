@@ -4,12 +4,13 @@ app.service('ShingleCalcs', ['$http','$q','ShingleSrvc','SharedSrvc', function (
     var S = SharedSrvc;
     var SH = ShingleSrvc;
     self.ME = "ShingleCalcs: ";
+    var jobInput = [];
     self.jobMaterials = [];
-    self.TOTAL = "";
+    self.runningTotal = 0;
     self.roofElements = [{
             Code: "SHFI",
             Qty: 0,
-            Materials: ["A1", "G1", "H1", "K1", "Q1"]
+            Materials: ["A1", "G1", "H1", "K1"]
         }, //Field
         {
             Code: "SHTR",
@@ -117,26 +118,61 @@ app.service('ShingleCalcs', ['$http','$q','ShingleSrvc','SharedSrvc', function (
             Materials: ["", ""]
         }
     ];
-    self.updatePrices = function(jobInput) {
-            /*for (var x = 0; x < jobInput.length; x++) {
-                var inputCode = jobInput[x].item_code;
-                for (var i = 0; i < self.roofElements.length; i++) {
-                    if (self.roofElements[i].Code = inputCode) {
-                        self.roofElements[i].Qty = roofElementsInput[x].qty;
-                        var M = self.roofElements[i].Materials;
-                        for (var y = 0; y < M.length; y++) {
-                            var Mcode = M[y];
-                            for (var z = 0; z < self.MATERIALS.length; z++) {
-                                if (self.MATERIALS[z].Code == Mcode) {
-                                    var Amt = Math.ceil(self.roofElements[i].Qty / self.MATERIALS[z].Usage);
-                                    var Total = Math.round(Amt * self.MATERIALS[z].Price * 100) / 100;
-                                }
-                            };
-                        };
-                    };
-                };
-            };*/
+
+    var zeroOutLists = function(){
+    	for (var i = 0; i < self.jobMaterials.length; i++) {
+    		self.jobMaterials[i].Total = 0;
+    		self.jobMaterials[i].Amt = 0;
+    	};
+
+    	for (i = 0; i < self.roofElements.length; i++) {
+    		self.roofElements[i].Qty = 0;
+    	};
+    };
+
+    var updateJobInput = function(){
+    	for (var x = 0; x < jobInput.length; x++) {
+            var inputCode = jobInput[x].Code;
+            for (var i = 0; i < self.roofElements.length; i++) {
+                if (self.roofElements[i].Code == inputCode) {
+                    self.roofElements[i].Qty = jobInput[x].Qty;
+                    continue;
+                }
+            }
+        };
+    };
+
+    var calculateCosts  = function(){
+    	self.runningTotal = 0;
+    	 for (var i = 0; i < self.roofElements.length; i++) {
+        	if(self.roofElements[i].Qty != 0){
+        		var Q = self.roofElements[i].Qty;
+        		var M = self.roofElements[i].Materials;
+        		for (var x = 0; x < M.length; x++) {
+		            var Mcode = M[x];
+		            for (var z = 0; z < self.jobMaterials.length; z++) {
+		                if (self.jobMaterials[z].Code == Mcode) {
+		                    var Amt = Math.ceil( Q / self.jobMaterials[z].Usage);
+		                    var Total = Math.round(Amt * self.jobMaterials[z].Price * 100) / 100;
+		                   	self.jobMaterials[z].Amt += Amt;
+		                    self.jobMaterials[z].Total += Total;
+		                    self.runningTotal+=Total;
+		                }
+		            };
+		        };
+        	}
         }
+    };
+
+
+    self.updatePrices = function(jI) {
+    	jobInput = jI;
+    	zeroOutLists();
+        updateJobInput();
+        calculateCosts();
+        console.log("self.runningTotal : " + self.runningTotal)
+        return self.jobMaterials;
+    };
 
         // Gets the "inv_shingle" DB table 
     var getInventory = function() {
@@ -146,7 +182,6 @@ app.service('ShingleCalcs', ['$http','$q','ShingleSrvc','SharedSrvc', function (
             url: 'views/jobs/proposals/http/getShingleMaterials.php'
         }).
         success(function(data, status) {
-            console.log(data);
             if (typeof data != 'string' && data.length > 0) {
                 deferred.resolve(data);
             } else {

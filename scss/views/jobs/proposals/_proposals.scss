@@ -1,0 +1,166 @@
+$job-item-height:36px;
+$material-height:1em;
+
+.list-container-proposal{
+	width:100%;
+
+	.materials-container{
+		display:flex;
+		margin:4px 0 0 0;
+		height:$material-height;
+		background-color:#B9E3FF;
+		h5{
+			font-weight: 400;
+			font-size: .8em;
+			line-height:$material-height;
+			vertical-align: middle;
+			text-align: center;
+		}
+
+
+		.materials-small{
+			height:$material-height;
+			width:3em;
+			background-color: #3a3a3a;
+			color:#fff;
+			margin:0 4px 0 0;
+			padding-left:3px;
+			h5{
+				
+				text-align: center;
+		    }
+		}
+
+		.materials-small-plus{
+			height:$material-height;
+			width:4em;
+			background-color: #3a3a3a;
+			color:#fff;
+			margin:0 4px 0 0;
+			padding-left:3px;
+			h5{
+				
+				text-align: center;
+		    }
+		}
+
+		.materials-medium{
+			height:$material-height;
+			width:5em;
+			background-color: #3a3a3a;
+			color:#fff;
+			margin:0 4px 0 0;
+			padding-left:3px;
+			h5{
+				
+				text-align: left;
+		    }
+		}
+
+		.materials-large{
+			height:$material-height;
+			width:8em;
+			background-color: #3a3a3a;
+			color:#fff;
+			margin:0 4px 0 0;
+			padding-left:3px;
+			h5{
+				
+				text-align: left;
+		    }
+		}
+
+		.right{
+
+			h5{
+				margin-right:.5em;
+				text-align: right;
+		    }
+		}
+
+	}
+	
+	.job-items-container{
+		display:flex;
+		margin:4px 0 0 0;
+		height:$job-item-height;
+		background-color:#B9E3FF;
+		.job-item-name{
+			height:$job-item-height;
+			width:150px;
+			background-color: #3a3a3a;
+			color:#fff;
+			margin:0 4px 0 0;
+			padding-left:3px;
+			h4{
+		      line-height:$job-item-height;
+		      vertical-align: middle;
+		      text-align: left;
+		    }
+		}
+		.job-item-qty{
+			height:$job-item-height;
+			width:60px;
+			background-color: #3a3a3a;
+			color:#000;
+			margin:0 4px 0 0;
+			h3{
+				color:#f2ce10;
+				line-height:$job-item-height;
+		      	vertical-align: middle;
+		      	text-align: center;
+			}
+		}
+
+		.job-item-unit{
+			height:$job-item-height;
+			width:100px;
+			background-color: #3a3a3a;
+			color:#000;
+			margin:0 4px 0 0;
+			padding:0 0 0 4px;
+			h3{
+				color:#f2ce10;
+				line-height:$job-item-height;
+		      	vertical-align: middle;
+		      	text-align: left;
+			}
+		}
+		.job-item-input{
+			width:60px;
+			height:$job-item-height;
+			margin:0 4px 0 0;
+			padding:1px 9px;
+			box-sizing:border-box;
+			input[type="tel"] {
+				height:28px;
+	    		display:inline-block;
+	    		width:40px;
+	    		text-align: right;
+	    		font-size: 20px;
+			}
+		}
+		.job-item-icon{
+			height:31px;
+			width:32px;
+			margin: 0 4px 0 0;
+			padding:2px 8px;
+			cursor: pointer;
+			background-color: $secondary-color;
+			i{
+				vertical-align: middle;
+			}
+		}
+		.job-item-icon-check{
+			height:31px;
+			width:32px;
+			margin: 0 4px 0 0;
+			padding:2px 8px;
+			cursor: pointer;
+			background-color: #D4511A;
+			i{
+				vertical-align: middle;
+			}
+		}
+	}
+}

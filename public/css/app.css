@@ -535,6 +535,128 @@ body {
   display: flex;
   justify-content: space-between; }
 
+.list-container-proposal {
+  width: 100%; }
+  .list-container-proposal .materials-container {
+    display: flex;
+    margin: 4px 0 0 0;
+    height: 1em;
+    background-color: #B9E3FF; }
+    .list-container-proposal .materials-container h5 {
+      font-weight: 400;
+      font-size: .8em;
+      line-height: 1em;
+      vertical-align: middle;
+      text-align: center; }
+    .list-container-proposal .materials-container .materials-small {
+      height: 1em;
+      width: 3em;
+      background-color: #3a3a3a;
+      color: #fff;
+      margin: 0 4px 0 0;
+      padding-left: 3px; }
+      .list-container-proposal .materials-container .materials-small h5 {
+        text-align: center; }
+    .list-container-proposal .materials-container .materials-small-plus {
+      height: 1em;
+      width: 4em;
+      background-color: #3a3a3a;
+      color: #fff;
+      margin: 0 4px 0 0;
+      padding-left: 3px; }
+      .list-container-proposal .materials-container .materials-small-plus h5 {
+        text-align: center; }
+    .list-container-proposal .materials-container .materials-medium {
+      height: 1em;
+      width: 5em;
+      background-color: #3a3a3a;
+      color: #fff;
+      margin: 0 4px 0 0;
+      padding-left: 3px; }
+      .list-container-proposal .materials-container .materials-medium h5 {
+        text-align: left; }
+    .list-container-proposal .materials-container .materials-large {
+      height: 1em;
+      width: 8em;
+      background-color: #3a3a3a;
+      color: #fff;
+      margin: 0 4px 0 0;
+      padding-left: 3px; }
+      .list-container-proposal .materials-container .materials-large h5 {
+        text-align: left; }
+    .list-container-proposal .materials-container .right h5 {
+      margin-right: .5em;
+      text-align: right; }
+  .list-container-proposal .job-items-container {
+    display: flex;
+    margin: 4px 0 0 0;
+    height: 36px;
+    background-color: #B9E3FF; }
+    .list-container-proposal .job-items-container .job-item-name {
+      height: 36px;
+      width: 150px;
+      background-color: #3a3a3a;
+      color: #fff;
+      margin: 0 4px 0 0;
+      padding-left: 3px; }
+      .list-container-proposal .job-items-container .job-item-name h4 {
+        line-height: 36px;
+        vertical-align: middle;
+        text-align: left; }
+    .list-container-proposal .job-items-container .job-item-qty {
+      height: 36px;
+      width: 60px;
+      background-color: #3a3a3a;
+      color: #000;
+      margin: 0 4px 0 0; }
+      .list-container-proposal .job-items-container .job-item-qty h3 {
+        color: #f2ce10;
+        line-height: 36px;
+        vertical-align: middle;
+        text-align: center; }
+    .list-container-proposal .job-items-container .job-item-unit {
+      height: 36px;
+      width: 100px;
+      background-color: #3a3a3a;
+      color: #000;
+      margin: 0 4px 0 0;
+      padding: 0 0 0 4px; }
+      .list-container-proposal .job-items-container .job-item-unit h3 {
+        color: #f2ce10;
+        line-height: 36px;
+        vertical-align: middle;
+        text-align: left; }
+    .list-container-proposal .job-items-container .job-item-input {
+      width: 60px;
+      height: 36px;
+      margin: 0 4px 0 0;
+      padding: 1px 9px;
+      box-sizing: border-box; }
+      .list-container-proposal .job-items-container .job-item-input input[type="tel"] {
+        height: 28px;
+        display: inline-block;
+        width: 40px;
+        text-align: right;
+        font-size: 20px; }
+    .list-container-proposal .job-items-container .job-item-icon {
+      height: 31px;
+      width: 32px;
+      margin: 0 4px 0 0;
+      padding: 2px 8px;
+      cursor: pointer;
+      background-color: #048F7B; }
+      .list-container-proposal .job-items-container .job-item-icon i {
+        vertical-align: middle; }
+    .list-container-proposal .job-items-container .job-item-icon-check {
+      height: 31px;
+      width: 32px;
+      margin: 0 4px 0 0;
+      padding: 2px 8px;
+      cursor: pointer;
+      background-color: #D4511A; }
+      .list-container-proposal .job-items-container .job-item-icon-check i {
+        vertical-align: middle; }
+
 button:focus {
   outline: none; }
 
@@ -962,78 +1084,6 @@ table {
 @media all and (max-width: 550px) {
   .mobile-input {
     width: 100%; } }
-
-.list-container {
-  width: 100%; }
-  .list-container .job-items-container {
-    display: flex;
-    margin: 4px 0 0 0;
-    height: 36px;
-    background-color: #B9E3FF; }
-    .list-container .job-items-container .job-item-name {
-      height: 36px;
-      width: 150px;
-      background-color: #3a3a3a;
-      color: #fff;
-      margin: 0 4px 0 0;
-      padding-left: 3px; }
-      .list-container .job-items-container .job-item-name h4 {
-        line-height: 36px;
-        vertical-align: middle;
-        text-align: left; }
-    .list-container .job-items-container .job-item-qty {
-      height: 36px;
-      width: 60px;
-      background-color: #3a3a3a;
-      color: #000;
-      margin: 0 4px 0 0; }
-      .list-container .job-items-container .job-item-qty h3 {
-        color: #f2ce10;
-        line-height: 36px;
-        vertical-align: middle;
-        text-align: center; }
-    .list-container .job-items-container .job-item-unit {
-      height: 36px;
-      width: 100px;
-      background-color: #3a3a3a;
-      color: #000;
-      margin: 0 4px 0 0;
-      padding: 0 0 0 4px; }
-      .list-container .job-items-container .job-item-unit h3 {
-        color: #f2ce10;
-        line-height: 36px;
-        vertical-align: middle;
-        text-align: left; }
-    .list-container .job-items-container .job-item-input {
-      width: 60px;
-      height: 36px;
-      margin: 0 4px 0 0;
-      padding: 1px 9px;
-      box-sizing: border-box; }
-      .list-container .job-items-container .job-item-input input[type="tel"] {
-        height: 28px;
-        display: inline-block;
-        width: 40px;
-        text-align: right;
-        font-size: 20px; }
-    .list-container .job-items-container .job-item-icon {
-      height: 31px;
-      width: 32px;
-      margin: 0 4px 0 0;
-      padding: 2px 8px;
-      cursor: pointer;
-      background-color: #048F7B; }
-      .list-container .job-items-container .job-item-icon i {
-        vertical-align: middle; }
-    .list-container .job-items-container .job-item-icon-check {
-      height: 31px;
-      width: 32px;
-      margin: 0 4px 0 0;
-      padding: 2px 8px;
-      cursor: pointer;
-      background-color: #D4511A; }
-      .list-container .job-items-container .job-item-icon-check i {
-        vertical-align: middle; }
 
 @media all and (max-height: 900px) {
   footer {

@@ -39,10 +39,27 @@
         <div class="section-header">
             <h2>Roof Description</h2>
         </div>
-        <div class="list-container">
+        <div class="list-container-proposal">
             <div job-input-item id="{{e.PRIMARY_ID}}" code="{{e.Code}}" item="{{e.Item}}" qty="{{e.Qty}}" unit="{{e.Unit}}" 
             submit="Ctrl.submitItemQty"
             ng-repeat="e in Ctrl.jobInputFields"></div> 
         </div>
+        <div class="section-header" style="margin-top:1em;">
+            <h2>Materials</h2>
+        </div>
+        <div class="list-container-proposal">
+            <div proposal-material code="{{e.Code}}" item="{{e.Item}}" qty="{{e.Qty}}" unit="{{e.Unit}}" 
+            price="{{e.Price}}" total="{{e.Total}}" amt="{{e.Amt}}"
+            ng-repeat="e in Ctrl.jobMaterials"></div> 
+        </div>
+
+
+
+
+
+
+
+    <!--  ui-view -->
     </div>
+<!--  page -->
 </div>

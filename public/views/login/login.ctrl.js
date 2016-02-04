@@ -1,5 +1,5 @@
 'use strict';
-app.controller('LoginCtrl',['$scope','$state','evoDb','SharedSrvc','ShingleSrvc',function ($scope,$state,evoDb,SharedSrvc,ShingleSrvc) {
+app.controller('LoginCtrl',['$scope','$state','evoDb','SharedSrvc','ShingleSrvc','ShingleCalcs',function ($scope,$state,evoDb,SharedSrvc,ShingleSrvc,ShingleCalcs) {
 
 	var DB = evoDb;
 	var S = SharedSrvc;
