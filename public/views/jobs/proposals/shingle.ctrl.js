@@ -1,5 +1,5 @@
 'use strict';
-app.controller('ShingleCtrl',['$state','$element','ShingleSrvc',function ($state,$element,ShingleSrvc) {
+app.controller('ShingleCtrl',['$state','$scope','SharedSrvc','ShingleSrvc',function ($state,$scope,$element,SharedSrvc,ShingleSrvc) {
 
 	var SRVC = ShingleSrvc;
 	var Me = this;
@@ -30,18 +30,6 @@ app.controller('ShingleCtrl',['$state','$element','ShingleSrvc',function ($state
     Me.T20="0";
 
    
-  
-
-    $element.bind("keydown keypress", function (event) {
-        console.log('keypress', event, event.which);
-        if(event.which === 38) { // up
-            Me.submitForm();
-        } else if (event.which === 40) { // down
-        } else {
-            return;
-        }
-        event.preventDefault();
-    });
 
     Me.submitForm = function(){
        if(Me.A.$valid){
@@ -101,6 +89,13 @@ app.controller('ShingleCtrl',['$state','$element','ShingleSrvc',function ($state
     };
 
     clearForm();
+
+    $scope.$watch('$viewContentLoaded', function() {
+       var loggedIn = S.loggedIn;
+       if(!loggedIn){
+            $state.transitionTo('login');
+       }
+    });
 	
 
  }]);

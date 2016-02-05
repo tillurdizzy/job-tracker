@@ -88,12 +88,15 @@ app.controller('JobsCtrl',['$location','$state','evoDb','$scope','SharedSrvc',fu
 		console.log(loc + " : " + error);
 	};
 
-	/*$scope.$watch('$viewContentLoaded', function() {
- 		ME.getManagerJobs();
-    });*/
-
     $scope.$watch( function () { return ME.S.managerJobs; }, function ( jobs ) {
 	  ME.jobs = jobs;
 	});
+
+	$scope.$watch('$viewContentLoaded', function() {
+       var loggedIn = ME.S.loggedIn;
+       if(!loggedIn){
+       		$state.transitionTo('login');
+       }
+    });
 
  }]);

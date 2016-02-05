@@ -95,6 +95,11 @@ $status-item-height:32px;
 
   .status-item-update{
     height:$status-item-height;
+    i{
+       height:$status-item-height;
+       font-size: $status-item-height;
+       color:$secondary-color;
+    }
   }
 }
 

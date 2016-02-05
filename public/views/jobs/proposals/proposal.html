@@ -20,19 +20,19 @@
             <div class="flex-space-between">
                 <div><h3>Materials</h3></div>
                 <div></div>
-                <div><h4>{{Ctrl.materialsCost}}</h4></div>
+                <div><h4>{{Ctrl.materialsCost | currency:"$":0}}</h4></div>
             </div>
            
             <div class="flex-space-between">
                 <div><h3>Labor</h3></div>
                 <div></div>
-                <div><h4>{{Ctrl.laborCost}}</h4></div>
+                <div><h4>{{Ctrl.laborCost | currency:"$":0}}</h4></div>
             </div>
             <horiz-rule margintop="4px" marginbottom="4px"></horiz-rule>
             <div class="flex-space-between">
                 <div><h3>Total</h3></div>
                 <div></div>
-                <div><h4>{{Ctrl.totalCost}}</h4></div>
+                <div><h4>{{Ctrl.totalCost | currency:"$":0}}</h4></div>
             </div>
         </div>
        

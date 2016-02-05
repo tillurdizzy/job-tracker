@@ -1,12 +1,11 @@
 'use strict';
 
-app.controller('ProposalCtrl', ['$state','evoDb','SharedSrvc','ShingleSrvc','ShingleCalcs', function($state,evoDb,SharedSrvc,ShingleSrvc,ShingleCalcs) {
+app.controller('ProposalCtrl', ['$state','$scope','evoDb','SharedSrvc','ShingleSrvc','ShingleCalcs', function($state,$scope,evoDb,SharedSrvc,ShingleSrvc,ShingleCalcs) {
     var DB = evoDb;
     var ME = this;
     var S = SharedSrvc;
     ME.SRVC = ShingleSrvc;
     var CALCS = ShingleCalcs;
-
 
     ME.controllerName = "ProposalCtrl";
     ME.managerID = DB.managerID;
@@ -113,6 +112,13 @@ app.controller('ProposalCtrl', ['$state','evoDb','SharedSrvc','ShingleSrvc','Shi
     ME.dataError = function(loc, error) {
         console.log(loc + " : " + error);
     };
+
+    $scope.$watch('$viewContentLoaded', function() {
+       var loggedIn = S.loggedIn;
+       if(!loggedIn){
+       		$state.transitionTo('login');
+       }
+    });
 
     initPage();
 

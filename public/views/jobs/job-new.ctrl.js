@@ -102,5 +102,12 @@ app.controller('NewJobCtrl',['$scope','$state','evoDb','SharedSrvc',function ($s
         }
     };
 
+    $scope.$watch('$viewContentLoaded', function() {
+       var loggedIn = S.loggedIn();
+       if(!loggedIn){
+            $state.transitionTo('login');
+       }
+    });
+
     
  }]);

@@ -190,6 +190,8 @@ app.service('SharedSrvc',['$rootScope',function sharedVars($rootScope){
 		}
 	};
 
+	
+
 	var convertDateToString = function(m){
 		var dateStr = ""
 		var d = new Date(m);

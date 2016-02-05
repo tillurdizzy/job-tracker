@@ -98,6 +98,7 @@ app.service('ShingleSrvc',['$http','$q','SharedSrvc',function shingleJobForm($ht
 	};
 
 
+
 	initService();
 
 	return self;

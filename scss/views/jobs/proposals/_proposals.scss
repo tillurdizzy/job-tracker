@@ -1,4 +1,4 @@
-$job-item-height:36px;
+$job-item-height:2.25em;
 $material-height:1em;
 
 .list-container-proposal{
@@ -8,7 +8,7 @@ $material-height:1em;
 		display:flex;
 		margin:4px 0 0 0;
 		height:$material-height;
-		background-color:#B9E3FF;
+		background-color:#f7f7f7;
 		h5{
 			font-weight: 400;
 			font-size: .8em;
@@ -52,7 +52,6 @@ $material-height:1em;
 			margin:0 4px 0 0;
 			padding-left:3px;
 			h5{
-				
 				text-align: left;
 		    }
 		}
@@ -65,7 +64,6 @@ $material-height:1em;
 			margin:0 4px 0 0;
 			padding-left:3px;
 			h5{
-				
 				text-align: left;
 		    }
 		}
@@ -84,7 +82,7 @@ $material-height:1em;
 		display:flex;
 		margin:4px 0 0 0;
 		height:$job-item-height;
-		background-color:#B9E3FF;
+		background-color:#f7f7f7;
 		.job-item-name{
 			height:$job-item-height;
 			width:150px;
@@ -141,24 +139,26 @@ $material-height:1em;
 			}
 		}
 		.job-item-icon{
-			height:31px;
-			width:32px;
+			height:$job-item-height;
 			margin: 0 4px 0 0;
-			padding:2px 8px;
+			padding:0;
 			cursor: pointer;
-			background-color: $secondary-color;
 			i{
+				height:$job-item-height;
+       			font-size: $job-item-height;
+       			color:$secondary-color;
 				vertical-align: middle;
 			}
 		}
 		.job-item-icon-check{
-			height:31px;
-			width:32px;
+			height:$job-item-height;
 			margin: 0 4px 0 0;
-			padding:2px 8px;
+			padding:0;
 			cursor: pointer;
-			background-color: #D4511A;
 			i{
+				height:$job-item-height;
+       			font-size: $job-item-height;
+       			color:$tertiary-color;
 				vertical-align: middle;
 			}
 		}

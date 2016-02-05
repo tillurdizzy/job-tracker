@@ -457,6 +457,10 @@ body {
     color: #000000; }
   .status-container .status-item-update {
     height: 32px; }
+    .status-container .status-item-update i {
+      height: 32px;
+      font-size: 32px;
+      color: #048F7B; }
 
 .job-summary-item {
   display: flex;
@@ -541,7 +545,7 @@ body {
     display: flex;
     margin: 4px 0 0 0;
     height: 1em;
-    background-color: #B9E3FF; }
+    background-color: #f7f7f7; }
     .list-container-proposal .materials-container h5 {
       font-weight: 400;
       font-size: .8em;
@@ -590,32 +594,32 @@ body {
   .list-container-proposal .job-items-container {
     display: flex;
     margin: 4px 0 0 0;
-    height: 36px;
-    background-color: #B9E3FF; }
+    height: 2.25em;
+    background-color: #f7f7f7; }
     .list-container-proposal .job-items-container .job-item-name {
-      height: 36px;
+      height: 2.25em;
       width: 150px;
       background-color: #3a3a3a;
       color: #fff;
       margin: 0 4px 0 0;
       padding-left: 3px; }
       .list-container-proposal .job-items-container .job-item-name h4 {
-        line-height: 36px;
+        line-height: 2.25em;
         vertical-align: middle;
         text-align: left; }
     .list-container-proposal .job-items-container .job-item-qty {
-      height: 36px;
+      height: 2.25em;
       width: 60px;
       background-color: #3a3a3a;
       color: #000;
       margin: 0 4px 0 0; }
       .list-container-proposal .job-items-container .job-item-qty h3 {
         color: #f2ce10;
-        line-height: 36px;
+        line-height: 2.25em;
         vertical-align: middle;
         text-align: center; }
     .list-container-proposal .job-items-container .job-item-unit {
-      height: 36px;
+      height: 2.25em;
       width: 100px;
       background-color: #3a3a3a;
       color: #000;
@@ -623,12 +627,12 @@ body {
       padding: 0 0 0 4px; }
       .list-container-proposal .job-items-container .job-item-unit h3 {
         color: #f2ce10;
-        line-height: 36px;
+        line-height: 2.25em;
         vertical-align: middle;
         text-align: left; }
     .list-container-proposal .job-items-container .job-item-input {
       width: 60px;
-      height: 36px;
+      height: 2.25em;
       margin: 0 4px 0 0;
       padding: 1px 9px;
       box-sizing: border-box; }
@@ -639,22 +643,24 @@ body {
         text-align: right;
         font-size: 20px; }
     .list-container-proposal .job-items-container .job-item-icon {
-      height: 31px;
-      width: 32px;
+      height: 2.25em;
       margin: 0 4px 0 0;
-      padding: 2px 8px;
-      cursor: pointer;
-      background-color: #048F7B; }
+      padding: 0;
+      cursor: pointer; }
       .list-container-proposal .job-items-container .job-item-icon i {
+        height: 2.25em;
+        font-size: 2.25em;
+        color: #048F7B;
         vertical-align: middle; }
     .list-container-proposal .job-items-container .job-item-icon-check {
-      height: 31px;
-      width: 32px;
+      height: 2.25em;
       margin: 0 4px 0 0;
-      padding: 2px 8px;
-      cursor: pointer;
-      background-color: #D4511A; }
+      padding: 0;
+      cursor: pointer; }
       .list-container-proposal .job-items-container .job-item-icon-check i {
+        height: 2.25em;
+        font-size: 2.25em;
+        color: #AE1616;
         vertical-align: middle; }
 
 button:focus {

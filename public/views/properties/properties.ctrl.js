@@ -57,4 +57,11 @@ app.controller('PropertiesCtrl',['$scope','$state','evoDb','SharedSrvc',function
 	  ME.properties = S.managerProperties;
 	});
 
+	$scope.$watch('$viewContentLoaded', function() {
+       var loggedIn = S.loggedIn();
+       if(!loggedIn){
+       		$state.transitionTo('login');
+       }
+    });
+
  }]);

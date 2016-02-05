@@ -1,5 +1,5 @@
 'use strict';
-app.controller('NewPropertyCtrl',['$state','evoDb','SharedSrvc',function ($state,evoDb,SharedSrvc) {
+app.controller('NewPropertyCtrl',['$state','$scope','evoDb','SharedSrvc',function ($state,$scope,evoDb,SharedSrvc) {
 
     var DB = evoDb;
     var ME = this;
@@ -217,6 +217,13 @@ app.controller('NewPropertyCtrl',['$state','evoDb','SharedSrvc',function ($state
     ME.goNewClient = function(){
         $state.transitionTo("addNewClient");
     }
+
+    $scope.$watch('$viewContentLoaded', function() {
+       var loggedIn = S.loggedIn();
+       if(!loggedIn){
+            $state.transitionTo('login');
+       }
+    });
 
 
    
