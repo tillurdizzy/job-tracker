@@ -15,6 +15,35 @@ app.controller('JobsCtrl',['$location','$state','evoDb','$scope','SharedSrvc',fu
     ME.selectedPropertyObj = ME.S.selectedPropertyObj;
     ME.jobStatus = [];
 
+    // DOM vars
+    ME.updateContract = false;
+    ME.updateActive = false;
+    ME.updateComplete = false;
+
+    ME.isProposal = false;
+    ME.isContract = false;
+    ME.isActive = false;
+    ME.isComplete = false;
+
+
+    var setStatusVars = function(){
+    	if(ME.selectedJobObj.dateProposal != ""){
+    		 ME.isProposal = true;
+    	}
+    	
+    	if(ME.selectedJobObj.dateContract != ""){
+    		 ME.isContract = true;
+    	}
+    	
+    	if(ME.selectedJobObj.dateActive != ""){
+    		 ME.isActive = true;
+    	}
+    	
+    	if(ME.selectedJobObj.dateComplete != ""){
+    		 ME.isComplete = true;
+    	}
+    }
+
 
 	ME.showDetails = function(ndxStr){
 		var ndx = Number(ndxStr);
@@ -23,7 +52,7 @@ app.controller('JobsCtrl',['$location','$state','evoDb','$scope','SharedSrvc',fu
 				ME.selectedJobObj = ME.jobs[i];
 			}
 		};
-		
+		setStatusVars();
 		// Send job selection to shared
 		ME.S.selectJob(ME.selectedJobObj);
 		ME.selectedClientObj = ME.S.selectedClientObj;
@@ -84,6 +113,25 @@ app.controller('JobsCtrl',['$location','$state','evoDb','$scope','SharedSrvc',fu
         });
 	};
 
+	ME.updateStatus = function(id){
+		var d = new Date();
+		var v = d.valueOf();
+		switch(id){
+			case 'contract':
+				ME.selectedJobObj.dateContract = v;
+				ME.updateContract = false;
+				break;
+			case 'active':
+				ME.selectedJobObj.dateActive = v;
+				ME.updateActive = false;
+				break;
+			case 'complete':
+				ME.selectedJobObj.dateComplete = v;
+				ME.updateComplete = false;
+				break;
+		}
+	}
+
 	ME.dataError = function(loc,error){
 		console.log(loc + " : " + error);
 	};
@@ -96,7 +144,11 @@ app.controller('JobsCtrl',['$location','$state','evoDb','$scope','SharedSrvc',fu
        var loggedIn = ME.S.loggedIn;
        if(!loggedIn){
        		$state.transitionTo('login');
+       }else{
+       	initMe();
        }
     });
+
+    
 
  }]);

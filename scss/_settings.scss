@@ -2,36 +2,65 @@
 //Define colors
 
 //Blue
-$base-color:#0463A1;
-$base-lighter:#0984D4;
-$base-lighter-X2:#2D8FCF;
-$base-darker:#035082;
-$base-darker-X2:#023d63;
+$base-color:#34495E;
+$base-darker:#2C3E50;
+//Dark Blues
+$wetAsphalt:#34495E;//same as base
+$midnight-blue:#2C3E50;
 
-//Green
-$secondary-color:#048F7B;
-$secondary-darker:#024d42;
-$scondary-lighter:#06d1b4;
+//Turquois
+$secondary-color:#1ABC9C;
+$secondary-darker:#16A085;
+// duplicates of above with names
+$turquois-green:#1ABC9C;
+$turquois-green-lighter:#48c9b0;
+$sea-green:#16A085;
 
 //Red
-$tertiary-color:#AE1616;
-$tertiary-darker:#901212;
-$tertiary-lighter:#db1c1c;
+$tertiary-color:#E74C3C;
+$tertiary-darker:#C0392B;
 
-$hilite-green:#00AF5B;
+//Green
+$emerald-green:#2ECC71;
+$nephritis-green:#27AE60;
 
-$primary-button-up:$secondary-color;
-$primary-button-over:$scondary-lighter;
+//Blue
+$peterRiver-blue:#3498DB;
+$belizeHole-blue:#2980B9;
+
+
+//Greys
+$clouds-grey:#ECF0F1;
+$silver-grey:#BDC3C7;
+$concrete-grey:#95A5A6;
+$asbestos-grey:#7F8C8D;
+
+// Purple
+$amethyst-purple:#9B59B6;
+$wisteria-purple:#8E44AD;
+
+//Yellow-orange
+$sunFlower-yellow:#F1C40F;
+$orange-yellow:#F39C12;
+$carrot-orange:#E67E22;
+$pumpkin-orange:#D35400;
+
+$white:#FFFFFF;
+$black:#000000;
+
+
+$primary-button-up:$turquois-green;
+$primary-button-over:$sea-green;
 
 
 // Assign colors
 $title-bar-bkg:$base-color;
 $top-bar-bkg:$base-darker;
 $section-header-bkg:$base-color;
-$button-background:$primary-button-up;
+
 $off-canvas-bkg:$base-darker;
 $off-canvas-btn-bkg:$base-darker;
-$off-canvas-btn-bdr:$base-lighter;
+$off-canvas-btn-bdr:$asbestos-grey;
 
 h1{
 	font-size: 1.3em;

@@ -1,0 +1,144 @@
+
+
+$summary-item-height:2.25em;
+
+.job-summary-item{
+  display:flex;
+  height:$summary-item-height;
+  margin-top: 6px;
+  background-color:$clouds-grey;
+  border-bottom: 1px solid $tertiary-color;
+  
+  .job-summary-status{
+    height:$summary-item-height;
+    background-color: $tertiary-color;
+    color:#fff;
+    width:100px;
+    h4{
+      width:100px;
+      line-height:$summary-item-height;
+      vertical-align: middle;
+      text-align: center;
+    }
+  }
+
+  .job-summary-property{
+    height:$summary-item-height;
+    margin-left:5px;
+    overflow: hidden;
+    h4{
+      margin-left:5px;
+      line-height:$summary-item-height;
+      vertical-align: middle;
+    }
+  }
+
+  .job-summary-icon{
+    height:$summary-item-height;
+    margin-left:5px;
+    cursor:pointer;
+    i{
+        height:$summary-item-height;
+        font-size: $summary-item-height;
+        color:$secondary-color;
+        vertical-align: middle;
+      }
+  
+  }
+}
+
+$status-item-height:2em;
+
+.status-container{
+  width:100%;
+
+  .status-item{
+    background-color:$clouds-grey;
+    height:$status-item-height;
+    width:100%;
+    display:flex;
+    margin:3px 0 0 0;
+
+    h4{
+      line-height: $status-item-height;
+      vertical-align: middle;
+      padding:0;
+      margin:0;
+      font-size: 1em;
+    }
+    h3{
+      line-height: $status-item-height;
+      vertical-align: middle;
+      padding:0;
+      margin:0;
+    }
+    .button{
+      border:0;
+      padding:8px 16px;
+      width:80px;
+    }
+    a{
+      text-decoration: none;
+    }
+
+  }
+
+  .status-label-inactive{
+    background-color: $silver-grey;
+    width:100px;
+    height:$status-item-height;
+    h4{
+      color:$asbestos-grey;
+      line-height:$status-item-height;
+      vertical-align: middle;
+     margin:0;
+      text-align: center;
+    }
+  }
+
+  .status-label-active{
+    background-color: $tertiary-color;
+    width:100px;
+    height:$status-item-height;
+    h4{
+      color:$clouds-grey;
+      line-height:$status-item-height;
+      vertical-align: middle;
+      margin:0;
+      text-align: center;
+    }
+  }
+
+  .status-item-date{
+    width:100px;
+    height:$status-item-height;
+    color:#000000;
+    padding-left: .5rem;
+  }
+
+  .status-item-update{
+    height:$status-item-height;
+    cursor:pointer;
+    margin-left:.5rem;
+    i{
+       cursor:pointer;
+       height:$status-item-height;
+       font-size: $status-item-height;
+       color:$secondary-color;
+    }
+  }
+
+  .status-item-check{
+    height:$status-item-height;
+    cursor:pointer;
+    margin-left:.5em;
+    i{
+       cursor:pointer;
+       height:$status-item-height;
+       font-size: $status-item-height;
+       color:$tertiary-color;
+    }
+  }
+}
+
+

@@ -10,7 +10,8 @@ html {
   -ms-text-size-adjust: 100%;
   /* 2 */
   -webkit-text-size-adjust: 100%;
-  /* 2 */ }
+  /* 2 */
+  font-size: 16px; }
 
 /**
  * Remove default margin.
@@ -401,126 +402,61 @@ body {
     margin-bottom: 10px; }
   .page .page-title-bar {
     width: 100%;
-    margin-bottom: .7em; }
+    margin-bottom: .7rem; }
     .page .page-title-bar h2 {
-      color: #000000;
-      font-size: 1.7em;
+      color: #2C3E50;
+      font-size: 1.7rem;
       font-weight: 700;
       line-height: 1; }
   .page .section-header {
-    height: 24px;
-    background-color: #0463A1; }
+    height: 1.5rem;
+    background-color: #34495E; }
     .page .section-header h2 {
-      color: #FFFFFF;
+      color: #ECF0F1;
       font-size: 1em;
       font-weight: 700;
-      line-height: 24px;
+      line-height: 1.5rem;
       vertical-align: middle;
-      margin: 0 0 0 .3em; }
+      margin: 0 0 0 .3rem; }
 
-.status-container {
-  width: 100%; }
-  .status-container .status-item {
-    background-color: #cdcdcd;
-    height: 32px;
-    width: 100%;
-    display: flex;
-    margin: 3px 0 0 0; }
-    .status-container .status-item h4 {
-      line-height: 32px;
-      vertical-align: middle;
-      padding: 0;
-      margin: 0 0 0 3px; }
-    .status-container .status-item h3 {
-      line-height: 32px;
-      vertical-align: middle;
-      padding: 0;
-      margin: 0 0 0 3px; }
-    .status-container .status-item .button {
-      border: 0;
-      padding: 8px 16px;
-      width: 80px; }
-    .status-container .status-item a {
-      text-decoration: none; }
-  .status-container .status-item-title {
-    background-color: #3a3a3a;
-    width: 100px;
-    height: 32px; }
-    .status-container .status-item-title h4 {
-      color: #fff;
-      line-height: 32px;
-      vertical-align: middle;
-      margin-left: 4px; }
-  .status-container .status-item-date {
-    width: 100px;
-    height: 32px;
-    color: #000000; }
-  .status-container .status-item-update {
-    height: 32px; }
-    .status-container .status-item-update i {
-      height: 32px;
-      font-size: 32px;
-      color: #048F7B; }
+.bar-end-cap {
+  background-color: #E74C3C;
+  height: 2.25rem;
+  width: 1rem; }
 
-.job-summary-item {
-  display: flex;
-  height: 42px;
-  margin-top: 6px;
-  background-color: #cccccc; }
-  .job-summary-item button {
-    height: 42px;
-    width: 105px;
-    padding: 0;
-    transition: #048F7B 0.25s ease-out, color 0.25s ease-out;
-    background-color: #048F7B; }
-  .job-summary-item button:hover, .job-summary-item button:focus, .job-summary-item .button:hover, .job-summary-item .button:focus {
-    background-color: #024d42; }
-  .job-summary-item .stage {
-    height: 42px;
-    margin-left: 5px;
-    background-color: #AE1616;
-    color: #fff;
-    width: 100px; }
-    .job-summary-item .stage h4 {
-      width: 100px;
-      line-height: 42px;
-      vertical-align: middle;
-      text-align: center; }
-  .job-summary-item .prop {
-    height: 42px;
-    margin-left: 5px;
-    overflow: hidden; }
-    .job-summary-item .prop h4 {
-      margin-left: 5px;
-      line-height: 42px;
-      vertical-align: middle; }
+.block-section {
+  background-color: #ECF0F1;
+  padding: 2rem;
+  border: 2px solid #BDC3C7;
+  display: inline-block; }
 
 .hrule {
-  border-top: 1px solid #000000;
+  border-top: 1px solid #7F8C8D;
   width: 100%;
   clear: both;
   content: '';
   display: block; }
 
 .top-bar {
-  height: 45px;
+  height: 3rem;
   width: 100%;
   display: flex;
-  background-color: #035082; }
+  background-color: #34495E; }
   .top-bar h1 {
     color: #fff;
-    line-height: 45px;
+    line-height: 3rem;
     vertical-align: middle;
-    margin: 0 0 0 .5em;
+    margin: 0 0 0 .5rem;
     padding: 0; }
   .top-bar button {
-    height: 45px;
+    height: 3rem;
     width: 80px;
     padding: 0;
-    transition: #048F7B 0.25s ease-out, color 0.25s ease-out;
-    background-color: #048F7B; }
+    transition: background-color 0.25s ease-out;
+    background-color: #34495E;
+    border-right: 1px solid #7F8C8D; }
   .top-bar button:hover, .top-bar button:focus, .top-bar .button:hover, .top-bar .button:focus {
-    background-color: #024d42; }
+    background-color: #2C3E50; }
 
 .view-container {
   max-width: 800px; }
@@ -545,7 +481,7 @@ body {
     display: flex;
     margin: 4px 0 0 0;
     height: 1em;
-    background-color: #f7f7f7; }
+    background-color: #ECF0F1; }
     .list-container-proposal .materials-container h5 {
       font-weight: 400;
       font-size: .8em;
@@ -555,7 +491,7 @@ body {
     .list-container-proposal .materials-container .materials-small {
       height: 1em;
       width: 3em;
-      background-color: #3a3a3a;
+      background-color: #BDC3C7;
       color: #fff;
       margin: 0 4px 0 0;
       padding-left: 3px; }
@@ -564,7 +500,7 @@ body {
     .list-container-proposal .materials-container .materials-small-plus {
       height: 1em;
       width: 4em;
-      background-color: #3a3a3a;
+      background-color: #BDC3C7;
       color: #fff;
       margin: 0 4px 0 0;
       padding-left: 3px; }
@@ -573,7 +509,7 @@ body {
     .list-container-proposal .materials-container .materials-medium {
       height: 1em;
       width: 5em;
-      background-color: #3a3a3a;
+      background-color: #BDC3C7;
       color: #fff;
       margin: 0 4px 0 0;
       padding-left: 3px; }
@@ -582,7 +518,7 @@ body {
     .list-container-proposal .materials-container .materials-large {
       height: 1em;
       width: 8em;
-      background-color: #3a3a3a;
+      background-color: #BDC3C7;
       color: #fff;
       margin: 0 4px 0 0;
       padding-left: 3px; }
@@ -595,11 +531,11 @@ body {
     display: flex;
     margin: 4px 0 0 0;
     height: 2.25em;
-    background-color: #f7f7f7; }
+    background-color: #ECF0F1; }
     .list-container-proposal .job-items-container .job-item-name {
       height: 2.25em;
       width: 150px;
-      background-color: #3a3a3a;
+      background-color: #BDC3C7;
       color: #fff;
       margin: 0 4px 0 0;
       padding-left: 3px; }
@@ -610,7 +546,7 @@ body {
     .list-container-proposal .job-items-container .job-item-qty {
       height: 2.25em;
       width: 60px;
-      background-color: #3a3a3a;
+      background-color: #BDC3C7;
       color: #000;
       margin: 0 4px 0 0; }
       .list-container-proposal .job-items-container .job-item-qty h3 {
@@ -621,7 +557,7 @@ body {
     .list-container-proposal .job-items-container .job-item-unit {
       height: 2.25em;
       width: 100px;
-      background-color: #3a3a3a;
+      background-color: #BDC3C7;
       color: #000;
       margin: 0 4px 0 0;
       padding: 0 0 0 4px; }
@@ -650,7 +586,7 @@ body {
       .list-container-proposal .job-items-container .job-item-icon i {
         height: 2.25em;
         font-size: 2.25em;
-        color: #048F7B;
+        color: #1ABC9C;
         vertical-align: middle; }
     .list-container-proposal .job-items-container .job-item-icon-check {
       height: 2.25em;
@@ -660,13 +596,171 @@ body {
       .list-container-proposal .job-items-container .job-item-icon-check i {
         height: 2.25em;
         font-size: 2.25em;
-        color: #AE1616;
+        color: #E74C3C;
         vertical-align: middle; }
+
+.job-summary-item {
+  display: flex;
+  height: 2.25em;
+  margin-top: 6px;
+  background-color: #ECF0F1;
+  border-bottom: 1px solid #E74C3C; }
+  .job-summary-item .job-summary-status {
+    height: 2.25em;
+    background-color: #E74C3C;
+    color: #fff;
+    width: 100px; }
+    .job-summary-item .job-summary-status h4 {
+      width: 100px;
+      line-height: 2.25em;
+      vertical-align: middle;
+      text-align: center; }
+  .job-summary-item .job-summary-property {
+    height: 2.25em;
+    margin-left: 5px;
+    overflow: hidden; }
+    .job-summary-item .job-summary-property h4 {
+      margin-left: 5px;
+      line-height: 2.25em;
+      vertical-align: middle; }
+  .job-summary-item .job-summary-icon {
+    height: 2.25em;
+    margin-left: 5px;
+    cursor: pointer; }
+    .job-summary-item .job-summary-icon i {
+      height: 2.25em;
+      font-size: 2.25em;
+      color: #1ABC9C;
+      vertical-align: middle; }
+
+.status-container {
+  width: 100%; }
+  .status-container .status-item {
+    background-color: #ECF0F1;
+    height: 2em;
+    width: 100%;
+    display: flex;
+    margin: 3px 0 0 0; }
+    .status-container .status-item h4 {
+      line-height: 2em;
+      vertical-align: middle;
+      padding: 0;
+      margin: 0;
+      font-size: 1em; }
+    .status-container .status-item h3 {
+      line-height: 2em;
+      vertical-align: middle;
+      padding: 0;
+      margin: 0; }
+    .status-container .status-item .button {
+      border: 0;
+      padding: 8px 16px;
+      width: 80px; }
+    .status-container .status-item a {
+      text-decoration: none; }
+  .status-container .status-label-inactive {
+    background-color: #BDC3C7;
+    width: 100px;
+    height: 2em; }
+    .status-container .status-label-inactive h4 {
+      color: #7F8C8D;
+      line-height: 2em;
+      vertical-align: middle;
+      margin: 0;
+      text-align: center; }
+  .status-container .status-label-active {
+    background-color: #E74C3C;
+    width: 100px;
+    height: 2em; }
+    .status-container .status-label-active h4 {
+      color: #ECF0F1;
+      line-height: 2em;
+      vertical-align: middle;
+      margin: 0;
+      text-align: center; }
+  .status-container .status-item-date {
+    width: 100px;
+    height: 2em;
+    color: #000000;
+    padding-left: .5rem; }
+  .status-container .status-item-update {
+    height: 2em;
+    cursor: pointer;
+    margin-left: .5rem; }
+    .status-container .status-item-update i {
+      cursor: pointer;
+      height: 2em;
+      font-size: 2em;
+      color: #1ABC9C; }
+  .status-container .status-item-check {
+    height: 2em;
+    cursor: pointer;
+    margin-left: .5em; }
+    .status-container .status-item-check i {
+      cursor: pointer;
+      height: 2em;
+      font-size: 2em;
+      color: #E74C3C; }
+
+.client-list-container {
+  width: 100%; }
+
+.client-summary-item {
+  display: flex;
+  height: 2.25em;
+  margin-top: 6px;
+  background-color: #cccccc;
+  border-bottom: 1px solid #E74C3C; }
+  .client-summary-item .client-summary-text {
+    height: 2.25em;
+    margin-left: 5px;
+    overflow: hidden; }
+    .client-summary-item .client-summary-text h4 {
+      margin-left: 5px;
+      line-height: 2.25em;
+      vertical-align: middle; }
+  .client-summary-item .client-summary-icon {
+    height: 2.25em;
+    margin-left: 5px;
+    cursor: pointer; }
+    .client-summary-item .client-summary-icon i {
+      height: 2.25em;
+      font-size: 2.25em;
+      color: #1ABC9C;
+      vertical-align: middle; }
+
+.property-list-container {
+  width: 100%; }
+
+.property-summary-item {
+  display: flex;
+  height: 2.25em;
+  margin-top: 6px;
+  background-color: #cccccc;
+  border-bottom: 1px solid #E74C3C; }
+  .property-summary-item .property-summary-text {
+    height: 2.25em;
+    margin-left: 5px;
+    overflow: hidden; }
+    .property-summary-item .property-summary-text h4 {
+      margin-left: 5px;
+      line-height: 2.25em;
+      vertical-align: middle; }
+  .property-summary-item .property-summary-icon {
+    height: 2.25em;
+    margin-left: 5px;
+    cursor: pointer; }
+    .property-summary-item .property-summary-icon i {
+      height: 2.25em;
+      font-size: 2.25em;
+      color: #1ABC9C;
+      vertical-align: middle; }
 
 button:focus {
   outline: none; }
 
-button, .button {
+button,
+.button {
   display: inline-block;
   text-align: center;
   line-height: 1;
@@ -676,12 +770,15 @@ button, .button {
   border: 1px solid transparent;
   padding: 0.85em 1em;
   margin: 0;
-  background-color: #048F7B;
-  color: #fff;
+  background-color: #1ABC9C;
+  color: #FFFFFF;
   overflow: visible; }
 
-button:hover, button:focus, .button:hover, .button:focus {
-  background-color: #037a69; }
+button:hover,
+button:focus,
+.button:hover,
+.button:focus {
+  background-color: #16a085; }
 
 button.large, .button.large {
   padding: 1.125rem 2.25rem 1.1875rem 2.25rem;
@@ -696,13 +793,13 @@ button.tiny, .button.tiny {
   font-size: 0.6875rem; }
 
 .nav-btn {
-  transition: #048F7B 0.25s ease-out, color 0.25s ease-out;
-  background-color: #048F7B;
-  margin: 10px 0;
-  width: 100px; }
+  transition: #1ABC9C 0.25s ease-out, color 0.25s ease-out;
+  background-color: #1ABC9C;
+  margin: .5rem 0;
+  width: 6.25rem; }
 
 .nav-btn:hover, .nav-btn:focus {
-  background-color: #024d42; }
+  background-color: #16A085; }
 
 #site-wrapper {
   position: relative;
@@ -728,7 +825,7 @@ button.tiny, .button.tiny {
   height: 100%;
   position: absolute;
   top: 0;
-  background-color: #035082;
+  background-color: #2C3E50;
   display: flex;
   flex-direction: column; }
   #off-canvas-menu h3 {
@@ -741,8 +838,8 @@ button.tiny, .button.tiny {
     width: 100%;
     height: 48px;
     margin: 1px 0 0 0;
-    border: 1px solid #0984D4;
-    background-color: #035082; }
+    border: 1px solid #7F8C8D;
+    background-color: #2C3E50; }
   #off-canvas-menu .label {
     background-color: #012135;
     height: 30px;
@@ -815,7 +912,7 @@ table {
   min-height: 100px; }
   .jobs-table .title {
     height: 1.4em;
-    background-color: #0463A1; }
+    background-color: #34495E; }
   .jobs-table h2 {
     color: #FFFFFF;
     font-size: 1em;
@@ -896,7 +993,7 @@ table {
   min-height: 100px; }
   .jobs-table .title {
     height: 1.4em;
-    background-color: #0463A1; }
+    background-color: #34495E; }
   .jobs-table h2 {
     color: #FFFFFF;
     font-size: 1em;
@@ -929,36 +1026,37 @@ table {
     float: left;
     margin-right: 1em; }
 
-.login-form {
-  margin-left: 1em;
-  display: flex; }
-  .login-form label {
-    font-size: 1em;
-    font-weight: 700;
-    display: block; }
-  .login-form form {
-    display: flex;
-    align-items: flex-end; }
-    .login-form form div {
-      margin-right: 6px; }
-  .login-form input[type="text"] {
-    padding: 2px;
-    height: 28px;
-    width: 100px;
-    display: block; }
-  .login-form .pin-input {
-    width: 80px; }
-  .login-form .button {
-    height: 36px;
-    padding: 4px 10px; }
+.login-form form {
+  display: flex;
+  flex-direction: column; }
+  .login-form form div {
+    margin-right: .5rem; }
+
+.login-form label {
+  font-size: 1rem;
+  line-height: 1;
+  font-weight: 700;
+  display: block;
+  color: #7F8C8D; }
+
+.login-form input[type="text"] {
+  height: 2rem;
+  width: 6.25rem;
+  display: block;
+  margin-bottom: 1rem; }
+
+.login-form .button {
+  height: 2.25rem;
+  padding: 4px 10px;
+  width: 6.25rem; }
 
 .login-error {
   font-size: .9em;
-  color: #FF0000; }
+  color: #E74C3C; }
 
 .login-attention {
   font-size: .9em;
-  color: #FF0000; }
+  color: #E74C3C; }
 
 .inventory {
   width: 500px; }

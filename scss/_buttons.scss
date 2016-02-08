@@ -9,16 +9,16 @@ $button-margin: 0 !default;
 $button-fill: solid !default;
 
 /// Default background color for buttons.
-$button-background: $primary-button-up !default;
+$button-background: $turquois-green !default;
 
 /// Background color on hover for buttons.
-$button-hover-color: scale-color($button-background, $lightness: -15%) !default;
+$button-hover-color: scale-color($turquois-green, $lightness: -15%) !default;
 
 /// Font color for buttons.
-$button-color: #fff !default;
+$button-color: $white !default;
 
 /// Font color for buttons, if the background is light.
-$button-color-alt: #000 !default;
+$button-color-alt: $asbestos-grey !default;
 
 /// Border radius for buttons, defaulted to global-radius.
 $button-radius: 0 !default;
@@ -39,7 +39,8 @@ $button-sizes: (
 $button-opacity-disabled: 0.25 !default;
 
 
-button, .button{
+button, 
+.button{
 	display: inline-block;
 	text-align: center;
 	line-height: 1;
@@ -54,8 +55,12 @@ button, .button{
 	overflow: visible;
 }
 
-button:hover, button:focus, .button:hover, .button:focus {
-    background-color: $button-hover-color; }
+button:hover, 
+button:focus, 
+.button:hover, 
+.button:focus {
+  background-color: $button-hover-color; 
+}
 
 button.large, .button.large {
     padding: 1.125rem 2.25rem 1.1875rem 2.25rem;
@@ -70,8 +75,8 @@ button.tiny, .button.tiny {
 .nav-btn{
 	transition: $secondary-color 0.25s ease-out, color 0.25s ease-out;
   background-color: $secondary-color;
-  margin:10px 0;
-  width:100px;
+  margin:.5rem 0;
+  width:6.25rem;
  }
 
 .nav-btn:hover, .nav-btn:focus {

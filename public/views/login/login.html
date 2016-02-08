@@ -1,50 +1,41 @@
 <div class="page">
     <div class="page-title-bar"><h2>Manager Log In</h2></div>
-    <div class="login-form" ng-if="!requestSuccess"> 
+    <div class="block-section" ng-hide="requestSuccess">
+    <div class="login-form"> 
         <form name="loginForm" data-ng-submit="submitLoginForm()" novalidate>
             <div>
                 <label>User Name</label>
                 <input name="username" type="text" placeholder="User Name" ng-model="_username" required>
-            </div>
-            <div>
+           
                 <label>Pin #</label>
-                <input style="width:60px;" name="pin" type="text" placeholder="PIN" ng-model="_pin" required>
+                <input name="pin" type="text" placeholder="PIN" ng-model="_pin" required>
              </div>
              <div>
                 <button type="submit" class="button">Submit</button>
             </div>
+            
         </form>
-        
     </div>
-    <div style="margin-left:1em;">
-        <p class="login-attention" data-ng-show="loginSuccess===false">Did not find a match for Username and PIN.</p>
-        <p class="login-attention" data-ng-show="submissionInvalid">Please complete both fields.</p>
-    </div>
-
     
-    <div class="login-status" ng-if="requestSuccess">
+</div>
+<div>
+    <p class="login-attention" data-ng-show="loginSuccess===false">Did not find a match for Username and PIN.</p>
+    <p class="login-attention" data-ng-show="submissionInvalid">Please complete both fields.</p>
+</div>
+  <div class="block-section" ng-show="requestSuccess">
+    <div class="login-status" >
         <h4>Logged in as {{displayname}}</h4>
-        <div ng-show="!dataRefreshed">
-            <label>Retrieving data</label>
-            <i class="fa fa-spinner fa-pulse fa-2x"></i>
-        </div>
-        <div ng-show="dataRefreshed">
+        
+        <div>
             <button type="button" class="button" style="width:100px;" ng-click="continueBtn()">Continue</button>
             <button type="button" class="button"  style="width:100px;" ng-click="logOut()">Log Out</button>
         </div>
         
     </div>
 
-    <div style="width:1em; height:1em; background-color: #0000aa; margin-bottom: 3em; color:#fff;">
-        1em
-    </div>
-    <div style="width:1.5em; height:1.5em; background-color: #0000aa;margin-bottom: 3em; color:#fff;">
-        1.5em
-    </div>
-    <div style="width:2em; height:2em; background-color: #0000aa;margin-bottom: 3em; color:#fff;">
-        2em
-    </div>
-    <div style="width:2.25em; height:2.25em; background-color: #0000aa;margin-bottom: 3em; color:#fff;">
-        2.25em
-    </div>
+   </div>
+   <div ng-show="!dataRefreshed && requestSuccess">
+            <label>Retrieving data</label>
+            <i class="fa fa-spinner fa-pulse fa-2x"></i>
+        </div>
 </div>

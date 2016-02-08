@@ -17,138 +17,45 @@ body{
   }
   .page-title-bar{
     width:100%;
-    margin-bottom: .7em;
+    margin-bottom: .7rem;
     h2{
-      color:#000000;
-      font-size:1.7em;
+      color:$midnight-blue;
+      font-size:1.7rem;
       font-weight: 700;
       line-height: 1;
     }
   }
 
   .section-header{
-    height:24px;
+    height:1.5rem;
     background-color:$section-header-bkg;
     h2{
-      color:#FFFFFF;
+      color:$clouds-grey;
       font-size:1em;
       font-weight: 700;
-      line-height: 24px;
+      line-height: 1.5rem;
       vertical-align: middle;
-      margin:0 0 0 .3em;
+      margin:0 0 0 .3rem;
     }
   }
 }
 
-$status-item-height:32px;
-
-.status-container{
-  width:100%;
-
-  .status-item{
-    background-color: #cdcdcd;
-    height:$status-item-height;
-    width:100%;
-    display:flex;
-    margin:3px 0 0 0;
-
-    h4{
-      line-height: $status-item-height;
-      vertical-align: middle;
-      padding:0;
-      margin:0 0 0 3px;
-    }
-    h3{
-      line-height: $status-item-height;
-      vertical-align: middle;
-      padding:0;
-      margin:0 0 0 3px;
-    }
-    .button{
-      border:0;
-      padding:8px 16px;
-      width:80px;
-    }
-    a{
-      text-decoration: none;
-    }
-
-  }
-
-  .status-item-title{
-    background-color: #3a3a3a;
-    width:100px;
-    height:$status-item-height;
-    h4{
-      color:#fff;
-      line-height:$status-item-height;
-      vertical-align: middle;
-      margin-left: 4px;
-    }
-  }
-
-  .status-item-date{
-    width:100px;
-    height:$status-item-height;
-    color:#000000;
-  }
-
-  .status-item-update{
-    height:$status-item-height;
-    i{
-       height:$status-item-height;
-       font-size: $status-item-height;
-       color:$secondary-color;
-    }
-  }
+.bar-end-cap{
+  background-color: $tertiary-color;
+  height:2.25rem;
+  width:1rem;
 }
 
-$summary-item-height:42px;
-
-.job-summary-item{
-  display:flex;
-  height:$summary-item-height;
-  margin-top: 6px;
-  background-color:#cccccc;
-  button{
-    height:$summary-item-height;
-    width:105px;
-    padding:0;
-    transition: $secondary-color 0.25s ease-out, color 0.25s ease-out;
-    background-color: $secondary-color;
-  }
-  button:hover, button:focus, .button:hover, .button:focus {
-    background-color: $secondary-darker; }
-
-  .stage{
-    height:$summary-item-height;
-    margin-left:5px;
-    background-color: $tertiary-color;
-    color:#fff;
-    width:100px;
-    h4{
-      width:100px;
-      line-height:$summary-item-height;
-      vertical-align: middle;
-      text-align: center;
-    }
-  }
-
-  .prop{
-    height:$summary-item-height;
-    margin-left:5px;
-    overflow: hidden;
-    h4{
-      margin-left:5px;
-      line-height:$summary-item-height;
-      vertical-align: middle;
-    }
-  }
-
+.block-section{
+  background-color: $clouds-grey;
+  padding:2rem;
+  border:2px solid $silver-grey;
+  display:inline-block;
 }
+
 
 .hrule{
-  border-top: 1px solid #000000;
+  border-top: 1px solid $asbestos-grey;
   width:100%;
   clear:both;
   content:'';
@@ -156,26 +63,27 @@ $summary-item-height:42px;
 }
 
 .top-bar{
-  height:45px;
+  height:3rem;
   width:100%;
   display:flex;
-  background-color: $top-bar-bkg;
+  background-color: $wetAsphalt;
   h1{
     color:#fff;
-    line-height:45px;
+    line-height:3rem;
     vertical-align: middle;
-    margin:0 0 0 .5em;
+    margin:0 0 0 .5rem;
     padding:0;
   }
   button{
-    height:45px;
+    height:3rem;
     width:80px;
     padding:0;
-    transition: $secondary-color 0.25s ease-out, color 0.25s ease-out;
-    background-color: $secondary-color;
+    transition: background-color 0.25s ease-out;
+    background-color: $wetAsphalt;
+    border-right:1px solid $asbestos-grey;
   }
   button:hover, button:focus, .button:hover, .button:focus {
-    background-color: $secondary-darker; }
+    background-color: $midnight-blue; }
 }
 
 .view-container{

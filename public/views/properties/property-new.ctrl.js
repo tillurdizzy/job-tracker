@@ -219,7 +219,7 @@ app.controller('NewPropertyCtrl',['$state','$scope','evoDb','SharedSrvc',functio
     }
 
     $scope.$watch('$viewContentLoaded', function() {
-       var loggedIn = S.loggedIn();
+       var loggedIn = S.loggedIn;
        if(!loggedIn){
             $state.transitionTo('login');
        }

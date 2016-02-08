@@ -1,5 +1,6 @@
 <div class="page" ng-controller="ClientsCtrl as Ctrl">
     <div class="page-title-bar"><h2>Clients</h2></div>
+    <horiz-rule margintop="5px" marginbottom="10px"></horiz-rule>
     <div ui-view>
        
         <div class="page-nav">
@@ -8,7 +9,7 @@
             <button ng-click="Ctrl.goNewClient()" type="button" class="button">New Client</button>
         </div>
 
-        <div class="list-container">
+        <div class="client-list-container">
             <div client-item id="{{e.PRIMARY_ID}}" company="{{e.company}}" details="Ctrl.showDetails"
                 contact="{{e.name_first + ' ' + e.name_last}}" ng-repeat="e in Ctrl.clients">
             </div> 

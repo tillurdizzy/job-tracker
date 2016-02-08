@@ -51,7 +51,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
 
 		.state('jobs', {
 			url: "/jobs",
-			templateUrl:"views/jobs/jobs.html"
+			templateUrl:"views/jobs/jobs-summary.html"
 		})
 		.state('jobs.details', {
 			url: "/details",

@@ -1,12 +1,13 @@
 <div class="page" ng-controller="PropertiesCtrl as Ctrl">
     <div class="page-title-bar"><h2>Properties</h2></div>
+    <horiz-rule margintop="5px" marginbottom="10px"></horiz-rule>
     <div ui-view>
     	<div class="page-nav">
     		<button ng-click="Ctrl.getManagerJobs()" type="button" class="button">Refresh List</button>
     		<div></div>
     		<button ng-click="Ctrl.goNewProperty()" type="button" class="button">New Property</button>
     	</div>
-    	<div class="list-container">
+    	<div class="property-list-container">
             <div property-item id="{{e.PRIMARY_ID}}" name="{{e.name}}" details="Ctrl.showDetails"
                 address="{{e.street + ', ' + e.city}}" ng-repeat="e in Ctrl.properties">
             </div> 

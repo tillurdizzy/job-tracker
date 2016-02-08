@@ -8,7 +8,7 @@ $material-height:1em;
 		display:flex;
 		margin:4px 0 0 0;
 		height:$material-height;
-		background-color:#f7f7f7;
+		background-color:$clouds-grey;
 		h5{
 			font-weight: 400;
 			font-size: .8em;
@@ -21,7 +21,7 @@ $material-height:1em;
 		.materials-small{
 			height:$material-height;
 			width:3em;
-			background-color: #3a3a3a;
+			background-color: $silver-grey;
 			color:#fff;
 			margin:0 4px 0 0;
 			padding-left:3px;
@@ -34,7 +34,7 @@ $material-height:1em;
 		.materials-small-plus{
 			height:$material-height;
 			width:4em;
-			background-color: #3a3a3a;
+			background-color: $silver-grey;
 			color:#fff;
 			margin:0 4px 0 0;
 			padding-left:3px;
@@ -47,7 +47,7 @@ $material-height:1em;
 		.materials-medium{
 			height:$material-height;
 			width:5em;
-			background-color: #3a3a3a;
+			background-color: $silver-grey;
 			color:#fff;
 			margin:0 4px 0 0;
 			padding-left:3px;
@@ -59,7 +59,7 @@ $material-height:1em;
 		.materials-large{
 			height:$material-height;
 			width:8em;
-			background-color: #3a3a3a;
+			background-color: $silver-grey;
 			color:#fff;
 			margin:0 4px 0 0;
 			padding-left:3px;
@@ -82,11 +82,11 @@ $material-height:1em;
 		display:flex;
 		margin:4px 0 0 0;
 		height:$job-item-height;
-		background-color:#f7f7f7;
+		background-color:$clouds-grey;
 		.job-item-name{
 			height:$job-item-height;
 			width:150px;
-			background-color: #3a3a3a;
+			background-color: $silver-grey;
 			color:#fff;
 			margin:0 4px 0 0;
 			padding-left:3px;
@@ -99,7 +99,7 @@ $material-height:1em;
 		.job-item-qty{
 			height:$job-item-height;
 			width:60px;
-			background-color: #3a3a3a;
+			background-color: $silver-grey;
 			color:#000;
 			margin:0 4px 0 0;
 			h3{
@@ -113,7 +113,7 @@ $material-height:1em;
 		.job-item-unit{
 			height:$job-item-height;
 			width:100px;
-			background-color: #3a3a3a;
+			background-color: $silver-grey;
 			color:#000;
 			margin:0 4px 0 0;
 			padding:0 0 0 4px;

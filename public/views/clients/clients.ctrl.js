@@ -56,4 +56,11 @@ app.controller('ClientsCtrl',['$scope','$state','evoDb','SharedSrvc',function ($
      	ME.clients = S.managerClients;
     });
 
+    $scope.$watch('$viewContentLoaded', function() {
+       var loggedIn = S.loggedIn;
+       if(!loggedIn){
+       		$state.transitionTo('login');
+       }
+    });
+
  }]);

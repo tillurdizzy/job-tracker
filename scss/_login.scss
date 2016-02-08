@@ -1,46 +1,46 @@
 
 .login-form{
-  margin-left: 1em;
-	display:flex;
 
-  label{
-    font-size: 1em;
-    font-weight: 700;
-    display:block;
-  }
   form{
     display:flex;
-    align-items:flex-end;
+    flex-direction:column;
+
     div{
-      margin-right:6px;
+      margin-right:.5rem;
     }
   }
 
-  input[type="text"]{
-    padding:2px;
-    height:28px;
-    width:100px;
+  label{
+    font-size: 1rem;
+    line-height: 1;
+    font-weight: 700;
     display:block;
+    color:$asbestos-grey;
+  }
+  
+
+  input[type="text"]{
+    height:2rem;
+    width:6.25rem;
+    display:block;
+    margin-bottom: 1rem;
   }
 
-  .pin-input{
-    width:80px;
-  }
-   
 	.button{
-    height:36px;
+    height:2.25rem;
     padding:4px 10px;
+    width:6.25rem;
 	}
 
 }
 
 .login-error{
     font-size: .9em;
-    color:#FF0000;
+    color:$tertiary-color;
   }
 
   .login-attention{
     font-size: .9em;
-    color:#FF0000;
+    color:$tertiary-color;
   }
 

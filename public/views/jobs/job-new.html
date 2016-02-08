@@ -1,31 +1,36 @@
 <div ng-controller="NewJobCtrl as Ctrl" class="page">
-    <div class="page-title-bar"><h2>New Job</h2></div>
+    <div class="page-title-bar">
+        <h2>New Job</h2></div>
+    <horiz-rule margintop="5px" marginbottom="10px"></horiz-rule>
     <div class="mobile-input">
         <div class="mobile-input-item" ng-show="Ctrl.inputField=='INFO'">
-            <h3>Instructions</h3>
             <add-space margintop="10"></add-space>
-            <div class="text-block-display">
-                <h4>What is a Job?</h4>
-                <p>A Job simply consists of one of your <span class="bold">Clients</span> matched with one your <span class="bold">Properties.</span></p>
-                <p>Before creating a new <span class="bold">Job</span>, you should already have the <span class="bold">Client</span> and the <span class="bold">Property</span> created.  You can access your Client List and Property List from the green MENU button sabove.</p>
-                <add-space margintop="12"></add-space>
-                <h4>Job Status</h4>
-                <p>All new Jobs are created with the Status of <span class="bold">Prospect</span>, and progresses through successive stages as follows:</p>
-                <ul>
-                    <li><span class="bold">Proposal</span> - Bid and Scope of Work have been created and submitted to client.</li>
-                    <li><span class="bold">Contract</span> - Bid and Scope of Work have been approved and accepted by client, and initial payment has been received.</li>
-                    <li><span class="bold">Active</span> - Materials have been delivered and a crew is on the job site.</li>
-                    <li><span class="bold">Complete</span> - All payments has been received.</li>
-                </ul>
+            <div class="block-section">
+                <div class="text-block-display">
+                    <h4>What is a Job?</h4>
+                    <p>A Job simply consists of one of your <span class="bold">Clients</span> matched with one your <span class="bold">Properties.</span></p>
+                    <p>Before creating a new <span class="bold">Job</span>, you should already have the <span class="bold">Client</span> and the <span class="bold">Property</span> created. You can access your Client List and Property List from the green MENU button sabove.</p>
+                    <add-space margintop="12"></add-space>
+                    <h4>Job Status</h4>
+                    <p>All new Jobs are created with the Status of <span class="bold">Prospect</span>, and progresses through successive stages as follows:</p>
+                    <ul>
+                        <li><span class="bold">Proposal</span> - Bid and Scope of Work have been created and submitted to client.</li>
+                        <li><span class="bold">Contract</span> - Bid and Scope of Work have been approved and accepted by client, and initial payment has been received.</li>
+                        <li><span class="bold">Active</span> - Materials have been delivered and a crew is on the job site.</li>
+                        <li><span class="bold">Complete</span> - All payments has been received.</li>
+                    </ul>
+                </div>
             </div>
-            <div><button type="button" ng-click="Ctrl.inputField='S1'">Continue</button></div>
+            <div>
+                <button type="button" ng-click="Ctrl.inputField='S1'">Continue</button>
+            </div>
         </div>
         <div class="mobile-input-item" ng-show="Ctrl.inputField=='S1'">
             <div class="input-label">
-                <div><h3>Client</h3></div>
+                <div>
+                    <h3>Client</h3></div>
                 <p>Choose a Client from the selections below.</p>
             </div>
-            
             <select id="selectClient" ng-model="Ctrl.S1" ng-options="c.company for c in Ctrl.clientList" ng-change="Ctrl.filterProperties()">
             </select>
             <div class="page-nav">
@@ -40,10 +45,10 @@
                 </div>
             </div>
         </div>
-
         <div class="mobile-input-item" ng-show="Ctrl.inputField=='S2'">
             <div class="input-label">
-                <div><h3>Property</h3></div>
+                <div>
+                    <h3>Property</h3></div>
                 <p>Choose a Property from the selections below.</p>
             </div>
             <select id="selectProperty" ng-model="Ctrl.S2" ng-options="c.name for c in Ctrl.propertyOptions">
@@ -60,7 +65,6 @@
                 </div>
             </div>
         </div>
-
         <div class="mobile-input-item" ng-show="Ctrl.inputField == 'REVIEW'">
             <h3>Review and Submit</h3>
             <div class="text-block-display">
@@ -86,7 +90,6 @@
             <p>{{Ctrl.S2.name}} has been added as a job prospect for {{Ctrl.S1.company}}.</p>
             <button type="button" ng-click="Ctrl.goProposal()">Create Proposal</button>
         </div>
-
         <div class="mobile-input-item" ng-show="Ctrl.inputField == 'ERROR'">
             <h3>Oops!  An error occured saving the data.</h3>
             <p>Try again later or click below to reset and try again now.</p>
