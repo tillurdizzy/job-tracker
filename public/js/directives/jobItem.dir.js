@@ -24,7 +24,6 @@ app.directive('jobInputItem', [function() {
                 var validate = isNaN(userInput);
                 if (validate) { // input is not a number
                     userInput = 0;
-                    $scope.inputNum = "";
                     $scope.qty = "0";
                 } else {
                     var obj = {};
@@ -33,6 +32,7 @@ app.directive('jobInputItem', [function() {
                     $scope.qty = userInput;
                     $scope.submit()(obj);
                 }
+                $scope.inputNum = "";
             }
             $scope.toggleEdit = function() {
                 $scope.editMode = !$scope.editMode;

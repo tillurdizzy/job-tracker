@@ -6,10 +6,10 @@
     <h3>{{Ctrl.selectedPropertyObj.name}}</h3>
     <h3>{{Ctrl.selectedPropertyObj.street}}</h3>
     <h3>{{Ctrl.selectedPropertyObj.city + ", " + Ctrl.selectedPropertyObj.state + " " + Ctrl.selectedPropertyObj.zip}}</h3>
-    <h3>Class: {{Ctrl.selectedPropertyObj.class}}</h3>
-    <h3>Roof type: {{Ctrl.selectedPropertyObj.roof}}</h3>
-    <h3>Layers: {{Ctrl.selectedPropertyObj.layers}}</h3>
-    <h3>Description: {{Ctrl.selectedPropertyObj.description}}</h3>
+    <h3 style = "margin-top:.5em;"><span class="bold">Class:</span> {{Ctrl.selectedPropertyObj.class}}</h3>
+    <h3><span class="bold">Roof type:</span> {{Ctrl.selectedPropertyObj.roof}}</h3>
+    <h3><span class="bold">Layers:</span> {{Ctrl.selectedPropertyObj.layers}}</h3>
+    <h3><span class="bold">Description:</span> {{Ctrl.selectedPropertyObj.description}}</h3>
 </div>
 
 <button type="button" class="button nav-btn" ng-click="Ctrl.backToList()">Back</button>

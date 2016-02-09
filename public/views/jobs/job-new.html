@@ -2,8 +2,8 @@
     <div class="page-title-bar">
         <h2>New Job</h2></div>
     <horiz-rule margintop="5px" marginbottom="10px"></horiz-rule>
-    <div class="mobile-input">
-        <div class="mobile-input-item" ng-show="Ctrl.inputField=='INFO'">
+    <div class="ez-form">
+        <div class="ez-form-item" ng-show="Ctrl.inputField=='INFO'">
             <add-space margintop="10"></add-space>
             <div class="block-section">
                 <div class="text-block-display">
@@ -25,7 +25,7 @@
                 <button type="button" ng-click="Ctrl.inputField='S1'">Continue</button>
             </div>
         </div>
-        <div class="mobile-input-item" ng-show="Ctrl.inputField=='S1'">
+        <div class="ez-form-item" ng-show="Ctrl.inputField=='S1'">
             <div class="input-label">
                 <div>
                     <h3>Client</h3></div>
@@ -45,7 +45,7 @@
                 </div>
             </div>
         </div>
-        <div class="mobile-input-item" ng-show="Ctrl.inputField=='S2'">
+        <div class="ez-form-item" ng-show="Ctrl.inputField=='S2'">
             <div class="input-label">
                 <div>
                     <h3>Property</h3></div>
@@ -65,7 +65,7 @@
                 </div>
             </div>
         </div>
-        <div class="mobile-input-item" ng-show="Ctrl.inputField == 'REVIEW'">
+        <div class="ez-form-item" ng-show="Ctrl.inputField == 'REVIEW'">
             <h3>Review and Submit</h3>
             <div class="text-block-display">
                 <h4>Client:</h4>
@@ -85,12 +85,12 @@
                 </div>
             </div>
         </div>
-        <div class="mobile-input-item" ng-show="Ctrl.inputField == 'SUCCESS'">
+        <div class="ez-form-item" ng-show="Ctrl.inputField == 'SUCCESS'">
             <h3>Success!</h3>
             <p>{{Ctrl.S2.name}} has been added as a job prospect for {{Ctrl.S1.company}}.</p>
             <button type="button" ng-click="Ctrl.goProposal()">Create Proposal</button>
         </div>
-        <div class="mobile-input-item" ng-show="Ctrl.inputField == 'ERROR'">
+        <div class="ez-form-item" ng-show="Ctrl.inputField == 'ERROR'">
             <h3>Oops!  An error occured saving the data.</h3>
             <p>Try again later or click below to reset and try again now.</p>
             <button type="button" ng-click="Ctrl.clearForm()">Reset</button>

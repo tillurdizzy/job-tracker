@@ -10,7 +10,7 @@ $client-item-height:2.25em;
   display:flex;
   height:$client-item-height;
   margin-top: 6px;
-  background-color:#cccccc;
+  background-color:$clouds-grey;
   border-bottom: 1px solid $tertiary-color;
   
   .client-summary-text{

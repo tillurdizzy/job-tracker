@@ -29,7 +29,8 @@ app.controller('LoginCtrl',['$scope','$state','evoDb','SharedSrvc','ShingleSrvc'
     $scope.submitLoginForm = function(){
     	$scope.loginSuccess = null;
         $scope.requestSuccess = false;
-        if(this.loginForm.$valid){
+        if(true){
+        /*if(this.loginForm.$valid){*/
             $scope.submissionInvalid = false;
             var dataObj = new Object();
             dataObj.name_user = this._username;

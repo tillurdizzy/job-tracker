@@ -7,16 +7,16 @@ app.controller('NewClientCtrl',['$state','evoDb','SharedSrvc',function ($state,e
     ME.managerName = S.managerName;
     // Form elements
    
-    ME.T1="";
-    ME.T2="";
-    ME.T3="";
-    ME.T4="";
-    ME.T5="Houston";
-    ME.T6="TX";
-    ME.T7="";
-    ME.T8="";
-    ME.T9="";
-    ME.T10="";
+    ME.T1="";//company name
+    ME.T2="";//street
+    ME.T3="";//cilty
+    ME.T4="";//state
+    ME.T5="";//zip
+    ME.T6="";//phone
+    ME.T7="";//first
+    ME.T8="";//last
+    ME.T9="";//cell
+    ME.T10="";//email
    
     var currentFieldNum = "1";
     var numFields = "10";
@@ -42,10 +42,10 @@ app.controller('NewClientCtrl',['$state','evoDb','SharedSrvc',function ($state,e
         };
     };
 
-    ME.submitT2=function(){//first name
+    ME.submitT2=function(){
         ME.inputMsg = "";
         ME.isError = false;
-        if(ME.T2==""){
+        if(ME.T2==""){//street
             ME.isError = true;
             ME.inputMsg = "This field cannot be blank.";
         }else{
@@ -54,10 +54,10 @@ app.controller('NewClientCtrl',['$state','evoDb','SharedSrvc',function ($state,e
         }
     };
 
-    ME.submitT3=function(){//last name
+    ME.submitT3=function(){
         ME.inputMsg = "";
         ME.isError = false;
-        if(ME.T3==""){
+        if(ME.T3==""){//city
             ME.isError = true;
             ME.inputMsg = "This field cannot be blank.";
         }else{
@@ -66,10 +66,10 @@ app.controller('NewClientCtrl',['$state','evoDb','SharedSrvc',function ($state,e
         }
     };
 
-    ME.submitT4=function(){//street
+    ME.submitT4=function(){
         ME.inputMsg = "";
         ME.isError = false;
-       if(ME.T4==""){
+       if(ME.T4==""){//state
             ME.isError = true;
             ME.inputMsg = "This field cannot be blank.";
         }else{
@@ -78,7 +78,7 @@ app.controller('NewClientCtrl',['$state','evoDb','SharedSrvc',function ($state,e
         }
     };
 
-    ME.submitT5=function(){//city
+    ME.submitT5=function(){//zip
         ME.inputMsg = "";
         ME.isError = false;
        if(ME.T5==""){
@@ -90,7 +90,7 @@ app.controller('NewClientCtrl',['$state','evoDb','SharedSrvc',function ($state,e
         }
     };
 
-    ME.submitT6=function(){//state
+    ME.submitT6=function(){//phone
         ME.inputMsg = "";
         ME.isError = false;
        if(ME.T6==""){
@@ -105,7 +105,7 @@ app.controller('NewClientCtrl',['$state','evoDb','SharedSrvc',function ($state,e
     ME.submitT7=function(){
         ME.inputMsg = "";
         ME.isError = false;
-        if(ME.T7==""){//zip
+        if(ME.T7==""){//first
             ME.isError = true;
             ME.inputMsg = "This field cannot be blank.";
         }else{
@@ -117,7 +117,7 @@ app.controller('NewClientCtrl',['$state','evoDb','SharedSrvc',function ($state,e
     ME.submitT8=function(){
         ME.inputMsg = "";
         ME.isError = false;
-        if(ME.T8==""){//mobile phone
+        if(ME.T8==""){//last
             ME.isError = true;
             ME.inputMsg = "This field cannot be blank.";
         }else{
@@ -129,7 +129,7 @@ app.controller('NewClientCtrl',['$state','evoDb','SharedSrvc',function ($state,e
     ME.submitT9=function(){
         ME.inputMsg = "";
         ME.isError = false;
-        if(ME.T9==""){//business phone
+        if(ME.T9==""){//mobile
             ME.isError = true;
             ME.inputMsg = "This field cannot be blank.";
         }else{
@@ -156,14 +156,14 @@ app.controller('NewClientCtrl',['$state','evoDb','SharedSrvc',function ($state,e
         var dataObj = {};
         dataObj.manager = S.manager;
         dataObj.company = ME.T1;
-        dataObj.name_first = ME.T2;
-        dataObj.name_last = ME.T3;
-        dataObj.street = ME.T4;
-        dataObj.city = ME.T5;
-        dataObj.state = ME.T6;
-        dataObj.zip = ME.T7;
-        dataObj.phone_cell = ME.T8;
-        dataObj.phone_bus = ME.T9;
+        dataObj.street = ME.T2;
+        dataObj.city = ME.T3;
+        dataObj.state = ME.T4;
+        dataObj.zip = ME.T5;
+        dataObj.phone_bus = ME.T6;
+         dataObj.name_first = ME.T7;
+        dataObj.name_last = ME.T8;
+        dataObj.phone_cell = ME.T9;
         dataObj.email = ME.T10;
         var result = DB.putClient(dataObj)
         .then(function(result){

@@ -1,9 +1,10 @@
 'use strict';
 
-app.controller('ProposalCtrl', ['$state','$scope','evoDb','SharedSrvc','ShingleSrvc','ShingleCalcs', function($state,$scope,evoDb,SharedSrvc,ShingleSrvc,ShingleCalcs) {
+app.controller('ProposalCtrl', ['$state','$scope','evoDb','SharedSrvc','ShingleSrvc','ShingleCalcs','PdfSrvc', function($state,$scope,evoDb,SharedSrvc,ShingleSrvc,ShingleCalcs,PdfSrvc) {
     var DB = evoDb;
     var ME = this;
     var S = SharedSrvc;
+    var PDF = PdfSrvc;
     ME.SRVC = ShingleSrvc;
     var CALCS = ShingleCalcs;
 
@@ -24,6 +25,11 @@ app.controller('ProposalCtrl', ['$state','$scope','evoDb','SharedSrvc','ShingleS
     ME.jobInput = [];
     ME.jobInputFields = ME.SRVC.inputFields;
     ME.jobMaterials = [];
+
+    //DOM vars
+    ME.inputOpen = false;
+    ME.materialsOpen = false;
+    ME.specialOpen = false;
    
 
     //pricing
@@ -39,6 +45,12 @@ app.controller('ProposalCtrl', ['$state','$scope','evoDb','SharedSrvc','ShingleS
     ME.backToList = function() {
         $state.transitionTo("jobs");
     };
+
+    ME.printSummary = function(){
+        var dataObj = {};
+        dataObj.materialsCost = ME.materialsCost;
+        PDF.newPDF(dataObj);
+    }
 
     // Called from Directive
     ME.submitItemQty = function(dObj) {

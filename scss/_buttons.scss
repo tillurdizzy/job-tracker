@@ -21,7 +21,7 @@ $button-color: $white !default;
 $button-color-alt: $asbestos-grey !default;
 
 /// Border radius for buttons, defaulted to global-radius.
-$button-radius: 0 !default;
+$button-radius: 0.25rem !default;
 
 button:focus {
     outline: none;
@@ -45,6 +45,7 @@ button,
 	text-align: center;
 	line-height: 1;
 	cursor: pointer;
+  border-radius:$button-radius;
 	transition: background-color 0.25s ease-out, color 0.25s ease-out;
 	vertical-align: middle;
 	border: 1px solid transparent;

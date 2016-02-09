@@ -145,7 +145,7 @@ app.controller('JobsCtrl',['$location','$state','evoDb','$scope','SharedSrvc',fu
        if(!loggedIn){
        		$state.transitionTo('login');
        }else{
-       	initMe();
+       	//initMe();
        }
     });
 

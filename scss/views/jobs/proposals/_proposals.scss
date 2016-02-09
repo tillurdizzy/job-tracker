@@ -9,6 +9,7 @@ $material-height:1em;
 		margin:4px 0 0 0;
 		height:$material-height;
 		background-color:$clouds-grey;
+		color:#000;
 		h5{
 			font-weight: 400;
 			font-size: .8em;
@@ -22,7 +23,7 @@ $material-height:1em;
 			height:$material-height;
 			width:3em;
 			background-color: $silver-grey;
-			color:#fff;
+			
 			margin:0 4px 0 0;
 			padding-left:3px;
 			h5{
@@ -35,7 +36,7 @@ $material-height:1em;
 			height:$material-height;
 			width:4em;
 			background-color: $silver-grey;
-			color:#fff;
+			
 			margin:0 4px 0 0;
 			padding-left:3px;
 			h5{
@@ -48,7 +49,7 @@ $material-height:1em;
 			height:$material-height;
 			width:5em;
 			background-color: $silver-grey;
-			color:#fff;
+			
 			margin:0 4px 0 0;
 			padding-left:3px;
 			h5{
@@ -60,7 +61,7 @@ $material-height:1em;
 			height:$material-height;
 			width:8em;
 			background-color: $silver-grey;
-			color:#fff;
+			
 			margin:0 4px 0 0;
 			padding-left:3px;
 			h5{
@@ -86,7 +87,7 @@ $material-height:1em;
 		.job-item-name{
 			height:$job-item-height;
 			width:150px;
-			background-color: $silver-grey;
+			background-color: $midnight-blue;
 			color:#fff;
 			margin:0 4px 0 0;
 			padding-left:3px;
@@ -99,11 +100,10 @@ $material-height:1em;
 		.job-item-qty{
 			height:$job-item-height;
 			width:60px;
-			background-color: $silver-grey;
-			color:#000;
+			background-color: $midnight-blue;
 			margin:0 4px 0 0;
 			h3{
-				color:#f2ce10;
+				color:$sunFlower-yellow;
 				line-height:$job-item-height;
 		      	vertical-align: middle;
 		      	text-align: center;
@@ -113,12 +113,12 @@ $material-height:1em;
 		.job-item-unit{
 			height:$job-item-height;
 			width:100px;
-			background-color: $silver-grey;
+			background-color: $midnight-blue;
 			color:#000;
 			margin:0 4px 0 0;
 			padding:0 0 0 4px;
 			h3{
-				color:#f2ce10;
+				color:$sunFlower-yellow;
 				line-height:$job-item-height;
 		      	vertical-align: middle;
 		      	text-align: left;
@@ -162,5 +162,14 @@ $material-height:1em;
 				vertical-align: middle;
 			}
 		}
+	}
+}
+
+.special-considerations{
+	padding:0 .5rem;
+	textarea{
+		width:100%;
+		height:10rem;
+		font-size: .8rem;
 	}
 }

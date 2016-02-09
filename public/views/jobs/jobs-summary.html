@@ -3,10 +3,17 @@
         <h2>Jobs Summary</h2></div>
     <horiz-rule margintop="5px" marginbottom="10px"></horiz-rule>
     <div ui-view>
-        <div class="page-nav">
+        <div class="top-page-menu">
             <button ng-click="Ctrl.getManagerJobs()" type="button" class="button">Refresh List</button>
-            <div></div>
             <button ng-click="Ctrl.goNewJob()" type="button" class="button">New Job</button>
+        </div>
+        <div class="list-header">
+            <div class="header-item" style="width:100px;">
+                <h2>Status</h2>
+            </div>
+            <div class="header-item" style="width:699px;">
+                <h2>Property</h2>
+            </div>
         </div>
         <div class="list-container">
             <div job-item id="{{e.PRIMARY_ID}}" status="{{e.status}}" details="Ctrl.showDetails" property="{{e.propertyName}}" ng-repeat="e in Ctrl.jobs"></div>
