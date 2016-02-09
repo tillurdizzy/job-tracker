@@ -10,12 +10,12 @@ app.controller('NewPropertyCtrl',['$state','$scope','evoDb','SharedSrvc',functio
     ME.T1=ME.clientList[0];
     ME.T2="";
     ME.T3="";
-    ME.T4="Houston";
+    ME.T4="";
     ME.T5="TX";
     ME.T6="";
     ME.T7=1;
-    ME.T8="Commercial";
-    ME.T9="Flat";
+    ME.T8="Residential";
+    ME.T9="Pitched";
     ME.T10="0";
     ME.T11=1;
    

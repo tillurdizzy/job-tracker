@@ -198,9 +198,10 @@ app.service('SharedSrvc',['$rootScope',function sharedVars($rootScope){
 		return dateStr;
 	};
 
-	self.roofTypes = [
-		{label:"Flat",id:0},
-		{label:"Pitched",id:1}];
+	self.roofOptions = [
+		{label:"3-tab",id:0},
+		{label:"Dimensional",id:1},
+		{label:"Speciality",id:2}];
 
 	self.compositionOptions = [
 		{label:"Composition over plywood deck",id:0},
@@ -211,6 +212,29 @@ app.service('SharedSrvc',['$rootScope',function sharedVars($rootScope){
 		{label:"1",id:1},{label:"2",id:2},{label:"3",id:3},{label:"4",id:4},{label:"5",id:5},
 		{label:"6",id:6},{label:"7",id:7},{label:"8",id:8},{label:"9",id:9},{label:"10",id:10},
 		{label:"11",id:11},{label:"12",id:12}];
+
+	self.deckOptions = [
+		{label:"Plywood",id:0},
+		{label:"Tongue and Groove",id:1}];
+
+	self.edgeDetail = [
+		{label:"Painted drip edge",id:0},
+		{label:"With 1x2 trim",id:1}];
+
+	self.valleyOptions = [
+		{label:"Shingle-laced",id:0},
+		{label:"Open metal",id:1}];
+
+	self.ridgeOptions = [
+		{label:"Standard 3-tab",id:0},
+		{label:"Enhanced ridge detail",id:1}];
+
+	self.ventilationOptions = [
+		{label:"Ridge vents",id:0},
+		{label:"Static vents",id:1},
+		{label:"Turbine vents",id:2},
+		{label:"Power vents",id:3},
+		{label:"Solar vents",id:4}];
 	
 
 	

@@ -24,9 +24,13 @@
                     </i>
                 </div>
             </div>
-            <h5>If the Client for this Property is not listed, click below to add a new Client, then return here.</h5>
-            <button ng-click="Ctrl.goNewClient()" type="button" class="button">New Client</button>
         </div>
+
+        <div ng-show="Ctrl.inputField == 'T1'">
+            <h5>If the Client for this Property is not listed, click below to add a new Client, then return here.</h5>
+            <button ng-click="Ctrl.goNewClient()" type="button" class="button" style="margin-top: 5px;">New Client</button>
+        </div>
+
         <div class="ez-form-item" ng-show="Ctrl.inputField == 'T2'">
             <h3>
                 Property or Building Name
@@ -143,23 +147,31 @@
         </div>
         <div class="ez-form-item" ng-show="Ctrl.inputField == 'T8'">
             <h3>
-                Class
+                Shingle Style
             </h3>
             <div class="radio-btns">
                 <div>
-                    <input type="radio" id="radio01" value="Commercial" ng-model="Ctrl.T8"/>
-                    <label for="radio01">
+                    <input type="radio" id="radio01A" value="3-tab" ng-model="Ctrl.T8"/>
+                    <label for="radio01A">
                         <span>
                         </span>
-                        Commercial
+                        3-tab
                     </label>
                 </div>
                 <div>
-                    <input type="radio" id="radio02" value="Residential" ng-model="Ctrl.T8"/>
-                    <label for="radio02">
+                    <input type="radio" id="radio01B" value="Dimensional" ng-model="Ctrl.T8"/>
+                    <label for="radio01B">
                         <span>
                         </span>
-                        Residential
+                        Dimensional
+                    </label>
+                </div>
+                 <div>
+                    <input type="radio" id="radio1C" value="Specialty" ng-model="Ctrl.T8"/>
+                    <label for="radio1C">
+                        <span>
+                        </span>
+                        Specialty
                     </label>
                 </div>
             </div>
@@ -179,22 +191,22 @@
         </div>
         <div class="ez-form-item" ng-show="Ctrl.inputField == 'T9'">
             <h3>
-                Roof Type
+                Decking
             </h3>
             <div class="radio-btns">
                 <div>
-                    <input type="radio" id="radio03" value="Flat" ng-model="Ctrl.T9"/>
-                    <label for="radio03">
+                    <input type="radio" id="radio02A" value="Plywood" ng-model="Ctrl.T9"/>
+                    <label for="radio02A">
                         <span>
                         </span>
-                        Flat</label>
+                        Plywood</label>
                 </div>
                 <div>
-                    <input type="radio" id="radio04" value="Pitched" ng-model="Ctrl.T9"/>
-                    <label for="radio04">
+                    <input type="radio" id="radio02B" value="Tongue and Groove" ng-model="Ctrl.T9"/>
+                    <label for="radio02B">
                         <span>
                         </span>
-                        Pitched
+                        Tongue and Groove
                     </label>
                 </div>
             </div>
@@ -214,22 +226,30 @@
         </div>
         <div class="ez-form-item" ng-show="Ctrl.inputField == 'T10'">
             <h3>
-                Description
+                Decking Material
             </h3>
             <div class="radio-btns">
                 <div>
-                    <input type="radio" id="radio05" value="Composition over plywood deck" ng-model="Ctrl.T10"/>
-                    <label for="radio05">
+                    <input type="radio" id="radio3A" value="Composition over plywood deck" ng-model="Ctrl.T10"/>
+                    <label for="radio3A">
                         <span>
                         </span>
                         Composition over plywood deck</label>
                 </div>
                 <div>
-                    <input type="radio" id="radio06" value="Composition over wood shingles" ng-model="Ctrl.T10"/>
-                    <label for="radio06">
+                    <input type="radio" id="radio3B" value="Composition over wood shingles" ng-model="Ctrl.T10"/>
+                    <label for="radio3B">
                         <span>
                         </span>
                         Composition over wood shingles
+                    </label>
+                </div>
+                <div>
+                    <input type="radio" id="radio3C" value="Low slope" ng-model="Ctrl.T10"/>
+                    <label for="radio3C">
+                        <span>
+                        </span>
+                        Low slope
                     </label>
                 </div>
             </div>
@@ -271,45 +291,7 @@
             <h3>
                 Review and Submit
             </h3>
-            <div class="text-block-display">
-                <h4>
-                    Client:
-                </h4>
-                <h3>
-                    {{Ctrl.T1.company}}
-                </h3>
-                <h4>
-                    Address:
-                </h4>
-                <h3>
-                    {{Ctrl.T2}}
-                </h3>
-                <h3>
-                    {{Ctrl.T3}}
-                </h3>
-                <h3>
-                    {{Ctrl.T4 + ", " + Ctrl.T5 + " " + Ctrl.T6}}
-                </h3>
-                <h4>
-                    Class:
-                </h4>
-                <h3>
-                    {{Ctrl.T8}}
-                </h3>
-                <h4>
-                    Roof Description:
-                </h4>
-               
-                <h3>
-                    Type: {{Ctrl.T9}}
-                </h3>
-                <h3>
-                    Description: {{Ctrl.T10}}
-                </h3>
-                <h3>
-                    Layers: {{Ctrl.T11}}
-                </h3>
-            </div>
+           
             <div class="page-nav">
                 <div class="page-nav-left">
                     <i ng-click="Ctrl.goPrevious('11')" class="fa fa-arrow-circle-left fa-3x">
@@ -345,4 +327,66 @@
             </button>
         </div>
     </div>
+
+    <div class="ez-form">
+        <div id="liveReview" class="review-section">
+            <div class="text-block-display">
+                <h4>
+                    Owner/Location:
+                </h4>
+                <h4>
+                    Owner: {{Ctrl.T1.company}}
+                </h4>
+                <h3>
+                    Name: {{Ctrl.T2}}
+                </h3>
+                <h3>
+                    Street: {{Ctrl.T3}}
+                </h3>
+                <h3>
+                    City: {{Ctrl.T4}}
+                </h3>
+                <h3>
+                    State: {{Ctrl.T5}}
+                </h3>
+                <h3>
+                    Zip: {{Ctrl.T6}}
+                </h3>
+               
+            </div>
+            <div class="text-block-display" style="margin-left:3rem;">
+                <h4>
+                    Existing Conditions:
+                </h4>
+                <h3>
+                    Levels: {{Ctrl.T7}}
+                </h3>
+                <h3>
+                    Roof Type: {{Ctrl.T7}}
+                </h3>
+                <h3>
+                   Shingle Style: {{Ctrl.T8}}
+                </h3>
+                <h3>
+                    Deck: {{Ctrl.T9}}
+                </h3>
+                <h3>
+                    Edge Detail: {{Ctrl.T10}}
+                </h3>
+                 <h3>
+                    Valley: {{Ctrl.T10}}
+                </h3>
+                 <h3>
+                    Ridge: {{Ctrl.T10}}
+                </h3>
+                 <h3>
+                    Ventilation: {{Ctrl.T10}}
+                </h3>
+            </div>
+        </div>
+    </div>
+
+
+
+
 </div>
