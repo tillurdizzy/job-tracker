@@ -72,7 +72,7 @@ app.controller('NewJobCtrl',['$scope','$state','evoDb','SharedSrvc',function ($s
         dataObj.dateProspect = Me.T2;
         var result = DB.putJob(dataObj)
         .then(function(result){
-            if(result != false){
+            if(typeof result != "boolean"){
                Me.inputField="SUCCESS";
             }else{
                 Me.dataError();

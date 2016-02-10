@@ -27,6 +27,7 @@ app.service('evoDb',['$http','$q','SharedSrvc',function eventQueries($http,$q,Sh
 		var deferred = $q.defer();
 		$http({method: 'POST', url: 'js/php/putClient.php',data:dataObj}).
 		success(function(data, status, headers, config) {
+			self.getManagerClients();
      		deferred.resolve(data);
 	    }).
 	    error(function(data, status, headers, config) {
@@ -41,6 +42,7 @@ app.service('evoDb',['$http','$q','SharedSrvc',function eventQueries($http,$q,Sh
 		var deferred = $q.defer();
 		$http({method: 'POST', url: 'js/php/putProperty.php',data:dataObj}).
 		success(function(data, status, headers, config) {
+			self.getManagerProperties();
      		deferred.resolve(data);
 	    }).
 	    error(function(data, status, headers, config) {

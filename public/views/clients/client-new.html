@@ -1,7 +1,7 @@
 <div ng-controller="NewClientCtrl as Ctrl" class="page">
     <div class="page-title-bar">
         <h2>
-            Add New Client
+            New Client
         </h2>
     </div>
     <div class="ez-form">
@@ -220,6 +220,11 @@
             <p>
                 {{Ctrl.T1}} has been added as a client.
             </p>
+            <div>
+                <div>
+                    <a ui-sref="addNewProperty" class="button">New Property</a>
+                </div>
+            </div>
         </div>
         <div class="ez-form-item" ng-show="Ctrl.inputField == 'ERROR'">
             <h3>

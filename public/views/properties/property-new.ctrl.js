@@ -182,7 +182,7 @@ app.controller('NewPropertyCtrl',['$state','$scope','evoDb','SharedSrvc',functio
         dataObj.layers = ME.T11;
         var result = DB.putProperty(dataObj)
         .then(function(result){
-            if(result != false){
+             if(typeof result != "boolean"){
                ME.inputField="SUCCESS";
             }else{
                 ME.dataError();
@@ -218,13 +218,18 @@ app.controller('NewPropertyCtrl',['$state','$scope','evoDb','SharedSrvc',functio
         $state.transitionTo("addNewClient");
     }
 
+    ME.goNewProperty = function(){
+        $state.transitionTo("addNewProperty");
+    }
+
     $scope.$watch('$viewContentLoaded', function() {
        var loggedIn = S.loggedIn;
        if(!loggedIn){
             $state.transitionTo('login');
+       }else{
+        // Refresh the Client list every time we come to this page
+            DB.getManagerClients();
        }
     });
 
-
-   
  }]);

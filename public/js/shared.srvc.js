@@ -101,6 +101,7 @@ app.service('SharedSrvc',['$rootScope',function sharedVars($rootScope){
 
 	self.setManagerClients = function(c){
 		var arr = c;
+		self.managerClients = [];
 		for (var i = 0; i < arr.length; i++) {
 			if(arr[i].manager == self.managerID){
 				self.managerClients.push(arr[i]);
@@ -110,6 +111,7 @@ app.service('SharedSrvc',['$rootScope',function sharedVars($rootScope){
 	
 	self.setManagerProperties = function(p){
 		var arr = p;
+		self.managerProperties = [];
 		for (var i = 0; i < arr.length; i++) {
 			if(arr[i].manager == self.managerID){
 				self.managerProperties.push(arr[i]);

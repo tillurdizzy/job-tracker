@@ -5,10 +5,6 @@ app.directive('addSpace',[function () {
         margintop:'@',
         marginbottom:'@'
       },
-      templateUrl:'js/directives/add-space.tpl.html',
-      link: function(scope, elm, attrs) {
-      }
-
-
+      templateUrl:'js/directives/add-space.tpl.html'
     }
 }]);

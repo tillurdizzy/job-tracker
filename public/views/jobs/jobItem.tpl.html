@@ -1,0 +1,8 @@
+<div class="job-items-container">
+    <div class="job-item-name"><h4>{{item}}</h4></div>
+    <div class="job-item-qty"><h3>{{qty}}</h3></div>
+    <div class="job-item-unit"><h3>{{unit}}</h3></div>
+    <div class="job-item-icon"><i ng-click="toggleEdit();" class="fa fa-pencil-square fa-2x"></i></div>
+    <div class="job-item-input" ng-show="editMode"><input type="tel" name="qtyInput" ng-model="inputNum"></div>
+    <div class="job-item-icon-check" ng-show="editMode"><i ng-click="submitEdit();" class="fa fa-check-square fa-2x"></i></div>
+</div>

@@ -31,9 +31,9 @@
                     <div class="label"><h3>IDENTITY</h3></div>
                     <div><button ng-click="Ctrl.menuClick('login')">Log In / Out</button></div>
                     <div class="label"><h3>LISTS</h3></div>
-                    <div><button ng-click="Ctrl.menuClick('jobs')">Jobs List</button></div>
                     <div><button ng-click="Ctrl.menuClick('clients')">Client List</button></div>
                     <div><button ng-click="Ctrl.menuClick('properties')">Property List</button></div>
+                    <div><button ng-click="Ctrl.menuClick('jobs')">Jobs List</button></div>
                     <div class="label"><h3>INVENTORY</h3></div>
                     <div><button>Coming soon...</button></div>
                     <div class="label"><h3>REPORTS</h3></div>
@@ -57,11 +57,9 @@
     <script src="views/login/login.ctrl.js?v=2"></script>
     <script src="views/jobs/jobs.ctrl.js?v=3"></script>
     <script src="views/clients/clients.ctrl.js?v=2"></script>
-    <script src="views/jobs/proposals/proposal.ctrl.js?v=2"></script>
-   
+    <script src="views/proposals/proposal.ctrl.js?v=2"></script>
     <script src="views/inventory/inventory.ctrl.js?v=1"></script>
     <script src="views/properties/properties.ctrl.js?v=2"></script>
-   
     <script src="views/jobs/job-new.ctrl.js?v=1"></script>
     <script src="views/clients/client-new.ctrl.js?v=1"></script>
     <script src="views/properties/property-new.ctrl.js?v=2"></script>
@@ -71,17 +69,21 @@
     <script src="js/inventory.srvc.js?v=1"></script>
     <script src="js/shared.srvc.js?v=1"></script>
     <script src="js/pdf.srvc.js?v=1"></script>
-    <script src="views/jobs/proposals/shingle-calcs.srvc.js?v=1"></script>
-    <script src="views/jobs/proposals/shingle.srvc.js?v=1"></script>
+    <script src="views/proposals/shingle-calcs.srvc.js?v=1"></script>
+    <script src="views/proposals/shingle.srvc.js?v=1"></script>
     <!--Directives-->
     <script src="js/directives/hrule.dir.js?v=1"></script>
-    <script src="js/directives/job.dir.js?v=2"></script>
-    <script src="js/directives/client.dir.js?v=2"></script>
-    <script src="js/directives/property.dir.js?v=2"></script>
-    <script src="js/directives/material.dir.js?v=2"></script>
-    <script src="js/directives/jobItem.dir.js?v=2"></script>
-    <script src="js/directives/proposalMaterial.dir.js?v=1"></script>
     <script src="js/directives/space.dir.js?v=1"></script>
+    <script src="views/jobs/job.dir.js?v=2"></script>
+    <script src="views/jobs/jobItem.dir.js?v=2"></script>
+    <script src="views/clients/client.dir.js?v=2"></script>
+    <script src="views/properties/property.dir.js?v=2"></script>
+    <script src="views/proposals/material.dir.js?v=2"></script>
+    <script src="views/proposals/proposalMaterial.dir.js?v=1"></script>
+    
+
+
+
 
 </body>
 </html>

@@ -1,23 +1,84 @@
 <div ng-controller="JobsCtrl as Ctrl" class="page">
     <div class="page-title-bar">
-        <h2>Jobs Summary</h2></div>
-    <horiz-rule margintop="5px" marginbottom="10px"></horiz-rule>
+        <h2>
+            Jobs Summary
+        </h2>
+    </div>
+    <horiz-rule margintop="5px" marginbottom="10px">
+    </horiz-rule>
     <div ui-view>
         <div class="top-page-menu">
-            <button ng-click="Ctrl.getManagerJobs()" type="button" class="button">Refresh List</button>
-            <button ng-click="Ctrl.goNewJob()" type="button" class="button">New Job</button>
+            <button ng-click="Ctrl.getManagerJobs()" type="button" class="button">
+                Refresh List
+            </button>
+            <button ng-click="Ctrl.goNewJob()" type="button" class="button">
+                New Job
+            </button>
         </div>
         <div class="list-header">
             <div class="header-item" style="width:100px;">
-                <h2>Status</h2>
+                <h2>
+                    Status
+                </h2>
             </div>
             <div class="header-item" style="width:699px;">
-                <h2>Property</h2>
+                <h2>
+                    Property
+                </h2>
             </div>
         </div>
         <div class="list-container">
-            <div job-item id="{{e.PRIMARY_ID}}" status="{{e.status}}" details="Ctrl.showDetails" property="{{e.propertyName}}" ng-repeat="e in Ctrl.jobs"></div>
+            <div job-item id="{{e.PRIMARY_ID}}" status="{{e.status}}" details="Ctrl.showDetails" property="{{e.propertyName}}" ng-repeat="e in Ctrl.jobs">
+            </div>
+        </div>
+        <div class="block-section" style="margin-top:20px;">
+            <div class="text-block-display">
+                <p>
+                    The
+                    <span class="bold">
+                        Jobs Summary
+                    </span>
+                    page is your main entryway into the program, and consists of a listing of all the jobs you currently have in progress.
+                </p>
+                <p>
+                    On the left edge, in the red box, is the
+                    <span class="bold">
+                        Job Status
+                    </span>
+                    . All new Jobs are created with the Status of
+                    <span class="bold">
+                        Prospect
+                    </span>
+                    , and progresses through successive stages as follows:
+                </p>
+                <ul>
+                    <li>
+                        <span class="bold">
+                            Proposal
+                        </span>
+                        - Bid and Scope of Work have been created and submitted to client.  Waiting approval.
+                    </li>
+                    <li>
+                        <span class="bold">
+                            Contract
+                        </span>
+                        - Bid and Scope of Work have been approved and accepted by client, and initial payment has been received.
+                    </li>
+                    <li>
+                        <span class="bold">
+                            Active
+                        </span>
+                        - Materials have been delivered and a crew is on the job site.
+                    </li>
+                    <li>
+                        <span class="bold">
+                            Complete
+                        </span>
+                        - All payments has been received.
+                    </li>
+                </ul>
+                <p>Click the green Pencil Icon at the end of each listing to make changes and edits to the Job.</p>
+            </div>
         </div>
     </div>
 </div>
-

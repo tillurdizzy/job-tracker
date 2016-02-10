@@ -1,7 +1,7 @@
 <div ng-controller="NewPropertyCtrl as Ctrl" class="page">
     <div class="page-title-bar">
         <h2>
-            Add New Property
+            New Property
         </h2>
     </div>
     <horiz-rule margintop="5px" marginbottom="10px"></horiz-rule>
@@ -27,8 +27,7 @@
         </div>
 
         <div ng-show="Ctrl.inputField == 'T1'">
-            <h5>If the Client for this Property is not listed, click below to add a new Client, then return here.</h5>
-            <button ng-click="Ctrl.goNewClient()" type="button" class="button" style="margin-top: 5px;">New Client</button>
+            <h5>If the Client for this Property is not listed, <a ui-sref="addNewClient">Add a New Client</a>, then return here.</h5>
         </div>
 
         <div class="ez-form-item" ng-show="Ctrl.inputField == 'T2'">

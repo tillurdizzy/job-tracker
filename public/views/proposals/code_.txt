@@ -1,0 +1,156 @@
+self.processInput = function(){
+		// Shingles
+		A1.Amt = parseInt(Math.ceil(self.FIELD * A1.Usage)/A1.Usage);
+		A1.Total = Math.round(A1.Amt * A1.Price * 100)/100;
+
+		// Timber tex
+		C1.Amt = Math.ceil(self.TOP / C1.Usage);
+		C1.Total = Math.round(A1.Amt * A1.Price * 100)/100;
+
+		// Z-Ridge
+		D1.Amt = Math.ceil(self.RAKE / D1.Usage);
+		D1.Total = Math.round(D1.Amt * A1.Price * 100)/100;
+
+		// Ridge
+		E1.Amt = Math.ceil((self.TOP + self.RAKE) / E1.Usage);
+		E1.Total = Math.round(E1.Amt * E1.Price * 100)/100;
+
+		// Starter
+		F1.Amt = Math.ceil(self.PERIMETER / F1.Usage);
+		F1.Total = Math.round(F1.Amt * F1.Price * 100)/100;
+
+		// Deck Nails
+		G1.Amt = Math.ceil(self.FIELD / G1.Usage);
+		G1.Total = Math.round(G1.Amt * G1.Price * 100)/100;
+
+		// Roofing Nails
+		H1.Amt = Math.ceil(self.FIELD / H1.Usage);
+		H1.Total = H1.Amt * H1.Price;
+
+		// Stainless Nails
+		J1.Amt = Math.ceil(self.LOWSLOPE / J1.Usage);
+		J1.Total = J1.Amt * J1.Price;
+
+		// #15 Felt
+		K1.Amt = Math.ceil(self.FIELD / K1.Usage);
+		K1.Total = K1.Amt * K1.Price;
+
+		// Ice and Water Shield
+		L1.Amt = Math.ceil((self.LOWSLOPE * 1.05 ) / L1.Usage);
+		L1.Total = L1.Amt * L1.Price;
+
+		// Drip Edge
+		M1.Amt = Math.ceil(self.PERIMETER / M1.Usage);
+		M1.Total = M1.Amt * M1.Price;
+
+		// Lumber 1x8
+		N1.Amt = Math.ceil(self.PERIMETER / N1.Usage);
+		N1.Total = N1.Amt * N1.Price;
+
+		// 8x8
+		O1.Amt = Math.ceil(self.EIGHT / O1.Usage);
+		O1.Total = O1.Amt * O1.Price;
+
+		// GV Valley
+		P1.Amt = Math.ceil(self.VALLEY / P1.Usage);
+		P1.Total = P1.Amt * P1.Price;
+
+		// GV Carport
+		Q1.Amt = Math.ceil(self.FIELD / Q1.Usage);
+		Q1.Total = Q1.Amt * Q1.Price;
+
+		// W Valley
+		R1.Amt = Math.ceil(self.VALLEY / R1.Usage);
+		R1.Total = R1.Amt * R1.Price;
+
+		// 8" vents
+		S1.Amt = self.VENTS8;
+		S1.Total = S1.Amt * S1.Price;
+
+		// 1.5 Lead
+		T1.Amt = self.LEAD1;
+		T1.Total = T1.Amt * T1.Price;
+
+		// 2 Lead
+		U1.Amt = self.LEAD2;
+		U1.Total = U1.Amt * U1.Price;
+
+		// 4 Lead
+		V1.Amt = self.LEAD4;
+		V1.Total = V1.Amt * V1.Price;
+
+		// Ridge Vents
+		W1.Amt = Math.ceil(self.TOP / W1.Usage);
+		W1.Total = W1.Amt * W1.Price;
+
+		// Power Vents
+		X1.Amt = self.PWRVENTS;
+		X1.Total = X1.Amt * X1.Price;
+
+		// Air Hawks
+		Y1.Amt = self.AIRHAWKS;
+		Y1.Total = Y1.Amt * Y1.Price;
+
+		// Turbines
+		Z1.Amt = self.TURBINES;
+		Z1.Total = Z1.Amt * Z1.Price;
+
+		// Plywood
+		A2.Amt = self.DECKING;
+		A2.Total = A2.Amt * A2.Price;
+
+		// OSB
+		B2.Amt = A2.Amt;
+		B2.Total = B2.Amt * B2.Price;
+
+		// Caulk
+		C2.Amt = self.CAULK;
+		C2.Total = C2.Amt * C2.Price;
+
+		// Commdeck
+		D2.Amt = self.SATILITE;
+		D2.Total = D2.Amt * D2.Price;
+
+		// Delivery
+		E2.Amt = 0;
+		E2.Total = E2.Amt * E2.Price;
+
+		// Paint
+		F2.Amt = self.PAINT;
+		F2.Total = F2.Amt * F2.Price;
+
+		var rtnArray = [];
+		rtnArray.push(A1);
+		rtnArray.push(B1);
+		rtnArray.push(C1);
+		rtnArray.push(D1);
+		rtnArray.push(E1);
+		rtnArray.push(F1);
+		rtnArray.push(G1);
+		rtnArray.push(H1);
+		rtnArray.push(J1);
+		rtnArray.push(K1);
+		rtnArray.push(L1);
+		rtnArray.push(M1);
+		rtnArray.push(N1);
+		rtnArray.push(O1);
+		rtnArray.push(P1);
+		rtnArray.push(Q1);
+		rtnArray.push(R1);
+		rtnArray.push(S1);
+		rtnArray.push(T1);
+		rtnArray.push(U1);
+		rtnArray.push(V1);
+		rtnArray.push(W1);
+		rtnArray.push(X1);
+		rtnArray.push(Y1);
+		rtnArray.push(Z1);
+		rtnArray.push(A2);
+		rtnArray.push(B2);
+		rtnArray.push(C2);
+		rtnArray.push(D2);
+		rtnArray.push(E2);
+		rtnArray.push(F2);
+		return rtnArray;
+
+	};

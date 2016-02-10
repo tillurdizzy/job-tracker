@@ -37,7 +37,7 @@ app.controller('PropertiesCtrl',['$scope','$state','evoDb','SharedSrvc',function
     ME.getManagerJobs = function(){
 		var result = DB.getManagerJobs()
         .then(function(result){
-            if(result != false){
+             if(typeof result != "boolean"){
             	// DB sent the data to the SharedSrvc
 				
             }else{

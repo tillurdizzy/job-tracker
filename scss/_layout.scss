@@ -80,7 +80,7 @@ body{
 
 .block-section{
   background-color: $clouds-grey;
-  padding:2rem;
+  padding:1.5rem 2rem;
   border:2px solid $silver-grey;
   display:inline-block;
 }
@@ -126,6 +126,16 @@ body{
 .flex-column{
   display: flex;
   flex-direction: column;
+}
+
+.flex-row-start{
+  display: flex;
+  flex-direction: row;
+  justify-content:flex-start;
+  align-items:center;
+  div{
+    margin-right: 1rem;
+  }
 }
 
 .top-page-menu{

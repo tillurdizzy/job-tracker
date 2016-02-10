@@ -34,14 +34,18 @@ app.controller('ClientsCtrl',['$scope','$state','evoDb','SharedSrvc',function ($
 	ME.getManagerJobs = function(){
         var result = DB.getManagerJobs()
         .then(function(result){
-            if(result != false){
-                console.log("Successful getting job data");
+            if(typeof result != "boolean"){
+                //console.log("Successful getting job data");
             }else{
               ME.dataError("ClientsCtrl-getManagerJobs()-1",result); 
             }
         },function(error){
             ME.dataError("ClientsCtrl-getManagerJobs()-2",result);
         });
+    };
+
+    ME.dataError = function(){
+
     };
 
 	ME.backToList = function(){

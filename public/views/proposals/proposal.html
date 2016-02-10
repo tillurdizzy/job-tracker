@@ -1,0 +1,86 @@
+<div class="page" ng-controller="ProposalCtrl as Ctrl">
+    <div class="page-title-bar"><h2>Proposal</h2></div>
+    <div ui-view>
+        <div class="section-header">
+            <h2>Property</h2>
+        </div>
+        <div class="text-block-display">
+            <h4>{{Ctrl.selectedPropertyObj.name}}</h4>
+            <h3>{{Ctrl.selectedPropertyObj.street}}</h3>
+            <h3>{{Ctrl.selectedPropertyObj.city + ", " + Ctrl.selectedPropertyObj.state + " " + Ctrl.selectedPropertyObj.zip}}</h3>
+            <h3 style = "margin-top:.5em;"><span class="bold">Class:</span> {{Ctrl.selectedPropertyObj.class}}</h3>
+            <h3><span class="bold">Roof type:</span> {{Ctrl.selectedPropertyObj.roof}}</h3>
+            <h3><span class="bold">Layers:</span> {{Ctrl.selectedPropertyObj.layers}}</h3>
+            <h3><span class="bold">Description:</span> {{Ctrl.selectedPropertyObj.description}}</h3>
+        </div>
+         <div class="section-header">
+            <h2>Bid Summary</h2>
+        </div>
+        <div class="text-block-display">
+            <div class="flex-space-between">
+                <div><h3>Materials</h3></div>
+                <div></div>
+                <div><h4>{{Ctrl.materialsCost | currency:"$":0}}</h4></div>
+            </div>
+           
+            <div class="flex-space-between">
+                <div><h3>Labor</h3></div>
+                <div></div>
+                <div><h4>{{Ctrl.laborCost | currency:"$":0}}</h4></div>
+            </div>
+            <horiz-rule margintop="4px" marginbottom="4px"></horiz-rule>
+            <div class="flex-space-between">
+                <div><h3>Total</h3></div>
+                <div></div>
+                <div><h4>{{Ctrl.totalCost | currency:"$":0}}</h4></div>
+            </div>
+            <button type="button" ng-click="Ctrl.printSummary();">Create PDF</button>
+        </div>
+       
+        <div class="section-header">
+            <h2>Roof Description</h2>
+            <i class="fa fa-chevron-down" ng-hide="Ctrl.inputOpen" ng-click="Ctrl.inputOpen =true;"></i>
+            <i class="fa fa-chevron-up" ng-show="Ctrl.inputOpen" ng-click="Ctrl.inputOpen =false;"></i>
+        </div>
+        <div class="list-container-proposal" ng-show="Ctrl.inputOpen">
+            <div job-input-item id="{{e.PRIMARY_ID}}" code="{{e.Code}}" item="{{e.Item}}" qty="{{e.Qty}}" unit="{{e.Unit}}" 
+            submit="Ctrl.submitItemQty"
+            ng-repeat="e in Ctrl.jobInputFields"></div> 
+        </div>
+
+        <div class="section-header">
+            <h2>Special Considerations</h2>
+            <i class="fa fa-chevron-down" ng-hide="Ctrl.specialOpen" ng-click="Ctrl.specialOpen =true;"></i>
+            <i class="fa fa-chevron-up" ng-show="Ctrl.specialOpen" ng-click="Ctrl.specialOpen =false;"></i>
+        </div>
+        <div class="special-considerations" ng-show="Ctrl.specialOpen">
+            <h4>Description</h4>
+            <textarea name=""></textarea>
+            <div>
+                <h4>Cost</h4>
+                <input type="tel" ng-model="specialCosts" placeholder="USD">
+            </div>
+            <button type="button">Submit</button>
+        </div>
+
+        <div class="section-header">
+            <h2>Materials</h2>
+            <i class="fa fa-chevron-down" ng-hide="Ctrl.materialsOpen" ng-click="Ctrl.materialsOpen =true;"></i>
+            <i class="fa fa-chevron-up" ng-show="Ctrl.materialsOpen" ng-click="Ctrl.materialsOpen =false;"></i>
+        </div>
+        <div class="list-container-proposal" ng-show="Ctrl.materialsOpen">
+            <div proposal-material code="{{e.Code}}" item="{{e.Item}}" qty="{{e.Qty}}" unit="{{e.Unit}}" 
+            price="{{e.Price}}" total="{{e.Total}}" amt="{{e.Amt}}"
+            ng-repeat="e in Ctrl.jobMaterials"></div> 
+        </div>
+
+
+
+
+
+
+
+    <!--  ui-view -->
+    </div>
+<!--  page -->
+</div>

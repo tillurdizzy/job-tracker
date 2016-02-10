@@ -167,7 +167,7 @@ app.controller('NewClientCtrl',['$state','evoDb','SharedSrvc',function ($state,e
         dataObj.email = ME.T10;
         var result = DB.putClient(dataObj)
         .then(function(result){
-            if(result != false){
+            if(typeof result != "boolean"){
                ME.inputField="SUCCESS";
                ME.getManagerProperties();
             }else{

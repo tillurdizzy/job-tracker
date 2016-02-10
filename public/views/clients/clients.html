@@ -2,11 +2,9 @@
     <div class="page-title-bar"><h2>Clients</h2></div>
     <horiz-rule margintop="5px" marginbottom="10px"></horiz-rule>
     <div ui-view>
-       
-        <div class="page-nav">
-            <button ng-click="Ctrl.getManagerJobs()" type="button" class="button">Refresh List</button>
-            <div></div>
+        <div class="top-page-menu">
             <button ng-click="Ctrl.goNewClient()" type="button" class="button">New Client</button>
+            <button ng-click="Ctrl.getManagerJobs()" type="button" class="button">Refresh List</button>
         </div>
 
         <div class="client-list-container">
@@ -14,6 +12,12 @@
                 contact="{{e.name_first + ' ' + e.name_last}}" ng-repeat="e in Ctrl.clients">
             </div> 
         </div>
-            
+        <div class="block-section" style="margin-top:20px;">
+            <div class="text-block-display">
+                <p>Every Job begins with a <span class="bold">Client</span>. This may be an individual, such as a the home owner; or a company, such as a real estate developer or property manager.</p>
+                <p>Click the <span class="bold">New Client</span> button in the menu bar add a client.  If you do not see the new client you created, click the Refresh List button.</p>
+                <p>Click the <span class="bold">Pencil Icon</span> button at the end of each listing to view the Client Details or to make edits.</p>
+            </div>
+        </div> 
     </div>
 </div>

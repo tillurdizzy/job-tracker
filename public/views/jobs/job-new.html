@@ -5,36 +5,37 @@
     <div class="ez-form">
         <div class="ez-form-item" ng-show="Ctrl.inputField=='INFO'">
             <add-space margintop="10"></add-space>
-            <div class="block-section">
+            
                 <div class="text-block-display">
                     <h4>What is a Job?</h4>
-                    <p>A Job simply consists of one of your <span class="bold">Clients</span> matched with one your <span class="bold">Properties.</span></p>
-                    <p>Before creating a new <span class="bold">Job</span>, you should already have the <span class="bold">Client</span> and the <span class="bold">Property</span> created. You can access your Client List and Property List from the green MENU button sabove.</p>
-                    <add-space margintop="12"></add-space>
-                    <h4>Job Status</h4>
-                    <p>All new Jobs are created with the Status of <span class="bold">Prospect</span>, and progresses through successive stages as follows:</p>
-                    <ul>
-                        <li><span class="bold">Proposal</span> - Bid and Scope of Work have been created and submitted to client.</li>
-                        <li><span class="bold">Contract</span> - Bid and Scope of Work have been approved and accepted by client, and initial payment has been received.</li>
-                        <li><span class="bold">Active</span> - Materials have been delivered and a crew is on the job site.</li>
-                        <li><span class="bold">Complete</span> - All payments has been received.</li>
-                    </ul>
+                    <p>A job simply consists of one of your <a ui-sref="clients"><span class="bold">Clients</span></a> matched with one your <a ui-sref="properties"><span class="bold">Properties.</span></a></p>
+                    <p>Before creating a new <span class="bold">Job</span>, you should already have the <span class="bold">Client</span> and the <span class="bold">Property</span> created.</p>
+                    <add-space margintop="12" marginbottom="0"></add-space> 
                 </div>
-            </div>
-            <div>
-                <button type="button" ng-click="Ctrl.inputField='S1'">Continue</button>
+           
+            <div class="flex-row-start">
+                <div>
+                     <button type="button" ng-click="Ctrl.goNewClient()">New Client</button>
+                </div>
+                <div>
+                     <button type="button" ng-click="Ctrl.goNewProperty();">New Property</button>
+                </div>
+                <div>
+                     <button type="button" ng-click="Ctrl.inputField='S1'">Continue</button>
+                </div>
             </div>
         </div>
         <div class="ez-form-item" ng-show="Ctrl.inputField=='S1'">
             <div class="input-label">
                 <div>
-                    <h3>Client</h3></div>
-                <p>Choose a Client from the selections below.</p>
+                    <h3>Select the Client for this Job</h3>
+                </div>
             </div>
             <select id="selectClient" ng-model="Ctrl.S1" ng-options="c.company for c in Ctrl.clientList" ng-change="Ctrl.filterProperties()">
             </select>
             <div class="page-nav">
                 <div class="page-nav-left">
+                    <button type="button" ng-click="Ctrl.goNewClient()">New Client</button>
                 </div>
                 <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">
                     {{Ctrl.inputMsg}}
@@ -48,13 +49,13 @@
         <div class="ez-form-item" ng-show="Ctrl.inputField=='S2'">
             <div class="input-label">
                 <div>
-                    <h3>Property</h3></div>
-                <p>Choose a Property from the selections below.</p>
+                    <h3>Select the Property for this Job</h3></div>
             </div>
             <select id="selectProperty" ng-model="Ctrl.S2" ng-options="c.name for c in Ctrl.propertyOptions">
             </select>
             <div class="page-nav">
                 <div class="page-nav-left">
+                    <button type="button" ng-click="Ctrl.goNewProperty();">New Property</button>
                 </div>
                 <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">
                     {{Ctrl.inputMsg}}

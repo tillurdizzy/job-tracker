@@ -7,14 +7,18 @@ app.controller('LoginCtrl',['$scope','$state','evoDb','SharedSrvc','ShingleSrvc'
     $scope.submissionInvalid = false;// form is filled out correctly
     $scope.requestSuccess=false;// database query; starts out false set to true on successful query
     $scope.loginSuccess = null;// user/pword match; starts out null, set false if user entry does not match, true if does
-
+    $scope.resultLength = 0;
     $scope.displayname="";
 
     var serverAvailable = true;
     $scope.dataRefreshed = false;
 
     $scope.continueBtn = function(){
-        $state.transitionTo("jobs");
+        if($scope.resultLength == 0){
+            $state.transitionTo("clients");
+        }else{
+            $state.transitionTo("jobs");
+        }
     };
 
     $scope.logOut = function(){
@@ -73,15 +77,16 @@ app.controller('LoginCtrl',['$scope','$state','evoDb','SharedSrvc','ShingleSrvc'
 
     $scope.getManagerJobs = function(){
         var result = DB.getManagerJobs()
-        .then(function(result){
-            if(result != false){
+        .then(function(result){// result could be and empty array OR boolean false OR array with data
+            if(typeof result != "boolean"){
                 $scope.dataRefreshed = true;
+                $scope.resultLength = result.length;
                 console.log("Successful getting job data");
             }else{
-              ME.dataError("LoginCtrl-getManagerJobs()-1",result); 
+                $scope.dataError("LoginCtrl-getManagerJobs()-1",result); 
             }
         },function(error){
-            ME.dataError("LoginCtrl-getManagerJobs()-2",result);
+            $scope.dataError("LoginCtrl-getManagerJobs()-2",result);
         });
     };
 
