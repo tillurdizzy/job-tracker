@@ -1,5 +1,5 @@
 'use strict';
-app.controller('NewPropertyViewCtrl',['$state','$scope','evoDb','SharedSrvc',function ($state,$scope,evoDb,SharedSrvc) {
+app.controller('NewPropertyOrgCtrl',['$state','$scope','evoDb','SharedSrvc',function ($state,$scope,evoDb,SharedSrvc) {
 
     var DB = evoDb;
     var ME = this;

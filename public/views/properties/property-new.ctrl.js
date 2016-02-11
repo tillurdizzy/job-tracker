@@ -1,11 +1,11 @@
 'use strict';
-app.controller('NewPropertyViewCtrl',['$state','SharedSrvc',function ($state,SharedSrvc) {
+app.controller('NewPropertyViewCtrl',['$scope','$state','SharedSrvc','evoDb',function ($scope,$state,SharedSrvc,evoDb) {
 
-    var DB = evoDb;
+    var DB = evoDb; 
     var ME = this;
     var S = SharedSrvc;
     ME.clientList = S.managerClients;
-    ME.selectedClient;
+    ME.selectedClient = ME.clientList[0];;
 
     ME.submitClient=function(){
         S.selectedClientObj =  ME.selectedClient;

@@ -1,491 +1,319 @@
-<div ng-controller="NewPropertyCtrl as Ctrl" class="page">
-    <div class="page-title-bar">
-        <h2>
-            New Property
-        </h2>
-    </div>
-    <horiz-rule margintop="5px" marginbottom="10px"></horiz-rule>
-    
-    
+<div ng-controller="NewPropertyIndCtrl as Ctrl" class="page">
 
-        <div class="ez-form-item" ng-show="Ctrl.inputField == 'T2'">
-            <h3>
-                Property or Building Name
-            </h3>
-            <input name="T2" type="text" ng-model="Ctrl.T2" placeholder="Name"/>
-            <div class="page-nav">
-                <div class="page-nav-left">
-                    <i ng-click="Ctrl.goPrevious('1')" class="fa fa-arrow-circle-left fa-3x">
-                    </i>
-                </div>
-                <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">
-                    {{Ctrl.inputMsg}}
-                </div>
-                <div class="page-nav-right">
-                    <i ng-click="Ctrl.submitT2();" class="fa fa-arrow-circle-right fa-3x">
-                    </i>
-                </div>
+    <div class="ez-form-item" ng-show="Ctrl.inputField == 'propertyName'">
+        <h3>Property or Building Name</h3>
+        <input name="propertyName" type="text" ng-model="Ctrl.propertyName" placeholder="Name" />
+        <div class="page-nav">
+            <div class="page-nav-left">
+                <i ng-click="Ctrl.goPrevious('propertyName')" class="fa fa-arrow-circle-left fa-3x"></i>
             </div>
-        </div>
-        <div class="ez-form-item" ng-show="Ctrl.inputField=='T3'">
-            <h3>
-                Street Address
-            </h3>
-            <input name="T3" type="text" ng-model="Ctrl.T3"/>
-            <div class="page-nav">
-                <div class="page-nav-left">
-                    <i ng-click="Ctrl.goPrevious('2')" class="fa fa-arrow-circle-left fa-3x">
-                    </i>
-                </div>
-                <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">
-                    {{Ctrl.inputMsg}}
-                </div>
-                <div class="page-nav-right">
-                    <i ng-click="Ctrl.submitT3();" class="fa fa-arrow-circle-right fa-3x">
-                    </i>
-                </div>
+            <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">
+                {{Ctrl.inputMsg}}
             </div>
-        </div>
-        <div class="ez-form-item" ng-show="Ctrl.inputField == 'T4'">
-            <h3>
-                City
-            </h3>
-            <input name="T4" type="text" ng-model="Ctrl.T4"/>
-            <div class="page-nav">
-                <div class="page-nav-left">
-                    <i ng-click="Ctrl.goPrevious('3')" class="fa fa-arrow-circle-left fa-3x">
-                    </i>
-                </div>
-                <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">
-                    {{Ctrl.inputMsg}}
-                </div>
-                <div class="page-nav-right">
-                    <i ng-click="Ctrl.submitT4();" class="fa fa-arrow-circle-right fa-3x">
-                    </i>
-                </div>
+            <div class="page-nav-right">
+                <i ng-click="Ctrl.submit_propertyName();" class="fa fa-arrow-circle-right fa-3x"></i>
             </div>
-        </div>
-        <div class="ez-form-item" ng-show="Ctrl.inputField == 'T5'">
-            <h3>
-                State
-            </h3>
-            <input name="T5" type="text" ng-model="Ctrl.T5"/>
-            <div class="page-nav">
-                <div class="page-nav-left">
-                    <i ng-click="Ctrl.goPrevious('4')" class="fa fa-arrow-circle-left fa-3x">
-                    </i>
-                </div>
-                <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">
-                    {{Ctrl.inputMsg}}
-                </div>
-                <div class="page-nav-right">
-                    <i ng-click="Ctrl.submitT5();" class="fa fa-arrow-circle-right fa-3x">
-                    </i>
-                </div>
-            </div>
-        </div>
-        <div class="ez-form-item" ng-show="Ctrl.inputField == 'T6'">
-            <h3>
-                Zip
-            </h3>
-            <input name="T6" type="text" ng-model="Ctrl.T6"/>
-            <div class="page-nav">
-                <div class="page-nav-left">
-                    <i ng-click="Ctrl.goPrevious('5')" class="fa fa-arrow-circle-left fa-3x">
-                    </i>
-                </div>
-                <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">
-                    {{Ctrl.inputMsg}}
-                </div>
-                <div class="page-nav-right">
-                    <i ng-click="Ctrl.submitT6();" class="fa fa-arrow-circle-right fa-3x">
-                    </i>
-                </div>
-            </div>
-        </div>
-        <div class="ez-form-item" ng-show="Ctrl.inputField == 'T7'">
-            <h3>
-                Levels (stories)
-            </h3>
-            <div class="radio-btns">
-                <div>
-                     <label>
-                       <input type="radio" name="Rad0" id="radio1A" value="One" class="custom-radio" ng-model="Ctrl.T7"/>
-                        One
-                </label>
-                </div>
-                <div>
-                     <label>
-                       <input type="radio" name="Rad0" id="radio1B" value="Two" class="custom-radio" ng-model="Ctrl.T7"/>
-                        Two
-                </label>
-                </div>
-                 <div>
-                     <label>
-                       <input type="radio" name="Rad0" id="radio1C" value="Three" class="custom-radio" ng-model="Ctrl.T7"/>
-                        Three
-                </label>
-                </div>
-            </div>
-            <div class="page-nav">
-                <div class="page-nav-left">
-                    <i ng-click="Ctrl.goPrevious('6')" class="fa fa-arrow-circle-left fa-3x">
-                    </i>
-                </div>
-                <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">
-                    {{Ctrl.inputMsg}}
-                </div>
-                <div class="page-nav-right">
-                    <i ng-click="Ctrl.submitT7();" class="fa fa-arrow-circle-right fa-3x">
-                    </i>
-                </div>
-            </div>
-        </div>
-        <div class="ez-form-item" ng-show="Ctrl.inputField == 'T8'">
-            <h2>Existing Roof Assembly</h2>
-            <h3>Shingle Style</h3>
-            <div class="radio-btns">
-                <div>
-                     <label>
-                       <input type="radio" name="Rad1" id="radio1A" value="3-tab" class="custom-radio" ng-model="Ctrl.T8"/>
-                        3-tab
-                </label>
-                </div>
-                <div>
-                     <label>
-                       <input type="radio" name="Rad1" id="radio1B" value="Dimensional" class="custom-radio" ng-model="Ctrl.T8"/>
-                        Dimensional
-                </label>
-                </div>
-                 <div>
-                     <label>
-                       <input type="radio" name="Rad1" id="radio1C" value="Speciality" class="custom-radio" ng-model="Ctrl.T8"/>
-                        Speciality
-                </label>
-                </div>
-            </div>
-            <div class="page-nav">
-                <div class="page-nav-left">
-                    <i ng-click="Ctrl.goPrevious('7')" class="fa fa-arrow-circle-left fa-3x">
-                    </i>
-                </div>
-                <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">
-                    {{Ctrl.inputMsg}}
-                </div>
-                <div class="page-nav-right">
-                    <i ng-click="Ctrl.submitT8();" class="fa fa-arrow-circle-right fa-3x">
-                    </i>
-                </div>
-            </div>
-        </div>
-        <div class="ez-form-item" ng-show="Ctrl.inputField == 'T9'">
-        <h2>Existing Roof Assembly</h2>
-            <h3>
-                Roof Deck
-            </h3>
-            <div>
-                <select id="selectRoofDeck" ng-model="Ctrl.T9" ng-options="c.label for c in Ctrl.S.shingleLayerOptions"></select>
-            </div>
-            <div class="page-nav">
-                <div class="page-nav-left">
-                    <i ng-click="Ctrl.goPrevious('8')" class="fa fa-arrow-circle-left fa-3x">
-                    </i>
-                </div>
-                <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">
-                    {{Ctrl.inputMsg}}
-                </div>
-                <div class="page-nav-right">
-                    <i ng-click="Ctrl.submitT9();" class="fa fa-arrow-circle-right fa-3x">
-                    </i>
-                </div>
-            </div>
-        </div>
-        <div class="ez-form-item" ng-show="Ctrl.inputField == 'T10'">
-        <h2>Existing Roof Assembly</h2>
-            <h3>
-                Re-roof History
-            </h3>
-            <div class="radio-btns">
-                <div>
-                    <select id="selectToplayer" ng-model="Ctrl.shingleLayerTop" ng-options="c.label for c in Ctrl.S.shingleLayerOptions"></select>
-                </div>
-                
-                <div>
-                   OVER
-                </div>
-                <div>
-                   <select id="selectBottomlayer" ng-model="Ctrl.shingleLayerBottom" ng-options="c.label for c in Ctrl.S.overLayerOptions"></select>
-                </div>
-            </div>
-
-            <div class="page-nav">
-                <div class="page-nav-left">
-                    <i ng-click="Ctrl.goPrevious('9')" class="fa fa-arrow-circle-left fa-3x">
-                    </i>
-                </div>
-                <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">
-                    {{Ctrl.inputMsg}}
-                </div>
-                <div class="page-nav-right">
-                    <i ng-click="Ctrl.submitT10();" class="fa fa-arrow-circle-right fa-3x">
-                    </i>
-                </div>
-            </div>
-        </div>
-        <div class="ez-form-item" ng-show="Ctrl.inputField == 'T11'">
-        <h2>Existing Roof Assembly</h2>
-            <h3>
-                Layers
-            </h3>
-            <input type="tel" ng-model="Ctrl.T11" min="1" max="5"/>
-            <div class="page-nav">
-                <div class="page-nav-left">
-                    <i ng-click="Ctrl.goPrevious('10')" class="fa fa-arrow-circle-left fa-3x">
-                    </i>
-                </div>
-                <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">
-                    {{Ctrl.inputMsg}}
-                </div>
-                <div class="page-nav-right">
-                    <i ng-click="Ctrl.submitT11();" class="fa fa-arrow-circle-right fa-3x">
-                    </i>
-                </div>
-            </div>
-        </div>
-
-        <div class="ez-form-item" ng-show="Ctrl.inputField == 'T12'">
-        <h2>Existing Roof Assembly</h2>
-            <h3>
-                Edge Detail
-            </h3>
-            <div class="radio-btns">
-                <div>
-                    <label>
-                       <input type="radio" name="Rad12" id="radio12A" value="Painted Drip Edge" class="custom-radio" ng-model="Ctrl.T12"/>
-                        Painted Drip Edge
-                    </label>
-                </div>
-                
-                <div>
-                   <label>
-                       <input type="radio" name="Rad12" id="radio12B" value="With trim" class="custom-radio" ng-model="Ctrl.T12"/>
-                        With trim
-                    </label>
-                </div>
-                
-            </div>
-            <div class="page-nav">
-                <div class="page-nav-left">
-                    <i ng-click="Ctrl.goPrevious('11')" class="fa fa-arrow-circle-left fa-3x">
-                    </i>
-                </div>
-                <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">
-                    {{Ctrl.inputMsg}}
-                </div>
-                <div class="page-nav-right">
-                    <i ng-click="Ctrl.submitT12();" class="fa fa-arrow-circle-right fa-3x">
-                    </i>
-                </div>
-            </div>
-        </div>
-
-        <div class="ez-form-item" ng-show="Ctrl.inputField == 'T13'">
-        <h2>Existing Roof Assembly</h2>
-            <h3>
-                Valleys
-            </h3>
-            <div class="radio-btns">
-                <div>
-                    <label>
-                       <input type="radio" name="Rad13" id="radio13A" value="Single-laced" class="custom-radio" ng-model="Ctrl.T13"/>
-                       Single-laced
-                    </label>
-                </div>
-                
-                <div>
-                   <label>
-                       <input type="radio" name="Rad13" id="radio13B" value="Open metal" class="custom-radio" ng-model="Ctrl.T13"/>
-                       Open metal
-                    </label>
-                </div>
-            </div>
-            <div class="page-nav">
-                <div class="page-nav-left">
-                    <i ng-click="Ctrl.goPrevious('12')" class="fa fa-arrow-circle-left fa-3x">
-                    </i>
-                </div>
-                <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">
-                    {{Ctrl.inputMsg}}
-                </div>
-                <div class="page-nav-right">
-                    <i ng-click="Ctrl.submitT13();" class="fa fa-arrow-circle-right fa-3x">
-                    </i>
-                </div>
-            </div>
-        </div>
-
-        <div class="ez-form-item" ng-show="Ctrl.inputField == 'T14'">
-        <h2>Existing Roof Assembly</h2>
-            <h3>
-                Ridges
-            </h3>
-            <div class="radio-btns">
-                <div>
-                    <label>
-                       <input type="radio" name="Rad14" id="radio14A" value="Standard 3" class="custom-radio" ng-model="Ctrl.T14"/>
-                       Standard 3
-                    </label>
-                </div>
-                
-                <div>
-                   <label>
-                       <input type="radio" name="Rad14" id="radio14B" value="Enhanced" class="custom-radio" ng-model="Ctrl.T14"/>
-                       Enhanced
-                    </label>
-                </div>
-            </div>
-            <div class="page-nav">
-                <div class="page-nav-left">
-                    <i ng-click="Ctrl.goPrevious('13')" class="fa fa-arrow-circle-left fa-3x">
-                    </i>
-                </div>
-                <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">
-                    {{Ctrl.inputMsg}}
-                </div>
-                <div class="page-nav-right">
-                    <i ng-click="Ctrl.submitT14();" class="fa fa-arrow-circle-right fa-3x">
-                    </i>
-                </div>
-            </div>
-        </div>
-
-        <div class="ez-form-item" ng-show="Ctrl.inputField == 'T15'">
-        <h2>Existing Roof Assembly</h2>
-            <h3>
-                Ventilation
-            </h3>
-            <div>
-                <select id="selectVents" ng-model="Ctrl.T15" ng-options="c.label for c in Ctrl.S.ventOptions"></select>
-            </div>
-           
-            <div class="page-nav">
-                <div class="page-nav-left">
-                    <i ng-click="Ctrl.goPrevious('14')" class="fa fa-arrow-circle-left fa-3x">
-                    </i>
-                </div>
-                <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">
-                    {{Ctrl.inputMsg}}
-                </div>
-                <div class="page-nav-right">
-                    <i ng-click="Ctrl.submitT15();" class="fa fa-arrow-circle-right fa-3x">
-                    </i>
-                </div>
-            </div>
-        </div>
-        <div class="ez-form-item" ng-show="Ctrl.inputField == 'SUBMIT'">
-            <h3>
-                Review and Submit
-            </h3>
-           
-            <div class="page-nav">
-                <div class="page-nav-left">
-                    <i ng-click="Ctrl.goPrevious('11')" class="fa fa-arrow-circle-left fa-3x">
-                    </i>
-                </div>
-                <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">
-                    {{Ctrl.inputMsg}}
-                </div>
-                <div class="page-nav-right">
-                    <button type="button" ng-click="Ctrl.submitForm()">
-                        Submit
-                    </button>
-                </div>
-            </div>
-        </div>
-        <div class="ez-form-item" ng-show="Ctrl.inputField == 'SUCCESS'">
-            <h3>
-                Success!
-            </h3>
-            <p>
-                {{Ctrl.T3}} has been added as a property for {{Ctrl.T1.company}}.
-            </p>
-        </div>
-        <div class="ez-form-item" ng-show="Ctrl.inputField == 'ERROR'">
-            <h3>
-                Oops!  An error occured saving the data.
-            </h3>
-            <p>
-                Try again later or click below to reset and try again now.
-            </p>
-            <button type="button" ng-click="Ctrl.clearForm()">
-                Reset
-            </button>
         </div>
     </div>
 
-    <div class="ez-form" ng-show="Ctrl.">
-        <div id="liveReview" class="review-section">
-            <div class="text-block-display">
-                <h4>
-                    Property:
-                </h4>
-                <h4>
-                    Owner: {{Ctrl.T1.company}}
-                </h4>
-                <h3>
-                    Name: {{Ctrl.T2}}
-                </h3>
-                <h3>
-                    Street: {{Ctrl.T3}}
-                </h3>
-                <h3>
-                    City: {{Ctrl.T4}}
-                </h3>
-                <h3>
-                    State: {{Ctrl.T5}}
-                </h3>
-                <h3>
-                    Zip: {{Ctrl.T6}}
-                </h3>
-               
+    <div class="ez-form-item" ng-show="Ctrl.inputField=='streetAddress'">
+        <h3>Street Address</h3>
+        <input type="text" ng-model="Ctrl.streetAddress" />
+        <div class="page-nav">
+            <div class="page-nav-left">
+                <i ng-click="Ctrl.goPrevious('streetAddress')" class="fa fa-arrow-circle-left fa-3x"></i>
             </div>
-            <div class="text-block-display" style="margin-left:3rem;">
-                <h4>
-                    Existing Conditions:
-                </h4>
-                <h3>
-                    Levels: {{Ctrl.T7}}
-                </h3>
-                
-                <h3>
-                   Shingle Style: {{Ctrl.T8}}
-                </h3>
-                <h3>
-                    Decking: {{Ctrl.T9}}
-                </h3>
-                 <h3>
-                    Roof: {{Ctrl.T10}}
-                </h3>
-                <h3>
-                    Layers: {{Ctrl.T11}}
-                </h3>
-                <h3>
-                    Edge Detail: {{Ctrl.T12}}
-                </h3>
-                 <h3>
-                    Valley: {{Ctrl.T13}}
-                </h3>
-                 <h3>
-                    Ridge: {{Ctrl.T14}}
-                </h3>
-                 <h3>
-                    Ventilation: {{Ctrl.T15}}
-                </h3>
+            <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">
+                {{Ctrl.inputMsg}}
+            </div>
+            <div class="page-nav-right">
+                <i ng-click="Ctrl.submit_streetAddress();" class="fa fa-arrow-circle-right fa-3x"></i>
             </div>
         </div>
     </div>
 
 
+    <div class="ez-form-item" ng-show="Ctrl.inputField == 'propertyCity'">
+        <h3>City</h3>
+        <input type="text" ng-model="Ctrl.propertyCity" />
+        <div class="page-nav">
+            <div class="page-nav-left">
+                <i ng-click="Ctrl.goPrevious('propertyCity')" class="fa fa-arrow-circle-left fa-3x"></i>
+            </div>
+            <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">
+                {{Ctrl.inputMsg}}
+            </div>
+            <div class="page-nav-right">
+                <i ng-click="Ctrl.submit_propertyCity();" class="fa fa-arrow-circle-right fa-3x"></i>
+            </div>
+        </div>
+    </div>
 
 
+    <div class="ez-form-item" ng-show="Ctrl.inputField == 'propertyState'">
+        <h3>State</h3>
+        <input type="text" ng-model="Ctrl.propertyState" />
+        <div class="page-nav">
+            <div class="page-nav-left">
+                <i ng-click="Ctrl.goPrevious('propertyState')" class="fa fa-arrow-circle-left fa-3x"></i>
+            </div>
+            <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">
+                {{Ctrl.inputMsg}}
+            </div>
+            <div class="page-nav-right">
+                <i ng-click="Ctrl.submit_propertyState();" class="fa fa-arrow-circle-right fa-3x"></i>
+            </div>
+        </div>
+    </div>
+    <div class="ez-form-item" ng-show="Ctrl.inputField == 'propertyZip'">
+        <h3>Zip</h3>
+        <input type="text" ng-model="Ctrl.propertyZip" />
+        <div class="page-nav">
+            <div class="page-nav-left">
+                <i ng-click="Ctrl.goPrevious('propertyZip')" class="fa fa-arrow-circle-left fa-3x"></i>
+            </div>
+            <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">
+                {{Ctrl.inputMsg}}
+            </div>
+            <div class="page-nav-right">
+                <i ng-click="Ctrl.submit_propertyZip();" class="fa fa-arrow-circle-right fa-3x"></i>
+            </div>
+        </div>
+    </div>
+    <div class="ez-form-item" ng-show="Ctrl.inputField == 'numLevels'">
+        <h3>Levels (stories)</h3>
+        <div class="dropDownSelector">
+            <select ng-model="Ctrl.numLevels" ng-options="c.label for c in Ctrl.S.levelOptions"></select>
+        </div>
+        <div class="page-nav">
+            <div class="page-nav-left">
+                <i ng-click="Ctrl.goPrevious('numLevels')" class="fa fa-arrow-circle-left fa-3x"></i>
+            </div>
+            <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">
+                {{Ctrl.inputMsg}}
+            </div>
+            <div class="page-nav-right">
+                <i ng-click="Ctrl.submit_numLevels();" class="fa fa-arrow-circle-right fa-3x"></i>
+            </div>
+        </div>
+    </div>
+    <div class="ez-form-item" ng-show="Ctrl.inputField == 'shingleGrade'">
+        <h2>Existing Roof Assembly</h2>
+        <h3>Shingle Grade</h3>
+        <div class="dropDownSelector">
+            <select ng-model="Ctrl.shingleGrade" ng-options="c.label for c in Ctrl.S.shingleGradeOptions"></select>
+        </div>
+        <div class="page-nav">
+            <div class="page-nav-left">
+                <i ng-click="Ctrl.goPrevious('shingleGrade')" class="fa fa-arrow-circle-left fa-3x"></i>
+            </div>
+            <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">
+                {{Ctrl.inputMsg}}
+            </div>
+            <div class="page-nav-right">
+                <i ng-click="Ctrl.submit_shingleGrade();" class="fa fa-arrow-circle-right fa-3x"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="ez-form-item" ng-show="Ctrl.inputField == 'roofDeck'">
+        <h2>Existing Roof Assembly</h2>
+        <h3>Roof Deck</h3>
+        <div class="dropDownSelector">
+            <select ng-model="Ctrl.roofDeck" ng-options="c.label for c in Ctrl.S.roofDeckOptions"></select>
+        </div>
+        <div class="page-nav">
+            <div class="page-nav-left">
+                <i ng-click="Ctrl.goPrevious('roofDeck')" class="fa fa-arrow-circle-left fa-3x"></i>
+            </div>
+            <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">
+                {{Ctrl.inputMsg}}
+            </div>
+            <div class="page-nav-right">
+                <i ng-click="Ctrl.submit_roofDeck();" class="fa fa-arrow-circle-right fa-3x"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="ez-form-item" ng-show="Ctrl.inputField == 'coveredLayer'">
+        <h2>Existing Roof Assembly</h2>
+        <h3>Covered Layer</h3>
+        <p>Has this roof be recovered previously?  What is the layer below the surface?</p>
+       
+        <div class="dropDownSelector">
+            <select ng-model="Ctrl.coveredLayer" ng-options="c.label for c in Ctrl.S.originalTypeOptions"></select>
+        </div>
+       
+        <div class="page-nav">
+            <div class="page-nav-left">
+                <i ng-click="Ctrl.goPrevious('coveredLayer')" class="fa fa-arrow-circle-left fa-3x"></i>
+            </div>
+            <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">
+                {{Ctrl.inputMsg}}
+            </div>
+            <div class="page-nav-right">
+                <i ng-click="Ctrl.submit_coveredLayer();" class="fa fa-arrow-circle-right fa-3x"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="ez-form-item" ng-show="Ctrl.inputField == 'layersCovering'">
+        <h2>Existing Roof Assembly</h2>
+        <h3>Number of layers of existing roof covering:</h3>
+        <div class="dropDownSelector">
+            <select ng-model="Ctrl.shingleLayerTop" ng-options="c.label for c in Ctrl.S.numbersToFive"></select>
+        </div>
+        <div class="page-nav">
+            <div class="page-nav-left">
+                <i ng-click="Ctrl.goPrevious('layersCovering')" class="fa fa-arrow-circle-left fa-3x"></i>
+            </div>
+            <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">
+                {{Ctrl.inputMsg}}
+            </div>
+            <div class="page-nav-right">
+                <i ng-click="Ctrl.submit_layersCovering();" class="fa fa-arrow-circle-right fa-3x"></i>
+            </div>
+        </div>
+    </div>
+    <div class="ez-form-item" ng-show="Ctrl.inputField == 'edgeDetail'">
+        <h2>Existing Roof Assembly</h2>
+        <h3>Edge Detail</h3>
+
+        <div class="dropDownSelector">
+            <select ng-model="Ctrl.edgeDetail" ng-options="c.label for c in Ctrl.S.edgeDetail"></select>
+        </div>
+
+        <div class="page-nav">
+            <div class="page-nav-left">
+                <i ng-click="Ctrl.goPrevious('edgeDetail')" class="fa fa-arrow-circle-left fa-3x"></i>
+            </div>
+            <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">
+                {{Ctrl.inputMsg}}
+            </div>
+            <div class="page-nav-right">
+                <i ng-click="Ctrl.submit_edgeDetail();" class="fa fa-arrow-circle-right fa-3x"></i>
+            </div>
+        </div>
+    </div>
+    <div class="ez-form-item" ng-show="Ctrl.inputField == 'valleyDetail'">
+        <h2>Existing Roof Assembly</h2>
+        <h3>Valley Details</h3>
+        <div class="dropDownSelector">
+            <select ng-model="Ctrl.valleyDetail" ng-options="c.label for c in Ctrl.S.valleyOptions"></select>
+        </div>
+        <div class="page-nav">
+            <div class="page-nav-left">
+                <i ng-click="Ctrl.goPrevious('valleyDetail')" class="fa fa-arrow-circle-left fa-3x"></i>
+            </div>
+            <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">
+                {{Ctrl.inputMsg}}
+            </div>
+            <div class="page-nav-right">
+                <i ng-click="Ctrl.submit_valleyDetail();" class="fa fa-arrow-circle-right fa-3x"></i>
+            </div>
+        </div>
+    </div>
+    <div class="ez-form-item" ng-show="Ctrl.inputField == 'ridgeCap'">
+        <h2>Existing Roof Assembly</h2>
+        <h3>Ridge Cap</h3>
+        <div class="dropDownSelector">
+            <select ng-model="Ctrl.ridgeCap" ng-options="c.label for c in Ctrl.S.ridgeCapShingles"></select>
+        </div>
+        <div class="page-nav">
+            <div class="page-nav-left">
+                <i ng-click="Ctrl.goPrevious('ridgeCap')" class="fa fa-arrow-circle-left fa-3x"></i>
+            </div>
+            <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">
+                {{Ctrl.inputMsg}}
+            </div>
+            <div class="page-nav-right">
+                <i ng-click="Ctrl.submit_ridgeCap();" class="fa fa-arrow-circle-right fa-3x"></i>
+            </div>
+        </div>
+    </div>
+    <div class="ez-form-item" ng-show="Ctrl.inputField == 'roofVents'">
+        <h2>Existing Roof Assembly</h2>
+        <h3>Ventilation</h3>
+        <div>
+            <select ng-model="Ctrl.roofVents" ng-options="c.label for c in Ctrl.S.ventOptions"></select>
+        </div>
+        <div class="page-nav">
+            <div class="page-nav-left">
+                <i ng-click="Ctrl.goPrevious('roofVents')" class="fa fa-arrow-circle-left fa-3x"></i>
+            </div>
+            <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">
+                {{Ctrl.inputMsg}}
+            </div>
+            <div class="page-nav-right">
+                <i ng-click="Ctrl.submit_roofVents();" class="fa fa-arrow-circle-right fa-3x"></i>
+            </div>
+        </div>
+    </div>
+    <div class="ez-form-item" ng-show="Ctrl.inputField == 'specialFlashing'">
+        <h2>Existing Roof Assembly</h2>
+        <h3>Special Flashing Requirements</h3>
+        <p>Check all that apply</p>
+        <div>
+        </div>
+        <div class="page-nav">
+            <div class="page-nav-left">
+                <i ng-click="Ctrl.goPrevious('specialFlashing')" class="fa fa-arrow-circle-left fa-3x"></i>
+            </div>
+            <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">
+                {{Ctrl.inputMsg}}
+            </div>
+            <div class="page-nav-right">
+                <i ng-click="Ctrl.submit_specialFlashing();" class="fa fa-arrow-circle-right fa-3x"></i>
+            </div>
+        </div>
+    </div>
+    <div class="ez-form-item" ng-show="Ctrl.inputField == 'SUBMIT'">
+        <h3>Review and Submit</h3>
+        <div class="page-nav">
+            <div class="page-nav-left">
+                <i ng-click="Ctrl.goPrevious('Submit')" class="fa fa-arrow-circle-left fa-3x"></i>
+            </div>
+            <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">
+                {{Ctrl.inputMsg}}
+            </div>
+            <div class="page-nav-right">
+                <button type="button" ng-click="Ctrl.submitForm()">Submit</button>
+            </div>
+        </div>
+    </div>
+    <div class="ez-form-item" ng-show="Ctrl.inputField == 'SUCCESS'">
+        <h3>Success!</h3>
+        <p>{{Ctrl.T3}} has been added as a property for {{Ctrl.S.company}}.</p>
+    </div>
+    <div class="ez-form-item" ng-show="Ctrl.inputField == 'ERROR'">
+        <h3>Oops!  An error occured saving the data.</h3>
+        <p>Try again later or click below to reset and try again now.</p>
+        <button type="button" ng-click="Ctrl.clearForm()">Reset</button>
+    </div>
+</div>
+<div class="ez-form">
+    <div id="liveReview" class="review-section">
+        <div class="text-block-display">
+            <h4>Property:</h4>
+            <h3>Owner: {{Ctrl.S.company}}</h3>
+            <h3>Name: {{Ctrl.propertyName}}</h3>
+            <h3>Street: {{Ctrl.streetAddress}}</h3>
+            <h3>City: {{Ctrl.propertyCity}}</h3>
+            <h3>State: {{Ctrl.propertyState}}</h3>
+            <h3>Zip: {{Ctrl.propertyZip}}</h3>
+        </div>
+        <div class="text-block-display" style="margin-left:3rem;">
+            <h4>Existing Conditions:</h4>
+            <h3>Levels: {{Ctrl.numLevels}}</h3>
+            <h3>Shingle Grade: {{Ctrl.shingleGrade}}</h3>
+            <h3>Decking: {{Ctrl.roofDeck}}</h3>
+            <h3>Under Layer: {{Ctrl.coveredLayer}}</h3>
+            <h3>Layers: {{Ctrl.layersCovering}}</h3>
+            <h3>Edge Detail: {{Ctrl.edgeDetail}}</h3>
+            <h3>Valley Detail: {{Ctrl.valleyDetail}}</h3>
+            <h3>Ridge Cap: {{Ctrl.ridgeCap}}</h3>
+            <h3>Ventilation: {{Ctrl.roofVents}}</h3>
+        </div>
+    </div>
+</div>
 </div>

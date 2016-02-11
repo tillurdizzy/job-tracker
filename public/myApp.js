@@ -1,5 +1,5 @@
 'use strict';
-var app = angular.module('MyApp', ['ui.router','ngSanitize','smart-table']);
+var app = angular.module('MyApp', ['ui.router','ngSanitize']);
 
 app.config(function($stateProvider, $urlRouterProvider) {
  	

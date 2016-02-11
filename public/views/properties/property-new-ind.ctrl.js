@@ -1,5 +1,5 @@
 'use strict';
-app.controller('NewPropertyViewCtrl',['$state','$scope','evoDb','SharedSrvc',function ($state,$scope,evoDb,SharedSrvc) {
+app.controller('NewPropertyIndCtrl',['$state','$scope','evoDb','SharedSrvc',function ($state,$scope,evoDb,SharedSrvc) {
 
     var DB = evoDb;
     var ME = this;
@@ -7,218 +7,222 @@ app.controller('NewPropertyViewCtrl',['$state','$scope','evoDb','SharedSrvc',fun
     ME.managerName = S.managerName;
     ME.clientList = S.managerClients;
 
-   
-    ME.T1=ME.clientList[0];
-    ME.T2="";
-    ME.T3="";
-    ME.T4="";
-    ME.T5="";
-    ME.T6="";
-    ME.T7="";
-    ME.T8="";
-    ME.T9="";
-    ME.T10="";
-    ME.T11="";
-    ME.T12="";
-    ME.T13="";
-    ME.T14="";
-    ME.T15="";
+    ME.propertyName="";
+    ME.streetAddress="";
+    ME.propertyCity="";
+    ME.propertyState="";
+    ME.propertyZip="";
+    ME.numLevels="";
+    ME.shingleGrade="";
+    ME.roofDeck="";
+    ME.coveredLayer="";
+    ME.layersCovering="";
+    ME.edgeDetail="";
+    ME.valleyDetail="";
+    ME.ridgeCap="";
+    ME.roofVents="";
+    ME.specialFlashing="";
 
+    ME.formFields = ['','propertyName','streetAddress','propertyCity','propertyState','propertyZip',
+        'numLevels','shingleGrade','roofDeck','coveredLayer','layersCovering','edgeDetail',
+        'valleyDetail','ridgeCap','roofVents','specialFlashing'];
 
-    ME.shingleLayerTop=S.shingleLayerOptions[0];
-    ME.shingleLayerBottom=S.overLayerOptions[0];
    
-    var numFields = "15";
-    var currentFieldNum = "0";
-    ME.inputField = "T1";
+    var numFields = ME.formFields.length - 1;
+    ME.inputField = ME.formFields[1];
     ME.inputMsg = "Field 1 of " + numFields;
     ME.isError = false;
 
-    ME.goPrevious = function(num){
-        currentFieldNum = num;
-        ME.inputField="T" + num;
-        ME.inputMsg = "Field " + num +  " of " + numFields;
+    ME.goPrevious = function(_from){
+        var currentField = returnNdx(_from);
+        var goToFieldNum = currentField - 1;
+        ME.inputField=ME.formFields[goToFieldNum]
+        ME.inputMsg = "Field " + goToFieldNum +  " of " + numFields;
     };
 
+    ME.goNext = function(_from){
+        var currentField = returnNdx(_from);
+        var goToFieldNum = currentField + 1;
+        if(goToFieldNum < numFields){
+            ME.inputField=ME.formFields[goToFieldNum]
+            ME.inputMsg = "Field " + goToFieldNum +  " of " + numFields;
+        }else{
+
+        }
+    };
+
+    var returnNdx = function(item){
+        return _.indexof(ME.formFields,item);
+    }
+
     
-    ME.submitT1=function(){
+    ME.submit_propertyName=function(){
         ME.inputMsg = "";
         ME.isError = false;
-        if(ME.T1==""){//company/client
+        if(ME.propertyName==""){
             ME.isError = true;
             ME.inputMsg = "This field cannot be blank.";
         }else{
-            ME.inputField="T2";
-            ME.inputMsg = "Field 2 of " + numFields;
+            ME.goNext('propertyName');
         };
     };
 
-    ME.submitT2=function(){//bldg name
+    ME.submit_streetAddress=function(){//bldg name
         ME.inputMsg = "";
         ME.isError = false;
-        if(ME.T2==""){
+        if(ME.streetAddress==""){
             ME.isError = true;
             ME.inputMsg = "This field cannot be blank.";
         }else{
-            ME.inputField="T3";
-            ME.inputMsg = "Field 3 of " + numFields;
-        }
+            ME.goNext('streetAddress');
+        };
     };
 
-    ME.submitT3=function(){//street
+    ME.submit_propertyCity=function(){//street
         ME.inputMsg = "";
         ME.isError = false;
-        if(ME.T3==""){
+        if(ME.propertyCity==""){
             ME.isError = true;
             ME.inputMsg = "This field cannot be blank.";
         }else{
-            ME.inputField="T4";
-            ME.inputMsg = "Field 4 of " + numFields;
-        }
+            ME.goNext('propertyCity');
+        };
     };
 
-    ME.submitT4=function(){//city
+    ME.submit_propertyState=function(){//city
         ME.inputMsg = "";
         ME.isError = false;
-       if(ME.T4==""){
+       if(ME.propertyState==""){
             ME.isError = true;
             ME.inputMsg = "This field cannot be blank.";
         }else{
-            ME.inputField="T5";
-            ME.inputMsg = "Field 5 of " + numFields;
-        }
+            ME.goNext('propertyState');
+        };
     };
 
-    ME.submitT5=function(){//state
+    ME.submit_propertyZip=function(){//state
         ME.inputMsg = "";
         ME.isError = false;
-       if(ME.T5==""){
+       if(ME.propertyZip==""){
             ME.isError = true;
             ME.inputMsg = "This field cannot be blank.";
         }else{
-            ME.inputField="T6";
-            ME.inputMsg = "Field 6 of " + numFields;
-        }
+            ME.goNext('propertyZip');
+        };
     };
 
-    ME.submitT6=function(){//zip
+    ME.submit_numLevels=function(){//zip
         ME.inputMsg = "";
         ME.isError = false;
-       if(ME.T6==""){
+       if(ME.numLevels==""){
             ME.isError = true;
             ME.inputMsg = "This field cannot be blank.";
         }else{
-            ME.inputField="T7";
-            ME.inputMsg = "Field 7 of " + numFields;
-        }
+            ME.goNext('numLevels');
+        };
     };
 
-    ME.submitT7=function(){
+    ME.submit_shingleGrade=function(){
         ME.inputMsg = "";
         ME.isError = false;
-        if(ME.T7==""){//class
+        if(ME.shingleGrade==""){
             ME.isError = true;
             ME.inputMsg = "This field cannot be blank.";
         }else{
-            ME.inputField="T8";
-            ME.inputMsg = "Field 8 of " + numFields;
-        }
+            ME.goNext('shingleGrade');
+        };
     };
 
-    ME.submitT8=function(){
+   
+
+    ME.submit_roofDeck=function(){
         ME.inputMsg = "";
         ME.isError = false;
-        if(ME.T8==""){//mobile phone
+        if(ME.roofDeck==""){
             ME.isError = true;
             ME.inputMsg = "This field cannot be blank.";
         }else{
-            ME.inputField="T9";
-            ME.inputMsg = "Field 9 of " + numFields;
-        }
+            ME.goNext('roofDeck');
+        };
     };
 
-    ME.submitT9=function(){
+    ME.submit_coveredLayer=function(){
         ME.inputMsg = "";
         ME.isError = false;
-        if(ME.T9==""){//business phone
+       if(ME.coveredLayer==""){
             ME.isError = true;
             ME.inputMsg = "This field cannot be blank.";
         }else{
-            ME.inputField="T10";
-            ME.inputMsg = "Field 10 of " + numFields;
-        }
+            ME.goNext('coveredLayer');
+        };
     };
 
-    ME.submitT10=function(){
+    ME.submit_layersCovering=function(){
         ME.inputMsg = "";
         ME.isError = false;
-       if(ME.T10==""){//email
+       if(ME.layersCovering==""){
             ME.isError = true;
             ME.inputMsg = "This field cannot be blank.";
         }else{
-            ME.inputField="T11";
-            ME.inputMsg = "Field 11 of " + numFields;
-        }
+            ME.goNext('layersCovering');
+        };
     };
 
-    ME.submitT11=function(){
+    ME.submit_edgeDetail=function(){
         ME.inputMsg = "";
         ME.isError = false;
-       if(ME.T11==""){//email
+       if(ME.edgeDetail==""){
             ME.isError = true;
             ME.inputMsg = "This field cannot be blank.";
         }else{
-            ME.inputField="T12";
-            ME.inputMsg = "Field 12 of " + numFields;
-        }
+            ME.goNext('edgeDetail');
+        };
     };
 
-    ME.submitT12=function(){
+   
+
+    ME.submit_valleyDetail=function(){
         ME.inputMsg = "";
         ME.isError = false;
-       if(ME.T12==""){//email
+       if(ME.valleyDetail==""){
             ME.isError = true;
             ME.inputMsg = "This field cannot be blank.";
         }else{
-            ME.inputField="T13";
-            ME.inputMsg = "Field 13 of " + numFields;
-        }
+            ME.goNext('valleyDetail');
+        };
     };
 
-    ME.submitT13=function(){
+    ME.submit_ridgeCap=function(){
         ME.inputMsg = "";
         ME.isError = false;
-       if(ME.T13==""){//email
+      if(ME.ridgeCap==""){
             ME.isError = true;
             ME.inputMsg = "This field cannot be blank.";
         }else{
-            ME.inputField="T14";
-            ME.inputMsg = "Field 14 of " + numFields;
-        }
+            ME.goNext('ridgeCap');
+        };
     };
 
-    ME.submitT14=function(){
+     ME.submit_roofVents=function(){
         ME.inputMsg = "";
         ME.isError = false;
-       if(ME.T14==""){//email
+       if(ME.roofVents==""){
             ME.isError = true;
             ME.inputMsg = "This field cannot be blank.";
         }else{
-            ME.inputField="T15";
-            ME.inputMsg = "Field 15 of " + numFields;
-        }
+            ME.goNext('roofVents');
+        };
     };
 
-    ME.submitT15=function(){
+     ME.submit_specialFlashing=function(){
         ME.inputMsg = "";
         ME.isError = false;
-       if(ME.T15==""){//email
+      if(ME.specialFlashing==""){
             ME.isError = true;
             ME.inputMsg = "This field cannot be blank.";
         }else{
-            ME.inputField="SUBMIT";
-            ME.inputMsg = "";
-        }
+            ME.goNext('specialFlashing');
+        };
     };
 
   
@@ -227,20 +231,21 @@ app.controller('NewPropertyViewCtrl',['$state','$scope','evoDb','SharedSrvc',fun
         var dataObj = {};
         dataObj.manager = S.manager;
         dataObj.client = ME.T1;
-        dataObj.name = ME.T2;
-        dataObj.street = ME.T3;
-        dataObj.city = ME.T4;
-        dataObj.state = ME.T5;
-        dataObj.zip = ME.T6;
-        dataObj.levels = ME.T7;
-        dataObj.roof = ME.T8;
-        dataObj.shingle = ME.T9;
-        dataObj.deck = ME.T10;
-        dataObj.layers = ME.T11;
-        dataObj.edge = ME.T12;
-        dataObj.valley = ME.T13;
-        dataObj.valley = ME.T14;
-        dataObj.vents = ME.T15;
+        dataObj.name = ME.propertyName;
+        dataObj.street = ME.streetAddress;
+        dataObj.city = ME.propertyCity;
+        dataObj.state = ME.propertyState;
+        dataObj.zip = ME.propertyZip;
+        dataObj.levels = ME.numLevels;
+        dataObj.underlayer = ME.coveredLayer;
+        dataObj.shingle = ME.shingleGrade;
+        dataObj.deck = ME.roofDeck;
+        dataObj.layers = ME.layersCovering;
+        dataObj.edge = ME.edgeDetail;
+        dataObj.valley = ME.valleyDetail;
+        dataObj.ridge = ME.ridgeCap;
+        dataObj.vents = ME.roofVents;
+        dataObj.flashin = ME.specialFlashing;
         var result = DB.putProperty(dataObj)
         .then(function(result){
              if(typeof result != "boolean"){
