@@ -29,6 +29,10 @@ app.controller('NewClientIndCtrl',['$state','evoDb','SharedSrvc',function ($stat
         ME.inputMsg = "Field " + num +  " of " + numFields;
     }
 
+    ME.goStart=  function(){
+        $state.transitionTo("addNewClient");
+    }
+
     
   
     ME.submitT1=function(){

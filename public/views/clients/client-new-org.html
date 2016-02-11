@@ -7,6 +7,7 @@
             <input name="T1" type="text" ng-model="Ctrl.T1" placeholder="name"/>
             <div class="page-nav">
                 <div class="page-nav-left">
+                    <i ng-click="Ctrl.goStart()" class="fa fa-arrow-circle-left fa-3x"></i>
                 </div>
                 <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">
                     {{Ctrl.inputMsg}}
@@ -236,7 +237,7 @@
     <div class="ez-form">
         <div id="liveReview" class="review-section">
             <div class="text-block-display">
-                <h4 style="margin-bottom:1rem;">
+                <h4 style="margin-bottom:.5rem;">
                     Organization:
                 </h4>
                 <h3>
@@ -259,7 +260,7 @@
                 </h3>
             </div>
             <div class="text-block-display" style="margin-left:3rem;">
-                <h4 style="margin-bottom:1rem;">
+                <h4 style="margin-bottom:.5rem;">
                     Contact Information:
                 </h4>
                 <h3>

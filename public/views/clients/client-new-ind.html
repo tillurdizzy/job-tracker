@@ -7,8 +7,7 @@
             <input name="T1" type="text" ng-model="Ctrl.T1" placeholder="first name" />
             <div class="page-nav">
                 <div class="page-nav-left">
-                    <i ng-click="Ctrl.goPrevious('0')" class="fa fa-arrow-circle-left fa-3x">
-                    </i>
+                    <i ng-click="Ctrl.goStart()" class="fa fa-arrow-circle-left fa-3x"></i>
                 </div>
                 <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">
                     {{Ctrl.inputMsg}}
