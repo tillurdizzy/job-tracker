@@ -30,6 +30,7 @@ $resultValueObjects = array();
 while ($row = mysqli_fetch_object($result)) {
 	$oneVO = new clientVO();
 	$oneVO->PRIMARY_ID = $row->PRIMARY_ID;
+	$oneVO->type = $row->type;
 	$oneVO->manager = $row->manager;
 	$oneVO->company = $row->company;
 	$oneVO->name_first = $row->name_first;

@@ -8,10 +8,11 @@ class propertyVO{
 	var $city;
 	var $state;
 	var $zip;
-	var $levels;
-	var $class;//Residential or commercial
-	var $roof;// Flat or pitched
-	var $description;//ex: Composition over plywood deck
+	var $levels;//stories
+	var $style;// style of existing shingle
+	var $deck;// deck material - plywood etc.
+	var $roof;
+	var $assembly;//ex: Composition over plywood deck
 	var $layers;
 }
 ?>

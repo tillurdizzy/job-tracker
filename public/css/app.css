@@ -762,6 +762,19 @@ body {
   border: 2px solid #BDC3C7;
   display: inline-block; }
 
+.block-outline-red {
+  background-color: rgba(231, 76, 60, 0.3);
+  padding: 1rem;
+  border: 2px solid #C0392B;
+  display: block;
+  margin: .5rem 0; }
+
+.block-section-blue {
+  background-color: #ECF0F1;
+  padding: 1.5rem 2rem;
+  border: 2px solid #BDC3C7;
+  display: inline-block; }
+
 .hrule {
   border-top: 1px solid #7F8C8D;
   width: 100%;

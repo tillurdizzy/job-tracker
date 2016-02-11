@@ -6,29 +6,7 @@
     </div>
     <horiz-rule margintop="5px" marginbottom="10px"></horiz-rule>
     
-    <div class="ez-form">
-        <div class="ez-form-item" ng-show="Ctrl.inputField == 'T1'">
-            <h3>
-                Choose the Client for this Property
-            </h3>
-            <select id="selectClient" ng-model="Ctrl.T1" ng-options="c.company for c in Ctrl.clientList">
-            </select>
-            <div class="page-nav">
-                <div class="page-nav-left">
-                </div>
-                <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">
-                    {{Ctrl.inputMsg}}
-                </div>
-                <div class="page-nav-right">
-                    <i ng-click="Ctrl.submitT1();" class="fa fa-arrow-circle-right fa-3x">
-                    </i>
-                </div>
-            </div>
-        </div>
-        
-        <div ng-show="Ctrl.inputField == 'T1'" class="block-outline-red">
-            <h5>If the Client for this Property is not listed, <a ui-sref="addNewClient">Add a New Client</a>, then return here.</h5>
-        </div>
+    
 
         <div class="ez-form-item" ng-show="Ctrl.inputField == 'T2'">
             <h3>
@@ -164,9 +142,8 @@
             </div>
         </div>
         <div class="ez-form-item" ng-show="Ctrl.inputField == 'T8'">
-            <h3>
-                Shingle Style
-            </h3>
+            <h2>Existing Roof Assembly</h2>
+            <h3>Shingle Style</h3>
             <div class="radio-btns">
                 <div>
                      <label>
@@ -202,23 +179,12 @@
             </div>
         </div>
         <div class="ez-form-item" ng-show="Ctrl.inputField == 'T9'">
+        <h2>Existing Roof Assembly</h2>
             <h3>
-                Decking
+                Roof Deck
             </h3>
-            <div class="radio-btns">
-                <div>
-                    <label>
-                       <input type="radio" name="Rad2" id="radio2A" value="Plywood" class="custom-radio" ng-model="Ctrl.T9"/>
-                        Plywood
-                    </label>
-                </div>
-                
-                <div>
-                    <label>
-                       <input type="radio" name="Rad2" id="radio2B" value="Tongue and Groove" class="custom-radio" ng-model="Ctrl.T9"/>
-                        Tongue and Groove
-                    </label>
-                </div>
+            <div>
+                <select id="selectRoofDeck" ng-model="Ctrl.T9" ng-options="c.label for c in Ctrl.S.shingleLayerOptions"></select>
             </div>
             <div class="page-nav">
                 <div class="page-nav-left">
@@ -235,28 +201,20 @@
             </div>
         </div>
         <div class="ez-form-item" ng-show="Ctrl.inputField == 'T10'">
+        <h2>Existing Roof Assembly</h2>
             <h3>
-                Decking Material
+                Re-roof History
             </h3>
             <div class="radio-btns">
                 <div>
-                    <label>
-                       <input type="radio" name="Rad3" id="radio3A" value="Composition over plywood deck" class="custom-radio" ng-model="Ctrl.T10"/>
-                        Composition over plywood deck
-                    </label>
+                    <select id="selectToplayer" ng-model="Ctrl.shingleLayerTop" ng-options="c.label for c in Ctrl.S.shingleLayerOptions"></select>
                 </div>
                 
                 <div>
-                   <label>
-                       <input type="radio" name="Rad3" id="radio3B" value="Composition over wood shingles" class="custom-radio" ng-model="Ctrl.T10"/>
-                        Composition over wood shingles
-                    </label>
+                   OVER
                 </div>
                 <div>
-                    <label>
-                       <input type="radio" name="Rad3" id="radio3C" value="Low slope" class="custom-radio" ng-model="Ctrl.T10"/>
-                        Low slope
-                    </label>
+                   <select id="selectBottomlayer" ng-model="Ctrl.shingleLayerBottom" ng-options="c.label for c in Ctrl.S.overLayerOptions"></select>
                 </div>
             </div>
 
@@ -275,6 +233,7 @@
             </div>
         </div>
         <div class="ez-form-item" ng-show="Ctrl.inputField == 'T11'">
+        <h2>Existing Roof Assembly</h2>
             <h3>
                 Layers
             </h3>
@@ -295,6 +254,7 @@
         </div>
 
         <div class="ez-form-item" ng-show="Ctrl.inputField == 'T12'">
+        <h2>Existing Roof Assembly</h2>
             <h3>
                 Edge Detail
             </h3>
@@ -330,6 +290,7 @@
         </div>
 
         <div class="ez-form-item" ng-show="Ctrl.inputField == 'T13'">
+        <h2>Existing Roof Assembly</h2>
             <h3>
                 Valleys
             </h3>
@@ -364,6 +325,7 @@
         </div>
 
         <div class="ez-form-item" ng-show="Ctrl.inputField == 'T14'">
+        <h2>Existing Roof Assembly</h2>
             <h3>
                 Ridges
             </h3>
@@ -398,42 +360,14 @@
         </div>
 
         <div class="ez-form-item" ng-show="Ctrl.inputField == 'T15'">
+        <h2>Existing Roof Assembly</h2>
             <h3>
                 Ventilation
             </h3>
-            <div class="radio-btns">
-                <div>
-                    <label>
-                       <input type="radio" name="Rad15" id="radio15A" value="Ridge Vents" class="custom-radio" ng-model="Ctrl.T15"/>
-                       Ridge Vents
-                    </label>
-                </div>
-                
-                <div>
-                   <label>
-                       <input type="radio" name="Rad15" id="radio15B" value="Static Vents" class="custom-radio" ng-model="Ctrl.T15"/>
-                       Static Vents
-                    </label>
-                </div>
-                <div>
-                   <label>
-                       <input type="radio" name="Rad15" id="radio15C" value="Turbine Vents" class="custom-radio" ng-model="Ctrl.T15"/>
-                       Turbine Vents
-                    </label>
-                </div>
-                <div>
-                   <label>
-                       <input type="radio" name="Rad15" id="radio15D" value="Power Vents" class="custom-radio" ng-model="Ctrl.T15"/>
-                       Power Vents
-                    </label>
-                </div>
-                <div>
-                   <label>
-                       <input type="radio" name="Rad15" id="radio15E" value="Solar Vents" class="custom-radio" ng-model="Ctrl.T15"/>
-                       Solar Vents
-                    </label>
-                </div>
+            <div>
+                <select id="selectVents" ng-model="Ctrl.T15" ng-options="c.label for c in Ctrl.S.ventOptions"></select>
             </div>
+           
             <div class="page-nav">
                 <div class="page-nav-left">
                     <i ng-click="Ctrl.goPrevious('14')" class="fa fa-arrow-circle-left fa-3x">

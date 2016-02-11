@@ -85,6 +85,23 @@ body{
   display:inline-block;
 }
 
+.block-outline-red{
+  background-color: rgba(231,76,60,0.3);
+  padding:1rem;
+  border:2px solid $tertiary-darker;
+  display:block;
+  margin:.5rem 0;
+}
+
+.block-section-blue{
+  background-color: $clouds-grey;
+  padding:1.5rem 2rem;
+  border:2px solid $silver-grey;
+  display:inline-block;
+}
+
+
+
 
 .hrule{
   border-top: 1px solid $asbestos-grey;

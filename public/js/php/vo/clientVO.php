@@ -1,6 +1,7 @@
 <?php
 class clientVO{
 	var $PRIMARY_ID;
+	var $type;
 	var $manager;
 	var $company;
 	var $name_first;

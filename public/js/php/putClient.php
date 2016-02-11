@@ -3,10 +3,6 @@ ini_set('display_errors', 'On');
 error_reporting(E_ALL | E_STRICT);
 $data = json_decode(file_get_contents("php://input"));
 
-/*define( "DATABASE_USERNAME", "evo-danny");
-define( "DATABASE_PASSWORD", "SaDie9954!");
-define( "DATABASE_NAME", "evo-jobtrack");*/
-
 define( "DATABASE_SERVER", "jobtracker.db.10253438.hostedresource.com");
 define( "DATABASE_USERNAME", "jobtracker");
 define( "DATABASE_PASSWORD", "Sadie9954!");
@@ -14,6 +10,7 @@ define( "DATABASE_NAME", "jobtracker");
 
 $con = mysqli_connect(DATABASE_SERVER, DATABASE_USERNAME, DATABASE_PASSWORD,DATABASE_NAME) or die ('ERROR!!!');
 $manager = mysqli_real_escape_string($con,$data->manager);
+$type = mysqli_real_escape_string($con,$data->type);
 $company = mysqli_real_escape_string($con,$data->company);
 $name_first = mysqli_real_escape_string($con,$data->name_first);
 $name_last = mysqli_real_escape_string($con,$data->name_last);
@@ -25,10 +22,11 @@ $phone_cell = mysqli_real_escape_string($con,$data->phone_cell);
 $phone_bus = mysqli_real_escape_string($con,$data->phone_bus);
 $email = mysqli_real_escape_string($con,$data->email);
 
-$query = "INSERT INTO clients(manager,company,name_first,name_last,street,city,state,zip,phone_cell,phone_bus,email)
+$query = "INSERT INTO clients(manager,company,type,name_first,name_last,street,city,state,zip,phone_cell,phone_bus,email)
 VALUES(
 '" . $manager . "', " .
 "'" . $company . "', " .
+"'" . $type . "', " .
 "'" . $name_first . "', " .
 "'" . $name_last . "', " .
 "'" . $street . "', " .
