@@ -11,16 +11,20 @@ app.controller('NewPropertyCtrl',['$state','$scope','evoDb','SharedSrvc',functio
     ME.T2="";
     ME.T3="";
     ME.T4="";
-    ME.T5="TX";
+    ME.T5="";
     ME.T6="";
-    ME.T7=1;
-    ME.T8="Residential";
-    ME.T9="Pitched";
-    ME.T10="0";
-    ME.T11=1;
+    ME.T7="";
+    ME.T8="";
+    ME.T9="";
+    ME.T10="";
+    ME.T11="";
+    ME.T12="";
+    ME.T13="";
+    ME.T14="";
+    ME.T15="";
    
-    var numFields = "11";
-    var currentFieldNum = "1";
+    var numFields = "15";
+    var currentFieldNum = "0";
     ME.inputField = "T1";
     ME.inputMsg = "Field 1 of " + numFields;
     ME.isError = false;
@@ -147,15 +151,63 @@ app.controller('NewPropertyCtrl',['$state','$scope','evoDb','SharedSrvc',functio
             ME.isError = true;
             ME.inputMsg = "This field cannot be blank.";
         }else{
-            ME.inputField="SUBMIT";
-            ME.inputMsg = "";
+            ME.inputField="T11";
+            ME.inputMsg = "Field 11 of " + numFields;
         }
     };
 
     ME.submitT11=function(){
         ME.inputMsg = "";
         ME.isError = false;
-       if(ME.T10==""){//email
+       if(ME.T11==""){//email
+            ME.isError = true;
+            ME.inputMsg = "This field cannot be blank.";
+        }else{
+            ME.inputField="T12";
+            ME.inputMsg = "Field 12 of " + numFields;
+        }
+    };
+
+    ME.submitT12=function(){
+        ME.inputMsg = "";
+        ME.isError = false;
+       if(ME.T12==""){//email
+            ME.isError = true;
+            ME.inputMsg = "This field cannot be blank.";
+        }else{
+            ME.inputField="T13";
+            ME.inputMsg = "Field 13 of " + numFields;
+        }
+    };
+
+    ME.submitT13=function(){
+        ME.inputMsg = "";
+        ME.isError = false;
+       if(ME.T13==""){//email
+            ME.isError = true;
+            ME.inputMsg = "This field cannot be blank.";
+        }else{
+            ME.inputField="T14";
+            ME.inputMsg = "Field 14 of " + numFields;
+        }
+    };
+
+    ME.submitT14=function(){
+        ME.inputMsg = "";
+        ME.isError = false;
+       if(ME.T14==""){//email
+            ME.isError = true;
+            ME.inputMsg = "This field cannot be blank.";
+        }else{
+            ME.inputField="T15";
+            ME.inputMsg = "Field 15 of " + numFields;
+        }
+    };
+
+    ME.submitT15=function(){
+        ME.inputMsg = "";
+        ME.isError = false;
+       if(ME.T15==""){//email
             ME.isError = true;
             ME.inputMsg = "This field cannot be blank.";
         }else{
@@ -176,10 +228,14 @@ app.controller('NewPropertyCtrl',['$state','$scope','evoDb','SharedSrvc',functio
         dataObj.state = ME.T5;
         dataObj.zip = ME.T6;
         dataObj.levels = ME.T7;
-        dataObj.class = ME.T8;
-        dataObj.roof = ME.T9;
-        dataObj.description = ME.T10;
+        dataObj.roof = ME.T8;
+        dataObj.shingle = ME.T9;
+        dataObj.deck = ME.T10;
         dataObj.layers = ME.T11;
+        dataObj.edge = ME.T12;
+        dataObj.valley = ME.T13;
+        dataObj.valley = ME.T14;
+        dataObj.vents = ME.T15;
         var result = DB.putProperty(dataObj)
         .then(function(result){
              if(typeof result != "boolean"){

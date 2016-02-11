@@ -7,6 +7,10 @@ app.config(function($stateProvider, $urlRouterProvider) {
   	
 	$stateProvider
 		$stateProvider
+		.state('test', {
+			url: "/test",
+			templateUrl:"views/test/test.html"
+		})
 		.state('login', {
 			url: "/login",
 			templateUrl:"views/login/login.html",
@@ -74,6 +78,16 @@ app.config(function($stateProvider, $urlRouterProvider) {
 		.state('addNewClient', {
 			url: "/client-new",
 			templateUrl:"views/clients/client-new.html"
+		})
+
+		.state('addNewClient.organization', {
+			url: "/client-new-org",
+			templateUrl:"views/clients/client-new-org.html"
+		})
+
+		.state('addNewClient.individual', {
+			url: "/client-new-individual",
+			templateUrl:"views/clients/client-new-ind.html"
 		})
 		
 

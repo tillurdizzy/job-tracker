@@ -1,5 +1,5 @@
 'use strict';
-app.controller('NewClientCtrl',['$state','evoDb','SharedSrvc',function ($state,evoDb,SharedSrvc) {
+app.controller('NewClientIndCtrl',['$state','evoDb','SharedSrvc',function ($state,evoDb,SharedSrvc) {
 
 	var DB = evoDb;
 	var ME = this;
@@ -7,21 +7,20 @@ app.controller('NewClientCtrl',['$state','evoDb','SharedSrvc',function ($state,e
     ME.managerName = S.managerName;
     // Form elements
    
-    ME.T1="";//company name
-    ME.T2="";//street
-    ME.T3="";//cilty
-    ME.T4="";//state
-    ME.T5="";//zip
-    ME.T6="";//phone
-    ME.T7="";//first
-    ME.T8="";//last
-    ME.T9="";//cell
-    ME.T10="";//email
+    ME.T1="";//first name
+    ME.T2="";//last name
+    ME.T3="";//cell
+    ME.T4="";//email
+    ME.T5="";//street
+    ME.T6="";//city
+    ME.T7="";//state
+    ME.T8="";//zip
+   
    
     var currentFieldNum = "1";
-    var numFields = "10";
+    var numFields = "8";
     ME.inputField = "T1";
-    ME.inputMsg = "Field 1 of 10";
+    ME.inputMsg = "Field 1 of " + numFields;
     ME.isError = false;
 
     ME.goPrevious = function(num){
@@ -29,11 +28,13 @@ app.controller('NewClientCtrl',['$state','evoDb','SharedSrvc',function ($state,e
         ME.inputField="T" + num;
         ME.inputMsg = "Field " + num +  " of " + numFields;
     }
+
+    
   
     ME.submitT1=function(){
         ME.inputMsg = "";
         ME.isError = false;
-        if(ME.T1==""){//company
+        if(ME.T1==""){//first name
             ME.isError = true;
             ME.inputMsg = "This field cannot be blank.";
         }else{
@@ -45,40 +46,40 @@ app.controller('NewClientCtrl',['$state','evoDb','SharedSrvc',function ($state,e
     ME.submitT2=function(){
         ME.inputMsg = "";
         ME.isError = false;
-        if(ME.T2==""){//street
+        if(ME.T2==""){//last
             ME.isError = true;
             ME.inputMsg = "This field cannot be blank.";
         }else{
             ME.inputField="T3";
-            ME.inputMsg = "Field 3 of " + numFields;;
+            ME.inputMsg = "Field 3 of " + numFields;
         }
     };
 
     ME.submitT3=function(){
         ME.inputMsg = "";
         ME.isError = false;
-        if(ME.T3==""){//city
+        if(ME.T3==""){//cell
             ME.isError = true;
             ME.inputMsg = "This field cannot be blank.";
         }else{
             ME.inputField="T4";
-            ME.inputMsg = "Field 4 of " + numFields;;
+            ME.inputMsg = "Field 4 of " + numFields;
         }
     };
 
     ME.submitT4=function(){
         ME.inputMsg = "";
         ME.isError = false;
-       if(ME.T4==""){//state
+       if(ME.T4==""){//email
             ME.isError = true;
             ME.inputMsg = "This field cannot be blank.";
         }else{
             ME.inputField="T5";
-            ME.inputMsg = "Field 5 of " + numFields;;
+            ME.inputMsg = "Field 5 of " + numFields;
         }
     };
 
-    ME.submitT5=function(){//zip
+    ME.submitT5=function(){//street
         ME.inputMsg = "";
         ME.isError = false;
        if(ME.T5==""){
@@ -86,11 +87,11 @@ app.controller('NewClientCtrl',['$state','evoDb','SharedSrvc',function ($state,e
             ME.inputMsg = "This field cannot be blank.";
         }else{
             ME.inputField="T6";
-            ME.inputMsg = "Field 6 of " + numFields;;
+            ME.inputMsg = "Field 6 of " + numFields;
         }
     };
 
-    ME.submitT6=function(){//phone
+    ME.submitT6=function(){//city
         ME.inputMsg = "";
         ME.isError = false;
        if(ME.T6==""){
@@ -98,50 +99,26 @@ app.controller('NewClientCtrl',['$state','evoDb','SharedSrvc',function ($state,e
             ME.inputMsg = "This field cannot be blank.";
         }else{
             ME.inputField="T7";
-            ME.inputMsg = "Field 7 of 10";
+            ME.inputMsg = "Field 7 of " + numFields;
         }
     };
 
     ME.submitT7=function(){
         ME.inputMsg = "";
         ME.isError = false;
-        if(ME.T7==""){//first
+        if(ME.T7==""){//state
             ME.isError = true;
             ME.inputMsg = "This field cannot be blank.";
         }else{
             ME.inputField="T8";
-            ME.inputMsg = "Field 8 of 10";
+            ME.inputMsg = "Field 8 of " + numFields;
         }
     };
 
     ME.submitT8=function(){
         ME.inputMsg = "";
         ME.isError = false;
-        if(ME.T8==""){//last
-            ME.isError = true;
-            ME.inputMsg = "This field cannot be blank.";
-        }else{
-            ME.inputField="T9";
-            ME.inputMsg = "Field 9 of 10";
-        }
-    };
-
-    ME.submitT9=function(){
-        ME.inputMsg = "";
-        ME.isError = false;
-        if(ME.T9==""){//mobile
-            ME.isError = true;
-            ME.inputMsg = "This field cannot be blank.";
-        }else{
-            ME.inputField="T10";
-            ME.inputMsg = "Field 10 of 10";
-        }
-    };
-
-    ME.submitT10=function(){
-        ME.inputMsg = "";
-        ME.isError = false;
-       if(ME.T10==""){//email
+        if(ME.T8==""){//zip
             ME.isError = true;
             ME.inputMsg = "This field cannot be blank.";
         }else{
@@ -150,21 +127,24 @@ app.controller('NewClientCtrl',['$state','evoDb','SharedSrvc',function ($state,e
         }
     };
 
+   
   
     ME.submitForm = function(){
         ME.isError = false;
         var dataObj = {};
+
         dataObj.manager = S.manager;
-        dataObj.company = ME.T1;
-        dataObj.street = ME.T2;
-        dataObj.city = ME.T3;
-        dataObj.state = ME.T4;
-        dataObj.zip = ME.T5;
-        dataObj.phone_bus = ME.T6;
-         dataObj.name_first = ME.T7;
-        dataObj.name_last = ME.T8;
-        dataObj.phone_cell = ME.T9;
-        dataObj.email = ME.T10;
+        dataObj.client_type = "Individual";
+        dataObj.name_first = ME.T1;
+        dataObj.name_last = ME.T2;
+        dataObj.phone_cell = ME.T3;
+        dataObj.email = ME.T4;
+       
+        dataObj.street = ME.T5;
+        dataObj.city = ME.T6;
+        dataObj.state = ME.T7;
+        dataObj.zip = ME.T8;
+        
         var result = DB.putClient(dataObj)
         .then(function(result){
             if(typeof result != "boolean"){
@@ -193,24 +173,10 @@ app.controller('NewClientCtrl',['$state','evoDb','SharedSrvc',function ($state,e
         ME.T6 = "";
         ME.T7 = "";
         ME.T8 = "";
-        ME.T9 = "";
-        ME.T10 = "";
         ME.isError = false;
-        ME.inputField="INFO";
+        ME.inputField="T1";
     };
 
-    ME.getManagerProperties = function(){
-        var result = DB.getManagerProperties()
-        .then(function(result){
-            if(result != false){
-                // Don't do anything here
-            }else{
-              ME.dataError("NewClientCtrl-getManagerProperties()-1",result); 
-            }
-        },function(error){
-            ME.dataError("NewClientCtrl-getManagerProperties()-2",result);
-        });
-    };
 
     ME.dataError = function(loc,error){
         console.log(loc + " : " + error);
