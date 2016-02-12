@@ -96,8 +96,8 @@ app.controller('ProposalCtrl', ['$state','$scope','evoDb','SharedSrvc','ShingleS
                 }
             };
         };
-        ME.jobMaterials = CALCS.updatePrices(ME.jobInputFields);
-        ME.materialsCost = CALCS.runningTotal;
+        //ME.jobMaterials = CALCS.updatePrices(ME.jobInputFields);
+        //ME.materialsCost = CALCS.runningTotal;
     };
 
 

@@ -9,13 +9,24 @@ define( "DATABASE_PASSWORD", "Sadie9954!");
 define( "DATABASE_NAME", "jobtracker");
 
 $con = mysqli_connect(DATABASE_SERVER, DATABASE_USERNAME, DATABASE_PASSWORD,DATABASE_NAME) or die ('cannot reach database');
-$job_id = mysqli_real_escape_string($con,$data->ID);
-$item_code = mysqli_real_escape_string($con,$data->Code);
-$qty = mysqli_real_escape_string($con,$data->Qty);
+$jobID = mysqli_real_escape_string($con,$data->jobID);
+$TOPRDG = mysqli_real_escape_string($con,$data->TOPRDG);
+$RKERDG = mysqli_real_escape_string($con,$data->RKERDG);
+$SHNGLS = mysqli_real_escape_string($con,$data->SHNGLS);
+$NAILS = mysqli_real_escape_string($con,$data->NAILS);
+$EDGTRM = mysqli_real_escape_string($con,$data->EDGTRM);
+$VALLEY = mysqli_real_escape_string($con,$data->VALLEY);
+$DECKNG = mysqli_real_escape_string($con,$data->DECKNG);
 
-$query = "UPDATE job_items SET 
-qty='".$qty."'
-WHERE item_code='".$item_code."' AND job_id='".$job_id."'";
+$query = "UPDATE material_options SET 
+TOPRDG='".$TOPRDG."',
+RKERDG='".$RKERDG."',
+SHNGLS='".$SHNGLS."',
+NAILS='".$NAILS."',
+EDGTRM='".$EDGTRM."',
+VALLEY='".$VALLEY."',
+DECKNG='".$DECKNG."'
+WHERE jobID='".$jobID."'";
 
 $qry_res = mysqli_query($con,$query);
 

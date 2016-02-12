@@ -9,6 +9,7 @@ app.controller('LoginCtrl',['$scope','$state','evoDb','SharedSrvc','ShingleSrvc'
     $scope.loginSuccess = null;// user/pword match; starts out null, set false if user entry does not match, true if does
     $scope.resultLength = 0;
     $scope.displayname="";
+    $scope.loginObj;
 
     var serverAvailable = true;
     $scope.dataRefreshed = false;
@@ -42,17 +43,27 @@ app.controller('LoginCtrl',['$scope','$state','evoDb','SharedSrvc','ShingleSrvc'
 
             dataObj.name_user = "dsheives";
             dataObj.pin = "9954";
+
             if(serverAvailable == true){
                 var result = DB.queryLogIn(dataObj)
                 .then(function(result){
                     if(result != false){
                         // DB sets Shared Srvc var for login
+                        $scope.loginObj = result[0];
+                        $scope.userType = result.userType;
                         $scope.dataRefreshed = false;// control display of spinning icon
                         $scope.loginSuccess=true;
                         $scope.requestSuccess = true;// this var changes the stage
                         $scope.clearForm();
-                        $scope.displayname = result[0].name_first + " " + result[0].name_last; 
-                        $scope.getManagerJobs();
+                        $scope.displayname = loginObj.name_first + " " + loginObj.name_last;
+                        if(loginObj.userType == "client"){
+
+                        }else if(loginObj.userType == "sales"){
+                            $scope.getManagerJobs();
+                        }else if(loginObj.userType == "admin"){
+                             $scope.getManagerJobs();
+                        }
+                       
                     }else{
                         $scope.loginSuccess = false;
                     }

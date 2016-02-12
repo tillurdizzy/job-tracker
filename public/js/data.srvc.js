@@ -79,7 +79,7 @@ app.service('evoDb',['$http','$q','SharedSrvc',function eventQueries($http,$q,Sh
 	// Called from login page to verify name/password
 	self.queryLogIn = function(dataObj){
 		var deferred = $q.defer();
-		$http({method: 'POST', url: 'js/php/getManager.php',data:dataObj}).
+		$http({method: 'POST', url: 'views/login/http/getUser.php',data:dataObj}).
 		success(function(data, status) {
 			if(typeof data != 'string' && data.length > 0){
 				//console.log(typeof data);

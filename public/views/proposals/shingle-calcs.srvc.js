@@ -4,119 +4,116 @@ app.service('ShingleCalcs', ['$http','$q','ShingleSrvc','SharedSrvc', function (
     var S = SharedSrvc;
     var SH = ShingleSrvc;
     self.ME = "ShingleCalcs: ";
+    var Options = {TOPRDG:"",RKERDG:"",SHNGLS:"",NAILS:"",EDGTRM:"",VALLEY:"",DECKNG:"",};
+   
     var jobInput = [];
     self.jobMaterials = [];
     self.runningTotal = 0;
-    self.roofElements = [{
-            Code: "SHFI",
+
+    // Materials reflects the default options
+    // 
+    self.jobParameters = [{
+            Code: "FIELD",
             Qty: 0,
-            Materials: ["A1", "G1", "H1", "K1"]
+            Materials: ["A1"]
         }, //Field
         {
-            Code: "SHTR",
+            Code: "TOPRDG",
             Qty: 0,
             Materials: ["E1"]
         }, //Top Ridge
         {
-            Code: "SHRR",
+            Code: "RKERDG",
             Qty: 0,
-            Materials: ["D1", "E1"]
-        }, //Ridge Rake
+            Materials: ["E1"]
+        }, //Rake Ridge
         {
-            Code: "SHPR",
+            Code: "PRMITR",
             Qty: 0,
-            Materials: ["F1", "M1", "N1"]
-        }, //Perimeter
+            Materials: ["F1", "M1"]
+        }, //Perimeter: Calculates drip edge
         {
-            Code: "SHLS",
+            Code: "LOWSLP",
             Qty: 0,
             Materials: ["J1", "L1"]
         }, // Low Slope
         {
-            Code: "SHVA",
+            Code: "VALLEY",
             Qty: 0,
-            Materials: ["P1", "R1"]
+            Materials: ["P1"]
         }, //Valley
         {
-            Code: "SHL1",
+            Code: "LEDBF1",
             Qty: 0,
             Materials: ["T1"]
         }, //Lead 1.5
         {
-            Code: "SHL2",
+            Code: "LEDBF2",
             Qty: 0,
             Materials: ["U1"]
         }, //Lead 2
         {
-            Code: "SHL3",
+            Code: "LEDBF3",
             Qty: 0,
             Materials: ["G2"]
         }, //Lead 3
         {
-            Code: "SHL4",
+            Code: "LEDBF4",
             Qty: 0,
             Materials: ["V1"]
         }, //Lead 4
         {
-            Code: "SHV8",
+            Code: "JKVNT8",
             Qty: 0,
             Materials: ["S1"]
         }, //8"Vents
         {
-            Code: "SH8X",
+            Code: "FLHSH8",
             Qty: 0,
             Materials: ["O1"]
         }, //8x8
         {
-            Code: "SHTU",
+            Code: "TURBNS",
             Qty: 0,
             Materials: ["Z1"]
         }, //Turbines
         {
-            Code: "SHPV",
+            Code: "PWRVNT",
             Qty: 0,
             Materials: ["X1"]
         }, //P Vents
         {
-            Code: "SHAH",
+            Code: "AIRHWK",
             Qty: 0,
             Materials: ["Y1"]
         }, //Air Hawks
         {
-            Code: "SHDK",
+            Code: "DECKNG",
             Qty: 0,
-            Materials: ["A2", "B2"]
+            Materials: ["A2"]
         }, //Decking
         {
-            Code: "SHPT",
+            Code: "PAINT",
             Qty: 0,
             Materials: ["F2"]
         }, //Paint
         {
-            Code: "SHCK",
+            Code: "CAULK",
             Qty: 0,
             Materials: ["C2"]
         }, //Caulk
         {
-            Code: "SHCP",
+            Code: "CARPRT",
             Qty: 0,
             Materials: []
         }, //Carport
+        
         {
-            Code: "SHDL",
-            Qty: 0,
-            Materials: ["E2"]
-        }, //Delivery
-        {
-            Code: "SHSA",
+            Code: "SATDSH",
             Qty: 0,
             Materials: ["D2", ""]
-        }, //Satellite
-        {
-            Code: "SH",
-            Qty: 0,
-            Materials: ["", ""]
-        }
+        } //Satellite Dish
+        
     ];
 
     var zeroOutLists = function(){
@@ -125,29 +122,29 @@ app.service('ShingleCalcs', ['$http','$q','ShingleSrvc','SharedSrvc', function (
     		self.jobMaterials[i].Amt = 0;
     	};
 
-    	for (i = 0; i < self.roofElements.length; i++) {
-    		self.roofElements[i].Qty = 0;
+    	for (i = 0; i < self.jobParameters.length; i++) {
+    		self.jobParameters[i].Qty = 0;
     	};
     };
 
     var updateJobInput = function(){
     	for (var x = 0; x < jobInput.length; x++) {
             var inputCode = jobInput[x].Code;
-            for (var i = 0; i < self.roofElements.length; i++) {
-                if (self.roofElements[i].Code == inputCode) {
-                    self.roofElements[i].Qty = jobInput[x].Qty;
+            for (var i = 0; i < self.jobParameters.length; i++) {
+                if (self.jobParameters[i].Code == inputCode) {
+                    self.jobParameters[i].Qty = jobInput[x].Qty;
                     continue;
                 }
             }
         };
     };
-    // roofElements: the items listed on view... Field, Top Ridge, Valey etc...
+    // jobParameters: the items listed on view... Field, Top Ridge, Valey etc...
     var calculateCosts  = function(){
     	self.runningTotal = 0;
-    	 for (var i = 0; i < self.roofElements.length; i++) {
-        	if(self.roofElements[i].Qty != 0){ // User has entered a value
-        		var Q = self.roofElements[i].Qty;
-        		var M = self.roofElements[i].Materials; // List of materials affected by this item
+    	 for (var i = 0; i < self.jobParameters.length; i++) {
+        	if(self.jobParameters[i].Qty != 0){ // User has entered a value
+        		var Q = self.jobParameters[i].Qty;
+        		var M = self.jobParameters[i].Materials; // List of materials affected by this item
         		for (var x = 0; x < M.length; x++) {
 		            var Mcode = M[x];
 		            for (var z = 0; z < self.jobMaterials.length; z++) {
@@ -164,11 +161,22 @@ app.service('ShingleCalcs', ['$http','$q','ShingleSrvc','SharedSrvc', function (
         }
     };
 
+    self.calculateRidge = function(){
+        if(Options.topRidge == "E1"){
+
+        }
+        
+
+    }
+
 
     self.updatePrices = function(jI) {
     	jobInput = jI;
     	zeroOutLists();
         updateJobInput();
+        // Calculate each item
+
+
         calculateCosts();
         return self.jobMaterials;
     };
@@ -193,8 +201,8 @@ app.service('ShingleCalcs', ['$http','$q','ShingleSrvc','SharedSrvc', function (
         return deferred.promise;
     };
     self.resetService = function() {
-        for (var i = 0; i < self.roofElements.length; i++) {
-            self.roofElements[i].Qty = 0;
+        for (var i = 0; i < self.jobParameters.length; i++) {
+            self.jobParameters[i].Qty = 0;
         };
     };
     var initService = function() {
@@ -204,6 +212,9 @@ app.service('ShingleCalcs', ['$http','$q','ShingleSrvc','SharedSrvc', function (
             } else {}
         }, function(error) {});
     }
+
+    
+
     initService();
     return self;
 }]);

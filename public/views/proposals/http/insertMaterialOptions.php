@@ -9,15 +9,19 @@ define( "DATABASE_PASSWORD", "Sadie9954!");
 define( "DATABASE_NAME", "jobtracker");
 
 $con = mysqli_connect(DATABASE_SERVER, DATABASE_USERNAME, DATABASE_PASSWORD,DATABASE_NAME) or die ('ERROR!!!');
-$id = mysqli_real_escape_string($con,$data->ID);
-$code = mysqli_real_escape_string($con,$data->Code);
-$qty = mysqli_real_escape_string($con,$data->Qty);
-
-$query = "INSERT INTO job_items(job_id,item_code,qty)
+$jobID = mysqli_real_escape_string($con,$data->jobID);
+$zero = "0";
+// Use this to initialize all options for new job -- then only use UPDATE afterward
+$query = "INSERT INTO material_options(jobID,TOPRDG,RKERDG,SHNGLS,NAILS,EDGTRM,VALLEY,DECKNG)
 VALUES(
-'" . $id . "', " .
-"'" . $code . "', " .
-"'" . $qty . "')";
+'" . $jobID . "', " .
+"'" . $zero . "', " .
+"'" . $zero . "', " .
+"'" . $zero . "', " .
+"'" . $zero . "', " .
+"'" . $zero . "', " .
+"'" . $zero . "', " .
+"'" . $zero . "')";
 
 $qry_res = mysqli_query($con,$query);
 
