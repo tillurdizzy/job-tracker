@@ -110,6 +110,7 @@ $bottom-margin:10px;
 }
 
 .review-section{
+	margin-top:2rem;
 	padding:.5rem;
 	width:100%;
 	box-sizing: border-box;
@@ -120,7 +121,33 @@ $bottom-margin:10px;
 	div{
 		width:50%;
 	}
+	color:#000000;
+	p{
+		font-size: .9rem;
+		margin:6px 0 0 0;
+	}
+	h4{
+		margin:0;
+		padding:0;
+		font-size: 1.2em;
+		line-height: 1;
+		font-weight: 700;
+		font-family:  'Jaldi', sans-serif;
+	}
+	h3{
+		margin:0;
+		padding:0;
+		font-size: 1.1em;
+		line-height: 1;
+		font-weight: 400;
+		font-family:  'Jaldi', sans-serif;
+	}
 
+	ul{
+		font-size: .9rem;
+		margin:8px 0;
+		padding:0 0 0 20px;
+	}
 }
 
 @media all and ( max-width: 550px ) {

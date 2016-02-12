@@ -123,7 +123,6 @@ app.service('SharedSrvc',['$rootScope',function sharedVars($rootScope){
 	};
 
 
-
 	self.setAllClients = function(c){
 		self.fullClientList = c;	
 	};
@@ -133,7 +132,6 @@ app.service('SharedSrvc',['$rootScope',function sharedVars($rootScope){
 	self.setAllJobs = function(c){
 		self.fullJobsList = c;	
 	};
-
 
 	var returnCompany = function(id){
 		for (var i = 0; i < self.managerClients.length; i++) {
@@ -165,7 +163,6 @@ app.service('SharedSrvc',['$rootScope',function sharedVars($rootScope){
 		$rootScope.$broadcast("data-refreshed");
 	};
 
-
 	// Using angular filter instead
 	var parseJobDates = function(){
 		for (var i = 0; i < self.managerJobs.length; i++) {
@@ -188,7 +185,6 @@ app.service('SharedSrvc',['$rootScope',function sharedVars($rootScope){
 			if(d == "0"){
 				self.managerJobs[i].dateComplete = "";
 			}
-			
 		}
 	};
 
@@ -200,77 +196,75 @@ app.service('SharedSrvc',['$rootScope',function sharedVars($rootScope){
 	};
 
 	self.levelOptions = [
-		{label:"One",id:0},
-		{label:"Two",id:1},
-		{label:"Three",id:2},
-		{label:"Other",id:3}];
+		{label:"One",id:1},
+		{label:"Two",id:2},
+		{label:"Three",id:3},
+		{label:"Other",id:4}];
 
 	self.shingleGradeOptions = [
-		{label:"Basic (Three-Tab, Strip)",id:0},
-		{label:"Dimensional (Architectural, Laminated)",id:1},
-		{label:"Premium (Specialty, Designer)",id:2},
-		{label:"Other",id:3}];
+		{label:"Basic (Three-Tab, Strip)",id:1},
+		{label:"Dimensional (Architectural, Laminated)",id:2},
+		{label:"Premium (Specialty, Designer)",id:3},
+		{label:"Other",id:4}];
 
 	self.roofDeckOptions = [
-		{label:"Plywood",id:0},
-		{label:"Tongue and Groove",id:1},
-		{label:"Low Slope",id:1}];
+		{label:"Plywood",id:1},
+		{label:"Tongue and Groove",id:2},
+		{label:"Low Slope",id:3}];
 
 	self.shingleTypeOptions = [
 		{label:"Composition",id:1},
 		{label:"Asphalt",id:2},
 		{label:"Ceramic",id:3},
-		{label:"Wood",id:3}];
+		{label:"Wood",id:4}];
 
-	self.originalTypeOptions = [
-		{label:"None (Deck)",id:0},
-		{label:"Composition Shingles",id:1},
+	self.coveredLayerOptions = [
+		{label:"None (Deck)",id:1},
+		{label:"Composition Shingles",id:2},
 		{label:"Wood Shingles",id:3},
 		{label:"Other",id:4}];
 
-	self.bottomLayerOptions = [
-		{label:"Plywood Deck",id:0},
-		{label:"Tongue and Groove",id:1},
-		{label:"Wood Shingles",id:2},
-		{label:"Composition Shingles",id:3},
-		{label:"Built up roofing",id:4}];
-
-	self.compositionLayers = [
-		{label:"1",id:1},{label:"2",id:2},{label:"3",id:3},{label:"4",id:4},{label:"5",id:5},
-		{label:"6",id:6},{label:"7",id:7},{label:"8",id:8},{label:"9",id:9},{label:"10",id:10},
-		{label:"11",id:11},{label:"12",id:12}];
+	self.numbersToTwelve = [
+		{label:"One",id:1},{label:"Two",id:2},{label:"Three",id:3},{label:"Four",id:4},{label:"Five",id:5},
+		{label:"Six",id:6},{label:"Seven",id:7},{label:"Eight",id:8},{label:"Nine",id:9},{label:"Ten",id:10},
+		{label:"Eleven",id:11},{label:"Twelve+",id:12}];
 
 	self.numbersToFive = [
-		{label:"1",id:1},{label:"2",id:2},{label:"3",id:3},{label:"4",id:4},{label:"5",id:5}];
+		{label:"One",id:1},{label:"Two",id:2},{label:"Three",id:3},{label:"Four",id:4},{label:"Five",id:5}];
 	
 	self.edgeDetail = [
-		{label:"None",id:0},
-		{label:"Drip Edge",id:1},
-		{label:"Drip Edge with Trim",id:2}];
+		{label:"None",id:1},
+		{label:"Drip Edge",id:2},
+		{label:"Drip Edge with Trim",id:3}];
 
 	self.valleyOptions = [
-		{label:"Shingle-laced",id:0},
-		{label:"Open metal",id:1}];
+		{label:"Shingle-laced",id:1},
+		{label:"Open metal",id:2}];
 
 	self.ridgeCapShingles = [
-		{label:"Standard Three-Tab",id:0},
-		{label:"Hip and Ridge Cap",id:1}];
+		{label:"Standard Three-Tab",id:1},
+		{label:"Hip and Ridge Cap",id:2}];
 
 	self.ventOptions = [
-		{label:"Ridge vents",id:0},
-		{label:"Static vents",id:1},
-		{label:"Turbine vents",id:2},
-		{label:"Power vents",id:3},
-		{label:"Solar vents",id:4}];
+		{label:"Ridge vents",id:1},
+		{label:"Static vents",id:2},
+		{label:"Turbine vents",id:3},
+		{label:"Power vents",id:4},
+		{label:"Solar vents",id:5}];
+
+	self.pitchAverages = [
+		{label:"Low",id:1},
+		{label:"Medium",id:2},
+		{label:"High",id:3}];
 
 	self.roofPenetrations = [
-		{label:"Chimney",id:0},
-		{label:"Pipe Jacks",id:1},
-		{label:"Skylights",id:2},
-		{label:"Joints",id:2},
-		{label:"Drains",id:3},
-		{label:"Scuppers",id:4},
-		{label:"Equipment",id:4}];
+		{label:"Chimney",id:1},
+		{label:"Pipe Jacks",id:2},
+		{label:"Skylights",id:3},
+		{label:"Joints",id:4},
+		{label:"Drains",id:5},
+		{label:"Scuppers",id:6},
+		{label:"Equipment",id:7}];
 	
 
 	

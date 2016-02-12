@@ -30,9 +30,9 @@ gulp.task('jsbundle',function(){
 		'bower_components/jquery/dist/jquery.min.js',
 		'bower_components/angular/angular.min.js',
 		'bower_components/angular-sanitize/angular-sanitize.min.js',
+		'bower_components/ng-underscore/build/ng-underscore.min.js',
 		'bower_components/angular-ui-router/release/angular-ui-router.min.js',
-		'bower_components/angular-smart-table/dist/smart-table.min.js',
-		'bower_components/underscore/underscore-min.js'])
+		'bower_components/angular-smart-table/dist/smart-table.min.js'])
 	.pipe(concat('bundle.js'))
 	.pipe(gulp.dest('public'));
 });

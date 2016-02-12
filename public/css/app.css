@@ -716,10 +716,10 @@ body {
       font-weight: 700;
       line-height: 1; }
   .page .section-header {
-    margin-top: 1rem;
+    margin: 1rem 0 .5rem 0;
     height: 1.7rem;
-    background-color: #34495E;
-    color: #F1C40F; }
+    background-color: #ECF0F1;
+    color: #7F8C8D; }
     .page .section-header h2 {
       font-family: 'Open Sans', sans-serif;
       font-size: 1rem;
@@ -847,7 +847,7 @@ body {
   justify-content: space-between; }
 
 textarea {
-  font-size: 20px;
+  font-size: 12;
   line-height: 24px;
   padding: 5px 11px; }
 
@@ -1631,15 +1631,38 @@ table {
     margin-bottom: 4px; }
 
 .review-section {
+  margin-top: 2rem;
   padding: .5rem;
   width: 100%;
   box-sizing: border-box;
   background-color: #ECF0F1;
   border: 2px solid #BDC3C7;
   display: block;
-  display: flex; }
+  display: flex;
+  color: #000000; }
   .review-section div {
     width: 50%; }
+  .review-section p {
+    font-size: .9rem;
+    margin: 6px 0 0 0; }
+  .review-section h4 {
+    margin: 0;
+    padding: 0;
+    font-size: 1.2em;
+    line-height: 1;
+    font-weight: 700;
+    font-family: 'Jaldi', sans-serif; }
+  .review-section h3 {
+    margin: 0;
+    padding: 0;
+    font-size: 1.1em;
+    line-height: 1;
+    font-weight: 400;
+    font-family: 'Jaldi', sans-serif; }
+  .review-section ul {
+    font-size: .9rem;
+    margin: 8px 0;
+    padding: 0 0 0 20px; }
 
 @media all and (max-width: 550px) {
   .mobile-input {

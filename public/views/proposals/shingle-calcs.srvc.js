@@ -15,7 +15,7 @@ app.service('ShingleCalcs', ['$http','$q','ShingleSrvc','SharedSrvc', function (
         {
             Code: "SHTR",
             Qty: 0,
-            Materials: ["C1", "E1", "W1"]
+            Materials: ["E1"]
         }, //Top Ridge
         {
             Code: "SHRR",
@@ -141,18 +141,18 @@ app.service('ShingleCalcs', ['$http','$q','ShingleSrvc','SharedSrvc', function (
             }
         };
     };
-
+    // roofElements: the items listed on view... Field, Top Ridge, Valey etc...
     var calculateCosts  = function(){
     	self.runningTotal = 0;
     	 for (var i = 0; i < self.roofElements.length; i++) {
-        	if(self.roofElements[i].Qty != 0){
+        	if(self.roofElements[i].Qty != 0){ // User has entered a value
         		var Q = self.roofElements[i].Qty;
-        		var M = self.roofElements[i].Materials;
+        		var M = self.roofElements[i].Materials; // List of materials affected by this item
         		for (var x = 0; x < M.length; x++) {
 		            var Mcode = M[x];
 		            for (var z = 0; z < self.jobMaterials.length; z++) {
-		                if (self.jobMaterials[z].Code == Mcode) {
-		                    var Amt = Math.ceil( Q / self.jobMaterials[z].Usage);
+		                if (self.jobMaterials[z].Code == Mcode) { // When match is found, 
+		                    var Amt = Math.ceil( Q / self.jobMaterials[z].Usage); // 
 		                    var Total = Math.round(Amt * self.jobMaterials[z].Price * 100) / 100;
 		                   	self.jobMaterials[z].Amt += Amt;
 		                    self.jobMaterials[z].Total += Total;

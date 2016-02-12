@@ -95,11 +95,7 @@ app.controller('NewJobCtrl',['$scope','$state','evoDb','SharedSrvc',function ($s
     };
 
      Me.goProposal =  function(){
-        if(Me.S2.roof == "Pitched"){
-            $state.transitionTo("proposalNewPitched");
-        }else{
-            $state.transitionTo("proposalNewFlat");
-        }
+        $state.transitionTo("proposal");
     };
 
     $scope.$watch('$viewContentLoaded', function() {

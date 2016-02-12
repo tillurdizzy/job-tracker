@@ -1,34 +1,34 @@
 'use strict';
-app.controller('NewPropertyIndCtrl',['$state','$scope','evoDb','SharedSrvc',function ($state,$scope,evoDb,SharedSrvc) {
+app.controller('NewPropertyIndCtrl',['$state','$scope','evoDb','SharedSrvc','underscore',function ($state,$scope,evoDb,SharedSrvc,underscore) {
 
     var DB = evoDb;
     var ME = this;
-    var S = SharedSrvc;
-    ME.managerName = S.managerName;
-    ME.clientList = S.managerClients;
+    ME.S = SharedSrvc;
+    ME.managerName = ME.S.managerName;
+    ME.selectedClientObj = ME.S.selectedClientObj;
 
-    ME.propertyName="";
-    ME.streetAddress="";
-    ME.propertyCity="";
-    ME.propertyState="";
-    ME.propertyZip="";
-    ME.numLevels="";
-    ME.shingleGrade="";
-    ME.roofDeck="";
-    ME.coveredLayer="";
-    ME.layersCovering="";
-    ME.edgeDetail="";
-    ME.valleyDetail="";
-    ME.ridgeCap="";
-    ME.roofVents="";
-    ME.specialFlashing="";
+    ME.clientName = ME.selectedClientObj.name_first + " " + ME.selectedClientObj.name_last;
+    ME.propertyName = ME.selectedClientObj.name_last + " Residence";
+    ME.streetAddress = ME.selectedClientObj.street;
+    ME.propertyCity=ME.selectedClientObj.city;
+    ME.propertyState=ME.selectedClientObj.state;
+    ME.propertyZip=ME.selectedClientObj.zip;
+    ME.numLevels=ME.S.levelOptions[0];
+    ME.shingleGrade=ME.S.shingleGradeOptions[0];;
+    ME.roofDeck=ME.S.roofDeckOptions[0];
+    ME.coveredLayer=ME.S.coveredLayerOptions[0];
+    ME.layersCovering=ME.S.numbersToFive[0];
+    ME.edgeDetail=ME.S.edgeDetail[0];
+    ME.valleyDetail=ME.S.valleyOptions[0];
+    ME.ridgeCap=ME.S.ridgeCapShingles[0];
+    ME.roofVents=ME.S.ventOptions[0];
+    ME.pitchAvg = ME.S.pitchAverages[0];
 
     ME.formFields = ['','propertyName','streetAddress','propertyCity','propertyState','propertyZip',
         'numLevels','shingleGrade','roofDeck','coveredLayer','layersCovering','edgeDetail',
-        'valleyDetail','ridgeCap','roofVents','specialFlashing'];
+        'valleyDetail','ridgeCap','roofVents','SUBMIT'];
 
-   
-    var numFields = ME.formFields.length - 1;
+    var numFields = ME.formFields.length-2;
     ME.inputField = ME.formFields[1];
     ME.inputMsg = "Field 1 of " + numFields;
     ME.isError = false;
@@ -36,26 +36,29 @@ app.controller('NewPropertyIndCtrl',['$state','$scope','evoDb','SharedSrvc',func
     ME.goPrevious = function(_from){
         var currentField = returnNdx(_from);
         var goToFieldNum = currentField - 1;
-        ME.inputField=ME.formFields[goToFieldNum]
-        ME.inputMsg = "Field " + goToFieldNum +  " of " + numFields;
+        if(goToFieldNum == 0){
+            $state.transitionTo("addNewProperty");
+        }else{
+            ME.inputField=ME.formFields[goToFieldNum]
+            ME.inputMsg = "Field " + goToFieldNum +  " of " + numFields;
+        };
     };
 
     ME.goNext = function(_from){
         var currentField = returnNdx(_from);
         var goToFieldNum = currentField + 1;
-        if(goToFieldNum < numFields){
-            ME.inputField=ME.formFields[goToFieldNum]
-            ME.inputMsg = "Field " + goToFieldNum +  " of " + numFields;
-        }else{
-
+        ME.inputField=ME.formFields[goToFieldNum];
+        if(ME.inputField == "SUBMIT"){
+             ME.inputMsg = "";
         }
+       
     };
 
     var returnNdx = function(item){
-        return _.indexof(ME.formFields,item);
+        console.log("Going to "  + underscore.indexOf(ME.formFields,item));
+        return underscore.indexOf(ME.formFields,item);
     }
 
-    
     ME.submit_propertyName=function(){
         ME.inputMsg = "";
         ME.isError = false;
@@ -133,8 +136,6 @@ app.controller('NewPropertyIndCtrl',['$state','$scope','evoDb','SharedSrvc',func
         };
     };
 
-   
-
     ME.submit_roofDeck=function(){
         ME.inputMsg = "";
         ME.isError = false;
@@ -179,7 +180,6 @@ app.controller('NewPropertyIndCtrl',['$state','$scope','evoDb','SharedSrvc',func
         };
     };
 
-   
 
     ME.submit_valleyDetail=function(){
         ME.inputMsg = "";
@@ -229,23 +229,23 @@ app.controller('NewPropertyIndCtrl',['$state','$scope','evoDb','SharedSrvc',func
     ME.submitForm = function(){
         ME.isError = false;
         var dataObj = {};
-        dataObj.manager = S.manager;
-        dataObj.client = ME.T1;
+        dataObj.manager = ME.S.managerID;
+        dataObj.client = ME.selectedClientObj.PRIMARY_ID;
         dataObj.name = ME.propertyName;
         dataObj.street = ME.streetAddress;
         dataObj.city = ME.propertyCity;
         dataObj.state = ME.propertyState;
         dataObj.zip = ME.propertyZip;
-        dataObj.levels = ME.numLevels;
-        dataObj.underlayer = ME.coveredLayer;
-        dataObj.shingle = ME.shingleGrade;
-        dataObj.deck = ME.roofDeck;
-        dataObj.layers = ME.layersCovering;
-        dataObj.edge = ME.edgeDetail;
-        dataObj.valley = ME.valleyDetail;
-        dataObj.ridge = ME.ridgeCap;
-        dataObj.vents = ME.roofVents;
-        dataObj.flashin = ME.specialFlashing;
+        dataObj.numLevels = ME.numLevels.id;
+        dataObj.coveredLayer = ME.coveredLayer.id;
+        dataObj.shingleGrade = ME.shingleGrade.id;
+        dataObj.roofDeck = ME.roofDeck.id;
+        dataObj.layersCovering = ME.layersCovering.id;
+        dataObj.edgeDetail = ME.edgeDetail.id;
+        dataObj.valleyDetail = ME.valleyDetail.id;
+        dataObj.ridgeCap = ME.ridgeCap.id;
+        dataObj.roofVents = ME.roofVents.id;
+       
         var result = DB.putProperty(dataObj)
         .then(function(result){
              if(typeof result != "boolean"){
@@ -265,19 +265,7 @@ app.controller('NewPropertyIndCtrl',['$state','$scope','evoDb','SharedSrvc',func
     };
 
     ME.clearForm = function(){
-        ME.T1=ME.clientList[0];
-        ME.T2="";
-        ME.T3="";
-        ME.T4="Houston";
-        ME.T5="TX";
-        ME.T6="";
-        ME.T7="1";
-        ME.T8="Commercial";
-        ME.T9="Flat";
-        ME.T10="0";
-        ME.T11="1";
-        ME.isError = false;
-        ME.inputField="T1";
+       
     };
 
     ME.goNewClient = function(){
@@ -289,12 +277,11 @@ app.controller('NewPropertyIndCtrl',['$state','$scope','evoDb','SharedSrvc',func
     }
 
     $scope.$watch('$viewContentLoaded', function() {
-       var loggedIn = S.loggedIn;
+       var loggedIn = ME.S.loggedIn;
        if(!loggedIn){
             $state.transitionTo('login');
        }else{
-        // Refresh the Client list every time we come to this page
-            DB.getManagerClients();
+        
        }
     });
 

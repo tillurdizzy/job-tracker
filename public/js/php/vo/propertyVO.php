@@ -8,11 +8,15 @@ class propertyVO{
 	var $city;
 	var $state;
 	var $zip;
-	var $levels;//stories
-	var $style;// style of existing shingle
-	var $deck;// deck material - plywood etc.
-	var $roof;
-	var $assembly;//ex: Composition over plywood deck
-	var $layers;
+	var $numLevels;//stories
+	var $shingleGrade;// style of existing shingle
+	var $roofDeck;// deck material - plywood etc.
+	var $coveredLayer;// previous roof covering
+	var $layersCovering;//number of previous coverings
+	var $edgeDetail;
+	var $valleyDetail;
+	var $ridgeCap;
+	var $roofVents;
+	var $pitchAvg;
 }
 ?>

@@ -1,5 +1,5 @@
 'use strict';
-var app = angular.module('MyApp', ['ui.router','ngSanitize']);
+var app = angular.module('MyApp', ['ui.router','ngSanitize','ngUnderscore']);
 
 app.config(function($stateProvider, $urlRouterProvider) {
  	
@@ -90,7 +90,6 @@ app.config(function($stateProvider, $urlRouterProvider) {
 			templateUrl:"views/clients/client-new-ind.html"
 		})
 		
-
 		.state('properties', {
 			url: "/properties",
 			templateUrl:"views/properties/properties.html"
@@ -114,17 +113,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
 
 		.state('proposal', {
 			url: "/proposal",
-			templateUrl:"views/jobs/proposals/proposal.html"
-		})
-
-		.state('proposal.pitched', {
-			url: "/pitched",
-			templateUrl:"views/jobs/proposals/proposal-new-pitched.html"
-		})
-
-		.state('proposalNewFlat', {
-			url: "/flat",
-			templateUrl:"views/jobs/proposals/proposal-new-flat.html"
+			templateUrl:"views/proposals/proposal.html"
 		})
 
 		.state('reports', {
@@ -135,11 +124,5 @@ app.config(function($stateProvider, $urlRouterProvider) {
 		
 		
 });	
-
-/*app.run(function($rootScope) {
-    $rootScope.$on('$viewContentLoaded', function () {
-        $(document).foundation();
-    });
-});*/
 
 

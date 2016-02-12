@@ -6,10 +6,6 @@ define( "DATABASE_SERVER", "jobtracker.db.10253438.hostedresource.com");
 define( "DATABASE_USERNAME", "jobtracker");
 define( "DATABASE_PASSWORD", "Sadie9954!");
 define( "DATABASE_NAME", "jobtracker");
-/*define( "DATABASE_USERNAME", "evo-danny");
-define( "DATABASE_PASSWORD", "SaDie9954!");
-define( "DATABASE_NAME", "evo-jobtrack");*/
-
 
 $con = mysqli_connect(DATABASE_SERVER, DATABASE_USERNAME, DATABASE_PASSWORD,DATABASE_NAME) or die ('ERROR!!!');
 $manager = mysqli_real_escape_string($con,$data->manager);
@@ -19,8 +15,20 @@ $street = mysqli_real_escape_string($con,$data->street);
 $city = mysqli_real_escape_string($con,$data->city);
 $state = mysqli_real_escape_string($con,$data->state);
 $zip = mysqli_real_escape_string($con,$data->zip);
+$numLevels = mysqli_real_escape_string($con,$data->numLevels);
+$shingleGrade = mysqli_real_escape_string($con,$data->shingleGrade);
+$roofDeck = mysqli_real_escape_string($con,$data->roofDeck);
+$coveredLayer = mysqli_real_escape_string($con,$data->coveredLayer);
+$layersCovering = mysqli_real_escape_string($con,$data->layersCovering);
+$edgeDetail = mysqli_real_escape_string($con,$data->edgeDetail);
+$valleyDetail = mysqli_real_escape_string($con,$data->valleyDetail);
+$ridgeCap = mysqli_real_escape_string($con,$data->ridgeCap);
+$roofVents = mysqli_real_escape_string($con,$data->roofVents);
+$pitchAvg = mysqli_real_escape_string($con,$data->pitchAvg);
 
-$query = "INSERT INTO properties(manager,client,name,street,city,state,zip)
+$query = "INSERT INTO properties(manager,client,name,street,city,state,zip,
+numLevels,shingleGrade,roofDeck,coveredLayer,layersCovering,edgeDetail,valleyDetail,
+ridgeCap,roofVents,pitchAvg)
 VALUES(
 '" . $manager . "', " .
 "'" . $client . "', " .
@@ -28,7 +36,17 @@ VALUES(
 "'" . $street . "', " .
 "'" . $city . "', " .
 "'" . $state . "', " .
-"'" . $zip . "')";
+"'" . $zip . "', " .
+"'" . $numLevels . "', " .
+"'" . $shingleGrade . "', " .
+"'" . $roofDeck . "', " .
+"'" . $coveredLayer . "', " .
+"'" . $layersCovering . "', " .
+"'" . $edgeDetail . "', " .
+"'" . $valleyDetail . "', " .
+"'" . $ridgeCap . "', " .
+"'" . $roofVents . "', " .
+"'" . $pitchAvg . "')";
 $qry_res = mysqli_query($con,$query);
 if ($qry_res) {
 	$last_id = mysqli_insert_id($con);

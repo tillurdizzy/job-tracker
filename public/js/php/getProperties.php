@@ -23,10 +23,16 @@ while ($row = mysqli_fetch_object($result)) {
 	$oneVO->city = $row->city;
 	$oneVO->state = $row->state;
 	$oneVO->zip = $row->zip;
-	$oneVO->class = $row->class;
-	$oneVO->roof = $row->roof;
-	$oneVO->description = $row->description;
-	$oneVO->layers = $row->layers;
+	$oneVO->numLevels = $row->numLevels;
+	$oneVO->shingleGrade = $row->shingleGrade;
+	$oneVO->roofDeck = $row->roofDeck;
+	$oneVO->coveredLayer = $row->coveredLayer;
+	$oneVO->layersCovering = $row->layersCovering;
+	$oneVO->edgeDetail = $row->edgeDetail;
+	$oneVO->valleyDetail = $row->valleyDetail;
+	$oneVO->ridgeCap = $row->ridgeCap;
+	$oneVO->roofVents = $row->roofVents;
+	$oneVO->pitchAvg = $row->pitchAvg;
 	
 	array_push( $resultValueObjects, $oneVO );
 }

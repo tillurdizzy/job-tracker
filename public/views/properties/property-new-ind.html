@@ -1,8 +1,9 @@
 <div ng-controller="NewPropertyIndCtrl as Ctrl" class="page">
 
     <div class="ez-form-item" ng-show="Ctrl.inputField == 'propertyName'">
-        <h3>Property or Building Name</h3>
-        <input name="propertyName" type="text" ng-model="Ctrl.propertyName" placeholder="Name" />
+        <h2>Property</h2>
+        <h3>Building Name or Reference</h3>
+        <input name="propertyName" type="text" ng-model="Ctrl.propertyName" placeholder="Smith Residence" />
         <div class="page-nav">
             <div class="page-nav-left">
                 <i ng-click="Ctrl.goPrevious('propertyName')" class="fa fa-arrow-circle-left fa-3x"></i>
@@ -17,6 +18,7 @@
     </div>
 
     <div class="ez-form-item" ng-show="Ctrl.inputField=='streetAddress'">
+        <h2>Property</h2>
         <h3>Street Address</h3>
         <input type="text" ng-model="Ctrl.streetAddress" />
         <div class="page-nav">
@@ -34,6 +36,7 @@
 
 
     <div class="ez-form-item" ng-show="Ctrl.inputField == 'propertyCity'">
+        <h2>Property</h2>
         <h3>City</h3>
         <input type="text" ng-model="Ctrl.propertyCity" />
         <div class="page-nav">
@@ -51,6 +54,7 @@
 
 
     <div class="ez-form-item" ng-show="Ctrl.inputField == 'propertyState'">
+        <h2>Property</h2>
         <h3>State</h3>
         <input type="text" ng-model="Ctrl.propertyState" />
         <div class="page-nav">
@@ -66,6 +70,7 @@
         </div>
     </div>
     <div class="ez-form-item" ng-show="Ctrl.inputField == 'propertyZip'">
+        <h2>Property</h2>
         <h3>Zip</h3>
         <input type="text" ng-model="Ctrl.propertyZip" />
         <div class="page-nav">
@@ -81,7 +86,8 @@
         </div>
     </div>
     <div class="ez-form-item" ng-show="Ctrl.inputField == 'numLevels'">
-        <h3>Levels (stories)</h3>
+        <h2>Property</h2>
+        <h3>Levels (number of stories)</h3>
         <div class="dropDownSelector">
             <select ng-model="Ctrl.numLevels" ng-options="c.label for c in Ctrl.S.levelOptions"></select>
         </div>
@@ -137,11 +143,10 @@
 
     <div class="ez-form-item" ng-show="Ctrl.inputField == 'coveredLayer'">
         <h2>Existing Roof Assembly</h2>
-        <h3>Covered Layer</h3>
-        <p>Has this roof be recovered previously?  What is the layer below the surface?</p>
+        <h3>Under-layer (Previous roofing installation)</h3>
        
         <div class="dropDownSelector">
-            <select ng-model="Ctrl.coveredLayer" ng-options="c.label for c in Ctrl.S.originalTypeOptions"></select>
+            <select ng-model="Ctrl.coveredLayer" ng-options="c.label for c in Ctrl.S.coveredLayerOptions"></select>
         </div>
        
         <div class="page-nav">
@@ -161,7 +166,7 @@
         <h2>Existing Roof Assembly</h2>
         <h3>Number of layers of existing roof covering:</h3>
         <div class="dropDownSelector">
-            <select ng-model="Ctrl.shingleLayerTop" ng-options="c.label for c in Ctrl.S.numbersToFive"></select>
+            <select ng-model="Ctrl.layersCovering" ng-options="c.label for c in Ctrl.S.numbersToFive"></select>
         </div>
         <div class="page-nav">
             <div class="page-nav-left">
@@ -253,7 +258,22 @@
         <h2>Existing Roof Assembly</h2>
         <h3>Special Flashing Requirements</h3>
         <p>Check all that apply</p>
-        <div>
+        <div >
+            <div>
+                <label><input type="checkbox" ng-model="specialFlashing.chimney">Chimney</label>
+                    <br/>
+                <label><input type="checkbox" ng-model="specialFlashing.pipes">Pipe Jacks</label>
+                   <br/>
+                <label><input type="checkbox" ng-model="specialFlashing.skylights">Skylights</label>
+            </div>
+            <div>
+                <label><input type="checkbox" ng-model="specialFlashing.joints">Joints</label>
+                    <br/>
+                <label><input type="checkbox" ng-model="specialFlashing.scuppers">Scuppers</label>
+                   <br/>
+                <label><input type="checkbox" ng-model="specialFlashing.equipment">Equipment</label>
+            </div>
+
         </div>
         <div class="page-nav">
             <div class="page-nav-left">
@@ -283,37 +303,38 @@
     </div>
     <div class="ez-form-item" ng-show="Ctrl.inputField == 'SUCCESS'">
         <h3>Success!</h3>
-        <p>{{Ctrl.T3}} has been added as a property for {{Ctrl.S.company}}.</p>
+        <p>{{Ctrl.propertyName}} has been added as a property for {{Ctrl.clientName}}.</p>
+        <a ui-sref="addNewJob" class="button">Create New Job</a>
     </div>
     <div class="ez-form-item" ng-show="Ctrl.inputField == 'ERROR'">
         <h3>Oops!  An error occured saving the data.</h3>
         <p>Try again later or click below to reset and try again now.</p>
         <button type="button" ng-click="Ctrl.clearForm()">Reset</button>
     </div>
-</div>
-<div class="ez-form">
-    <div id="liveReview" class="review-section">
-        <div class="text-block-display">
-            <h4>Property:</h4>
-            <h3>Owner: {{Ctrl.S.company}}</h3>
+
+    <div class="review-section">
+        <div>
+            <h4 style="margin-bottom:.5rem;">Property:</h4>
+            <h3>Owner: {{Ctrl.clientName}}</h3>
             <h3>Name: {{Ctrl.propertyName}}</h3>
             <h3>Street: {{Ctrl.streetAddress}}</h3>
             <h3>City: {{Ctrl.propertyCity}}</h3>
             <h3>State: {{Ctrl.propertyState}}</h3>
             <h3>Zip: {{Ctrl.propertyZip}}</h3>
         </div>
-        <div class="text-block-display" style="margin-left:3rem;">
-            <h4>Existing Conditions:</h4>
-            <h3>Levels: {{Ctrl.numLevels}}</h3>
-            <h3>Shingle Grade: {{Ctrl.shingleGrade}}</h3>
-            <h3>Decking: {{Ctrl.roofDeck}}</h3>
-            <h3>Under Layer: {{Ctrl.coveredLayer}}</h3>
-            <h3>Layers: {{Ctrl.layersCovering}}</h3>
-            <h3>Edge Detail: {{Ctrl.edgeDetail}}</h3>
-            <h3>Valley Detail: {{Ctrl.valleyDetail}}</h3>
-            <h3>Ridge Cap: {{Ctrl.ridgeCap}}</h3>
-            <h3>Ventilation: {{Ctrl.roofVents}}</h3>
+        <div style="margin-left:3rem;">
+            <h4 style="margin-bottom:.5rem;">Existing Conditions:</h4>
+            <h3>Levels: {{Ctrl.numLevels.label}}</h3>
+            <h3>Shingle Grade: {{Ctrl.shingleGrade.label}}</h3>
+            <h3>Decking: {{Ctrl.roofDeck.label}}</h3>
+            <h3>Underlayer: {{Ctrl.coveredLayer.label}}</h3>
+            <h3>Layers: {{Ctrl.layersCovering.label}}</h3>
+            <h3>Edge Detail: {{Ctrl.edgeDetail.label}}</h3>
+            <h3>Valley Detail: {{Ctrl.valleyDetail.label}}</h3>
+            <h3>Ridge Cap: {{Ctrl.ridgeCap.label}}</h3>
+            <h3>Ventilation: {{Ctrl.roofVents.label}}</h3>
         </div>
     </div>
+   
 </div>
-</div>
+
