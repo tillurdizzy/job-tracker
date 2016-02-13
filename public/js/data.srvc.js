@@ -82,7 +82,6 @@ app.service('evoDb',['$http','$q','SharedSrvc',function eventQueries($http,$q,Sh
 		$http({method: 'POST', url: 'views/login/http/getUser.php',data:dataObj}).
 		success(function(data, status) {
 			if(typeof data != 'string' && data.length > 0){
-				//console.log(typeof data);
 				self.lastResult = data;
      			self.managerID = data[0].PRIMARY_ID;
      			self.managerName = data[0].name_first + " " + data[0].name_last;
@@ -102,7 +101,6 @@ app.service('evoDb',['$http','$q','SharedSrvc',function eventQueries($http,$q,Sh
 	};
 
 	
-
 	self.getAllClients = function(){
 		var deferred = $q.defer();
 		$http({method: 'POST', url: 'js/php/getClients.php'}).

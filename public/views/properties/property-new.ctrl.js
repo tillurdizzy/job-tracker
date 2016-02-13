@@ -9,19 +9,16 @@ app.controller('NewPropertyViewCtrl',['$scope','$state','SharedSrvc','evoDb',fun
 
     ME.submitClient=function(){
         S.selectedClientObj =  ME.selectedClient;
-        if(ME.selectedClient.type=="Individual"){
-            
+        if(ME.selectedClient.type=="Individual"){  
             $state.transitionTo('addNewProperty.individual');
         }else{
             $state.transitionTo('addNewProperty.organization');
         };
     };
 
-
     ME.goNewClient = function(){
         $state.transitionTo("addNewClient");
     };
-
 
     $scope.$watch('$viewContentLoaded', function() {
         var loggedIn = S.loggedIn;

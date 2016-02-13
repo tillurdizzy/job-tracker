@@ -5,14 +5,12 @@
     <div class="ez-form">
         <div class="ez-form-item" ng-show="Ctrl.inputField=='INFO'">
             <add-space margintop="10"></add-space>
-            
                 <div class="text-block-display">
                     <h4>What is a Job?</h4>
                     <p>A job simply consists of one of your <a ui-sref="clients"><span class="bold">Clients</span></a> matched with one your <a ui-sref="properties"><span class="bold">Properties.</span></a></p>
                     <p>Before creating a new <span class="bold">Job</span>, you should already have the <span class="bold">Client</span> and the <span class="bold">Property</span> created.</p>
                     <add-space margintop="12" marginbottom="0"></add-space> 
                 </div>
-           
             <div class="flex-row-start">
                 <div>
                      <button type="button" ng-click="Ctrl.goNewClient()">New Client</button>
@@ -31,7 +29,7 @@
                     <h3>Select the Client for this Job</h3>
                 </div>
             </div>
-            <select id="selectClient" ng-model="Ctrl.S1" ng-options="c.company for c in Ctrl.clientList" ng-change="Ctrl.filterProperties()">
+            <select ng-model="Ctrl.S1" ng-options="c.displayName for c in Ctrl.clientList" ng-change="Ctrl.filterProperties()">
             </select>
             <div class="page-nav">
                 <div class="page-nav-left">
@@ -48,8 +46,7 @@
         </div>
         <div class="ez-form-item" ng-show="Ctrl.inputField=='S2'">
             <div class="input-label">
-                <div>
-                    <h3>Select the Property for this Job</h3></div>
+                <div><h3>Select the Property for this Job</h3></div>
             </div>
             <select id="selectProperty" ng-model="Ctrl.S2" ng-options="c.name for c in Ctrl.propertyOptions">
             </select>
@@ -70,7 +67,7 @@
             <h3>Review and Submit</h3>
             <div class="text-block-display">
                 <h4>Client:</h4>
-                <h3>{{Ctrl.S1.company}}</h3>
+                <h3>{{Ctrl.S1.displayName}}</h3>
                 <h4>Property:</h4>
                 <h3>{{Ctrl.S2.name}}</h3>
                 <h4>Status:</h4>
@@ -88,7 +85,7 @@
         </div>
         <div class="ez-form-item" ng-show="Ctrl.inputField == 'SUCCESS'">
             <h3>Success!</h3>
-            <p>{{Ctrl.S2.name}} has been added as a job prospect for {{Ctrl.S1.company}}.</p>
+            <p><span class="bold">{{Ctrl.S2.name}}</span> has been added as a job prospect for <span class="bold">{{Ctrl.S1.displayName}}</span>.</p>
             <button type="button" ng-click="Ctrl.goProposal()">Create Proposal</button>
         </div>
         <div class="ez-form-item" ng-show="Ctrl.inputField == 'ERROR'">

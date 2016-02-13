@@ -6,5 +6,6 @@ class userVO{
 	var $name_user;
 	var $pin;
 	var $userType;
+	var $jobID;
 }
 ?>

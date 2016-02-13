@@ -33,6 +33,14 @@ app.controller('NewClientIndCtrl',['$state','evoDb','SharedSrvc',function ($stat
         $state.transitionTo("addNewClient");
     }
 
+    ME.goAddProperty=  function(){
+        $state.transitionTo("addNewProperty");
+    }
+
+    ME.goNewJob = function(){
+        
+    }
+
     
   
     ME.submitT1=function(){
@@ -138,9 +146,10 @@ app.controller('NewClientIndCtrl',['$state','evoDb','SharedSrvc',function ($stat
         var dataObj = {};
 
         dataObj.manager = S.manager;
-        dataObj.client_type = "Individual";
+        dataObj.type = "Individual";
         dataObj.name_first = ME.T1;
         dataObj.name_last = ME.T2;
+        dataObj.displayName = ME.T1 + " " + ME.T2;
         dataObj.phone_cell = ME.T3;
         dataObj.email = ME.T4;
        

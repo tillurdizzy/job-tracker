@@ -11,6 +11,7 @@ app.controller('ClientsCtrl',['$scope','$state','evoDb','SharedSrvc',function ($
 	// data vars
 	ME.clients = S.managerClients;
 	ME.selectedClientObj = {};
+  ME.clientType = ME.selectedClientObj.type;
 
 	ME.showDetails = function(ndxStr){
 		var ndx = Number(ndxStr);
@@ -29,6 +30,14 @@ app.controller('ClientsCtrl',['$scope','$state','evoDb','SharedSrvc',function ($
 	ME.refreshList = function(){
 		ME.getManagerJobs();
 	};
+
+	ME.goJobs = function(){
+      $state.transitionTo("jobs");
+    };
+
+  ME.goProperties = function(){
+      $state.transitionTo("properties");
+  };
 
 	// Triggers all 3 data queries (Clients, Properties, Jobs)
 	ME.getManagerJobs = function(){

@@ -3,19 +3,6 @@ ini_set('display_errors', 'On');
 error_reporting(E_ALL | E_STRICT);
 $data = json_decode(file_get_contents("php://input"));
 require_once ('vo/clientVO.php');
-/*
-define( "DATABASE_SERVER", "localhost");
-define( "DATABASE_USERNAME", "root");
-define( "DATABASE_PASSWORD", "");
-define( "DATABASE_NAME", "roofingtracker");
-*/
-
-/*
-define( "DATABASE_SERVER", "tillurdizzy.db.10253438.hostedresource.com");
-define( "DATABASE_USERNAME", "evo-danny");
-define( "DATABASE_PASSWORD", "SaDie9954!");
-define( "DATABASE_NAME", "evo-jobtrack");
-*/
 
 define( "DATABASE_SERVER", "jobtracker.db.10253438.hostedresource.com");
 define( "DATABASE_USERNAME", "jobtracker");
@@ -32,6 +19,7 @@ while ($row = mysqli_fetch_object($result)) {
 	$oneVO->PRIMARY_ID = $row->PRIMARY_ID;
 	$oneVO->type = $row->type;
 	$oneVO->manager = $row->manager;
+	$oneVO->displayName = $row->displayName;
 	$oneVO->company = $row->company;
 	$oneVO->name_first = $row->name_first;
 	$oneVO->name_last = $row->name_last;

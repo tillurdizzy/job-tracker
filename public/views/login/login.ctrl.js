@@ -1,8 +1,11 @@
 'use strict';
-app.controller('LoginCtrl',['$scope','$state','evoDb','SharedSrvc','ShingleSrvc','ShingleCalcs',function ($scope,$state,evoDb,SharedSrvc,ShingleSrvc,ShingleCalcs) {
+app.controller('LoginCtrl',['$scope','$state','evoDb','SharedSrvc','ShingleSrvc','ShingleCalcs','ClientSrvc','LogInSrvc',
+    function ($scope,$state,evoDb,SharedSrvc,ShingleSrvc,ShingleCalcs,ClientSrvc,LogInSrvc) {
 
 	var DB = evoDb;
 	var S = SharedSrvc;
+    var C = ClientSrvc;
+    var L = LogInSrvc;
 
     $scope.submissionInvalid = false;// form is filled out correctly
     $scope.requestSuccess=false;// database query; starts out false set to true on successful query
@@ -15,10 +18,14 @@ app.controller('LoginCtrl',['$scope','$state','evoDb','SharedSrvc','ShingleSrvc'
     $scope.dataRefreshed = false;
 
     $scope.continueBtn = function(){
-        if($scope.resultLength == 0){
-            $state.transitionTo("clients");
+        if( $scope.loginObj.userType == "client"){
+            $state.transitionTo("contract");
         }else{
-            $state.transitionTo("jobs");
+           if($scope.resultLength == 0){
+                $state.transitionTo("clients");
+            }else{
+                $state.transitionTo("jobs");
+            } 
         }
     };
 
@@ -28,6 +35,7 @@ app.controller('LoginCtrl',['$scope','$state','evoDb','SharedSrvc','ShingleSrvc'
         $scope.loginSuccess = null;
         $scope.displayname="";
         S.logOut();
+        L.logOut();
         DB.logOut();
     };
 
@@ -41,8 +49,8 @@ app.controller('LoginCtrl',['$scope','$state','evoDb','SharedSrvc','ShingleSrvc'
             dataObj.name_user = this._username;
             dataObj.pin = this._pin;
 
-            dataObj.name_user = "dsheives";
-            dataObj.pin = "9954";
+            dataObj.name_user = "smartin";
+            dataObj.pin = "7663";
 
             if(serverAvailable == true){
                 var result = DB.queryLogIn(dataObj)
@@ -50,18 +58,21 @@ app.controller('LoginCtrl',['$scope','$state','evoDb','SharedSrvc','ShingleSrvc'
                     if(result != false){
                         // DB sets Shared Srvc var for login
                         $scope.loginObj = result[0];
-                        $scope.userType = result.userType;
+                        L.setUser(result[0]);
+                        var userType = $scope.loginObj.userType;
                         $scope.dataRefreshed = false;// control display of spinning icon
                         $scope.loginSuccess=true;
                         $scope.requestSuccess = true;// this var changes the stage
                         $scope.clearForm();
-                        $scope.displayname = loginObj.name_first + " " + loginObj.name_last;
-                        if(loginObj.userType == "client"){
-
-                        }else if(loginObj.userType == "sales"){
+                        $scope.displayname = $scope.loginObj.name_first + " " + $scope.loginObj.name_last;
+                        if(userType == "client"){
+                            
+                        }else if(userType == "sales"){
                             $scope.getManagerJobs();
-                        }else if(loginObj.userType == "admin"){
+                        }else if(userType == "admin"){
                              $scope.getManagerJobs();
+                        }else{
+
                         }
                        
                     }else{

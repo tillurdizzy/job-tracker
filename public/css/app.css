@@ -709,17 +709,31 @@ body {
     margin-bottom: 10px; }
   .page .page-title-bar {
     width: 100%;
-    margin-bottom: .7rem; }
-    .page .page-title-bar h2 {
-      color: #2C3E50;
+    margin: .7rem 0;
+    height: 3rem;
+    display: flex; }
+    .page .page-title-bar .button {
+      height: 3rem;
+      color: #ECF0F1;
+      width: 100%;
       font-size: 1.7rem;
       font-weight: 700;
-      line-height: 1; }
+      line-height: 1;
+      border-radius: 0;
+      vertical-align: middle;
+      padding: 0; }
+    .page .page-title-bar .inactive {
+      background-color: #C0392B;
+      cursor: default;
+      color: #FFFFFF; }
+    .page .page-title-bar .middle {
+      border-left: 2px solid #7F8C8D;
+      border-right: 2px solid #7F8C8D; }
   .page .section-header {
     margin: 1rem 0 .5rem 0;
     height: 1.7rem;
-    background-color: #ECF0F1;
-    color: #7F8C8D; }
+    background-color: #BDC3C7;
+    color: #000000; }
     .page .section-header h2 {
       font-family: 'Open Sans', sans-serif;
       font-size: 1rem;
@@ -805,6 +819,7 @@ body {
     transition: background-color 0.25s ease-out; }
 
 .view-container {
+  margin: 0 auto;
   max-width: 800px; }
 
 .flex-column {
@@ -820,18 +835,21 @@ body {
     margin-right: 1rem; }
 
 .top-page-menu {
-  height: 2.625rem;
-  background-color: #16A085;
-  width: 100%; }
-  .top-page-menu .button {
-    height: 2.625rem;
-    border-radius: 0;
-    font-size: 1rem;
-    font-weight: 600;
-    font-family: 'Open Sans', sans-serif;
-    transition: none; }
-  .top-page-menu .button:hover, .top-page-menu .button:focus {
-    background-color: #1ABC9C; }
+  height: 34px;
+  background-color: #BDC3C7;
+  width: 100%;
+  display: flex;
+  font-size: 1.1rem;
+  line-height: 34px; }
+  .top-page-menu div {
+    height: 34px;
+    margin-right: 4px; }
+  .top-page-menu i {
+    color: #ECF0F1;
+    cursor: pointer;
+    background-color: #1ABC9C;
+    font-size: 26px;
+    padding: 4px 10px 4px 10px; }
 
 .page-nav {
   width: 100%;
@@ -1269,8 +1287,7 @@ button.tiny, .button.tiny {
   position: relative;
   overflow: hidden;
   width: 100%;
-  height: 5000px;
-  /* Temp: Simulates a tall page. */ }
+  height: 5000px; }
 
 #site-canvas {
   width: 100%;
@@ -1557,7 +1574,7 @@ table {
   color: #000000; }
   .text-block-display p {
     font-size: .9rem;
-    margin: 6px 0 0 0; }
+    margin: 0 0 .3rem 0; }
   .text-block-display h4 {
     margin: 0;
     padding: 0;

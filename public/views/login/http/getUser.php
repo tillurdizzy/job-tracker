@@ -21,6 +21,7 @@ while ($row = mysqli_fetch_object($result)) {
 	$oneVO->name_first = $row->name_first;
 	$oneVO->name_last = $row->name_last;
 	$oneVO->userType = $row->userType;
+	$oneVO->jobID = $row->jobID;
 	array_push( $resultValueObjects, $oneVO );
 }
 echo json_encode($resultValueObjects);

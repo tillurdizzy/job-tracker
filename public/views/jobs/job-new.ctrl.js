@@ -24,9 +24,11 @@ app.controller('NewJobCtrl',['$scope','$state','evoDb','SharedSrvc',function ($s
             Me.isError = true;
             Me.inputMsg = "This field cannot be blank.";
         }else{
+            Me.filterProperties();
             Me.inputField="S2";
             Me.inputMsg = "Field 2 of " + numFields;
             S.selectedClientObj = Me.S1;
+
         };
    };
 

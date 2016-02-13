@@ -33,6 +33,10 @@ app.controller('NewPropertyIndCtrl',['$state','$scope','evoDb','SharedSrvc','und
     ME.inputMsg = "Field 1 of " + numFields;
     ME.isError = false;
 
+    ME.goNewJob = function(){
+        $state.transitionTo('addNewJob');
+    }
+
     ME.goPrevious = function(_from){
         var currentField = returnNdx(_from);
         var goToFieldNum = currentField - 1;

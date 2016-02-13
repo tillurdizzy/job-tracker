@@ -1,202 +1,155 @@
-
-    <div class="ez-form" ng-controller="NewClientIndCtrl as Ctrl">
-        <div class="ez-form-item" ng-show="Ctrl.inputField == 'T1'">
-            <h3>
-                First Name
-            </h3>
-            <input name="T1" type="text" ng-model="Ctrl.T1" placeholder="first name" />
-            <div class="page-nav">
-                <div class="page-nav-left">
-                    <i ng-click="Ctrl.goStart()" class="fa fa-arrow-circle-left fa-3x"></i>
-                </div>
-                <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">
-                    {{Ctrl.inputMsg}}
-                </div>
-                <div class="page-nav-right">
-                    <i ng-click="Ctrl.submitT1();" class="fa fa-arrow-circle-right fa-3x">
-                    </i>
-                </div>
+<h2>New Client</h2>
+<div class="ez-form" ng-controller="NewClientIndCtrl as Ctrl">
+    <div class="ez-form-item" ng-show="Ctrl.inputField == 'T1'">
+        <h3>First Name</h3>
+        <input name="T1" type="text" ng-model="Ctrl.T1" placeholder="first name" />
+        <div class="page-nav">
+            <div class="page-nav-left">
+                <i ng-click="Ctrl.goStart()" class="fa fa-arrow-circle-left fa-3x"></i>
+            </div>
+            <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">
+                {{Ctrl.inputMsg}}
+            </div>
+            <div class="page-nav-right">
+                <i ng-click="Ctrl.submitT1();" class="fa fa-arrow-circle-right fa-3x"></i>
             </div>
         </div>
-        <div class="ez-form-item" ng-show="Ctrl.inputField == 'T2'">
-            <h3>
-                Last Name
-            </h3>
-            <input name="T2" type="text" ng-model="Ctrl.T2"  placeholder="last name"/>
-            <div class="page-nav">
-                <div class="page-nav-left">
-                    <i ng-click="Ctrl.goPrevious('1')" class="fa fa-arrow-circle-left fa-3x">
-                    </i>
-                </div>
-                <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">
-                    {{Ctrl.inputMsg}}
-                </div>
-                <div class="page-nav-right">
-                    <i ng-click="Ctrl.submitT2();" class="fa fa-arrow-circle-right fa-3x">
-                    </i>
-                </div>
+    </div>
+    <div class="ez-form-item" ng-show="Ctrl.inputField == 'T2'">
+        <h3>Last Name</h3>
+        <input name="T2" type="text" ng-model="Ctrl.T2" placeholder="last name" />
+        <div class="page-nav">
+            <div class="page-nav-left">
+                <i ng-click="Ctrl.goPrevious('1')" class="fa fa-arrow-circle-left fa-3x"></i>
+            </div>
+            <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">
+                {{Ctrl.inputMsg}}
+            </div>
+            <div class="page-nav-right">
+                <i ng-click="Ctrl.submitT2();" class="fa fa-arrow-circle-right fa-3x"></i>
             </div>
         </div>
-        <div class="ez-form-item" ng-show="Ctrl.inputField == 'T3'">
-            <h3>
-                Cell Phone
-            </h3>
-            <input name="T3" type="tel" ng-model="Ctrl.T3" placeholder="phone"/>
-            <div class="page-nav">
-                <div class="page-nav-left">
-                    <i ng-click="Ctrl.goPrevious('2')" class="fa fa-arrow-circle-left fa-3x">
+    </div>
+    <div class="ez-form-item" ng-show="Ctrl.inputField == 'T3'">
+        <h3>Cell Phone</h3>
+        <input name="T3" type="tel" ng-model="Ctrl.T3" placeholder="phone" />
+        <div class="page-nav">
+            <div class="page-nav-left">
+                <i ng-click="Ctrl.goPrevious('2')" class="fa fa-arrow-circle-left fa-3x">
                     </i>
-                </div>
-                <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">
-                    {{Ctrl.inputMsg}}
-                </div>
-                <div class="page-nav-right">
-                    <i ng-click="Ctrl.submitT3();" class="fa fa-arrow-circle-right fa-3x">
-                    </i>
-                </div>
+            </div>
+            <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">
+                {{Ctrl.inputMsg}}
+            </div>
+            <div class="page-nav-right">
+                <i ng-click="Ctrl.submitT3();" class="fa fa-arrow-circle-right fa-3x"></i>
             </div>
         </div>
-        <div class="ez-form-item" ng-show="Ctrl.inputField == 'T4'">
-            <h3>
-                Email
-            </h3>
-            <input name="T4" type="email" ng-model="Ctrl.T4" placeholder="email"/>
-            <div class="page-nav">
-                <div class="page-nav-left">
-                    <i ng-click="Ctrl.goPrevious('3')" class="fa fa-arrow-circle-left fa-3x">
-                    </i>
-                </div>
-                <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">
-                    {{Ctrl.inputMsg}}
-                </div>
-                <div class="page-nav-right">
-                    <i ng-click="Ctrl.submitT4();" class="fa fa-arrow-circle-right fa-3x">
-                    </i>
-                </div>
+    </div>
+    <div class="ez-form-item" ng-show="Ctrl.inputField == 'T4'">
+        <h3>Email</h3>
+        <input name="T4" type="email" ng-model="Ctrl.T4" placeholder="email" />
+        <div class="page-nav">
+            <div class="page-nav-left">
+                <i ng-click="Ctrl.goPrevious('3')" class="fa fa-arrow-circle-left fa-3x"></i>
+            </div>
+            <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">
+                {{Ctrl.inputMsg}}
+            </div>
+            <div class="page-nav-right">
+                <i ng-click="Ctrl.submitT4();" class="fa fa-arrow-circle-right fa-3x"></i>
             </div>
         </div>
-        <div class="ez-form-item" ng-show="Ctrl.inputField == 'T5'">
-            <h3>
-                Street Address
-            </h3>
-            <input name="T5" type="text" ng-model="Ctrl.T5" placeholder="street"/>
-            <div class="page-nav">
-                <div class="page-nav-left">
-                    <i ng-click="Ctrl.goPrevious('4')" class="fa fa-arrow-circle-left fa-3x">
-                    </i>
-                </div>
-                <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">
-                    {{Ctrl.inputMsg}}
-                </div>
-                <div class="page-nav-right">
-                    <i ng-click="Ctrl.submitT5();" class="fa fa-arrow-circle-right fa-3x">
-                    </i>
-                </div>
+    </div>
+    <div class="ez-form-item" ng-show="Ctrl.inputField == 'T5'">
+        <h3>Street Address</h3>
+        <input name="T5" type="text" ng-model="Ctrl.T5" placeholder="street" />
+        <div class="page-nav">
+            <div class="page-nav-left">
+                <i ng-click="Ctrl.goPrevious('4')" class="fa fa-arrow-circle-left fa-3x"></i>
+            </div>
+            <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">
+                {{Ctrl.inputMsg}}
+            </div>
+            <div class="page-nav-right">
+                <i ng-click="Ctrl.submitT5();" class="fa fa-arrow-circle-right fa-3x"></i>
             </div>
         </div>
-        <div class="ez-form-item" ng-show="Ctrl.inputField == 'T6'">
-            <h3>
-                City
-            </h3>
-            <input name="T6" type="text" ng-model="Ctrl.T6" placeholder="city"/>
-            <div class="page-nav">
-                <div class="page-nav-left">
-                    <i ng-click="Ctrl.goPrevious('5')" class="fa fa-arrow-circle-left fa-3x">
-                    </i>
-                </div>
-                <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">
-                    {{Ctrl.inputMsg}}
-                </div>
-                <div class="page-nav-right">
-                    <i ng-click="Ctrl.submitT6();" class="fa fa-arrow-circle-right fa-3x">
-                    </i>
-                </div>
+    </div>
+    <div class="ez-form-item" ng-show="Ctrl.inputField == 'T6'">
+        <h3>City</h3>
+        <input name="T6" type="text" ng-model="Ctrl.T6" placeholder="city" />
+        <div class="page-nav">
+            <div class="page-nav-left">
+                <i ng-click="Ctrl.goPrevious('5')" class="fa fa-arrow-circle-left fa-3x"></i>
+            </div>
+            <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">
+                {{Ctrl.inputMsg}}
+            </div>
+            <div class="page-nav-right">
+                <i ng-click="Ctrl.submitT6();" class="fa fa-arrow-circle-right fa-3x"></i>
             </div>
         </div>
-        <div class="ez-form-item" ng-show="Ctrl.inputField == 'T7'">
-            <h3>
-                State
-            </h3>
-            <input name="T7" type="text" ng-model="Ctrl.T7" placeholder="state"/>
-            <div class="page-nav">
-                <div class="page-nav-left">
-                    <i ng-click="Ctrl.goPrevious('6')" class="fa fa-arrow-circle-left fa-3x">
-                    </i>
-                </div>
-                <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">
-                    {{Ctrl.inputMsg}}
-                </div>
-                <div class="page-nav-right">
-                    <i ng-click="Ctrl.submitT7();" class="fa fa-arrow-circle-right fa-3x">
-                    </i>
-                </div>
+    </div>
+    <div class="ez-form-item" ng-show="Ctrl.inputField == 'T7'">
+        <h3>State</h3>
+        <input name="T7" type="text" ng-model="Ctrl.T7" placeholder="state" />
+        <div class="page-nav">
+            <div class="page-nav-left">
+                <i ng-click="Ctrl.goPrevious('6')" class="fa fa-arrow-circle-left fa-3x"></i>
+            </div>
+            <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">
+                {{Ctrl.inputMsg}}
+            </div>
+            <div class="page-nav-right">
+                <i ng-click="Ctrl.submitT7();" class="fa fa-arrow-circle-right fa-3x"></i>
             </div>
         </div>
-        <div class="ez-form-item" ng-show="Ctrl.inputField == 'T8'">
-            <h3>
-                Zip
-            </h3>
-            <input name="T8" type="tel" ng-model="Ctrl.T8" placeholder="zip"/>
-            <div class="page-nav">
-                <div class="page-nav-left">
-                    <i ng-click="Ctrl.goPrevious('7')" class="fa fa-arrow-circle-left fa-3x">
-                    </i>
-                </div>
-                <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">
-                    {{Ctrl.inputMsg}}
-                </div>
-                <div class="page-nav-right">
-                    <i ng-click="Ctrl.submitT8();" class="fa fa-arrow-circle-right fa-3x">
-                    </i>
-                </div>
+    </div>
+    <div class="ez-form-item" ng-show="Ctrl.inputField == 'T8'">
+        <h3>Zip</h3>
+        <input name="T8" type="tel" ng-model="Ctrl.T8" placeholder="zip" />
+        <div class="page-nav">
+            <div class="page-nav-left">
+                <i ng-click="Ctrl.goPrevious('7')" class="fa fa-arrow-circle-left fa-3x"></i>
+            </div>
+            <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">
+                {{Ctrl.inputMsg}}
+            </div>
+            <div class="page-nav-right">
+                <i ng-click="Ctrl.submitT8();" class="fa fa-arrow-circle-right fa-3x"></i>
             </div>
         </div>
-       
-        
-        <div class="ez-form-item" ng-show="Ctrl.inputField == 'SUBMIT'">
-            <h2>
-                Review your new client information below and click Submit to finalize, or use the back arrow to make changes.
-            </h2>
-            
-            <div class="page-nav">
-                <div class="page-nav-left">
-                    <i ng-click="Ctrl.goPrevious('8')" class="fa fa-arrow-circle-left fa-3x">
-                    </i>
-                </div>
-                <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">
-                    {{Ctrl.inputMsg}}
-                </div>
-                <div class="page-nav-right">
-                    <button type="button" ng-click="Ctrl.submitForm()">
-                        Submit
-                    </button>
-                </div>
+    </div>
+    <div class="ez-form-item" ng-show="Ctrl.inputField == 'SUBMIT'">
+        <h2>
+            Review your new client information below and click Submit to finalize, or use the back arrow to make changes.
+        </h2>
+        <div class="page-nav">
+            <div class="page-nav-left">
+                <i ng-click="Ctrl.goPrevious('8')" class="fa fa-arrow-circle-left fa-3x"></i>
+            </div>
+            <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">
+                {{Ctrl.inputMsg}}
+            </div>
+            <div class="page-nav-right">
+                <button type="button" ng-click="Ctrl.submitForm()">
+                    Submit
+                </button>
             </div>
         </div>
-        <div class="ez-form-item" ng-show="Ctrl.inputField == 'SUCCESS'">
-            <h3>
-                Success!
-            </h3>
-            <p>
-                {{Ctrl.T1}} has been added as a client.
-            </p>
-            <div>
-                <div>
-                    <a ui-sref="addNewProperty" class="button">New Property</a>
-                </div>
-            </div>
+    </div>
+    <div class="ez-form-item" ng-show="Ctrl.inputField == 'SUCCESS'">
+        <h3>Success!</h3>
+        <p>{{Ctrl.T1}} has been added as a Client. Click below to add a Property for this client. <span class="bold">Even if it is the same address as the client's contact information you just entered, you need to confirm this is also the property for the roofing proposal.</span></p>
+        <div>
+            <button type="button" ng-click="Ctrl.goAddProperty()">Add Client Property</button>
         </div>
-        <div class="ez-form-item" ng-show="Ctrl.inputField == 'ERROR'">
-            <h3>
-                Oops!  An error occured saving the data.
-            </h3>
-            <p>
-                Try again later or click below to reset and try again now.
-            </p>
-            <button type="button" ng-click="Ctrl.clearForm()">
-                Reset
-            </button>
-        </div>
+    </div>
+    <div class="ez-form-item" ng-show="Ctrl.inputField == 'ERROR'">
+        <h3>Oops!  An error occured saving the data.</h3>
+        <p>Try again later or click below to reset and try again now.</p>
+        <button type="button" ng-click="Ctrl.clearForm()">Reset</button>
     </div>
     <div class="ez-form">
         <div id="liveReview" class="review-section">
@@ -210,8 +163,7 @@
                 <h3>
                     Last: {{Ctrl.T2}}
                 </h3>
-               
-                 <h3>
+                <h3>
                     Cell Phone: {{Ctrl.T3}}
                 </h3>
                 <h3>
@@ -222,7 +174,7 @@
                 <h4 style="margin-bottom:.5rem;">
                     Property:
                 </h4>
-                 <h3>
+                <h3>
                     Street: {{Ctrl.T5}}
                 </h3>
                 <h3>
@@ -237,4 +189,4 @@
             </div>
         </div>
     </div>
-
+</div>

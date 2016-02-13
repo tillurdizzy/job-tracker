@@ -1,14 +1,13 @@
 'use strict';
 
-app.controller('OffCanvasCtrl',['$state',function ($state) {
+app.controller('OffCanvasCtrl',['$state','LogInSrvc',function ($state,LogInSrvc) {
 	
 	var Me = this;
 	Me.menuOpen =  false;
-
+	Me.L = LogInSrvc;
 	
 	Me.toggleNav = function(){
 		Me.menuOpen = !Me.menuOpen;
-		
 	};
 
 	Me.menuClick = function(s){

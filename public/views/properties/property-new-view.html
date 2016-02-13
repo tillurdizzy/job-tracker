@@ -1,18 +1,13 @@
 <div ng-controller="NewPropertyViewCtrl as VIEW" class="page">
     <div class="page-title-bar">
-        <h2>
-            New Property
-        </h2>
+        <h2>New Property</h2>
     </div>
-    <horiz-rule margintop="5px" marginbottom="10px">
-    </horiz-rule>
+    <horiz-rule margintop="5px" marginbottom="10px"></horiz-rule>
     <div ui-view>
         <div class="ez-form">
             <div class="ez-form-item">
-                <h3>
-                    Choose the Client for this Property
-                </h3>
-                <select id="selectClient" ng-model="VIEW.selectedClient" ng-options="c.company for c in VIEW.clientList"></select>
+                <h3>Choose the Client for this Property</h3>
+                <select ng-model="VIEW.selectedClient" ng-options="c.displayName for c in VIEW.clientList"></select>
                 <div class="page-nav">
                     <div class="page-nav-left">
                     </div>
@@ -20,8 +15,7 @@
                         {{VIEW.inputMsg}}
                     </div>
                     <div class="page-nav-right">
-                        <i ng-click="VIEW.submitClient();" class="fa fa-arrow-circle-right fa-3x">
-                        </i>
+                        <i ng-click="VIEW.submitClient();" class="fa fa-arrow-circle-right fa-3x"></i>
                     </div>
                 </div>
             </div>

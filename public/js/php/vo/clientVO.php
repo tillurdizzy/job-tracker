@@ -4,6 +4,7 @@ class clientVO{
 	var $type;
 	var $manager;
 	var $company;
+	var $displayName;
 	var $name_first;
 	var $name_last;
 	var $street;

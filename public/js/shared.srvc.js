@@ -202,7 +202,7 @@ app.service('SharedSrvc',['$rootScope',function sharedVars($rootScope){
 		{label:"Other",id:4}];
 
 	self.shingleGradeOptions = [
-		{label:"Basic (Three-Tab, Strip)",id:1},
+		{label:"Standard (Three-Tab, Strip)",id:1},
 		{label:"Dimensional (Architectural, Laminated)",id:2},
 		{label:"Premium (Specialty, Designer)",id:3},
 		{label:"Other",id:4}];
@@ -234,11 +234,12 @@ app.service('SharedSrvc',['$rootScope',function sharedVars($rootScope){
 	
 	self.edgeDetail = [
 		{label:"None",id:1},
-		{label:"Drip Edge",id:2},
-		{label:"Drip Edge with Trim",id:3}];
+		{label:"Pre-painted, no enhancement",id:2},
+		{label:"Enhanced",id:3}];
 
 	self.valleyOptions = [
 		{label:"Shingle-laced",id:1},
+		{label:"Closed, with metal subflashing",id:1},
 		{label:"Open metal",id:2}];
 
 	self.ridgeCapShingles = [

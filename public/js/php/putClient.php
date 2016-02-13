@@ -12,6 +12,7 @@ $con = mysqli_connect(DATABASE_SERVER, DATABASE_USERNAME, DATABASE_PASSWORD,DATA
 $manager = mysqli_real_escape_string($con,$data->manager);
 $type = mysqli_real_escape_string($con,$data->type);
 $company = mysqli_real_escape_string($con,$data->company);
+$displayName = mysqli_real_escape_string($con,$data->displayName);
 $name_first = mysqli_real_escape_string($con,$data->name_first);
 $name_last = mysqli_real_escape_string($con,$data->name_last);
 $street = mysqli_real_escape_string($con,$data->street);
@@ -22,10 +23,11 @@ $phone_cell = mysqli_real_escape_string($con,$data->phone_cell);
 $phone_bus = mysqli_real_escape_string($con,$data->phone_bus);
 $email = mysqli_real_escape_string($con,$data->email);
 
-$query = "INSERT INTO clients(manager,company,type,name_first,name_last,street,city,state,zip,phone_cell,phone_bus,email)
+$query = "INSERT INTO clients(manager,company,displayName,type,name_first,name_last,street,city,state,zip,phone_cell,phone_bus,email)
 VALUES(
 '" . $manager . "', " .
 "'" . $company . "', " .
+"'" . $displayName . "', " .
 "'" . $type . "', " .
 "'" . $name_first . "', " .
 "'" . $name_last . "', " .

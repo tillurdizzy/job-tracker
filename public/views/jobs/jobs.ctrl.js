@@ -68,6 +68,14 @@ app.controller('JobsCtrl',['$location','$state','evoDb','$scope','SharedSrvc',fu
       $state.transitionTo("addNewJob");
     };
 
+    ME.goClients = function(){
+      $state.transitionTo("clients");
+    };
+
+    ME.goProperties = function(){
+      $state.transitionTo("properties");
+    };
+
 	
 	// Get all jobs for current manager
 	// DB already has manager_id

@@ -202,7 +202,7 @@
     </div>
     <div class="ez-form-item" ng-show="Ctrl.inputField == 'valleyDetail'">
         <h2>Existing Roof Assembly</h2>
-        <h3>Valley Details</h3>
+        <h3>Valley Detail</h3>
         <div class="dropDownSelector">
             <select ng-model="Ctrl.valleyDetail" ng-options="c.label for c in Ctrl.S.valleyOptions"></select>
         </div>
@@ -220,9 +220,9 @@
     </div>
     <div class="ez-form-item" ng-show="Ctrl.inputField == 'ridgeCap'">
         <h2>Existing Roof Assembly</h2>
-        <h3>Ridge Cap</h3>
+        <h3>Ridge Detail</h3>
         <div class="dropDownSelector">
-            <select ng-model="Ctrl.ridgeCap" ng-options="c.label for c in Ctrl.S.ridgeCapShingles"></select>
+            <select ng-model="Ctrl.ridgeCap" ng-options="c.label for c in Ctrl.S.shingleGradeOptions"></select>
         </div>
         <div class="page-nav">
             <div class="page-nav-left">
@@ -289,6 +289,8 @@
     </div>
     <div class="ez-form-item" ng-show="Ctrl.inputField == 'SUBMIT'">
         <h3>Review and Submit</h3>
+        <p>Proof below and Submit or use the back arrow to revise.</p>
+
         <div class="page-nav">
             <div class="page-nav-left">
                 <i ng-click="Ctrl.goPrevious('Submit')" class="fa fa-arrow-circle-left fa-3x"></i>
@@ -304,7 +306,8 @@
     <div class="ez-form-item" ng-show="Ctrl.inputField == 'SUCCESS'">
         <h3>Success!</h3>
         <p>{{Ctrl.propertyName}} has been added as a property for {{Ctrl.clientName}}.</p>
-        <a ui-sref="addNewJob" class="button">Create New Job</a>
+        <p>You can now create Job by clicking below.</p>
+        <button type="button" ng-click="Ctrl.goNewJob()">Create Job</button>
     </div>
     <div class="ez-form-item" ng-show="Ctrl.inputField == 'ERROR'">
         <h3>Oops!  An error occured saving the data.</h3>
@@ -322,7 +325,7 @@
             <h3>State: {{Ctrl.propertyState}}</h3>
             <h3>Zip: {{Ctrl.propertyZip}}</h3>
         </div>
-        <div style="margin-left:3rem;">
+        <div style="margin-left:1rem;">
             <h4 style="margin-bottom:.5rem;">Existing Conditions:</h4>
             <h3>Levels: {{Ctrl.numLevels.label}}</h3>
             <h3>Shingle Grade: {{Ctrl.shingleGrade.label}}</h3>

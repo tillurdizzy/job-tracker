@@ -17,6 +17,5 @@ class propertyVO{
 	var $valleyDetail;
 	var $ridgeCap;
 	var $roofVents;
-	var $pitchAvg;
 }
 ?>

@@ -21,7 +21,7 @@
     <body ng-app="MyApp">
 
         <div id="site-wrapper" ng-controller="OffCanvasCtrl as Ctrl">
-            <div class="top-bar">
+            <div class="top-bar" ng-show="Ctrl.L.showTopBar">
                 <button ng-click="Ctrl.toggleNav()"><i class="fa fa-bars fa-2x"></i></button>
                 <h1>Evolution Roofing Systems</h1>
             </div>
@@ -39,9 +39,7 @@
                     <div class="label"><h3>REPORTS</h3></div>
                     <div><button>Coming soon...</button></div>
                 </div>
-                <!-- <div class="canvas-slider" ng-class="!Ctrl.menuOpen ? 'canvas-slide-false' : 'canvas-slide-true'"> -->
-                <div class="canvas-slider" class="canvas-slide-false">
-                    <!-- APP Content !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
+                <div>
                     <div ui-view class="view-container"></div>
                 </div>
                 <!-- #site-canvas -->
@@ -88,9 +86,11 @@
     <script src="views/inventory/inventory.ctrl.js?v=1"></script>
    
     <!--Global Services-->
-    <script src="js/data.srvc.js?v=1"></script>
+    <script src="js/data.srvc.js?v=2"></script>
+    <script src="js/login.srvc.js?v=1"></script>
+    <script src="js/client.srvc.js?v=1"></script>
     <script src="js/inventory.srvc.js?v=1"></script>
-    <script src="js/shared.srvc.js?v=1"></script>
+    <script src="js/shared.srvc.js?v=2"></script>
     <script src="js/pdf.srvc.js?v=1"></script>
     
     <!--Directives-->

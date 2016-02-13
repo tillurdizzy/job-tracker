@@ -1,10 +1,14 @@
 <div class="page" ng-controller="PropertiesCtrl as Ctrl">
-    <div class="page-title-bar"><h2>Properties</h2></div>
+    <div class="page-title-bar">
+        <button ng-click="Ctrl.goClients()" type="button" class="button">CLIENTS</button>
+        <button type="button" class="button middle inactive">PROPERTIES</button>
+        <button ng-click="Ctrl.goJobs()" type="button" class="button">JOBS</button>
+    </div>
     <horiz-rule margintop="5px" marginbottom="10px"></horiz-rule>
     <div ui-view>
         <div class="top-page-menu">
-            <button ng-click="Ctrl.getManagerJobs()" type="button" class="button">Refresh List</button>
-            <button ng-click="Ctrl.goNewProperty()" type="button" class="button">New Property</button>
+            <div><i ng-click="Ctrl.goNewProperty();" class="fa fa-plus fa-2x"></i></div>
+            <div><h3>New Property</h3></div>
         </div>
     	
     	<div class="property-list-container">
@@ -13,5 +17,12 @@
             </div> 
         </div>
 	    
+        <div class="block-section" style="margin-top:20px;">
+            <div class="text-block-display large">
+                <p>Every Job needs a <span class="bold">Property</span>. Every property must have a Client that it belongs to.</p>
+                <p>Click the <span class="bold">New Property</span> button in the menu bar add a client.</p>
+                <p>Click the <span class="bold">Pencil Icon</span> button at the end of each listing to view the Property Details or to make edits.</p>
+            </div>
+        </div> 
     </div>
 </div>

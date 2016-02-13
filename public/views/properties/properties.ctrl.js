@@ -26,6 +26,14 @@ app.controller('PropertiesCtrl',['$scope','$state','evoDb','SharedSrvc',function
 		$state.transitionTo("properties.details");
 	};
 
+	ME.goClients = function(){
+      $state.transitionTo("clients");
+    };
+
+    ME.goJobs = function(){
+      $state.transitionTo("jobs");
+    };
+
 	ME.backToList = function(){
       $state.transitionTo("properties");
     };
