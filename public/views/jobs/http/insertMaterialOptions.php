@@ -1,5 +1,5 @@
 <?php
-//Just makes an entry into the jobs_parameters table using the ID auto-created from the jobs_list table.
+//Just makes an entry into the jobs_details table using the ID auto-created from the jobs_list table.
 ini_set('display_errors', 'On');
 error_reporting(E_ALL | E_STRICT);
 $data = json_decode(file_get_contents("php://input"));
@@ -10,8 +10,18 @@ define( "DATABASE_NAME", "jobtracker");
 
 $con = mysqli_connect(DATABASE_SERVER, DATABASE_USERNAME, DATABASE_PASSWORD,DATABASE_NAME) or die ('ERROR!!!');
 $jobID = mysqli_real_escape_string($con,$data->jobID);
-
-$query = "INSERT INTO job_parameters(jobID)VALUES('" . $jobID . "')";
+$zero = "0";
+// Use this to initialize all options for new job -- then only use UPDATE afterward
+$query = "INSERT INTO material_options(jobID,TOPRDG,RKERDG,SHNGLS,NAILS,EDGTRM,VALLEY,DECKNG)
+VALUES(
+'" . $jobID . "', " .
+"'" . $zero . "', " .
+"'" . $zero . "', " .
+"'" . $zero . "', " .
+"'" . $zero . "', " .
+"'" . $zero . "', " .
+"'" . $zero . "', " .
+"'" . $zero . "')";
 
 $qry_res = mysqli_query($con,$query);
 

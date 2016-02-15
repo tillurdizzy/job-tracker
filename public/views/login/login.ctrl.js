@@ -22,6 +22,8 @@ app.controller('LoginCtrl',['$scope','$state','evoDb','SharedSrvc','ShingleSrvc'
     $scope.continueBtn = function(){
         if( $scope.loginObj.userType == "client"){
             $state.transitionTo("approval");
+        }else if($scope.loginObj.userType == "admin"){
+            $state.transitionTo("admin");
         }else{
            if($scope.resultLength == 0){
                 $state.transitionTo("clients");
@@ -54,8 +56,11 @@ app.controller('LoginCtrl',['$scope','$state','evoDb','SharedSrvc','ShingleSrvc'
             //dataObj.name_user = "ssmith";
             //dataObj.pin = "1234";
 
-            dataObj.name_user = "smartin";
-            dataObj.pin = "7663";
+            //dataObj.name_user = "smartin";
+            //dataObj.pin = "7663";
+
+            //dataObj.name_user = "dsheives";
+            //dataObj.pin = "9954";
 
             if(serverAvailable == true){
                 var result = DB.queryLogIn(dataObj)
@@ -75,7 +80,7 @@ app.controller('LoginCtrl',['$scope','$state','evoDb','SharedSrvc','ShingleSrvc'
                         }else if(userType == "sales"){
                             $scope.getManagerJobs();
                         }else if(userType == "admin"){
-                            $scope.getManagerJobs();
+                            $scope.dataRefreshed = true;
                         }else{
 
                         }

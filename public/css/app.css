@@ -925,7 +925,9 @@ textarea {
   padding: 5px 11px; }
 
 .list-container-proposal {
-  width: 100%; }
+  width: 100%;
+  display: flex;
+  justify-content: space-between; }
   .list-container-proposal .materials-container {
     display: flex;
     margin: 4px 0 0 0;
@@ -980,7 +982,7 @@ textarea {
     background-color: #ECF0F1; }
     .list-container-proposal .job-items-container .job-item-name {
       height: 2.25em;
-      width: 150px;
+      width: 180px;
       background-color: #2C3E50;
       color: #fff;
       margin: 0 4px 0 0;

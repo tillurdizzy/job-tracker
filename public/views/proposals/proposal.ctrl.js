@@ -32,6 +32,26 @@ app.controller('ProposalCtrl', ['$state','$scope','evoDb','SharedSrvc','ShingleS
     ME.specialOpen = false;
     ME.specialText = "";
     ME.specialCost = "";
+
+    ME.params = {FIELD:140,
+        TOPRDG:0,
+        RAKRDG:0,
+        PRMETR:0,
+        VALLEY:0,
+        LBF1:0,
+        LBF2:0,
+        LBF3:0,
+        LBF4:0,
+        JKVNT8:0,
+        FLHSH8:0,
+        TURBNS:0,
+        PWRVNT:0,
+        AIRHWK:0,
+        DECKNG:0,
+        PAINT:0,
+        CAULK:0,
+        CARPRT:0,
+        SATDSH:0};
    
 
     //pricing
@@ -71,12 +91,11 @@ app.controller('ProposalCtrl', ['$state','$scope','evoDb','SharedSrvc','ShingleS
     ME.submitItemQty = function(dObj) {
         var itemCode = dObj.itemCode;
 
-        // Update item in jobInput list IF it already exists
-        var itemExists = false;
+        // Update item in jobInput list 
+       
         for (var x = 0; x < ME.jobInput.length; x++) {
             if (ME.jobInput[x].Code == itemCode) {
                 ME.jobInput[x].Qty = dObj.qty;
-                itemExists = true;
                 continue;
             }
         }
@@ -86,17 +105,12 @@ app.controller('ProposalCtrl', ['$state','$scope','evoDb','SharedSrvc','ShingleS
         dataObj.Code = dObj.itemCode;
         dataObj.Qty = dObj.qty;
 
-        // Insert or update in DB
-        // Push to jobInput if did not already exist
-        if (itemExists == true) {
-            ME.SRVC.updateJobItem(dataObj);
-        } else {
-            ME.jobInput.push(dataObj);
-            ME.SRVC.insertJobItem(dataObj);
-        }
+       
+        //ME.SRVC.updateJobItem(dataObj);
+
 
         // Update pricing
-       mergeInputLists();
+       //mergeInputLists();
     };
 
     var mergeInputLists = function() {

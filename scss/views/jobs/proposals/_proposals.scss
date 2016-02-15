@@ -3,7 +3,8 @@ $material-height:1em;
 
 .list-container-proposal{
 	width:100%;
-
+	display:flex;
+	justify-content:space-between;
 	.materials-container{
 		display:flex;
 		margin:4px 0 0 0;
@@ -86,11 +87,12 @@ $material-height:1em;
 		background-color:$clouds-grey;
 		.job-item-name{
 			height:$job-item-height;
-			width:150px;
+			width:200px;
 			background-color: $midnight-blue;
 			color:#fff;
 			margin:0 4px 0 0;
 			padding-left:3px;
+			overflow: hidden;
 			h4{
 		      line-height:$job-item-height;
 		      vertical-align: middle;

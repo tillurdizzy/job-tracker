@@ -55,7 +55,24 @@ app.service('evoDb',['$http','$q','SharedSrvc','LogInSrvc',function eventQueries
 	self.putJob = function(dataObj){
 		dataObj.manager = self.managerID;
 		var deferred = $q.defer();
-		$http({method: 'POST', url: 'js/php/putJob.php',data:dataObj}).
+		$http({method: 'POST', url: 'views/jobs/http/putJob.php',data:dataObj}).
+		success(function(data, status, headers, config) {
+			var newJobID = data.params;
+			var dataObj = {jobID:newJobID};
+			self.putJobParams(dataObj);
+			self.putMaterialOptions(dataObj);
+			self.putSpecialConsiderations(dataObj);
+     		deferred.resolve(data);
+	    }).
+	    error(function(data, status, headers, config) {
+			deferred.reject(data);
+	    });
+	    return deferred.promise;
+	};
+
+	self.putJobParams = function(dataObj){
+		var deferred = $q.defer();
+		$http({method: 'POST', url: 'views/jobs/http/insertJobParameters.php',data:dataObj}).
 		success(function(data, status, headers, config) {
      		deferred.resolve(data);
 	    }).
@@ -64,6 +81,32 @@ app.service('evoDb',['$http','$q','SharedSrvc','LogInSrvc',function eventQueries
 	    });
 	    return deferred.promise;
 	};
+
+	self.putMaterialOptions = function(dataObj){
+		var deferred = $q.defer();
+		$http({method: 'POST', url: 'views/jobs/http/insertMaterialOptions.php',data:dataObj}).
+		success(function(data, status, headers, config) {
+     		deferred.resolve(data);
+	    }).
+	    error(function(data, status, headers, config) {
+			deferred.reject(data);
+	    });
+	    return deferred.promise;
+	};
+
+	self.putSpecialConsiderations = function(dataObj){
+		var deferred = $q.defer();
+		$http({method: 'POST', url: 'views/jobs/http/insertSpecialConsiderations.php',data:dataObj}).
+		success(function(data, status, headers, config) {
+     		deferred.resolve(data);
+	    }).
+	    error(function(data, status, headers, config) {
+			deferred.reject(data);
+	    });
+	    return deferred.promise;
+	};
+
+
 
 	self.putManager = function(dataObj){
 		var deferred = $q.defer();
@@ -133,7 +176,6 @@ app.service('evoDb',['$http','$q','SharedSrvc','LogInSrvc',function eventQueries
 	    return deferred.promise; //return the data
 	};
 
-
 	self.getManagerClients = function(){
 		var dataObj = {manager:S.managerID};
 		var deferred = $q.defer();
@@ -199,7 +241,7 @@ app.service('evoDb',['$http','$q','SharedSrvc','LogInSrvc',function eventQueries
 		}
 		var dataObj = {manager:S.managerID};
 		var deferred = $q.defer();
-		$http({method: 'POST', url: 'js/php/getJobsByManager.php',data:dataObj}).
+		$http({method: 'POST', url: 'views/jobs/http/getJobsByManager.php',data:dataObj}).
 		success(function(data, status) {
 			if(typeof data != 'string'){
 				self.lastResult = data;

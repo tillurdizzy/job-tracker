@@ -195,6 +195,20 @@ app.controller('NewClientIndCtrl',['$state','evoDb','SharedSrvc',function ($stat
         console.log(loc + " : " + error);
     };
 
+    ME.getManagerProperties = function(){
+        var result = DB.getManagerProperties()
+        .then(function(result){
+            if(result != false){
+                // DB sent the data to the SharedSrvc
+                // Don't do anything here
+            }else{
+              ME.dataError("JobsCtrl-getManagerProperties()-1",result); 
+            }
+        },function(error){
+            ME.dataError("JobsCtrl-getManagerProperties()-2",result);
+        });
+    };
+
 
    
  }]);

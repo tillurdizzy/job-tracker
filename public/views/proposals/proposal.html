@@ -1,5 +1,5 @@
 <div class="page" ng-controller="ProposalCtrl as Ctrl">
-    <div class="page-title-bar"><h2>Proposal</h2></div>
+    <div class="page-title"><h2>Proposal</h2></div>
     <div ui-view>
         <div class="section-header">
             <h2>Property</h2>
@@ -9,7 +9,7 @@
             <h3>{{Ctrl.selectedPropertyObj.street}}</h3>
             <h3>{{Ctrl.selectedPropertyObj.city + ", " + Ctrl.selectedPropertyObj.state + " " + Ctrl.selectedPropertyObj.zip}}</h3>
         </div>
-         <div class="section-header">
+        <div class="section-header">
             <h2>Bid Summary</h2>
         </div>
         <div class="text-block-display">
@@ -34,14 +34,117 @@
         </div>
        
         <div class="section-header">
-            <h2>Roof Description</h2>
+            <h2>Roofing Parameters</h2>
             <i class="fa fa-chevron-down" ng-hide="Ctrl.inputOpen" ng-click="Ctrl.inputOpen =true;"></i>
             <i class="fa fa-chevron-up" ng-show="Ctrl.inputOpen" ng-click="Ctrl.inputOpen =false;"></i>
         </div>
         <div class="list-container-proposal" ng-show="Ctrl.inputOpen">
-            <div job-input-item id="{{e.PRIMARY_ID}}" code="{{e.Code}}" item="{{e.Item}}" qty="{{e.Qty}}" unit="{{e.Unit}}" 
-            submit="Ctrl.submitItemQty"
-            ng-repeat="e in Ctrl.jobInputFields"></div> 
+        <div>
+            <div class="job-items-container">
+                <div class="job-item-name"><h4>Field</h4></div>
+                <div class="job-item-input"><input type="tel" name="qtyInput" ng-model="Ctrl.params.FIELD"></div>
+                <div class="job-item-unit"><h3>Sqs</h3></div>
+            </div>
+            <div class="job-items-container">
+                <div class="job-item-name"><h4>Decking</h4></div>
+                <div class="job-item-input"><input type="tel" name="qtyInput" ng-model="Ctrl.params.DECKNG"></div>
+                <div class="job-item-unit"><h3>Sqs</h3></div>
+            </div>
+            <div class="job-items-container">
+                <div class="job-item-name"><h4>Top Ridge</h4></div>
+                <div class="job-item-input"><input type="tel" name="qtyInput" ng-model="Ctrl.params.TOPRDG"></div>
+                <div class="job-item-unit"><h3>LF</h3></div>
+            </div>
+            <div class="job-items-container">
+                <div class="job-item-name"><h4>Rake Ridge</h4></div>
+                <div class="job-item-input"><input type="tel" name="qtyInput" ng-model="Ctrl.params.RAKRDG"></div>
+                <div class="job-item-unit"><h3>LF</h3></div>
+            </div>
+            <div class="job-items-container">
+                <div class="job-item-name"><h4>Perimeter</h4></div>
+                <div class="job-item-input"><input type="tel" name="qtyInput" ng-model="Ctrl.params.PRMETR"></div>
+                <div class="job-item-unit"><h3>LF</h3></div>
+            </div>
+            <div class="job-items-container">
+                <div class="job-item-name"><h4>Valley</h4></div>
+                <div class="job-item-input"><input type="tel" name="qtyInput" ng-model="Ctrl.params.VALLEY"></div>
+                <div class="job-item-unit"><h3>LF</h3></div>
+            </div>
+            <div class="job-items-container">
+                <div class="job-item-name"><h4>1.5 in. Lead Boot Flashing</h4></div>
+                <div class="job-item-input"><input type="tel" name="qtyInput" ng-model="Ctrl.params.LBF1"></div>
+                <div class="job-item-unit"><h3>Each</h3></div>
+            </div>
+            <div class="job-items-container">
+                <div class="job-item-name"><h4>2 in. Lead Boot Flashing</h4></div>
+                <div class="job-item-input"><input type="tel" name="qtyInput" ng-model="Ctrl.params.LBF2"></div>
+                <div class="job-item-unit"><h3>Each</h3></div>
+            </div>
+            <div class="job-items-container">
+                <div class="job-item-name"><h4>3 in. Lead Boot Flashing</h4></div>
+                <div class="job-item-input"><input type="tel" name="qtyInput" ng-model="Ctrl.params.LBF3"></div>
+                <div class="job-item-unit"><h3>Each</h3></div>
+            </div>
+            <div class="job-items-container">
+                <div class="job-item-name"><h4>4 in. Lead Boot Flashing</h4></div>
+                <div class="job-item-input"><input type="tel" name="qtyInput" ng-model="Ctrl.params.LBF4"></div>
+                <div class="job-item-unit"><h3>Each</h3></div>
+            </div>
+        </div>
+        <div>
+            
+        </div>
+
+        <div>
+            <div class="job-items-container">
+                <div class="job-item-name"><h4>8 in. Roof Jack with vent</h4></div>
+                <div class="job-item-input"><input type="tel" name="qtyInput" ng-model="Ctrl.params.JKVNT8"></div>
+                <div class="job-item-unit"><h3>Each</h3></div>
+            </div>
+            <div class="job-items-container">
+                <div class="job-item-name"><h4>8 X 8 Flashing Shingles</h4></div>
+                <div class="job-item-input"><input type="tel" name="qtyInput" ng-model="Ctrl.params.FLHSH8"></div>
+                <div class="job-item-unit"><h3>Each</h3></div>
+            </div>
+            <div class="job-items-container">
+                <div class="job-item-name"><h4>Turbines</h4></div>
+                <div class="job-item-input"><input type="tel" name="qtyInput" ng-model="Ctrl.params.TURBNS"></div>
+                <div class="job-item-unit"><h3>Each</h3></div>
+            </div>
+            <div class="job-items-container">
+                <div class="job-item-name"><h4>Power Vents</h4></div>
+                <div class="job-item-input"><input type="tel" name="qtyInput" ng-model="Ctrl.params.PWRVNT"></div>
+                <div class="job-item-unit"><h3>Each</h3></div>
+            </div>
+            <div class="job-items-container">
+                <div class="job-item-name"><h4>Air Hawks</h4></div>
+                <div class="job-item-input"><input type="tel" name="qtyInput" ng-model="Ctrl.params.AIRHWK"></div>
+                <div class="job-item-unit"><h3>Each</h3></div>
+            </div>
+            
+            <div class="job-items-container">
+                <div class="job-item-name"><h4>Carport</h4></div>
+                <div class="job-item-input"><input type="tel" name="qtyInput" ng-model="Ctrl.params.CARPRT"></div>
+                <div class="job-item-unit"><h3>Each</h3></div>
+            </div>
+            <div class="job-items-container">
+                <div class="job-item-name"><h4>Satellite</h4></div>
+                <div class="job-item-input"><input type="tel" name="qtyInput" ng-model="Ctrl.params.SATDSH"></div>
+                <div class="job-item-unit"><h3>Sqs</h3></div>
+            </div>
+            <div class="job-items-container">
+                <div class="job-item-name"><h4>Paint</h4></div>
+                <div class="job-item-input"><input type="tel" name="qtyInput" ng-model="Ctrl.params.PAINT"></div>
+                <div class="job-item-unit"><h3>Gal.</h3></div>
+            </div>
+            <div class="job-items-container">
+                <div class="job-item-name"><h4>Caulk</h4></div>
+                <div class="job-item-input"><input type="tel" name="qtyInput" ng-model="Ctrl.params.CAULK"></div>
+                <div class="job-item-unit"><h3>Tubes</h3></div>
+            </div>
+            
+        </div>
+            
         </div>
 
         <div class="section-header">
