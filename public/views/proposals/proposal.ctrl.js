@@ -28,8 +28,10 @@ app.controller('ProposalCtrl', ['$state','$scope','evoDb','SharedSrvc','ShingleS
 
     //DOM vars
     ME.inputOpen = false;
-    ME.materialsOpen = false;
+    ME.submitOpen = false;
     ME.specialOpen = false;
+    ME.specialText = "";
+    ME.specialCost = "";
    
 
     //pricing
@@ -51,6 +53,19 @@ app.controller('ProposalCtrl', ['$state','$scope','evoDb','SharedSrvc','ShingleS
         dataObj.materialsCost = ME.materialsCost;
         PDF.newPDF(dataObj);
     }
+
+    ME.submitForApproval = function(){
+        var dataObj = {};
+        
+    }
+
+    ME.submitSpecial = function(){
+        var dataObj = {};
+        dataObj.jobID = ME.specialText;
+        dataObj.body = ME.specialText;
+        dataObj.cost = ME.specialCost;
+        DB.putSpecial(dataObj);
+    };
 
     // Called from Directive
     ME.submitItemQty = function(dObj) {

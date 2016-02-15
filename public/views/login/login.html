@@ -1,37 +1,40 @@
 <div class="page">
-    <div class="page-title-bar">
-        <h2>Log In</h2></div>
-    <div class="block-section" ng-hide="requestSuccess">
-        <div class="login-form">
-            <form name="loginForm" data-ng-submit="submitLoginForm()" novalidate>
-                <div>
-                    <label>User Name</label>
-                    <input name="username" type="text" placeholder="User Name" ng-model="_username" required>
-                </div>
-                <div>
-                    <label>Pin #</label>
-                    <input style="width:3rem;" name="pin" type="text" placeholder="PIN" ng-model="_pin" required>
-                </div>
-                <div>
-                    <button type="submit" class="button">Submit</button>
-                </div>
-            </form>
+    <div class="centered-content">
+        <div class="page-title">
+            <h2>Work Proposal</h2>
         </div>
-    </div>
-    <div>
-        <p class="login-attention" data-ng-show="loginSuccess===false">Did not find a match for Username and PIN.</p>
-        <p class="login-attention" data-ng-show="submissionInvalid">Please complete both fields.</p>
-    </div>
-    <div class="block-section" ng-show="requestSuccess">
-        <div class="login-status">
-            <h4>Logged in as {{displayname}}</h4>
-            <div>
-                <button type="button" class="button" style="width:100px; margin-right:1em;" ng-click="continueBtn()">Continue</button>
-                <button type="button" class="button" style="width:100px;" ng-click="logOut()">Log Out</button>
+        <div class="block-section" ng-hide="requestSuccess">
+            <div class="login-form">
+                <form name="loginForm" data-ng-submit="submitLoginForm()" novalidate>
+                    <div>
+                        <label>User Name</label>
+                        <input name="username" type="text" placeholder="User Name" ng-model="_username" required>
+                    </div>
+                    <div>
+                        <label>Pin #</label>
+                        <input style="width:4rem;" name="pin" type="text" placeholder="PIN" ng-model="_pin" required>
+                    </div>
+                    <div>
+                        <button type="submit" class="button">Submit</button>
+                    </div>
+                </form>
             </div>
         </div>
-    </div>
-    <div ng-show="!dataRefreshed && requestSuccess">
-        <label>Retrieving data...</label>
+        <div>
+            <p class="login-attention" data-ng-show="loginSuccess===false">Did not find a match for Username and PIN.</p>
+            <p class="login-attention" data-ng-show="submissionInvalid">Please complete both fields.</p>
+        </div>
+        <div class="block-section" ng-show="requestSuccess">
+            <div class="login-status">
+                <h4>Logged in as {{displayName}}</h4>
+                <div>
+                    <button type="button" class="button" style="width:100px; margin-right:1em;" ng-click="continueBtn()">Continue</button>
+                    <button type="button" class="button" style="width:100px;" ng-click="logOut()">Log Out</button>
+                </div>
+            </div>
+        </div>
+        <div ng-show="!dataRefreshed && requestSuccess">
+            <label>Retrieving data...</label>
+        </div>
     </div>
 </div>

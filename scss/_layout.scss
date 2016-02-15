@@ -8,6 +8,45 @@ body{
   font-weight: 700;
 }
 
+.header{
+  background:$wetAsphalt;
+  display:flex;
+  min-width:100%;
+  margin:0;
+  padding-left:2%;
+  padding-right:2%;
+  height:130px;
+  box-sizing:border-box;
+  justify-content:space-between;
+}
+
+.headerLogo{
+  height:100%;
+  float:left;
+  display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.headerContact{
+  height:100%;
+  float:right;
+  display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.underHead{
+  width:100%;
+  min-height:6px;
+  background-color:#f8f8f8;
+  box-shadow:0 1px 0 rgba(0,0,0,0.1);
+  margin:0;
+  display:block;
+  border-top:1px solid #FFF;
+  background:#eee;
+}
+
 .page{
   width:100%;
 
@@ -30,7 +69,6 @@ body{
       border-radius: 0;
       vertical-align: middle;
       padding:0;
-      
     }
     .inactive{
         background-color: $tertiary-darker;
@@ -42,8 +80,26 @@ body{
       border-left: 2px solid $asbestos-grey;
       border-right: 2px solid $asbestos-grey;
     }
+  }
 
-   
+  .centered-content{
+    display:flex;
+    justify-content:center;
+    flex-direction:column;
+  }
+
+  .page-title{
+    width:100%;
+    margin:1rem 0;
+    h2{
+      width:100%;
+      
+      font-size:1.6rem;
+      font-weight: 600;
+      display:inline-block;
+      color:#000000;
+      text-align: center;
+    }
   }
 
   .section-header{
@@ -89,7 +145,6 @@ body{
 
     }
   }
-
 }
 
 .bar-end-cap{
@@ -103,6 +158,13 @@ body{
   padding:1.5rem 2rem;
   border:2px solid $silver-grey;
   display:inline-block;
+}
+
+.block-section-width{
+  background-color: $clouds-grey;
+  padding:1rem;
+  border:2px solid $silver-grey;
+  display:block;
 }
 
 .block-outline-red{
@@ -119,9 +181,6 @@ body{
   border:2px solid $silver-grey;
   display:inline-block;
 }
-
-
-
 
 .hrule{
   border-top: 1px solid $asbestos-grey;

@@ -51,23 +51,22 @@
         </div>
         <div class="special-considerations" ng-show="Ctrl.specialOpen">
             <h4>Description</h4>
-            <textarea name=""></textarea>
+            <textarea ng-model="specialText"></textarea>
             <div>
                 <h4>Cost</h4>
-                <input type="tel" ng-model="specialCosts" placeholder="USD">
+                <input type="tel" ng-model="specialCost" placeholder="USD">
             </div>
             <button type="button" ng-click="submitSpecial()" style="margin-top:5px;">Submit</button>
         </div>
 
         <div class="section-header">
-            <h2>Materials</h2>
-            <i class="fa fa-chevron-down" ng-hide="Ctrl.materialsOpen" ng-click="Ctrl.materialsOpen =true;"></i>
-            <i class="fa fa-chevron-up" ng-show="Ctrl.materialsOpen" ng-click="Ctrl.materialsOpen =false;"></i>
+            <h2>Submit</h2>
+            <i class="fa fa-chevron-down" ng-hide="Ctrl.submitOpen" ng-click="Ctrl.submitOpen =true;"></i>
+            <i class="fa fa-chevron-up" ng-show="Ctrl.submitOpen" ng-click="Ctrl.submitOpen =false;"></i>
         </div>
-        <div class="list-container-proposal" ng-show="Ctrl.materialsOpen">
-            <div proposal-material code="{{e.Code}}" item="{{e.Item}}" qty="{{e.Qty}}" unit="{{e.Unit}}" 
-            price="{{e.Price}}" total="{{e.Total}}" amt="{{e.Amt}}"
-            ng-repeat="e in Ctrl.jobMaterials"></div> 
+        <div class="list-container-proposal" ng-show="Ctrl.submitOpen">
+            <p>When your proposal is complete, click below to submit for approval.</p>
+            <button type="button" ng-click="submitForApproval()" style="margin-top:5px;">Submit</button>
         </div>
 
 

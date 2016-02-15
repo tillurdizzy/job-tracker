@@ -110,7 +110,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
 			url: "/individual",
 			templateUrl:"views/properties/property-new-ind.html"
 		})
-
+		
 		.state('proposal', {
 			url: "/proposal",
 			templateUrl:"views/proposals/proposal.html"

@@ -2,6 +2,8 @@
 app.controller('LoginCtrl',['$scope','$state','evoDb','SharedSrvc','ShingleSrvc','ShingleCalcs','ClientSrvc','LogInSrvc',
     function ($scope,$state,evoDb,SharedSrvc,ShingleSrvc,ShingleCalcs,ClientSrvc,LogInSrvc) {
 
+    // Inject all these Services so they get initiated and are ready for use later
+
 	var DB = evoDb;
 	var S = SharedSrvc;
     var C = ClientSrvc;
@@ -11,15 +13,15 @@ app.controller('LoginCtrl',['$scope','$state','evoDb','SharedSrvc','ShingleSrvc'
     $scope.requestSuccess=false;// database query; starts out false set to true on successful query
     $scope.loginSuccess = null;// user/pword match; starts out null, set false if user entry does not match, true if does
     $scope.resultLength = 0;
-    $scope.displayname="";
-    $scope.loginObj;
+    $scope.displayName="";
+    $scope.loginObj={};
 
     var serverAvailable = true;
     $scope.dataRefreshed = false;
 
     $scope.continueBtn = function(){
         if( $scope.loginObj.userType == "client"){
-            $state.transitionTo("contract");
+            $state.transitionTo("approval");
         }else{
            if($scope.resultLength == 0){
                 $state.transitionTo("clients");
@@ -33,7 +35,7 @@ app.controller('LoginCtrl',['$scope','$state','evoDb','SharedSrvc','ShingleSrvc'
         $scope.submissionInvalid = false;
         $scope.requestSuccess=false;
         $scope.loginSuccess = null;
-        $scope.displayname="";
+        $scope.displayName="";
         S.logOut();
         L.logOut();
         DB.logOut();
@@ -49,6 +51,9 @@ app.controller('LoginCtrl',['$scope','$state','evoDb','SharedSrvc','ShingleSrvc'
             dataObj.name_user = this._username;
             dataObj.pin = this._pin;
 
+            //dataObj.name_user = "ssmith";
+            //dataObj.pin = "1234";
+
             dataObj.name_user = "smartin";
             dataObj.pin = "7663";
 
@@ -56,21 +61,21 @@ app.controller('LoginCtrl',['$scope','$state','evoDb','SharedSrvc','ShingleSrvc'
                 var result = DB.queryLogIn(dataObj)
                 .then(function(result){
                     if(result != false){
-                        // DB sets Shared Srvc var for login
+                        // DB sets basic log in data for Shared Srvc and LogIn Srvc
                         $scope.loginObj = result[0];
-                        L.setUser(result[0]);
                         var userType = $scope.loginObj.userType;
-                        $scope.dataRefreshed = false;// control display of spinning icon
+                        $scope.dataRefreshed = false;
                         $scope.loginSuccess=true;
                         $scope.requestSuccess = true;// this var changes the stage
                         $scope.clearForm();
-                        $scope.displayname = $scope.loginObj.name_first + " " + $scope.loginObj.name_last;
+                        $scope.displayName = $scope.loginObj.name_first + " " + $scope.loginObj.name_last;
                         if(userType == "client"){
-                            
+                            C.LogIn($scope.loginObj);
+                            $scope.getClientJob($scope.loginObj.jobID);
                         }else if(userType == "sales"){
                             $scope.getManagerJobs();
                         }else if(userType == "admin"){
-                             $scope.getManagerJobs();
+                            $scope.getManagerJobs();
                         }else{
 
                         }
@@ -87,7 +92,7 @@ app.controller('LoginCtrl',['$scope','$state','evoDb','SharedSrvc','ShingleSrvc'
                 $scope.loginSuccess=true;
                 $scope.requestSuccess = true;
                 $scope.clearForm();
-                $scope.displayname = "Admin Testing";
+                $scope.displayName = "Admin Testing";
                 S.setManagerID(3,"Admin Testing");
                 DB.setManagerID(3);
                 $scope.getManagerJobs();
@@ -95,6 +100,54 @@ app.controller('LoginCtrl',['$scope','$state','evoDb','SharedSrvc','ShingleSrvc'
         }else{
             $scope.submissionInvalid = true;// triggers form errors to show 
         };
+    };
+
+    $scope.getClientJob = function(jobID){
+        var dataObj = {ID:jobID}
+        var result = DB.getJobByID(dataObj)
+        .then(function(result){// result could be and empty array OR boolean false OR array with data
+            if(typeof result != "boolean"){
+                C.setData(result[0],"job");
+                $scope.getClientProperty(result[0].property);
+                $scope.getClientID(result[0].client);
+                console.log("Successful getting CLIENT JOB! data");
+            }else{
+                $scope.dataError("LoginCtrl-getClientJob()-1",result); 
+            }
+        },function(error){
+            $scope.dataError("LoginCtrl-getClientJob()-2",result);
+        });
+    };
+
+    $scope.getClientProperty = function(propID){
+        var dataObj = {ID:propID};
+        var result = DB.getPropertyByID(dataObj)
+        .then(function(result){
+            if(typeof result != "boolean"){
+                C.setData(result[0],"property");
+                console.log("Successful getting CLIENT Property! data");
+            }else{
+                $scope.dataError("LoginCtrl-getClientProperty()-1",result); 
+            }
+        },function(error){
+            $scope.dataError("LoginCtrl-getClientProperty()-2",result);
+        });
+    };
+
+    $scope.getClientID = function(clientID){
+        var dataObj = {ID:clientID};
+        var result = DB.getClientByID(dataObj)
+        .then(function(result){
+            if(typeof result != "boolean"){
+                $scope.dataRefreshed = true;
+                C.setData(result[0],"id");
+                console.log("Successful getting CLIENT ID data");
+            }else{
+                $scope.dataError("LoginCtrl-getClientID()-1",result); 
+            }
+        },function(error){
+            $scope.dataError("LoginCtrl-getClientID()-2",result);
+        });
     };
 
     $scope.getManagerJobs = function(){
@@ -127,7 +180,7 @@ app.controller('LoginCtrl',['$scope','$state','evoDb','SharedSrvc','ShingleSrvc'
         if (login===true) {
             $scope.loginSuccess=true;
             $scope.requestSuccess = true;
-            $scope.displayname=S.managerName;
+            $scope.displayName=S.managerName;
         };
     };
 

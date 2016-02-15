@@ -21,11 +21,21 @@
     <body ng-app="MyApp">
 
         <div id="site-wrapper" ng-controller="OffCanvasCtrl as Ctrl">
+            <div class="header" role="banner">
+                <div class="headerLogo">
+                    <object  type="image/svg+xml" data="img/WhiteEvolutionLogo.svg" width="200"></object>
+                </div>
+                <div></div>
+                <div class="headerContact">
+                    <img id="headerRight"  src="img/CallUsIcon.png" alt="1-713-729-7663">
+                </div>
+            </div>
+            <div class="underHead"></div>
             <div class="top-bar" ng-show="Ctrl.L.showTopBar">
                 <button ng-click="Ctrl.toggleNav()"><i class="fa fa-bars fa-2x"></i></button>
                 <h1>Evolution Roofing Systems</h1>
             </div>
-            
+           
             <div id="site-canvas">
                 <div id="off-canvas-menu" ng-class="Ctrl.menuOpen ? 'off-canvas-show' : 'off-canvas-hide'">
                     <div class="label"><h3>IDENTITY</h3></div>
@@ -54,6 +64,7 @@
     <!--Controllers-->
     <script src="views/offcanvas.ctrl.js?v=1"></script>
     <script src="views/login/login.ctrl.js?v=2"></script>
+    <script src="views/approval/approval.ctrl.js?v=2"></script>
    
     <!--Jobs-->
     <script src="views/jobs/job-new.ctrl.js?v=1"></script>

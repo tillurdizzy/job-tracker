@@ -1,11 +1,12 @@
 'use strict';
 
-app.service('evoDb',['$http','$q','SharedSrvc',function eventQueries($http,$q,SharedSrvc){
+app.service('evoDb',['$http','$q','SharedSrvc','LogInSrvc',function eventQueries($http,$q,SharedSrvc,LogInSrvc){
 	var self = this;
 	self.lastResult = [];
 	self.ME = "evoDB: ";
 	self.managerID = "";
 	var S = SharedSrvc;
+	var L = LogInSrvc;
 	var serverAvailable = false;
 
 	self.setManagerID = function(id){
@@ -86,6 +87,7 @@ app.service('evoDb',['$http','$q','SharedSrvc',function eventQueries($http,$q,Sh
      			self.managerID = data[0].PRIMARY_ID;
      			self.managerName = data[0].name_first + " " + data[0].name_last;
      			S.setManagerID(self.managerID,self.managerName);
+     			L.setUser(data[0]);
      			deferred.resolve(data);
 			}else{
 				// 0 length means password/username match not found
@@ -99,6 +101,18 @@ app.service('evoDb',['$http','$q','SharedSrvc',function eventQueries($http,$q,Sh
 	    });
 	    return deferred.promise;
 	};
+
+	self.putLogIn = function(dataObj){
+		var deferred = $q.defer();
+		$http({method: 'POST', url: 'views/login/putUser.php',data:dataObj}).
+		success(function(data, status, headers, config) {
+     		deferred.resolve(data);
+	    }).
+	    error(function(data, status, headers, config) {
+			deferred.reject(data);
+	    });
+	    return deferred.promise;
+	}
 
 	
 	self.getAllClients = function(){
@@ -177,7 +191,7 @@ app.service('evoDb',['$http','$q','SharedSrvc',function eventQueries($http,$q,Sh
 	    return deferred.promise; //return the data
 	};
 
-	// Triggered after successful log in and wheever user chooses Refresh data buttons
+	// Triggered after successful log in and whenever user chooses Refresh data buttons
 	// When successful, will trigger getManagerClients, which will then trigger getManagerProperties
 	self.getManagerJobs = function(){
 		if(S.managerID === ""){
@@ -191,6 +205,56 @@ app.service('evoDb',['$http','$q','SharedSrvc',function eventQueries($http,$q,Sh
 				self.lastResult = data;
 				self.getManagerClients();
 				S.setManagerJobsList(data);
+     			deferred.resolve(data);
+     		}else{
+				deferred.resolve(false);
+     		}
+	    }).
+		error(function(data, status, headers, config) {
+			deferred.reject(false);
+	    });
+	    return deferred.promise; //return the data
+	};
+
+	self.getJobByID = function(dataObj){
+		var deferred = $q.defer();
+		$http({method: 'POST', url: 'js/php/getJobByID.php',data:dataObj}).
+		success(function(data, status) {
+			if(typeof data != 'string'){
+				self.lastResult = data;
+     			deferred.resolve(data);
+     		}else{
+				deferred.resolve(false);
+     		}
+	    }).
+		error(function(data, status, headers, config) {
+			deferred.reject(false);
+	    });
+	    return deferred.promise; //return the data
+	};
+
+	self.getClientByID = function(dataObj){
+		var deferred = $q.defer();
+		$http({method: 'POST', url: 'js/php/getClientByID.php',data:dataObj}).
+		success(function(data, status) {
+			if(typeof data != 'string'){
+				self.lastResult = data;
+     			deferred.resolve(data);
+     		}else{
+				deferred.resolve(false);
+     		}
+	    }).
+		error(function(data, status, headers, config) {
+			deferred.reject(false);
+	    });
+	    return deferred.promise; //return the data
+	};
+	self.getPropertyByID = function(dataObj){
+		var deferred = $q.defer();
+		$http({method: 'POST', url: 'js/php/getPropertyByID.php',data:dataObj}).
+		success(function(data, status) {
+			if(typeof data != 'string'){
+				self.lastResult = data;
      			deferred.resolve(data);
      		}else{
 				deferred.resolve(false);
@@ -219,6 +283,18 @@ app.service('evoDb',['$http','$q','SharedSrvc',function eventQueries($http,$q,Sh
 	self.updateDetails = function(dataObj){
 		var deferred = $q.defer();
 		$http({method: 'POST', url: 'js/php/updateDetails.php',data:dataObj}).
+		success(function(data, status, headers, config) {
+     		deferred.resolve(data);
+	    }).
+	    error(function(data, status, headers, config) {
+			deferred.reject(data);
+	    });
+	    return deferred.promise;
+	}
+
+	self.putSpecial = function(dataObj){
+		var deferred = $q.defer();
+		$http({method: 'POST', url: 'views/proposal/putSpecial.php',data:dataObj}).
 		success(function(data, status, headers, config) {
      		deferred.resolve(data);
 	    }).
