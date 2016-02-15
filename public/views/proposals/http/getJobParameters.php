@@ -24,10 +24,10 @@ while ($row = mysqli_fetch_object($result)) {
 	$oneVO->PRMITR = $row->PRMITR;
 	$oneVO->LOWSLP = $row->LOWSLP;
 	$oneVO->VALLEY = $row->VALLEY;
-	$oneVO->LEDBF1 = $row->LEDBF1;
-	$oneVO->LEDBF2 = $row->LEDBF2;
-	$oneVO->LEDBF3 = $row->LEDBF3;
-	$oneVO->LEDBF4 = $row->LEDBF4;
+	$oneVO->LBF1 = $row->LBF1;
+	$oneVO->LBF2 = $row->LBF2;
+	$oneVO->LBF3 = $row->LBF3;
+	$oneVO->LBF4 = $row->LBF4;
 	$oneVO->JKVNT8 = $row->JKVNT8;
 	$oneVO->FLHSH8 = $row->FLHSH8;
 	$oneVO->TURBNS = $row->TURBNS;
@@ -37,6 +37,7 @@ while ($row = mysqli_fetch_object($result)) {
 	$oneVO->PAINT = $row->PAINT;
 	$oneVO->CAULK = $row->CAULK;
 	$oneVO->SATDSH = $row->SATDSH;
+	$oneVO->CARPRT = $row->CARPRT;
 	array_push( $resultValueObjects, $oneVO );
 }
 echo json_encode($resultValueObjects);

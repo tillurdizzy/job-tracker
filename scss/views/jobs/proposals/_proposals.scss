@@ -28,7 +28,6 @@ $material-height:1em;
 			margin:0 4px 0 0;
 			padding-left:3px;
 			h5{
-				
 				text-align: center;
 		    }
 		}
@@ -40,8 +39,7 @@ $material-height:1em;
 			
 			margin:0 4px 0 0;
 			padding-left:3px;
-			h5{
-				
+			h5{				
 				text-align: center;
 		    }
 		}
@@ -71,13 +69,11 @@ $material-height:1em;
 		}
 
 		.right{
-
 			h5{
 				margin-right:.5em;
 				text-align: right;
 		    }
 		}
-
 	}
 	
 	.job-items-container{
@@ -85,6 +81,10 @@ $material-height:1em;
 		margin:4px 0 0 0;
 		height:$job-item-height;
 		background-color:$clouds-grey;
+		button, .button{
+			float:right;
+			padding:0;
+		}
 		.job-item-name{
 			height:$job-item-height;
 			width:200px;

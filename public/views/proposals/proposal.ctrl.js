@@ -19,11 +19,7 @@ app.controller('ProposalCtrl', ['$state','$scope','evoDb','SharedSrvc','ShingleS
     ME.selectedPropertyObj = S.selectedPropertyObj;
     ME.proposalDate = ME.selectedJobObj.dateProposal;
 
-    // These 2 lists basically tracking the same data... user input of roof elements.
-    // jobInput is how items inserted and retrieved from database... only includes items with non-zero values and has job ID
-    // jobInputFields includes ALL fields and used for repeat on the view and to pass to CALCS for pricing calculations
-    ME.jobInput = [];
-    ME.jobInputFields = ME.SRVC.inputFields;
+    
     ME.jobMaterials = [];
 
     //DOM vars
@@ -33,10 +29,11 @@ app.controller('ProposalCtrl', ['$state','$scope','evoDb','SharedSrvc','ShingleS
     ME.specialText = "";
     ME.specialCost = "";
 
-    ME.params = {FIELD:140,
+    ME.params = {jobID:0,
+        FIELD:0,
         TOPRDG:0,
-        RAKRDG:0,
-        PRMETR:0,
+        RKERDG:0,
+        PRMITR:0,
         VALLEY:0,
         LBF1:0,
         LBF2:0,
@@ -87,68 +84,36 @@ app.controller('ProposalCtrl', ['$state','$scope','evoDb','SharedSrvc','ShingleS
         DB.putSpecial(dataObj);
     };
 
-    // Called from Directive
-    ME.submitItemQty = function(dObj) {
-        var itemCode = dObj.itemCode;
-
-        // Update item in jobInput list 
-       
-        for (var x = 0; x < ME.jobInput.length; x++) {
-            if (ME.jobInput[x].Code == itemCode) {
-                ME.jobInput[x].Qty = dObj.qty;
-                continue;
-            }
-        }
-        // Create data object
-        var dataObj = {};
-        dataObj.ID = ME.selectedJobObj.PRIMARY_ID;
-        dataObj.Code = dObj.itemCode;
-        dataObj.Qty = dObj.qty;
-
-       
-        //ME.SRVC.updateJobItem(dataObj);
-
-
-        // Update pricing
-       //mergeInputLists();
-    };
-
-    var mergeInputLists = function() {
-        // Place any recorded Qty from jobInput into jobInputFields for view display
-        for (var i = 0; i < ME.jobInputFields.length; i++) {
-            var itemCode = ME.jobInputFields[i].Code;
-            ME.jobInputFields[i].Qty = 0;
-            for (var x = 0; x < ME.jobInput.length; x++) {
-                if (ME.jobInput[x].Code == itemCode) {
-                    ME.jobInputFields[i].Qty = ME.jobInput[x].Qty;
-                    continue;
-                }
-            };
-        };
-        //ME.jobMaterials = CALCS.updatePrices(ME.jobInputFields);
-        //ME.materialsCost = CALCS.runningTotal;
-    };
-
-
-    var initPage = function() {
-        CALCS.resetService();
-        ME.jobInputFields = ME.SRVC.inputFields.slice(0);
-        getJobInput();
-    };
-
-    var getJobInput = function() {
-        var jobData = ME.SRVC.getJobInput()
-            .then(function(jobData) {
-                if (jobData != false) { // false just meaqns there were no records found
-                    ME.jobInput = jobData;
-                    mergeInputLists();
+    ME.submitParams = function() {
+        var result = ME.SRVC.submitParams(ME.params)
+            .then(function(result) {
+                if (result != false) { 
+                    alert("OK");
                 } else {
-                    mergeInputLists();
+                   
                 }
             }, function(error) {
 
             });
     };
+
+
+    var getJobParameters = function() {
+        var jobData = ME.SRVC.getJobParameters()
+            .then(function(jobData) {
+                if (jobData != false) { 
+                    setParams(jobData[0]);
+                } else {
+                   
+                }
+            }, function(error) {
+
+            });
+    };
+
+    var setParams = function(dataObj){
+        ME.params = dataObj;
+    }
 
     ME.dataError = function(loc, error) {
         console.log(loc + " : " + error);
@@ -160,6 +125,11 @@ app.controller('ProposalCtrl', ['$state','$scope','evoDb','SharedSrvc','ShingleS
        		$state.transitionTo('login');
        }
     });
+
+    var initPage = function() {
+        CALCS.resetService();
+        getJobParameters();
+    };
 
     initPage();
 

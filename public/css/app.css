@@ -980,13 +980,17 @@ textarea {
     margin: 4px 0 0 0;
     height: 2.25em;
     background-color: #ECF0F1; }
+    .list-container-proposal .job-items-container button, .list-container-proposal .job-items-container .button {
+      float: right;
+      padding: 0; }
     .list-container-proposal .job-items-container .job-item-name {
       height: 2.25em;
-      width: 180px;
+      width: 200px;
       background-color: #2C3E50;
       color: #fff;
       margin: 0 4px 0 0;
-      padding-left: 3px; }
+      padding-left: 3px;
+      overflow: hidden; }
       .list-container-proposal .job-items-container .job-item-name h4 {
         line-height: 2.25em;
         vertical-align: middle;

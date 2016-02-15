@@ -210,13 +210,37 @@ app.service('SharedSrvc',['$rootScope',function sharedVars($rootScope){
 	self.roofDeckOptions = [
 		{label:"Plywood",id:1},
 		{label:"Tongue and Groove",id:2},
-		{label:"Low Slope",id:3}];
+		{label:"Wood Shingles",id:3}];
 
 	self.shingleTypeOptions = [
 		{label:"Composition",id:1},
 		{label:"Asphalt",id:2},
 		{label:"Ceramic",id:3},
 		{label:"Wood",id:4}];
+
+	self.pitchOptions = [
+		{label:"Flat (0-2)",id:1},
+		{label:"Low (3-6)",id:2},
+		{label:"Medium (7-9)",id:3},
+		{label:"Steep (8+)",id:4},
+		{label:"Multi-level",id:5}];
+
+	self.multiLevelOptions = [
+		{label:"Flat (0-2)",id:1},
+		{label:"Low (3-6)",id:2},
+		{label:"Medium (7-9)",id:3},
+		{label:"Steep (8+)",id:4}];
+
+	self.percentOptions = [
+		{label:"10%",id:1},
+		{label:"20%",id:2},
+		{label:"30%",id:3},
+		{label:"40%",id:4},
+		{label:"50%",id:5},
+		{label:"60%",id:6},
+		{label:"70%",id:7},
+		{label:"80%",id:8},
+		{label:"90%",id:9}];
 
 	self.coveredLayerOptions = [
 		{label:"None (Deck)",id:1},
@@ -234,8 +258,8 @@ app.service('SharedSrvc',['$rootScope',function sharedVars($rootScope){
 	
 	self.edgeDetail = [
 		{label:"None",id:1},
-		{label:"Pre-painted, no enhancement",id:2},
-		{label:"Enhanced",id:3}];
+		{label:"Galvanized",id:2},
+		{label:"Pre-painted",id:3}];
 
 	self.valleyOptions = [
 		{label:"Shingle-laced",id:1},
@@ -244,29 +268,24 @@ app.service('SharedSrvc',['$rootScope',function sharedVars($rootScope){
 
 	self.ridgeCapShingles = [
 		{label:"Standard Three-Tab",id:1},
-		{label:"Hip and Ridge Cap",id:2}];
+		{label:"Z-Ridge/9 in.",id:2},
+		{label:"Premium/12 in.",id:2}];
 
 	self.ventOptions = [
-		{label:"Ridge vents",id:1},
-		{label:"Static vents",id:2},
-		{label:"Turbine vents",id:3},
-		{label:"Power vents",id:4},
-		{label:"Solar vents",id:5}];
+		{label:"Ridge Vents",id:1},
+		{label:"Other",id:2}];
+
+	self.ventConfig = [
+		{label:"Static/RV151",id:1},
+		{label:"Turbine",id:2},
+		{label:"Power",id:3},
+		{label:"Solar",id:4}];
 
 	self.pitchAverages = [
 		{label:"Low",id:1},
 		{label:"Medium",id:2},
 		{label:"High",id:3}];
 
-	self.roofPenetrations = [
-		{label:"Chimney",id:1},
-		{label:"Pipe Jacks",id:2},
-		{label:"Skylights",id:3},
-		{label:"Joints",id:4},
-		{label:"Drains",id:5},
-		{label:"Scuppers",id:6},
-		{label:"Equipment",id:7}];
 	
-
 	
 }]);

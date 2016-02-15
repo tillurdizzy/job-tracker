@@ -62,6 +62,7 @@ app.service('evoDb',['$http','$q','SharedSrvc','LogInSrvc',function eventQueries
 			self.putJobParams(dataObj);
 			self.putMaterialOptions(dataObj);
 			self.putSpecialConsiderations(dataObj);
+			self.putMultiLevel(dataObj);
      		deferred.resolve(data);
 	    }).
 	    error(function(data, status, headers, config) {
@@ -97,6 +98,18 @@ app.service('evoDb',['$http','$q','SharedSrvc','LogInSrvc',function eventQueries
 	self.putSpecialConsiderations = function(dataObj){
 		var deferred = $q.defer();
 		$http({method: 'POST', url: 'views/jobs/http/insertSpecialConsiderations.php',data:dataObj}).
+		success(function(data, status, headers, config) {
+     		deferred.resolve(data);
+	    }).
+	    error(function(data, status, headers, config) {
+			deferred.reject(data);
+	    });
+	    return deferred.promise;
+	};
+
+	self.putMultiLevel = function(dataObj){
+		var deferred = $q.defer();
+		$http({method: 'POST', url: 'views/jobs/http/insertMultiLevel.php',data:dataObj}).
 		success(function(data, status, headers, config) {
      		deferred.resolve(data);
 	    }).

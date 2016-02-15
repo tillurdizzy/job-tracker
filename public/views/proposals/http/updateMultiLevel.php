@@ -10,12 +10,21 @@ define( "DATABASE_NAME", "jobtracker");
 
 $con = mysqli_connect(DATABASE_SERVER, DATABASE_USERNAME, DATABASE_PASSWORD,DATABASE_NAME) or die ('cannot reach database');
 $jobID = mysqli_real_escape_string($con,$data->jobID);
-$paramCode = mysqli_real_escape_string($con,$data->paramCode);
-$count = mysqli_real_escape_string($con,$data->count);
+$LEVONE = mysqli_real_escape_string($con,$data->LEVONE);
+$LEVTWO = mysqli_real_escape_string($con,$data->LEVTWO);
+$LEVTHR = mysqli_real_escape_string($con,$data->LEVTHR);
+$LEVFOU = mysqli_real_escape_string($con,$data->LEVFOU);
+$LEVFIV = mysqli_real_escape_string($con,$data->LEVFIV);
+$LEVSIX = mysqli_real_escape_string($con,$data->LEVSIX);
 
-$query = "UPDATE job_parameters SET 
-count='".$count."'
-WHERE paramCode='".$paramCode."' AND jobID='".$jobID."'";
+$query = "UPDATE multi_level SET 
+LEVONE='".$LEVONE."',
+LEVTWO='".$LEVTWO."',
+LEVTHR='".$LEVTHR."',
+LEVFOU='".$LEVFOU."',
+LEVFIV='".$LEVFIV."',
+LEVSIX='".$LEVSIX."'
+WHERE jobID='".$jobID."'";
 
 $qry_res = mysqli_query($con,$query);
 

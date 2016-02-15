@@ -24,7 +24,7 @@ app.controller('NewPropertyIndCtrl',['$state','$scope','evoDb','SharedSrvc','und
     ME.roofVents=ME.S.ventOptions[0];
     ME.pitchAvg = ME.S.pitchAverages[0];
 
-    ME.formFields = ['','propertyName','streetAddress','propertyCity','propertyState','propertyZip',
+    ME.formFields = ['','propertyName','streetAddress',
         'numLevels','shingleGrade','roofDeck','coveredLayer','layersCovering','edgeDetail',
         'valleyDetail','ridgeCap','roofVents','SUBMIT'];
 
@@ -74,7 +74,7 @@ app.controller('NewPropertyIndCtrl',['$state','$scope','evoDb','SharedSrvc','und
         };
     };
 
-    ME.submit_streetAddress=function(){//bldg name
+    ME.submit_streetAddress=function(){
         ME.inputMsg = "";
         ME.isError = false;
         if(ME.streetAddress==""){
@@ -85,40 +85,9 @@ app.controller('NewPropertyIndCtrl',['$state','$scope','evoDb','SharedSrvc','und
         };
     };
 
-    ME.submit_propertyCity=function(){//street
-        ME.inputMsg = "";
-        ME.isError = false;
-        if(ME.propertyCity==""){
-            ME.isError = true;
-            ME.inputMsg = "This field cannot be blank.";
-        }else{
-            ME.goNext('propertyCity');
-        };
-    };
+   
 
-    ME.submit_propertyState=function(){//city
-        ME.inputMsg = "";
-        ME.isError = false;
-       if(ME.propertyState==""){
-            ME.isError = true;
-            ME.inputMsg = "This field cannot be blank.";
-        }else{
-            ME.goNext('propertyState');
-        };
-    };
-
-    ME.submit_propertyZip=function(){//state
-        ME.inputMsg = "";
-        ME.isError = false;
-       if(ME.propertyZip==""){
-            ME.isError = true;
-            ME.inputMsg = "This field cannot be blank.";
-        }else{
-            ME.goNext('propertyZip');
-        };
-    };
-
-    ME.submit_numLevels=function(){//zip
+    ME.submit_numLevels=function(){
         ME.inputMsg = "";
         ME.isError = false;
        if(ME.numLevels==""){
@@ -210,7 +179,7 @@ app.controller('NewPropertyIndCtrl',['$state','$scope','evoDb','SharedSrvc','und
      ME.submit_roofVents=function(){
         ME.inputMsg = "";
         ME.isError = false;
-       if(ME.roofVents==""){
+       if(ME.roofVents=="6"){
             ME.isError = true;
             ME.inputMsg = "This field cannot be blank.";
         }else{

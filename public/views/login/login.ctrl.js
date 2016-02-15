@@ -56,8 +56,8 @@ app.controller('LoginCtrl',['$scope','$state','evoDb','SharedSrvc','ShingleSrvc'
             //dataObj.name_user = "ssmith";
             //dataObj.pin = "1234";
 
-            //dataObj.name_user = "smartin";
-            //dataObj.pin = "7663";
+            dataObj.name_user = "smartin";
+            dataObj.pin = "7663";
 
             //dataObj.name_user = "dsheives";
             //dataObj.pin = "9954";

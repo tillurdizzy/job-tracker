@@ -17,13 +17,19 @@
         </div>
     </div>
 
-    <div class="ez-form-item" ng-show="Ctrl.inputField=='streetAddress'">
+    <div class="ez-form-item" ng-show="Ctrl.inputField=='propertyAddress'">
         <h2>Property</h2>
         <h3>Street Address</h3>
-        <input type="text" ng-model="Ctrl.streetAddress" />
+         <input type="text" ng-model="Ctrl.streetAddress" />
+        <h3>City</h3>
+        <input type="text" ng-model="Ctrl.propertyCity" />
+        <h3>State</h3>
+        <input type="text" ng-model="Ctrl.propertyState" />
+        <h3>Zip</h3>
+        <input type="text" ng-model="Ctrl.propertyZip" />
         <div class="page-nav">
             <div class="page-nav-left">
-                <i ng-click="Ctrl.goPrevious('streetAddress')" class="fa fa-arrow-circle-left fa-3x"></i>
+                <i ng-click="Ctrl.goPrevious('propertyName')" class="fa fa-arrow-circle-left fa-3x"></i>
             </div>
             <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">
                 {{Ctrl.inputMsg}}
@@ -35,56 +41,7 @@
     </div>
 
 
-    <div class="ez-form-item" ng-show="Ctrl.inputField == 'propertyCity'">
-        <h2>Property</h2>
-        <h3>City</h3>
-        <input type="text" ng-model="Ctrl.propertyCity" />
-        <div class="page-nav">
-            <div class="page-nav-left">
-                <i ng-click="Ctrl.goPrevious('propertyCity')" class="fa fa-arrow-circle-left fa-3x"></i>
-            </div>
-            <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">
-                {{Ctrl.inputMsg}}
-            </div>
-            <div class="page-nav-right">
-                <i ng-click="Ctrl.submit_propertyCity();" class="fa fa-arrow-circle-right fa-3x"></i>
-            </div>
-        </div>
-    </div>
 
-
-    <div class="ez-form-item" ng-show="Ctrl.inputField == 'propertyState'">
-        <h2>Property</h2>
-        <h3>State</h3>
-        <input type="text" ng-model="Ctrl.propertyState" />
-        <div class="page-nav">
-            <div class="page-nav-left">
-                <i ng-click="Ctrl.goPrevious('propertyState')" class="fa fa-arrow-circle-left fa-3x"></i>
-            </div>
-            <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">
-                {{Ctrl.inputMsg}}
-            </div>
-            <div class="page-nav-right">
-                <i ng-click="Ctrl.submit_propertyState();" class="fa fa-arrow-circle-right fa-3x"></i>
-            </div>
-        </div>
-    </div>
-    <div class="ez-form-item" ng-show="Ctrl.inputField == 'propertyZip'">
-        <h2>Property</h2>
-        <h3>Zip</h3>
-        <input type="text" ng-model="Ctrl.propertyZip" />
-        <div class="page-nav">
-            <div class="page-nav-left">
-                <i ng-click="Ctrl.goPrevious('propertyZip')" class="fa fa-arrow-circle-left fa-3x"></i>
-            </div>
-            <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">
-                {{Ctrl.inputMsg}}
-            </div>
-            <div class="page-nav-right">
-                <i ng-click="Ctrl.submit_propertyZip();" class="fa fa-arrow-circle-right fa-3x"></i>
-            </div>
-        </div>
-    </div>
     <div class="ez-form-item" ng-show="Ctrl.inputField == 'numLevels'">
         <h2>Property</h2>
         <h3>Levels (number of stories)</h3>
@@ -103,6 +60,48 @@
             </div>
         </div>
     </div>
+
+    <div class="ez-form-item" ng-show="Ctrl.inputField == 'roofPitch'">
+        <h2>Existing Roof Assembly</h2>
+        <h3>Pitch</h3>
+        <div class="dropDownSelector">
+            <select ng-model="Ctrl.roofPitch" ng-options="c.label for c in Ctrl.S.pitchOptions"></select>
+        </div>
+        <div ng-show="Ctrl.roofPitch=='6'">
+            <div class="dropDownSelector">
+                <select ng-model="Ctrl.multiLevel.levelOne.pitch" ng-options="c.label for c in Ctrl.S.multiLevelOptions"></select>
+                <select ng-model="Ctrl.multiLevel.levelOne.percent" ng-options="c.label for c in Ctrl.S.percentOptions"></select>
+            </div>
+            <div class="dropDownSelector">
+                <select ng-model="Ctrl.multiLevel.levelTwo.pitch" ng-options="c.label for c in Ctrl.S.multiLevelOptions"></select>
+                <select ng-model="Ctrl.multiLevel.levelTwo.percent" ng-options="c.label for c in Ctrl.S.percentOptions"></select>
+            </div>
+            <div class="dropDownSelector">
+                <select ng-model="Ctrl.multiLevel.levelThree.pitch" ng-options="c.label for c in Ctrl.S.multiLevelOptions"></select>
+                <select ng-model="Ctrl.multiLevel.levelThree.percent" ng-options="c.label for c in Ctrl.S.percentOptions"></select>
+            </div>
+            <div class="dropDownSelector">
+                <select ng-model="Ctrl.multiLevel.levelFour.pitch" ng-options="c.label for c in Ctrl.S.multiLevelOptions"></select>
+                <select ng-model="Ctrl.multiLevel.levelFour.percent" ng-options="c.label for c in Ctrl.S.percentOptions"></select>
+            </div>
+            <div class="dropDownSelector">
+                <select ng-model="Ctrl.multiLevel.levelFive.pitch" ng-options="c.label for c in Ctrl.S.multiLevelOptions"></select>
+                <select ng-model="Ctrl.multiLevel.levelFive.percent" ng-options="c.label for c in Ctrl.S.percentOptions"></select>
+            </div>
+        </div>
+        <div class="page-nav">
+            <div class="page-nav-left">
+                <i ng-click="Ctrl.goPrevious('shingleGrade')" class="fa fa-arrow-circle-left fa-3x"></i>
+            </div>
+            <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">
+                {{Ctrl.inputMsg}}
+            </div>
+            <div class="page-nav-right">
+                <i ng-click="Ctrl.submit_shingleGrade();" class="fa fa-arrow-circle-right fa-3x"></i>
+            </div>
+        </div>
+    </div>
+
     <div class="ez-form-item" ng-show="Ctrl.inputField == 'shingleGrade'">
         <h2>Existing Roof Assembly</h2>
         <h3>Shingle Grade</h3>
@@ -141,26 +140,7 @@
         </div>
     </div>
 
-    <div class="ez-form-item" ng-show="Ctrl.inputField == 'coveredLayer'">
-        <h2>Existing Roof Assembly</h2>
-        <h3>Under-layer (Previous roofing installation)</h3>
-       
-        <div class="dropDownSelector">
-            <select ng-model="Ctrl.coveredLayer" ng-options="c.label for c in Ctrl.S.coveredLayerOptions"></select>
-        </div>
-       
-        <div class="page-nav">
-            <div class="page-nav-left">
-                <i ng-click="Ctrl.goPrevious('coveredLayer')" class="fa fa-arrow-circle-left fa-3x"></i>
-            </div>
-            <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">
-                {{Ctrl.inputMsg}}
-            </div>
-            <div class="page-nav-right">
-                <i ng-click="Ctrl.submit_coveredLayer();" class="fa fa-arrow-circle-right fa-3x"></i>
-            </div>
-        </div>
-    </div>
+   
 
     <div class="ez-form-item" ng-show="Ctrl.inputField == 'layersCovering'">
         <h2>Existing Roof Assembly</h2>
@@ -186,6 +166,9 @@
 
         <div class="dropDownSelector">
             <select ng-model="Ctrl.edgeDetail" ng-options="c.label for c in Ctrl.S.edgeDetail"></select>
+        </div>
+        <div>
+            <label><input type="checkbox" ng-model="Ctrl.edgeTrim"></input>Enhanced with trim</label>
         </div>
 
         <div class="page-nav">
@@ -222,7 +205,7 @@
         <h2>Existing Roof Assembly</h2>
         <h3>Ridge Detail</h3>
         <div class="dropDownSelector">
-            <select ng-model="Ctrl.ridgeCap" ng-options="c.label for c in Ctrl.S.shingleGradeOptions"></select>
+            <select ng-model="Ctrl.ridgeCap" ng-options="c.label for c in Ctrl.S.ridgeCapShingles"></select>
         </div>
         <div class="page-nav">
             <div class="page-nav-left">
@@ -315,7 +298,7 @@
         <button type="button" ng-click="Ctrl.clearForm()">Reset</button>
     </div>
 
-    <div class="review-section">
+    <div class="review-section" ng-show="Ctrl.inputField == 'SUBMIT'">
         <div>
             <h4 style="margin-bottom:.5rem;">Property:</h4>
             <h3>Owner: {{Ctrl.clientName}}</h3>
@@ -327,15 +310,15 @@
         </div>
         <div style="margin-left:1rem;">
             <h4 style="margin-bottom:.5rem;">Existing Conditions:</h4>
-            <h3>Levels: {{Ctrl.numLevels.label}}</h3>
-            <h3>Shingle Grade: {{Ctrl.shingleGrade.label}}</h3>
-            <h3>Decking: {{Ctrl.roofDeck.label}}</h3>
-            <h3>Underlayer: {{Ctrl.coveredLayer.label}}</h3>
-            <h3>Layers: {{Ctrl.layersCovering.label}}</h3>
-            <h3>Edge Detail: {{Ctrl.edgeDetail.label}}</h3>
-            <h3>Valley Detail: {{Ctrl.valleyDetail.label}}</h3>
-            <h3>Ridge Cap: {{Ctrl.ridgeCap.label}}</h3>
-            <h3>Ventilation: {{Ctrl.roofVents.label}}</h3>
+            <h3>Levels: <span class="bold">{{Ctrl.numLevels.label}}</span></h3>
+            <h3>Shingle Grade: <span class="bold">{{Ctrl.shingleGrade.label}}</span></h3>
+            <h3>Decking: <span class="bold">{{Ctrl.roofDeck.label}}</span></h3>
+            <h3>Underlayer: <span class="bold">{{Ctrl.coveredLayer.label}}</span></h3>
+            <h3>Layers: <span class="bold">{{Ctrl.layersCovering.label}}</span></h3>
+            <h3>Edge Detail: <span class="bold">{{Ctrl.edgeDetail.label}}</span></h3>
+            <h3>Valley Detail: <span class="bold">{{Ctrl.valleyDetail.label}}</span></h3>
+            <h3>Ridge Cap: <span class="bold">{{Ctrl.ridgeCap.label}}</span></h3>
+            <h3>Ventilation: <span class="bold">{{Ctrl.roofVents.label}}</span></h3>
         </div>
     </div>
    
