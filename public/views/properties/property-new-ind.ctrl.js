@@ -7,6 +7,7 @@ app.controller('NewPropertyIndCtrl',['$state','$scope','evoDb','SharedSrvc','und
     ME.managerName = ME.S.managerName;
     ME.selectedClientObj = ME.S.selectedClientObj;
 
+    //Form models
     ME.clientName = ME.selectedClientObj.name_first + " " + ME.selectedClientObj.name_last;
     ME.propertyName = ME.selectedClientObj.name_last + " Residence";
     ME.streetAddress = ME.selectedClientObj.street;
@@ -14,28 +15,54 @@ app.controller('NewPropertyIndCtrl',['$state','$scope','evoDb','SharedSrvc','und
     ME.propertyState=ME.selectedClientObj.state;
     ME.propertyZip=ME.selectedClientObj.zip;
     ME.numLevels=ME.S.levelOptions[0];
-    ME.shingleGrade=ME.S.shingleGradeOptions[0];;
+    ME.roofPitch = ME.S.pitchOptions[0];
+    ME.shingleGrade=ME.S.shingleGradeOptions[0];
     ME.roofDeck=ME.S.roofDeckOptions[0];
-    ME.coveredLayer=ME.S.coveredLayerOptions[0];
-    ME.layersCovering=ME.S.numbersToFive[0];
+    ME.layerToRemove=ME.S.numbersToFive[0];
     ME.edgeDetail=ME.S.edgeDetail[0];
+    ME.edgeTrim=false;
     ME.valleyDetail=ME.S.valleyOptions[0];
     ME.ridgeCap=ME.S.ridgeCapShingles[0];
     ME.roofVents=ME.S.ventOptions[0];
-    ME.pitchAvg = ME.S.pitchAverages[0];
 
-    ME.formFields = ['','propertyName','streetAddress',
-        'numLevels','shingleGrade','roofDeck','coveredLayer','layersCovering','edgeDetail',
+    ME.multiLevelObj = {propertyID:0,LEVONE:0,LEVTWO:0,LEVTHR:0,LEVFOU:0,LEVFIV:0,LEVSIX:0};
+    ME.multiVentObj = {propertyID:0,TURBNS:0,STATIC:0,PWRVNT:0,AIRHWK:0,SLRVNT:0};
+    // Form fields to show and in this order
+    // the goPrevious and goNext use this list to find destination
+    ME.formFields = ['','propertyName','propertyAddress',
+        'numLevels','roofPitch','shingleGrade','roofDeck','layerToRemove','edgeDetail',
         'valleyDetail','ridgeCap','roofVents','SUBMIT'];
+
+    ME.multiLevelModel = {
+        levelOne:{pitch:ME.S.multiLevelOptions[0],percent:ME.S.percentOptions[0]},
+        levelTwo:{pitch:ME.S.multiLevelOptions[0],percent:ME.S.percentOptions[0]},
+        levelThree:{pitch:ME.S.multiLevelOptions[0],percent:ME.S.percentOptions[0]},
+        levelFour:{pitch:ME.S.multiLevelOptions[0],percent:ME.S.percentOptions[0]},
+        levelFive:{pitch:ME.S.multiLevelOptions[0],percent:ME.S.percentOptions[0]},
+        levelSix:{pitch:ME.S.multiLevelOptions[0],percent:ME.S.percentOptions[0]}
+    };
+
+    ME.multiVentModel = {
+        TURBNS:ME.S.numbersToTen[0],
+        STATIC:ME.S.numbersToTen[0],
+        PWRVNT:ME.S.numbersToTen[0],
+        AIRHWK:ME.S.numbersToTen[0],
+        SLRVNT:ME.S.numbersToTen[0]
+    };
 
     var numFields = ME.formFields.length-2;
     ME.inputField = ME.formFields[1];
     ME.inputMsg = "Field 1 of " + numFields;
     ME.isError = false;
 
+    // ME.DOM used to store vars that are only used to show/hide DOM elements
+    ME.DOM = {};
+    ME.DOM.isMultiLevel = false;
+    ME.DOM.isMultiVented = false;
+
     ME.goNewJob = function(){
         $state.transitionTo('addNewJob');
-    }
+    };
 
     ME.goPrevious = function(_from){
         var currentField = returnNdx(_from);
@@ -55,13 +82,11 @@ app.controller('NewPropertyIndCtrl',['$state','$scope','evoDb','SharedSrvc','und
         if(ME.inputField == "SUBMIT"){
              ME.inputMsg = "";
         }
-       
     };
 
     var returnNdx = function(item){
-        console.log("Going to "  + underscore.indexOf(ME.formFields,item));
         return underscore.indexOf(ME.formFields,item);
-    }
+    };
 
     ME.submit_propertyName=function(){
         ME.inputMsg = "";
@@ -74,18 +99,16 @@ app.controller('NewPropertyIndCtrl',['$state','$scope','evoDb','SharedSrvc','und
         };
     };
 
-    ME.submit_streetAddress=function(){
+    ME.submit_propertyAddress=function(){
         ME.inputMsg = "";
         ME.isError = false;
-        if(ME.streetAddress==""){
+        if(ME.streetAddress==="" || ME.propertyCity==="" || ME.propertyState==="" || ME.propertyZip===""){
             ME.isError = true;
-            ME.inputMsg = "This field cannot be blank.";
+            ME.inputMsg = "Please complete all fields.";
         }else{
-            ME.goNext('streetAddress');
+            ME.goNext('propertyAddress');
         };
     };
-
-   
 
     ME.submit_numLevels=function(){
         ME.inputMsg = "";
@@ -95,6 +118,38 @@ app.controller('NewPropertyIndCtrl',['$state','$scope','evoDb','SharedSrvc','und
             ME.inputMsg = "This field cannot be blank.";
         }else{
             ME.goNext('numLevels');
+        };
+    };
+
+
+    ME.selectPitch = function(){
+        if(ME.roofPitch.id == 6){
+            ME.DOM.isMultiLevel = true;
+        }else{
+            ME.DOM.isMultiLevel = false;
+        }
+    };
+
+    ME.submit_roofPitch=function(){
+        ME.inputMsg = "";
+        ME.isError = false;
+        if(ME.DOM.isMultiLevel===true){
+            ME.multiLevelObj.LEVONE = ME.multiLevelModel.levelOne.percent.id;
+            ME.multiLevelObj.LEVTWO = ME.multiLevelModel.levelTwo.percent.id;
+            ME.multiLevelObj.LEVTHR = ME.multiLevelModel.levelThree.percent.id;
+            ME.multiLevelObj.LEVFOU = ME.multiLevelModel.levelFour.percent.id;
+            ME.multiLevelObj.LEVFIV = ME.multiLevelModel.levelFive.percent.id;
+            ME.multiLevelObj.LEVSIX = ME.multiLevelModel.levelSix.percent.id;
+            var percentTotal = ME.multiLevelObj.LEVONE + ME.multiLevelObj.LEVTWO + 
+            ME.multiLevelObj.LEVTHR + ME.multiLevelObj.LEVFOU + ME.multiLevelObj.LEVFIV + ME.multiLevelObj.LEVSIX;
+            if(percentTotal == 10){
+               ME.goNext('roofPitch');
+            }else{
+                ME.inputMsg = "Percent column must total 100.";
+                ME.isError = true; 
+            }
+        }else{
+            ME.goNext('roofPitch');
         };
     };
 
@@ -120,25 +175,15 @@ app.controller('NewPropertyIndCtrl',['$state','$scope','evoDb','SharedSrvc','und
         };
     };
 
-    ME.submit_coveredLayer=function(){
+   
+    ME.submit_layerToRemove=function(){
         ME.inputMsg = "";
         ME.isError = false;
-       if(ME.coveredLayer==""){
+       if(ME.layerToRemove==""){
             ME.isError = true;
             ME.inputMsg = "This field cannot be blank.";
         }else{
-            ME.goNext('coveredLayer');
-        };
-    };
-
-    ME.submit_layersCovering=function(){
-        ME.inputMsg = "";
-        ME.isError = false;
-       if(ME.layersCovering==""){
-            ME.isError = true;
-            ME.inputMsg = "This field cannot be blank.";
-        }else{
-            ME.goNext('layersCovering');
+            ME.goNext('layerToRemove');
         };
     };
 
@@ -176,15 +221,25 @@ app.controller('NewPropertyIndCtrl',['$state','$scope','evoDb','SharedSrvc','und
         };
     };
 
+    ME.selectVentilation = function(){
+        if(ME.roofVents.id == 2){
+            ME.DOM.isMultiVented = true;
+        }else{
+            ME.DOM.isMultiVented = false;
+        }
+    };
+
      ME.submit_roofVents=function(){
         ME.inputMsg = "";
         ME.isError = false;
-       if(ME.roofVents=="6"){
-            ME.isError = true;
-            ME.inputMsg = "This field cannot be blank.";
-        }else{
-            ME.goNext('roofVents');
-        };
+        if(ME.DOM.isMultiVented === true){
+           ME.multiVentObj.TURBNS = ME.multiVentModel.TURBNS.id;
+           ME.multiVentObj.STATIC = ME.multiVentModel.STATIC.id;
+           ME.multiVentObj.PWRVNT = ME.multiVentModel.PWRVNT.id;
+           ME.multiVentObj.AIRHWK = ME.multiVentModel.AIRHWK.id;
+           ME.multiVentObj.SLRVNT = ME.multiVentModel.SLRVNT.id;
+        }
+        ME.goNext('roofVents');
     };
 
      ME.submit_specialFlashing=function(){
@@ -210,25 +265,59 @@ app.controller('NewPropertyIndCtrl',['$state','$scope','evoDb','SharedSrvc','und
         dataObj.state = ME.propertyState;
         dataObj.zip = ME.propertyZip;
         dataObj.numLevels = ME.numLevels.id;
-        dataObj.coveredLayer = ME.coveredLayer.id;
         dataObj.shingleGrade = ME.shingleGrade.id;
         dataObj.roofDeck = ME.roofDeck.id;
-        dataObj.layersCovering = ME.layersCovering.id;
+        dataObj.layerToRemove = ME.layerToRemove.id;
         dataObj.edgeDetail = ME.edgeDetail.id;
+        dataObj.edgeTrim = (ME.edgeTrim===true) ? 1:0;
         dataObj.valleyDetail = ME.valleyDetail.id;
         dataObj.ridgeCap = ME.ridgeCap.id;
         dataObj.roofVents = ME.roofVents.id;
+        dataObj.pitch = ME.roofPitch.id;
        
         var result = DB.putProperty(dataObj)
         .then(function(result){
              if(typeof result != "boolean"){
-               ME.inputField="SUCCESS";
+                var thisPropertyID = result.id;
+                ME.submitMultiLevels(thisPropertyID);
+                ME.submitMultiVents(thisPropertyID);
+                ME.inputField="SUCCESS";
             }else{
                 ME.dataError();
             }                 
         },function(error){
             ME.dataError();
         });
+    };
+
+    ME.submitMultiLevels = function(id){
+        if(ME.roofPitch === 5){
+            var result = DB.putMultiLevel(ME.multiLevelObj)
+                .then(function(result){
+                if(typeof result != "boolean"){
+                  
+                }else{
+                    ME.dataError();
+                }                 
+            },function(error){
+                ME.dataError();
+            });
+        }
+    };
+
+    ME.submitMultiVents = function(id){
+        if(ME.DOM.isMultiVented === true){
+            var result = DB.putMultiVents(ME.multiLevelObj)
+                .then(function(result){
+                if(typeof result != "boolean"){
+                  
+                }else{
+                    ME.dataError();
+                }                 
+            },function(error){
+                ME.dataError();
+            });
+        }
     };
 
     ME.dataError = function(){
@@ -243,11 +332,11 @@ app.controller('NewPropertyIndCtrl',['$state','$scope','evoDb','SharedSrvc','und
 
     ME.goNewClient = function(){
         $state.transitionTo("addNewClient");
-    }
+    };
 
     ME.goNewProperty = function(){
         $state.transitionTo("addNewProperty");
-    }
+    };
 
     $scope.$watch('$viewContentLoaded', function() {
        var loggedIn = ME.S.loggedIn;

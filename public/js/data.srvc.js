@@ -109,7 +109,7 @@ app.service('evoDb',['$http','$q','SharedSrvc','LogInSrvc',function eventQueries
 
 	self.putMultiLevel = function(dataObj){
 		var deferred = $q.defer();
-		$http({method: 'POST', url: 'views/jobs/http/insertMultiLevel.php',data:dataObj}).
+		$http({method: 'POST', url: 'views/properties/http/putMultiLevel.php',data:dataObj}).
 		success(function(data, status, headers, config) {
      		deferred.resolve(data);
 	    }).
@@ -119,7 +119,29 @@ app.service('evoDb',['$http','$q','SharedSrvc','LogInSrvc',function eventQueries
 	    return deferred.promise;
 	};
 
+	self.putMultiVents = function(dataObj){
+		var deferred = $q.defer();
+		$http({method: 'POST', url: 'views/properties/http/putMultiVents.php',data:dataObj}).
+		success(function(data, status, headers, config) {
+     		deferred.resolve(data);
+	    }).
+	    error(function(data, status, headers, config) {
+			deferred.reject(data);
+	    });
+	    return deferred.promise;
+	};
 
+	self.updateMultiLevel = function(dataObj){
+		var deferred = $q.defer();
+		$http({method: 'POST', url: 'views/properties/http/updateMultiLevel.php',data:dataObj}).
+		success(function(data, status, headers, config) {
+     		deferred.resolve(data);
+	    }).
+	    error(function(data, status, headers, config) {
+			deferred.reject(data);
+	    });
+	    return deferred.promise;
+	};
 
 	self.putManager = function(dataObj){
 		var deferred = $q.defer();

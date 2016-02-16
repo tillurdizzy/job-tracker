@@ -1,16 +1,12 @@
 <div ng-controller="NewPropertyCtrl as Ctrl" class="page">
     <div class="page-title">
-        <h2>
-            New Property
-        </h2>
+        <h2>New Property</h2>
     </div>
     <horiz-rule margintop="5px" marginbottom="10px"></horiz-rule>
     
     <div class="ez-form">
         <div class="ez-form-item" ng-show="Ctrl.inputField == 'T1'">
-            <h3>
-                Choose the Client for this Property
-            </h3>
+            <h3>Choose the Client / Owner for this Property</h3>
             <select id="selectClient" ng-model="Ctrl.T1" ng-options="c.company for c in Ctrl.clientList">
             </select>
             <div class="page-nav">
@@ -31,28 +27,23 @@
         </div>
 
         <div class="ez-form-item" ng-show="Ctrl.inputField == 'T2'">
-            <h3>
-                Property or Building Name
-            </h3>
+            <h3>Property or Building Name</h3>
             <input name="T2" type="text" ng-model="Ctrl.T2" placeholder="Name"/>
             <div class="page-nav">
                 <div class="page-nav-left">
-                    <i ng-click="Ctrl.goPrevious('1')" class="fa fa-arrow-circle-left fa-3x">
-                    </i>
+                    <i ng-click="Ctrl.goPrevious('1')" class="fa fa-arrow-circle-left fa-3x"></i>
                 </div>
                 <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">
                     {{Ctrl.inputMsg}}
                 </div>
                 <div class="page-nav-right">
-                    <i ng-click="Ctrl.submitT2();" class="fa fa-arrow-circle-right fa-3x">
-                    </i>
+                    <i ng-click="Ctrl.submitT2();" class="fa fa-arrow-circle-right fa-3x"></i>
                 </div>
             </div>
+            <h5>This is just a short-hand / nickname for the property.</h5>
         </div>
         <div class="ez-form-item" ng-show="Ctrl.inputField=='T3'">
-            <h3>
-                Street Address
-            </h3>
+            <h3>Street Address</h3>
             <input name="T3" type="text" ng-model="Ctrl.T3"/>
             <div class="page-nav">
                 <div class="page-nav-left">
@@ -69,40 +60,32 @@
             </div>
         </div>
         <div class="ez-form-item" ng-show="Ctrl.inputField == 'T4'">
-            <h3>
-                City
-            </h3>
+            <h3>City</h3>
             <input name="T4" type="text" ng-model="Ctrl.T4"/>
             <div class="page-nav">
                 <div class="page-nav-left">
-                    <i ng-click="Ctrl.goPrevious('3')" class="fa fa-arrow-circle-left fa-3x">
-                    </i>
+                    <i ng-click="Ctrl.goPrevious('3')" class="fa fa-arrow-circle-left fa-3x"></i>
                 </div>
                 <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">
                     {{Ctrl.inputMsg}}
                 </div>
                 <div class="page-nav-right">
-                    <i ng-click="Ctrl.submitT4();" class="fa fa-arrow-circle-right fa-3x">
-                    </i>
+                    <i ng-click="Ctrl.submitT4();" class="fa fa-arrow-circle-right fa-3x"></i>
                 </div>
             </div>
         </div>
         <div class="ez-form-item" ng-show="Ctrl.inputField == 'T5'">
-            <h3>
-                State
-            </h3>
+            <h3>State</h3>
             <input name="T5" type="text" ng-model="Ctrl.T5"/>
             <div class="page-nav">
                 <div class="page-nav-left">
-                    <i ng-click="Ctrl.goPrevious('4')" class="fa fa-arrow-circle-left fa-3x">
-                    </i>
+                    <i ng-click="Ctrl.goPrevious('4')" class="fa fa-arrow-circle-left fa-3x"></i>
                 </div>
                 <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">
                     {{Ctrl.inputMsg}}
                 </div>
                 <div class="page-nav-right">
-                    <i ng-click="Ctrl.submitT5();" class="fa fa-arrow-circle-right fa-3x">
-                    </i>
+                    <i ng-click="Ctrl.submitT5();" class="fa fa-arrow-circle-right fa-3x"></i>
                 </div>
             </div>
         </div>
@@ -113,22 +96,18 @@
             <input name="T6" type="text" ng-model="Ctrl.T6"/>
             <div class="page-nav">
                 <div class="page-nav-left">
-                    <i ng-click="Ctrl.goPrevious('5')" class="fa fa-arrow-circle-left fa-3x">
-                    </i>
+                    <i ng-click="Ctrl.goPrevious('5')" class="fa fa-arrow-circle-left fa-3x"></i>
                 </div>
                 <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">
                     {{Ctrl.inputMsg}}
                 </div>
                 <div class="page-nav-right">
-                    <i ng-click="Ctrl.submitT6();" class="fa fa-arrow-circle-right fa-3x">
-                    </i>
+                    <i ng-click="Ctrl.submitT6();" class="fa fa-arrow-circle-right fa-3x"></i>
                 </div>
             </div>
         </div>
         <div class="ez-form-item" ng-show="Ctrl.inputField == 'T7'">
-            <h3>
-                Levels (stories)
-            </h3>
+            <h3>Levels (stories)</h3>
             <div class="radio-btns">
                 <div>
                      <label>

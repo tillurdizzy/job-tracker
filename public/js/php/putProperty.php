@@ -18,17 +18,17 @@ $zip = mysqli_real_escape_string($con,$data->zip);
 $numLevels = mysqli_real_escape_string($con,$data->numLevels);
 $shingleGrade = mysqli_real_escape_string($con,$data->shingleGrade);
 $roofDeck = mysqli_real_escape_string($con,$data->roofDeck);
-$coveredLayer = mysqli_real_escape_string($con,$data->coveredLayer);
-$layersCovering = mysqli_real_escape_string($con,$data->layersCovering);
+$layersToRemove = mysqli_real_escape_string($con,$data->layersToRemove);
 $edgeDetail = mysqli_real_escape_string($con,$data->edgeDetail);
+$edgeTrim = mysqli_real_escape_string($con,$data->edgeTrim);
 $valleyDetail = mysqli_real_escape_string($con,$data->valleyDetail);
 $ridgeCap = mysqli_real_escape_string($con,$data->ridgeCap);
 $roofVents = mysqli_real_escape_string($con,$data->roofVents);
-$pitchAvg = mysqli_real_escape_string($con,$data->pitchAvg);
+$pitch = mysqli_real_escape_string($con,$data->pitch);
 
 $query = "INSERT INTO properties(manager,client,name,street,city,state,zip,
-numLevels,shingleGrade,roofDeck,coveredLayer,layersCovering,edgeDetail,valleyDetail,
-ridgeCap,roofVents,pitchAvg)
+numLevels,shingleGrade,roofDeck,layersToRemove,edgeDetail,edgeTrim,valleyDetail,
+ridgeCap,roofVents,pitch)
 VALUES(
 '" . $manager . "', " .
 "'" . $client . "', " .
@@ -40,17 +40,17 @@ VALUES(
 "'" . $numLevels . "', " .
 "'" . $shingleGrade . "', " .
 "'" . $roofDeck . "', " .
-"'" . $coveredLayer . "', " .
-"'" . $layersCovering . "', " .
+"'" . $layersToRemove . "', " .
 "'" . $edgeDetail . "', " .
+"'" . $edgeTrim . "', " .
 "'" . $valleyDetail . "', " .
 "'" . $ridgeCap . "', " .
 "'" . $roofVents . "', " .
-"'" . $pitchAvg . "')";
+"'" . $pitch . "')";
 $qry_res = mysqli_query($con,$query);
 if ($qry_res) {
 	$last_id = mysqli_insert_id($con);
-	$arr = array('msg' => "Success", 'result' => $qry_res, 'params' => $last_id);
+	$arr = array('msg' => "Success", 'result' => $qry_res, 'id' => $last_id);
 	$jsn = json_encode($arr);
 	echo($jsn);
 } else {

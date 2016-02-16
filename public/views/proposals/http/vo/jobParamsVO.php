@@ -16,8 +16,10 @@ class jobParamsVO{
 	var $JKVNT8;
 	var $FLHSH8;
 	var $TURBNS;
+	var $STATIC;
 	var $PWRVNT;
 	var $AIRHWK;
+	var $SLRVNT;
 	var $DECKNG;
 	var $PAINT;
 	var $CAULK;

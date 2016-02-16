@@ -173,6 +173,17 @@ body{
   border:2px solid $tertiary-darker;
   display:block;
   margin:.5rem 0;
+  h5{
+    font-size: 1.1rem;
+    color:#000000;
+    margin:0;
+    font-weight: 700;
+  }
+  p{
+    font-size: 1.1rem;
+    color:#000000;
+    margin:0;
+  }
 }
 
 .block-section-blue{

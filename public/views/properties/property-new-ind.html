@@ -1,7 +1,6 @@
 <div ng-controller="NewPropertyIndCtrl as Ctrl" class="page">
 
     <div class="ez-form-item" ng-show="Ctrl.inputField == 'propertyName'">
-        <h2>Property</h2>
         <h3>Building Name or Reference</h3>
         <input name="propertyName" type="text" ng-model="Ctrl.propertyName" placeholder="Smith Residence" />
         <div class="page-nav">
@@ -18,15 +17,14 @@
     </div>
 
     <div class="ez-form-item" ng-show="Ctrl.inputField=='propertyAddress'">
-        <h2>Property</h2>
         <h3>Street Address</h3>
          <input type="text" ng-model="Ctrl.streetAddress" />
         <h3>City</h3>
-        <input type="text" ng-model="Ctrl.propertyCity" />
+        <input type="text" ng-model="Ctrl.propertyCity"  />
         <h3>State</h3>
-        <input type="text" ng-model="Ctrl.propertyState" />
+        <input type="text" ng-model="Ctrl.propertyState" placeholder="USPS 2-Letter Code"/>
         <h3>Zip</h3>
-        <input type="text" ng-model="Ctrl.propertyZip" />
+        <input type="text" ng-model="Ctrl.propertyZip" placeholder="USPS 5-digit zip code"/>
         <div class="page-nav">
             <div class="page-nav-left">
                 <i ng-click="Ctrl.goPrevious('propertyName')" class="fa fa-arrow-circle-left fa-3x"></i>
@@ -35,15 +33,12 @@
                 {{Ctrl.inputMsg}}
             </div>
             <div class="page-nav-right">
-                <i ng-click="Ctrl.submit_streetAddress();" class="fa fa-arrow-circle-right fa-3x"></i>
+                <i ng-click="Ctrl.submit_propertyAddress();" class="fa fa-arrow-circle-right fa-3x"></i>
             </div>
         </div>
     </div>
 
-
-
     <div class="ez-form-item" ng-show="Ctrl.inputField == 'numLevels'">
-        <h2>Property</h2>
         <h3>Levels (number of stories)</h3>
         <div class="dropDownSelector">
             <select ng-model="Ctrl.numLevels" ng-options="c.label for c in Ctrl.S.levelOptions"></select>
@@ -64,47 +59,69 @@
     <div class="ez-form-item" ng-show="Ctrl.inputField == 'roofPitch'">
         <h2>Existing Roof Assembly</h2>
         <h3>Pitch</h3>
-        <div class="dropDownSelector">
-            <select ng-model="Ctrl.roofPitch" ng-options="c.label for c in Ctrl.S.pitchOptions"></select>
+        <div>
+            <select ng-model="Ctrl.roofPitch" ng-options="c.label for c in Ctrl.S.pitchOptions" 
+            ng-change="Ctrl.selectPitch()"></select>
         </div>
-        <div ng-show="Ctrl.roofPitch=='6'">
-            <div class="dropDownSelector">
-                <select ng-model="Ctrl.multiLevel.levelOne.pitch" ng-options="c.label for c in Ctrl.S.multiLevelOptions"></select>
-                <select ng-model="Ctrl.multiLevel.levelOne.percent" ng-options="c.label for c in Ctrl.S.percentOptions"></select>
-            </div>
-            <div class="dropDownSelector">
-                <select ng-model="Ctrl.multiLevel.levelTwo.pitch" ng-options="c.label for c in Ctrl.S.multiLevelOptions"></select>
-                <select ng-model="Ctrl.multiLevel.levelTwo.percent" ng-options="c.label for c in Ctrl.S.percentOptions"></select>
-            </div>
-            <div class="dropDownSelector">
-                <select ng-model="Ctrl.multiLevel.levelThree.pitch" ng-options="c.label for c in Ctrl.S.multiLevelOptions"></select>
-                <select ng-model="Ctrl.multiLevel.levelThree.percent" ng-options="c.label for c in Ctrl.S.percentOptions"></select>
-            </div>
-            <div class="dropDownSelector">
-                <select ng-model="Ctrl.multiLevel.levelFour.pitch" ng-options="c.label for c in Ctrl.S.multiLevelOptions"></select>
-                <select ng-model="Ctrl.multiLevel.levelFour.percent" ng-options="c.label for c in Ctrl.S.percentOptions"></select>
-            </div>
-            <div class="dropDownSelector">
-                <select ng-model="Ctrl.multiLevel.levelFive.pitch" ng-options="c.label for c in Ctrl.S.multiLevelOptions"></select>
-                <select ng-model="Ctrl.multiLevel.levelFive.percent" ng-options="c.label for c in Ctrl.S.percentOptions"></select>
-            </div>
+        <div ng-show="Ctrl.DOM.isMultiLevel">
+           <table class="table table-striped" style="width:100%;">
+                <thead>
+                    <tr>
+                        <th>Level</th>
+                        <th>Pitch</th>
+                        <th>Percent</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><h3>Level A</h3></td>
+                        <td><select ng-model="Ctrl.multiLevelModel.levelOne.pitch" ng-options="c.label for c in Ctrl.S.multiLevelOptions"></select></td>
+                        <td><select ng-model="Ctrl.multiLevelModel.levelOne.percent" ng-options="c.label for c in Ctrl.S.percentOptions"></select></td>
+                    </tr>
+                    <tr>
+                        <td><h3>Level B</h3></td>
+                        <td><select ng-model="Ctrl.multiLevelModel.levelTwo.pitch" ng-options="c.label for c in Ctrl.S.multiLevelOptions"></select></td>
+                        <td><select ng-model="Ctrl.multiLevelModel.levelTwo.percent" ng-options="c.label for c in Ctrl.S.percentOptions"></select></td>
+                    </tr>
+                    <tr>
+                        <td><h3>Level C</h3></td>
+                        <td><select ng-model="Ctrl.multiLevelModel.levelThree.pitch" ng-options="c.label for c in Ctrl.S.multiLevelOptions"></select></td>
+                        <td><select ng-model="Ctrl.multiLevelModel.levelThree.percent" ng-options="c.label for c in Ctrl.S.percentOptions"></select></td>
+                    </tr>
+                    <tr>
+                        <td><h3>Level D</h3></td>
+                        <td><select ng-model="Ctrl.multiLevelModel.levelFour.pitch" ng-options="c.label for c in Ctrl.S.multiLevelOptions"></select></td>
+                        <td><select ng-model="Ctrl.multiLevelModel.levelFour.percent" ng-options="c.label for c in Ctrl.S.percentOptions"></select></td>
+                    </tr>
+                    <tr>
+                        <td><h3>Level E</h3></td>
+                        <td><select ng-model="Ctrl.multiLevelModel.levelFive.pitch" ng-options="c.label for c in Ctrl.S.multiLevelOptions"></select></td>
+                        <td><select ng-model="Ctrl.multiLevelModel.levelFive.percent" ng-options="c.label for c in Ctrl.S.percentOptions"></select></td>
+                    </tr>
+                    <tr>
+                        <td><h3>Level F</h3></td>
+                        <td><select ng-model="Ctrl.multiLevelModel.levelSix.pitch" ng-options="c.label for c in Ctrl.S.multiLevelOptions"></select></td>
+                        <td><select ng-model="Ctrl.multiLevelModel.levelSix.percent" ng-options="c.label for c in Ctrl.S.percentOptions"></select></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
         <div class="page-nav">
             <div class="page-nav-left">
-                <i ng-click="Ctrl.goPrevious('shingleGrade')" class="fa fa-arrow-circle-left fa-3x"></i>
+                <i ng-click="Ctrl.goPrevious('roofPitch')" class="fa fa-arrow-circle-left fa-3x"></i>
             </div>
             <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">
                 {{Ctrl.inputMsg}}
             </div>
             <div class="page-nav-right">
-                <i ng-click="Ctrl.submit_shingleGrade();" class="fa fa-arrow-circle-right fa-3x"></i>
+                <i ng-click="Ctrl.submit_roofPitch();" class="fa fa-arrow-circle-right fa-3x"></i>
             </div>
         </div>
     </div>
 
     <div class="ez-form-item" ng-show="Ctrl.inputField == 'shingleGrade'">
         <h2>Existing Roof Assembly</h2>
-        <h3>Shingle Grade</h3>
+        <h3>Field Shingle Grade</h3>
         <div class="dropDownSelector">
             <select ng-model="Ctrl.shingleGrade" ng-options="c.label for c in Ctrl.S.shingleGradeOptions"></select>
         </div>
@@ -140,23 +157,22 @@
         </div>
     </div>
 
-   
 
-    <div class="ez-form-item" ng-show="Ctrl.inputField == 'layersCovering'">
+    <div class="ez-form-item" ng-show="Ctrl.inputField == 'layerToRemove'">
         <h2>Existing Roof Assembly</h2>
-        <h3>Number of layers of existing roof covering:</h3>
+        <h3>Existing roof layers</h3>
         <div class="dropDownSelector">
-            <select ng-model="Ctrl.layersCovering" ng-options="c.label for c in Ctrl.S.numbersToFive"></select>
+            <select ng-model="Ctrl.layerToRemove" ng-options="c.label for c in Ctrl.S.numbersToFive"></select>
         </div>
         <div class="page-nav">
             <div class="page-nav-left">
-                <i ng-click="Ctrl.goPrevious('layersCovering')" class="fa fa-arrow-circle-left fa-3x"></i>
+                <i ng-click="Ctrl.goPrevious('layerToRemove')" class="fa fa-arrow-circle-left fa-3x"></i>
             </div>
             <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">
                 {{Ctrl.inputMsg}}
             </div>
             <div class="page-nav-right">
-                <i ng-click="Ctrl.submit_layersCovering();" class="fa fa-arrow-circle-right fa-3x"></i>
+                <i ng-click="Ctrl.submit_layerToRemove();" class="fa fa-arrow-circle-right fa-3x"></i>
             </div>
         </div>
     </div>
@@ -223,7 +239,40 @@
         <h2>Existing Roof Assembly</h2>
         <h3>Ventilation</h3>
         <div>
-            <select ng-model="Ctrl.roofVents" ng-options="c.label for c in Ctrl.S.ventOptions"></select>
+            <select ng-model="Ctrl.roofVents" ng-options="c.label for c in Ctrl.S.ventOptions" ng-change="Ctrl.selectVentilation()"></select>
+        </div>
+        <div ng-show="Ctrl.DOM.isMultiVented">
+           <table class="table table-striped" style="width:100%;">
+                <thead>
+                    <tr>
+                        <th>Type</th>
+                        <th>Quantity</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><h3>Static / RV151</h3></td>
+                        <td><select ng-model="Ctrl.multiVentModel.STATIC" ng-options="c.label for c in Ctrl.S.numbersToTen"></select></td>
+                    </tr>
+                    <tr>
+                        <td><h3>Turbine</h3></td>
+                        <td><select ng-model="Ctrl.multiVentModel.TURBNS" ng-options="c.label for c in Ctrl.S.numbersToTen"></select></td>
+                    </tr>
+                    <tr>
+                        <td><h3>Power</h3></td>
+                        <td><select ng-model="Ctrl.multiVentModel.PWRVNT" ng-options="c.label for c in Ctrl.S.numbersToTen"></select></td>
+                    </tr>
+                    <tr>
+                        <td><h3>Air Hawks</h3></td>
+                        <td><select ng-model="Ctrl.multiVentModel.AIRHWK" ng-options="c.label for c in Ctrl.S.numbersToTen"></select></td>
+                    </tr>
+                    <tr>
+                        <td><h3>Solar</h3></td>
+                        <td><select ng-model="Ctrl.multiVentModel.SLRVNT" ng-options="c.label for c in Ctrl.S.numbersToTen"></select></td>
+                    </tr>
+                    
+                </tbody>
+            </table>
         </div>
         <div class="page-nav">
             <div class="page-nav-left">

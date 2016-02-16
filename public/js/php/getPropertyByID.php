@@ -27,13 +27,12 @@ while ($row = mysqli_fetch_object($result)) {
 	$oneVO->numLevels = $row->numLevels;
 	$oneVO->shingleGrade = $row->shingleGrade;
 	$oneVO->roofDeck = $row->roofDeck;
-	$oneVO->coveredLayer = $row->coveredLayer;
 	$oneVO->layersCovering = $row->layersCovering;
 	$oneVO->edgeDetail = $row->edgeDetail;
 	$oneVO->valleyDetail = $row->valleyDetail;
 	$oneVO->ridgeCap = $row->ridgeCap;
 	$oneVO->roofVents = $row->roofVents;
-	$oneVO->pitchAvg = $row->pitchAvg;
+	$oneVO->pitch = $row->pitch;
 	
 	
 	array_push( $resultValueObjects, $oneVO );

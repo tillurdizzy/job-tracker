@@ -11,11 +11,12 @@ class propertyVO{
 	var $numLevels;//stories
 	var $shingleGrade;// style of existing shingle
 	var $roofDeck;// deck material - plywood etc.
-	var $coveredLayer;// previous roof covering
-	var $layersCovering;//number of previous coverings
+	var $layersToRemove;//number of previous coverings to REMOVE
 	var $edgeDetail;
+	var $edgeTrim;
 	var $valleyDetail;
 	var $ridgeCap;
 	var $roofVents;
+	var $pitch;
 }
 ?>

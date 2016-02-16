@@ -837,6 +837,15 @@ body {
   border: 2px solid #C0392B;
   display: block;
   margin: .5rem 0; }
+  .block-outline-red h5 {
+    font-size: 1.1rem;
+    color: #000000;
+    margin: 0;
+    font-weight: 700; }
+  .block-outline-red p {
+    font-size: 1.1rem;
+    color: #000000;
+    margin: 0; }
 
 .block-section-blue {
   background-color: #ECF0F1;
@@ -1343,6 +1352,12 @@ button.tiny, .button.tiny {
   top: 0;
   width: 20px;
   height: 20px; }
+
+a:visited {
+  color: #C0392B; }
+
+a:link {
+  color: #E74C3C; }
 
 #site-wrapper {
   position: relative;

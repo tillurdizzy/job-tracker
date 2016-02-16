@@ -220,18 +220,21 @@ app.service('SharedSrvc',['$rootScope',function sharedVars($rootScope){
 
 	self.pitchOptions = [
 		{label:"Flat (0-2)",id:1},
-		{label:"Low (3-6)",id:2},
-		{label:"Medium (7-9)",id:3},
-		{label:"Steep (8+)",id:4},
-		{label:"Multi-level",id:5}];
+		{label:"Low (3-4)",id:2},
+		{label:"Medium (5-8)",id:3},
+		{label:"Steep (9-12)",id:4},
+		{label:"Mansard",id:5},
+		{label:"Multi-level",id:6}];
 
 	self.multiLevelOptions = [
+		{label:"NA",id:0},
 		{label:"Flat (0-2)",id:1},
 		{label:"Low (3-6)",id:2},
 		{label:"Medium (7-9)",id:3},
 		{label:"Steep (8+)",id:4}];
 
 	self.percentOptions = [
+		{label:"NA",id:0},
 		{label:"10%",id:1},
 		{label:"20%",id:2},
 		{label:"30%",id:3},
@@ -255,21 +258,25 @@ app.service('SharedSrvc',['$rootScope',function sharedVars($rootScope){
 
 	self.numbersToFive = [
 		{label:"One",id:1},{label:"Two",id:2},{label:"Three",id:3},{label:"Four",id:4},{label:"Five",id:5}];
+
+	self.numbersToTen = [
+		{label:"Zero",id:0},{label:"One",id:1},{label:"Two",id:2},{label:"Three",id:3},{label:"Four",id:4},{label:"Five",id:5},
+		{label:"Six",id:6},{label:"Seven",id:7},{label:"Eight",id:8},{label:"Nine",id:9},{label:"Ten",id:10}];
 	
 	self.edgeDetail = [
-		{label:"None",id:1},
-		{label:"Galvanized",id:2},
-		{label:"Pre-painted",id:3}];
+		{label:"None",id:0},
+		{label:"Galvanized",id:1},
+		{label:"Pre-painted",id:2}];
 
 	self.valleyOptions = [
 		{label:"Shingle-laced",id:1},
-		{label:"Closed, with metal subflashing",id:1},
-		{label:"Open metal",id:2}];
+		{label:"Closed, with metal subflashing",id:2},
+		{label:"Open metal",id:3}];
 
 	self.ridgeCapShingles = [
 		{label:"Standard Three-Tab",id:1},
-		{label:"Z-Ridge/9 in.",id:2},
-		{label:"Premium/12 in.",id:2}];
+		{label:"Z-Ridge / 9 in.",id:2},
+		{label:"Premium / 12 in.",id:3}];
 
 	self.ventOptions = [
 		{label:"Ridge Vents",id:1},
@@ -281,10 +288,7 @@ app.service('SharedSrvc',['$rootScope',function sharedVars($rootScope){
 		{label:"Power",id:3},
 		{label:"Solar",id:4}];
 
-	self.pitchAverages = [
-		{label:"Low",id:1},
-		{label:"Medium",id:2},
-		{label:"High",id:3}];
+	
 
 	
 	

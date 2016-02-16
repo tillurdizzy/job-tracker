@@ -4,9 +4,9 @@
     </div>
     <horiz-rule margintop="5px" marginbottom="10px"></horiz-rule>
     <div ui-view>
-        <div class="ez-form">
+       
             <div class="ez-form-item">
-                <h3>Choose the Client for this Property</h3>
+                <h3>Choose the Client / Owner for this Property</h3>
                 <select ng-model="VIEW.selectedClient" ng-options="c.displayName for c in VIEW.clientList"></select>
                 <div class="page-nav">
                     <div class="page-nav-left">
@@ -20,11 +20,11 @@
                 </div>
             </div>
             <div class="block-outline-red">
-                <h5>
+                <p>
                     If the Client for this Property is not listed,
                     <a ui-sref="addNewClient">Add a New Client</a>, then return here.
-                </h5>
+                </p>
             </div>
-        </div>
+      
     </div>
 </div>
