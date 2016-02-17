@@ -24,7 +24,9 @@ app.service('SharedSrvc',['$rootScope',function sharedVars($rootScope){
 	self.selectedJobObj = {};
 	self.selectedClientObj = {};
 	self.selectedPropertyObj = {};
+
 	
+	self.keyValues = [];
 	// Methods
 
 	//Called after successful Log In
@@ -119,7 +121,7 @@ app.service('SharedSrvc',['$rootScope',function sharedVars($rootScope){
 		};
 		// Should have all 3 lists complete now
 		// Collate Jobs with their Client and Property
-		collateLists();
+		translateRelations();
 	};
 
 
@@ -149,7 +151,8 @@ app.service('SharedSrvc',['$rootScope',function sharedVars($rootScope){
 		};
 	};
 
-	var collateLists = function(){
+	var translateRelations = function(){
+		// Translate related Client and Property ID #'s from Jobs into Names
 		for (var i = 0; i < self.managerJobs.length; i++) {
 			var clientID = self.managerJobs[i].client;
 			var thisClient = returnCompany(clientID);
@@ -159,41 +162,28 @@ app.service('SharedSrvc',['$rootScope',function sharedVars($rootScope){
 			var thisProperty = returnProperty(propID);
 			self.managerJobs[i].propertyName = thisProperty;
 		};
+
+		// Translate key-value pairs
+		for (var i = 0; i < self.managerProperties.length; i++) {
+			var x = self.managerProperties[i].numLevels;
+
+
+		}
 		self.dataRefreshed = true;
 		$rootScope.$broadcast("data-refreshed");
 	};
 
-	// Using angular filter instead
-	var parseJobDates = function(){
-		for (var i = 0; i < self.managerJobs.length; i++) {
-			var d = self.managerJobs[i].dateProposal;
-			if(d == "0"){
-				self.managerJobs[i].dateProposal = "";
-			}
-			
-			d = self.managerJobs[i].dateContract;
-			if(d == "0"){
-				self.managerJobs[i].dateContract = "";
-			}
-			
-			d = self.managerJobs[i].dateActive;
-			if(d == "0"){
-				self.managerJobs[i].dateActive = "";
-			}
-			
-			d = self.managerJobs[i].dateComplete;
-			if(d == "0"){
-				self.managerJobs[i].dateComplete = "";
-			}
-		}
-	};
-
+	
 	
 	var convertDateToString = function(m){
 		var dateStr = ""
 		var d = new Date(m);
 		return dateStr;
 	};
+
+	
+
+
 
 	self.levelOptions = [
 		{label:"One",id:1},
@@ -280,15 +270,25 @@ app.service('SharedSrvc',['$rootScope',function sharedVars($rootScope){
 
 	self.ventOptions = [
 		{label:"Ridge Vents",id:1},
-		{label:"Other",id:2}];
+		{label:"Various Other",id:2}];
 
 	self.ventConfig = [
-		{label:"Static/RV151",id:1},
+		{label:"Static / RV151",id:1},
 		{label:"Turbine",id:2},
 		{label:"Power",id:3},
 		{label:"Solar",id:4}];
 
-	
+	self.returnIdValue = function(set,id){
+		var rtnObj = {};
+		for (var i = 0; i < set.length; i++) {
+			if (set[i].id == id) {
+				rtnObj = set[i];
+			}
+		}
+		return rtnObj;
+	};
+
+
 
 	
 	

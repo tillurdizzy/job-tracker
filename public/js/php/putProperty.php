@@ -9,6 +9,7 @@ define( "DATABASE_NAME", "jobtracker");
 
 $con = mysqli_connect(DATABASE_SERVER, DATABASE_USERNAME, DATABASE_PASSWORD,DATABASE_NAME) or die ('ERROR!!!');
 $manager = mysqli_real_escape_string($con,$data->manager);
+$createdDate = mysqli_real_escape_string($con,$data->createdDate);
 $client = mysqli_real_escape_string($con,$data->client);
 $name = mysqli_real_escape_string($con,$data->name);
 $street = mysqli_real_escape_string($con,$data->street);
@@ -18,7 +19,7 @@ $zip = mysqli_real_escape_string($con,$data->zip);
 $numLevels = mysqli_real_escape_string($con,$data->numLevels);
 $shingleGrade = mysqli_real_escape_string($con,$data->shingleGrade);
 $roofDeck = mysqli_real_escape_string($con,$data->roofDeck);
-$layersToRemove = mysqli_real_escape_string($con,$data->layersToRemove);
+$layers = mysqli_real_escape_string($con,$data->layers);
 $edgeDetail = mysqli_real_escape_string($con,$data->edgeDetail);
 $edgeTrim = mysqli_real_escape_string($con,$data->edgeTrim);
 $valleyDetail = mysqli_real_escape_string($con,$data->valleyDetail);
@@ -26,11 +27,12 @@ $ridgeCap = mysqli_real_escape_string($con,$data->ridgeCap);
 $roofVents = mysqli_real_escape_string($con,$data->roofVents);
 $pitch = mysqli_real_escape_string($con,$data->pitch);
 
-$query = "INSERT INTO properties(manager,client,name,street,city,state,zip,
-numLevels,shingleGrade,roofDeck,layersToRemove,edgeDetail,edgeTrim,valleyDetail,
+$query = "INSERT INTO properties(manager,createdDate,client,name,street,city,state,zip,
+numLevels,shingleGrade,roofDeck,layers,edgeDetail,edgeTrim,valleyDetail,
 ridgeCap,roofVents,pitch)
 VALUES(
 '" . $manager . "', " .
+"'" . $createdDate . "', " .
 "'" . $client . "', " .
 "'" . $name . "', " .
 "'" . $street . "', " .
@@ -40,7 +42,7 @@ VALUES(
 "'" . $numLevels . "', " .
 "'" . $shingleGrade . "', " .
 "'" . $roofDeck . "', " .
-"'" . $layersToRemove . "', " .
+"'" . $layers . "', " .
 "'" . $edgeDetail . "', " .
 "'" . $edgeTrim . "', " .
 "'" . $valleyDetail . "', " .

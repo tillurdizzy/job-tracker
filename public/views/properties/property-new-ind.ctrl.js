@@ -18,7 +18,7 @@ app.controller('NewPropertyIndCtrl',['$state','$scope','evoDb','SharedSrvc','und
     ME.roofPitch = ME.S.pitchOptions[0];
     ME.shingleGrade=ME.S.shingleGradeOptions[0];
     ME.roofDeck=ME.S.roofDeckOptions[0];
-    ME.layerToRemove=ME.S.numbersToFive[0];
+    ME.layers=ME.S.numbersToFive[0];
     ME.edgeDetail=ME.S.edgeDetail[0];
     ME.edgeTrim=false;
     ME.valleyDetail=ME.S.valleyOptions[0];
@@ -30,7 +30,7 @@ app.controller('NewPropertyIndCtrl',['$state','$scope','evoDb','SharedSrvc','und
     // Form fields to show and in this order
     // the goPrevious and goNext use this list to find destination
     ME.formFields = ['','propertyName','propertyAddress',
-        'numLevels','roofPitch','shingleGrade','roofDeck','layerToRemove','edgeDetail',
+        'numLevels','roofPitch','shingleGrade','roofDeck','layers','edgeDetail',
         'valleyDetail','ridgeCap','roofVents','SUBMIT'];
 
     ME.multiLevelModel = {
@@ -176,14 +176,14 @@ app.controller('NewPropertyIndCtrl',['$state','$scope','evoDb','SharedSrvc','und
     };
 
    
-    ME.submit_layerToRemove=function(){
+    ME.submit_layers=function(){
         ME.inputMsg = "";
         ME.isError = false;
-       if(ME.layerToRemove==""){
+       if(ME.layers==""){
             ME.isError = true;
             ME.inputMsg = "This field cannot be blank.";
         }else{
-            ME.goNext('layerToRemove');
+            ME.goNext('layers');
         };
     };
 
@@ -256,9 +256,11 @@ app.controller('NewPropertyIndCtrl',['$state','$scope','evoDb','SharedSrvc','und
   
     ME.submitForm = function(){
         ME.isError = false;
+        var d = new Date();
         var dataObj = {};
         dataObj.manager = ME.S.managerID;
         dataObj.client = ME.selectedClientObj.PRIMARY_ID;
+        dataObj.createdDate = d.valueOf();
         dataObj.name = ME.propertyName;
         dataObj.street = ME.streetAddress;
         dataObj.city = ME.propertyCity;
@@ -267,7 +269,7 @@ app.controller('NewPropertyIndCtrl',['$state','$scope','evoDb','SharedSrvc','und
         dataObj.numLevels = ME.numLevels.id;
         dataObj.shingleGrade = ME.shingleGrade.id;
         dataObj.roofDeck = ME.roofDeck.id;
-        dataObj.layerToRemove = ME.layerToRemove.id;
+        dataObj.layers = ME.layers.id;
         dataObj.edgeDetail = ME.edgeDetail.id;
         dataObj.edgeTrim = (ME.edgeTrim===true) ? 1:0;
         dataObj.valleyDetail = ME.valleyDetail.id;
@@ -291,7 +293,8 @@ app.controller('NewPropertyIndCtrl',['$state','$scope','evoDb','SharedSrvc','und
     };
 
     ME.submitMultiLevels = function(id){
-        if(ME.roofPitch === 5){
+        if(ME.DOM.isMultiLevel === true){
+            ME.multiLevelObj.propertyID = id;
             var result = DB.putMultiLevel(ME.multiLevelObj)
                 .then(function(result){
                 if(typeof result != "boolean"){
@@ -307,7 +310,8 @@ app.controller('NewPropertyIndCtrl',['$state','$scope','evoDb','SharedSrvc','und
 
     ME.submitMultiVents = function(id){
         if(ME.DOM.isMultiVented === true){
-            var result = DB.putMultiVents(ME.multiLevelObj)
+            ME.multiVentObj.propertyID = id;
+            var result = DB.putMultiVents(ME.multiVentObj)
                 .then(function(result){
                 if(typeof result != "boolean"){
                   

@@ -3,7 +3,6 @@ app.controller('LoginCtrl',['$scope','$state','evoDb','SharedSrvc','ShingleSrvc'
     function ($scope,$state,evoDb,SharedSrvc,ShingleSrvc,ShingleCalcs,ClientSrvc,LogInSrvc) {
 
     // Inject all these Services so they get initiated and are ready for use later
-
 	var DB = evoDb;
 	var S = SharedSrvc;
     var C = ClientSrvc;
@@ -84,11 +83,9 @@ app.controller('LoginCtrl',['$scope','$state','evoDb','SharedSrvc','ShingleSrvc'
                         }else{
 
                         }
-                       
                     }else{
                         $scope.loginSuccess = false;
                     }
-                   
                 },function(error){
                     $scope.loginSuccess = false;
                     $scope.dataError();
@@ -180,6 +177,7 @@ app.controller('LoginCtrl',['$scope','$state','evoDb','SharedSrvc','ShingleSrvc'
     };
 
     var checkForLogIn = function(){
+        S.keyValues = DB.getIdValues();
         var login = S.loggedIn;
         $scope.dataRefreshed = S.dataRefreshed;
         if (login===true) {

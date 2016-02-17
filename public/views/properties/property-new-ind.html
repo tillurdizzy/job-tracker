@@ -1,7 +1,7 @@
 <div ng-controller="NewPropertyIndCtrl as Ctrl" class="page">
 
     <div class="ez-form-item" ng-show="Ctrl.inputField == 'propertyName'">
-        <h3>Building Name or Reference</h3>
+        <h3>Building Name or Discriptive Reference</h3>
         <input name="propertyName" type="text" ng-model="Ctrl.propertyName" placeholder="Smith Residence" />
         <div class="page-nav">
             <div class="page-nav-left">
@@ -158,21 +158,21 @@
     </div>
 
 
-    <div class="ez-form-item" ng-show="Ctrl.inputField == 'layerToRemove'">
+    <div class="ez-form-item" ng-show="Ctrl.inputField == 'layers'">
         <h2>Existing Roof Assembly</h2>
-        <h3>Existing roof layers</h3>
+        <h3>Number of Layers (previous roof coverings including current)</h3>
         <div class="dropDownSelector">
-            <select ng-model="Ctrl.layerToRemove" ng-options="c.label for c in Ctrl.S.numbersToFive"></select>
+            <select ng-model="Ctrl.layers" ng-options="c.label for c in Ctrl.S.numbersToFive"></select>
         </div>
         <div class="page-nav">
             <div class="page-nav-left">
-                <i ng-click="Ctrl.goPrevious('layerToRemove')" class="fa fa-arrow-circle-left fa-3x"></i>
+                <i ng-click="Ctrl.goPrevious('layers')" class="fa fa-arrow-circle-left fa-3x"></i>
             </div>
             <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">
                 {{Ctrl.inputMsg}}
             </div>
             <div class="page-nav-right">
-                <i ng-click="Ctrl.submit_layerToRemove();" class="fa fa-arrow-circle-right fa-3x"></i>
+                <i ng-click="Ctrl.submit_layers();" class="fa fa-arrow-circle-right fa-3x"></i>
             </div>
         </div>
     </div>
@@ -183,8 +183,9 @@
         <div class="dropDownSelector">
             <select ng-model="Ctrl.edgeDetail" ng-options="c.label for c in Ctrl.S.edgeDetail"></select>
         </div>
-        <div>
-            <label><input type="checkbox" ng-model="Ctrl.edgeTrim"></input>Enhanced with trim</label>
+        <div class="check-radio-container" style="margin-bottom:10px;">
+            <input type="checkbox" id="trimCB" ng-model="Ctrl.edgeTrim"></input>
+            <label for="trimCB"><span></span>Enhanced with trim</label>
         </div>
 
         <div class="page-nav">
@@ -270,7 +271,6 @@
                         <td><h3>Solar</h3></td>
                         <td><select ng-model="Ctrl.multiVentModel.SLRVNT" ng-options="c.label for c in Ctrl.S.numbersToTen"></select></td>
                     </tr>
-                    
                 </tbody>
             </table>
         </div>
@@ -299,10 +299,8 @@
                 <label><input type="checkbox" ng-model="specialFlashing.skylights">Skylights</label>
             </div>
             <div>
-                <label><input type="checkbox" ng-model="specialFlashing.joints">Joints</label>
+                <label><input type="checkbox" ng-model="specialFlashing.joints">Solar Panels</label>
                     <br/>
-                <label><input type="checkbox" ng-model="specialFlashing.scuppers">Scuppers</label>
-                   <br/>
                 <label><input type="checkbox" ng-model="specialFlashing.equipment">Equipment</label>
             </div>
 
@@ -358,12 +356,12 @@
             <h3>Zip: {{Ctrl.propertyZip}}</h3>
         </div>
         <div style="margin-left:1rem;">
-            <h4 style="margin-bottom:.5rem;">Existing Conditions:</h4>
+            <h4 style="margin-bottom:.5rem;">Existing Roof Description</h4>
             <h3>Levels: <span class="bold">{{Ctrl.numLevels.label}}</span></h3>
+            <h3>Pitch: <span class="bold">{{Ctrl.roofPitch.label}}</span></h3>
             <h3>Shingle Grade: <span class="bold">{{Ctrl.shingleGrade.label}}</span></h3>
             <h3>Decking: <span class="bold">{{Ctrl.roofDeck.label}}</span></h3>
-            <h3>Underlayer: <span class="bold">{{Ctrl.coveredLayer.label}}</span></h3>
-            <h3>Layers: <span class="bold">{{Ctrl.layersCovering.label}}</span></h3>
+            <h3>Layers: <span class="bold">{{Ctrl.layers.label}}</span></h3>
             <h3>Edge Detail: <span class="bold">{{Ctrl.edgeDetail.label}}</span></h3>
             <h3>Valley Detail: <span class="bold">{{Ctrl.valleyDetail.label}}</span></h3>
             <h3>Ridge Cap: <span class="bold">{{Ctrl.ridgeCap.label}}</span></h3>

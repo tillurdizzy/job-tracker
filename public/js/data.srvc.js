@@ -8,6 +8,7 @@ app.service('evoDb',['$http','$q','SharedSrvc','LogInSrvc',function eventQueries
 	var S = SharedSrvc;
 	var L = LogInSrvc;
 	var serverAvailable = false;
+	self.keyValues = [];
 
 	self.setManagerID = function(id){
 		self.managerID = id;
@@ -397,6 +398,19 @@ app.service('evoDb',['$http','$q','SharedSrvc','LogInSrvc',function eventQueries
 		var deferred = $q.defer();
 		$http({method: 'POST', url: 'js/php/updateMaterialsItem.php',data:primaryIDObj}).
 		success(function(data, status, headers, config) {
+     		deferred.resolve(data);
+	    }).
+	    error(function(data, status, headers, config) {
+			deferred.reject(data);
+	    });
+	    return deferred.promise;
+	}
+
+	self.getIdValues = function(){
+		var deferred = $q.defer();
+		$http({method: 'POST', url: 'js/php/getIdVals.php'}).
+		success(function(data, status, headers, config) {
+			self.keyValues = data;
      		deferred.resolve(data);
 	    }).
 	    error(function(data, status, headers, config) {
