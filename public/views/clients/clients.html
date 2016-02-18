@@ -8,13 +8,12 @@
     <div ui-view>
         <div class="top-page-menu">
             <div><i ng-click="Ctrl.goNewClient();" class="fa fa-plus fa-2x"></i></div>
-            <div><h3>New Client</h3></div>
+            <div>
+                <h3>New Client</h3></div>
         </div>
-
         <div class="client-list-container">
-            <div client-item id="{{e.PRIMARY_ID}}" company="{{e.displayName}}" details="Ctrl.showDetails"
-                contact="{{e.name_first + ' ' + e.name_last}}" ng-repeat="e in Ctrl.clients">
-            </div> 
+            <div client-item id="{{e.PRIMARY_ID}}" company="{{e.displayName}}" details="Ctrl.showDetails" contact="{{e.name_first + ' ' + e.name_last}}" ng-repeat="e in Ctrl.clients">
+            </div>
         </div>
         <div class="block-section" style="margin-top:20px;">
             <div class="text-block-display large">
@@ -22,6 +21,6 @@
                 <p>Click the <span class="bold">New Client</span> button in the menu bar add a client.</p>
                 <p>Click the <span class="bold">Pencil Icon</span> button at the end of each listing to view the Client Details or to make edits.</p>
             </div>
-        </div> 
+        </div>
     </div>
 </div>
