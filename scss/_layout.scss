@@ -236,6 +236,10 @@ body{
   flex-direction: column;
 }
 
+.flex-row{
+  display: flex;
+}
+
 .flex-row-start{
   display: flex;
   flex-direction: row;

@@ -1,6 +1,6 @@
 <div class="page" ng-controller="ProposalCtrl as Ctrl">
     <div class="page-title"><h2>Proposal</h2></div>
-    <div ui-view>
+
         <div class="section-header">
             <h2>Property</h2>
         </div>
@@ -32,156 +32,16 @@
             </div>
            
         </div>
-       
-        <div class="section-header">
-            <h2>Roofing Parameters</h2>
+
+       <div id='cssmenu' ng-controller="ProposalMenuCtrl">
+            <ul>
+               <li ng-class="{ active: isCurrentPath('/proposal/params')}"><a ui-sref='proposal.params'>Parameters</a></li>
+               <li ng-class="{ active: isCurrentPath('/proposal/photos')}"><a ui-sref='proposal.photos'>Photos</a></li>
+               <li ng-class="{ active: isCurrentPath('/proposal/special')}"><a ui-sref='proposal.special'>Special Considerations</a></li>
+               <li ng-class="{ active: isCurrentPath('/proposal/submit')}"><a ui-sref='proposal.submit'>Submit</a></li>
+            </ul>
         </div>
-        <div class="list-container-proposal">
-        <div>
-            <div class="job-items-container">
-                <div class="job-item-name"><h4>Field</h4></div>
-                <div class="job-item-input"><input type="tel" name="qtyInput" ng-model="Ctrl.params.FIELD"></div>
-                <div class="job-item-unit"><h3>Sqs</h3></div>
-            </div>
-            <div class="job-items-container">
-                <div class="job-item-name"><h4>Decking</h4></div>
-                <div class="job-item-input"><input type="tel" name="qtyInput" ng-model="Ctrl.params.DECKNG"></div>
-                <div class="job-item-unit"><h3>Sqs</h3></div>
-            </div>
-            <div class="job-items-container">
-                <div class="job-item-name"><h4>Top Ridge</h4></div>
-                <div class="job-item-input"><input type="tel" name="qtyInput" ng-model="Ctrl.params.TOPRDG"></div>
-                <div class="job-item-unit"><h3>LF</h3></div>
-            </div>
-            <div class="job-items-container">
-                <div class="job-item-name"><h4>Rake Ridge</h4></div>
-                <div class="job-item-input"><input type="tel" name="qtyInput" ng-model="Ctrl.params.RKERDG"></div>
-                <div class="job-item-unit"><h3>LF</h3></div>
-            </div>
-            <div class="job-items-container">
-                <div class="job-item-name"><h4>Perimeter</h4></div>
-                <div class="job-item-input"><input type="tel" name="qtyInput" ng-model="Ctrl.params.PRMITR"></div>
-                <div class="job-item-unit"><h3>LF</h3></div>
-            </div>
-            <div class="job-items-container">
-                <div class="job-item-name"><h4>Valley</h4></div>
-                <div class="job-item-input"><input type="tel" name="qtyInput" ng-model="Ctrl.params.VALLEY"></div>
-                <div class="job-item-unit"><h3>LF</h3></div>
-            </div>
-            <div class="job-items-container">
-                <div class="job-item-name"><h4>1.5 in. Lead Pipe</h4></div>
-                <div class="job-item-input"><input type="tel" name="qtyInput" ng-model="Ctrl.params.LBF1"></div>
-                <div class="job-item-unit"><h3>Each</h3></div>
-            </div>
-            <div class="job-items-container">
-                <div class="job-item-name"><h4>2 in. Lead Pipe</h4></div>
-                <div class="job-item-input"><input type="tel" name="qtyInput" ng-model="Ctrl.params.LBF2"></div>
-                <div class="job-item-unit"><h3>Each</h3></div>
-            </div>
-            <div class="job-items-container">
-                <div class="job-item-name"><h4>3 in. Lead Pipe</h4></div>
-                <div class="job-item-input"><input type="tel" name="qtyInput" ng-model="Ctrl.params.LBF3"></div>
-                <div class="job-item-unit"><h3>Each</h3></div>
-            </div>
-            <div class="job-items-container">
-                <div class="job-item-name"><h4>4 in. Lead Pipe</h4></div>
-                <div class="job-item-input"><input type="tel" name="qtyInput" ng-model="Ctrl.params.LBF4"></div>
-                <div class="job-item-unit"><h3>Each</h3></div>
-            </div>
-           
+       <div ui-view></div>
 
-        </div>
-        <div>
-            
-        </div>
-
-        <div>
-            <div class="job-items-container">
-                <div class="job-item-name"><h4>8 in. Vents</h4></div>
-                <div class="job-item-input"><input type="tel" name="qtyInput" ng-model="Ctrl.params.JKVNT8"></div>
-                <div class="job-item-unit"><h3>Each</h3></div>
-            </div>
-            <div class="job-items-container">
-                <div class="job-item-name"><h4>8 X 8 Flashing</h4></div>
-                <div class="job-item-input"><input type="tel" name="qtyInput" ng-model="Ctrl.params.FLHSH8"></div>
-                <div class="job-item-unit"><h3>Each</h3></div>
-            </div>
-            <div class="job-items-container">
-                <div class="job-item-name"><h4>Turbines</h4></div>
-                <div class="job-item-input"><input type="tel" name="qtyInput" ng-model="Ctrl.params.TURBNS"></div>
-                <div class="job-item-unit"><h3>Each</h3></div>
-            </div>
-            <div class="job-items-container">
-                <div class="job-item-name"><h4>Power Vents</h4></div>
-                <div class="job-item-input"><input type="tel" name="qtyInput" ng-model="Ctrl.params.PWRVNT"></div>
-                <div class="job-item-unit"><h3>Each</h3></div>
-            </div>
-            <div class="job-items-container">
-                <div class="job-item-name"><h4>Air Hawks</h4></div>
-                <div class="job-item-input"><input type="tel" name="qtyInput" ng-model="Ctrl.params.AIRHWK"></div>
-                <div class="job-item-unit"><h3>Each</h3></div>
-            </div>
-            
-            <div class="job-items-container">
-                <div class="job-item-name"><h4>Carport</h4></div>
-                <div class="job-item-input"><input type="tel" name="qtyInput" ng-model="Ctrl.params.CARPRT"></div>
-                <div class="job-item-unit"><h3>Each</h3></div>
-            </div>
-            <div class="job-items-container">
-                <div class="job-item-name"><h4>Satellite</h4></div>
-                <div class="job-item-input"><input type="tel" name="qtyInput" ng-model="Ctrl.params.SATDSH"></div>
-                <div class="job-item-unit"><h3>Each</h3></div>
-            </div>
-            <div class="job-items-container">
-                <div class="job-item-name"><h4>Paint</h4></div>
-                <div class="job-item-input"><input type="tel" name="qtyInput" ng-model="Ctrl.params.PAINT"></div>
-                <div class="job-item-unit"><h3>Gal.</h3></div>
-            </div>
-            <div class="job-items-container">
-                <div class="job-item-name"><h4>Caulk</h4></div>
-                <div class="job-item-input"><input type="tel" name="qtyInput" ng-model="Ctrl.params.CAULK"></div>
-                <div class="job-item-unit"><h3>Tubes</h3></div>
-            </div>
-             <div class="job-items-container">
-                 <button type="button" ng-click="Ctrl.submitParams()">Submit</button>
-            </div>
-            
-        </div>
-            
-        </div>
-
-        <div class="section-header">
-            <h2>Special Considerations</h2>
-            <i class="fa fa-chevron-down" ng-hide="Ctrl.specialOpen" ng-click="Ctrl.specialOpen =true;"></i>
-            <i class="fa fa-chevron-up" ng-show="Ctrl.specialOpen" ng-click="Ctrl.specialOpen =false;"></i>
-        </div>
-        <div class="special-considerations" ng-show="Ctrl.specialOpen">
-            <h4>Description</h4>
-            <textarea ng-model="specialText"></textarea>
-            <div>
-                <h4>Cost</h4>
-                <input type="tel" ng-model="specialCost" placeholder="USD">
-            </div>
-            <button type="button" ng-click="submitSpecial()" style="margin-top:5px;">Submit</button>
-        </div>
-
-        <div class="section-header">
-            <h2>Submit</h2>
-            <i class="fa fa-chevron-down" ng-hide="Ctrl.submitOpen" ng-click="Ctrl.submitOpen =true;"></i>
-            <i class="fa fa-chevron-up" ng-show="Ctrl.submitOpen" ng-click="Ctrl.submitOpen =false;"></i>
-        </div>
-        <div class="list-container-proposal" ng-show="Ctrl.submitOpen">
-            <p>When your proposal is complete, click below to submit for approval.</p>
-            <button type="button" ng-click="submitForApproval()" style="margin-top:5px;">Submit</button>
-        </div>
-
-
-
-
-
-
-
-    <!--  ui-view -->
-    </div>
 <!--  page -->
 </div>

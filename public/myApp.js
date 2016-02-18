@@ -112,6 +112,25 @@ app.config(function($stateProvider, $urlRouterProvider) {
 			templateUrl:"views/proposals/proposal.html"
 		})
 
+		.state('proposal.params', {
+			url: "/params",
+			templateUrl:"views/proposals/proposal-params.html"
+		})
+
+		.state('proposal.photos', {
+			url: "/photos",
+			templateUrl:"views/proposals/proposal-photos.html"
+		})
+
+		.state('proposal.special', {
+			url: "/special",
+			templateUrl:"views/proposals/proposal-special.html"
+		})
+		.state('proposal.submit', {
+			url: "/submit",
+			templateUrl:"views/proposals/proposal-submit.html"
+		})
+
 		.state('reports', {
 			url: "/reports",
 			templateUrl:"views/reports/reports.html"

@@ -11,7 +11,6 @@ app.controller('ClientsCtrl',['$scope','$state','evoDb','SharedSrvc',function ($
 	// data vars
 	ME.clients = S.managerClients;
 	ME.selectedClientObj = {};
-  ME.clientType = ME.selectedClientObj.type;
 
 	ME.showDetails = function(ndxStr){
 		var ndx = Number(ndxStr);

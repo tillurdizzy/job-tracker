@@ -98,7 +98,7 @@ app.service('SharedSrvc',['$rootScope',function sharedVars($rootScope){
 		self.managerProperties = [];
 		self.managerJobs = [];
 		self.managerJobs = d;
-		parseJobDates();
+		//parseJobDates();
 	};
 
 	self.setManagerClients = function(c){
@@ -143,6 +143,14 @@ app.service('SharedSrvc',['$rootScope',function sharedVars($rootScope){
 		};
 	};
 
+	var returnDisplayNameFromClient = function(id){
+		for (var i = 0; i < self.managerClients.length; i++) {
+			if(self.managerClients[i].PRIMARY_ID === id){
+				return self.managerClients[i].displayName;
+			}
+		};
+	};
+
 	var returnProperty = function(id){
 		for (var i = 0; i < self.managerProperties.length; i++) {
 			if(self.managerProperties[i].PRIMARY_ID === id){
@@ -155,7 +163,7 @@ app.service('SharedSrvc',['$rootScope',function sharedVars($rootScope){
 		// Translate related Client and Property ID #'s from Jobs into Names
 		for (var i = 0; i < self.managerJobs.length; i++) {
 			var clientID = self.managerJobs[i].client;
-			var thisClient = returnCompany(clientID);
+			var thisClient = returnDisplayNameFromClient(clientID);
 			self.managerJobs[i].clientName = thisClient;
 
 			var propID = self.managerJobs[i].property;
@@ -163,9 +171,46 @@ app.service('SharedSrvc',['$rootScope',function sharedVars($rootScope){
 			self.managerJobs[i].propertyName = thisProperty;
 		};
 
-		// Translate key-value pairs
 		for (var i = 0; i < self.managerProperties.length; i++) {
-			var x = self.managerProperties[i].numLevels;
+			
+			clientID=self.managerProperties[i].client;
+			self.managerProperties[i].client = returnDisplayNameFromClient(clientID);
+
+			var ID = self.managerProperties[i].numLevels;
+			self.managerProperties[i].numLevels = self.returnIdValue(self.levelOptions,ID);
+
+			ID = self.managerProperties[i].shingleGrade;
+			self.managerProperties[i].shingleGrade = self.returnIdValue(self.shingleGradeOptions,ID);
+
+			ID = self.managerProperties[i].roofDeck;
+			self.managerProperties[i].roofDeck = self.returnIdValue(self.roofDeckOptions,ID);
+
+			ID = self.managerProperties[i].layers;
+			self.managerProperties[i].layers = self.returnIdValue(self.numbersToTen,ID);
+
+			ID = self.managerProperties[i].edgeDetail;
+			self.managerProperties[i].edgeDetail = self.returnIdValue(self.edgeDetail,ID);
+
+			ID = self.managerProperties[i].edgeTrim;
+			self.managerProperties[i].edgeTrim = self.returnIdValue(self.yesNo,ID);
+
+			ID = self.managerProperties[i].valleyDetail;
+			self.managerProperties[i].valleyDetail = self.returnIdValue(self.valleyOptions,ID);
+
+			ID = self.managerProperties[i].ridgeCap;
+			self.managerProperties[i].ridgeCap = self.returnIdValue(self.ridgeCapShingles,ID);
+
+			ID = self.managerProperties[i].roofVents;
+			self.managerProperties[i].roofVents = self.returnIdValue(self.ventOptions,ID);
+
+			ID = self.managerProperties[i].pitch;
+			self.managerProperties[i].pitch = self.returnIdValue(self.pitchOptions,ID);
+
+			//ID = self.managerProperties[i].multiLevel;
+			//self.managerProperties[i].multiLevel = self.returnIdValue(self.multiLevelOptions,ID);
+
+			//ID = self.managerProperties[i].multiVents;
+			//self.managerProperties[i].multiVents = self.returnIdValue(self.ventConfig,ID);
 
 
 		}
@@ -182,9 +227,6 @@ app.service('SharedSrvc',['$rootScope',function sharedVars($rootScope){
 	};
 
 	
-
-
-
 	self.levelOptions = [
 		{label:"One",id:1},
 		{label:"Two",id:2},
@@ -277,6 +319,14 @@ app.service('SharedSrvc',['$rootScope',function sharedVars($rootScope){
 		{label:"Turbine",id:2},
 		{label:"Power",id:3},
 		{label:"Solar",id:4}];
+
+	self.trueFalse = [
+		{label:"False",id:0},
+		{label:"True",id:1}];
+
+	self.yesNo = [
+		{label:"No",id:0},
+		{label:"Yes",id:1}];
 
 	self.returnIdValue = function(set,id){
 		var rtnObj = {};

@@ -81,10 +81,12 @@ $material-height:1em;
 		margin:4px 0 0 0;
 		height:$job-item-height;
 		background-color:$clouds-grey;
-		button, .button{
-			float:right;
+
+		button{
 			padding:0;
+			width:200px;
 		}
+
 		.job-item-name{
 			height:$job-item-height;
 			width:200px;
