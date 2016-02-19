@@ -1,31 +1,21 @@
 'use strict';
 
- app.controller('AmazonS3Ctrl', ["$window","serviceAWS", function ($scope,$window,serviceAWS) {
+ app.controller('AmazonS3Ctrl', ["$window","serviceAWS","SharedSrvc", function ($window,serviceAWS,SharedSrvc) {
   var ME = this;
-  ME.Bucket = serviceAWS;
-  ME.currentView = 'grid'; // 'list'  || 'grid'
-  ME.currentFolder = 'images';// 'images' || 'docs'
+  ME.S = SharedSrvc;
+  ME.AWS = serviceAWS;
+  
  	ME.alerts = [];
-
- 	ME.listPhotos = function(){	
- 		ME.currentFolder = 'images';
-    ME.uploadResult='';
- 		ME.alerts = [];
- 	};
-
- 	ME.listDocs = function(){
- 		ME.currentFolder = 'docs';
-    ME.uploadResult='';
- 		ME.alerts = [];
- 	};
-
-  ME.showView = function(v){
-     ME.currentView = v;
-  }
+  ME.uploadResult = [];
+  ME.selectedPhoto = "";
+  ME.photoCategory = "";
+  ME.photoCaption = "";
+  ME.jobPhotos = [];
 
  	ME.selectImage = function(image){
  		$window.open(image.path);
  	};
+
 
  	ME.selectDoc = function(doc){
  		$window.open(doc.path);
@@ -35,9 +25,14 @@
     ME.alerts = [];
   };
 
+  ME.onSelectFile = function(file){
+    ME.selectedPhoto = file;
+
+  }
+
 	ME.onFile = function(fileList) {
     serviceAWS.uploadBucketItems(fileList).then(function(item){
-      ME.uploadResult = serviceAWS.uploadedURL;
+      ME.uploadResult.push(serviceAWS.uploadedURL);
     });
   };
 

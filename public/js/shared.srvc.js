@@ -328,6 +328,16 @@ app.service('SharedSrvc',['$rootScope',function sharedVars($rootScope){
 		{label:"No",id:0},
 		{label:"Yes",id:1}];
 
+	self.photoCats = [
+	    {label:"Street View"},
+	    {label:"Shingles"},
+	    {label:"Deck"},
+	    {label:"Edge Detail"},
+	    {label:"Valley Detail"},
+	    {label:"Ridge Detail"},
+	    {label:"Ventilation"},
+	    {label:"Other"}];
+
 	self.returnIdValue = function(set,id){
 		var rtnObj = {};
 		for (var i = 0; i < set.length; i++) {

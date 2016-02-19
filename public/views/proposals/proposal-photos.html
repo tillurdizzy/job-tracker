@@ -2,27 +2,18 @@
 	<div class="section-header">
     	<h2>Photos</h2>
 	</div>
-	<p>Upload at least one photo for each category.</p>
-	<div class="flex-row">
-		<div><h4>Front View</h4></div>
-		<div file-upload="ImgCtrl.onFile(files)"></div>
-	</div>
-
+	<p>Upload at least one photo each for Street View, Shingle Detail, Ridge Detail, Valley Detail, Edge Detail, and Ventilation.</p>
+	
 	<div>
-		<div><h4>Front View</h4><div file-upload="ImgCtrl.onFile(files)"></div>
+		<div file-selector file-select="ImgCtrl.onSelectFile(files)"></div>
 	</div>
-
-	<div>
-		<div><h4>Front View</h4><div file-upload="ImgCtrl.onFile(files)"></div>
-	</div>
-
-	<div>
-		<div><h4>Front View</h4><div file-upload="ImgCtrl.onFile(files)"></div>
-	</div>
-
-	<div>
-		<div><h4>Other Photos</h4><div file-upload="ImgCtrl.onFile(files)"></div>
-	</div>
+	<horiz-rule margintop="15" marginbottom="10"></horiz-rule>
+	<div class="dropDownSelector">
+        <select ng-model="ImgCtrl.photoCategory" ng-options="c.label for c in ImgCtrl.S.photoCats"></select>
+    </div>
+	<img src="{{ImgCtrl.selectedPhoto}}" style="max-width:100%;" alt="">
+	
+	
 </div>
 
 

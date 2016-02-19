@@ -7,7 +7,7 @@ app.controller('LoginCtrl',['$scope','$state','evoDb','SharedSrvc','ShingleSrvc'
 	var S = SharedSrvc;
     var C = ClientSrvc;
     var L = LogInSrvc;
-    var A = serviceAWS;
+     $scope.A = serviceAWS;
 
     $scope.submissionInvalid = false;// form is filled out correctly
     $scope.requestSuccess=false;// database query; starts out false set to true on successful query
@@ -74,7 +74,7 @@ app.controller('LoginCtrl',['$scope','$state','evoDb','SharedSrvc','ShingleSrvc'
                         $scope.requestSuccess = true;// this var changes the stage
                         $scope.clearForm();
                         $scope.displayName = $scope.loginObj.name_first + " " + $scope.loginObj.name_last;
-                        A.initAWS(true);
+                         $scope.A.initAWS(true);
                         if(userType == "client"){
                             C.LogIn($scope.loginObj);
                             $scope.getClientJob($scope.loginObj.jobID);

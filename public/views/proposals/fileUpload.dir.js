@@ -1,18 +1,18 @@
 'use strict';
 
-app.directive('fileUpload', function(){
+app.directive('fileSelector', function(){
 	return{
 		restrict:'A',
 		scope:{
-			fileUpload: '&'
+			fileSelect: '&'
 		},
-		template:'<input type="file" id="file" /> ',
+		template:'<input type="file" id="file"/> ',
 		replace:true,
 		link: function(scope,ele,attrs,c){
 			ele.bind('change',function(){
 				var file = ele[0].files;
 				if(file){
-					scope.fileUpload({files:file});
+					scope.fileSelect({files:file});
 				}
 			})
 		}

@@ -116,6 +116,7 @@ app.service('serviceAWS',['$q',function ($q){
         self.s3Obj.getSignedUrl('getObject',getUrlParams, function(err,url){
           if(!err){
             self.uploadedURL = url;
+            console.log(self.uploadedURL);
             self.getPhotoList();
             self.getDocumentList();
           }
