@@ -1,47 +1,49 @@
 <div class="page" ng-controller="ProposalCtrl as Ctrl">
-    <div class="page-title"><h2>Proposal</h2></div>
-
-        <div class="section-header">
-            <h2>Property</h2>
+    <div class="page-title">
+        <h2>Proposal</h2></div>
+    <div class="section-header">
+        <h2>Property</h2>
+    </div>
+    <div class="text-block-display">
+        <h4>{{Ctrl.selectedPropertyObj.name}}</h4>
+        <h3>{{Ctrl.selectedPropertyObj.street}}</h3>
+        <h3>{{Ctrl.selectedPropertyObj.city + ", " + Ctrl.selectedPropertyObj.state + " " + Ctrl.selectedPropertyObj.zip}}</h3>
+    </div>
+    <div class="section-header">
+        <h2>Bid Summary</h2>
+    </div>
+    <div class="text-block-display">
+        <div class="flex-space-between">
+            <div>
+                <h3>Materials</h3></div>
+            <div></div>
+            <div>
+                <h4>{{Ctrl.materialsCost | currency:"$":0}}</h4></div>
         </div>
-        <div class="text-block-display">
-            <h4>{{Ctrl.selectedPropertyObj.name}}</h4>
-            <h3>{{Ctrl.selectedPropertyObj.street}}</h3>
-            <h3>{{Ctrl.selectedPropertyObj.city + ", " + Ctrl.selectedPropertyObj.state + " " + Ctrl.selectedPropertyObj.zip}}</h3>
+        <div class="flex-space-between">
+            <div>
+                <h3>Labor</h3></div>
+            <div></div>
+            <div>
+                <h4>{{Ctrl.laborCost | currency:"$":0}}</h4></div>
         </div>
-        <div class="section-header">
-            <h2>Bid Summary</h2>
+        <horiz-rule margintop="4px" marginbottom="4px"></horiz-rule>
+        <div class="flex-space-between">
+            <div>
+                <h3>Total</h3></div>
+            <div></div>
+            <div>
+                <h4>{{Ctrl.totalCost | currency:"$":0}}</h4></div>
         </div>
-        <div class="text-block-display">
-            <div class="flex-space-between">
-                <div><h3>Materials</h3></div>
-                <div></div>
-                <div><h4>{{Ctrl.materialsCost | currency:"$":0}}</h4></div>
-            </div>
-           
-            <div class="flex-space-between">
-                <div><h3>Labor</h3></div>
-                <div></div>
-                <div><h4>{{Ctrl.laborCost | currency:"$":0}}</h4></div>
-            </div>
-            <horiz-rule margintop="4px" marginbottom="4px"></horiz-rule>
-            <div class="flex-space-between">
-                <div><h3>Total</h3></div>
-                <div></div>
-                <div><h4>{{Ctrl.totalCost | currency:"$":0}}</h4></div>
-            </div>
-           
-        </div>
-
-       <div id='cssmenu' ng-controller="ProposalMenuCtrl">
-            <ul>
-               <li ng-class="{ active: isCurrentPath('/proposal/params')}"><a ui-sref='proposal.params'>Parameters</a></li>
-               <li ng-class="{ active: isCurrentPath('/proposal/photos')}"><a ui-sref='proposal.photos'>Photos</a></li>
-               <li ng-class="{ active: isCurrentPath('/proposal/special')}"><a ui-sref='proposal.special'>Special Considerations</a></li>
-               <li ng-class="{ active: isCurrentPath('/proposal/submit')}"><a ui-sref='proposal.submit'>Submit</a></li>
-            </ul>
-        </div>
-       <div ui-view></div>
-
-<!--  page -->
+    </div>
+    <div id='cssmenu' ng-controller="ProposalMenuCtrl">
+        <ul>
+            <li ng-class="{ active: isCurrentPath('/proposal/params')}"><a ui-sref='proposal.params'>Parameters</a></li>
+            <li ng-class="{ active: isCurrentPath('/proposal/photos')}"><a ui-sref='proposal.photos'>Photos</a></li>
+            <li ng-class="{ active: isCurrentPath('/proposal/special')}"><a ui-sref='proposal.special'>Special Considerations</a></li>
+            <li ng-class="{ active: isCurrentPath('/proposal/submit')}"><a ui-sref='proposal.submit'>Submit</a></li>
+        </ul>
+    </div>
+    <div ui-view></div>
+    <!--  page -->
 </div>

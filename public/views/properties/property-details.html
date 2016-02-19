@@ -1,9 +1,7 @@
 <div class="section-header">
     <h2>Property Details</h2>
 </div>
-
-<div  class="text-block-display">
-
+<div class="text-block-display">
     <h3>{{Ctrl.selectedPropertyObj.name}}</h3>
     <h3>{{Ctrl.selectedPropertyObj.street}}</h3>
     <h3>{{Ctrl.selectedPropertyObj.city + ", " + Ctrl.selectedPropertyObj.state + " " + Ctrl.selectedPropertyObj.zip}}</h3>
@@ -18,8 +16,5 @@
     <h3>Edge Trim:<span class="bold"> {{Ctrl.selectedPropertyObj.edgeTrim.label}}</span></h3>
     <h3>Ridge Detail:<span class="bold"> {{Ctrl.selectedPropertyObj.ridgeCap.label}}</span></h3>
     <h3>Ventilation:<span class="bold"> {{Ctrl.selectedPropertyObj.roofVents.label}}</span></h3>
-
-
 </div>
-
 <button type="button" class="button nav-btn" ng-click="Ctrl.backToList()">Back</button>
