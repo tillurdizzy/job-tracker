@@ -293,4 +293,21 @@ textarea {
   padding: 5px 11px;
 }
 
+#thumbWrapper{
+  margin-top: 1rem;
+}
+
+#thumbList li{
+  cursor: pointer;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+input[type="file"], textarea{
+   background-color: #507C99;
+   display: inline;
+   padding: 2px;
+   height: 28px;
+}
+
 

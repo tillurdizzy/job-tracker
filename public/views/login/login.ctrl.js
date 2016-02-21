@@ -66,6 +66,7 @@ app.controller('LoginCtrl',['$scope','$state','evoDb','SharedSrvc','ShingleSrvc'
                 var result = DB.queryLogIn(dataObj)
                 .then(function(result){
                     if(result != false){
+                        
                         // DB sets basic log in data for Shared Srvc and LogIn Srvc
                         $scope.loginObj = result[0];
                         var userType = $scope.loginObj.userType;
@@ -74,7 +75,7 @@ app.controller('LoginCtrl',['$scope','$state','evoDb','SharedSrvc','ShingleSrvc'
                         $scope.requestSuccess = true;// this var changes the stage
                         $scope.clearForm();
                         $scope.displayName = $scope.loginObj.name_first + " " + $scope.loginObj.name_last;
-                         $scope.A.initAWS(true);
+                        $scope.A.initAWS(true);
                         if(userType == "client"){
                             C.LogIn($scope.loginObj);
                             $scope.getClientJob($scope.loginObj.jobID);

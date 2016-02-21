@@ -7,5 +7,6 @@ class userVO{
 	var $pin;
 	var $userType;
 	var $jobID;
+	var $awsRegion;
 }
 ?>

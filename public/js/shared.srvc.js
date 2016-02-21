@@ -11,8 +11,9 @@ app.service('SharedSrvc',['$rootScope',function sharedVars($rootScope){
 	self.fullPropertyList = [];
 	self.fullJobList = [];
 
-	// Manager vars
+	// User vars
 	self.loggedIn = false;
+	self.logInObj = {};
 	self.dataRefreshed = false;
 	self.managerID = "";
 	self.managerName = "";
@@ -25,18 +26,28 @@ app.service('SharedSrvc',['$rootScope',function sharedVars($rootScope){
 	self.selectedClientObj = {};
 	self.selectedPropertyObj = {};
 
-	
+	// AWS Bucket Vars
+	self.awsBucketUrl = "https://s3.amazonaws.com/"; // Specific to AWS Account
+
 	self.keyValues = [];
+
+
 	// Methods
 
 	//Called after successful Log In
-	self.setManagerID = function(id,n){
-		self.managerID = id;
-		self.managerName = n;
+	self.setUser = function(obj){
+		self.logInObj = obj;
 		self.loggedIn = true;
+
+
+		//... Get rid of these and adjust reference to above obj
+		self.managerID = obj.PRIMARY_ID;
+		self.managerName = obj.name_first + " " + obj.name_last;
+		
 	};
 
 	self.logOut = function(){
+		self.logInObj = {};
 		self.managerID = "";
 		self.managerName = "";
 		self.loggedIn = false;

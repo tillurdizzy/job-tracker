@@ -12,46 +12,12 @@
 	<div class="dropDownSelector">
         <select ng-model="ImgCtrl.photoCategory" ng-options="c.label for c in ImgCtrl.S.photoCats"></select>
     </div>
-	<img src="{{ImgCtrl.selectedPhoto}}" style="max-width:100%;" alt="">
+
+    <ul id="thumbList" ng-class="">
+        <li ng-repeat="x in ImgCtrl.bucketImages" class="th" ng-click="selectImage(x)">
+            <img ng-src={{x.path}}>
+        </li>
+    </ul>
 	
 	
 </div>
-
-
-
-=======
-<div ng-controller="AmazonS3Ctrl as ImgCtrl">
-    <div class="section-header">
-        <h2>Photos</h2>
-    </div>
-    <p>Upload at least one photo for each category.</p>
-    <div class="flex-row">
-        <div>
-            <h4>Front View</h4></div>
-        <div file-upload="ImgCtrl.onFile(files)"></div>
-    </div>
-    <div>
-        <div>
-            <h4>Front View</h4>
-            <div file-upload="ImgCtrl.onFile(files)"></div>
-        </div>
-    </div>
-    <div>
-        <div>
-            <h4>Front View</h4>
-            <div file-upload="ImgCtrl.onFile(files)"></div>
-        </div>
-    </div>
-    <div>
-        <div>
-            <h4>Front View</h4>
-            <div file-upload="ImgCtrl.onFile(files)"></div>
-        </div>
-    </div>
-    <div>
-        <div>
-            <h4>Other Photos</h4>
-            <div file-upload="ImgCtrl.onFile(files)"></div>
-        </div>
-    </div>
->>>>>>> 3be6a96ba589b957589005e96a1d557236dca9db

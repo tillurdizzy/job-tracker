@@ -6,7 +6,7 @@
   ME.AWS = serviceAWS;
   
  	ME.alerts = [];
-  ME.uploadResult = [];
+  ME.bucketImages = ME.AWS.bucketImages;
   ME.selectedPhoto = "";
   ME.photoCategory = "";
   ME.photoCaption = "";
@@ -27,13 +27,15 @@
 
   ME.onSelectFile = function(file){
     ME.selectedPhoto = file;
-
+    ME.uploadToBucket(file);
   }
 
-	ME.onFile = function(fileList) {
-    serviceAWS.uploadBucketItems(fileList).then(function(item){
-      ME.uploadResult.push(serviceAWS.uploadedURL);
+	ME.uploadToBucket = function(file) {
+    serviceAWS.uploadBucketItems(file).then(function(item){
+      console.log(item);
     });
   };
+
+  ME.AWS.updateReferences();
 
 }]);

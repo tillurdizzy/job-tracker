@@ -1,7 +1,10 @@
 'use strict';
-app.service('serviceAWS',['$q',function ($q){
+app.service('serviceAWS',['$q','SharedSrvc','LogInSrvc',function ($q,SharedSrvc,LogInSrvc){
 
   var self = this;
+  self.S = SharedSrvc;
+  self.L = LogInSrvc;
+
   self.config = null;
   self.uploadedURL = null;
 
@@ -9,7 +12,17 @@ app.service('serviceAWS',['$q',function ($q){
   self.s3Obj = null;
   self.bucketImages=[];
   self.bucketDocs=[];
-  var bucketUrl = "https://s3.amazonaws.com/tillurdizzy9954/";
+
+
+  self.awsRegion = self.L.userVO.awsRegion;
+  self.awsRegion = "us-east-1";// Resets above until confirmed as needed
+  
+  self.bucketUrl = self.S.awsBucketUrl;
+  self.bucketName = self.L.userVO.name_user;
+ 
+  // Job folder within Users S3 Bucket
+  // ANY path items between the bucket and the file
+  self.bucketPrefix = "id_" + self.S.selectedPropertyObj.PRIMARY_ID + "/";
 
   // DynamoDB vars
   self.dynamoObj;
@@ -25,8 +38,13 @@ app.service('serviceAWS',['$q',function ($q){
     self.initDynamo();
   };
 
+  self.updateReferences = function(){
+    self.bucketName = self.L.userVO.name_user;
+    self.bucketPrefix = "id_" + self.S.selectedPropertyObj.PRIMARY_ID + "/";
+  }
+
   self.initS3 = function(){
-    AWS.config.region = 'us-east-1';// S3 Region
+    AWS.config.region = self.awsRegion;// S3 Region
     self.s3Obj = new AWS.S3();
     self.getPhotoList();
     self.getDocumentList();
@@ -38,7 +56,7 @@ app.service('serviceAWS',['$q',function ($q){
     }
     // list objects in the 'photos' folder
     self.bucketImages=[];
-    self.s3Obj.listObjects({Bucket: 'tillurdizzy9954',Prefix:'photos/'}, function(error, data) {
+    self.s3Obj.listObjects({Bucket: self.bucketName,Prefix:self.bucketPrefix + 'photos/'}, function(error, data) {
       if (error) {
         console.log(error);
       } else {
@@ -46,7 +64,7 @@ app.service('serviceAWS',['$q',function ($q){
         for (var i=1; i<contentArray.length; i++){ 
           var bucketPath = contentArray[i].Key;               
           var nameOnly = bucketPath.replace(/photos\//,'');
-          self.bucketImages.push({name:nameOnly,path:bucketUrl + bucketPath});
+          self.bucketImages.push({name:nameOnly,path:self.bucketUrl + bucketPath});
         }
       }
     });
@@ -58,7 +76,7 @@ app.service('serviceAWS',['$q',function ($q){
     }
     // list objects in the 'docs' folder
     self.bucketDocs=[];
-    self.s3Obj.listObjects({Bucket: 'tillurdizzy9954',Prefix:'docs/'}, function(error, data) {
+    self.s3Obj.listObjects({Bucket: self.bucketName,Prefix:self.bucketPrefix + 'docs/'}, function(error, data) {
       if (error) {
         console.log(error);
       } else {
@@ -76,7 +94,7 @@ app.service('serviceAWS',['$q',function ($q){
             case '.xls': iconpath = 'images/excel-icon.png';break;
             case '.xlsx': iconpath = 'images/excel-icon.png';break;
           }
-          self.bucketDocs.push({name:nameOnly,path:bucketUrl + bucketPath,icon:iconpath});
+          self.bucketDocs.push({name:nameOnly,path:self.bucketUrl + bucketPath,icon:iconpath});
         }
       }
     });
@@ -93,15 +111,15 @@ app.service('serviceAWS',['$q',function ($q){
     var thisfilemime = file.type;
     var filetype = thisfilemime.replace(/\/.*/,'');
     if(filetype == 'image' || filetype == 'video'){
-      var keypath = 'photos/';
+      var prefix = self.bucketPrefix + 'photos/';
     }else{
-        keypath = 'docs/';
+      prefix = self.bucketPrefix + 'docs/';
     }
 
     var putParams = {
       ACL: 'public-read-write',
-      Bucket:'tillurdizzy9954',
-      Key: keypath + file.name,
+      Bucket:self.bucketName,
+      Key: prefix + file.name,
       Body: file,
       ContentType: file.type
     };
@@ -112,7 +130,7 @@ app.service('serviceAWS',['$q',function ($q){
         d.reject(err);
       }else{
         console.log("PUT BUCKET OBJ SUCCESS ");
-        var getUrlParams = { Bucket:'tillurdizzy9954', Key:keypath + file.name,Expires:900*4};
+        var getUrlParams = { Bucket:self.bucketName, Key:prefix + file.name,Expires:900*4};
         self.s3Obj.getSignedUrl('getObject',getUrlParams, function(err,url){
           if(!err){
             self.uploadedURL = url;

@@ -165,7 +165,7 @@ app.service('evoDb',['$http','$q','SharedSrvc','LogInSrvc',function eventQueries
 				self.lastResult = data;
      			self.managerID = data[0].PRIMARY_ID;
      			self.managerName = data[0].name_first + " " + data[0].name_last;
-     			S.setManagerID(self.managerID,self.managerName);
+     			S.setUser(data[0]);
      			L.setUser(data[0]);
      			deferred.resolve(data);
 			}else{
