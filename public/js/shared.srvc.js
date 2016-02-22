@@ -27,7 +27,7 @@ app.service('SharedSrvc',['$rootScope',function sharedVars($rootScope){
 	self.selectedPropertyObj = {};
 
 	// AWS Bucket Vars
-	self.awsBucketUrl = "https://s3.amazonaws.com/"; // Specific to AWS Account
+	self.awsBucketUrl = "https://s3.amazonaws.com/";
 
 	self.keyValues = [];
 
@@ -229,6 +229,8 @@ app.service('SharedSrvc',['$rootScope',function sharedVars($rootScope){
 		$rootScope.$broadcast("data-refreshed");
 	};
 
+
+
 	
 	
 	var convertDateToString = function(m){
@@ -340,6 +342,7 @@ app.service('SharedSrvc',['$rootScope',function sharedVars($rootScope){
 		{label:"Yes",id:1}];
 
 	self.photoCats = [
+		{label:"Select"},
 	    {label:"Street View"},
 	    {label:"Shingles"},
 	    {label:"Deck"},

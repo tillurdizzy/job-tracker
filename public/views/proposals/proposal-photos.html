@@ -1,23 +1,47 @@
-<<<<<<< HEAD
-<div ng-controller = "AmazonS3Ctrl as ImgCtrl">
+
+<div ng-controller="AmazonS3Ctrl as ImgCtrl" class="proposal-photo-page">
 	<div class="section-header">
     	<h2>Photos</h2>
 	</div>
 	<p>Upload at least one photo each for Street View, Shingle Detail, Ridge Detail, Valley Detail, Edge Detail, and Ventilation.</p>
-	
-	<div>
-		<div file-selector file-select="ImgCtrl.onSelectFile(files)"></div>
-	</div>
-	<horiz-rule margintop="15" marginbottom="10"></horiz-rule>
-	<div class="dropDownSelector">
-        <select ng-model="ImgCtrl.photoCategory" ng-options="c.label for c in ImgCtrl.S.photoCats"></select>
-    </div>
 
-    <ul id="thumbList" ng-class="">
-        <li ng-repeat="x in ImgCtrl.bucketImages" class="th" ng-click="selectImage(x)">
-            <img ng-src={{x.path}}>
-        </li>
-    </ul>
+	
+	<h4>Add a photo in 4 steps</h4>
+	<horiz-rule margintop="15" marginbottom="10"></horiz-rule>
+	<div ng-show="ImgCtrl.stepOne">
+		<h3>Step 1:</h3>
+		<p>Choose the category this photo belongs to.</p>
+		<div class="dropDownSelector">
+        	<select ng-model="ImgCtrl.photoCategory" ng-options="c.label for c in ImgCtrl.S.photoCats" ng-change="ImgCtrl.selectCat()"></select>
+    	</div>
+    	<horiz-rule margintop="15" marginbottom="10"></horiz-rule>
+	</div>
+	
+	<div ng-show="ImgCtrl.stepTwo">
+		<h3>Step 2:</h3>
+		<p>Write a caption for this photo.</p>
+		<textarea ng-model="ImgCtrl.photoCaption"></textarea>
+		<button type="button" ng-click="ImgCtrl.submitCaption()">Submit</button>
+		<horiz-rule margintop="15" marginbottom="10"></horiz-rule>
+	</div>
+	
+	<div ng-show="ImgCtrl.stepThree">
+		<h3>Step 3:</h3>
+		<p>Choose the photo.</p>
+		<div file-selector file-select="ImgCtrl.onSelectFile(files)"></div>
+		
+		<horiz-rule margintop="15" marginbottom="10"></horiz-rule>
+	</div>
+	
+	<div ng-show="ImgCtrl.stepFour">
+		<h3>Step 4:</h3>
+		<button type="button" ng-click="ImgCtrl.uploadToBucket()">Submit</button>
+		<horiz-rule margintop="15" marginbottom="10"></horiz-rule>
+	</div>
 	
 	
+	<div class="photoListContainer">
+		<photo-list ng-repeat="x in ImgCtrl.AWS.bucketImages" url="{{x.path}}" category="Category" caption="this is a caption"></photo-list>
+	</div>
+   
 </div>

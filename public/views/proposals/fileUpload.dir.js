@@ -6,7 +6,7 @@ app.directive('fileSelector', function(){
 		scope:{
 			fileSelect: '&'
 		},
-		template:'<input type="file" id="file"/> ',
+		templateUrl:'views/proposals/upload.tpl.html',
 		replace:true,
 		link: function(scope,ele,attrs,c){
 			ele.bind('change',function(){
