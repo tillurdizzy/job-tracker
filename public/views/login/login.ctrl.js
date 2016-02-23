@@ -15,9 +15,36 @@ app.controller('LoginCtrl',['$scope','$state','evoDb','SharedSrvc','ShingleSrvc'
     $scope.resultLength = 0;
     $scope.displayName="";
     $scope.loginObj={};
+    $scope.googleAuthResult = {};
+    $scope.googleReturnEvent = {};
 
     var serverAvailable = true;
     $scope.dataRefreshed = false;
+
+    $scope.$on('event:google-plus-signin-success', function (event, authResult) {
+        $scope.googleAuthResult = authResult;
+        $scope.googleReturnEvent = event;
+        makeApiCall();
+    });
+    $scope.$on('event:google-plus-signin-failure', function (event, authResult) {
+          // User has not authorized the G+ App!
+          console.log('Not signed into Google Plus.');
+    });
+
+    var makeApiCall = function(){
+        gapi.client.load('plus', 'v1').then(function() {
+          // Step 5: Assemble the API request
+          var request = gapi.client.plus.people.get({
+            'userId': 'me'
+          });
+          // Step 6: Execute the API request
+          request.then(function(resp) {
+           var userName = resp.result.displayName;
+          }, function(reason) {
+            console.log('Error: ' + reason.result.error.message);
+          });
+        });
+    }
 
     $scope.continueBtn = function(){
         if( $scope.loginObj.userType == "client"){
@@ -42,6 +69,10 @@ app.controller('LoginCtrl',['$scope','$state','evoDb','SharedSrvc','ShingleSrvc'
         L.logOut();
         DB.logOut();
     };
+
+    $scope.verifyGoogleSignIn = function(){
+        
+    }
 
     $scope.submitLoginForm = function(){
     	$scope.loginSuccess = null;

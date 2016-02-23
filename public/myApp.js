@@ -1,5 +1,5 @@
 'use strict';
-var app = angular.module('MyApp', ['ui.router','ngSanitize','ngUnderscore']);
+var app = angular.module('MyApp', ['ui.router','ngSanitize','ngUnderscore','directive.g+signin']);
 
 app.config(function($stateProvider, $urlRouterProvider) {
  	
