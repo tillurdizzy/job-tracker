@@ -281,6 +281,11 @@ body{
   }
 }
 
+.flex-center{
+  display:flex;
+  justify-content:center;
+}
+
 .flex-space-between{
   width:100%;
   display:flex;

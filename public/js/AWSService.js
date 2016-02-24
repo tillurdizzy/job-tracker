@@ -29,10 +29,12 @@ app.service('serviceAWS',['$http','$q','$rootScope','SharedSrvc','LogInSrvc',fun
   self.currentTableScan;
   self.lastAccountID;
   
+
+
   self.initAWS = function(id_token){
     AWS.config.logger = 'console';
     AWS.config.apiVersions = {s3: '2006-03-01',dynamodb: '2012-08-10'};
-    AWS.config.update({accessKeyId: 'AKIAIWWAHXVHJAHPG7ZA', secretAccessKey: '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'});
+    AWS.config.update({accessKeyId: id_token.Credentials.AccessKeyId, secretAccessKey:id_token.Credentials.SecretAccessKey});
    
     self.initS3();
     self.initDynamo();

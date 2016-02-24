@@ -185,7 +185,7 @@ app.service('SharedSrvc',['$rootScope',function sharedVars($rootScope){
 		for (var i = 0; i < self.managerProperties.length; i++) {
 			
 			clientID=self.managerProperties[i].client;
-			self.managerProperties[i].client = returnDisplayNameFromClient(clientID);
+			self.managerProperties[i].clientName = returnDisplayNameFromClient(clientID);
 
 			var ID = self.managerProperties[i].numLevels;
 			self.managerProperties[i].numLevels = self.returnIdValue(self.levelOptions,ID);

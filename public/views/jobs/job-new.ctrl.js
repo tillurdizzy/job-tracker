@@ -97,7 +97,7 @@ app.controller('NewJobCtrl',['$scope','$state','evoDb','SharedSrvc',function ($s
     };
 
      Me.goProposal =  function(){
-        $state.transitionTo("proposal");
+        $state.transitionTo("proposal.params");
     };
 
     $scope.$watch('$viewContentLoaded', function() {

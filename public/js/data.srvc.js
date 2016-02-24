@@ -181,6 +181,30 @@ app.service('evoDb',['$http','$q','SharedSrvc','LogInSrvc',function eventQueries
 	    return deferred.promise;
 	};
 
+	self.queryLogInGoogle = function(dataObj){
+		var deferred = $q.defer();
+		$http({method: 'POST', url: 'views/login/http/getGoogleUser.php',data:dataObj}).
+		success(function(data, status) {
+			if(typeof data != 'string' && data.length > 0){
+				self.lastResult = data;
+     			self.managerID = data[0].PRIMARY_ID;
+     			self.managerName = data[0].name_first + " " + data[0].name_last;
+     			S.setUser(data[0]);
+     			L.setUser(data[0]);
+     			deferred.resolve(data);
+			}else{
+				// 0 length means password/username match not found
+				console.log(data);
+				deferred.resolve(false);
+			}
+	    }).
+		error(function(data, status, headers, config) {
+			console.log(data);
+			deferred.reject(data);
+	    });
+	    return deferred.promise;
+	};
+
 	self.putLogIn = function(dataObj){
 		var deferred = $q.defer();
 		$http({method: 'POST', url: 'views/login/putUser.php',data:dataObj}).

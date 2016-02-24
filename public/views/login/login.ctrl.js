@@ -7,7 +7,7 @@ app.controller('LoginCtrl',['$scope','$state','evoDb','SharedSrvc','ShingleSrvc'
 	var S = SharedSrvc;
     var C = ClientSrvc;
     var L = LogInSrvc;
-     $scope.A = serviceAWS;
+    var A = serviceAWS;
 
     $scope.submissionInvalid = false;// form is filled out correctly
     $scope.requestSuccess=false;// database query; starts out false set to true on successful query
@@ -17,6 +17,8 @@ app.controller('LoginCtrl',['$scope','$state','evoDb','SharedSrvc','ShingleSrvc'
     $scope.loginObj={};
     $scope.googleAuthResult = {};
     $scope.googleReturnEvent = {};
+    $scope.googlePerson = {};
+    $scope.AWSSTS = {};
 
     var serverAvailable = true;
     $scope.dataRefreshed = false;
@@ -39,7 +41,8 @@ app.controller('LoginCtrl',['$scope','$state','evoDb','SharedSrvc','ShingleSrvc'
           });
           // Step 6: Execute the API request
           request.then(function(resp) {
-           var userName = resp.result.displayName;
+           $scope.googlePerson = resp.result;
+           verifyGoogleSignIn();
           }, function(reason) {
             console.log('Error: ' + reason.result.error.message);
           });
@@ -70,73 +73,91 @@ app.controller('LoginCtrl',['$scope','$state','evoDb','SharedSrvc','ShingleSrvc'
         DB.logOut();
     };
 
-    $scope.verifyGoogleSignIn = function(){
-        
+    var verifyGoogleSignIn = function(){
+        var dataObj = new Object();
+        dataObj.googleID = $scope.googlePerson.id;
+        var result = DB.queryLogInGoogle(dataObj).then(function(result){
+            if(result != false){
+                // DB sets basic log in data for Shared Srvc and LogIn Srvc
+                $scope.loginObj = result[0];
+                onLogInSuccess();
+            }else{
+                $scope.loginSuccess = false;
+            }
+        },function(error){
+            $scope.loginSuccess = false;
+            $scope.dataError();
+        });
     }
 
+    // Depracated log in form before google - still use during production
     $scope.submitLoginForm = function(){
     	$scope.loginSuccess = null;
         $scope.requestSuccess = false;
-        if(true){
-        /*if(this.loginForm.$valid){*/
-            $scope.submissionInvalid = false;
-            var dataObj = new Object();
-            dataObj.name_user = this._username;
-            dataObj.pin = this._pin;
+        $scope.submissionInvalid = false;
 
-            //dataObj.name_user = "ssmith";
-            //dataObj.pin = "1234";
+        var dataObj = new Object();
+        dataObj.name_user = this._username;
+        dataObj.pin = this._pin;
 
-            dataObj.name_user = "smartin";
-            dataObj.pin = "7663";
+        //dataObj.name_user = "ssmith";
+        //dataObj.pin = "1234";
 
-            //dataObj.name_user = "dsheives";
-            //dataObj.pin = "9954";
+        dataObj.name_user = "smartin";
+        dataObj.pin = "7663";
 
-            if(serverAvailable == true){
-                var result = DB.queryLogIn(dataObj)
-                .then(function(result){
-                    if(result != false){
-                        
-                        // DB sets basic log in data for Shared Srvc and LogIn Srvc
-                        $scope.loginObj = result[0];
-                        var userType = $scope.loginObj.userType;
-                        $scope.dataRefreshed = false;
-                        $scope.loginSuccess=true;
-                        $scope.requestSuccess = true;// this var changes the stage
-                        $scope.clearForm();
-                        $scope.displayName = $scope.loginObj.name_first + " " + $scope.loginObj.name_last;
-                        $scope.A.initAWS(true);
-                        if(userType == "client"){
-                            C.LogIn($scope.loginObj);
-                            $scope.getClientJob($scope.loginObj.jobID);
-                        }else if(userType == "sales"){
-                            $scope.getManagerJobs();
-                        }else if(userType == "admin"){
-                            $scope.dataRefreshed = true;
-                        }else{
+        //dataObj.name_user = "dsheives";
+        //dataObj.pin = "9954";
 
-                        }
-                    }else{
-                        $scope.loginSuccess = false;
-                    }
-                },function(error){
-                    $scope.loginSuccess = false;
-                    $scope.dataError();
-                });
+        var result = DB.queryLogIn(dataObj).then(function(result){
+            if(result != false){
+                // DB sets basic log in data for Shared Srvc and LogIn Srvc
+                $scope.loginObj = result[0];
+                onLogInSuccess();
             }else{
-                $scope.loginSuccess=true;
-                $scope.requestSuccess = true;
-                $scope.clearForm();
-                $scope.displayName = "Admin Testing";
-                S.setManagerID(3,"Admin Testing");
-                DB.setManagerID(3);
-                $scope.getManagerJobs();
+                $scope.loginSuccess = false;
             }
-        }else{
-            $scope.submissionInvalid = true;// triggers form errors to show 
-        };
+        },function(error){
+                $scope.loginSuccess = false;
+                $scope.dataError();
+            });
     };
+
+    var onLogInSuccess = function(){
+        var userType = $scope.loginObj.userType;
+        $scope.dataRefreshed = false;
+        $scope.loginSuccess=true;
+        $scope.requestSuccess = true;// this var changes the stage
+        $scope.clearForm();
+        $scope.displayName = $scope.loginObj.name_first + " " + $scope.loginObj.name_last;
+        
+        if(userType == "client"){
+            C.LogIn($scope.loginObj);
+            $scope.getClientJob($scope.loginObj.jobID);
+        }else if(userType == "sales"){
+            $scope.getManagerJobs();
+        }else if(userType == "admin"){
+            $scope.dataRefreshed = true;
+        }else{
+
+        }
+        var sts = new AWS.STS();
+        // Get amazon credentials
+        var params = {
+          RoleArn: 'arn:aws:iam::845886544285:role/evo-id-auth',
+          RoleSessionName: $scope.loginObj.name_user,
+          WebIdentityToken: $scope.googleAuthResult.id_token
+        };
+        sts.assumeRoleWithWebIdentity(params, function(err, data) {
+            if(err){
+                console.log(err, err.stack); // an error occurred
+            }else{
+               $scope.AWSSTS = data;
+               // Configure AWS
+               A.initAWS($scope.AWSSTS);
+            }
+        });
+    }
 
     $scope.getClientJob = function(jobID){
         var dataObj = {ID:jobID}
