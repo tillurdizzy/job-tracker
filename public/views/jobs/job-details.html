@@ -34,19 +34,23 @@
             <div ng-class="Ctrl.isProposal ? 'status-label-active' : 'status-label-inactive'">
                 <h4>Proposal</h4></div>
             <div class="status-item-date">
-                <h3>{{Ctrl.selectedJobObj.dateProposal | date:'MM/dd/yyyy'}}</h3></div>
-            <div class="status-item-update"><a ui-sref="proposal.params"><i class="fa fa-pencil-square fa-2x"></a></i>
+                <h3 ng-show="Ctrl.isProposal">{{Ctrl.selectedJobObj.dateProposal | date:'MM/dd/yyyy'}}</h3>
+            </div>
+            <div class="status-item-update">
+                <a ui-sref="proposal.params"><i class="fa fa-pencil-square fa-2x"></a></i>
             </div>
         </div>
         <div class="status-item">
             <div ng-class="Ctrl.isContract ? 'status-label-active' : 'status-label-inactive'">
                 <h4>Contract</h4></div>
             <div class="status-item-date">
-                <h3>{{Ctrl.selectedJobObj.dateContract | date:'MM/dd/yyyy'}}</h3></div>
-            <div class="status-item-update"><a ng-click="Ctrl.updateContract=!Ctrl.updateContract"><i class="fa fa-pencil-square fa-2x"></a></i>
+                <h3 ng-show="Ctrl.isContract">{{Ctrl.selectedJobObj.dateContract | date:'MM/dd/yyyy'}}</h3>
+            </div>
+            <div class="status-item-update">
+                <a ng-click="Ctrl.updateContract=!Ctrl.updateContract"><i class="fa fa-pencil-square fa-2x"></a></i>
             </div>
             <div class="status-item-action" ng-show="Ctrl.updateContract">
-                <h3>Has contract been signed?</h3></div>
+                <h3 style="margin-left:5px;">Has contract been signed?</h3></div>
             <div class="status-item-check" ng-show="Ctrl.updateContract"><a ng-click="Ctrl.updateStatus('contract')"><i class="fa fa-check-square fa-2x"></a></i>
             </div>
         </div>
@@ -54,24 +58,29 @@
             <div ng-class="Ctrl.isActive ? 'status-label-active' : 'status-label-inactive'">
                 <h4>Active</h4></div>
             <div class="status-item-date">
-                <h3>{{Ctrl.selectedJobObj.dateActive | date:'MM/dd/yyyy'}}</h3></div>
+                <h3 ng-show="Ctrl.isActive">{{Ctrl.selectedJobObj.dateActive | date:'MM/dd/yyyy'}}</h3></div>
             <div class="status-item-update"><a ng-click="Ctrl.updateActive=!Ctrl.updateActive"><i class="fa fa-pencil-square fa-2x"></a></i>
             </div>
             <div class="status-item-action" ng-show="Ctrl.updateActive">
-                <h3>Is there a crew on the property?</h3></div>
-            <div class="status-item-check" ng-show="Ctrl.updateActive"><a ng-click="Ctrl.updateStatus('active')"><i class="fa fa-check-square fa-2x"></a></i>
+                <h3 style="margin-left:5px;">Is there a crew on the property?</h3></div>
+            <div class="status-item-check" ng-show="Ctrl.updateActive">
+                <a ng-click="Ctrl.updateStatus('active')"><i class="fa fa-check-square fa-2x"></a></i>
             </div>
         </div>
         <div class="status-item">
             <div ng-class="Ctrl.isComplete ? 'status-label-active' : 'status-label-inactive'">
                 <h4>Complete</h4></div>
             <div class="status-item-date">
-                <h3>{{Ctrl.selectedJobObj.dateComplete | date:'MM/dd/yyyy'}}</h3></div>
-            <div class="status-item-update"><a ng-click="Ctrl.updateComplete=!Ctrl.updateComplete"><i class="fa fa-pencil-square fa-2x"></a></i>
+                <h3 ng-show="Ctrl.isComplete">{{Ctrl.selectedJobObj.dateComplete | date:'MM/dd/yyyy'}}</h3>
+            </div>
+            <div class="status-item-update">
+                <a ng-click="Ctrl.updateComplete=!Ctrl.updateComplete"><i class="fa fa-pencil-square fa-2x"></a></i>
             </div>
             <div class="status-item-action" ng-show="Ctrl.updateComplete">
-                <h3>Have all payments been received?</h3></div>
-            <div class="status-item-check" ng-show="Ctrl.updateComplete"><a ng-click="Ctrl.updateStatus('complete')"><i class="fa fa-check-square fa-2x"></a></i>
+                <h3 style="margin-left:5px;"Have all payments been received?</h3>
+            </div>
+            <div class="status-item-check" ng-show="Ctrl.updateComplete">
+                <a ng-click="Ctrl.updateStatus('complete')"><i class="fa fa-check-square fa-2x"></a></i>
             </div>
         </div>
     </div>

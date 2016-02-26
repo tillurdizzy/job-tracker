@@ -24,6 +24,40 @@ app.service('evoDb',['$http','$q','SharedSrvc','LogInSrvc',function eventQueries
 		$http({method: 'POST', url: 'js/php/sendEmail.php',data:dataObj});
 	};
 
+	self.returnRawData = function(phpFile){
+		var deferred = $q.defer();
+		$http({method: 'POST', url:phpFile}).
+		success(function(data, status) {
+			if(typeof data != 'string'){
+				self.lastResult = data;
+     			deferred.resolve(data);
+     		}else{
+				deferred.resolve(false);
+     		}
+	    }).
+		error(function(data, status, headers, config) {
+			deferred.reject(false);
+	    });
+	    return deferred.promise;
+	}
+
+	self.returnRawDataWithObj = function(phpFile,dataObj){
+		var deferred = $q.defer();
+		$http({method: 'POST', url:phpFile,data:dataObj}).
+		success(function(data, status) {
+			if(typeof data != 'string'){
+				self.lastResult = data;
+     			deferred.resolve(data);
+     		}else{
+				deferred.resolve(false);
+     		}
+	    }).
+		error(function(data, status, headers, config) {
+			deferred.reject(false);
+	    });
+	    return deferred.promise;
+	};
+
 	self.putClient = function(dataObj){
 		dataObj.manager = self.managerID;
 		var deferred = $q.defer();
@@ -318,6 +352,23 @@ app.service('evoDb',['$http','$q','SharedSrvc','LogInSrvc',function eventQueries
 	    return deferred.promise; //return the data
 	};
 
+	self.getActiveProposals = function(){
+		var deferred = $q.defer();
+		$http({method: 'POST', url: 'views/admin/http/getJobProposals.php'}).
+		success(function(data, status) {
+			if(typeof data != 'string'){
+				self.lastResult = data;
+     			deferred.resolve(data);
+     		}else{
+				deferred.resolve(false);
+     		}
+	    }).
+		error(function(data, status, headers, config) {
+			deferred.reject(false);
+	    });
+	    return deferred.promise; //return the data
+	};
+
 	self.getJobByID = function(dataObj){
 		var deferred = $q.defer();
 		$http({method: 'POST', url: 'js/php/getJobByID.php',data:dataObj}).
@@ -334,6 +385,34 @@ app.service('evoDb',['$http','$q','SharedSrvc','LogInSrvc',function eventQueries
 	    });
 	    return deferred.promise; //return the data
 	};
+
+	self.updateJobStatus = function(jobid,status,val){
+		var dataObj = {};
+		dataObj.id = jobid;
+		dataObj.val = val;
+		dataObj.status = status;
+		var query = "";
+		switch(item){
+			case "proposal":query="updateProposalDate.php";break;
+			case "contract":query="updateContractDate.php";break;
+			case "active":query="updateActiveDate.php";break;
+			case "complete":query="updateCompleteDate.php";break;
+		}
+		var deferred = $q.defer();
+		$http({method: 'POST', url: 'js/php/'+ query,data:dataObj}).
+		success(function(data, status) {
+			if(typeof data != 'string'){
+				self.lastResult = data;
+     			deferred.resolve(data);
+     		}else{
+				deferred.resolve(false);
+     		}
+	    }).
+		error(function(data, status, headers, config) {
+			deferred.reject(false);
+	    });
+	    return deferred.promise; //return the data
+	}
 
 	self.getClientByID = function(dataObj){
 		var deferred = $q.defer();

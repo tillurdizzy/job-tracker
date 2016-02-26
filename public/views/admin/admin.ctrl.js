@@ -2,27 +2,44 @@
 
 app.controller('AdminCtrl',['$location','$state','evoDb','$scope','SharedSrvc',function ($location,$state,evoDb,$scope,SharedSrvc) {
 	var DB =  evoDb;
-	var Me = this;
+	var ME = this;
 	var S = SharedSrvc;
 	
-	Me.managerAdd = function(){
+	ME.managerAdd = function(){
 		$state.transitionTo("admin.managerAdd");
 	};
 
-	Me.managerUpdate = function(){
+	ME.managerUpdate = function(){
 		$state.transitionTo("admin.managerUpdate");
 	};
 
-	Me.inventoryAdd = function(){
+	ME.inventoryAdd = function(){
 		$state.transitionTo("admin.inventoryAdd");
 	};
 
-	Me.inventoryUpdate = function(){
+	ME.inventoryUpdate = function(){
 		$state.transitionTo("admin.inventoryUpdate");
 	};
 
-	Me.jobsActive = function(){
+	ME.jobsActive = function(){
 		$state.transitionTo("admin.reportJobsActive");
+	};
+
+
+	ME.prospectsReview = function(){
+		$state.transitionTo("admin.prospectsReview");
+	};
+	ME.proposalsReview = function(){
+		$state.transitionTo("admin.proposalsReview");
+	};
+	ME.contractsReview = function(){
+		$state.transitionTo("admin.contractsReview");
+	};
+	ME.activeReview = function(){
+		$state.transitionTo("admin.activeReview");
+	};
+	ME.completeReview = function(){
+		$state.transitionTo("admin.completeReview");
 	};
 
 	

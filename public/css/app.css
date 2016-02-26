@@ -1291,6 +1291,11 @@ div.upload input {
       color: #1ABC9C;
       vertical-align: middle; }
 
+.admin-menu {
+  width: 100%; }
+  .admin-menu button {
+    width: 150px; }
+
 #cssmenu,
 #cssmenu ul,
 #cssmenu ul li,

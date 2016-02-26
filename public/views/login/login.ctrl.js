@@ -141,14 +141,17 @@ app.controller('LoginCtrl',['$scope','$state','evoDb','SharedSrvc','ShingleSrvc'
         }else{
 
         }
-        var sts = new AWS.STS();
+        //var sts = new AWS.STS();
         // Get amazon credentials
-        var params = {
+        /*var params = {
           RoleArn: 'arn:aws:iam::845886544285:role/evo-id-auth',
           RoleSessionName: $scope.loginObj.name_user,
           WebIdentityToken: $scope.googleAuthResult.id_token
-        };
-        sts.assumeRoleWithWebIdentity(params, function(err, data) {
+        };*/
+
+        A.initAWS($scope.googleAuthResult.id_token);
+        
+        /*sts.assumeRoleWithWebIdentity(params, function(err, data) {
             if(err){
                 console.log(err, err.stack); // an error occurred
             }else{
@@ -156,7 +159,7 @@ app.controller('LoginCtrl',['$scope','$state','evoDb','SharedSrvc','ShingleSrvc'
                // Configure AWS
                A.initAWS($scope.AWSSTS);
             }
-        });
+        });*/
     }
 
     $scope.getClientJob = function(jobID){

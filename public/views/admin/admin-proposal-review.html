@@ -1,0 +1,7 @@
+<div class="page" ng-controller="AdminProposalCtrl as Ctrl">
+    <div class="page-title"><h2>Proposal Review</h2></div>
+   <div>
+        <select ng-model="Ctrl.selectedProposal" ng-options="c.label for c in Ctrl.selectDataProvider" ng-change="Ctrl.selectProposal()"></select>
+   </div>
+    
+</div>

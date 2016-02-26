@@ -21,10 +21,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
 			url: "/admin",
 			templateUrl:"views/admin/admin.html"
 		})
-		.state('admin.prospect', {
-			url: "/prospectAdd",
-			templateUrl:"views/admin/prospect-add.html"
-		})
+		
 		.state('admin.managerAdd', {
 			url: "/managerAdd",
 			templateUrl:"views/admin/manager-add.html"
@@ -46,6 +43,27 @@ app.config(function($stateProvider, $urlRouterProvider) {
 		.state('admin.reportJobsActive', {
 			url: "/reportJobsActive",
 			templateUrl:"views/reports/jobs-active.html"
+		})
+
+		.state('admin.prospectsReview', {
+			url: "/prospect-review",
+			templateUrl:"views/admin/admin-proposal-review.html"
+		})
+		.state('admin.proposalsReview', {
+			url: "/proposal-review",
+			templateUrl:"views/admin/admin-proposal-review.html"
+		})
+		.state('admin.contractsReview', {
+			url: "/ontracts-review",
+			templateUrl:"views/admin/admin-proposal-review.html"
+		})
+		.state('admin.activeReview', {
+			url: "/active-review",
+			templateUrl:"views/admin/admin-proposal-review.html"
+		})
+		.state('admin.completeReview', {
+			url: "/complete-review",
+			templateUrl:"views/admin/admin-proposal-review.html"
 		})
 
 

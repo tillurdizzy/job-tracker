@@ -5,6 +5,8 @@ app.service('serviceAWS',['$http','$q','$rootScope','SharedSrvc','LogInSrvc',fun
   self.S = SharedSrvc;
   self.L = LogInSrvc;
 
+  self.webIdCredentials = {};
+
   self.config = null;
   self.uploadedURL = null;
 
@@ -15,47 +17,44 @@ app.service('serviceAWS',['$http','$q','$rootScope','SharedSrvc','LogInSrvc',fun
 
 
   self.awsRegion = self.L.userVO.awsRegion;
-  self.awsRegion = "us-east-1";// Resets above until confirmed as needed
+  self.S3Region = "us-east-1";
   
   self.bucketUrl = self.S.awsBucketUrl;
   self.bucketName = self.L.userVO.name_user;
  
   // Job folder within Users S3 Bucket
   // ANY path items between the bucket and the file
-  self.bucketPrefix = "id_" + self.S.selectedPropertyObj.PRIMARY_ID + "/";
+  self.bucketPrefix = "";
 
   // DynamoDB vars
   self.dynamoObj;
   self.currentTableScan;
   self.lastAccountID;
-  
 
-
-  self.initAWS = function(id_token){
+  self.initAWS = function(GOOGLE_ACCESS_TOKEN){
     AWS.config.logger = 'console';
+    AWS.config.region = 'us-east-1';
+    AWS.config.region = 'us-west-2';
     AWS.config.apiVersions = {s3: '2006-03-01',dynamodb: '2012-08-10'};
-    AWS.config.update({accessKeyId: id_token.Credentials.AccessKeyId, secretAccessKey:id_token.Credentials.SecretAccessKey});
-   
-    self.initS3();
-    self.initDynamo();
+    var credentials = {
+      RoleArn: 'arn:aws:iam::845886544285:role/evo-id-auth',
+      WebIdentityToken: GOOGLE_ACCESS_TOKEN,
+      RoleSessionName: 'web-id'
+    }
+    self.webIdCredentials = new AWS.WebIdentityCredentials(credentials);
+    AWS.config.credentials = self.webIdCredentials;
+    self.s3Obj = new AWS.S3({region: self.S3Region});
+    console.log("S3 Object: " + self.s3Obj);
   };
 
   self.updateReferences = function(){
     self.bucketName = self.L.userVO.name_user;
     self.bucketPrefix = "id_" + self.S.selectedPropertyObj.PRIMARY_ID + "/";
     self.getPhotoList();
-  }
-
-  self.initS3 = function(){
-    AWS.config.region = self.awsRegion;// S3 Region
-    self.s3Obj = new AWS.S3();
   };
 
   self.getPhotoList = function(){
-    if(!angular.isDefined(self.s3Obj)){
-      self.initS3();
-    }
-
+    
     // list objects in the 'photos' folder
     self.bucketImages=[];
     self.s3Obj.listObjects({Bucket: self.bucketName,Prefix:self.bucketPrefix + 'photos/'}, function(error, data) {
@@ -74,9 +73,7 @@ app.service('serviceAWS',['$http','$q','$rootScope','SharedSrvc','LogInSrvc',fun
   };
 
   self.getDocumentList = function(){
-    if(!angular.isDefined(self.s3Obj)){
-      self.initS3();
-    }
+    
     // list objects in the 'docs' folder
     self.bucketDocs=[];
     self.s3Obj.listObjects({Bucket: self.bucketName,Prefix:self.bucketPrefix + 'docs/'}, function(error, data) {
@@ -104,9 +101,7 @@ app.service('serviceAWS',['$http','$q','$rootScope','SharedSrvc','LogInSrvc',fun
   };
 
   self.uploadBucketItems = function(fileList){
-    if(!angular.isDefined(self.s3Obj)){
-      self.initS3();
-    }
+   
     var d = $q.defer();
     var file=fileList[0];
 
@@ -149,15 +144,10 @@ app.service('serviceAWS',['$http','$q','$rootScope','SharedSrvc','LogInSrvc',fun
   };
 
 
-  self.initDynamo = function() {
-    AWS.config.region = 'us-west-2';// Dynamo region
-    self.dynamoObj = new AWS.DynamoDB();
-  };
+  
 
   self.dynamo_getTable = function (tbl){
-    if(!angular.isDefined(self.dynamoObj)){
-      self.initDynamo();
-    }
+    
     var d = $q.defer();
          
     self.dynamoObj.scan({TableName: tbl}, function (err, data) {

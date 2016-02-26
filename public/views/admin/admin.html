@@ -2,14 +2,28 @@
     <div class="page-title"><h2>Admin</h2></div>
     <div ui-view>
         <div class="admin-menu">
-            <h4>Managers</h4>
-            <button type="button" class="button small radius" ng-click="Ctrl.managerAdd()">New Manager</button>
-            <button type="button" class="button small radius" ng-click="Ctrl.managerUpdate()">Update Manager</button>
-             <h4>Inventory</h4>
-            <button type="button" class="button small radius" ng-click="Ctrl.inventoryAdd()">New Inventory</button>
-            <button type="button" class="button small radius" ng-click="Ctrl.inventoryUpdate()">Update Inventory</button>
-             <h4>Reports</h4>
-            <button type="button" class="button small radius" ng-click="Ctrl.jobsActive()">Active Jobs</button>
+            <div class="section-header">
+                <h2>Sales Managers</h2>
+            </div>
+            <button type="button" class="button radius" ng-click="Ctrl.managerAdd()">New Manager</button>
+            <button type="button" class="button radius" ng-click="Ctrl.managerUpdate()">Edit Manager</button>
+             <div class="section-header">
+                <h2>Inventory</h2>
+            </div>
+            <button type="button" class="button radius" ng-click="Ctrl.inventoryAdd()">New Inventory</button>
+            <button type="button" class="button radius" ng-click="Ctrl.inventoryUpdate()">Update Inventory</button>
+             <div class="section-header">
+                <h2>Jobs</h2>
+            </div>
+            <button type="button" class="button radius" ng-click="Ctrl.propspectsReview()">Prospects</button>
+            <button type="button" class="button radius" ng-click="Ctrl.proposalsReview()">Proposals</button>
+            <button type="button" class="button radius" ng-click="Ctrl.contractsReview()">Contracts</button>
+            <button type="button" class="button radius" ng-click="Ctrl.activeReview()">Active</button>
+            <button type="button" class="button radius" ng-click="Ctrl.completeReview()">Complete</button>
+             <div class="section-header">
+                <h2>Reports</h2>
+            </div>
+            <button type="button" class="button radius" ng-click="Ctrl.reportsOverview()">Overview</button>
         </div>
         
     </div>

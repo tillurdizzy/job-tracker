@@ -27,19 +27,19 @@ app.controller('JobsCtrl',['$location','$state','evoDb','$scope','SharedSrvc',fu
 
 
     var setStatusVars = function(){
-    	if(ME.selectedJobObj.dateProposal != ""){
+    	if(ME.selectedJobObj.dateProposal != "0"){
     		 ME.isProposal = true;
     	}
     	
-    	if(ME.selectedJobObj.dateContract != ""){
+    	if(ME.selectedJobObj.dateContract != "0"){
     		 ME.isContract = true;
     	}
     	
-    	if(ME.selectedJobObj.dateActive != ""){
+    	if(ME.selectedJobObj.dateActive != "0"){
     		 ME.isActive = true;
     	}
     	
-    	if(ME.selectedJobObj.dateComplete != ""){
+    	if(ME.selectedJobObj.dateComplete != "0"){
     		 ME.isComplete = true;
     	}
     }
@@ -121,10 +121,10 @@ app.controller('JobsCtrl',['$location','$state','evoDb','$scope','SharedSrvc',fu
         });
 	};
 
-	ME.updateStatus = function(id){
+	ME.updateStatus = function(status){
 		var d = new Date();
 		var v = d.valueOf();
-		switch(id){
+		switch(status){
 			case 'contract':
 				ME.selectedJobObj.dateContract = v;
 				ME.updateContract = false;
@@ -138,6 +138,8 @@ app.controller('JobsCtrl',['$location','$state','evoDb','$scope','SharedSrvc',fu
 				ME.updateComplete = false;
 				break;
 		}
+        setStatusVars();
+        DB.updateJobStatus(ME.selectedJobObj.PRIMARY_ID,status,v);
 	}
 
 	ME.dataError = function(loc,error){
