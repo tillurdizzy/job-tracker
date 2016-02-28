@@ -1,0 +1,12 @@
+<div class="job-items-container">
+	<div class="check-radio-container">
+        <input type="checkbox" ng-model="isIncluded"></input>
+    </div>
+    <div class="job-item-name"><h4>{{item}}</h4></div>
+    <div class="job-item-input">
+        <input type="tel" name="qtyInput" ng-model="inputNum" ng-change="qtyChange()">
+    </div>
+    <div class="job-item-unit"><h3>{{unit}}</h3></div>
+    <div class="job-item-qty"><h3>{{multiplier}}</h3></div>
+    <div class="job-item-unit"><h3>{{total}}</h3></div>
+</div>

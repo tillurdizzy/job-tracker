@@ -53,6 +53,18 @@ app.config(function($stateProvider, $urlRouterProvider) {
 			url: "/proposal-review",
 			templateUrl:"views/admin/admin-proposal-review.html"
 		})
+		.state('admin.proposalsReview.input', {
+			url: "/input",
+			templateUrl:"views/admin/admin-proposal-review-input.html"
+		})
+		.state('admin.proposalsReview.supplies', {
+			url: "/supplies",
+			templateUrl:"views/admin/admin-proposal-review-supplies.html"
+		})
+		.state('admin.proposalsReview.pricing', {
+			url: "/pricing",
+			templateUrl:"views/admin/admin-proposal-review-pricing.html"
+		})
 		.state('admin.contractsReview', {
 			url: "/ontracts-review",
 			templateUrl:"views/admin/admin-proposal-review.html"

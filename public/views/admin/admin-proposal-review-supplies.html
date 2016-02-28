@@ -1,0 +1,22 @@
+<div class="section-header">
+    <h2>Supplies</h2>
+</div>
+
+<div>
+	<table st-table="jobSuppliesData" class="table table-striped" style="width:100%;">
+		<thead>
+			<tr>
+				<th>Material</th>
+				<th>Quantity</th>
+				<th>Unit</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="row in jobSuppliesData">
+				<td>{{row.param}}</td>
+				<td>{{row.val}}</td>
+				<td>{{row.unit}}</td>
+			</tr>
+		</tbody>
+	</table>
+</div>

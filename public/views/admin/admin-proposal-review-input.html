@@ -1,0 +1,22 @@
+<div class="section-header">
+    <h2>Property Input Parameters</h2>
+</div>
+
+<div>
+	<table st-table="propertyInputData" class="table table-striped" style="width:100%;">
+		<thead>
+			<tr>
+				<th>Parameter</th>
+				<th>Value</th>
+				<th>Unit</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="row in propertyInputData">
+				<td>{{row.param}}</td>
+				<td>{{row.val}}</td>
+				<td>{{row.unit}}</td>
+			</tr>
+		</tbody>
+	</table>
+</div>

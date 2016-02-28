@@ -3,5 +3,13 @@
    <div>
         <select ng-model="Ctrl.selectedProposal" ng-options="c.label for c in Ctrl.selectDataProvider" ng-change="Ctrl.selectProposal()"></select>
    </div>
+   <div id='cssmenu' ng-controller="TabbedMenuCtrl">
+        <ul>
+            <li ng-class="{ active: isCurrentPath('/admin/proposal-review/input')}"><a ui-sref='admin.proposalsReview.input'>Input</a></li>
+            <li ng-class="{ active: isCurrentPath('/admin/proposal-review/supplies')}"><a ui-sref='admin.proposalsReview.supplies'>Supplies</a></li>
+            <li ng-class="{ active: isCurrentPath('/admin/proposal-review/pricing')}"><a ui-sref='admin.proposalsReview.pricing'>Pricing</a></li>
+        </ul>
+    </div>
+    <div ui-view></div>
     
 </div>
