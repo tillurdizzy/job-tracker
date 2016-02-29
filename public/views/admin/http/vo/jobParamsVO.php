@@ -7,11 +7,12 @@ class jobParamsVO{
 	var $RKERDG;
 	var $PRMITR;
 	var $PITCH;
+	var $MLTILV;// Multilevel
 	var $VALLEY;
-	var $LPIPE1;
-	var $LPIPE2;
-	var $LPIPE3;
-	var $LPIPE4;
+	var $LBF1;
+	var $LBF2;
+	var $LBF3;
+	var $LBF4;
 	var $JKVNT8;
 	var $FLHSH8;
 	var $TURBNS;

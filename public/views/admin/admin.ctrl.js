@@ -1,6 +1,6 @@
 'use strict';
 
-app.controller('AdminCtrl',['$location','$state','evoDb','$scope','SharedSrvc',function ($location,$state,evoDb,$scope,SharedSrvc) {
+app.controller('AdminCtrl',['$location','$state','$scope','SharedSrvc',function ($location,$state,evoDb,$scope,SharedSrvc) {
 	var DB =  evoDb;
 	var ME = this;
 	var S = SharedSrvc;
@@ -30,7 +30,7 @@ app.controller('AdminCtrl',['$location','$state','evoDb','$scope','SharedSrvc',f
 		$state.transitionTo("admin.prospectsReview");
 	};
 	ME.proposalsReview = function(){
-		$state.transitionTo("admin.proposalsReview");
+		$state.transitionTo("admin.proposalsReview.input");
 	};
 	ME.contractsReview = function(){
 		$state.transitionTo("admin.contractsReview");
@@ -42,10 +42,6 @@ app.controller('AdminCtrl',['$location','$state','evoDb','$scope','SharedSrvc',f
 		$state.transitionTo("admin.completeReview");
 	};
 
-	
 
-	$scope.$on('$viewContentLoaded', function() {
- 		
-    });
 
  }]);

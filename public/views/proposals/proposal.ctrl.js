@@ -35,15 +35,16 @@ app.controller('ProposalCtrl', ['$state','$scope','evoDb','SharedSrvc','ShingleS
         RKERDG:0,
         PRMITR:0,
         VALLEY:0,
-        LBF1:0,
-        LBF2:0,
-        LBF3:0,
-        LBF4:0,
+        LPIPE1:0,
+        LPIPE2:0,
+        LPIPE3:0,
+        LPIPE4:0,
         JKVNT8:0,
         FLHSH8:0,
         TURBNS:0,
         PWRVNT:0,
         AIRHWK:0,
+        SLRVNT:0,
         DECKNG:0,
         PAINT:0,
         CAULK:0,
@@ -69,50 +70,87 @@ app.controller('ProposalCtrl', ['$state','$scope','evoDb','SharedSrvc','ShingleS
         var dataObj = {};
         dataObj.materialsCost = ME.materialsCost;
         PDF.newPDF(dataObj);
-    }
+    };
 
     ME.submitForApproval = function(){
-        var dataObj = {};
-        
+       updateStatus();
+    };
+
+    var updateStatus = function(){
+        var d = new Date();
+        var v = d.valueOf();
+        ME.selectedJobObj.dateProposal = v;
+        S.selectedJobObj.dateProposal = v;
+        var status="proposal";
+        DB.updateJobStatus(ME.selectedJobObj.PRIMARY_ID,status,v).then(function(result) {
+            if (result != false) { 
+                alert("OK");
+            } else {
+               
+            }
+        }, function(error) {
+
+        });
     }
 
     ME.submitSpecial = function(){
         var dataObj = {};
-        dataObj.jobID = ME.specialText;
+        dataObj.jobID = S.selectedJobObj.PRIMARY_ID;
         dataObj.body = ME.specialText;
         dataObj.cost = ME.specialCost;
-        DB.putSpecial(dataObj);
+        DB.runQueryWithObj('views/proposals/http/updateSpecialConsiderations.php',dataObj).then(function(result) {
+            if (result != false) { 
+                alert("OK");
+            } else {
+               
+            }
+        }, function(error) {
+
+        });
     };
 
     ME.submitParams = function() {
-        var result = ME.SRVC.submitParams(ME.params)
-            .then(function(result) {
-                if (result != false) { 
-                    alert("OK");
-                } else {
-                   
-                }
-            }, function(error) {
+        ME.params.jobID = S.selectedJobObj.PRIMARY_ID;
+        var result = ME.SRVC.submitParams(ME.params).then(function(result) {
+            if (result != false) { 
+                alert("OK");
+            } else {
+               
+            }
+        }, function(error) {
 
-            });
+        });
     };
 
-
     var getJobParameters = function() {
-        var jobData = ME.SRVC.getJobParameters()
-            .then(function(jobData) {
-                if (jobData != false) { 
-                    setParams(jobData[0]);
-                } else {
-                   
-                }
-            }, function(error) {
+        var jobData = ME.SRVC.getJobParameters().then(function(jobData) {
+            if (jobData != false) { 
+                setParams(jobData[0]);
+            } else {
+               
+            }
+        }, function(error) {
 
-            });
+        });
     };
 
     var setParams = function(dataObj){
         ME.params = dataObj;
+    };
+
+    var getSpecial = function(){
+        var dataObj = {};
+        dataObj.jobID = S.selectedJobObj.PRIMARY_ID;
+        DB.runQueryWithObj('views/proposals/http/getSpecialConsiderations.php',dataObj).then(function(result) {
+            if (result != false) { 
+                ME.specialText = result[0].body;
+                ME.specialCost = result[0].cost;
+            } else {
+               
+            }
+        }, function(error) {
+
+        });
     }
 
     ME.dataError = function(loc, error) {
@@ -127,8 +165,10 @@ app.controller('ProposalCtrl', ['$state','$scope','evoDb','SharedSrvc','ShingleS
     });
 
     var initPage = function() {
-        CALCS.resetService();
+        //CALCS.resetService();
         getJobParameters();
+        getSpecial();
+        console.log("INIT Proposal Ctrl");
     };
 
     initPage();

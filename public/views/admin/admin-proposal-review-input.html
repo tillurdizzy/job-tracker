@@ -1,9 +1,11 @@
+<div ng-controller="AdminPropInput as ChildCtrl">
+
 <div class="section-header">
     <h2>Property Input Parameters</h2>
 </div>
 
 <div>
-	<table st-table="propertyInputData" class="table table-striped" style="width:100%;">
+	<table st-table="ChildCtrl.propertyInputParams" class="table table-striped" style="width:100%;">
 		<thead>
 			<tr>
 				<th>Parameter</th>
@@ -12,11 +14,12 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr ng-repeat="row in propertyInputData">
+			<tr ng-repeat="row in ChildCtrl.propertyInputParams">
 				<td>{{row.param}}</td>
 				<td>{{row.val}}</td>
 				<td>{{row.unit}}</td>
 			</tr>
 		</tbody>
 	</table>
+</div>
 </div>

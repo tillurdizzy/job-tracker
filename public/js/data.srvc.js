@@ -58,6 +58,22 @@ app.service('evoDb',['$http','$q','SharedSrvc','LogInSrvc',function eventQueries
 	    return deferred.promise;
 	};
 
+	self.runQueryWithObj = function(phpFile,dataObj){
+		var deferred = $q.defer();
+		$http({method: 'POST', url:phpFile,data:dataObj}).
+		success(function(data, status) {
+			if(typeof data != 'string'){
+     			deferred.resolve(data);
+     		}else{
+				deferred.resolve(false);
+     		}
+	    }).
+		error(function(data, status, headers, config) {
+			deferred.reject(false);
+	    });
+	    return deferred.promise;
+	};
+
 	self.putClient = function(dataObj){
 		dataObj.manager = self.managerID;
 		var deferred = $q.defer();
@@ -392,7 +408,7 @@ app.service('evoDb',['$http','$q','SharedSrvc','LogInSrvc',function eventQueries
 		dataObj.val = val;
 		dataObj.status = status;
 		var query = "";
-		switch(item){
+		switch(status){
 			case "proposal":query="updateProposalDate.php";break;
 			case "contract":query="updateContractDate.php";break;
 			case "active":query="updateActiveDate.php";break;
