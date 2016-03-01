@@ -54,7 +54,6 @@ app.service('serviceAWS',['$http','$q','$rootScope','SharedSrvc','LogInSrvc',fun
   };
 
   self.getPhotoList = function(){
-    
     // list objects in the 'photos' folder
     self.bucketImages=[];
     self.s3Obj.listObjects({Bucket: self.bucketName,Prefix:self.bucketPrefix + 'photos/'}, function(error, data) {
@@ -101,10 +100,8 @@ app.service('serviceAWS',['$http','$q','$rootScope','SharedSrvc','LogInSrvc',fun
   };
 
   self.uploadBucketItems = function(fileList){
-   
     var d = $q.defer();
     var file=fileList[0];
-
     // What type of file is this?
     var thisfilemime = file.type;
     var filetype = thisfilemime.replace(/\/.*/,'');
@@ -180,12 +177,6 @@ app.service('serviceAWS',['$http','$q','$rootScope','SharedSrvc','LogInSrvc',fun
     var deferred = $q.defer();
     $http({method: 'POST', url: 'views/proposals/http/putPhoto.php',data:dataObj}).
     success(function(data, status, headers, config) {
-      var newJobID = data.params;
-      var dataObj = {jobID:newJobID};
-      self.putJobParams(dataObj);
-      self.putMaterialOptions(dataObj);
-      self.putSpecialConsiderations(dataObj);
-      self.putMultiLevel(dataObj);
         deferred.resolve(data);
       }).
       error(function(data, status, headers, config) {

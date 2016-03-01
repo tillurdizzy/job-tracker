@@ -34,7 +34,6 @@
     ME.photoCaption = "";
   }
 
-
  	ME.selectImage = function(image){
  		$window.open(image.path);
  	};
@@ -47,16 +46,17 @@
     ME.alerts = [];
   };
 
-  ME.onSelectFile = function(file){
-    ME.selectedPhoto = file;
+  ME.onSelectFile = function(files){
+    ME.selectedPhoto = files;
     ME.stepFour = true;
-  }
+    $scope.$digest();
+  };
 
 	ME.uploadToBucket = function() {
-    dataObj = {};
+    var dataObj = {};
     dataObj.jobID = ME.S.selectedJobObj.PRIMARY_ID;
     dataObj.url = ME.selectedPhoto;
-    dataObj.category = ME. ME.photoCategory.label;
+    dataObj.category = ME.photoCategory.label;
     dataObj.caption = ME.photoCaption;
     var result =  ME.AWS.putPhotoData(dataObj).then(function(result) {
       if (result != false) { 
@@ -69,19 +69,16 @@
     });
 
     serviceAWS.uploadBucketItems(ME.selectedPhoto).then(function(item){
+      var x = item;
+
       ME.resetPhotoUpload();
     });
   };
 
-  $scope.$watch( ME.AWS.bucketImages ,function(newValue, oldValue){
-      console.log('bucketImages Changed');
-      console.log(newValue);
-      console.log(oldValue);
-    }
-  );
+  
 
   $scope.$on('aws-bucket-images', function (event, data) {
-    console.log("broadcast" + data);
+    console.log("broadcast - aws-bucket-images);
     $scope.$apply();
   });
  
