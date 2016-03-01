@@ -18,10 +18,12 @@
   ME.stepFour = false;
 
   ME.selectCat = function(){
-     ME.stepTwo = true;
+    photoFormAllFalse();
+    ME.stepTwo = true;
   }
   ME.submitCaption = function(){
-     ME.stepThree = true;
+    photoFormAllFalse();
+    ME.stepThree = true;
   }
 
   ME.resetPhotoUpload = function(){
@@ -47,6 +49,7 @@
   };
 
   ME.onSelectFile = function(files){
+    photoFormAllFalse();
     ME.selectedPhoto = files;
     ME.stepFour = true;
     $scope.$digest();
@@ -55,7 +58,7 @@
 	ME.uploadToBucket = function() {
     var dataObj = {};
     dataObj.jobID = ME.S.selectedJobObj.PRIMARY_ID;
-    dataObj.url = ME.selectedPhoto;
+    dataObj.url = ME.selectedPhoto[0].name;
     dataObj.category = ME.photoCategory.label;
     dataObj.caption = ME.photoCaption;
     var result =  ME.AWS.putPhotoData(dataObj).then(function(result) {
@@ -75,10 +78,17 @@
     });
   };
 
+  var photoFormAllFalse = function(){
+    ME.stepOne = false;
+    ME.stepTwo = false;
+    ME.stepThree = false;
+    ME.stepFour = false;
+  };
+
   
 
   $scope.$on('aws-bucket-images', function (event, data) {
-    console.log("broadcast - aws-bucket-images);
+    console.log("broadcast - aws-bucket-images");
     $scope.$apply();
   });
  

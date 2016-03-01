@@ -9,7 +9,7 @@ define( "DATABASE_PASSWORD", "Sadie9954!");
 define( "DATABASE_NAME", "jobtracker");
 //connect to the database.
 $con = mysqli_connect(DATABASE_SERVER, DATABASE_USERNAME, DATABASE_PASSWORD,DATABASE_NAME) or die ('ERROR!!!');
-$ID = mysqli_real_escape_string($con,$data->jobID);
+$ID = mysqli_real_escape_string($con,$data->ID);
 
 $query = sprintf("SELECT * FROM photos WHERE jobID = '".$ID."'");
 $result = mysqli_query($con,$query)or die(mysqli_error($con));
@@ -19,7 +19,8 @@ while ($row = mysqli_fetch_object($result)) {
 	$oneVO->PRIMARY_ID = $row->PRIMARY_ID;
 	$oneVO->jobID = $row->jobID;
 	$oneVO->category = $row->category;
-	$oneVO->description = $row->description;
+	$oneVO->caption = $row->caption;
+	$oneVO->url = $row->url;
 	array_push( $resultValueObjects, $oneVO );
 }
 echo json_encode($resultValueObjects);

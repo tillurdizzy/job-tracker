@@ -9,6 +9,7 @@ app.service('serviceAWS',['$http','$q','$rootScope','SharedSrvc','LogInSrvc',fun
 
   self.config = null;
   self.uploadedURL = null;
+  self.photoData = [];
 
   // S3 Bucket vars
   self.s3Obj = null;
@@ -21,6 +22,7 @@ app.service('serviceAWS',['$http','$q','$rootScope','SharedSrvc','LogInSrvc',fun
   
   self.bucketUrl = self.S.awsBucketUrl;
   self.bucketName = self.L.userVO.name_user;
+
  
   // Job folder within Users S3 Bucket
   // ANY path items between the bucket and the file
@@ -44,17 +46,16 @@ app.service('serviceAWS',['$http','$q','$rootScope','SharedSrvc','LogInSrvc',fun
     self.webIdCredentials = new AWS.WebIdentityCredentials(credentials);
     AWS.config.credentials = self.webIdCredentials;
     self.s3Obj = new AWS.S3({region: self.S3Region});
-    console.log("S3 Object: " + self.s3Obj);
   };
 
   self.updateReferences = function(){
     self.bucketName = self.L.userVO.name_user;
     self.bucketPrefix = "id_" + self.S.selectedPropertyObj.PRIMARY_ID + "/";
-    self.getPhotoList();
+    self.getPhotoData();
+    //self.getPhotoList();  This is called after successful getPhotoData() so we know data is updated
   };
 
   self.getPhotoList = function(){
-    // list objects in the 'photos' folder
     self.bucketImages=[];
     self.s3Obj.listObjects({Bucket: self.bucketName,Prefix:self.bucketPrefix + 'photos/'}, function(error, data) {
       if (error) {
@@ -62,17 +63,34 @@ app.service('serviceAWS',['$http','$q','$rootScope','SharedSrvc','LogInSrvc',fun
       } else {
         var contentArray = data.Contents;
         for (var i=1; i<contentArray.length; i++){ 
-          var bucketPath = contentArray[i].Key;  
-          var url =  self.bucketUrl + self.bucketName +  "/" + bucketPath;
-          self.bucketImages.push({section:"",caption:"",path:url});
+          var fileKey = contentArray[i].Key; // includes path from bucket to and including file 
+          var url =  "https://" + self.bucketName + ".s3.amazonaws.com/" + fileKey;
+          var fileNameOnly = "";
+          var ar = url.split("/");
+          fileNameOnly = ar[ar.length-1];
+          self.bucketImages.push({category:"",caption:"",name:fileNameOnly,path:url});
         }
-         $rootScope.$broadcast("aws-bucket-images");
+        matchPhotoData();
       }
     });
   };
 
+  var matchPhotoData = function(){
+    // Match photo data to S3 bucket images
+    for (var i = 0; i < self.bucketImages.length; i++) {
+      var thisFile = self.bucketImages[i].name;
+      for (var x = 0; x < self.photoData.length; x++) {
+        if (self.photoData[x].url == thisFile) {
+          self.bucketImages[i].category = self.photoData[x].category;
+          self.bucketImages[i].caption = self.photoData[x].caption;
+        }
+      }
+    }
+    $rootScope.$broadcast("aws-bucket-images",self.bucketImages);
+  };
+
+  
   self.getDocumentList = function(){
-    
     // list objects in the 'docs' folder
     self.bucketDocs=[];
     self.s3Obj.listObjects({Bucket: self.bucketName,Prefix:self.bucketPrefix + 'docs/'}, function(error, data) {
@@ -140,9 +158,6 @@ app.service('serviceAWS',['$http','$q','$rootScope','SharedSrvc','LogInSrvc',fun
     return d.promise;
   };
 
-
-  
-
   self.dynamo_getTable = function (tbl){
     
     var d = $q.defer();
@@ -162,21 +177,13 @@ app.service('serviceAWS',['$http','$q','$rootScope','SharedSrvc','LogInSrvc',fun
     return d.promise;
   };
 
-  self.getGreatestID = function(){
-    var tableItems =  self.currentTableScan.Items;
-    var idArray = [];
-    for (var i = 0; i < tableItems.length; i++) {
-      idArray.push(tableItems[i].PRIMARY_ID.N);
-    };
-    var sorted =  _.sortBy(idArray,function(num){return num});
-    self.lastAccountID = _.last(sorted);
-  }
-
+  
   self.putPhotoData = function(dataObj){
     dataObj.manager = self.managerID;
     var deferred = $q.defer();
     $http({method: 'POST', url: 'views/proposals/http/putPhoto.php',data:dataObj}).
     success(function(data, status, headers, config) {
+        
         deferred.resolve(data);
       }).
       error(function(data, status, headers, config) {
@@ -184,6 +191,28 @@ app.service('serviceAWS',['$http','$q','$rootScope','SharedSrvc','LogInSrvc',fun
       });
       return deferred.promise;
   };
+
+  self.getPhotoData = function(){
+    var dataObj =  {};
+    dataObj.ID = self.S.selectedJobObj.PRIMARY_ID;
+    var deferred = $q.defer();
+    $http({method: 'POST', url: 'views/proposals/http/getPhotos.php',data:dataObj}).
+    success(function(data, status, headers, config) {
+
+        self.photoData = data;
+
+        // 
+        self.getPhotoList();
+        deferred.resolve(data);
+      }).
+      error(function(data, status, headers, config) {
+      deferred.reject(data);
+      });
+      return deferred.promise;
+  }
+
+
+
 
   self.updateUser = function(userDataObj){
      var params = {
@@ -209,7 +238,7 @@ app.service('serviceAWS',['$http','$q','$rootScope','SharedSrvc','LogInSrvc',fun
     return d.promise;
   };
 
-   self.addNewAccount = function(DataObj){
+  self.addNewAccount = function(DataObj){
     self.lastAccountID++;
 
     var params = {
@@ -243,6 +272,7 @@ app.service('serviceAWS',['$http','$q','$rootScope','SharedSrvc','LogInSrvc',fun
     console.log("returnPhotoBucket = " + self.bucketImages.length)
     return self.bucketImages;
   }
+
 
  
 

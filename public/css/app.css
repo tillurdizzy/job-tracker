@@ -1084,6 +1084,11 @@ input[type="file"], textarea {
         color: #E74C3C;
         vertical-align: middle; }
 
+.photoStep {
+  height: 130px;
+  width: 100%;
+  background-color: #CCCCCC; }
+
 .special-considerations {
   padding: 0 .5rem; }
   .special-considerations textarea {
@@ -1454,6 +1459,21 @@ input[type="checkbox"] + label span {
 
 input[type="checkbox"]:checked + label span {
   background: url(check_radio_sheet.png) -30px top no-repeat; }
+
+input[type="radio"] {
+  display: none; }
+
+input[type="radio"] + label span {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  margin: -1px 4px 0 0;
+  vertical-align: middle;
+  background: url(check_radio_sheet.png) -60px top no-repeat;
+  cursor: pointer; }
+
+input[type="radio"]:checked + label span {
+  background: url(check_radio_sheet.png) -90px top no-repeat; }
 
 .check-radio-container {
   height: 30px;
