@@ -62,7 +62,6 @@
             <table class="table table-striped" style="width:100%;">
                 <thead>
                     <tr>
-                        <th>Level</th>
                         <th>Pitch</th>
                         <th>Percent</th>
                     </tr>
@@ -70,64 +69,33 @@
                 <tbody>
                     <tr>
                         <td>
-                            <h3>Level A</h3></td>
-                        <td>
-                            <select ng-model="Ctrl.multiLevelModel.levelOne.pitch" ng-options="c.label for c in Ctrl.S.multiLevelOptions"></select>
-                        </td>
+                            <h3>Flat (0-2)</h3></td>
                         <td>
                             <select ng-model="Ctrl.multiLevelModel.levelOne.percent" ng-options="c.label for c in Ctrl.S.percentOptions"></select>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <h3>Level B</h3></td>
-                        <td>
-                            <select ng-model="Ctrl.multiLevelModel.levelTwo.pitch" ng-options="c.label for c in Ctrl.S.multiLevelOptions"></select>
-                        </td>
+                            <h3>Low (3-6)</h3></td>
                         <td>
                             <select ng-model="Ctrl.multiLevelModel.levelTwo.percent" ng-options="c.label for c in Ctrl.S.percentOptions"></select>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <h3>Level C</h3></td>
-                        <td>
-                            <select ng-model="Ctrl.multiLevelModel.levelThree.pitch" ng-options="c.label for c in Ctrl.S.multiLevelOptions"></select>
-                        </td>
+                            <h3>Medium (7-9)</h3></td>
                         <td>
                             <select ng-model="Ctrl.multiLevelModel.levelThree.percent" ng-options="c.label for c in Ctrl.S.percentOptions"></select>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <h3>Level D</h3></td>
-                        <td>
-                            <select ng-model="Ctrl.multiLevelModel.levelFour.pitch" ng-options="c.label for c in Ctrl.S.multiLevelOptions"></select>
-                        </td>
+                            <h3>Steep (8+)</h3></td>
                         <td>
                             <select ng-model="Ctrl.multiLevelModel.levelFour.percent" ng-options="c.label for c in Ctrl.S.percentOptions"></select>
                         </td>
                     </tr>
-                    <tr>
-                        <td>
-                            <h3>Level E</h3></td>
-                        <td>
-                            <select ng-model="Ctrl.multiLevelModel.levelFive.pitch" ng-options="c.label for c in Ctrl.S.multiLevelOptions"></select>
-                        </td>
-                        <td>
-                            <select ng-model="Ctrl.multiLevelModel.levelFive.percent" ng-options="c.label for c in Ctrl.S.percentOptions"></select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <h3>Level F</h3></td>
-                        <td>
-                            <select ng-model="Ctrl.multiLevelModel.levelSix.pitch" ng-options="c.label for c in Ctrl.S.multiLevelOptions"></select>
-                        </td>
-                        <td>
-                            <select ng-model="Ctrl.multiLevelModel.levelSix.percent" ng-options="c.label for c in Ctrl.S.percentOptions"></select>
-                        </td>
-                    </tr>
+                   
                 </tbody>
             </table>
         </div>

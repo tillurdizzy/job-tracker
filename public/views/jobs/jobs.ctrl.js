@@ -125,15 +125,15 @@ app.controller('JobsCtrl',['$location','$state','evoDb','$scope','SharedSrvc',fu
 		var d = new Date();
 		var v = d.valueOf();
 		switch(status){
-			case 'contract':
+			case 'Contract':
 				ME.selectedJobObj.dateContract = v;
 				ME.updateContract = false;
 				break;
-			case 'active':
+			case 'Active':
 				ME.selectedJobObj.dateActive = v;
 				ME.updateActive = false;
 				break;
-			case 'complete':
+			case 'Complete':
 				ME.selectedJobObj.dateComplete = v;
 				ME.updateComplete = false;
 				break;

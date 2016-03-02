@@ -19,7 +19,6 @@ app.controller('ProposalCtrl', ['$state','$scope','evoDb','SharedSrvc','ShingleS
     ME.selectedPropertyObj = S.selectedPropertyObj;
     ME.proposalDate = ME.selectedJobObj.dateProposal;
 
-    
     ME.jobMaterials = [];
 
     //DOM vars
@@ -29,7 +28,8 @@ app.controller('ProposalCtrl', ['$state','$scope','evoDb','SharedSrvc','ShingleS
     ME.specialText = "";
     ME.specialCost = "";
 
-    ME.params = {jobID:0,
+    ME.params = {
+        jobID:0,
         FIELD:0,
         TOPRDG:0,
         RKERDG:0,
@@ -72,6 +72,14 @@ app.controller('ProposalCtrl', ['$state','$scope','evoDb','SharedSrvc','ShingleS
         PDF.newPDF(dataObj);
     };
 
+    ME.goClients = function(){
+      $state.transitionTo("clients");
+    };
+
+    ME.goProperties = function(){
+      $state.transitionTo("properties");
+    };
+
     ME.submitForApproval = function(){
        updateStatus();
     };
@@ -81,7 +89,7 @@ app.controller('ProposalCtrl', ['$state','$scope','evoDb','SharedSrvc','ShingleS
         var v = d.valueOf();
         ME.selectedJobObj.dateProposal = v;
         S.selectedJobObj.dateProposal = v;
-        var status="proposal";
+        var status="Proposal";
         DB.updateJobStatus(ME.selectedJobObj.PRIMARY_ID,status,v).then(function(result) {
             if (result != false) { 
                 alert("OK");

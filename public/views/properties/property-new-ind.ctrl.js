@@ -25,7 +25,7 @@ app.controller('NewPropertyIndCtrl',['$state','$scope','evoDb','SharedSrvc','und
     ME.ridgeCap=ME.S.ridgeCapShingles[0];
     ME.roofVents=ME.S.ventOptions[0];
 
-    ME.multiLevelObj = {propertyID:0,LEVONE:0,LEVTWO:0,LEVTHR:0,LEVFOU:0,LEVFIV:0,LEVSIX:0};
+    ME.multiLevelObj = {propertyID:0,LEVONE:0,LEVTWO:0,LEVTHR:0,LEVFOU:0};
     ME.multiVentObj = {propertyID:0,TURBNS:0,STATIC:0,PWRVNT:0,AIRHWK:0,SLRVNT:0};
     // Form fields to show and in this order
     // the goPrevious and goNext use this list to find destination
@@ -34,12 +34,10 @@ app.controller('NewPropertyIndCtrl',['$state','$scope','evoDb','SharedSrvc','und
         'valleyDetail','ridgeCap','roofVents','SUBMIT'];
 
     ME.multiLevelModel = {
-        levelOne:{pitch:ME.S.multiLevelOptions[0],percent:ME.S.percentOptions[0]},
-        levelTwo:{pitch:ME.S.multiLevelOptions[0],percent:ME.S.percentOptions[0]},
-        levelThree:{pitch:ME.S.multiLevelOptions[0],percent:ME.S.percentOptions[0]},
-        levelFour:{pitch:ME.S.multiLevelOptions[0],percent:ME.S.percentOptions[0]},
-        levelFive:{pitch:ME.S.multiLevelOptions[0],percent:ME.S.percentOptions[0]},
-        levelSix:{pitch:ME.S.multiLevelOptions[0],percent:ME.S.percentOptions[0]}
+        levelOne:{percent:ME.S.percentOptions[0]},
+        levelTwo:{percent:ME.S.percentOptions[0]},
+        levelThree:{percent:ME.S.percentOptions[0]},
+        levelFour:{percent:ME.S.percentOptions[0]}
     };
 
     ME.multiVentModel = {
@@ -138,10 +136,9 @@ app.controller('NewPropertyIndCtrl',['$state','$scope','evoDb','SharedSrvc','und
             ME.multiLevelObj.LEVTWO = ME.multiLevelModel.levelTwo.percent.id;
             ME.multiLevelObj.LEVTHR = ME.multiLevelModel.levelThree.percent.id;
             ME.multiLevelObj.LEVFOU = ME.multiLevelModel.levelFour.percent.id;
-            ME.multiLevelObj.LEVFIV = ME.multiLevelModel.levelFive.percent.id;
-            ME.multiLevelObj.LEVSIX = ME.multiLevelModel.levelSix.percent.id;
+            
             var percentTotal = ME.multiLevelObj.LEVONE + ME.multiLevelObj.LEVTWO + 
-            ME.multiLevelObj.LEVTHR + ME.multiLevelObj.LEVFOU + ME.multiLevelObj.LEVFIV + ME.multiLevelObj.LEVSIX;
+            ME.multiLevelObj.LEVTHR + ME.multiLevelObj.LEVFOU;
             if(percentTotal == 10){
                ME.goNext('roofPitch');
             }else{
