@@ -71,6 +71,7 @@ app.controller('LoginCtrl',['$scope','$state','evoDb','SharedSrvc','ShingleSrvc'
         S.logOut();
         L.logOut();
         DB.logOut();
+        $state.transitionTo("splash");
     };
 
     var verifyGoogleSignIn = function(){

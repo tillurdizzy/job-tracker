@@ -6,7 +6,6 @@
 	<p>Upload at least one photo each for Street View, Shingle Detail, Ridge Detail, Valley Detail, Edge Detail, and Ventilation.</p>
 
 	<h4>Add a photo in 4 Steps</h4>
-	<horiz-rule margintop="15" marginbottom="10"></horiz-rule>
 
 	<div class="photoStep" ng-show="ImgCtrl.stepOne">
 		<h3>Step 1:</h3>
@@ -14,7 +13,6 @@
 		<div class="dropDownSelector">
         	<select ng-model="ImgCtrl.photoCategory" ng-options="c.label for c in ImgCtrl.S.photoCats" ng-change="ImgCtrl.selectCat()"></select>
     	</div>
-    	<horiz-rule margintop="15" marginbottom="10"></horiz-rule>
 	</div>
 
 	<div class="photoStep" ng-show="ImgCtrl.stepTwo">
@@ -22,14 +20,12 @@
 		<p>Write a caption for this photo.</p>
 		<textarea ng-model="ImgCtrl.photoCaption"></textarea>
 		<button type="button" ng-click="ImgCtrl.submitCaption()">Submit</button>
-		<horiz-rule margintop="15" marginbottom="10"></horiz-rule>
 	</div>
 
 	<div class="photoStep" ng-show="ImgCtrl.stepThree">
 		<h3>Step 3:</h3>
 		<p>Choose the photo.</p>
 		<div file-upload="ImgCtrl.onSelectFile(files)"></div>
-		<horiz-rule margintop="15" marginbottom="10"></horiz-rule>
 	</div>
 
 	<div class="photoStep" ng-show="ImgCtrl.stepFour">
@@ -38,6 +34,7 @@
 		<button type="button" ng-click="ImgCtrl.uploadToBucket()">Submit</button>
 	</div>
 
+	
 	<div class="photoListContainer">
 		<h2>Uploaded Images</h2>
 		<photo-list ng-repeat="x in ImgCtrl.AWS.bucketImages" url="{{x.path}}" category="{{x.category}}" caption="{{x.caption}}"></photo-list>

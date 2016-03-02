@@ -3,7 +3,7 @@ var app = angular.module('MyApp', ['ui.router','ngSanitize','ngUnderscore','dire
 
 app.config(function($stateProvider, $urlRouterProvider) {
  	
- 	$urlRouterProvider.otherwise("/login");
+ 	$urlRouterProvider.otherwise("/splash");
   	
 	$stateProvider
 		$stateProvider
@@ -11,6 +11,14 @@ app.config(function($stateProvider, $urlRouterProvider) {
 			url: "/test",
 			templateUrl:"views/test/test.html"
 		})
+
+		.state('splash', {
+			url: "/splash",
+			templateUrl:"views/login/splash.html"
+		})
+
+		
+
 		.state('login', {
 			url: "/login",
 			templateUrl:"views/login/login.html",
@@ -169,7 +177,17 @@ app.config(function($stateProvider, $urlRouterProvider) {
 		.state('approval', {
 			url: "/approval",
 			templateUrl:"views/approval/approval.html"
-		});
+		})
+
+		.state('reference', {
+			url: "/reference",
+			templateUrl:"views/reference/reference.html"
+		})
+
+		.state('reference.roofpitch', {
+			url: "/roofpitch",
+			templateUrl:"views/reference/roofpitch.html"
+		})
 		
 		
 		

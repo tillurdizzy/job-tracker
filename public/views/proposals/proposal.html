@@ -10,7 +10,7 @@
         <h3>{{Ctrl.selectedPropertyObj.street}}</h3>
         <h3>{{Ctrl.selectedPropertyObj.city + ", " + Ctrl.selectedPropertyObj.state + " " + Ctrl.selectedPropertyObj.zip}}</h3>
     </div>
-    <div class="section-header">
+    <!-- <div class="section-header">
         <h2>Bid Summary</h2>
     </div>
     <div class="text-block-display">
@@ -36,7 +36,7 @@
             <div>
                 <h4>{{Ctrl.totalCost | currency:"$":0}}</h4></div>
         </div>
-    </div>
+    </div> -->
     <div id='cssmenu' ng-controller="ProposalMenuCtrl">
         <ul>
             <li ng-class="{ active: isCurrentPath('/proposal/params')}"><a ui-sref='proposal.params'>Parameters</a></li>

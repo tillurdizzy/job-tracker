@@ -15,5 +15,17 @@ app.controller('OffCanvasCtrl',['$state','LogInSrvc',function ($state,LogInSrvc)
 		Me.menuOpen =  false;
 	};
 
+	Me.goLogin = function(){
+		$state.transitionTo("login");
+	};
+
+	Me.goSplash = function(){
+		$state.transitionTo("splash");
+	};
+
+	Me.goReference = function(){
+		$state.transitionTo("reference");
+	};
+
 
  }]);

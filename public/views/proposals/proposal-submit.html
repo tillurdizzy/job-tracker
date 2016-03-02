@@ -2,11 +2,14 @@
     <h2>Submit</h2>
 </div>
 
-<div>
-	<p>After completing the forms and submitting each of the three previous sections (Parameters, Photos and Special Considerations) complete your proposal by clicking the button below.  This will change the Job Status to 'Proposal' and que the proposal for approval and submission to Client.</p>
-	
+<div ng-show="Ctrl.selectedJobObj.dateProposal==0">
+	<p>After completing the forms and submitting each of the three previous sections (Parameters, Photos and Special Considerations) complete your proposal by clicking the button below.  This will change the Job Status from 'Prospect' to 'Proposal', and que the proposal for approval and submission to Client.</p>
+	<p>You may still return and make changes at any time, but you will not need to submit again.</p>
 </div>
-<div>
+<div ng-hide="Ctrl.selectedJobObj.dateProposal==0">
+	<h3>This proposal has already been submitted.</h3>
+</div>
+<div ng-show="Ctrl.selectedJobObj.dateProposal==0">
 	<button type="button" ng-click="Ctrl.submitForApproval()">Submit</button>
 </div>
 

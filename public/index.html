@@ -1,134 +1,99 @@
 <!doctype html>
 <html lang="en">
-    <head>
-        <title>Evolution</title>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-COMPATIBLE" content="IE=edge,chrome=1">
-        <meta name="viewport" content="width=device-width, user-scalable=no">
 
-        <meta http-equiv="cache-control" content="no-cache, must-revalidate, post-check=0, pre-check=0">
-        <meta http-equiv="pragma" content="no-cache">
+<head>
+    <title>Evolution</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-COMPATIBLE" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, user-scalable=no">
+    <meta http-equiv="cache-control" content="no-cache, must-revalidate, post-check=0, pre-check=0">
+    <meta http-equiv="pragma" content="no-cache">
+    <!--Dependencies; AngularJS etc.-->
+    <script src="bundle.js?v=1"></script>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,800,600' rel='stylesheet' type='text/css' />
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700italic' rel='stylesheet' type='text/css' />
+    <link href='http://fonts.googleapis.com/css?family=Jaldi:400,700' rel='stylesheet' type='text/css' />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" />
+    <script src="https://plus.google.com/js/client:platform.js" async defer></script>
+    <link rel="stylesheet" href="css/app.css?v=5" />
+    <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+</head>
 
-        <!--Dependencies; AngularJS etc.-->
-        <script src="bundle.js?v=1"></script>
-        <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,800,600' rel='stylesheet' type='text/css'/>
-        <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700italic' rel='stylesheet' type='text/css'/>
-        <link href='http://fonts.googleapis.com/css?family=Jaldi:400,700' rel='stylesheet' type='text/css'/>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"/>
-        <script src = "https://plus.google.com/js/client:platform.js" async defer></script>
-        <link rel="stylesheet" href="css/app.css?v=5"/>
-        <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
-    </head>
-    <body ng-app="MyApp">
-
-        <div id="site-wrapper" ng-controller="OffCanvasCtrl as Ctrl">
-            <div class="header" role="banner">
-                <div class="headerLogo">
-                    <object  type="image/svg+xml" data="img/WhiteEvolutionLogo.svg" width="200"></object>
-                </div>
-                <div></div>
-                <div class="headerContact">
-                    <img id="headerRight"  src="img/CallUsIcon.png" alt="1-713-729-7663">
-                </div>
+<body ng-app="MyApp">
+    <div id="site-wrapper" ng-controller="OffCanvasCtrl as Ctrl">
+        <div class="header-light" role="banner" >
+            <div class="headerLogo" ng-click="Ctrl.goSplash();">
+                <img src="img/evo-logo-black-200px.png" alt="">
             </div>
-            <div class="underHead"></div>
-            <div class="top-bar" ng-show="Ctrl.L.showTopBar">
-                <button ng-click="Ctrl.toggleNav()"><i class="fa fa-bars fa-2x"></i></button>
-                <h1>Evolution Roofing Systems</h1>
+            <div></div>
+            <div class="header-right" ng-click="Ctrl.goReference();">
+                <img src="img/GetEducatedIcon.png" alt="">
             </div>
-           
-            <div id="site-canvas">
-                <div id="off-canvas-menu" ng-class="Ctrl.menuOpen ? 'off-canvas-show' : 'off-canvas-hide'">
-                    <div class="label"><h3>IDENTITY</h3></div>
-                    <div><button ng-click="Ctrl.menuClick('login')">Log In / Out</button></div>
-                    <div class="label"><h3>LISTS</h3></div>
-                    <div><button ng-click="Ctrl.menuClick('clients')">Client List</button></div>
-                    <div><button ng-click="Ctrl.menuClick('properties')">Property List</button></div>
-                    <div><button ng-click="Ctrl.menuClick('jobs')">Jobs List</button></div>
-                    <div class="label"><h3>INVENTORY</h3></div>
-                    <div><button>Coming soon...</button></div>
-                    <div class="label"><h3>REPORTS</h3></div>
-                    <div><button>Coming soon...</button></div>
-                </div>
-                <div>
-                    <div ui-view class="view-container"></div>
-                </div>
-                <!-- #site-canvas -->
-            </div>
-        <!-- #site-wrapper -->
         </div>
-   
-   
+        <div>
+            <div ui-view class="view-container"></div>
+        </div>
+        <!-- #site-canvas -->
+    </div>
+    <!-- #site-wrapper -->
+    </div>
     <!--APP-->
     <script src="https://sdk.amazonaws.com/js/aws-sdk-2.0.0-rc1.min.js"></script>
-
-    <script src="myApp.js?v=2"></script>
-
+    <script src="myApp.js?v=3"></script>
     <!--Global Services-->
-    <script src="js/AWSService.js"></script>
-    <script src="js/data.srvc.js?v=2"></script>
-    <script src="js/login.srvc.js?v=1"></script>
-    <script src="js/client.srvc.js?v=1"></script>
-    <script src="js/inventory.srvc.js?v=1"></script>
-    <script src="js/shared.srvc.js?v=2"></script>
+    <script src="js/AWSService.js?v=3"></script>
+    <script src="js/data.srvc.js?v=3"></script>
+    <script src="js/login.srvc.js?v=3"></script>
+    <script src="js/client.srvc.js?v=3"></script>
+    <script src="js/inventory.srvc.js?v=3"></script>
+    <script src="js/shared.srvc.js?v=3"></script>
     <script src="js/pdf.srvc.js?v=1"></script>
-
-     <!--Admin-->
+    <!--Admin-->
     <script src="views/admin/adminData.srvc.js?v=2"></script>
     <script src="views/admin/adminShared.srvc.js?v=2"></script>
     <script src="views/admin/admin.ctrl.js?v=2"></script>
     <script src="views/admin/adminProposal.ctrl.js?v=2"></script>
     <script src="views/admin/adminProposalInput.ctrl.js?v=2"></script>
     <script src="views/admin/purchaseItem.dir.js?v=1"></script>
-
     <!--Controllers-->
     <script src="views/offcanvas.ctrl.js?v=1"></script>
-    <script src="views/login/login.ctrl.js?v=2"></script>
+    <script src="views/login/login.ctrl.js?v=3"></script>
     <script src="views/approval/approval.ctrl.js?v=2"></script>
-    <script src="js/tabbedMenu.ctrl.js?v=2"></script>
-   
+    <script src="js/tabbedMenu.ctrl.js?v=3"></script>
     <!--Jobs-->
-    <script src="views/jobs/job-new.ctrl.js?v=1"></script>
+    <script src="views/jobs/job-new.ctrl.js?v=3"></script>
     <script src="views/jobs/jobs.ctrl.js?v=3"></script>
-    <script src="views/jobs/job.dir.js?v=2"></script>
-    <script src="views/jobs/jobItem.dir.js?v=2"></script>
-   
+    <script src="views/jobs/job.dir.js?v=3"></script>
+    <script src="views/jobs/jobItem.dir.js?v=3"></script>
     <!--Property-->
-    <script src="views/properties/property-new.ctrl.js?v=2"></script>
-    <script src="views/properties/properties.ctrl.js?v=2"></script>
-    <script src="views/properties/property-new-ind.ctrl.js?v=2"></script>
-    <script src="views/properties/properties.ctrl.js?v=2"></script>
-    <script src="views/properties/property.dir.js?v=2"></script>
-
+    <script src="views/properties/property-new.ctrl.js?v=3"></script>
+    <script src="views/properties/properties.ctrl.js?v=3"></script>
+    <script src="views/properties/property-new-ind.ctrl.js?v=3"></script>
+    <script src="views/properties/properties.ctrl.js?v=3"></script>
+    <script src="views/properties/property.dir.js?v=3"></script>
     <!--Clients-->
-    <script src="views/clients/client-new-view.ctrl.js?v=1"></script>
-    <script src="views/clients/client-new-org.ctrl.js?v=1"></script>
-    <script src="views/clients/client-new-ind.ctrl.js?v=1"></script>
+    <script src="views/clients/client-new-view.ctrl.js?v=2"></script>
+    <script src="views/clients/client-new-org.ctrl.js?v=2"></script>
+    <script src="views/clients/client-new-ind.ctrl.js?v=2"></script>
     <script src="views/clients/client.dir.js?v=2"></script>
     <script src="views/clients/clients.ctrl.js?v=2"></script>
-
     <!--Proposals-->
-    <script src="views/proposals/shingle-calcs.srvc.js?v=1"></script>
-    <script src="views/proposals/shingle.srvc.js?v=1"></script>
-    <script src="views/proposals/material.dir.js?v=2"></script>
-    <script src="views/proposals/proposalMaterial.dir.js?v=1"></script>
-    <script src="views/proposals/photoList.dir.js?v=1"></script>
-    <script src="views/proposals/proposal.ctrl.js?v=2"></script>
-    <script src="views/proposals/proposalMenu.ctrl.js?v=2"></script>
-    <script src="views/proposals/amazonS3.ctrl.js"></script>
-    <script src="views/proposals/fileUpload.dir.js"></script>
-
+    <script src="views/proposals/shingle-calcs.srvc.js?v=3"></script>
+    <script src="views/proposals/shingle.srvc.js?v=3"></script>
+    <script src="views/proposals/material.dir.js?v=3"></script>
+    <script src="views/proposals/proposalMaterial.dir.js?v=3"></script>
+    <script src="views/proposals/photoList.dir.js?v=3"></script>
+    <script src="views/proposals/proposal.ctrl.js?v=3"></script>
+    <script src="views/proposals/proposalMenu.ctrl.js?v=3"></script>
+    <script src="views/proposals/amazonS3.ctrl.js?v=3"></script>
+    <script src="views/proposals/fileUpload.dir.js?v=3"></script>
     <!--Inventory-->
     <script src="views/inventory/inventory.ctrl.js?v=1"></script>
-
+     <!--Reference-->
+    <script src="views/reference/reference.ctrl.js?v=1"></script>
     <!--Directives-->
     <script src="js/directives/hrule.dir.js?v=1"></script>
     <script src="js/directives/space.dir.js?v=1"></script>
-    
-    
-
-
-
-
 </body>
+
 </html>

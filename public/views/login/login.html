@@ -1,15 +1,14 @@
 <div class="page">
     <div class="centered-content">
         <div class="page-title">
-            <h2>Work Proposal</h2>
+            <h2>Scope of Work Proposal Application</h2>
         </div>
 
         <div class="flex-center" ng-hide="requestSuccess">
             <google-plus-signin clientid="694848371691-06c5a0e6s0988o8e5voq09s7anml5hlt.apps.googleusercontent.com"></google-plus-signin>
         </div>
         
-       
-        <div class="block-section" ng-hide="requestSuccess">
+        <!-- <div class="block-section" ng-hide="requestSuccess">
             <div class="login-form">
                 <form name="loginForm" data-ng-submit="submitLoginForm()" novalidate>
                     <div>
@@ -29,7 +28,7 @@
         <div>
             <p class="login-attention" data-ng-show="loginSuccess===false">Did not find a match for Username and PIN.</p>
             <p class="login-attention" data-ng-show="submissionInvalid">Please complete both fields.</p>
-        </div>
+        </div> -->
         <div class="flex-center" ng-show="requestSuccess">
             <div class="login-status">
                 <h4>Logged in as {{displayName}}</h4>

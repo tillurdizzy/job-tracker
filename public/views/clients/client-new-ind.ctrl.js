@@ -12,8 +12,8 @@ app.controller('NewClientIndCtrl',['$state','evoDb','SharedSrvc',function ($stat
     ME.T3="";//cell
     ME.T4="";//email
     ME.T5="";//street
-    ME.T6="";//city
-    ME.T7="";//state
+    ME.T6 = "Houston";
+    ME.T7 = "TX";
     ME.T8="";//zip
    
    
@@ -183,8 +183,8 @@ app.controller('NewClientIndCtrl',['$state','evoDb','SharedSrvc',function ($stat
         ME.T3 = "";
         ME.T4 = "";
         ME.T5 = "";
-        ME.T6 = "";
-        ME.T7 = "";
+        ME.T6 = "Houston";
+        ME.T7 = "TX";
         ME.T8 = "";
         ME.isError = false;
         ME.inputField="T1";

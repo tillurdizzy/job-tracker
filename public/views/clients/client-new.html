@@ -10,22 +10,14 @@
             <h3>
                 Is this client an individual homeowner or an organization?
             </h3>
-            <div class="radio-btns">
-                <div>
-                    <label>
-                       <input type="radio" name="Rad1" id="radio1A" value="Individual" class="custom-radio" ng-model="Ctrl.ClientType"/>
-                        Individual
-                    </label>
-                </div>
-                
-                <div>
-                    <label>
-                       <input type="radio" name="Rad1" id="radio1B" value="Organization" class="custom-radio" ng-model="Ctrl.ClientType"/>
-                        Organization
-                    </label>
-                </div>
-            </div>
+            <div class="check-radio-container" style="margin-bottom:10px;">
+                <input type="radio" id="Rad1A" name="Rad1" value="Individual" ng-model="Ctrl.ClientType"></input>
+                <label for="Rad1A"><span></span>Individual</label>
 
+                <input type="radio" id="Rad1B" name="Rad1" value="Organization" ng-model="Ctrl.ClientType"></input>
+                <label for="Rad1B"><span></span>Organization</label>
+            </div>
+            
             <div class="page-nav">
                 <div class="page-nav-left">
                     
