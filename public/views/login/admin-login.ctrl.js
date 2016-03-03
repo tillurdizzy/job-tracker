@@ -5,14 +5,9 @@ app.controller('AdminLoginCtrl',['$scope','$state','AdminDataSrvc','SharedSrvc',
     // Inject all these Services so they get initiated and are ready for use later
     var DB = AdminDataSrvc;
     var S = SharedSrvc;
-   
     var L = LogInSrvc;
     var A = serviceAWS;
 
-    $scope.submissionInvalid = false;// form is filled out correctly
-    $scope.requestSuccess=false;// database query; starts out false set to true on successful query
-    $scope.loginSuccess = null;// user/pword match; starts out null, set false if user entry does not match, true if does
-    $scope.resultLength = 0;
     $scope.displayName="";
     $scope.loginObj={};
     $scope.googleAuthResult = {};
@@ -20,17 +15,14 @@ app.controller('AdminLoginCtrl',['$scope','$state','AdminDataSrvc','SharedSrvc',
     $scope.googlePerson = {};
     $scope.credentialsInvalid = false;
     
-
-    $scope.dataRefreshed = false;
-
     $scope.$on('event:google-plus-signin-success', function (event, authResult) {
         $scope.googleAuthResult = authResult;
         $scope.googleReturnEvent = event;
         makeApiCall();
     });
+
     $scope.$on('event:google-plus-signin-failure', function (event, authResult) {
-          // User has not authorized the G+ App!
-          console.log('Not signed into Google Plus.');
+        console.log('Not signed into Google Plus.');
     });
 
     var makeApiCall = function(){
@@ -50,23 +42,10 @@ app.controller('AdminLoginCtrl',['$scope','$state','AdminDataSrvc','SharedSrvc',
     }
 
     $scope.continueBtn = function(){
-        if( $scope.loginObj.userType == "client"){
-            $state.transitionTo("approval");
-        }else if($scope.loginObj.userType == "admin"){
-            $state.transitionTo("admin");
-        }else{
-           if($scope.resultLength == 0){
-                $state.transitionTo("clients");
-            }else{
-                $state.transitionTo("jobs");
-            } 
-        }
+        $state.transitionTo("admin");
     };
 
     $scope.logOut = function(){
-        $scope.submissionInvalid = false;
-        $scope.requestSuccess=false;
-        $scope.loginSuccess = null;
         $scope.displayName="";
         S.logOut();
         L.logOut();
@@ -83,7 +62,7 @@ app.controller('AdminLoginCtrl',['$scope','$state','AdminDataSrvc','SharedSrvc',
                 $scope.loginObj = result[0];
                 onLogInSuccess();
             }else{
-                $scope.loginSuccess = false;
+                $state.transitionTo("login.invalid");
             }
         },function(error){
             $scope.loginSuccess = false;
@@ -93,26 +72,19 @@ app.controller('AdminLoginCtrl',['$scope','$state','AdminDataSrvc','SharedSrvc',
 
     var onLogInSuccess = function(){
         var userType = $scope.loginObj.userType;
-        $scope.dataRefreshed = false;
-        $scope.loginSuccess=true;
-        $scope.requestSuccess = true;// this var changes the stage
-        $scope.clearForm();
         $scope.displayName = $scope.loginObj.name_first + " " + $scope.loginObj.name_last;
-        
         if(userType == "admin"){
-            $scope.dataRefreshed = true;
             A.initAWS($scope.googleAuthResult.id_token);
+            $state.transitionTo("login.success");
         }else{
-            $scope.credentialsInvalid = true;
+            $state.transitionTo("login.invalid");
         }
     };
 
-    
     $scope.dataError = function(){
 
     };
 
-   
     var checkForLogIn = function(){
         S.keyValues = DB.getIdValues();
         var login = S.loggedIn;

@@ -6,12 +6,11 @@ app.controller('AdminPropInput',['$state','$scope','AdminSharedSrvc','AdminDataS
 	var S = AdminSharedSrvc;
 	var DB = AdminDataSrvc;
 
-
 	ME.propertyInputParams = {};
 
 	$scope.$on('onRefreshParamsData', function(event, obj) {
 		ME.propertyInputParams = obj;
-    })
+    });
 	
 
  }]);

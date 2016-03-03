@@ -8,24 +8,18 @@ app.controller('AdminCtrl',['$location','$state','$scope','SharedSrvc',function 
 	ME.managerAdd = function(){
 		$state.transitionTo("admin.managerAdd");
 	};
-
 	ME.managerUpdate = function(){
 		$state.transitionTo("admin.managerUpdate");
 	};
-
 	ME.inventoryAdd = function(){
 		$state.transitionTo("admin.inventoryAdd");
 	};
-
 	ME.inventoryUpdate = function(){
 		$state.transitionTo("admin.inventoryUpdate");
 	};
-
 	ME.jobsActive = function(){
 		$state.transitionTo("admin.reportJobsActive");
 	};
-
-
 	ME.prospectsReview = function(){
 		$state.transitionTo("admin.prospectsReview");
 	};

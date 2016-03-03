@@ -125,37 +125,10 @@ app.controller('LoginCtrl',['$scope','$state','evoDb','SharedSrvc','ShingleSrvc'
         $scope.requestSuccess = true;// this var changes the stage
         $scope.clearForm();
         $scope.displayName = $scope.loginObj.name_first + " " + $scope.loginObj.name_last;
-        
-        if(userType == "client"){
-            C.LogIn($scope.loginObj);
-            $scope.getClientJob($scope.loginObj.jobID);
-        }else if(userType == "sales"){
-            $scope.getManagerJobs();
-        }else if(userType == "admin"){
-            $scope.dataRefreshed = true;
-        }else{
-
-        }
-        //var sts = new AWS.STS();
-        // Get amazon credentials
-        /*var params = {
-          RoleArn: 'arn:aws:iam::845886544285:role/evo-id-auth',
-          RoleSessionName: $scope.loginObj.name_user,
-          WebIdentityToken: $scope.googleAuthResult.id_token
-        };*/
-
+       
+        $scope.getManagerJobs();
         A.initAWS($scope.googleAuthResult.id_token);
-        
-        /*sts.assumeRoleWithWebIdentity(params, function(err, data) {
-            if(err){
-                console.log(err, err.stack); // an error occurred
-            }else{
-               $scope.AWSSTS = data;
-               // Configure AWS
-               A.initAWS($scope.AWSSTS);
-            }
-        });*/
-    }
+    };
 
     $scope.getClientJob = function(jobID){
         var dataObj = {ID:jobID}

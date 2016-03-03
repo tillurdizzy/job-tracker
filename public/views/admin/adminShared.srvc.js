@@ -20,7 +20,6 @@ app.service('AdminSharedSrvc',['$rootScope','AdminDataSrvc',function adminShared
 		 getTabsData();
 	};
 
-
 	// We have three Tabs in UI... get data for all 3 even though user is only viewing one of them at a time
 	var getTabsData = function(){
 		getJobParameters();
@@ -44,26 +43,26 @@ app.service('AdminSharedSrvc',['$rootScope','AdminDataSrvc',function adminShared
     };
 
 
-	// Called from init on adminProposalCtrl
-	self.pullProposalData = function(){
+	//Queries the properties table based on open proposals
+	self.getPropertiesWithProposalJobStatus = function(){
 		DB.queryDB('views/admin/http/getJobProposals.php').then(function(result){
             if(typeof result != "boolean"){
              	self.openProposals = result;
              	self.proposalUnderReview = self.openProposals[0];
-             	$rootScope.$broadcast('onPullProposalData');
+             	$rootScope.$broadcast('onGetPropertiesWithProposalJobStatus');
             }else{
-              dataError("AdminSharedSrvc-pullProposalData()-1",result); 
+              dataError("AdminSharedSrvc-getPropertiesWithProposalJobStatus()-1",result); 
             }
         },function(error){
-            dataError("AdminSharedSrvc-pullProposalData()-2",result);
+            dataError("AdminSharedSrvc-getPropertiesWithProposalJobStatus()-2",result);
         });
 	};
 
+    //Queries the job_list table for open proposals
 	self.getJobsWithOpenProposals = function(){
     	DB.queryDB('views/admin/http/getJobsWithProposalStatus.php').then(function(result){
             if(typeof result != "boolean"){
              	jobsList = result;
-             	
             }else{
               dataError("AdminSharedSrvc-getJobsWithOpenProposals()-1",result); 
             }

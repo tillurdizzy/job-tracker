@@ -13,6 +13,14 @@ app.config(function($stateProvider, $urlRouterProvider) {
 			templateUrl:"views/login/admin-login.html",
 			controller:"AdminLoginCtrl"
 		})
+		.state('login.invalid', {
+			url: "/invalid",
+			templateUrl:"views/login/admin-login-invalid.html"
+		})
+		.state('login.success', {
+			url: "/success",
+			templateUrl:"views/login/admin-login-success.html"
+		})
 		
 		.state('admin', {
 			url: "/admin",

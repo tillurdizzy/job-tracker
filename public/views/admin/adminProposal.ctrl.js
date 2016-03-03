@@ -5,7 +5,7 @@ app.controller('AdminProposalCtrl',['$state','AdminDataSrvc','$scope','AdminShar
 	var ME = this;
 	var S = AdminSharedSrvc;
 
-	ME.selectedProposal = {}; // 
+	ME.selectedProposal = {};
 	ME.selectDataProvider = [];
 	
 	ME.selectProposal = function(){
@@ -17,7 +17,7 @@ app.controller('AdminProposalCtrl',['$state','AdminDataSrvc','$scope','AdminShar
 	var init = function(){
 		if(S.openProposals.length === 0){
 			S.getJobsWithOpenProposals();
-			S.pullProposalData();	
+			S.getPropertiesWithProposalJobStatus();	
 		}
 	};
 
@@ -34,9 +34,9 @@ app.controller('AdminProposalCtrl',['$state','AdminDataSrvc','$scope','AdminShar
 			ME.selectDataProvider.push({label:label,id:i});
 		}
 		ME.selectedProposal = ME.selectDataProvider[0];
-	}
+	};
 
-	$scope.$on('onPullProposalData', function() {
+	$scope.$on('onGetPropertiesWithProposalJobStatus', function() {
 		parseProposals();
     });
 
