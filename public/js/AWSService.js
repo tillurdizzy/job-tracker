@@ -62,7 +62,7 @@ app.service('serviceAWS',['$http','$q','$rootScope','SharedSrvc','LogInSrvc',fun
         console.log(error);
       } else {
         var contentArray = data.Contents;
-        for (var i=1; i<contentArray.length; i++){ 
+        for (var i=0; i<contentArray.length; i++){ 
           var fileKey = contentArray[i].Key; // includes path from bucket to and including file 
           var url =  "https://" + self.bucketName + ".s3.amazonaws.com/" + fileKey;
           var fileNameOnly = "";

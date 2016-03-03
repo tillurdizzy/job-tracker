@@ -18,7 +18,7 @@ app.controller('LoginCtrl',['$scope','$state','evoDb','SharedSrvc','ShingleSrvc'
     $scope.googleAuthResult = {};
     $scope.googleReturnEvent = {};
     $scope.googlePerson = {};
-    $scope.AWSSTS = {};
+    
 
     var serverAvailable = true;
     $scope.dataRefreshed = false;
@@ -50,17 +50,11 @@ app.controller('LoginCtrl',['$scope','$state','evoDb','SharedSrvc','ShingleSrvc'
     }
 
     $scope.continueBtn = function(){
-        if( $scope.loginObj.userType == "client"){
-            $state.transitionTo("approval");
-        }else if($scope.loginObj.userType == "admin"){
-            $state.transitionTo("admin");
+       if($scope.resultLength == 0){
+            $state.transitionTo("clients");
         }else{
-           if($scope.resultLength == 0){
-                $state.transitionTo("clients");
-            }else{
-                $state.transitionTo("jobs");
-            } 
-        }
+            $state.transitionTo("jobs");
+        } 
     };
 
     $scope.logOut = function(){

@@ -722,7 +722,7 @@ body {
   margin: 0;
   padding-left: 2%;
   padding-right: 2%;
-  height: 130px;
+  height: 80px;
   box-sizing: border-box;
   justify-content: space-between; }
 
@@ -732,6 +732,8 @@ body {
   flex-direction: column;
   justify-content: center;
   cursor: pointer; }
+  .headerLogo img {
+    height: 70px; }
 
 .header-right {
   height: 100%;
@@ -739,6 +741,8 @@ body {
   flex-direction: column;
   justify-content: center;
   cursor: pointer; }
+  .header-right img {
+    height: 60px; }
 
 .headerContact {
   height: 100%;
@@ -1105,7 +1109,7 @@ input[type="file"], textarea {
         vertical-align: middle; }
 
 .photoStep {
-  height: 150px;
+  height: 180px;
   width: 100%;
   background-color: #ECF0F1;
   padding: 10px;

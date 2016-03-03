@@ -1,69 +1,132 @@
 'use strict';
-app.controller('AdminLoginCtrl',['$scope','$state','$element','evoDb',function ($scope,$state,$element,evoDb) {
+app.controller('AdminLoginCtrl',['$scope','$state','AdminDataSrvc','SharedSrvc','ShingleSrvc','ShingleCalcs','LogInSrvc','serviceAWS',
+    function ($scope,$state,AdminDataSrvc,SharedSrvc,ShingleSrvc,ShingleCalcs,LogInSrvc,serviceAWS) {
 
-	var DB = evoDb;
-	
+    // Inject all these Services so they get initiated and are ready for use later
+    var DB = AdminDataSrvc;
+    var S = SharedSrvc;
+   
+    var L = LogInSrvc;
+    var A = serviceAWS;
+
     $scope.submissionInvalid = false;// form is filled out correctly
     $scope.requestSuccess=false;// database query; starts out false set to true on successful query
     $scope.loginSuccess = null;// user/pword match; starts out null, set false if user entry does not match, true if does
+    $scope.resultLength = 0;
+    $scope.displayName="";
+    $scope.loginObj={};
+    $scope.googleAuthResult = {};
+    $scope.googleReturnEvent = {};
+    $scope.googlePerson = {};
+    $scope.credentialsInvalid = false;
+    
 
-    $scope.displayname="";
+    $scope.dataRefreshed = false;
 
-    $element.bind("keydown keypress", function (event) {
-        console.log('keypress', event, event.which);
-        if(event.which === 38) { // up
-            $scope.submitLoginForm();
-        } else if (event.which === 40) { // down
-        } else {
-            return;
-        }
-        event.preventDefault();
+    $scope.$on('event:google-plus-signin-success', function (event, authResult) {
+        $scope.googleAuthResult = authResult;
+        $scope.googleReturnEvent = event;
+        makeApiCall();
+    });
+    $scope.$on('event:google-plus-signin-failure', function (event, authResult) {
+          // User has not authorized the G+ App!
+          console.log('Not signed into Google Plus.');
     });
 
-    $scope.continueBtn = function(){
-        $state.transitionTo("admin");
+    var makeApiCall = function(){
+        gapi.client.load('plus', 'v1').then(function() {
+          // Step 5: Assemble the API request
+          var request = gapi.client.plus.people.get({
+            'userId': 'me'
+          });
+          // Step 6: Execute the API request
+          request.then(function(resp) {
+           $scope.googlePerson = resp.result;
+           verifyGoogleSignIn();
+          }, function(reason) {
+            console.log('Error: ' + reason.result.error.message);
+          });
+        });
     }
 
-    $scope.submitLoginForm = function(){
-    	$scope.loginSuccess = null;
-        $scope.requestSuccess = false;
-        if(this.loginForm.$valid){
-            $scope.submissionInvalid = false;
-            var dataObj = new Object();
-            dataObj.name_user = this._username;
-            dataObj.pin = this._pin;
-
-            dataObj.name_user = "dsheives";
-            dataObj.pin = "9954";
-
-            var result = DB.queryLogIn(dataObj)
-                .then(function(result){
-                    if(result != false){
-                        $scope.loginSuccess=true;
-                        $scope.requestSuccess = true;
-                        $scope.clearForm();
-                        $scope.displayname = result[0].name_first + " " + result[0].name_last; 
-                    }else{
-                        $scope.loginSuccess = false;
-                    }
-                   
-                },function(error){
-                    $scope.loginSuccess = false;
-                    $scope.dataError();
-                });
+    $scope.continueBtn = function(){
+        if( $scope.loginObj.userType == "client"){
+            $state.transitionTo("approval");
+        }else if($scope.loginObj.userType == "admin"){
+            $state.transitionTo("admin");
         }else{
-            $scope.submissionInvalid = true;// triggers form errors to show 
-        };
+           if($scope.resultLength == 0){
+                $state.transitionTo("clients");
+            }else{
+                $state.transitionTo("jobs");
+            } 
+        }
     };
 
+    $scope.logOut = function(){
+        $scope.submissionInvalid = false;
+        $scope.requestSuccess=false;
+        $scope.loginSuccess = null;
+        $scope.displayName="";
+        S.logOut();
+        L.logOut();
+        DB.logOut();
+        $state.transitionTo("splash");
+    };
+
+    var verifyGoogleSignIn = function(){
+        var dataObj = new Object();
+        dataObj.googleID = $scope.googlePerson.id;
+        var result = DB.queryLogInGoogle(dataObj).then(function(result){
+            if(result != false){
+                // DB sets basic log in data for Shared Srvc and LogIn Srvc
+                $scope.loginObj = result[0];
+                onLogInSuccess();
+            }else{
+                $scope.loginSuccess = false;
+            }
+        },function(error){
+            $scope.loginSuccess = false;
+            $scope.dataError();
+        });
+    };
+
+    var onLogInSuccess = function(){
+        var userType = $scope.loginObj.userType;
+        $scope.dataRefreshed = false;
+        $scope.loginSuccess=true;
+        $scope.requestSuccess = true;// this var changes the stage
+        $scope.clearForm();
+        $scope.displayName = $scope.loginObj.name_first + " " + $scope.loginObj.name_last;
+        
+        if(userType == "admin"){
+            $scope.dataRefreshed = true;
+            A.initAWS($scope.googleAuthResult.id_token);
+        }else{
+            $scope.credentialsInvalid = true;
+        }
+    };
+
+    
     $scope.dataError = function(){
 
     };
 
-    $scope.clearForm = function(){
-        $scope._username="";
-        $scope._pin="";
+   
+    var checkForLogIn = function(){
+        S.keyValues = DB.getIdValues();
+        var login = S.loggedIn;
+        $scope.dataRefreshed = S.dataRefreshed;
+        if (login===true) {
+            $scope.loginSuccess=true;
+            $scope.requestSuccess = true;
+            $scope.displayName=S.managerName;
+        };
     };
-	
+
+    $scope.$watch('$viewContentLoaded', function() {
+       checkForLogIn();
+    });
+    
 
  }]);

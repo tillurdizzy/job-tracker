@@ -19,58 +19,37 @@
         <link rel="stylesheet" href="css/app.css?v=5"/>
         <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
     </head>
-    <body ng-app="MyApp">
-        <div id="site-wrapper" ng-controller="OffCanvasCtrl as Ctrl">
-            <div class="header" role="banner">
-                <div class="headerLogo">
-                    <object  type="image/svg+xml" data="img/WhiteEvolutionLogo.svg" width="200"></object>
+    <body ng-app="AdminApp">
+        <div id="site-wrapper" ng-controller="NavCtrl as Ctrl">
+            <div class="header-light" role="banner" >
+                <div class="headerLogo" ng-click="Ctrl.goSplash();">
+                    <img src="img/evo-logo-black.png" alt="">
                 </div>
                 <div></div>
-                <div class="headerContact">
-                    <img id="headerRight"  src="img/CallUsIcon.png" alt="1-713-729-7663">
+                <div class="header-right" ng-click="Ctrl.goReference();">
+                    <img src="img/GetEducatedIcon.png" alt="">
                 </div>
             </div>
-            <div class="underHead"></div>
-            <div class="top-bar" ng-show="Ctrl.L.showTopBar">
-                <button ng-click="Ctrl.toggleNav()"><i class="fa fa-bars fa-2x"></i></button>
-                <h1>Evolution Roofing Systems</h1>
+            <div>
+                <div ui-view class="view-container"></div>
             </div>
-           
-            <div id="site-canvas">
-                <div id="off-canvas-menu" ng-class="Ctrl.menuOpen ? 'off-canvas-show' : 'off-canvas-hide'">
-                    <div class="label"><h3>IDENTITY</h3></div>
-                    <div><button ng-click="Ctrl.menuClick('login')">Log In / Out</button></div>
-                    <div class="label"><h3>LISTS</h3></div>
-                    <div><button ng-click="Ctrl.menuClick('clients')">Client List</button></div>
-                    <div><button ng-click="Ctrl.menuClick('properties')">Property List</button></div>
-                    <div><button ng-click="Ctrl.menuClick('jobs')">Jobs List</button></div>
-                    <div class="label"><h3>INVENTORY</h3></div>
-                    <div><button>Coming soon...</button></div>
-                    <div class="label"><h3>REPORTS</h3></div>
-                    <div><button>Coming soon...</button></div>
-                </div>
-                <div>
-                    <div ui-view class="view-container"></div>
-                </div>
-                <!-- #site-canvas -->
-            </div>
-        <!-- #site-wrapper -->
+        <!-- #site-canvas -->
         </div>
    
    
     <!--APP-->
     <script src="https://sdk.amazonaws.com/js/aws-sdk-2.0.0-rc1.min.js"></script>
 
-    <script src="myApp.js?v=3"></script>
+    <script src="adminApp.js?v=3"></script>
 
     <!--Global Services-->
-    <script src="js/AWSService.jsv=3"></script>
+    <script src="js/AWSService.js?v=3"></script>
     <script src="js/data.srvc.js?v=3"></script>
     <script src="js/login.srvc.js?v=3"></script>
-    <script src="js/client.srvc.js?v=3"></script>
     <script src="js/inventory.srvc.js?v=3"></script>
     <script src="js/shared.srvc.js?v=3"></script>
-    <script src="js/pdf.srvc.js?v=1"></script>
+    <script src="views/proposals/shingle-calcs.srvc.js?v=3"></script>
+    <script src="views/proposals/shingle.srvc.js?v=3"></script>
 
      <!--Admin-->
     <script src="views/admin/adminData.srvc.js?v=2"></script>
@@ -81,41 +60,9 @@
     <script src="views/admin/purchaseItem.dir.js?v=1"></script>
 
     <!--Controllers-->
-    <script src="views/offcanvas.ctrl.js?v=1"></script>
-    <script src="views/login/login.ctrl.js?v=3"></script>
-    <script src="views/approval/approval.ctrl.js?v=2"></script>
+    <script src="views/login/admin-login.ctrl.js?v=3"></script>
     <script src="js/tabbedMenu.ctrl.js?v=3"></script>
-   
-    <!--Jobs-->
-    <script src="views/jobs/job-new.ctrl.js?v=3"></script>
-    <script src="views/jobs/jobs.ctrl.js?v=3"></script>
-    <script src="views/jobs/job.dir.js?v=3"></script>
-    <script src="views/jobs/jobItem.dir.js?v=3"></script>
-   
-    <!--Property-->
-    <script src="views/properties/property-new.ctrl.js?v=3"></script>
-    <script src="views/properties/properties.ctrl.js?v=3"></script>
-    <script src="views/properties/property-new-ind.ctrl.js?v=3"></script>
-    <script src="views/properties/properties.ctrl.js?v=3"></script>
-    <script src="views/properties/property.dir.js?v=3"></script>
-
-    <!--Clients-->
-    <script src="views/clients/client-new-view.ctrl.js?v=2"></script>
-    <script src="views/clients/client-new-org.ctrl.js?v=2"></script>
-    <script src="views/clients/client-new-ind.ctrl.js?v=2"></script>
-    <script src="views/clients/client.dir.js?v=2"></script>
-    <script src="views/clients/clients.ctrl.js?v=2"></script>
-
-    <!--Proposals-->
-    <script src="views/proposals/shingle-calcs.srvc.js?v=3"></script>
-    <script src="views/proposals/shingle.srvc.js?v=3"></script>
-    <script src="views/proposals/material.dir.js?v=3"></script>
-    <script src="views/proposals/proposalMaterial.dir.js?v=3"></script>
-    <script src="views/proposals/photoList.dir.js?v=3"></script>
-    <script src="views/proposals/proposal.ctrl.js?v=3"></script>
-    <script src="views/proposals/proposalMenu.ctrl.js?v=3"></script>
-    <script src="views/proposals/amazonS3.ctrl.js?v=3"></script>
-    <script src="views/proposals/fileUpload.dir.js?v=3"></script>
+    <script src="views/nav.ctrl.js?v=1"></script>
 
     <!--Inventory-->
     <script src="views/inventory/inventory.ctrl.js?v=1"></script>

@@ -27,7 +27,7 @@ body{
   margin:0;
   padding-left:2%;
   padding-right:2%;
-  height:130px;
+  height:80px;
   box-sizing:border-box;
   justify-content:space-between;
 }
@@ -38,6 +38,9 @@ body{
   flex-direction: column;
   justify-content: center;
   cursor:pointer;
+  img{
+    height:70px;
+  }
 }
 
 .header-right{
@@ -46,6 +49,9 @@ body{
   flex-direction: column;
   justify-content: center;
   cursor:pointer;
+  img{
+    height:60px;
+  }
 }
 
 .headerContact{
