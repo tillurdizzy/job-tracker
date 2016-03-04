@@ -93,12 +93,12 @@ input[type="checkbox"] + label span {
     height:30px;
     margin:-1px 4px 0 0;
     vertical-align:middle;
-    background:url(check_radio_sheet.png) left top no-repeat;
+    background:url(check_radio_sheet_red.png) left top no-repeat;
     cursor:pointer;
 }
 
 input[type="checkbox"]:checked + label span {
-    background:url(check_radio_sheet.png) -30px top no-repeat;
+    background:url(check_radio_sheet_red.png) -30px top no-repeat;
 }
 
 input[type="radio"] {
@@ -110,12 +110,12 @@ input[type="radio"] + label span {
     height:30px;
     margin:-1px 4px 0 0;
     vertical-align:middle;
-    background:url(check_radio_sheet.png) -60px top no-repeat;
+    background:url(check_radio_sheet_red.png) -60px top no-repeat;
     cursor:pointer;
 }
 
 input[type="radio"]:checked + label span {
-    background:url(check_radio_sheet.png) -90px top no-repeat;
+    background:url(check_radio_sheet_red.png) -90px top no-repeat;
 }
 
 .check-radio-container{

@@ -1,11 +1,10 @@
 'use strict';
-app.controller('LoginCtrl',['$scope','$state','evoDb','SharedSrvc','ShingleSrvc','ShingleCalcs','ClientSrvc','LogInSrvc','serviceAWS',
-    function ($scope,$state,evoDb,SharedSrvc,ShingleSrvc,ShingleCalcs,ClientSrvc,LogInSrvc,serviceAWS) {
+app.controller('LoginCtrl',['$scope','$state','evoDb','SharedSrvc','ShingleSrvc','ShingleCalcs','LogInSrvc','serviceAWS',
+    function ($scope,$state,evoDb,SharedSrvc,ShingleSrvc,ShingleCalcs,LogInSrvc,serviceAWS) {
 
     // Inject all these Services so they get initiated and are ready for use later
 	var DB = evoDb;
 	var S = SharedSrvc;
-    var C = ClientSrvc;
     var L = LogInSrvc;
     var A = serviceAWS;
 
@@ -130,7 +129,7 @@ app.controller('LoginCtrl',['$scope','$state','evoDb','SharedSrvc','ShingleSrvc'
         A.initAWS($scope.googleAuthResult.id_token);
     };
 
-    $scope.getClientJob = function(jobID){
+   /* $scope.getClientJob = function(jobID){
         var dataObj = {ID:jobID}
         var result = DB.getJobByID(dataObj)
         .then(function(result){// result could be and empty array OR boolean false OR array with data
@@ -176,7 +175,7 @@ app.controller('LoginCtrl',['$scope','$state','evoDb','SharedSrvc','ShingleSrvc'
         },function(error){
             $scope.dataError("LoginCtrl-getClientID()-2",result);
         });
-    };
+    };*/
 
     $scope.getManagerJobs = function(){
         var result = DB.getManagerJobs()

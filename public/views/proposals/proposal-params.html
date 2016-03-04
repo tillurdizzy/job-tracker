@@ -12,15 +12,7 @@
             <div class="job-item-unit">
                 <h3>Sqs</h3></div>
         </div>
-        <div class="job-items-container">
-            <div class="job-item-name">
-                <h4>Decking</h4></div>
-            <div class="job-item-input">
-                <input type="tel" name="qtyInput" ng-model="Ctrl.params.DECKNG">
-            </div>
-            <div class="job-item-unit">
-                <h3>Sqs</h3></div>
-        </div>
+        
         <div class="job-items-container">
             <div class="job-item-name">
                 <h4>Top Ridge</h4></div>
@@ -140,11 +132,15 @@
             <div class="job-item-unit">
                 <h3>Each</h3></div>
         </div>
+       
         <div class="job-items-container">
             <div class="job-item-name">
                 <h4>Carport</h4></div>
             <div class="job-item-input">
-                <input type="tel" name="qtyInput" ng-model="Ctrl.params.CARPRT">
+               <div class="check-radio-container" style="margin-bottom:10px;">
+                    <input type="checkbox" id="carCB" ng-model="Ctrl.params.CARPRT"></input>
+                    <label for="carCB"><span></span></label>
+                </div>
             </div>
             <div class="job-item-unit">
                 <h3>Each</h3></div>
@@ -153,7 +149,10 @@
             <div class="job-item-name">
                 <h4>Satellite</h4></div>
             <div class="job-item-input">
-                <input type="tel" name="qtyInput" ng-model="Ctrl.params.SATDSH">
+                <div class="check-radio-container" style="margin-bottom:10px;">
+                    <input type="checkbox" id="satCB" ng-model="Ctrl.params.SATDSH"></input>
+                    <label for="satCB"><span></span></label>
+                </div>
             </div>
             <div class="job-item-unit">
                 <h3>Each</h3></div>
@@ -165,7 +164,7 @@
                 <input type="tel" name="qtyInput" ng-model="Ctrl.params.PAINT">
             </div>
             <div class="job-item-unit">
-                <h3>Qrts.</h3></div>
+                <h3>Qts.</h3></div>
         </div>
         <div class="job-items-container">
             <div class="job-item-name">

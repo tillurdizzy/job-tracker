@@ -18,5 +18,17 @@ app.controller('NavCtrl',['$state',function ($state) {
 		$state.transitionTo("reference");
 	};
 
+	Me.goClients = function(){
+		$state.transitionTo("clients");
+	};
+
+	Me.goProperties = function(){
+		$state.transitionTo("properties");
+	};
+
+	Me.goJobs = function(){
+		$state.transitionTo("jobs");
+	};
+
 
  }]);

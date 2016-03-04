@@ -1,6 +1,10 @@
 <div ng-controller="NewJobCtrl as Ctrl" class="page">
-    <div class="page-title-bar">
-        <h2>New Job</h2></div>
+    <div class="page-title-bar" ng-controller="NavCtrl as NAV">
+        <button ng-click="NAV.goClients()" type="button" class="button">CLIENTS</button>
+        <button ng-click="NAV.goProperties()" type="button" class="button middle inactive">PROPERTIES</button>
+        <button ng-click="NAV.goJobs()" type="button" class="button">JOBS</button>
+    </div>
+    <h2>New Property</h2>
     <horiz-rule margintop="5px" marginbottom="10px"></horiz-rule>
     <div class="ez-form">
         <div class="ez-form-item" ng-show="Ctrl.inputField=='INFO'">
@@ -23,7 +27,7 @@
                     <h3>Select the Client for this Job</h3>
                 </div>
             </div>
-            <select ng-model="Ctrl.S1" ng-options="c.displayName for c in Ctrl.clientList" ng-change="Ctrl.filterProperties()">
+            <select ng-model="Ctrl.S1" ng-options="c.displayName for c in Ctrl.clientList" ng-change="Ctrl.filterProperties();">
             </select>
             <div class="page-nav">
                 <div class="page-nav-left">
@@ -42,7 +46,7 @@
             <div class="input-label">
                 <div><h3>Select the Property for this Job</h3></div>
             </div>
-            <select id="selectProperty" ng-model="Ctrl.S2" ng-options="c.name for c in Ctrl.propertyOptions">
+            <select ng-model="Ctrl.S2" ng-options="c.name for c in Ctrl.propertyOptions" ng-change="Ctrl.selectProperty();">
             </select>
             <div class="page-nav">
                 <div class="page-nav-left">

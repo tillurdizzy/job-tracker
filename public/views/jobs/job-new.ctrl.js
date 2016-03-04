@@ -16,7 +16,6 @@ app.controller('NewJobCtrl',['$scope','$state','evoDb','SharedSrvc',function ($s
     Me.T1;
     Me.T2;
     
-
     Me.submitS1 = function(){
         Me.inputMsg = "";
         Me.isError = false;
@@ -28,16 +27,17 @@ app.controller('NewJobCtrl',['$scope','$state','evoDb','SharedSrvc',function ($s
             Me.inputField="S2";
             Me.inputMsg = "Field 2 of " + numFields;
             S.selectedClientObj = Me.S1;
-
         };
    };
 
    Me.submitS2 = function(){
         Me.inputMsg = "";
         Me.isError = false;
-        if(Me.S2==""){//company/client
+        var isDupe = S.jobExists(Me.S1.PRIMARY_ID,Me.S2.PRIMARY_ID);
+        
+        if(isDupe){
             Me.isError = true;
-            Me.inputMsg = "This field cannot be blank.";
+            Me.inputMsg = "This Job already exists.";
         }else{
             Me.T1 = "Prospect";
             var d = new Date();
@@ -48,6 +48,7 @@ app.controller('NewJobCtrl',['$scope','$state','evoDb','SharedSrvc',function ($s
         };
    };
 
+
     // When user selects Client, filter properties for only tha client
     Me.filterProperties = function(){
         Me.propertyOptions = [];
@@ -56,7 +57,12 @@ app.controller('NewJobCtrl',['$scope','$state','evoDb','SharedSrvc',function ($s
                 Me.propertyOptions.push(Me.propertyList[i]);
             }
         };
-         Me.S2 = Me.propertyOptions[0];
+        Me.S2 = Me.propertyOptions[0];
+    };
+
+    Me.selectProperty = function(){
+        Me.inputMsg = "";
+        Me.isError = false;
     };
 
     Me.resetForm = function(){

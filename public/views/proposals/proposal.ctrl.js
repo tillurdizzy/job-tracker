@@ -1,10 +1,9 @@
 'use strict';
 
-app.controller('ProposalCtrl', ['$state','$scope','evoDb','SharedSrvc','ShingleSrvc','ShingleCalcs','PdfSrvc', function($state,$scope,evoDb,SharedSrvc,ShingleSrvc,ShingleCalcs,PdfSrvc) {
+app.controller('ProposalCtrl', ['$state','$scope','evoDb','SharedSrvc','ShingleSrvc','ShingleCalcs',function($state,$scope,evoDb,SharedSrvc,ShingleSrvc,ShingleCalcs) {
     var DB = evoDb;
     var ME = this;
     var S = SharedSrvc;
-    var PDF = PdfSrvc;
     ME.SRVC = ShingleSrvc;
     var CALCS = ShingleCalcs;
 
@@ -29,27 +28,27 @@ app.controller('ProposalCtrl', ['$state','$scope','evoDb','SharedSrvc','ShingleS
     ME.specialCost = "";
 
     ME.params = {
-        jobID:0,
-        FIELD:0,
-        TOPRDG:0,
-        RKERDG:0,
-        PRMITR:0,
-        VALLEY:0,
-        LPIPE1:0,
-        LPIPE2:0,
-        LPIPE3:0,
-        LPIPE4:0,
-        JKVNT8:0,
-        FLHSH8:0,
-        TURBNS:0,
-        PWRVNT:0,
-        AIRHWK:0,
-        SLRVNT:0,
-        DECKNG:0,
-        PAINT:0,
-        CAULK:0,
-        CARPRT:0,
-        SATDSH:0};
+        jobID:"",
+        FIELD:"",
+        TOPRDG:"",
+        RKERDG:"",
+        PRMITR:"",
+        VALLEY:"",
+        LPIPE1:"",
+        LPIPE2:"",
+        LPIPE3:"",
+        LPIPE4:"",
+        JKVNT8:"",
+        FLHSH8:"",
+        TURBNS:"",
+        PWRVNT:"",
+        AIRHWK:"",
+        SLRVNT:"",
+        DECKNG:"",
+        PAINT:"2",
+        CAULK:"2",
+        CARPRT:"",
+        SATDSH:""};
    
 
     //pricing
@@ -144,6 +143,7 @@ app.controller('ProposalCtrl', ['$state','$scope','evoDb','SharedSrvc','ShingleS
 
     var setParams = function(dataObj){
         ME.params = dataObj;
+        
     };
 
     var getSpecial = function(){

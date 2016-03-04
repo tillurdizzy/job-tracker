@@ -6,7 +6,6 @@ class jobParamsVO{
 	var $TOPRDG;
 	var $RKERDG;
 	var $PRMITR;
-	var $PITCH;
 	var $VALLEY;
 	var $LPIPE1;
 	var $LPIPE2;
@@ -15,7 +14,6 @@ class jobParamsVO{
 	var $JKVNT8;
 	var $FLHSH8;
 	var $TURBNS;
-	var $STATIC;
 	var $PWRVNT;
 	var $AIRHWK;
 	var $SLRVNT;

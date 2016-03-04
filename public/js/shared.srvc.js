@@ -56,6 +56,16 @@ app.service('SharedSrvc',['$rootScope',function sharedVars($rootScope){
 		self.managerProperties = [];
 	};
 
+	self.jobExists = function(ClientID,PropID){
+		var rtn = false;
+		for (var i = 0; i < self.managerJobs.length; i++) {
+			if(self.managerJobs[i].property == PropID && self.managerJobs[i].client == ClientID){
+				rtn = true;
+			}
+		}
+		return rtn;
+	};
+
 
 	//Called from their respective Summary Tables
 	self.selectJob = function(obj){

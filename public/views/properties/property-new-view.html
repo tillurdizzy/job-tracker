@@ -1,30 +1,31 @@
 <div ng-controller="NewPropertyViewCtrl as VIEW" class="page">
-    <div class="page-title">
-        <h2>New Property</h2>
+    <div class="page-title-bar" ng-controller="NavCtrl as NAV">
+        <button ng-click="NAV.goClients()" type="button" class="button">CLIENTS</button>
+        <button ng-click="NAV.goProperties()" type="button" class="button middle inactive">PROPERTIES</button>
+        <button ng-click="NAV.goJobs()" type="button" class="button">JOBS</button>
     </div>
+    <h2>New Property</h2>
     <horiz-rule margintop="5px" marginbottom="10px"></horiz-rule>
     <div ui-view>
-       
-            <div class="ez-form-item">
-                <h3>Choose the Client / Owner for this Property</h3>
-                <select ng-model="VIEW.selectedClient" ng-options="c.displayName for c in VIEW.clientList"></select>
-                <div class="page-nav">
-                    <div class="page-nav-left">
-                    </div>
-                    <div ng-class="VIEW.isError ? 'input-error' : 'input-msg'">
-                        {{VIEW.inputMsg}}
-                    </div>
-                    <div class="page-nav-right">
-                        <i ng-click="VIEW.submitClient();" class="fa fa-arrow-circle-right fa-3x"></i>
-                    </div>
+        <div class="ez-form-item">
+            <h3>Choose the Client / Owner for this Property</h3>
+            <select ng-model="VIEW.selectedClient" ng-options="c.displayName for c in VIEW.clientList"></select>
+            <div class="page-nav">
+                <div class="page-nav-left">
+                </div>
+                <div ng-class="VIEW.isError ? 'input-error' : 'input-msg'">
+                    {{VIEW.inputMsg}}
+                </div>
+                <div class="page-nav-right">
+                    <i ng-click="VIEW.submitClient();" class="fa fa-arrow-circle-right fa-3x"></i>
                 </div>
             </div>
-            <div class="block-outline-red">
-                <p>
-                    If the Client for this Property is not listed,
-                    <a ui-sref="addNewClient">Add a New Client</a>, then return here.
-                </p>
-            </div>
-      
+        </div>
+        <div class="block-outline-red">
+            <p>
+                If the Client for this Property is not listed,
+                <a ui-sref="addNewClient">Add a New Client</a>, then return here.
+            </p>
+        </div>
     </div>
 </div>
