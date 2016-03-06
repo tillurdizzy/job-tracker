@@ -22,7 +22,6 @@ while ($row = mysqli_fetch_object($result)) {
 	$oneVO->TOPRDG = $row->TOPRDG;
 	$oneVO->RKERDG = $row->RKERDG;
 	$oneVO->PRMITR = $row->PRMITR;
-	$oneVO->LOWSLP = $row->LOWSLP;
 	$oneVO->VALLEY = $row->VALLEY;
 	$oneVO->LPIPE1 = $row->LPIPE1;
 	$oneVO->LPIPE2 = $row->LPIPE2;

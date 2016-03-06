@@ -1,0 +1,225 @@
+<div ng-controller="AdminPropPricing as ChildCtrl">
+    <div class="section-header">
+        <h2>Shingles</h2>
+    </div>
+    <div>
+        <table st-table="ChildCtrl.propertyInputParams" class="table table-striped" style="width:100%;">
+            <thead>
+                <tr>
+                	<th>Include</th>
+                    <th>Item</th>
+                    <th>Price</th>
+                    <th>Unit</th>
+                    <th>Qty</th>
+                    <td>Pkg</td>
+                    <td>Margin</td>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr  ng-repeat="row in ChildCtrl.materialPricingDP.Shingles">
+                    <td>
+						<div class="check-radio-container">
+							<input type="checkbox" id="{{row.Sort}}" ng-model="Ctrl[row.Code]"></input>
+							<label for="{{row.Sort}}"><span></span></label>
+						</div>
+
+                    </td>
+                    <td>{{row.Item}}</td>
+                    <td>{{row.ItemPrice | currency:"$":2}}</td>
+                    <td>{{row.Unit}}</td>
+                    <td>{{row.Qty}}</td>
+                    <td>{{row.Usage}}</td>
+                    <td>{{row.Overage}}</td>
+                    <td>{{row.Total | currency:"$":2}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="section-header">
+        <h2>Ventilation</h2>
+    </div>
+    <div>
+        <table st-table="ChildCtrl.propertyInputParams" class="table table-striped" style="width:100%;">
+            <thead>
+                <tr>
+                	<th>Include</th>
+                    <th>Item</th>
+                    <th>Price</th>
+                    <th>Unit</th>
+                    <th>Qty</th>
+                    <td>Pkg</td>
+                    <td>Margin</td>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr  ng-repeat="row in ChildCtrl.materialPricingDP.Vents">
+                    <td>
+						<div class="check-radio-container">
+							<input type="checkbox" id="{{row.Sort}}" ng-model="Ctrl[row.Code]"></input>
+							<label for="{{row.Sort}}"><span></span></label>
+						</div>
+
+                    </td>
+                    <td>{{row.Item}}</td>
+                    <td>{{row.ItemPrice | currency:"$":2}}</td>
+                    <td>{{row.Unit}}</td>
+                    <td>{{row.Qty}}</td>
+                    <td>{{row.Usage}}</td>
+                    <td>{{row.Overage}}</td>
+                    <td>{{row.Total | currency:"$":2}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="section-header">
+        <h2>Edge and Flashing</h2>
+    </div>
+    <div>
+        <table st-table="ChildCtrl.propertyInputParams" class="table table-striped" style="width:100%;">
+            <thead>
+                <tr>
+                	<th>Include</th>
+                    <th>Item</th>
+                    <th>Price</th>
+                    <th>Unit</th>
+                    <th>Qty</th>
+                    <td>Pkg</td>
+                    <td>Margin</td>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr  ng-repeat="row in ChildCtrl.materialPricingDP.Edge">
+                    <td>
+						<div class="check-radio-container">
+							<input type="checkbox" id="{{row.Sort}}" ng-model="Ctrl[row.Code]"></input>
+							<label for="{{row.Sort}}"><span></span></label>
+						</div>
+
+                    </td>
+                    <td>{{row.Item}}</td>
+                    <td>{{row.ItemPrice | currency:"$":2}}</td>
+                    <td>{{row.Unit}}</td>
+                    <td>{{row.Qty}}</td>
+                    <td>{{row.Usage}}</td>
+                    <td>{{row.Overage}}</td>
+                    <td>{{row.Total | currency:"$":2}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="section-header">
+        <h2>Roof Caps and Other Accessories</h2>
+    </div>
+    <div>
+        <table st-table="ChildCtrl.propertyInputParams" class="table table-striped" style="width:100%;">
+            <thead>
+                <tr>
+                	<th>Include</th>
+                    <th>Item</th>
+                    <th>Price</th>
+                    <th>Unit</th>
+                    <th>Qty</th>
+                    <td>Pkg</td>
+                    <td>Margin</td>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr  ng-repeat="row in ChildCtrl.materialPricingDP.Caps">
+                    <td>
+						<div class="check-radio-container">
+							<input type="checkbox" id="{{row.Sort}}" ng-model="Ctrl[row.Code]"></input>
+							<label for="{{row.Sort}}"><span></span></label>
+						</div>
+
+                    </td>
+                    <td>{{row.Item}}</td>
+                    <td>{{row.ItemPrice | currency:"$":2}}</td>
+                    <td>{{row.Unit}}</td>
+                    <td>{{row.Qty}}</td>
+                    <td>{{row.Usage}}</td>
+                    <td>{{row.Overage}}</td>
+                    <td>{{row.Total | currency:"$":2}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="section-header">
+        <h2>Low Slope</h2>
+    </div>
+    <div>
+        <table st-table="ChildCtrl.propertyInputParams" class="table table-striped" style="width:100%;">
+            <thead>
+                <tr>
+                	<th>Include</th>
+                    <th>Item</th>
+                    <th>Price</th>
+                    <th>Unit</th>
+                    <th>Qty</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr  ng-repeat="row in ChildCtrl.materialPricingDP.Flat">
+                    <td>
+						<div class="check-radio-container">
+							<input type="checkbox" id="{{row.Sort}}" ng-model="Ctrl[row.Code]"></input>
+							<label for="{{row.Sort}}"><span></span></label>
+						</div>
+
+                    </td>
+                    <td>{{row.Item}}</td>
+                    <td>{{row.ItemPrice | currency:"$":2}}</td>
+                    <td>{{row.Unit}}</td>
+                    <td>{{row.Qty}}</td>
+                    <td>{{row.Usage}}</td>
+                    <td>{{row.Overage}}</td>
+                    <td>{{row.Total | currency:"$":2}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="section-header">
+        <h2>Other Supplies</h2>
+    </div>
+    <div>
+        <table st-table="ChildCtrl.propertyInputParams" class="table table-striped" style="width:100%;">
+            <thead>
+                <tr>
+                	<th>Include</th>
+                    <th>Item</th>
+                    <th>Price</th>
+                    <th>Unit</th>
+                    <th>Qty</th>
+                    <td>Pkg</td>
+                    <td>Margin</td>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr  ng-repeat="row in ChildCtrl.materialPricingDP.Other">
+                    <td>
+						<div class="check-radio-container">
+							<input type="checkbox" id="{{row.Sort}}" ng-model="Ctrl[row.Code]"></input>
+							<label for="{{row.Sort}}"><span></span></label>
+						</div>
+
+                    </td>
+                    <td>{{row.Item}}</td>
+                    <td>{{row.ItemPrice | currency:"$":2}}</td>
+                    <td>{{row.Unit}}</td>
+                    <td>{{row.Qty}}</td>
+                    <td>{{row.Usage}}</td>
+                    <td>{{row.Overage}}</td>
+                    <td>{{row.Total | currency:"$":2}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="section-header">
+        <h2>Labor</h2>
+    </div>
+</div>

@@ -6,17 +6,15 @@ class jobParamsVO{
 	var $TOPRDG;
 	var $RKERDG;
 	var $PRMITR;
-	var $PITCH;
-	var $MLTILV;// Multilevel
 	var $VALLEY;
-	var $LBF1;
-	var $LBF2;
-	var $LBF3;
-	var $LBF4;
+	var $LOWSLP;
+	var $LPIPE1;
+	var $LPIPE2;
+	var $LPIPE3;
+	var $LPIPE4;
 	var $JKVNT8;
 	var $FLHSH8;
 	var $TURBNS;
-	var $STATIC;
 	var $PWRVNT;
 	var $AIRHWK;
 	var $SLRVNT;
@@ -25,5 +23,13 @@ class jobParamsVO{
 	var $CAULK;
 	var $CARPRT;
 	var $SATDSH;
+
+	//Alias... $TOPRDG + $RKERDG;
+	var $RIDGETOTAL;
+
+	// Need??
+	// RAKE WALL
+	// LOW SLOPE
+	
 }
 ?>

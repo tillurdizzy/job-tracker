@@ -1,10 +1,10 @@
 'use strict';
-app.controller('AdminLoginCtrl',['$scope','$state','AdminDataSrvc','SharedSrvc','ShingleSrvc','ShingleCalcs','LogInSrvc','serviceAWS',
-    function ($scope,$state,AdminDataSrvc,SharedSrvc,ShingleSrvc,ShingleCalcs,LogInSrvc,serviceAWS) {
+app.controller('AdminLoginCtrl',['$scope','$state','AdminDataSrvc','AdminSharedSrvc','LogInSrvc','serviceAWS',
+    function ($scope,$state,AdminDataSrvc,AdminSharedSrvc,LogInSrvc,serviceAWS) {
 
     // Inject all these Services so they get initiated and are ready for use later
     var DB = AdminDataSrvc;
-    var S = SharedSrvc;
+    var S = AdminSharedSrvc;
     var L = LogInSrvc;
     var A = serviceAWS;
 

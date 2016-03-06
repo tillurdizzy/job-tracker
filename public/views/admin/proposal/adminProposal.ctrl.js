@@ -9,9 +9,7 @@ app.controller('AdminProposalCtrl',['$state','AdminDataSrvc','$scope','AdminShar
 	ME.selectDataProvider = [];
 	
 	ME.selectProposal = function(){
-		if(ME.selectedProposal.id > -1){
-			S.selectProposal(ME.selectedProposal.id);
-		}
+		S.selectProposal(ME.selectedProposal.id);
 	};
 
 	var init = function(){
