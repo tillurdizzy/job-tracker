@@ -1,6 +1,6 @@
 'use strict';
-app.controller('LoginCtrl',['$scope','$state','evoDb','SharedSrvc','ShingleSrvc','ShingleCalcs','LogInSrvc','serviceAWS',
-    function ($scope,$state,evoDb,SharedSrvc,ShingleSrvc,ShingleCalcs,LogInSrvc,serviceAWS) {
+app.controller('LoginCtrl',['$scope','$state','evoDb','SharedSrvc','LogInSrvc','serviceAWS',
+    function ($scope,$state,evoDb,SharedSrvc,LogInSrvc,serviceAWS) {
 
     // Inject all these Services so they get initiated and are ready for use later
 	var DB = evoDb;

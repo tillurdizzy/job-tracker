@@ -7,34 +7,16 @@
   
  	ME.alerts = [];
   
-  ME.selectedPhoto = null;;
-  ME.photoCategory = ME.S.photoCats[0];
-  ME.photoCaption = "";
+  ME.selectedPhoto = null;
   ME.jobPhotos = [];
 
-  ME.stepOne = true;
-  ME.stepTwo = false;
-  ME.stepThree = false;
-  ME.stepFour = false;
-
-  ME.selectCat = function(){
-    photoFormAllFalse();
-    ME.stepTwo = true;
-  }
-  ME.submitCaption = function(){
-    photoFormAllFalse();
-    ME.stepThree = true;
-  }
-
+  ME.userAction = {selectFile:true,uploadFile:false};
+  
   ME.resetPhotoUpload = function(){
-    ME.stepOne = true;
-    ME.stepTwo = false;
-    ME.stepThree = false;
-    ME.stepFour = false;
-    ME.selectedPhoto = null;;
-    ME.photoCategory = ME.S.photoCats[0];
-    ME.photoCaption = "";
-  }
+    ME.userAction.selectFile = true;
+    ME.userAction.uploadFile = false;
+    ME.selectedPhoto = null;
+  };
 
  	ME.selectImage = function(image){
  		$window.open(image.path);
@@ -49,10 +31,14 @@
   };
 
   ME.onSelectFile = function(files){
-    photoFormAllFalse();
     ME.selectedPhoto = files;
-    ME.stepFour = true;
+    ME.userAction.selectFile = false;
+    ME.userAction.uploadFile = true;
     $scope.$digest();
+    serviceAWS.uploadBucketItems(ME.selectedPhoto).then(function(item){
+      var x = item;
+      ME.resetPhotoUpload();
+    });
   };
 
 	ME.uploadToBucket = function() {
@@ -73,16 +59,8 @@
 
     serviceAWS.uploadBucketItems(ME.selectedPhoto).then(function(item){
       var x = item;
-
       ME.resetPhotoUpload();
     });
-  };
-
-  var photoFormAllFalse = function(){
-    ME.stepOne = false;
-    ME.stepTwo = false;
-    ME.stepThree = false;
-    ME.stepFour = false;
   };
 
   

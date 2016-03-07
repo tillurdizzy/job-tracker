@@ -1,11 +1,11 @@
 'use strict';
 
-app.controller('ProposalCtrl', ['$state','$scope','evoDb','SharedSrvc','ShingleSrvc','ShingleCalcs',function($state,$scope,evoDb,SharedSrvc,ShingleSrvc,ShingleCalcs) {
+app.controller('ProposalCtrl', ['$state','$scope','evoDb','SharedSrvc','ShingleSrvc',function($state,$scope,evoDb,SharedSrvc,ShingleSrvc) {
     var DB = evoDb;
     var ME = this;
     var S = SharedSrvc;
     ME.SRVC = ShingleSrvc;
-    var CALCS = ShingleCalcs;
+    //var CALCS = ShingleCalcs;
 
     ME.controllerName = "ProposalCtrl";
     ME.managerID = DB.managerID;
@@ -45,6 +45,7 @@ app.controller('ProposalCtrl', ['$state','$scope','evoDb','SharedSrvc','ShingleS
         AIRHWK:"",
         SLRVNT:"",
         DECKNG:"",
+        LOWSLOPE:"",
         PAINT:"2",
         CAULK:"2",
         CARPRT:"",
@@ -52,7 +53,7 @@ app.controller('ProposalCtrl', ['$state','$scope','evoDb','SharedSrvc','ShingleS
    
 
     //pricing
-    ME.materialsCost = CALCS.runningTotal;
+    ME.materialsCost = "";
     ME.laborCost = "0.00";
     ME.totalCost = "0.00";
 
@@ -68,7 +69,7 @@ app.controller('ProposalCtrl', ['$state','$scope','evoDb','SharedSrvc','ShingleS
     ME.printSummary = function(){
         var dataObj = {};
         dataObj.materialsCost = ME.materialsCost;
-        PDF.newPDF(dataObj);
+        //PDF.newPDF(dataObj);
     };
 
     ME.goClients = function(){

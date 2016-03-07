@@ -31,7 +31,7 @@ app.service('AdminSharedSrvc',['$rootScope','AdminDataSrvc','underscore',functio
 	var getJobParameters = function() {
         var jobData = DB.getJobParameters(self.proposalUnderReview.jobID).then(function(jobData) {
             if (jobData != false) { 
-                setParams(jobData[0]);
+                formatParams(jobData[0]);
             } else {
                alert("FALSE returned for DB.getJobParameters() at AdminSharedSrvc >>> getJobParameters()");
             }
@@ -42,7 +42,7 @@ app.service('AdminSharedSrvc',['$rootScope','AdminDataSrvc','underscore',functio
 
     // Called from getJobParameters() after successful result from DB
     // Format, set to var, and broadcast 
-    var setParams = function(dataObj){
+    var formatParams = function(dataObj){
         underscore.each(dataObj,function(value, key, obj){
             if(value == "" || value == null){
                 obj[key] = "-";
@@ -59,10 +59,10 @@ app.service('AdminSharedSrvc',['$rootScope','AdminDataSrvc','underscore',functio
         self.proposalUnderReview.propertyInputParams = dataObj;
         $rootScope.$broadcast('onRefreshParamsData', dataObj);
 
-        calculatePrices();
+        formatMaterials();
     };
 
-    var calculatePrices = function() {
+    var formatMaterials = function() {
        for (var i = 0; i < self.materialsList.length; i++) {
             var itemPrice = parseInt(self.materialsList[i].ItemPrice);
             var usage = parseInt(self.materialsList[i].Usage);
@@ -73,7 +73,16 @@ app.service('AdminSharedSrvc',['$rootScope','AdminDataSrvc','underscore',functio
 
             self.materialsList[i].Qty = parameterVal;
             self.materialsList[i].Total = total;
-        } 
+
+            var checked = self.materialsList[i].Default;
+            if(checked === "true"){
+                self.materialsList[i].Default = true;
+            }else{
+                 self.materialsList[i].Default = false;
+            }
+        }
+
+
 
         categorizeMaterials();
     };

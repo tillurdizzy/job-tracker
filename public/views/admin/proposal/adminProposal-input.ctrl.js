@@ -18,6 +18,7 @@ app.controller('AdminPropInput',['$state','$scope','AdminSharedSrvc','AdminDataS
     	ME.propertyInputParams.FIELD = "-";
     	ME.propertyInputParams.FLHSH8 = "-";
     	ME.propertyInputParams.JKVNT8 = "-";
+        ME.propertyInputParams.LOWSLOPE = "-";
     	ME.propertyInputParams.LPIPE1 = "-";
     	ME.propertyInputParams.LPIPE2 = "-";
     	ME.propertyInputParams.LPIPE3 = "-";

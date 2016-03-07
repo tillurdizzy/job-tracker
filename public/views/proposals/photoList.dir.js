@@ -7,7 +7,7 @@ app.directive('photoList',[function () {
         category:'@'
       },
       
-      templateUrl:'views/proposals/photoList.tpl.html',
+      templateUrl:'views/proposals/photoListThumbs.tpl.html',
       link: function(scope, elm, attrs) {
       }
 

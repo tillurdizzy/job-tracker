@@ -1109,7 +1109,7 @@ input[type="file"], textarea {
         vertical-align: middle; }
 
 .photoStep {
-  height: 180px;
+  height: 100px;
   width: 100%;
   background-color: #ECF0F1;
   padding: 10px;
@@ -1147,9 +1147,12 @@ div.upload input {
   overflow: hidden !important; }
 
 .photoListContainer {
-  max-width: 800px; }
+  display: flex;
+  max-width: 800px;
+  flex-wrap: wrap;
+  justify-content: space-between; }
   .photoListContainer .photoListItem img {
-    max-width: 800px; }
+    max-width: 350px; }
   .photoListContainer .photoListItem .photo-caption {
     margin: 0;
     padding: 0;
@@ -1535,8 +1538,7 @@ a:link {
 #site-wrapper {
   position: relative;
   overflow: hidden;
-  width: 100%;
-  height: 5000px; }
+  width: 100%; }
 
 #site-canvas {
   width: 100%;

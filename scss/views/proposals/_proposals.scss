@@ -171,7 +171,7 @@ $material-height:1em;
 
 .photoStep{
 
-	height:180px;
+	height:100px;
 	width:100%;
 	background-color: $clouds-grey;
 	padding:10px;
@@ -218,11 +218,14 @@ div.upload input {
 }
 
 .photoListContainer{
+	display:flex;
 	max-width: 800px;
+	flex-wrap:wrap;
+	justify-content:space-between;
 
 	.photoListItem{
 		img{
-			max-width: 800px;
+			max-width: 350px;
 		}
 
 		.photo-caption{
