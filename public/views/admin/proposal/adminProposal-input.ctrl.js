@@ -47,7 +47,7 @@ app.controller('AdminPropInput',['$state','$scope','AdminSharedSrvc','AdminDataS
     });
 
     $scope.$watch('$viewContentLoaded', function() {
-       console.log("AdminPropInputCtrl >>> $viewContentLoaded");
+       console.log("AdminPropINPUTCtrl >>> $viewContentLoaded");
        ME.propertyInputParams = S.proposalUnderReview.propertyInputParams;
     });
 	

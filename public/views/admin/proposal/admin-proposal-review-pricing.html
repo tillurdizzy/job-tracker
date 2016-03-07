@@ -1,6 +1,6 @@
 <div ng-controller="AdminPropPricing as ChildCtrl">
-    <div>
-        <h2>TOTAL:{{ChildCtrl.GrandTotal | currency:"$":2}}</h2>
+    <div style="margin-top: .5rem;">
+        <h2>Grand Total: {{ChildCtrl.GrandTotal | currency:"$":2}}</h2>
     </div>
     <div class="section-header">
         <h2>Shingles</h2>
@@ -39,9 +39,15 @@
             </tbody>
         </table>
     </div>
+
+    <div class="pricingCategoryTotal">
+    	<h2>Total Shingles: {{ChildCtrl.ShingleTotal | currency:"$":2}}</h2>
+    </div>
+
     <div class="section-header">
         <h2>Ventilation</h2>
     </div>
+
     <div>
         <table st-table="ChildCtrl.propertyInputParams" class="table table-striped" style="width:100%;">
             <thead>
@@ -75,6 +81,9 @@
                 </tr>
             </tbody>
         </table>
+    </div>
+    <div class="pricingCategoryTotal">
+    	<h2>Total Ventilation: {{ChildCtrl.VentsTotal | currency:"$":2}}</h2>
     </div>
     <div class="section-header">
         <h2>Edge and Flashing</h2>
@@ -113,6 +122,9 @@
             </tbody>
         </table>
     </div>
+    <div class="pricingCategoryTotal">
+    	<h2>Total Edge: {{ChildCtrl.EdgeTotal | currency:"$":2}}</h2>
+    </div>
     <div class="section-header">
         <h2>Roof Caps and Other Accessories</h2>
     </div>
@@ -150,6 +162,9 @@
             </tbody>
         </table>
     </div>
+    <div class="pricingCategoryTotal">
+    	<h2>Total Roof Caps: {{ChildCtrl.CapsTotal | currency:"$":2}}</h2>
+    </div>
     <div class="section-header">
         <h2>Low Slope</h2>
     </div>
@@ -184,6 +199,9 @@
                 </tr>
             </tbody>
         </table>
+    </div>
+    <div class="pricingCategoryTotal">
+    	<h2>Total Flat: {{ChildCtrl.FlatTotal | currency:"$":2}}</h2>
     </div>
     <div class="section-header">
         <h2>Other Supplies</h2>
@@ -221,6 +239,9 @@
                 </tr>
             </tbody>
         </table>
+    </div>
+    <div class="pricingCategoryTotal">
+    	<h2>Total Other: {{ChildCtrl.OtherTotal | currency:"$":2}}</h2>
     </div>
     <div class="section-header">
         <h2>Labor</h2>

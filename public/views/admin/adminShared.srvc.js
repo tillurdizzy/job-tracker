@@ -6,14 +6,15 @@ app.service('AdminSharedSrvc',['$rootScope','AdminDataSrvc','underscore',functio
 	var DB = AdminDataSrvc;
 	
 	var jobsList = [];
+    self.salesReps=[];
 	self.openProposals = [];// propertyVO's related to jobs that are in Proposal State
 	self.proposalUnderReview = {};
     self.materialPricing_dp = {Shingles:[],Vents:[],Edge:[],Caps:[],Flat:[],Other:[]};  // Data Provider for Pricing Tab
 
 	self.selectProposal = function(ndx){
+        var rtnRepName = "";
         if(ndx == -1){
-            $rootScope.$broadcast('onResetProposalData');
-            self.proposalUnderReview = {};
+           self.resetProposalData();
         }else{
             self.proposalUnderReview = self.openProposals[ndx];
             // get the Job ID
@@ -22,9 +23,16 @@ app.service('AdminSharedSrvc',['$rootScope','AdminDataSrvc','underscore',functio
                     self.proposalUnderReview.jobID = jobsList[i].PRIMARY_ID;
                 }
             }
+            rtnRepName = self.returnSalesRep(self.proposalUnderReview.manager);
             getJobParameters();
         }
+        return rtnRepName;
 	};
+
+    self.resetProposalData = function(){
+        $rootScope.$broadcast('onResetProposalData');
+        self.proposalUnderReview = {};
+    };
 
     // Data for the "Input" Tab on Proposal Review Page
     // Continues after success to calculate pricing and supplies
@@ -69,6 +77,10 @@ app.service('AdminSharedSrvc',['$rootScope','AdminDataSrvc','underscore',functio
             var over = parseInt(self.materialsList[i].Overage);
             var paramKey = self.materialsList[i].InputParam;
             var parameterVal = parseInt(self.proposalUnderReview.propertyInputParams[paramKey]);
+            var isNum = isNaN(parameterVal);
+            if(isNum){
+                parameterVal = 0;
+            };
             var total = (itemPrice * parameterVal / usage) * over;
 
             self.materialsList[i].Qty = parameterVal;
@@ -81,9 +93,6 @@ app.service('AdminSharedSrvc',['$rootScope','AdminDataSrvc','underscore',functio
                  self.materialsList[i].Default = false;
             }
         }
-
-
-
         categorizeMaterials();
     };
 
@@ -173,6 +182,17 @@ app.service('AdminSharedSrvc',['$rootScope','AdminDataSrvc','underscore',functio
         }
     };
 
+    self.returnSalesRep = function(id){
+        var rtn ="";
+        for (var i = 0; i < self.salesReps.length; i++) {
+            if(self.salesReps[i].PRIMARY_ID === id){
+                rtn = self.salesReps[i].name_first + " " + self.salesReps[i].name_last;
+                continue;
+            }
+        }
+        return rtn;
+    };
+
     var getMaterialsList = function() {
         var query = DB.queryDB("views/admin/http/getMaterialsShingle.php").then(function(result) {
             if (result != false) { 
@@ -187,7 +207,20 @@ app.service('AdminSharedSrvc',['$rootScope','AdminDataSrvc','underscore',functio
         });
     };
 
+    var getSalesReps = function() {
+        var query = DB.queryDB("views/admin/http/getSalesReps.php").then(function(result) {
+            if (result != false) { 
+               self.salesReps = result;
+            } else {
+               alert("FALSE returned from DB at AdminSharedSrvc >>> getSalesReps()");
+            }
+        }, function(error) {
+            alert("ERROR returned returned from DB at AdminSharedSrvc >>> getSalesReps()");
+        });
+    };
+
     getMaterialsList();
+    getSalesReps();
 	
 	return self;
 }]);

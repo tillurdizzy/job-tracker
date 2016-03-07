@@ -33,6 +33,7 @@ while ($row = mysqli_fetch_object($result)) {
 	$oneVO->PWRVNT = $row->PWRVNT;
 	$oneVO->AIRHWK = $row->AIRHWK;
 	$oneVO->DECKNG = $row->DECKNG;
+	$oneVO->LOWSLP = $row->LOWSLP;
 	$oneVO->PAINT = $row->PAINT;
 	$oneVO->CAULK = $row->CAULK;
 	$oneVO->SATDSH = $row->SATDSH;

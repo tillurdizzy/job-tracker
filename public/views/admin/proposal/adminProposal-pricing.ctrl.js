@@ -88,7 +88,7 @@ app.controller('AdminPropPricing',['$state','$scope','AdminSharedSrvc',
     });
 
     $scope.$watch('$viewContentLoaded', function() {
-       console.log("AdminPropInputCtrl >>> $viewContentLoaded");
+       console.log("AdminPropPRICINGCtrl >>> $viewContentLoaded");
        ME.materialPricingDP = S.materialPricing_dp;
        ME.getTotal();
     });

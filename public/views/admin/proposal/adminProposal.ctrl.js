@@ -7,15 +7,23 @@ app.controller('AdminProposalCtrl',['$state','AdminDataSrvc','$scope','AdminShar
 
 	ME.selectedProposal = {};
 	ME.selectDataProvider = [];
+	ME.salesRep = "";
 	
 	ME.selectProposal = function(){
-		S.selectProposal(ME.selectedProposal.id);
+		ME.salesRep = S.selectProposal(ME.selectedProposal.id);
 	};
+
+	ME.backToHome = function(){
+		$state.transitionTo('admin');
+	}
 
 	var init = function(){
 		if(S.openProposals.length === 0){
 			S.getJobsWithOpenProposals();
 			S.getPropertiesWithProposalJobStatus();	
+		}else{
+			S.resetProposalData();
+			parseProposals();
 		}
 	};
 
@@ -40,6 +48,7 @@ app.controller('AdminProposalCtrl',['$state','AdminDataSrvc','$scope','AdminShar
 
 	
 	$scope.$watch('$viewContentLoaded', function() {
+		console.log("AdminProposalCtrl >>> $viewContentLoaded");
 		init();
     });
 
