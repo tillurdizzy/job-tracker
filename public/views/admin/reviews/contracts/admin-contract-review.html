@@ -1,0 +1,22 @@
+<div class="page" ng-controller="AdminContractCtrl as Ctrl">
+    <div class="page-title"><h2>Contract Review</h2></div>
+    <div>
+      <button type="button" class="button radius" ng-click="Ctrl.backToHome()">Back to Admin Menu</button>
+    </div>
+   <div>
+        <select ng-model="Ctrl.selectedProposal" ng-options="c.label for c in Ctrl.selectDataProvider" 
+        ng-change="Ctrl.selectProposal()" style="width:50%";></select>
+   </div>
+   <div>
+     <h2>Sales Rep: {{Ctrl.salesRep}}</h2>
+   </div>
+   <div id='cssmenu' ng-controller="TabbedMenuCtrl">
+        <ul>
+            <li ng-class="{ active: isCurrentPath('/admin/proposal-review/input')}"><a ui-sref='admin.proposalsReview.input'>Input</a></li>
+            <li ng-class="{ active: isCurrentPath('/admin/proposal-review/pricing')}"><a ui-sref='admin.proposalsReview.pricing'>Pricing</a></li>
+            <li ng-class="{ active: isCurrentPath('/admin/proposal-review/supplies')}"><a ui-sref='admin.proposalsReview.supplies'>Supplies</a></li>
+        </ul>
+    </div>
+    <div ui-view></div>
+    
+</div>
