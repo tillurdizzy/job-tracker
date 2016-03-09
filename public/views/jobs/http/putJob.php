@@ -27,7 +27,7 @@ VALUES(
 $qry_res = mysqli_query($con,$query);
 if ($qry_res) {
 	$last_id = mysqli_insert_id($con);
-	$arr = array('msg' => "Success", 'result' => $qry_res, 'params' => $last_id);
+	$arr = array('msg' => "Success", 'result' => $qry_res, 'insertID' => $last_id);
 	$jsn = json_encode($arr);
 	echo($jsn);
 } else {

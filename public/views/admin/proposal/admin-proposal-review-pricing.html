@@ -26,14 +26,13 @@
 							<input type="checkbox" id="{{row.Sort}}" ng-model="row.Default" ng-change="ChildCtrl.toggleCheckBox()"></input>
 							<label for="{{row.Sort}}"><span></span></label>
 						</div>
-
                     </td>
                     <td>{{row.Item}}</td>
-                    <td>{{row.ItemPrice | currency:"$":2}}</td>
-                    <td>{{row.Unit}}</td>
+                    <td>{{row.PkgPrice | currency:"$":2}}</td>
+                    <td>{{row.UnitPkg}}</td>
                     <td>{{row.Qty}}</td>
-                    <td>{{row.Usage}}</td>
-                    <td>{{row.Overage}}</td>
+                    <td>{{row.QtyPkg}}</td>
+                    <td>{{row.Margin}}</td>
                     <td>{{row.Total | currency:"$":2}}</td>
                 </tr>
             </tbody>
@@ -69,14 +68,13 @@
 							<input type="checkbox" id="{{row.Sort}}" ng-model="row.Default" ng-change="ChildCtrl.toggleCheckBox()"></input>
 							<label for="{{row.Sort}}"><span></span></label>
 						</div>
-
                     </td>
                     <td>{{row.Item}}</td>
-                    <td>{{row.ItemPrice | currency:"$":2}}</td>
-                    <td>{{row.Unit}}</td>
+                    <td>{{row.PkgPrice | currency:"$":2}}</td>
+                    <td>{{row.UnitPkg}}</td>
                     <td>{{row.Qty}}</td>
-                    <td>{{row.Usage}}</td>
-                    <td>{{row.Overage}}</td>
+                    <td>{{row.QtyPkg}}</td>
+                    <td>{{row.Margin}}</td>
                     <td>{{row.Total | currency:"$":2}}</td>
                 </tr>
             </tbody>
@@ -109,14 +107,13 @@
 							<input type="checkbox" id="{{row.Sort}}" ng-model="row.Default" ng-change="ChildCtrl.toggleCheckBox()"></input>
 							<label for="{{row.Sort}}"><span></span></label>
 						</div>
-
                     </td>
                     <td>{{row.Item}}</td>
-                    <td>{{row.ItemPrice | currency:"$":2}}</td>
-                    <td>{{row.Unit}}</td>
+                    <td>{{row.PkgPrice | currency:"$":2}}</td>
+                    <td>{{row.UnitPkg}}</td>
                     <td>{{row.Qty}}</td>
-                    <td>{{row.Usage}}</td>
-                    <td>{{row.Overage}}</td>
+                    <td>{{row.QtyPkg}}</td>
+                    <td>{{row.Margin}}</td>
                     <td>{{row.Total | currency:"$":2}}</td>
                 </tr>
             </tbody>
@@ -149,14 +146,13 @@
 							<input type="checkbox" id="{{row.Sort}}" ng-model="row.Default" ng-change="ChildCtrl.toggleCheckBox()"></input>
 							<label for="{{row.Sort}}"><span></span></label>
 						</div>
-
                     </td>
                     <td>{{row.Item}}</td>
-                    <td>{{row.ItemPrice | currency:"$":2}}</td>
-                    <td>{{row.Unit}}</td>
+                    <td>{{row.PkgPrice | currency:"$":2}}</td>
+                    <td>{{row.UnitPkg}}</td>
                     <td>{{row.Qty}}</td>
-                    <td>{{row.Usage}}</td>
-                    <td>{{row.Overage}}</td>
+                    <td>{{row.QtyPkg}}</td>
+                    <td>{{row.Margin}}</td>
                     <td>{{row.Total | currency:"$":2}}</td>
                 </tr>
             </tbody>
@@ -177,6 +173,8 @@
                     <th>Price</th>
                     <th>Unit</th>
                     <th>Qty</th>
+                    <td>Pkg</td>
+                    <td>Margin</td>
                     <th>Total</th>
                 </tr>
             </thead>
@@ -187,14 +185,13 @@
 							<input type="checkbox" id="{{row.Sort}}" ng-model="row.Default" ng-change="ChildCtrl.toggleCheckBox()"></input>
 							<label for="{{row.Sort}}"><span></span></label>
 						</div>
-
                     </td>
                     <td>{{row.Item}}</td>
-                    <td>{{row.ItemPrice | currency:"$":2}}</td>
-                    <td>{{row.Unit}}</td>
+                    <td>{{row.PkgPrice | currency:"$":2}}</td>
+                    <td>{{row.UnitPkg}}</td>
                     <td>{{row.Qty}}</td>
-                    <td>{{row.Usage}}</td>
-                    <td>{{row.Overage}}</td>
+                    <td>{{row.QtyPkg}}</td>
+                    <td>{{row.Margin}}</td>
                     <td>{{row.Total | currency:"$":2}}</td>
                 </tr>
             </tbody>
@@ -227,14 +224,13 @@
 							<input type="checkbox" id="{{row.Sort}}" ng-model="row.Default" ng-change="ChildCtrl.toggleCheckBox()"></input>
 							<label for="{{row.Sort}}"><span></span></label>
 						</div>
-
                     </td>
                     <td>{{row.Item}}</td>
-                    <td>{{row.ItemPrice | currency:"$":2}}</td>
+                    <td>{{row.PkgPrice | currency:"$":2}}</td>
                     <td>{{row.Unit}}</td>
                     <td>{{row.Qty}}</td>
-                    <td>{{row.Usage}}</td>
-                    <td>{{row.Overage}}</td>
+                    <td>{{row.QtyPkg}}</td>
+                    <td>{{row.Margin}}</td>
                     <td>{{row.Total | currency:"$":2}}</td>
                 </tr>
             </tbody>

@@ -17,7 +17,7 @@ class jobParamsVO{
 	var $PWRVNT;
 	var $AIRHWK;
 	var $SLRVNT;
-	var $LOWSLOPE
+	var $LOWSLP;
 	var $DECKNG;
 	var $PAINT;
 	var $CAULK;

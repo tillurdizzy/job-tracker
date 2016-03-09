@@ -17,12 +17,14 @@ app.service('AdminDataSrvc',['$http','$q','SharedSrvc','LogInSrvc',function admi
 			if(typeof data != 'string'){
      			deferred.resolve(data);
      		}else{
+     			console.log(data);
 				deferred.resolve(false);
      		}
 	    }).
 		error(function(data, status, headers, config) {
 			deferred.reject(false);
 	    });
+
 	    return deferred.promise;
 	}
 

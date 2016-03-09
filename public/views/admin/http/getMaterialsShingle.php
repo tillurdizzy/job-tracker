@@ -22,12 +22,11 @@ while ($row = mysqli_fetch_object($result)) {
 	$oneVO->Item = $row->Item;
 	$oneVO->Code = $row->Code;
 	$oneVO->Package = $row->Package;
-	$oneVO->UnitsPerPackage = $row->UnitsPerPackage;
-	$oneVO->Unit = $row->Unit;
-	$oneVO->ItemPrice = $row->ItemPrice;
-	$oneVO->Usage = $row->Usage;
-	$oneVO->UsageUnit = $row->UsageUnit;
-	$oneVO->Overage = $row->Overage;
+	$oneVO->QtyPkg = $row->QtyPkg;
+	$oneVO->UnitPkg = $row->UnitPkg;
+	$oneVO->PkgPrice = $row->PkgPrice;
+	$oneVO->RoundUp = $row->RoundUp;
+	$oneVO->Margin = $row->Margin;
 	$oneVO->InputParam = $row->InputParam;
 	$oneVO->Default = $row->Default;
 	array_push( $resultValueObjects, $oneVO );

@@ -3,11 +3,11 @@ app.controller('NewJobCtrl',['$scope','$state','evoDb','SharedSrvc',function ($s
 
 	var DB = evoDb;
 	var Me = this;
-    var S = SharedSrvc;
+    Me.S = SharedSrvc;
     Me.inputField = "INFO";
-    Me.managerName = S.managerName;
-    Me.clientList = S.managerClients;
-    Me.propertyList = S.managerProperties;
+    Me.managerName = Me.S.managerName;
+    Me.clientList = Me.S.managerClients;
+    Me.propertyList = Me.S.managerProperties;
     var numFields = 2;
     Me.inputMsg = "Field 1 of " + numFields;
     // Form elements
@@ -26,14 +26,14 @@ app.controller('NewJobCtrl',['$scope','$state','evoDb','SharedSrvc',function ($s
             Me.filterProperties();
             Me.inputField="S2";
             Me.inputMsg = "Field 2 of " + numFields;
-            S.selectedClientObj = Me.S1;
+            Me.S.selectedClientObj = Me.S1;
         };
    };
 
    Me.submitS2 = function(){
         Me.inputMsg = "";
         Me.isError = false;
-        var isDupe = S.jobExists(Me.S1.PRIMARY_ID,Me.S2.PRIMARY_ID);
+        var isDupe = Me.S.jobExists(Me.S1.PRIMARY_ID,Me.S2.PRIMARY_ID);
         
         if(isDupe){
             Me.isError = true;
@@ -44,7 +44,7 @@ app.controller('NewJobCtrl',['$scope','$state','evoDb','SharedSrvc',function ($s
             Me.T2 = d.valueOf();
             Me.inputField="REVIEW";
             Me.inputMsg = "";
-            S.selectedPropertyObj = Me.S2;
+            Me.S.selectedPropertyObj = Me.S2;
         };
    };
 
@@ -73,15 +73,19 @@ app.controller('NewJobCtrl',['$scope','$state','evoDb','SharedSrvc',function ($s
         Me.isError = false;
         var dataObj = {};
         dataObj.jobNumber = "";
-        dataObj.manager = S.manager;
+        dataObj.manager = Me.S.manager;
         dataObj.client = Me.S1.PRIMARY_ID;
         dataObj.property = Me.S2.PRIMARY_ID;
         dataObj.status = Me.T1;
         dataObj.dateProspect = Me.T2;
-        var result = DB.putJob(dataObj)
-        .then(function(result){
+        dataObj.dateProposal = "0";
+
+        var result = DB.putJob(dataObj).then(function(result){
             if(typeof result != "boolean"){
                Me.inputField="SUCCESS";
+               var jobID = result.insertID;
+               dataObj.PRIMARY_ID = jobID;
+               Me.S.selectedJobObj = dataObj;
             }else{
                 Me.dataError();
             }                 
@@ -107,7 +111,7 @@ app.controller('NewJobCtrl',['$scope','$state','evoDb','SharedSrvc',function ($s
     };
 
     $scope.$watch('$viewContentLoaded', function() {
-       var loggedIn = S.loggedIn;
+       var loggedIn = Me.S.loggedIn;
        if(!loggedIn){
             $state.transitionTo('login');
        }

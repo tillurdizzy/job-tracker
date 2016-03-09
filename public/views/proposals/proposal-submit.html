@@ -7,7 +7,8 @@
 	<p>You may still return and make changes at any time, but you will not need to submit again.</p>
 </div>
 <div ng-hide="Ctrl.selectedJobObj.dateProposal==0">
-	<h3>This proposal has already been submitted.</h3>
+	<h3>Thank you. This proposal has been submitted.</h3>
+	<p>You can still make changes to the data later if needed.</p>
 </div>
 <div ng-show="Ctrl.selectedJobObj.dateProposal==0">
 	<button type="button" ng-click="Ctrl.submitForApproval()">Submit</button>

@@ -409,10 +409,10 @@ app.service('evoDb',['$http','$q','SharedSrvc','LogInSrvc',function eventQueries
 		dataObj.status = status;
 		var query = "";
 		switch(status){
-			case "proposal":query="updateProposalDate.php";break;
-			case "contract":query="updateContractDate.php";break;
-			case "active":query="updateActiveDate.php";break;
-			case "complete":query="updateCompleteDate.php";break;
+			case "Proposal":query="updateProposalDate.php";break;
+			case "Contract":query="updateContractDate.php";break;
+			case "Active":query="updateActiveDate.php";break;
+			case "Complete":query="updateCompleteDate.php";break;
 		}
 		var deferred = $q.defer();
 		$http({method: 'POST', url: 'js/php/'+ query,data:dataObj}).

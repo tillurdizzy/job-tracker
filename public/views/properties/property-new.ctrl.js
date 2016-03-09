@@ -1,11 +1,14 @@
 'use strict';
 app.controller('NewPropertyViewCtrl',['$scope','$state','SharedSrvc','evoDb',function ($scope,$state,SharedSrvc,evoDb) {
 
+    //This controller is the Parent View and is only used to choose the Client - then the ui-view is loaded with 
+    //either the form for Individual or Organization Client and a new controller takes over
+
     var DB = evoDb; 
     var ME = this;
     var S = SharedSrvc;
     ME.clientList = S.managerClients;
-    ME.selectedClient = ME.clientList[0];;
+    ME.selectedClient = ME.clientList[0];
 
     ME.submitClient=function(){
         S.selectedClientObj =  ME.selectedClient;

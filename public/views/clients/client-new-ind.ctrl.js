@@ -3,8 +3,8 @@ app.controller('NewClientIndCtrl',['$state','evoDb','SharedSrvc',function ($stat
 
 	var DB = evoDb;
 	var ME = this;
-    var S = SharedSrvc;
-    ME.managerName = S.managerName;
+    ME.S = SharedSrvc;
+    ME.managerName = ME.S.managerName;
     // Form elements
    
     ME.T1="";//first name
@@ -139,13 +139,11 @@ app.controller('NewClientIndCtrl',['$state','evoDb','SharedSrvc',function ($stat
         }
     };
 
-   
-  
     ME.submitForm = function(){
         ME.isError = false;
         var dataObj = {};
 
-        dataObj.manager = S.manager;
+        dataObj.manager = ME.S.manager;
         dataObj.type = "Individual";
         dataObj.name_first = ME.T1;
         dataObj.name_last = ME.T2;
@@ -158,11 +156,10 @@ app.controller('NewClientIndCtrl',['$state','evoDb','SharedSrvc',function ($stat
         dataObj.state = ME.T7;
         dataObj.zip = ME.T8;
         
-        var result = DB.putClient(dataObj)
-        .then(function(result){
+        var result = DB.putClient(dataObj).then(function(result){
             if(typeof result != "boolean"){
                ME.inputField="SUCCESS";
-               ME.getManagerProperties();
+               ME.getManagerProperties();//This will refresh Properties, Clients and Jobs for this Sales Rep!!!
             }else{
                 ME.dataError();
             }                 

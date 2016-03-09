@@ -3,7 +3,7 @@
 app.controller('ProposalCtrl', ['$state','$scope','evoDb','SharedSrvc','ShingleSrvc',function($state,$scope,evoDb,SharedSrvc,ShingleSrvc) {
     var DB = evoDb;
     var ME = this;
-    var S = SharedSrvc;
+    ME.S = SharedSrvc;
     ME.SRVC = ShingleSrvc;
     //var CALCS = ShingleCalcs;
 
@@ -12,10 +12,10 @@ app.controller('ProposalCtrl', ['$state','$scope','evoDb','SharedSrvc','ShingleS
     ME.managerName = DB.managerName;
 
     // data vars
-    ME.jobs = S.managerJobs;
-    ME.selectedJobObj = S.selectedJobObj;
-    ME.selectedClientObj = S.selectedClientObj;
-    ME.selectedPropertyObj = S.selectedPropertyObj;
+    ME.jobs = ME.S.managerJobs;
+    ME.selectedJobObj = ME.S.selectedJobObj;
+    ME.selectedClientObj = ME.S.selectedClientObj;
+    ME.selectedPropertyObj = ME.S.selectedPropertyObj;
     ME.proposalDate = ME.selectedJobObj.dateProposal;
 
     ME.jobMaterials = [];
@@ -45,7 +45,7 @@ app.controller('ProposalCtrl', ['$state','$scope','evoDb','SharedSrvc','ShingleS
         AIRHWK:"",
         SLRVNT:"",
         DECKNG:"",
-        LOWSLOPE:"",
+        LOWSLP:"",
         PAINT:"2",
         CAULK:"2",
         CARPRT:"",
@@ -88,7 +88,7 @@ app.controller('ProposalCtrl', ['$state','$scope','evoDb','SharedSrvc','ShingleS
         var d = new Date();
         var v = d.valueOf();
         ME.selectedJobObj.dateProposal = v;
-        S.selectedJobObj.dateProposal = v;
+        ME.S.selectedJobObj.dateProposal = v;
         var status="Proposal";
         DB.updateJobStatus(ME.selectedJobObj.PRIMARY_ID,status,v).then(function(result) {
             if (result != false) { 
@@ -103,7 +103,7 @@ app.controller('ProposalCtrl', ['$state','$scope','evoDb','SharedSrvc','ShingleS
 
     ME.submitSpecial = function(){
         var dataObj = {};
-        dataObj.jobID = S.selectedJobObj.PRIMARY_ID;
+        dataObj.jobID = ME.S.selectedJobObj.PRIMARY_ID;
         dataObj.body = ME.specialText;
         dataObj.cost = ME.specialCost;
         DB.runQueryWithObj('views/proposals/http/updateSpecialConsiderations.php',dataObj).then(function(result) {
@@ -118,7 +118,7 @@ app.controller('ProposalCtrl', ['$state','$scope','evoDb','SharedSrvc','ShingleS
     };
 
     ME.submitParams = function() {
-        ME.params.jobID = S.selectedJobObj.PRIMARY_ID;
+        ME.params.jobID = ME.S.selectedJobObj.PRIMARY_ID;
         var result = ME.SRVC.submitParams(ME.params).then(function(result) {
             if (result != false) { 
                 alert("OK");
@@ -149,7 +149,7 @@ app.controller('ProposalCtrl', ['$state','$scope','evoDb','SharedSrvc','ShingleS
 
     var getSpecial = function(){
         var dataObj = {};
-        dataObj.jobID = S.selectedJobObj.PRIMARY_ID;
+        dataObj.jobID = ME.S.selectedJobObj.PRIMARY_ID;
         DB.runQueryWithObj('views/proposals/http/getSpecialConsiderations.php',dataObj).then(function(result) {
             if (result != false) { 
                 ME.specialText = result[0].body;
@@ -167,14 +167,14 @@ app.controller('ProposalCtrl', ['$state','$scope','evoDb','SharedSrvc','ShingleS
     };
 
     $scope.$watch('$viewContentLoaded', function() {
-       var loggedIn = S.loggedIn;
+       var loggedIn = ME.S.loggedIn;
        if(!loggedIn){
        		$state.transitionTo('login');
        }
     });
 
     var initPage = function() {
-        //CALCS.resetService();
+        //CALCME.S.resetService();
         getJobParameters();
         getSpecial();
         console.log("INIT Proposal Ctrl");

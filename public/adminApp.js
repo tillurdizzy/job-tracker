@@ -55,10 +55,9 @@ app.config(function($stateProvider, $urlRouterProvider) {
 			templateUrl:"views/admin/reports/jobs-active.html"
 		})
 
-		.state('admin.prospectsReview', {
-			url: "/prospect-review",
-			templateUrl:"views/admin/admin-proposal-review.html"
-		})
+		
+
+		//  <<<<<<<<<< Begin Jobs Review  > Proposal >>>>>>>>>>>>>
 		.state('admin.proposalsReview', {
 			url: "/proposal-review",
 			templateUrl:"views/admin/proposal/admin-proposal-review.html"
@@ -73,19 +72,26 @@ app.config(function($stateProvider, $urlRouterProvider) {
 		})
 		.state('admin.proposalsReview.pricing', {
 			url: "/pricing",
-			templateUrl:"views/admin//proposal/admin-proposal-review-pricing.html"
+			templateUrl:"views/admin/proposal/admin-proposal-review-pricing.html"
+		})
+		//  <<<<<<<<<< End Jobs Review >> Proposal >>>>>>>>>>>>>
+
+		// <<<<<<<<<<< Jobs Review >> Other than Proposal>> 
+		.state('admin.prospectsReview', {
+			url: "/prospect-review",
+			templateUrl:"views/admin/reviews/prospects/admin-prospect-review.html"
 		})
 		.state('admin.contractsReview', {
-			url: "/ontracts-review",
-			templateUrl:"views/admin/proposal/admin-proposal-review.html"
+			url: "/contracts-review",
+			templateUrl:"views/admin/reviews/contracts/admin-contract-review.html"
 		})
 		.state('admin.activeReview', {
 			url: "/active-review",
-			templateUrl:"views/admin/proposal/admin-proposal-review.html"
+			templateUrl:"views/admin/reviews/active//admin-active-review.html"
 		})
 		.state('admin.completeReview', {
 			url: "/complete-review",
-			templateUrl:"views/admin/proposal/admin-proposal-review.html"
+			templateUrl:"views/admin/reviews/complete/admin-complete-review.html"
 		})
 
 

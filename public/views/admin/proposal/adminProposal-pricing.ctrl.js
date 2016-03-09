@@ -13,7 +13,7 @@ app.controller('AdminPropPricing',['$state','$scope','AdminSharedSrvc',
     ME.FlatTotal = 0;
     ME.OtherTotal = 0;
 	
-	ME.materialPricingDP = S.materialPricing_dp;
+	 ME.materialPricingDP = S.materialPricing_dp;
 
     ME.toggleCheckBox = function(){
         var id = 0;

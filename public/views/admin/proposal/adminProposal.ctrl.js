@@ -18,9 +18,9 @@ app.controller('AdminProposalCtrl',['$state','AdminDataSrvc','$scope','AdminShar
 	}
 
 	var init = function(){
-		if(S.openProposals.length === 0){
-			S.getJobsWithOpenProposals();
-			S.getPropertiesWithProposalJobStatus();	
+		if(S.proposalsAsProperty.length === 0){
+			S.getProposalsByJob();
+			S.getProposalsByProperty();	
 		}else{
 			S.resetProposalData();
 			parseProposals();
@@ -30,7 +30,7 @@ app.controller('AdminProposalCtrl',['$state','AdminDataSrvc','$scope','AdminShar
 
 	var parseProposals = function(){
 		ME.selectDataProvider = [{label:"Select a Property",id:-1}];
-		var arr = S.openProposals;
+		var arr = S.proposalsAsProperty;
 		for (var i = 0; i < arr.length; i++) {
 			var a =  arr[i].name;
 			var b =  arr[i].street;
@@ -42,7 +42,7 @@ app.controller('AdminProposalCtrl',['$state','AdminDataSrvc','$scope','AdminShar
 		ME.selectedProposal = ME.selectDataProvider[0];
 	};
 
-	$scope.$on('onGetPropertiesWithProposalJobStatus', function() {
+	$scope.$on('getProposalsByProperty', function() {
 		parseProposals();
     });
 

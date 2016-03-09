@@ -52,7 +52,7 @@ app.service('ShingleSrvc',['$http','$q','SharedSrvc',function shingleJobForm($ht
 		var deferred = $q.defer();
 		$http({method: 'POST', url: 'views/proposals/http/updateJobParameters.php',data:dataObj}).
 		success(function(data, status) {
-			if(typeof data != 'string'){
+			if(typeof data != 'string' && data.result != false){
      			deferred.resolve(data);
 			}else{
 				deferred.resolve(false);
@@ -68,7 +68,7 @@ app.service('ShingleSrvc',['$http','$q','SharedSrvc',function shingleJobForm($ht
 		var deferred = $q.defer();
 		$http({method: 'POST', url: 'views/proposals/http/insertJobParameter.php',data:dataObj}).
 		success(function(data, status) {
-			if(typeof data != 'string'){
+			if(typeof data != 'string' && data.result != false){
      			deferred.resolve(data);
 			}else{
 				deferred.resolve(false);

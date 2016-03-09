@@ -5,9 +5,9 @@ app.service('AdminSharedSrvc',['$rootScope','AdminDataSrvc','underscore',functio
 	self.ME = "AdminSharedSrvc: ";
 	var DB = AdminDataSrvc;
 	
-	var jobsList = [];
+	var proposalsAsJob = [];
     self.salesReps=[];
-	self.openProposals = [];// propertyVO's related to jobs that are in Proposal State
+	self.proposalsAsProperty = [];// propertyVO's related to jobs that are in Proposal State
 	self.proposalUnderReview = {};
     self.materialPricing_dp = {Shingles:[],Vents:[],Edge:[],Caps:[],Flat:[],Other:[]};  // Data Provider for Pricing Tab
 
@@ -16,11 +16,11 @@ app.service('AdminSharedSrvc',['$rootScope','AdminDataSrvc','underscore',functio
         if(ndx == -1){
            self.resetProposalData();
         }else{
-            self.proposalUnderReview = self.openProposals[ndx];
-            // get the Job ID
-            for (var i = 0; i < jobsList.length; i++) {
-                if (jobsList[i].property === self.proposalUnderReview.PRIMARY_ID){
-                    self.proposalUnderReview.jobID = jobsList[i].PRIMARY_ID;
+            self.proposalUnderReview = self.proposalsAsProperty[ndx];
+            // Get the Job ID
+            for (var i = 0; i < proposalsAsJob.length; i++) {
+                if (proposalsAsJob[i].property === self.proposalUnderReview.PRIMARY_ID){
+                    self.proposalUnderReview.jobID = proposalsAsJob[i].PRIMARY_ID;
                 }
             }
             rtnRepName = self.returnSalesRep(self.proposalUnderReview.manager);
@@ -72,22 +72,26 @@ app.service('AdminSharedSrvc',['$rootScope','AdminDataSrvc','underscore',functio
 
     var formatMaterials = function() {
        for (var i = 0; i < self.materialsList.length; i++) {
-            var itemPrice = parseInt(self.materialsList[i].ItemPrice);
-            var usage = parseInt(self.materialsList[i].Usage);
-            var over = parseInt(self.materialsList[i].Overage);
+            var itemPrice = Number(self.materialsList[i].PkgPrice);
+            var usage = Number(self.materialsList[i].QtyPkg);
+            var over = Number(self.materialsList[i].Margin);
+            var roundUp = Number(self.materialsList[i].RoundUp);
             var paramKey = self.materialsList[i].InputParam;
-            var parameterVal = parseInt(self.proposalUnderReview.propertyInputParams[paramKey]);
+            var parameterVal = Number(self.proposalUnderReview.propertyInputParams[paramKey]);
             var isNum = isNaN(parameterVal);
+            var total = 0;
             if(isNum){
                 parameterVal = 0;
-            };
-            var total = (itemPrice * parameterVal / usage) * over;
-
+                total = 0;
+            }else{
+                 total = (((parameterVal / usage) * itemPrice * over) * roundUp)/roundUp;
+            }
+           
             self.materialsList[i].Qty = parameterVal;
             self.materialsList[i].Total = total;
 
             var checked = self.materialsList[i].Default;
-            if(checked === "true"){
+            if(checked === "true" || checked === true || checked === 1){
                 self.materialsList[i].Default = true;
             }else{
                  self.materialsList[i].Default = false;
@@ -128,7 +132,6 @@ app.service('AdminSharedSrvc',['$rootScope','AdminDataSrvc','underscore',functio
         underscore.sortBy(flat, 'Sort');
         underscore.sortBy(other, 'Sort');
 
-
         self.materialPricing_dp.Shingles = shingles;
         self.materialPricing_dp.Caps = caps;
         self.materialPricing_dp.Vents = vents;
@@ -140,31 +143,31 @@ app.service('AdminSharedSrvc',['$rootScope','AdminDataSrvc','underscore',functio
     };
 
 
-	//Queries the properties table based on open proposals
-	self.getPropertiesWithProposalJobStatus = function(){
+	//Queries the properties table based on proposal status
+	self.getProposalsByProperty = function(){
 		DB.queryDB('views/admin/http/getJobProposals.php').then(function(result){
             if(typeof result != "boolean"){
-             	self.openProposals = result;
-             	self.proposalUnderReview = self.openProposals[0];
-             	$rootScope.$broadcast('onGetPropertiesWithProposalJobStatus');
+             	self.proposalsAsProperty = result;
+             	self.proposalUnderReview = self.proposalsAsProperty[0];
+             	$rootScope.$broadcast('getProposalsByProperty');
             }else{
-              dataError("AdminSharedSrvc-getPropertiesWithProposalJobStatus()-1",result); 
+              dataError("AdminSharedSrvc-getProposalsByProperty()-1",result); 
             }
         },function(error){
-            dataError("AdminSharedSrvc-getPropertiesWithProposalJobStatus()-2",result);
+            dataError("AdminSharedSrvc-getProposalsByProperty()-2",result);
         });
 	};
 
     //Queries the job_list table for open proposals
-	self.getJobsWithOpenProposals = function(){
+	self.getProposalsByJob = function(){
     	DB.queryDB('views/admin/http/getJobsWithProposalStatus.php').then(function(result){
             if(typeof result != "boolean"){
-             	jobsList = result;
+             	proposalsAsJob = result;
             }else{
-              dataError("AdminSharedSrvc-getJobsWithOpenProposals()-1",result); 
+              dataError("AdminSharedSrvc-getProposalsByJob()-1",result); 
             }
         },function(error){
-            dataError("AdminSharedSrvc-getJobsWithOpenProposals()-2","404");
+            dataError("AdminSharedSrvc-getProposalsByJob()-2","404");
         });
     };
 
@@ -218,6 +221,8 @@ app.service('AdminSharedSrvc',['$rootScope','AdminDataSrvc','underscore',functio
             alert("ERROR returned returned from DB at AdminSharedSrvc >>> getSalesReps()");
         });
     };
+
+    
 
     getMaterialsList();
     getSalesReps();

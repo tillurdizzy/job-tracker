@@ -28,5 +28,26 @@ $client-item-height:2.25em;
 	}
 }
 
+.title-with-btn{
+	display:flex;
+	height:48px;
+	margin-bottom:2rem;
+	width:100%;
+	
+	box-sizing: border-box;
+	i{
+		margin-right:2rem;
+		cursor:pointer;
+		color:$secondary-color;
+	}
+	h2{
+		font-size: 1.6rem;
+		line-height: 48px;
+		vertical-align: middle;
+		display:inline-block;
+	}
+	
+}
+
 
 

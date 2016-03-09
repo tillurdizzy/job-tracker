@@ -6,11 +6,11 @@ class materialsShingleVO{
 	var $Item;
 	var $Code;
 	var $Package;
-	var $UnitsPerPackage;
-	var $Unit;
-	var $ItemPrice;
-	var $Usage;
-	var $UsageUnit;
+	var $QtyPkg;
+	var $UnitPkg;
+	var $PkgPrice;
+	var $RoundUp;
+	var $Margin;
 	var $Overage;
 	var $InputParam;
 	var $Default;
