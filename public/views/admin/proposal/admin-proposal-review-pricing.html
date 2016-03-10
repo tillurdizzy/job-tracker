@@ -1,6 +1,15 @@
 <div ng-controller="AdminPropPricing as ChildCtrl">
+    <div class="standardParagraph">
+        <p>The <span class="bold">Quantities</span> listed here are derived from the values shown on the 'Input' tab.</p>
+        <p>The <span class="bold">Include</span> column should be adjusted to reflect the client options and choices. </p>
+        <p><span class="hilite">IMPORTANT!</span> This screen will always reflect the default selections and current pricing until it is Saved.</p>
+    </div>
+    <horiz-rule margintop="5" marginbottom="5"></horiz-rule>
     <div style="margin-top: .5rem;">
         <h2>Grand Total: {{ChildCtrl.GrandTotal | currency:"$":2}}</h2>
+    </div>
+    <div>
+        <button type="button" class="button radius" ng-click="ChildCtrl.saveJobMaterials()">Save</button>
     </div>
     <div class="section-header">
         <h2>Shingles</h2>

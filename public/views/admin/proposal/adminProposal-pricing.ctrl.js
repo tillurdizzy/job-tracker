@@ -4,7 +4,7 @@ app.controller('AdminPropPricing',['$state','$scope','AdminSharedSrvc',
 	function ($state,$scope,AdminSharedSrvc) {
 
 	var ME = this;
-	var S = AdminSharedSrvc;
+	ME.S = AdminSharedSrvc;
     ME.GrandTotal = 0;
     ME.ShingleTotal = 0;
     ME.VentsTotal = 0;
@@ -13,12 +13,16 @@ app.controller('AdminPropPricing',['$state','$scope','AdminSharedSrvc',
     ME.FlatTotal = 0;
     ME.OtherTotal = 0;
 	
-	 ME.materialPricingDP = S.materialPricing_dp;
+	 ME.materialPricingDP = ME.S.materialsCatergorized;
 
     ME.toggleCheckBox = function(){
         var id = 0;
         ME.getTotal();
     };
+
+    ME.saveJobMaterials = function(){
+      
+    }
 
     ME.getTotal = function(){
         ME.ShingleTotal = 0;
@@ -76,20 +80,20 @@ app.controller('AdminPropPricing',['$state','$scope','AdminSharedSrvc',
     }
 
     // Broadcast from AdminSharedSrvc >>> setParams
-    $scope.$on('onRefreshPricingData', function(event, obj) {
-		ME.propertyInputParams = S.materialPricing_dp;
-        ME.getTotal();
+    $scope.$on('onRefreshMaterialsData', function(event, obj) {
+		  ME.materialPricingDP = ME.S.materialsCatergorized;
+      ME.getTotal();
     });
 
     // Broadcast from AdminSharedSrvc >>> selectProposal (user selected prompt -1 from dropdown i.e. there is no proposal selected)
     $scope.$on('onResetProposalData', function(event, obj) {
-		ME.materialPricingDP = S.materialPricing_dp;
-        ME.getTotal();
+		  ME.materialPricingDP = ME.S.materialsCatergorized;
+      ME.getTotal();
     });
 
     $scope.$watch('$viewContentLoaded', function() {
        console.log("AdminPropPRICINGCtrl >>> $viewContentLoaded");
-       ME.materialPricingDP = S.materialPricing_dp;
+       ME.materialPricingDP = ME.S.materialsCatergorized;
        ME.getTotal();
     });
 	

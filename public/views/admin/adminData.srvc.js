@@ -32,8 +32,7 @@ app.service('AdminDataSrvc',['$http','$q','SharedSrvc','LogInSrvc',function admi
 		var deferred = $q.defer();
 		$http({method: 'POST', url:phpFile,data:dataObj}).
 		success(function(data, status) {
-			if(typeof data != 'string'){
-				self.lastResult = data;
+			if(typeof data != 'string' && data.result != false){
      			deferred.resolve(data);
      		}else{
 				deferred.resolve(false);

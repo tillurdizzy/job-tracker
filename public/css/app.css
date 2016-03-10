@@ -912,6 +912,17 @@ body {
     background-color: #2C3E50;
     transition: background-color 0.25s ease-out; }
 
+.standardParagraph {
+  margin-top: .9rem; }
+  .standardParagraph p {
+    font-size: .9rem;
+    display: block;
+    margin: 0 0 7px 0;
+    color: #000000; }
+  .standardParagraph .hilite {
+    color: #E74C3C;
+    font-weight: bold; }
+
 .flex-column {
   display: flex;
   flex-direction: column; }

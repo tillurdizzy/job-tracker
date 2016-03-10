@@ -262,7 +262,20 @@ body{
     transition: background-color 0.25s ease-out;}
 }
 
+.standardParagraph{
+  margin-top: .9rem;
+  p{
+    font-size: .9rem;
+    display:block;
+    margin:0 0 7px 0;
+    color:#000000;
+  }
 
+  .hilite{
+    color:$tertiary-color;
+    font-weight: bold;
+  }
+}
 
 .flex-column{
   display: flex;
