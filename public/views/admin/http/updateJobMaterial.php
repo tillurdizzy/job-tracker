@@ -10,14 +10,11 @@ define( "DATABASE_NAME", "jobtracker");
 
 $con = mysqli_connect(DATABASE_SERVER, DATABASE_USERNAME, DATABASE_PASSWORD,DATABASE_NAME) or die ('ERROR!!!');
 $jobID = mysqli_real_escape_string($con,$data->jobID);
-$materialCode = mysqli_real_escape_string($con,$data->materialCode);
-$qty = mysqli_real_escape_string($con,$data->qty);
-$price = mysqli_real_escape_string($con,$data->price);
+$strData = mysqli_real_escape_string($con,$data->strData);
 
-$query = "UPDATE jobs_materials SET 
-qty='".$qty."',
-price='".$price."'
-WHERE jobID='".$id."' AND materialCode='".$materialCode."'";
+$query = "UPDATE job_materials SET 
+strData='".$strData."'
+WHERE jobID='".$jobID."'";
 $qry_res = mysqli_query($con,$query);
 if ($qry_res) {
 	$last_id = mysqli_insert_id($con);
@@ -25,7 +22,7 @@ if ($qry_res) {
 	$jsn = json_encode($arr);
 	echo($jsn);
 } else {
-	$arr = array('msg' => "Error inserting record", 'result' => $qry_res,'params' => $materialCode);
+	$arr = array('msg' => "Error inserting record", 'result' => $qry_res,'params' => $jobID);
 	$jsn = json_encode($arr);
 	echo($jsn);
 }

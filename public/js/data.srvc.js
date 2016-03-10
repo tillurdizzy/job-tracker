@@ -114,6 +114,19 @@ app.service('evoDb',['$http','$q','SharedSrvc','LogInSrvc',function eventQueries
 			self.putMaterialOptions(dataObj);
 			self.putSpecialConsiderations(dataObj);
 			self.putMultiLevel(dataObj);
+			self.putJobMaterials(dataObj);
+     		deferred.resolve(data);
+	    }).
+	    error(function(data, status, headers, config) {
+			deferred.reject(data);
+	    });
+	    return deferred.promise;
+	};
+
+	self.putJobMaterials = function(dataObj){
+		var deferred = $q.defer();
+		$http({method: 'POST', url: 'views/jobs/http/insertJobMaterial.php',data:dataObj}).
+		success(function(data, status, headers, config) {
      		deferred.resolve(data);
 	    }).
 	    error(function(data, status, headers, config) {

@@ -10,16 +10,12 @@ define( "DATABASE_NAME", "jobtracker");
 
 $con = mysqli_connect(DATABASE_SERVER, DATABASE_USERNAME, DATABASE_PASSWORD,DATABASE_NAME) or die ('ERROR!!!');
 $jobID = mysqli_real_escape_string($con,$data->jobID);
-$materialCode = mysqli_real_escape_string($con,$data->materialCode);
-$qty = mysqli_real_escape_string($con,$data->qty);
-$price = mysqli_real_escape_string($con,$data->price);
+$strData = "";
 
-$query = "INSERT INTO job_materials(jobID,materialCode,qty,price)
+$query = "INSERT INTO job_materials(jobID,strData)
 VALUES(
 '" . $jobID . "', " .
-"'" . $materialCode . "', " .
-"'" . $qty . "', " .
-"'" . $price . "')";
+"'" . $strData . "')";
 $qry_res = mysqli_query($con,$query);
 if ($qry_res) {
 	$last_id = mysqli_insert_id($con);

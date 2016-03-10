@@ -30,15 +30,13 @@ app.service('AdminDataSrvc',['$http','$q','SharedSrvc','LogInSrvc',function admi
 
 	self.queryDBWithObj = function(phpFile,dataObj){
 		var deferred = $q.defer();
-		$http({method: 'POST', url:phpFile,data:dataObj}).
-		success(function(data, status) {
+		$http({method: 'POST', url:phpFile,data:dataObj}).success(function(data, status) {
 			if(typeof data != 'string' && data.result != false){
      			deferred.resolve(data);
      		}else{
 				deferred.resolve(false);
      		}
-	    }).
-		error(function(data, status, headers, config) {
+	    }).error(function(data, status, headers, config) {
 			deferred.reject(false);
 	    });
 	    return deferred.promise;
@@ -48,6 +46,24 @@ app.service('AdminDataSrvc',['$http','$q','SharedSrvc','LogInSrvc',function admi
 		self.managerID = "";
 		self.managerName = "";
 	};
+
+	
+	self.getJobMaterials = function(dataObj){
+		var deferred = $q.defer();
+		$http({method: 'POST', url: 'views/admin/http/getJobMaterials.php',data:dataObj}).
+		success(function(data, status) {
+			if(data === false){
+				deferred.resolve(false);
+     		}else{
+				deferred.resolve(data);
+     		}
+	    }).
+		error(function(data, status, headers, config) {
+			deferred.reject(false);
+	    });
+
+	    return deferred.promise;
+	}
 	
 
 	var getShingleIntputFields = function(){
