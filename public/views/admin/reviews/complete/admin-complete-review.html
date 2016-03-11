@@ -4,28 +4,23 @@
         <h2>Completed Jobs Review</h2>
     </div>
     <div>
-        <table st-table="ChildCtrl.reviewList" class="table table-striped" style="width:100%;">
+        <table st-table="ChildCtrl.tableDataProvider" class="table table-striped" style="width:100%;">
             <thead>
                 <tr>
-                    <th>Details</th>
                     <th>Date</th>
-                    <th>Client</th>
+                    <th>Sales Rep</th>
                     <th>Property</th>
-                    <th>Address</th>
+                    <th>Street</th>
+                    <th>City</th>
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="row in ChildCtrl.reviewList">
-                    <td>
-                        <div class="check-radio-container">
-                            <input type="checkbox" id="{{row.Sort}}" ng-model="row.Default" ng-change="ChildCtrl.toggleCheckBox()"></input>
-                            <label for="{{row.Sort}}"><span></span></label>
-                        </div>
-                    </td>
-                    <td>{{row.Date}}</td>
-                    <td>{{row.ClientName}}</td>
-                    <td>{{row.PropertyName}}</td>
-                    <td>{{row.PropertyAddress}}</td>
+                <tr ng-repeat="row in ChildCtrl.tableDataProvider">
+                    <td>{{row.date}}</td>
+                    <td>{{row.rep}}</td>
+                    <td>{{row.name}}</td>
+                    <td>{{row.street}}</td>
+                    <td>{{row.city}}</td>
                 </tr>
             </tbody>
         </table>

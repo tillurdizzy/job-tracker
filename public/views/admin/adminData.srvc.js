@@ -6,9 +6,11 @@ app.service('AdminDataSrvc',['$http','$q','SharedSrvc','LogInSrvc',function admi
 	self.ME = "AdminDataSrvc: ";
 	var S = SharedSrvc;
 	var L = LogInSrvc;
+	
 	self.UserID = "";
 	self.UserName = "";
-	self.keyValues = [];
+	
+	//self.keyValues = [];
 
 	self.queryDB = function(phpFile){
 		var deferred = $q.defer();
@@ -157,7 +159,7 @@ app.service('AdminDataSrvc',['$http','$q','SharedSrvc','LogInSrvc',function admi
 	    return deferred.promise;
 	};
 
-	self.getIdValues = function(){
+	/*self.getIdValues = function(){
 		var deferred = $q.defer();
 		$http({method: 'POST', url: 'js/php/getIdVals.php'}).
 		success(function(data, status, headers, config) {
@@ -168,7 +170,7 @@ app.service('AdminDataSrvc',['$http','$q','SharedSrvc','LogInSrvc',function admi
 			deferred.reject(data);
 	    });
 	    return deferred.promise;
-	}
+	}*/
 
 
 	return self;
