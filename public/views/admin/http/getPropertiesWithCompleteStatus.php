@@ -12,7 +12,7 @@ $con = mysqli_connect(DATABASE_SERVER, DATABASE_USERNAME, DATABASE_PASSWORD,DATA
 $query = sprintf("SELECT * FROM properties 
 WHERE PRIMARY_ID IN (
 SELECT property FROM jobs_list 
-WHERE status = 'Active'");
+WHERE status = 'Complete')");
 $result = mysqli_query($con,$query);
 $resultValueObjects = array();
 while ($row = mysqli_fetch_object($result)) {

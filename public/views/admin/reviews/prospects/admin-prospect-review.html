@@ -1,7 +1,10 @@
-<div class="page" ng-controller="AdminProspectCtrl as ChildCtrl">
+<div class="page" ng-controller="ProspectJobsCtrl as ChildCtrl">
     <div class="title-with-btn">
-        <i ng-click="Ctrl.backToHome()" class="fa fa-arrow-circle-left fa-3x"></i>
+        <i ng-click="ChildCtrl.backToHome()" class="fa fa-arrow-circle-left fa-3x"></i>
         <h2>Prospects Review</h2>
+    </div>
+    <div class="standardParagraph">
+        <p>List of all jobs in which 'Status' is equal to 'Prospect'. (Proposal for Work hasnot yet been submitted)</p>
     </div>
     <div>
         <table st-table="ChildCtrl.tableDataProvider" class="table table-striped" style="width:100%;">
@@ -16,7 +19,7 @@
             </thead>
             <tbody>
                 <tr ng-repeat="row in ChildCtrl.tableDataProvider">
-                    <td>{{row.date}}</td>
+                    <td>{{row.date | date }}</td>
                     <td>{{row.rep}}</td>
                     <td>{{row.name}}</td>
                     <td>{{row.street}}</td>

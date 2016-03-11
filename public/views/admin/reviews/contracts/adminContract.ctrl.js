@@ -1,55 +1,68 @@
 'use strict';
 
-app.controller('AdminContractCtrl',['$state','AdminDataSrvc','$scope','AdminSharedSrvc',function ($state,AdminDataSrvc,$scope,AdminSharedSrvc) {
-	var DB =  AdminDataSrvc;
-	var ME = this;
-	var S = AdminSharedSrvc;
+app.controller('ContractJobsCtrl', ['$state', 'JobDataSrvc', '$scope', 'AdminSharedSrvc', function($state, JobDataSrvc, $scope, AdminSharedSrvc) {
+    var DB = JobDataSrvc;
+    var ME = this;
+    var S = AdminSharedSrvc;
 
-	ME.selectedProposal = {};
-	ME.selectDataProvider = [];
-	ME.salesRep = "";
-	
-	ME.selectContract = function(){
-		ME.salesRep = S.selectProposal(ME.selectedProposal.id);
-	};
+    ME.tableDataProvider = [];
+    var jobList = [];
+    var propertyList = [];
 
-	ME.backToHome = function(){
-		$state.transitionTo('admin');
-	}
+    ME.backToHome = function() {
+        $state.transitionTo('admin');
+    };
 
-	var init = function(){
-		if(S.openProposals.length === 0){
-			S.getJobsWithOpenProposals();
-			S.getPropertiesWithProposalJobStatus();	
-		}else{
-			S.resetProposalData();
-			parseProposals();
-		}
-	};
+    var getMyJobs = function() {
+    	DB.queryByStatus("JobsContract").then(function(result) {
+            if (result === false) {
+                alert("FALSE returned for DB.queryByStatus() at ActiveJobsCtrl >>> getMyJobs()");
+            } else {
+                jobList = result;
+                getMyProperties();
+            }
+        }, function(error) {
+            alert("ERROR returned for DB.queryByStatus() at ActiveJobsCtrl >>> getMyJobs()");
+        });
+    };
+
+    var getMyProperties = function() {
+    	DB.queryByStatus("PropertyContract").then(function(result) {
+            if (result === false) {
+                alert("FALSE returned for DB.queryByStatus() at ActiveJobsCtrl >>> getMyProperties()");
+            } else {
+                propertyList = result;
+                formatDataProvider();
+            }
+        }, function(error) {
+            alert("ERROR returned for DB.queryByStatus() at ActiveJobsCtrl >>> getMyProperties()");
+        });
+    };
+
+    var formatDataProvider = function(){
+    	ME.tableDataProvider = [];
+    	for (var i = 0; i < propertyList.length; i++) {
+    		var dpObj = {};
+    		dpObj.name = propertyList[i].name;
+    		dpObj.street = propertyList[i].street;
+    		dpObj.city = propertyList[i].city;
+    		
+    		for (var x = 0; x < jobList.length; x++) {
+    			if(jobList[x].property == propertyList[i].PRIMARY_ID){
+    				dpObj.date = jobList[x].dateContract;
+    			}
+    		}
+    		var repID = propertyList[i].manager;
+    		dpObj.rep = S.returnSalesRep(repID);
+    		
+    		ME.tableDataProvider.push(dpObj);
+    	}
+    };
 
 
-	var parseContracts = function(){
-		ME.selectDataProvider = [{label:"Select a Property",id:-1}];
-		var arr = S.openProposals;
-		for (var i = 0; i < arr.length; i++) {
-			var a =  arr[i].name;
-			var b =  arr[i].street;
-			var c =  arr[i].city;
-			var d =  arr[i].state;
-			var label = a + ", " + b + ", " + c + " " + d;
-			ME.selectDataProvider.push({label:label,id:i});
-		}
-		ME.selectedProposal = ME.selectDataProvider[0];
-	};
-
-	$scope.$on('onGetPropertiesWithProposalJobStatus', function() {
-		parseProposals();
+    $scope.$watch('$viewContentLoaded', function() {
+        getMyJobs();
+        console.log("ContractJobsCtrl >>> $viewContentLoaded");
     });
 
-	
-	$scope.$watch('$viewContentLoaded', function() {
-		console.log("AdminProposalCtrl >>> $viewContentLoaded");
-		init();
-    });
-
- }]);
+}]);

@@ -1,0 +1,26 @@
+<div class="page">
+    <div class="centered-content">
+        <div class="page-title">
+            <h2>Proposal Review and Approval</h2>
+        </div>
+        <div ui-view>
+            <div class="block-section">
+                <div class="login-form">
+                    <form name="loginForm" data-ng-submit="submitLoginForm()" novalidate>
+                        <div>
+                            <label>User Name</label>
+                            <input name="username" type="text" placeholder="User Name" ng-model="_username" required>
+                        </div>
+                        <div>
+                            <label>Pin #</label>
+                            <input style="width:4rem;" name="pin" type="text" placeholder="PIN" ng-model="_pin" required>
+                        </div>
+                        <div>
+                            <button type="submit" class="button">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,5 +1,5 @@
 'use strict';
-app.controller('AdminLoginCtrl',['$scope','$state','AdminDataSrvc','AdminSharedSrvc','LogInSrvc','serviceAWS','JobDataSrvc'
+app.controller('AdminLoginCtrl',['$scope','$state','AdminDataSrvc','AdminSharedSrvc','LogInSrvc','serviceAWS','JobDataSrvc',
     function ($scope,$state,AdminDataSrvc,AdminSharedSrvc,LogInSrvc,serviceAWS,JobDataSrvc) {
 
     // Inject all these Services so they get initiated and are ready for use later

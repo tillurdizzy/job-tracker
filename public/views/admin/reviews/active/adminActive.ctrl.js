@@ -1,6 +1,6 @@
 'use strict';
 
-app.controller('ActiveJobsCtrl', ['$state', 'JobDataSrvc', '$scope', 'AdminSharedSrvc', function($state, JobDataSrvc, $scope, AdminSharedSrvc) {
+app.controller('JobsActiveCtrl', ['$state', 'JobDataSrvc', '$scope', 'AdminSharedSrvc', function($state, JobDataSrvc, $scope, AdminSharedSrvc) {
     var DB = JobDataSrvc;
     var ME = this;
     var S = AdminSharedSrvc;
@@ -54,12 +54,13 @@ app.controller('ActiveJobsCtrl', ['$state', 'JobDataSrvc', '$scope', 'AdminShare
     		}
     		var repID = propertyList[i].manager;
     		dpObj.rep = S.returnSalesRep(repID);
+            ME.tableDataProvider.push(dpObj);
     	}
     };
 
 
     $scope.$watch('$viewContentLoaded', function() {
-        init();
+        getMyJobs();
         console.log("ActiveJobsCtrl >>> $viewContentLoaded");
     });
 

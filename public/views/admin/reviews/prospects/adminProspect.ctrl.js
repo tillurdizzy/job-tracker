@@ -1,17 +1,68 @@
 'use strict';
 
-app.controller('ProspectJobsCtrl',['$state','AdminDataSrvc','$scope','AdminSharedSrvc',function ($state,AdminDataSrvc,$scope,AdminSharedSrvc) {
-	var DB =  AdminDataSrvc;
-	var ME = this;
-	var S = AdminSharedSrvc;
+app.controller('ProspectJobsCtrl', ['$state', 'JobDataSrvc', '$scope', 'AdminSharedSrvc', function($state, JobDataSrvc, $scope, AdminSharedSrvc) {
+    var DB = JobDataSrvc;
+    var ME = this;
+    var S = AdminSharedSrvc;
 
-	ME.reviewList = [];
-	
-	ME.backToHome = function(){
-		$state.transitionTo('admin');
-	};
-	
-	$scope.$watch('$viewContentLoaded', function() {
-		console.log("ProspectJobsCtrl >>> $viewContentLoaded");
+    ME.tableDataProvider = [];
+    var jobList = [];
+    var propertyList = [];
+
+    ME.backToHome = function() {
+        $state.transitionTo('admin');
+    };
+
+    var getMyJobs = function() {
+    	DB.queryByStatus("JobsProspect").then(function(result) {
+            if (result === false) {
+                alert("FALSE returned for DB.queryByStatus() at ActiveJobsCtrl >>> getMyJobs()");
+            } else {
+                jobList = result;
+                getMyProperties();
+            }
+        }, function(error) {
+            alert("ERROR returned for DB.queryByStatus() at ActiveJobsCtrl >>> getMyJobs()");
+        });
+    };
+
+    var getMyProperties = function() {
+    	DB.queryByStatus("PropertyProspect").then(function(result) {
+            if (result === false) {
+                alert("FALSE returned for DB.queryByStatus() at ActiveJobsCtrl >>> getMyProperties()");
+            } else {
+                propertyList = result;
+                formatDataProvider();
+            }
+        }, function(error) {
+            alert("ERROR returned for DB.queryByStatus() at ActiveJobsCtrl >>> getMyProperties()");
+        });
+    };
+
+    var formatDataProvider = function(){
+    	ME.tableDataProvider = [];
+    	for (var i = 0; i < propertyList.length; i++) {
+    		var dpObj = {};
+    		dpObj.name = propertyList[i].name;
+    		dpObj.street = propertyList[i].street;
+    		dpObj.city = propertyList[i].city;
+    		
+    		for (var x = 0; x < jobList.length; x++) {
+    			if(jobList[x].property == propertyList[i].PRIMARY_ID){
+    				dpObj.date = jobList[x].dateProspect;
+    			}
+    		}
+    		var repID = propertyList[i].manager;
+    		dpObj.rep = S.returnSalesRep(repID);
+
+    		ME.tableDataProvider.push(dpObj);
+    	}
+    };
+
+
+    $scope.$watch('$viewContentLoaded', function() {
+        getMyJobs();
+        console.log("ActiveJobsCtrl >>> $viewContentLoaded");
     });
- }]);
+
+}]);

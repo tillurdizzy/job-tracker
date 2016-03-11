@@ -10,8 +10,8 @@ app.config(function($stateProvider, $urlRouterProvider) {
 
 		.state('login', {
 			url: "/login",
-			templateUrl:"views/login/admin-login.html",
-			controller:"AdminLoginCtrl"
+			templateUrl:"views/login/client-login.html",
+			controller:"ClientLoginCtrl"
 		})
 		.state('login.invalid', {
 			url: "/invalid",
@@ -24,7 +24,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
 		
 		.state('splash', {
 			url: "/splash",
-			templateUrl:"views/login/splash-admin.html"
+			templateUrl:"views/login/splash-client.html"
 		})
 		
 		

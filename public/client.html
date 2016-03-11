@@ -20,14 +20,14 @@
 </head>
 
 <body ng-app="ClientApp">
-    <div id="site-wrapper" ng-controller="NavCtrl as Ctrl">
+    <div id="site-wrapper">
         <div class="header-light" role="banner">
-            <div class="headerLogo" ng-click="Ctrl.goSplash();">
+            <div class="headerLogo">
                 <img src="img/evo-logo-black.png" alt="">
             </div>
             <div></div>
-            <div class="header-right" ng-click="Ctrl.goReference();">
-                <img src="img/GetEducatedIcon.png" alt="">
+            <div class="header-right">
+               
             </div>
         </div>
         <div>
@@ -39,19 +39,16 @@
     <script src="https://sdk.amazonaws.com/js/aws-sdk-2.0.0-rc1.min.js"></script>
     <script src="clientApp.js?v=1"></script>
     <!--Global Services-->
-    <!--<script src="js/lodash.js?v=3"></script>-->
+   
     <script src="js/AWSService.js?v=3"></script>
-    <script src="js/data.srvc.js?v=3"></script>
-    <script src="js/login.srvc.js?v=3"></script>
-    <script src="js/shared.srvc.js?v=3"></script>
-    <!--Admin-->
+
+    <script src="client/clientShared.srvc.js?v=3"></script>
+    <script src="client/clientData.srvc.js?v=3"></script>
+   
    
     <!--Controllers-->
-    <script src="views/login/admin-login.ctrl.js?v=3"></script>
-    <script src="js/tabbedMenu.ctrl.js?v=3"></script>
-    <script src="views/nav.ctrl.js?v=1"></script>
-    <!--Inventory-->
-    <script src="views/inventory/inventory.ctrl.js?v=1"></script>
+    <script src="views/login/client-login.ctrl.js?v=3"></script>
+   
     <!--Directives-->
     <script src="js/directives/hrule.dir.js?v=1"></script>
     <script src="js/directives/space.dir.js?v=1"></script>

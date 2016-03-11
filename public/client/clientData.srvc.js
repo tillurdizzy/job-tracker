@@ -1,10 +1,10 @@
 'use strict';
-app.service('AdminDataSrvc',['$http','$q','SharedSrvc','LogInSrvc',function adminData($http,$q,SharedSrvc,LogInSrvc){
+app.service('ClientDataSrvc',['$http','$q','ClientSharedSrvc',function adminData($http,$q,ClientSharedSrvc){
 	// This service provides DB interaction for a Shingle Job Proposal
 
 	var self = this;
-	self.ME = "AdminDataSrvc: ";
-	var S = SharedSrvc;
+	self.ME = "ClientDataSrvc: ";
+	var S = ClientSharedSrvc;
 	var L = LogInSrvc;
 	
 	self.UserID = "";

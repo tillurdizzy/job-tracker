@@ -7,7 +7,7 @@ app.service('LogInSrvc',[function logInSrvc(){
 	self.userID = 0;
 	self.userName = "";
 	self.userType = "";
-	self.jobID = 0;// we only use this if the user is of type client
+	self.jobID = 0;
 	self.showTopBar = false;
 	
 	//Called after successful Log In
@@ -16,7 +16,7 @@ app.service('LogInSrvc',[function logInSrvc(){
 		self.userID = self.userVO.PRIMARY_ID;
 		self.userName = self.userVO.name_first + " " + self.userVO.name_last;
 		self.userType = self.userVO.userType;
-		self.jobID = self.userVO.jobID; // If user is Client
+		self.jobID = self.userVO.jobID; 
 		self.loggedIn = true;
 		if(self.userType != "client"){
 			self.showTopBar = true;

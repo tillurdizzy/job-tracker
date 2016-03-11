@@ -1,7 +1,10 @@
-<div class="page" ng-controller="AdminContractCtrl as ChildCtrl">
+<div class="page" ng-controller="JobsActiveCtrl as ChildCtrl">
     <div class="title-with-btn">
-        <i ng-click="Ctrl.backToHome()" class="fa fa-arrow-circle-left fa-3x"></i>
+        <i ng-click="ChildCtrl.backToHome();" class="fa fa-arrow-circle-left fa-3x"></i>
         <h2>Active Jobs Review</h2>
+    </div>
+    <div class="standardParagraph">
+        <p>List of all jobs in which 'Status' is equal to 'Active' (i.e. workers are on the job site).</p>
     </div>
     <div>
         <table st-table="ChildCtrl.tableDataProvider" class="table table-striped" style="width:100%;">
