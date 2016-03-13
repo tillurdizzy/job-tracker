@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Evolution</title>
+    <title>Evolution Roofing Client Portal</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-COMPATIBLE" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, user-scalable=no">
@@ -14,15 +14,14 @@
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700italic' rel='stylesheet' type='text/css' />
     <link href='http://fonts.googleapis.com/css?family=Jaldi:400,700' rel='stylesheet' type='text/css' />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" />
-    <script src="https://plus.google.com/js/client:platform.js" async defer></script>
     <link rel="stylesheet" href="css/app.css?v=5" />
     <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 </head>
 
 <body ng-app="ClientApp">
-    <div id="site-wrapper">
+    <div id="site-wrapper" ng-controller="NavCtrl as Ctrl">
         <div class="header-light" role="banner">
-            <div class="headerLogo">
+            <div class="headerLogo" ng-click="Ctrl.goSplash();">
                 <img src="img/evo-logo-black.png" alt="">
             </div>
             <div></div>
@@ -38,16 +37,18 @@
     <!--APP-->
     <script src="https://sdk.amazonaws.com/js/aws-sdk-2.0.0-rc1.min.js"></script>
     <script src="clientApp.js?v=1"></script>
-    <!--Global Services-->
-   
-    <script src="js/AWSService.js?v=3"></script>
+    <script src="js/login.srvc.js?v=3"></script>
+    <script src="js/shared.srvc.js?v=3"></script>
 
+    <!--Global Services-->
+    <script src="js/AWSService.js?v=3"></script>
     <script src="client/clientShared.srvc.js?v=3"></script>
     <script src="client/clientData.srvc.js?v=3"></script>
    
-   
     <!--Controllers-->
     <script src="views/login/client-login.ctrl.js?v=3"></script>
+    <script src="views/nav.ctrl.js?v=3"></script>
+    <script src="client/views/review.ctrl.js?v=3"></script>
    
     <!--Directives-->
     <script src="js/directives/hrule.dir.js?v=1"></script>

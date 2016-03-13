@@ -1,5 +1,5 @@
 'use strict';
-var app = angular.module('ClientApp', ['ui.router','ngSanitize','ngUnderscore','directive.g+signin']);
+var app = angular.module('ClientApp', ['ui.router','ngSanitize','ngUnderscore']);
 
 app.config(function($stateProvider, $urlRouterProvider) {
  	
@@ -15,16 +15,26 @@ app.config(function($stateProvider, $urlRouterProvider) {
 		})
 		.state('login.invalid', {
 			url: "/invalid",
-			templateUrl:"views/login/admin-login-invalid.html"
+			templateUrl:"views/login/client-login-invalid.html"
 		})
 		.state('login.success', {
 			url: "/success",
-			templateUrl:"views/login/admin-login-success.html"
+			templateUrl:"views/login/client-login-success.html"
 		})
 		
 		.state('splash', {
 			url: "/splash",
 			templateUrl:"views/login/splash-client.html"
+		})
+
+		.state('review', {
+			url: "/review",
+			templateUrl:"client/views/review.html"
+		})
+
+		.state('approval', {
+			url: "/approval",
+			templateUrl:"client/views/approval.html"
 		})
 		
 		

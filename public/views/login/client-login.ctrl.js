@@ -1,89 +1,77 @@
 'use strict';
-app.controller('ClientLoginCtrl',['$scope','$state','ClientDataSrvc','ClientSharedSrvc','LogInSrvc','serviceAWS',
-    function ($scope,$state,ClientDataSrvc,ClientSharedSrvc,LogInSrvc,serviceAWS,JobDataSrvc) {
+app.controller('ClientLoginCtrl', ['$scope', '$state', 'ClientSharedSrvc', 'ClientDataSrvc', 'serviceAWS',
+    function($scope, $state, ClientSharedSrvc, ClientDataSrvc, serviceAWS) {
 
-    // Inject all these Services so they get initiated and are ready for use later
-    var DB = ClientDataSrvc;
-    var S = ClientSharedSrvc;
-    var L = LogInSrvc;
-    var A = serviceAWS;
-    var J = JobDataSrvc;
+        // Inject all these Services so they get initiated and are ready for use later
+        var DB = ClientDataSrvc;
+        var C = ClientSharedSrvc;
+        var A = serviceAWS;
 
-    $scope.displayName="";
-    $scope.loginObj={};
-   
-    $scope.credentialsInvalid = false;
-   
+        $scope.displayName = "";
+        $scope.clientObj = {};
 
-    $scope.continueBtn = function(){
-        $state.transitionTo("admin");
-    };
-
-    $scope.logOut = function(){
-        $scope.displayName="";
-        S.logOut();
-        L.logOut();
-        DB.logOut();
-        $state.transitionTo("splash");
-    };
-
-    // Depracated log in form before google - still use during production
-    $scope.submitLoginForm = function(){
-        $scope.loginSuccess = null;
-        $scope.requestSuccess = false;
-        $scope.submissionInvalid = false;
-
-        var dataObj = new Object();
-        dataObj.name_user = this._username;
-        dataObj.pin = this._pin;
-
-        dataObj.name_user = "smartin";
-        dataObj.pin = "7663";
-
-        var result = DB.clientLogIn(dataObj).then(function(result){
-            if(result != false){
-                // DB sets basic log in data for Shared Srvc and LogIn Srvc
-                $scope.loginObj = result[0];
-                onLogInSuccess();
-            }else{
-                $scope.loginSuccess = false;
-            }
-        },function(error){
-                $scope.loginSuccess = false;
-                $scope.dataError();
-            });
-    };
-
-
-    var onLogInSuccess = function(){
-        var userType = $scope.loginObj.userType;
-        $scope.displayName = $scope.loginObj.name_first + " " + $scope.loginObj.name_last;
-        if(userType == "admin"){
-            A.initAWS($scope.googleAuthResult.id_token);
-            $state.transitionTo("login.success");
-        }else{
-            $state.transitionTo("login.invalid");
-        }
-    };
-
-    $scope.dataError = function(){
-
-    };
-
-    var checkForLogIn = function(){
-       
-        var login = S.loggedIn;
-        $scope.dataRefreshed = S.dataRefreshed;
-        if (login===true) {
-            $scope.loginSuccess=true;
-            $scope.requestSuccess = true;
-            $scope.displayName=S.clientName;
+        $scope.continueBtn = function() {
+            $state.transitionTo("review");
         };
-    };
 
-    $scope.$watch('$viewContentLoaded', function() {
-       checkForLogIn();
-    });
-    
+        $scope.logOut = function() {
+            $scope.displayName = "";
+            C.logOut();
+            DB.logOut();
+            $state.transitionTo("splash");
+        };
 
- }]);
+        $scope.submitLoginForm = function() {
+           
+            $scope.submissionInvalid = false;
+
+            var dataObj = new Object();
+            dataObj.username = this._username;
+            dataObj.PIN = this._pin;
+
+            dataObj.username = "rode";
+            dataObj.PIN = "1234";
+
+            DB.clientLogIn(dataObj).then(function(result) {
+                if (result === false || typeof result === 'string') {
+                    onLogInFail();
+                    console.log("submitLoginForm ---- " + result);
+                } else {
+                    $scope.clientObj = result[0];
+                    onLogInSuccess();
+                }
+            }, function(error) {
+                alert("clientLogIn Error");
+            });
+        };
+
+
+        var onLogInSuccess = function() {
+            $scope.displayName = $scope.clientObj.name_first + " " + $scope.clientObj.name_last;
+            //A.initAWS($scope.googleAuthResult.id_token);
+            $state.transitionTo("login.success");
+
+            // C.LogIn also triggers pulling the Client's job(s)
+            // Which will in turn pull the associated Property VO's
+            // When complete broadcasts "on-client-properties-complete"
+            C.LogIn($scope.displayName,$scope.clientObj);
+        };
+
+        var onLogInFail = function() {
+            $state.transitionTo("login.invalid");
+        };
+
+
+       
+
+        $scope.$on('on-client-properties-complete', function(event, data) {
+            
+        });
+
+        $scope.$watch('$viewContentLoaded', function() {
+            //checkForLogIn();
+        });
+
+
+    }
+]);

@@ -1,0 +1,118 @@
+<div class="page" ng-controller="ReviewCtrl as CTRL">
+    <div class="page-title">
+        <h2>Work Proposal</h2>
+    </div>
+    <div class="section-header">
+        <h2>Proposal For</h2>
+    </div>
+    <div class="block-section-width text-block-display" style="padding-right: 2rem;">
+        <div class="flex-space-between">
+            <div>
+                <h4>Client/Owner</h4>
+                <h3>{{CTRL.C.clientObj.displayName}}</h3>
+                <h3>{{CTRL.C.clientObj.street}}</h3>
+                <h3>{{CTRL.C.clientObj.city + ", " + CTRL.C.clientObj.state + " " + CTRL.C.clientObj.zip}}</h3>
+                <h3>{{CTRL.C.clientObj.phone_cell}}</h3>
+                <h3>{{CTRL.C.clientObj.email}}</h3>
+            </div>
+            <div>
+            </div>
+            <div>
+                <h4>Property</h4>
+                <h3>{{CTRL.C.propertyObj.name}}</h3>
+                <h3>{{CTRL.C.propertyObj.street}}</h3>
+                <h3>{{CTRL.C.propertyObj.city + ", " + CTRL.C.propertyObj.state + " " + CTRL.C.propertyObj.zip}}</h3>
+            </div>
+        </div>
+    </div>
+    <div class="section-header">
+        <h2>Existing Roof Assembly</h2>
+    </div>
+    <div class="block-section-width text-block-display">
+        <p>A strictly visual inspection of the existing roof assembly on the above referenced property was made on {{CTRL.C.propertyObj.createdDate | date:'fullDate'}}.  To the best of our knowledge the following statements represent as accurate a description as possible from the limited observations.</p>
+
+        <h3>Description</h3>
+        <ul>
+            <li>Deck Type: {{CTRL.C.existingRoofDescription.deck}}</li>
+            <li>Shingles Type: {{CTRL.C.existingRoofDescription.shingles}}</li>
+            <li>Edge Detail: {{CTRL.C.existingRoofDescription.edge}}</li>
+            <li>Valley Detail: {{CTRL.C.existingRoofDescription.valley}}</li>
+            <li>Ridge Detail: {{CTRL.C.existingRoofDescription.ridge}}</li>
+            <li>Ventilation: {{CTRL.C.existingRoofDescription.ventilation}}</li>
+        </ul>
+
+        <h3>Measurements and Counts</h3>
+        <ul>
+            <li>Roof Area in Squares (10ft x 10ft): {{CTRL.C.jobParameters.FIELD}}</li>
+            <li>Perimiter (LF): {{CTRL.C.jobParameters.PRMITR}}</li>
+            <li>Average Pitch: {{CTRL.C.jobParameters.PITCH}}</li>
+            <li>Top Ridge (LF): {{CTRL.C.jobParameters.TOPRDG}}</li>
+            <li>Rake Ridge (LF): {{CTRL.C.jobParameters.RKERDG}}</li>
+            <li>Rake Wall (LF): {{CTRL.C.jobParameters.FLHSH8}}</li>
+            <li>Valley (LF): {{CTRL.C.jobParameters.VALLEY}}</li>
+            <li>Plumbing Vents: {{CTRL.C.existingRoofDescription.plumbingVents}}</li>
+            <li>Heater Vents: {{CTRL.C.existingRoofDescription.heaterVents}}</li>
+            <li>Turbine Vents: {{CTRL.C.existingRoofDescription.turbines}}</li>
+        </ul>
+    </div>
+    <div class="section-header">
+        <h2>Baseline Proposal</h2>
+    </div>
+    <div class="block-section-width text-block-display">
+        <p>Evolution Roofing Systems recommends the following as a <span class="bold">baseline</span> roof assembly.  Options for a premium assembly to follow in the next section.</p>
+        <h3>Field Shingles</h3>
+        <a href="http://www.gaf.com/Roofing/Residential/Products/Shingles/Timberline"><h5>GAF Timberline 'Lifetime' Shingles</h5></a>
+
+        <h3>Ridge Shingles</h3>
+        <a href="http://www.gaf.com/Roofing/Residential/Products/Shingles/3_Tab/Royal_Sovereign/Features"><h5>GAF Royal Sovereign</h5></a>
+
+        <h3>Starter Shingles</h3>
+        <a href="http://www.gaf.com/Roofing/Residential/Products/Starter_Strip_Shingles/ProStart"><h5>GAF Pro-Start Strip Shingles</h5></a>
+
+        <h3>Attic Ventilation</h3>
+        <a href="http://www.gaf.com/Roofing/Residential/Products/Roof_Vents/Cobra_Rigid_Vent_3"><h5>Cobra Ridge Vent 3 </h5></a>
+
+        <h3>Drip Edge</h3>
+        <h5>1.5" x 1.5" Pre-Painted</h5>
+
+        <h3>Valleys</h3>
+        <h5>Laced with 20" Galvanzied Steel Subflashing</h5>
+        
+    </div>
+    <div class="section-header">
+        <h2>Premium Upgrade Options</h2>
+    </div>
+    <div class="block-section-width text-block-display">
+        <p>Evolution Roofing Systems recommends the following upgrade options.</p>
+        <h3>Field Shingles</h3>
+        <a href="http://www.gaf.com/Roofing/Residential/Products/Shingles/Specialty"><h5>GAF Specialty Roofing Shingles</h5></a>
+        <p>Higher impact resistance and energy savings.</p>
+        <h3>Enhanced Ridge Shingles</h3>
+        <p>The perfect finishing touch for your new roof should be a distinctive Ridge Cap shingle, which provide a striking and higher quality alternative to using cut-up strip shingles as your ridge cap.</p>
+        <div>
+            <img src="img/icon-timbertex2.jpg" alt="">
+            <img src="img/Z-Ridge_02.gif" alt="">
+        </div>
+        <a href="http://www.gaf.com/Roofing/Residential/Products/Ridge_Cap_Shingles"><h5>GAF Hip and Ridge Cap Shingles</h5></a>
+        <h3>Enhanced Valley Flashing</h3>
+        <p>'W' Style Flashing for </p>
+        <h3>Edge Trim Boards</h3>
+        <p>1"x 2" treated board added to perimiter before drip edge for both visual enhancement and improved water flow control over edge.</p>
+    </div>
+    <div class="section-header">
+        <h2>Cost Estimate</h2>
+    </div>
+    <div class="block-section-width text-block-display">
+        <h4>Materials and Labor</h4>
+    </div>
+    <div class="section-header">
+        <h2>Agreement Terms</h2>
+    </div>
+    <div class="block-section-width text-block-display">
+    </div>
+    <div class="section-header">
+        <h2>Acceptance of Contract</h2>
+    </div>
+    <div class="block-section-width text-block-display">
+    </div>
+</div>
