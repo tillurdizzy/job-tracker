@@ -405,7 +405,8 @@ h5 {
   font-family: 'Open Sans', sans-serif; }
 
 p {
-  font-size: .9em; }
+  font-size: .9em;
+  line-height: 1.1rem; }
 
 .fui-triangle-up:before {
   content: "\e600"; }
@@ -1977,3 +1978,48 @@ table {
 @media all and (max-height: 900px) {
   footer {
     display: none; } }
+
+.section-header-client {
+  margin: 1rem 0 .5rem 0;
+  height: 1.7rem;
+  background-color: #1ABC9C;
+  color: #FFF; }
+  .section-header-client h2 {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.7rem;
+    vertical-align: middle;
+    margin: 0 .3rem;
+    display: inline-block; }
+  .section-header-client i {
+    color: #1ABC9C;
+    font-size: 1.5rem;
+    display: inline-block;
+    cursor: pointer; }
+
+.indent-block-client {
+  margin-left: 1rem; }
+  .indent-block-client h3 {
+    font-weight: bold;
+    margin-top: 1rem; }
+    .indent-block-client h3 .first-item {
+      margin-top: 0; }
+  .indent-block-client .hilite {
+    color: #8E44AD;
+    font-weight: bold; }
+  .indent-block-client ul {
+    margin-left: 1rem; }
+  .indent-block-client a:link {
+    font-weight: normal; }
+  .indent-block-client h5 {
+    font-weight: normal; }
+
+.total-bar {
+  margin: 1rem .5rem .5rem 0;
+  height: 1.7rem;
+  background-color: #C0392B;
+  color: #FFF; }
+  .total-bar h2 {
+    float: right;
+    margin-right: 1.5rem; }

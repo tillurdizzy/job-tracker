@@ -1,0 +1,64 @@
+
+.section-header-client{
+  margin:1rem 0 .5rem 0;
+  height:1.7rem;
+  background-color:$turquois-green;
+  color:#FFF;
+  h2{
+    font-family: 'Open Sans', sans-serif;
+    font-size:1rem;
+    font-weight: 600;
+    line-height: 1.7rem;
+    vertical-align: middle;
+    margin:0 .3rem;
+    display:inline-block;
+  }
+  i{
+    color:$turquois-green;
+    font-size: 1.5rem;
+    display:inline-block;
+    cursor:pointer;
+  }
+}
+
+.indent-block-client{
+  margin-left:1rem;
+  h3{
+    font-weight: bold;
+    margin-top:1rem;
+    .first-item{
+      margin-top:0;
+    }
+  }
+  p{
+    
+  }
+
+  .hilite{
+    color:$wisteria-purple;
+    font-weight: bold;
+  }
+
+  ul{
+    margin-left:1rem;
+  }
+  a:link{
+    font-weight: normal;
+  }
+
+  h5{
+    font-weight: normal;
+  }
+
+}
+
+.total-bar{
+  margin:1rem .5rem .5rem 0;
+  height:1.7rem;
+  background-color:$tertiary-darker;
+  color:#FFF;
+  h2{
+    float:right;
+    margin-right:1.5rem;
+  }
+}
