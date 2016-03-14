@@ -2020,6 +2020,9 @@ table {
   height: 1.7rem;
   background-color: #C0392B;
   color: #FFF; }
-  .total-bar h2 {
+  .total-bar .left {
+    float: left;
+    margin-left: 1rem; }
+  .total-bar .right {
     float: right;
-    margin-right: 1.5rem; }
+    margin-right: 1rem; }

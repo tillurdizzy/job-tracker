@@ -31,6 +31,7 @@
     <div class="block-section-width text-block-display">
         <p>A strictly visual inspection of the existing roof assembly on the above referenced property was made on {{CTRL.C.propertyObj.createdDate | date:'fullDate'}}. To the best of our knowledge the following statements represent as accurate a description as possible from the limited observations.</p>
         <div class="indent-block-client">
+        <div>
             <h3>Description</h3>
             <ul>
                 <li>Deck Type: {{CTRL.C.existingRoofDescription.deck}}</li>
@@ -40,6 +41,8 @@
                 <li>Ridge Detail: {{CTRL.C.existingRoofDescription.ridge}}</li>
                 <li>Ventilation: {{CTRL.C.existingRoofDescription.ventilation}}</li>
             </ul>
+            </div>
+            <div>
             <h3>Measurements and Counts</h3>
             <ul>
                 <li>Roof Area in Squares (10ft x 10ft): {{CTRL.C.jobParameters.FIELD}}</li>
@@ -53,6 +56,7 @@
                 <li>Heater Vents: {{CTRL.C.existingRoofDescription.heaterVents}}</li>
                 <li>Turbine Vents: {{CTRL.C.existingRoofDescription.turbines}}</li>
             </ul>
+            </div>
         </div>
     </div>
     <div class="section-header-client">
@@ -68,44 +72,48 @@
             <p>Install new #15 Asphalt Saturated Organic Felt underlayment over entire roof deck. Without the felt layer, the wood planking or plywood deck - dried by heated temperatures found in most attics - will draw moisture (including tar and oils from the asphalt) from the shingles. The result will be shingles that are prematurely worn, cracked, brittle, as well as stuck to the wood surface when you attempt to remove them.</p>
 
             <h3>3. Install Premium Trim (if selected)</h3>
+            <p class="hilite">See below to select this Premium Upgrade.</p>
 
             <h3>4. Install New Drip Edge</h3>
             <p>1.5" x 1.5" pre-painted to match the fascia or the roof color as chosen by owner.</p>
-            <p class="hilite">See below to select this Premium Upgrade.</p>
-
-            <h3>4. Install New Valley Flashing</h3>
+           
+            <h3>5. Install New Valley Flashing</h3>
             <p>20" galvanzied steel subflashing; laced; tail ends extending a minimum of 1" past the fascia board intersection.</p>
             <p class="hilite">Premium upgrade available below for this product.</p>
 
-            <h3>5. Install Starter Shingles</h3>
+            <h3>6. Install Starter Shingles</h3>
             <a href="http://www.gaf.com/Roofing/Residential/Products/Starter_Strip_Shingles/ProStart" target="_blank"><h5>GAF Pro-Start Strip Shingles</h5></a>
             <p>Starter shingles are the first row of shingles installed along the entire perimeter of the roof. Evolution will install GAF Pre-cut Starter Strips.  Some contractors try to use a cut-up field shingle as the 'starter' course on your roof. Unfortunately, cut-up shingles may not have properly positioned adhesive to ensure adequate wind resistance.</p>
             
-            <h3>6. Install Field Shingles</h3>
-            <a href="http://www.gaf.com/Roofing/Residential/Products/Shingles/Timberline" target="_blank"><h5>GAF Timberline 'Lifetime' Shingles</h5></a>
+            <h3>7. Install Field Shingles</h3>
+            <a href="http://www.gaf.com/Roofing/Residential/Products/Shingles/Timberline/Natural_Shadow" target="_blank"><h5>GAF Timberline Natural Shadow</h5></a>
             <p>Evolution will install the above GAF Timberline Field shingles using four (4) nails per shingle. High wind or steep pitch application shall receive six (6) nails per shingle in accordance with manufacturers specifications when applicable.</p>
             <p class="hilite">Premium upgrade available below for this product.</p>
 
-            <h3>7. Attic Ventilation</h3>
+            <h3>8. Attic Ventilation</h3>
             <a href="http://www.gaf.com/Roofing/Residential/Products/Roof_Vents/Cobra_Rigid_Vent_3" target="_blank"><h5>Cobra Ridge Vent 3 </h5></a>
             <p>Evolution will install a ridge vent attic ventilation system in accordance with the manufacturer's recommendations.</p>
             
-            <h3>8. Ridge Shingles</h3>
+            <h3>9. Ridge Shingles</h3>
             <a href="http://www.gaf.com/Roofing/Residential/Products/Shingles/3_Tab/Royal_Sovereign/Features" target="_blank"><h5>GAF Royal Sovereign</h5></a>
             <p>Evolution will install standard ridge shingles over the ventilation system.</p>
             <p class="hilite">Premium upgrade available below for this product.</p>
 
-            <h3>9. Pipes and Vents</h3>
+            <h3>10. Pipes and Vents</h3>
             <p>Evolution will install new plumbing pipes and vent stacks as needed, and paint to match roof color as close as possible</p>
          
-            <total-bar price="2456.89"></total-bar>
+            <total-bar price="2456.89" label="Sub-Total"></total-bar>
         </div>
     </div>
     <div class="section-header-client">
         <h2>Premium Upgrade Options</h2>
     </div>
     <div class="block-section-width text-block-display">
-        <p>Evolution Roofing Systems recommends the following upgrade options.</p>
+        <!-- <div>
+            <button type="button" style="width:100%; margin-top: 1rem;" ng-click="CTRL.goLogin();">Premium Field Shingles</button>
+            <button type="button" style="width:100%; margin-top: 1rem;" ng-click="CTRL.goLogin();">Enhanced Ridge Shingles</button>
+            <button type="button" style="width:100%; margin-top: 1rem;" ng-click="CTRL.goLogin();">Premium W-Valley Flashing</button>
+        </div> -->
         <div class="indent-block-client">
             <h3 class="first-item">Premium Field Shingles</h3>
             <a href="http://www.gaf.com/Roofing/Residential/Products/Shingles/Specialty" target="_blank"><h5>GAF Specialty Roofing Shingles</h5></a>
@@ -146,7 +154,7 @@
                 <label for="trimCB"><span></span>Upgrade to Enhanced Trim for an additional $...</label>
             </div>
             <horiz-rule margintop="5" marginbottom="5"></horiz-rule>
-            <total-bar price="0"></total-bar>
+            <total-bar price="0" label="Total With Upgrades"></total-bar>
         </div>
     </div>
     <div class="section-header-client">

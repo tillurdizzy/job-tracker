@@ -2,7 +2,8 @@ app.directive('totalBar',[function () {
     return {
       restrict: 'E',
       scope:{
-        price:'@'
+        price:'@',
+        label:'@'
       },
       templateUrl:'client/views/total-bar.tpl.html',
       link: function(scope, elm, attrs) {

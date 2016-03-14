@@ -10,7 +10,12 @@ app.service('AdminDataSrvc',['$http','$q','SharedSrvc','LogInSrvc',function admi
 	self.UserID = "";
 	self.UserName = "";
 	
-	//self.keyValues = [];
+	var localPathPrefix="views/admin/http/";
+	var globalPathPrefix="js/php/";
+
+	var queryPaths = {
+		
+	};
 
 	self.queryDB = function(phpFile){
 		var deferred = $q.defer();

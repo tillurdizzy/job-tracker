@@ -1,6 +1,6 @@
 'use strict';
 app.service('ClientDataSrvc',['$http','$q',function ($http,$q){
-	// This service provides DB interaction for a Shingle Job Proposal
+	
 
 	var self = this;
 	self.ME = "ClientDataSrvc: ";
@@ -18,7 +18,9 @@ app.service('ClientDataSrvc',['$http','$q',function ($http,$q){
 		getJobParameters:"views/proposals/http/getJobParameters.php",
 		getKeyValuePairs:globalPathPrefix + "getIdVals.php",
 		getMultiVents:globalPathPrefix + "getMultiVents.php",
-		getMultiLevel:globalPathPrefix + "getMultiLevel.php"
+		getMultiLevel:globalPathPrefix + "getMultiLevel.php",
+		getMaterialsList:"views/admin/http/getMaterialsShingle.php",
+		getJobMaterials:"views/admin/http/getJobMaterials.php"
 	};
 
 

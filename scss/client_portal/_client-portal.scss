@@ -57,8 +57,16 @@
   height:1.7rem;
   background-color:$tertiary-darker;
   color:#FFF;
-  h2{
+  .left{
+    float:left;
+    margin-left:1rem;
+  }
+  .right{
     float:right;
-    margin-right:1.5rem;
+    margin-right:1rem;
+  }
+  h2{
+   
+    
   }
 }
