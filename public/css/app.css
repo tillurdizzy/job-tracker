@@ -1317,25 +1317,25 @@ div.upload input {
 
 .property-summary-item {
   display: flex;
-  height: 2.25em;
+  height: 2.25rem;
   margin-top: 6px;
   background-color: #ECF0F1;
   border-bottom: 1px solid #E74C3C; }
   .property-summary-item .property-summary-text {
-    height: 2.25em;
+    height: 2.25rem;
     margin-left: 5px;
     overflow: hidden; }
     .property-summary-item .property-summary-text h4 {
       margin-left: 5px;
-      line-height: 2.25em;
+      line-height: 2.25rem;
       vertical-align: middle; }
   .property-summary-item .property-summary-icon {
-    height: 2.25em;
+    height: 2.25rem;
     margin-left: 5px;
     cursor: pointer; }
     .property-summary-item .property-summary-icon i {
-      height: 2.25em;
-      font-size: 2.25em;
+      height: 2.25rem;
+      font-size: 2.25rem;
       color: #1ABC9C;
       vertical-align: middle; }
 
@@ -1997,6 +1997,26 @@ table {
     font-size: 1.5rem;
     display: inline-block;
     cursor: pointer; }
+
+.upgrade-level {
+  height: 2.25rem;
+  display: flex; }
+  .upgrade-level .upgrade-icon {
+    height: 2.25rem;
+    margin: 0 5px;
+    cursor: pointer; }
+    .upgrade-level .upgrade-icon i {
+      height: 2.25rem;
+      font-size: 2.25rem;
+      color: #1ABC9C;
+      vertical-align: middle; }
+  .upgrade-level .hilite {
+    color: #3498DB !important; }
+
+.upgrade-selections {
+  margin-left: 2.2rem; }
+  .upgrade-selections .upgrade-item .check-radio-container label {
+    font-size: 1.1rem; }
 
 .indent-block-client {
   margin-left: 1rem; }
