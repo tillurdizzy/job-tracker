@@ -258,8 +258,8 @@ app.service('SharedSrvc',['$rootScope',function sharedVars($rootScope){
 
 	self.shingleGradeOptions = [
 		{label:"Standard (Three-Tab, Strip)",id:1},
-		{label:"Dimensional (Architectural, Laminated)",id:2},
-		{label:"Premium (Specialty, Designer)",id:3},
+		{label:"Dimensional / Architectural",id:2},
+		{label:"Premium / Specialty / Designer)",id:3},
 		{label:"Other",id:4}];
 
 	self.roofDeckOptions = [

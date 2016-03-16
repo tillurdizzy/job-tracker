@@ -2,6 +2,7 @@
 class materialsShingleVO{
 	var $PRIMARY_ID;
 	var $Sort;
+	var $Category;
 	var $Manufacturer;
 	var $Item;
 	var $Code;
@@ -9,9 +10,10 @@ class materialsShingleVO{
 	var $QtyPkg;
 	var $UnitPkg;
 	var $PkgPrice;
+	var $QtyCoverage;
 	var $RoundUp;
 	var $Margin;
-	var $Overage;
+	var $url;
 	var $InputParam;
 	var $Default;
 

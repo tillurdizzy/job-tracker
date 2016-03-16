@@ -1,0 +1,14 @@
+<div ng-controller="PitchedRoofInventoryCtrl as Invt">
+	<div class="page-title">
+        <h2>Pitched Roof Inventory Management</h2>
+    </div>
+
+    <div class="admin-menu">
+        <button type="button" class="button radius" ng-click="Invt.addItem()">Add Item</button>
+        <button type="button" class="button radius" ng-click="Invt.updateItem()">Update Item</button>
+        <button type="button" class="button radius" ng-click="Invt.removeItem()">Remove Item</button>
+    </div>
+    <div ui-view>
+        Select from menu
+    </div>
+</div>

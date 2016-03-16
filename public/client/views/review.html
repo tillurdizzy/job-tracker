@@ -30,8 +30,8 @@
     </div>
     <div class="block-section-width text-block-display">
         <p>A strictly visual inspection of the existing roof assembly on the above referenced property was made on {{CTRL.C.propertyObj.createdDate | date:'fullDate'}}. To the best of our knowledge the following statements represent as accurate a description as possible from the limited observations.</p>
-        <div class="indent-block-client">
-            <div>
+        <div class="flex-space-between">
+            <div class="indent-block-client">
                 <h3>Description</h3>
                 <ul>
                     <li>Deck Type: {{CTRL.C.existingRoofDescription.deck}}</li>
@@ -42,7 +42,7 @@
                     <li>Ventilation: {{CTRL.C.existingRoofDescription.ventilation}}</li>
                 </ul>
             </div>
-            <div>
+            <div class="indent-block-client" style="padding-right:3rem;">
                 <h3>Measurements and Counts</h3>
                 <ul>
                     <li>Roof Area in Squares (10ft x 10ft): {{CTRL.C.jobParameters.FIELD}}</li>
@@ -68,13 +68,13 @@
             <h3 class="first-item">1. Pre-install</h3>
             <p>Remove existing roof system from the roof deck and haul from the site. Prepare the roof deck by nailing all raised nails and clearing debris from the roof surface left from the previous application.</p>
             <h3>2. Install Felt Underlayment</h3>
-            <p>Install new #15 Asphalt Saturated Organic Felt underlayment over entire roof deck. Without the felt layer, the wood planking or plywood deck - dried by heated temperatures found in most attics - will draw moisture (including tar and oils from the asphalt) from the shingles. The result will be shingles that are prematurely worn, cracked, brittle, as well as stuck to the wood surface when you attempt to remove them.</p>
+            <p>Install new #15 Asphalt Saturated Organic Felt underlayment over entire roof deck.</p>
             <h3>3. Install Premium Trim (if selected)</h3>
             <p class="hilite">See below to select this Premium Upgrade.</p>
             <h3>4. Install New Drip Edge</h3>
-            <p>1.5" x 1.5" pre-painted to match the fascia or the roof color as chosen by owner.</p>
+            <p>2" x 2" pre-painted to match the fascia or the roof color as chosen by owner (minimum IBC Building Code Standard).</p>
             <h3>5. Install New Valley Flashing</h3>
-            <p>20" galvanzied steel subflashing; laced; tail ends extending a minimum of 1" past the fascia board intersection.</p>
+            <p>36" wide valley underlayment covered with laced shingles; tail ends extending a minimum of 1" past the fascia board intersection.</p>
             <p class="hilite">Premium upgrade available below for this product.</p>
             <h3>6. Install Starter Shingles</h3>
             <a href="http://www.gaf.com/Roofing/Residential/Products/Starter_Strip_Shingles/ProStart" target="_blank"><h5>GAF Pro-Start Strip Shingles</h5></a>
@@ -92,7 +92,6 @@
             <p class="hilite">Premium upgrade available below for this product.</p>
             <h3>10. Pipes and Vents</h3>
             <p>Evolution will install new plumbing pipes and vent stacks as needed, and paint to match roof color as close as possible</p>
-
             <total-bar price="{{CTRL.baseLineTotal}}" label="Baseline Total"></total-bar>
         </div>
     </div>
@@ -107,10 +106,16 @@
             </div>
             <div class="upgrade-label">
                 <h2>Premium Field Shingles</h2>
-                <i class="fa fa-check-square" ng-show="CTRL.UpgradeFieldShingleSelection!='GAFTBRNAT'"></i>
+                <i class="fa fa-check-square" ng-show="CTRL.UpgradeFieldShingleSelection!='GAFROYSOV'"></i>
             </div>
         </div>
         <div class="upgrade-selections" ng-show="CTRL.showUpgrades.field">
+            <div class="upgrade-item">
+                <div class="check-radio-container" style="margin-bottom:10px;">
+                    <input type="radio" id="Grp1Z" name="Grp1" value="GAFROYSOV" ng-model="CTRL.UpgradeFieldShingleSelection" ng-change="CTRL.calculateTotal()"></input>
+                    <label for="Grp1Z"><span></span>GAF Royal Sovereign Three-Tab (+ $0)<a href="http://www.gaf.com/Roofing/Residential/Products/Shingles/3_Tab" target="_blank"> More</a></label>
+                </div>
+            </div>
             <div class="upgrade-item">
                 <div class="check-radio-container" style="margin-bottom:10px;">
                     <input type="radio" id="Grp1A" name="Grp1" value="GAFTBRNAT" ng-model="CTRL.UpgradeFieldShingleSelection" ng-change="CTRL.calculateTotal()"></input>
@@ -149,8 +154,6 @@
             </div>
             <horiz-rule margintop="5" marginbottom="15"></horiz-rule>
         </div>
-
-
         <div class="upgrade-level">
             <div class="upgrade-icon">
                 <i class="fa fa-arrow-circle-down" ng-click="CTRL.showUpgrades.ridge=true" ng-hide="CTRL.showUpgrades.ridge"></i>
@@ -165,7 +168,7 @@
             <div class="upgrade-item">
                 <div class="check-radio-container" style="margin-bottom:10px;">
                     <input type="radio" id="Grp2A" name="Grp2" value="Default" ng-model="CTRL.UpgradeRidgeSelection" ng-change="CTRL.calculateTotal()"></input>
-                    <label for="Grp2A"><span></span>GAF Royal Sovereign (+ $0) <a href="http://www.gaf.com/Roofing/Residential/Products/Shingles/Timberline/Natural_Shadow" target="_blank">More...</a></label>
+                    <label for="Grp2A"><span></span>GAF Royal Sovereign (+ $0)</label>
                 </div>
             </div>
             <div class="upgrade-item">
@@ -180,8 +183,6 @@
             </div>
             <horiz-rule margintop="5" marginbottom="15"></horiz-rule>
         </div>
-
-
         <div class="upgrade-level">
             <div class="upgrade-icon">
                 <i class="fa fa-arrow-circle-down" ng-click="CTRL.showUpgrades.valley=true" ng-hide="CTRL.showUpgrades.valley"></i>
@@ -196,7 +197,7 @@
             <div class="upgrade-item">
                 <div class="check-radio-container" style="margin-bottom:10px;">
                     <input type="radio" id="Grp3A" name="Grp3" value="Default" ng-model="CTRL.UpgradeValleySelection" ng-change="CTRL.calculateTotal()"></input>
-                    <label for="Grp3A"><span></span>20" Rolled Galvanized Steel (+ $0) <a href="http://www.gaf.com/Roofing/Residential/Products/Shingles/Timberline/Natural_Shadow" target="_blank">More...</a></label>
+                    <label for="Grp3A"><span></span>20" Rolled Galvanized Steel (+ $0)</label>
                 </div>
             </div>
             <div class="upgrade-item">
@@ -212,7 +213,6 @@
             <p>W-Valleys conduct water away from the shingles and down into your gutters smoother and quicker than any other valley available.</p>
             <horiz-rule margintop="5" marginbottom="15"></horiz-rule>
         </div>
-
         <div class="upgrade-level">
             <div class="upgrade-icon">
                 <i class="fa fa-arrow-circle-down" ng-click="CTRL.showUpgrades.trim=true" ng-hide="CTRL.showUpgrades.trim"></i>
@@ -238,8 +238,6 @@
             </div>
         </div>
         <total-bar price="{{CTRL.grandTotal}}" label="Total With Upgrades"></total-bar>
-
-
     </div>
     <div class="section-header-client">
         <h2>Disclaimers</h2>
@@ -266,4 +264,5 @@
     </div>
 </div>
 <div style="margin-bottom:5rem;">
+</div>
 </div>

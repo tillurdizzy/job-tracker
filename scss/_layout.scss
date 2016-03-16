@@ -48,9 +48,25 @@ body{
   display: flex;
   flex-direction: column;
   justify-content: center;
+
   cursor:pointer;
+  font-size: 20px;
   img{
     height:60px;
+  }
+}
+
+.header-right-text{
+  height:100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content:center;
+  h6{
+    font-size: 20px;
+    margin:0;
+    padding:0;
+    line-height: 24px;
   }
 }
 
@@ -116,9 +132,10 @@ body{
   .centered-content{
     display:flex;
     justify-content:center;
-    flex-direction:column;
+    
   }
 
+// This will center a single item in a div
   .centered-item{
     display:flex;
     justify-content:space-around;

@@ -40,9 +40,13 @@ app.config(function($stateProvider, $urlRouterProvider) {
 			url: "/managerUpdate",
 			templateUrl:"views/admin/reps/manager-update.html"
 		})
-		.state('admin.inventoryAdd', {
-			url: "/inventoryAdd",
-			templateUrl:"views/admin/inventory/inventory-add.html"
+		.state('admin.pitchedInventory', {
+			url: "/pitched-inventory",
+			templateUrl:"views/admin/inventory/pitched-roof-materials.html"
+		})
+		.state('admin.pitchedInventory.add', {
+			url: "/add",
+			templateUrl:"views/admin/inventory/add-pitched-item.html"
 		})
 
 		.state('admin.inventoryUpdate', {

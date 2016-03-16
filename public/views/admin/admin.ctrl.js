@@ -14,6 +14,9 @@ app.controller('AdminCtrl',['$location','$state','$scope','SharedSrvc',function 
 	ME.inventoryAdd = function(){
 		$state.transitionTo("admin.inventoryAdd");
 	};
+	ME.pitchedInventory = function(){
+		$state.transitionTo("admin.pitchedInventory");
+	};
 	ME.inventoryUpdate = function(){
 		$state.transitionTo("admin.inventoryUpdate");
 	};

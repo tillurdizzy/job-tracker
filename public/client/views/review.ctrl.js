@@ -10,13 +10,13 @@ app.controller('ReviewCtrl',['$scope','$state','ClientSharedSrvc',function ($sco
 	ME.baseLineTotal = "5855.76";
 	ME.grandTotal = ME.baseLineTotal;
 
-	ME.UpgradeFieldShingleSelection = "GAFTBRNAT";
+	ME.UpgradeFieldShingleSelection = "GAFROYSOV";
 	ME.UpgradeRidgeSelection = "Default";
 	ME.UpgradeValleySelection = "Default";
 	ME.UpgradeTrimSelection = "Default";
 
 	ME.showUpgrades = {field:true,ridge:false,valley:false,trim:false};
-	ME.shingleUpgradePrices = {GAFTBRNAT:"0",GAFTBRHD:"248",GAFTBRUHD:"302",GAFTBRCOOL:"389",GAFARMSH:"633",GAFGRNSEQ:"677"};
+	ME.shingleUpgradePrices = {GAFROYSOV:0,GAFTBRNAT:"215",GAFTBRHD:"248",GAFTBRUHD:"302",GAFTBRCOOL:"389",GAFARMSH:"633",GAFGRNSEQ:"677"};
 	ME.ridgeUpgradePrices = {Default:"0",Upgrade:"248"};
 	ME.valleyUpgradePrices = {Default:"0",Upgrade:"102"};
 	ME.trimUpgradePrices = {Default:"0",Upgrade:"133"};
@@ -29,7 +29,6 @@ app.controller('ReviewCtrl',['$scope','$state','ClientSharedSrvc',function ($sco
 		var trimUpgradeCost = Number(ME.trimUpgradePrices[ME.UpgradeTrimSelection]);
 		var base = Number(ME.baseLineTotal);
 		ME.grandTotal = base + fieldUpgradeCost + ridgeUpgradeCost + valleyUpgradeCost + trimUpgradeCost;
-
 	}
 	
 	

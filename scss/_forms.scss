@@ -37,6 +37,25 @@
 	}
 }
 
+
+// Used internally (admin) for inventory 
+.text-input-form-item{
+	display:flex;
+	margin-bottom:.8rem;
+	label{
+		font-size: 1rem;
+		width:100px;
+		text-align: left;
+	}
+	input[type="text"]{
+		line-height:1rem;
+	    width:100%;
+	    font-size: 1rem;
+	    display:inline-block;
+	    box-sizing: content-box;
+	}
+}
+
 .form-container{
 	float:left;
 	display:inline-block;
@@ -51,6 +70,8 @@
 	padding-left:15px;
 }
 
+
+// Single item-at-a-time input for tablets
 .ez-form{
 	padding:.5rem;
 	width:100%;

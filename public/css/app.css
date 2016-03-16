@@ -741,9 +741,22 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  cursor: pointer; }
+  cursor: pointer;
+  font-size: 20px; }
   .header-right img {
     height: 60px; }
+
+.header-right-text {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center; }
+  .header-right-text h6 {
+    font-size: 20px;
+    margin: 0;
+    padding: 0;
+    line-height: 24px; }
 
 .headerContact {
   height: 100%;
@@ -794,8 +807,7 @@ body {
       border-right: 2px solid #ECF0F1; }
   .page .centered-content {
     display: flex;
-    justify-content: center;
-    flex-direction: column; }
+    justify-content: center; }
   .page .centered-item {
     display: flex;
     justify-content: space-around; }
@@ -1884,6 +1896,19 @@ table {
     margin: 8px 0;
     padding: 0 0 0 20px; }
 
+.text-input-form-item {
+  display: flex;
+  margin-bottom: 1rem; }
+  .text-input-form-item label {
+    font-size: 1rem;
+    width: 100px; }
+  .text-input-form-item input[type="text"] {
+    line-height: 1rem;
+    width: 100%;
+    font-size: 1rem;
+    display: inline-block;
+    box-sizing: content-box; }
+
 .form-container {
   float: left;
   display: inline-block;
@@ -2044,7 +2069,7 @@ table {
 
 .total-bar {
   margin: 1rem .5rem .5rem 0;
-  height: 1.7rem;
+  height: 1.8rem;
   background-color: #C0392B;
   color: #FFF; }
   .total-bar .left {
@@ -2053,3 +2078,6 @@ table {
   .total-bar .right {
     float: right;
     margin-right: 1rem; }
+  .total-bar h2 {
+    line-height: 1.8rem;
+    vertical-align: middle; }

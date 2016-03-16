@@ -19,18 +19,20 @@
 </head>
 
 <body ng-app="ClientApp">
-    <div id="site-wrapper" ng-controller="NavCtrl as Ctrl">
+    <div class="view-container" ng-controller="NavCtrl as Ctrl">
         <div class="header-light" role="banner">
             <div class="headerLogo" ng-click="Ctrl.goSplash();">
                 <img src="img/evo-logo-black.png" alt="">
             </div>
             <div></div>
-            <div class="header-right">
-               
+            <div class="header-right-text">
+               <h6>13003 Murphy Rd.</h6>
+               <h6>Building Stafford, TX</h6>
+               <h6>281-804-9669</h6>
             </div>
         </div>
         <div>
-            <div ui-view class="view-container"></div>
+            <div ui-view></div>
         </div>
         <!-- #site-canvas -->
     </div>
