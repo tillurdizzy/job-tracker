@@ -2010,6 +2010,13 @@ table {
       font-size: 2.25rem;
       color: #1ABC9C;
       vertical-align: middle; }
+  .upgrade-level .upgrade-label {
+    display: flex; }
+    .upgrade-level .upgrade-label i {
+      align-self: center;
+      font-size: 1.5rem;
+      color: #8E44AD;
+      margin-left: 1rem; }
   .upgrade-level .hilite {
     color: #3498DB !important; }
 

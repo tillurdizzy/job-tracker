@@ -35,23 +35,30 @@ $upgrade-level-height:2.25rem;
             vertical-align: middle;
         }
     }
-    .hilite{
-      color: $peterRiver-blue !important;
-    }
-}
-
-.upgrade-selections{
-  margin-left: 2.2rem;
-  .upgrade-item {
-    .check-radio-container {
-        label {
-            font-size: 1.1rem;
+    .upgrade-label {
+      display: flex;
+        i {
+            align-self:center;
+            font-size: 1.5rem;
+            color: $wisteria-purple;
+            margin-left:1rem;
         }
     }
-  }
+    .hilite {
+        color: $peterRiver-blue !important;
+    }
 }
 
-
+.upgrade-selections {
+    margin-left: 2.2rem;
+    .upgrade-item {
+        .check-radio-container {
+            label {
+                font-size: 1.1rem;
+            }
+        }
+    }
+}
 
 .indent-block-client {
     margin-left: 1rem;
