@@ -2084,3 +2084,17 @@ table {
   .total-bar h2 {
     line-height: 1.8rem;
     vertical-align: middle; }
+
+.photo-gallery {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-content: flex-start; }
+
+.thumb {
+  height: 100px;
+  margin: 0 5px 15px 5px;
+  cursor: pointer; }
+  .thumb img {
+    height: 100px; }

@@ -16,7 +16,5 @@ app.directive('propertyItem',[function () {
       templateUrl:'views/properties/property.tpl.html',
       link: function(scope, elm, attrs) {
       }
-
-
     }
 }]);

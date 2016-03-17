@@ -33,6 +33,7 @@ gulp.task('jsbundle',function(){
 		'bower_components/ng-underscore/build/ng-underscore.min.js',
 		'bower_components/angular-ui-router/release/angular-ui-router.min.js',
 		'bower_components/angular-directive.g-signin/google-plus-signin.js',
+		'bower_components/ng-dialog/ngDialog.min.js',
 		'bower_components/angular-smart-table/dist/smart-table.min.js'])
 	.pipe(concat('bundle.js'))
 	.pipe(gulp.dest('public'));

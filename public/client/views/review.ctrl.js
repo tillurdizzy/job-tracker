@@ -1,6 +1,6 @@
 'use strict';
 
-app.controller('ReviewCtrl',['$scope','$state','ClientSharedSrvc',function ($scope,$state,ClientSharedSrvc) {
+app.controller('ReviewCtrl',['$scope','$state','ClientSharedSrvc','ngDialog','$controller',function ($scope,$state,ClientSharedSrvc,ngDialog,$controller) {
 	
 	var ME = this;
 	
@@ -9,6 +9,8 @@ app.controller('ReviewCtrl',['$scope','$state','ClientSharedSrvc',function ($sco
 	ME.UpgradeDripEdge = {};
 	ME.baseLineTotal = "5855.76";
 	ME.grandTotal = ME.baseLineTotal;
+	ME.imagePath = "client/img/";
+	ME.selectedPhoto = {path:"",cap:""};
 
 	ME.UpgradeFieldShingleSelection = "GAFROYSOV";
 	ME.UpgradeRidgeSelection = "Default";
@@ -22,7 +24,6 @@ OCDURATN:"233",OCDURPRCL:"365",OCWTHRGRD:"415",OCBRKSHR:"678"};
 	ME.valleyUpgradePrices = {Default:"0",Upgrade:"102"};
 	ME.trimUpgradePrices = {Default:"0",Upgrade:"133"};
 
-
 	ME.calculateTotal = function(){
 		var fieldUpgradeCost = Number(ME.shingleUpgradePrices[ME.UpgradeFieldShingleSelection]);
 		var ridgeUpgradeCost = Number(ME.ridgeUpgradePrices[ME.UpgradeRidgeSelection]);
@@ -30,6 +31,17 @@ OCDURATN:"233",OCDURPRCL:"365",OCWTHRGRD:"415",OCBRKSHR:"678"};
 		var trimUpgradeCost = Number(ME.trimUpgradePrices[ME.UpgradeTrimSelection]);
 		var base = Number(ME.baseLineTotal);
 		ME.grandTotal = base + fieldUpgradeCost + ridgeUpgradeCost + valleyUpgradeCost + trimUpgradeCost;
+	}
+
+	ME.thumbClick = function(ndx){
+		ME.selectedPhoto.path = ME.C.photoGallery[ndx].full;
+		ME.selectedPhoto.cap = ME.C.photoGallery[ndx].cap;
+		var myTemplate = "client/js/full.tpl.html";
+		ngDialog.open({
+            template: myTemplate,
+            scope: $scope,
+        	controller: $controller('DialogCtrl', {$scope: $scope,dataObj: ME.selectedPhoto})
+        });
 	}
 	
 	

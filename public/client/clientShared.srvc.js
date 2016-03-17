@@ -19,6 +19,7 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'underscore', f
     self.multiVents = {};
     self.multiLevels = {};
     self.jobMaterials = {};
+    self.photoGallery =[];
     self.existingRoofDescription = {
         shingles: "",
         deck: "",
@@ -31,10 +32,8 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'underscore', f
         plumbingVents: "",
         heatingVents: ""
     };
-
-
+    var photoGalleryPath = "";
     var keyValPairs = [];
-
 
     //Called after successful Log In
     self.LogIn = function(name, clientObj) {
@@ -46,7 +45,8 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'underscore', f
 
 
     // This function starts a chain of DB calls
-    // 1.getJobsByClient()  2.getPropertiesByClient() 3.getJobParameters() 4.getMultiVents(); 5. getMultiLevels() 6. getJobMaterials(); 7.getMaterialsList()
+    // 1.getJobsByClient()  2.getPropertiesByClient() 3.getJobParameters() 4.getMultiVents(); 5. getMultiLevels() 
+    // 6. getJobMaterials(); 7.getMaterialsList() 8. getPhotos()
     // Ending on buildRoofDescription() which creates a DOM dataProvider from all these different sources
     var getJobsByClient = function() {
         var dataObj = { clientID: self.clientObj.PRIMARY_ID };
@@ -134,7 +134,7 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'underscore', f
     var getJobParameters = function() {
         var dataObj = { ID: self.jobObj.PRIMARY_ID };
         DB.queryDB("getJobParameters", dataObj).then(function(resultObj) {
-            if (resultObj.result == "Error") {
+            if (resultObj.result == "Error" || typeof resultObj.data === "string") {
                 alert("Query Error - see console for details");
                 console.log("getJobParameters ---- " + resultObj.data);
             } else {
@@ -149,7 +149,7 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'underscore', f
     var getMultiVents = function() {
         var dataObj = { ID: self.propertyObj.PRIMARY_ID };
         DB.queryDB("getMultiVents", dataObj).then(function(resultObj) {
-            if (resultObj.result == "Error") {
+            if (resultObj.result == "Error" || typeof resultObj.data === "string") {
                 alert("Query Error - see console for details");
                 console.log("getMultiVents ---- " + resultObj.data);
             } else {
@@ -164,7 +164,7 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'underscore', f
     var getMultiLevels = function() {
         var dataObj = { ID: self.propertyObj.PRIMARY_ID };
         DB.queryDB("getMultiVents", dataObj).then(function(resultObj) {
-            if (resultObj.result == "Error") {
+            if (resultObj.result == "Error" || typeof resultObj.data === "string") {
                 alert("Query Error - see console for details");
                 console.log("getMultiVents ---- " + resultObj.data);
             } else {
@@ -177,18 +177,48 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'underscore', f
     }
 
     var getJobMaterials = function() {
-        var dataObj = { ID: self.jobObj.PRIMARY_ID };
+        var dataObj = { jobID: self.jobObj.PRIMARY_ID };
         DB.queryDB("getJobMaterials", dataObj).then(function(resultObj) {
-            if (resultObj.result == "Error") {
+            if (resultObj.result === "Error" || typeof resultObj.data === "string") {
                 alert("Query Error - see console for details");
                 console.log("getJobMaterials ---- " + resultObj.data);
             } else {
                 buildRoofDescription();
                 self.jobMaterials = resultObj.data[0];
+                getPhotoGallery();
             }
         }, function(error) {
             alert("Query Error - ClientSharedSrvc >> getJobMaterials");
         });
+    };
+
+    var getPhotoGallery = function() {
+        var dataObj = { ID: self.jobObj.PRIMARY_ID };
+        DB.queryDB("getPhotoGallery", dataObj).then(function(resultObj) {
+            if (resultObj.result == "Error" || typeof resultObj.data === "string") {
+                alert("Query Error - see console for details");
+                console.log("getPhotoGallery ---- " + resultObj.data);
+            } else {
+                parseGalleryResult(resultObj.data);
+            }
+        }, function(error) {
+            alert("Query Error - ClientSharedSrvc >> getPhotoGallery");
+        });
+    };
+
+    var parseGalleryResult = function(result){
+        
+        var clientDirectory = self.clientObj.name_last.toLowerCase();
+        photoGalleryPath = "client/img/" + clientDirectory + "/";
+        self.photoGallery =[];
+        for (var i = 0; i < result.length; i++) {
+           var obj = {};
+           obj.full = photoGalleryPath + "full/" + result[i].url;
+           obj.thumb = photoGalleryPath + "thumb/" + result[i].url;
+           obj.category = result[i].category;
+           obj.cap = result[i].caption;
+           self.photoGallery.push(obj);
+        }
     };
 
 
@@ -196,7 +226,7 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'underscore', f
 
     var getMaterialsList = function() {
         DB.queryDB("getMaterialsList").then(function(resultObj) {
-            if (resultObj.result == "Error") {
+            if (resultObj.result == "Error" || typeof resultObj.data === "string") {
                 alert("Query Error - see console for details");
                 console.log("getJobMaterials ---- " + resultObj.data);
             } else {
@@ -210,7 +240,7 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'underscore', f
     var getKeyValuePairs = function() {
         var dataObj = {};
         DB.queryDB("getKeyValuePairs", dataObj).then(function(resultObj) {
-            if (resultObj.result == "Error") {
+            if (resultObj.result == "Error" || typeof resultObj.data === "string") {
                 alert("Query Error - see console for details");
                 console.log("getKeyValuePairs ---- " + resultObj.data);
             } else {

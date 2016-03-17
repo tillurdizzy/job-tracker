@@ -59,6 +59,12 @@
             </div>
         </div>
     </div>
+     <div class="section-header-client">
+        <h2>Photo Gallery</h2>
+    </div>
+    <div class="photo-gallery">
+        <thumb ng-repeat="img in CTRL.C.photoGallery" ndx={{$index}} path="{{img.thumb}}" click="CTRL.thumbClick"></thumb>
+    </div>
     <div class="section-header-client">
         <h2>Baseline Proposal and Scope of Work</h2>
     </div>
@@ -308,3 +314,4 @@
 <div style="margin-bottom:5rem;">
 </div>
 </div>
+
