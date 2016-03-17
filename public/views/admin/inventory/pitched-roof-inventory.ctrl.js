@@ -5,6 +5,8 @@ app.controller('PitchedRoofInventoryCtrl',['$state','$scope','SharedSrvc','Admin
 	var ME = this;
 	ME.S = SharedSrvc;
 	var DB =  AdminDataSrvc;
+
+	ME.pitchedInventoryList = [];
 	
 	ME.addItem = function(){
 		$state.transitionTo("admin.pitchedInventory.add");
@@ -16,8 +18,8 @@ app.controller('PitchedRoofInventoryCtrl',['$state','$scope','SharedSrvc','Admin
 		$state.transitionTo("admin.pitchedInventory.remove");
 	};
 
-	ME.inputDataObj = {Sort:"100",Category:"Shingle-Field",Manufacturer:"",Item:"",Code:"",Package:"Bdls",QtyPkg:"",UnitPkg:"",PkgPrice:"",QtyCoverage:"",UnitCoverage:"",
-	RoundUp:"",Margin:"",InputParam:"",Checked:"",Notes:"",url:""};
+	ME.inputDataObj = {Sort:"100",Category:"Shingle-Field",Manufacturer:"",Item:"",Code:"",Package:"",QtyPkg:"",UnitPkg:"",PkgPrice:"",QtyCoverage:"",UnitCoverage:"",
+	RoundUp:"",Margin:"",InputParam:"",Checked:"false",Notes:"",url:""};
 
 	ME.selectDataObj = {Package:ME.S.packageOptions[0],UnitPkg:ME.S.unitOptions[0],UnitCoverage:ME.S.unitOptions[0],InputParam:ME.S.propertyParams[0]};
 
@@ -44,7 +46,21 @@ app.controller('PitchedRoofInventoryCtrl',['$state','$scope','SharedSrvc','Admin
         ME.inputDataObj.Sort =  sortNum;
 	}
 
+	var getInventory = function(){
+		var query = DB.queryDB("views/admin/http/getMaterialsShingle.php").then(function(result) {
+            if (result != false && typeof result != "string") {
+               ME.pitchedInventoryList = result;
+            } else {
+                alert("FALSE returned from DB at PitchedRoofInventoryCtrl >>> addItemSubmit()");
+                return false;
+            }
+        }, function(error) {
+            alert("ERROR returned returned from DB at PitchedRoofInventoryCtrl >>> addItemSubmit()");
+        });
+	}
 
+
+	getInventory();
 
 
  }]);

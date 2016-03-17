@@ -24,6 +24,8 @@ OCDURATN:"233",OCDURPRCL:"365",OCWTHRGRD:"415",OCBRKSHR:"678"};
 	ME.valleyUpgradePrices = {Default:"0",Upgrade:"102"};
 	ME.trimUpgradePrices = {Default:"0",Upgrade:"133"};
 
+	ME.OC_RidgeShingles = [{label:"Owens Corning RIZERidge",price:""}]
+
 	ME.calculateTotal = function(){
 		var fieldUpgradeCost = Number(ME.shingleUpgradePrices[ME.UpgradeFieldShingleSelection]);
 		var ridgeUpgradeCost = Number(ME.ridgeUpgradePrices[ME.UpgradeRidgeSelection]);

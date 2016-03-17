@@ -4,8 +4,6 @@ var app = angular.module('ClientApp', ['ui.router', 'ngSanitize', 'ngUnderscore'
 app.config(function($stateProvider, $urlRouterProvider) {
 
     $urlRouterProvider.otherwise("/splash");
-
-    $stateProvider
     $stateProvider
 
         .state('login', {
@@ -41,14 +39,8 @@ app.config(function($stateProvider, $urlRouterProvider) {
 
 app.config(['ngDialogProvider', function(ngDialogProvider) {
     ngDialogProvider.setDefaults({
-        className: 'ngdialog-theme-default',
-        plain: false,
         showClose: true,
         closeByDocument: true,
-        closeByEscape: true,
-        appendTo: false,
-        preCloseCallback: function() {
-            console.log('default pre-close callback');
-        }
+        closeByEscape: true
     });
 }]);
