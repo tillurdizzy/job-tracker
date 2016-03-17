@@ -9,7 +9,7 @@
 	</div>
 	<div class="text-input-form-item">
 		<label>Supplier</label>
-		<input type="text" ng-model="Invt.inputDataObj.Supplier">
+		<input type="text" ng-model="Invt.inputDataObj.Manufacturer">
 	</div>
 	<div class="text-input-form-item">
 		<label>Item</label>
@@ -21,7 +21,7 @@
 	</div>
 	<div class="text-input-form-item">
 		<label>Package</label>
-		<input type="text" ng-model="Invt.inputDataObj.Package">
+		<select ng-model="Invt.selectDataObj.Package" ng-options="c.label for c in Invt.S.packageOptions"></select>
 	</div>
 	<div class="text-input-form-item">
 		<label>QtyPkg</label>
@@ -29,7 +29,7 @@
 	</div>
 	<div class="text-input-form-item">
 		<label>UnitPkg</label>
-		<input type="text" ng-model="Invt.inputDataObj.UnitPkg">
+		<select ng-model="Invt.selectDataObj.UnitPkg" ng-options="c.label for c in Invt.S.unitOptions"></select>
 	</div>
 	<div class="text-input-form-item">
 		<label>PkgPrice</label>
@@ -41,7 +41,7 @@
 	</div>
 	<div class="text-input-form-item">
 		<label>UnitCoverage</label>
-		<input type="text" ng-model="Invt.inputDataObj.UnitCoverage">
+		<select ng-model="Invt.selectDataObj.UnitCoverage" ng-options="c.label for c in Invt.S.unitOptions"></select>
 	</div>
 	<div class="text-input-form-item">
 		<label>RoundUp</label>
@@ -53,11 +53,11 @@
 	</div>
 	<div class="text-input-form-item">
 		<label>InputParam</label>
-		<input type="text" ng-model="Invt.inputDataObj.InputParam">
+		<select ng-model="Invt.selectDataObj.InputParam" ng-options="c.label for c in Invt.S.propertyParams"></select>
 	</div>
 	<div class="text-input-form-item">
-		<label>Default</label>
-		<input type="text" ng-model="Invt.inputDataObj.Default">
+		<label>Checked</label>
+		<input type="text" ng-model="Invt.inputDataObj.Checked">
 	</div>
 	<div class="text-input-form-item">
 		<label>Notes</label>

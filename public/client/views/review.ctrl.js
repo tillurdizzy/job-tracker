@@ -16,7 +16,8 @@ app.controller('ReviewCtrl',['$scope','$state','ClientSharedSrvc',function ($sco
 	ME.UpgradeTrimSelection = "Default";
 
 	ME.showUpgrades = {field:true,ridge:false,valley:false,trim:false};
-	ME.shingleUpgradePrices = {GAFROYSOV:0,GAFTBRNAT:"215",GAFTBRHD:"248",GAFTBRUHD:"302",GAFTBRCOOL:"389",GAFARMSH:"633",GAFGRNSEQ:"677"};
+	ME.shingleUpgradePrices = {GAFROYSOV:0,GAFTBRNAT:"215",GAFTBRHD:"248",GAFTBRUHD:"302",GAFTBRCOOL:"389",GAFARMSH:"633",GAFGRNSEQ:"677",OCSUPRM:"0",OCOAKRDG:"156",
+OCDURATN:"233",OCDURPRCL:"365",OCWTHRGRD:"415",OCBRKSHR:"678"};
 	ME.ridgeUpgradePrices = {Default:"0",Upgrade:"248"};
 	ME.valleyUpgradePrices = {Default:"0",Upgrade:"102"};
 	ME.trimUpgradePrices = {Default:"0",Upgrade:"133"};

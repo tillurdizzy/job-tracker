@@ -28,7 +28,7 @@ while ($row = mysqli_fetch_object($result)) {
 	$oneVO->RoundUp = $row->RoundUp;
 	$oneVO->Margin = $row->Margin;
 	$oneVO->InputParam = $row->InputParam;
-	$oneVO->Default = $row->Default;
+	$oneVO->Checked = $row->Checked;
 	array_push( $resultValueObjects, $oneVO );
 }
 echo json_encode($resultValueObjects);

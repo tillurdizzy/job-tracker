@@ -15,7 +15,7 @@ class materialsShingleVO{
 	var $Margin;
 	var $url;
 	var $InputParam;
-	var $Default;
+	var $Checked;
 
 	// Used in calcs... not fields from DB
 	var $Qty;

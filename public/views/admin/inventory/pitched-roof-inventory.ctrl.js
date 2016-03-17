@@ -3,7 +3,7 @@
 app.controller('PitchedRoofInventoryCtrl',['$state','$scope','SharedSrvc','AdminDataSrvc',function ($state,$scope,SharedSrvc,AdminDataSrvc) {
 	
 	var ME = this;
-	var S = SharedSrvc;
+	ME.S = SharedSrvc;
 	var DB =  AdminDataSrvc;
 	
 	ME.addItem = function(){
@@ -16,26 +16,35 @@ app.controller('PitchedRoofInventoryCtrl',['$state','$scope','SharedSrvc','Admin
 		$state.transitionTo("admin.pitchedInventory.remove");
 	};
 
-	ME.inputDataObj = {Sort:"100",Category:"Shingle-Field",Supplier:"",Item:"",Code:"",Package:"Bdls",QtyPkg:"",UnitPkg:"",PkgPrice:"",QtyCoverage:"",UnitCoverage:"",
-	RoundUp:"",Margin:"",InputParam:"",Default:"",Notes:"",url:""};
+	ME.inputDataObj = {Sort:"100",Category:"Shingle-Field",Manufacturer:"",Item:"",Code:"",Package:"Bdls",QtyPkg:"",UnitPkg:"",PkgPrice:"",QtyCoverage:"",UnitCoverage:"",
+	RoundUp:"",Margin:"",InputParam:"",Checked:"",Notes:"",url:""};
+
+	ME.selectDataObj = {Package:ME.S.packageOptions[0],UnitPkg:ME.S.unitOptions[0],UnitCoverage:ME.S.unitOptions[0],InputParam:ME.S.propertyParams[0]};
 
 	ME.addItemSubmit = function(){
+		ME.inputDataObj.Package = ME.selectDataObj.Package.label;
+		ME.inputDataObj.UnitPkg = ME.selectDataObj.UnitPkg.label;
+		ME.inputDataObj.UnitCoverage = ME.selectDataObj.UnitCoverage.label;
+		ME.inputDataObj.InputParam = ME.selectDataObj.InputParam.label;
         var query = DB.queryDBWithObj("views/admin/http/putPitchedInventoryItem.php",ME.inputDataObj).then(function(result) {
             if (result != false) {
-                return true;
+                resetForm();
             } else {
-                alert("FALSE returned from DB at AdminSharedSrvc >>> getMaterialsList()");
+                alert("FALSE returned from DB at PitchedRoofInventoryCtrl >>> addItemSubmit()");
                 return false;
             }
         }, function(error) {
-            alert("ERROR returned returned from DB at AdminSharedSrvc >>> getMaterialsList()");
+            alert("ERROR returned returned from DB at PitchedRoofInventoryCtrl >>> addItemSubmit()");
         });
 	};
 
-	
+	var resetForm = function(){
+		var sortNum = parseInt(ME.inputDataObj.Sort);
+        sortNum+=1;
+        ME.inputDataObj.Sort =  sortNum;
+	}
 
 
-	
 
 
  }]);

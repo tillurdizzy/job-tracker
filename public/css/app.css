@@ -1898,16 +1898,19 @@ table {
 
 .text-input-form-item {
   display: flex;
-  margin-bottom: 1rem; }
+  margin-bottom: .8rem; }
   .text-input-form-item label {
     font-size: 1rem;
-    width: 100px; }
+    width: 100px;
+    text-align: left; }
   .text-input-form-item input[type="text"] {
     line-height: 1rem;
-    width: 100%;
+    width: 650px;
     font-size: 1rem;
     display: inline-block;
     box-sizing: content-box; }
+  .text-input-form-item select {
+    width: 50%; }
 
 .form-container {
   float: left;

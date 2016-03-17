@@ -249,6 +249,30 @@ app.service('SharedSrvc',['$rootScope',function sharedVars($rootScope){
 		return dateStr;
 	};
 
+	self.propertyParams = [
+		{label:"FIELD",id:1},
+		{label:"TOPRDG",id:2},
+		{label:"RKERDG",id:3},
+		{label:"RIDGETOTAL",id:4},
+		{label:"PRMITR",id:5},
+		{label:"VALLEY",id:6},
+		{label:"DECKNG",id:7},
+		{label:"LOWSLP",id:8},
+		{label:"LPIPE1",id:9},
+		{label:"LPIPE2",id:10},
+		{label:"LPIPE3",id:11},
+		{label:"LPIPE4",id:12},
+		{label:"FLHSH8",id:13},
+		{label:"JKVNT8",id:14},
+		{label:"TURBNS",id:15},
+		{label:"PWRVNT",id:16},
+		{label:"AIRHWK",id:17},
+		{label:"SLRVNT",id:18},
+		{label:"PAINT",id:19},
+		{label:"CAULK",id:20},
+		{label:"CARPRT",id:21},
+		{label:"SATDSH",id:22}];
+
 	
 	self.levelOptions = [
 		{label:"One",id:1},
@@ -350,6 +374,20 @@ app.service('SharedSrvc',['$rootScope',function sharedVars($rootScope){
 	self.yesNo = [
 		{label:"No",id:0},
 		{label:"Yes",id:1}];
+
+	self.packageOptions = [
+		{label:"Each",id:0},
+		{label:"Bdls",id:1},
+		{label:"Box",id:2},
+		{label:"Roll",id:3},
+		{label:"Pail",id:4}];
+
+	self.unitOptions = [
+		{label:"Each",id:0},
+		{label:"Sq",id:1},
+		{label:"Ft",id:2},
+		{label:"SqFt",id:3},
+		{label:"Lbs",id:4}];
 
 	self.photoCats = [
 		{label:"Select"},
