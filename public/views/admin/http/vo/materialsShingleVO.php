@@ -11,11 +11,12 @@ class materialsShingleVO{
 	var $UnitPkg;
 	var $PkgPrice;
 	var $QtyCoverage;
+	var $UnitCoverage;
 	var $RoundUp;
 	var $Margin;
-	var $url;
 	var $InputParam;
 	var $Checked;
+	var $url;
 
 	// Used in calcs... not fields from DB
 	var $Qty;

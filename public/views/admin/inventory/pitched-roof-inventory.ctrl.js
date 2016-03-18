@@ -7,30 +7,56 @@ app.controller('PitchedRoofInventoryCtrl',['$state','$scope','SharedSrvc','Admin
 	var DB =  AdminDataSrvc;
 
 	ME.pitchedInventoryList = [];
+	ME.EditMode = "Add Item";
+	ME.inputDataObj = {};
+	ME.formStatus = "Pristine";
 	
 	ME.addItem = function(){
-		$state.transitionTo("admin.pitchedInventory.add");
+		ME.EditMode = "Add Item";
 	};
 	ME.updateItem = function(){
-		$state.transitionTo("admin.pitchedInventory.update");
+		ME.EditMode = "Update Item";
 	};
+
 	ME.removeItem = function(){
-		$state.transitionTo("admin.pitchedInventory.remove");
+		ME.EditMode = "Remove Item";
 	};
 
-	ME.inputDataObj = {Sort:"100",Category:"Shingle-Field",Manufacturer:"",Item:"",Code:"",Package:"",QtyPkg:"",UnitPkg:"",PkgPrice:"",QtyCoverage:"",UnitCoverage:"",
-	RoundUp:"",Margin:"",InputParam:"",Checked:"false",Notes:"",url:""};
+	ME.backToHome = function(){
+		$state.transitionTo('admin');
+	}
 
-	ME.selectDataObj = {Package:ME.S.packageOptions[0],UnitPkg:ME.S.unitOptions[0],UnitCoverage:ME.S.unitOptions[0],InputParam:ME.S.propertyParams[0]};
+	ME.formChange = function(){
+		ME.formStatus = "Dirty";
+	}
 
-	ME.addItemSubmit = function(){
-		ME.inputDataObj.Package = ME.selectDataObj.Package.label;
-		ME.inputDataObj.UnitPkg = ME.selectDataObj.UnitPkg.label;
-		ME.inputDataObj.UnitCoverage = ME.selectDataObj.UnitCoverage.label;
-		ME.inputDataObj.InputParam = ME.selectDataObj.InputParam.label;
+	ME.clickTableRow = function(code){
+		ME.EditMode = "Update Item";
+		ME.formStatus = "Pristine";
+		ME.inputDataObj = {};
+		for (var i = 0; i < ME.pitchedInventoryList.length; i++) {
+			if(ME.pitchedInventoryList[i].Code == code){
+				ME.inputDataObj = ME.pitchedInventoryList[i];
+			}
+		}
+	};
+
+	ME.selectDataObj_dp = {Package:ME.S.packageOptions[0],UnitPkg:ME.S.unitOptions[0],UnitCoverage:ME.S.unitOptions[0],InputParam:ME.S.propertyParams[0]};
+
+	ME.submit = function(){
+		switch(ME.EditMode){
+			case "Add Item": addItem();break;
+			case "Update Item": updateItem();break;
+			case "Remove Item": removeItem();break;
+		}
+	};
+
+	var addItem = function(){
+		parseSelectionProviders();
         var query = DB.queryDBWithObj("views/admin/http/putPitchedInventoryItem.php",ME.inputDataObj).then(function(result) {
             if (result != false) {
                 resetForm();
+                alert("Add Item Successful");
             } else {
                 alert("FALSE returned from DB at PitchedRoofInventoryCtrl >>> addItemSubmit()");
                 return false;
@@ -40,11 +66,36 @@ app.controller('PitchedRoofInventoryCtrl',['$state','$scope','SharedSrvc','Admin
         });
 	};
 
+	var updateItem = function(){
+		parseSelectionProviders();
+        var query = DB.queryDBWithObj("js/php/updateMaterialsShingle.php",ME.inputDataObj).then(function(result) {
+            if (result != false) {
+            	resetForm();
+            	alert("Update Successful");
+            } else {
+                alert("FALSE returned from DB at PitchedRoofInventoryCtrl >>> addItemSubmit()");
+                return false;
+            }
+        }, function(error) {
+            alert("ERROR returned returned from DB at PitchedRoofInventoryCtrl >>> addItemSubmit()");
+        });
+	};
+
+	var parseSelectionProviders = function(){
+		ME.inputDataObj.Package = ME.selectDataObj_dp.Package.label;
+		ME.inputDataObj.UnitPkg = ME.selectDataObj_dp.UnitPkg.label;
+		ME.inputDataObj.UnitCoverage = ME.selectDataObj_dp.UnitCoverage.label;
+		ME.inputDataObj.InputParam = ME.selectDataObj_dp.InputParam.label;
+	};
+
 	var resetForm = function(){
-		var sortNum = parseInt(ME.inputDataObj.Sort);
-        sortNum+=1;
-        ME.inputDataObj.Sort =  sortNum;
-	}
+		ME.formStatus = "Pristine";
+		if(ME.EditMode == "Add Item"){
+			var sortNum = parseInt(ME.inputDataObj.Sort);
+        	sortNum+=1;
+        	ME.inputDataObj.Sort =  sortNum;
+		}
+	};
 
 	var getInventory = function(){
 		var query = DB.queryDB("views/admin/http/getMaterialsShingle.php").then(function(result) {
@@ -57,10 +108,16 @@ app.controller('PitchedRoofInventoryCtrl',['$state','$scope','SharedSrvc','Admin
         }, function(error) {
             alert("ERROR returned returned from DB at PitchedRoofInventoryCtrl >>> addItemSubmit()");
         });
-	}
+	};
+
+	var resetInputFields = function(){
+		ME.inputDataObj = {Sort:"",Category:"",Manufacturer:"",Item:"",Code:"",Package:"",QtyPkg:"",UnitPkg:"",PkgPrice:"",QtyCoverage:"",UnitCoverage:"",
+	RoundUp:"",Margin:"",InputParam:"",Checked:"false",Notes:"",url:""};
+	};
 
 
 	getInventory();
+	resetInputFields();
 
 
  }]);

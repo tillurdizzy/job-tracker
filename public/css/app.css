@@ -1353,6 +1353,9 @@ div.upload input {
 
 .admin-menu {
   width: 100%; }
+  .admin-menu .btn-grp {
+    display: flex;
+    justify-content: space-between; }
   .admin-menu button {
     width: 150px; }
 
@@ -2056,6 +2059,14 @@ table {
 
 .upgrade-selections {
   margin-left: 2.2rem; }
+  .upgrade-selections .upgrade-item a {
+    font-weight: normal;
+    line-height: 16px;
+    text-decoration: none; }
+  .upgrade-selections .upgrade-item a:link {
+    color: #3498DB; }
+  .upgrade-selections .upgrade-item a:visited {
+    color: #2980B9; }
   .upgrade-selections .upgrade-item .check-radio-container label {
     font-size: 1.1rem; }
 
@@ -2071,8 +2082,13 @@ table {
     font-weight: bold; }
   .indent-block-client ul {
     margin-left: 1rem; }
+  .indent-block-client a {
+    font-weight: normal;
+    line-height: 16px; }
   .indent-block-client a:link {
-    font-weight: normal; }
+    color: #3498DB; }
+  .indent-block-client a:visited {
+    color: #2980B9; }
   .indent-block-client h5 {
     font-weight: normal; }
 

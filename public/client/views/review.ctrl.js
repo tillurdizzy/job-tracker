@@ -11,6 +11,7 @@ app.controller('ReviewCtrl',['$scope','$state','ClientSharedSrvc','ngDialog','$c
 	ME.grandTotal = ME.baseLineTotal;
 	ME.imagePath = "client/img/";
 	ME.selectedPhoto = {path:"",cap:""};
+	ME.shingleManufacturer = "GAF";
 
 	ME.UpgradeFieldShingleSelection = "GAFROYSOV";
 	ME.UpgradeRidgeSelection = "Default";
@@ -20,7 +21,7 @@ app.controller('ReviewCtrl',['$scope','$state','ClientSharedSrvc','ngDialog','$c
 	ME.showUpgrades = {field:true,ridge:false,valley:false,trim:false};
 	ME.shingleUpgradePrices = {GAFROYSOV:0,GAFTBRNAT:"215",GAFTBRHD:"248",GAFTBRUHD:"302",GAFTBRCOOL:"389",GAFARMSH:"633",GAFGRNSEQ:"677",OCSUPRM:"0",OCOAKRDG:"156",
 OCDURATN:"233",OCDURPRCL:"365",OCWTHRGRD:"415",OCBRKSHR:"678"};
-	ME.ridgeUpgradePrices = {Default:"0",Upgrade:"248"};
+	ME.ridgeUpgradePrices = {Default:"0",GAFRDG:"248",OCPROEDG:"0",OCDURARDG:"0",OCDECORDG:"0",OCDECODUR:"0",OCBERKRDG:"0"};
 	ME.valleyUpgradePrices = {Default:"0",Upgrade:"102"};
 	ME.trimUpgradePrices = {Default:"0",Upgrade:"133"};
 
@@ -33,6 +34,13 @@ OCDURATN:"233",OCDURPRCL:"365",OCWTHRGRD:"415",OCBRKSHR:"678"};
 		var trimUpgradeCost = Number(ME.trimUpgradePrices[ME.UpgradeTrimSelection]);
 		var base = Number(ME.baseLineTotal);
 		ME.grandTotal = base + fieldUpgradeCost + ridgeUpgradeCost + valleyUpgradeCost + trimUpgradeCost;
+
+		var firstChar = ME.UpgradeFieldShingleSelection[0];
+		if(firstChar === "G"){
+			ME.shingleManufacturer = "GAF";
+		}else{
+			ME.shingleManufacturer = "OC";
+		}
 	}
 
 	ME.thumbClick = function(ndx){

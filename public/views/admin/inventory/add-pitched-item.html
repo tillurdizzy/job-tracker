@@ -1,9 +1,8 @@
-<div class="text-input-form-item" style="margin-top:2rem;" >
-        <label>Item</label>
-        <input type="text" ng-model="Invt.inputDataObj.Item" style="width:600px">
-    </div>
-
-<div  class="flex-row">
+<div class="text-input-form-item" style="margin-top:2rem;">
+    <label>Item</label>
+    <input type="text" ng-model="Invt.inputDataObj.Item" style="width:600px">
+</div>
+<div class="flex-row">
     <div style="width:50%">
         <div class="text-input-form-item">
             <label>Sort</label>
@@ -17,7 +16,6 @@
             <label>Supplier</label>
             <input type="text" ng-model="Invt.inputDataObj.Manufacturer">
         </div>
-        
         <div class="text-input-form-item">
             <label>Code</label>
             <input type="text" ng-model="Invt.inputDataObj.Code">
@@ -34,10 +32,9 @@
             <label>UnitPkg</label>
             <select ng-model="Invt.selectDataObj.UnitPkg" ng-options="c.label for c in Invt.S.unitOptions"></select>
         </div>
-       
     </div>
     <div style="width:50%">
-     <div class="text-input-form-item">
+        <div class="text-input-form-item">
             <label>PkgPrice</label>
             <input type="text" ng-model="Invt.inputDataObj.PkgPrice">
         </div>
@@ -65,13 +62,12 @@
             <label>Checked</label>
             <input type="text" ng-model="Invt.inputDataObj.Checked">
         </div>
-        
     </div>
 </div>
 <div class="text-input-form-item">
     <label>url</label>
     <input type="text" ng-model="Invt.inputDataObj.url" style="width:600px">
 </div>
-<button type="button" class="button radius" ng-click="Invt.addItemSubmit()">Submit</button>
-<div style="margin-top: 3rem;">
-</div>
+<button type="button" class="button radius" ng-click="Invt.addItemSubmit()" style="margin-top: 1rem; width:100%;">Submit</button>
+
+<horiz-rule margintop="15" marginbottom="15"></horiz-rule>

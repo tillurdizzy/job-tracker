@@ -4,6 +4,12 @@ $client-item-height:2.25em;
 
 .admin-menu{
   width:100%;
+  
+
+  .btn-grp{
+  	display:flex;
+  	justify-content: space-between;
+  }
 
   button{
     width:150px;

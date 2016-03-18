@@ -60,6 +60,18 @@ $upgrade-level-height:2.25rem;
 .upgrade-selections {
     margin-left: 2.2rem;
     .upgrade-item {
+        a{
+            font-weight: normal;
+            line-height: 16px;
+            text-decoration:none;
+        }
+        a:link {
+            color:$peterRiver-blue;
+        }
+        a:visited{
+            color:$belizeHole-blue;
+        }
+
         .check-radio-container {
             label {
                 font-size: 1.1rem;
@@ -85,8 +97,15 @@ $upgrade-level-height:2.25rem;
     ul {
         margin-left: 1rem;
     }
-    a:link {
+    a{
         font-weight: normal;
+        line-height: 16px;
+    }
+    a:link {
+        color:$peterRiver-blue;
+    }
+    a:visited{
+        color:$belizeHole-blue;
     }
     h5 {
         font-weight: normal;
