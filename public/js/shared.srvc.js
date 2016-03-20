@@ -410,6 +410,17 @@ app.service('SharedSrvc',['$rootScope',function sharedVars($rootScope){
 		return rtnObj;
 	};
 
+	self.returnObjByLabel = function(set,lbl){
+		var rtnObj = {};
+		for (var i = 0; i < set.length; i++) {
+			if (set[i].label == lbl) {
+				rtnObj = set[i];
+				break;
+			}
+		}
+		return rtnObj;
+	};
+
 
 
 	

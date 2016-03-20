@@ -1,9 +1,10 @@
 'use strict';
 
-app.controller('AdminPropPricing', ['$state', '$scope', 'AdminSharedSrvc', function($state, $scope, AdminSharedSrvc) {
+app.controller('AdminPropPricing', ['$state', '$scope', 'AdminSharedSrvc','ClientSelectionsSrvc',function($state, $scope, AdminSharedSrvc,ClientSelectionsSrvc) {
 
     var ME = this;
     ME.S = AdminSharedSrvc;
+    ME.C = ClientSelectionsSrvc;
     ME.GrandTotal = 0;
     ME.ShingleTotal = 0;
     ME.VentsTotal = 0;
@@ -24,53 +25,66 @@ app.controller('AdminPropPricing', ['$state', '$scope', 'AdminSharedSrvc', funct
        ME.dataIsSaved = ME.S.saveJobMaterials();
     };
 
+
+    // ME.getTotal() called every time a checkbox is changed on pricing tab view
     ME.getTotal = function() {
-        ME.ShingleTotal = 0;
+        ME.ShinglesFieldTotal = 0;
+        ME.ShingleRidgeTotal = 0;
         ME.VentsTotal = 0;
-        ME.EdgeTotal = 0;
+        ME.FlashingTotal = 0;
         ME.CapsTotal = 0;
         ME.FlatTotal = 0;
         ME.OtherTotal = 0;
         ME.GrandTotal = 0;
+
         var include = false;
 
-        for (var i = 0; i < ME.materialPricingDP.Shingles.length; i++) {
-            include = ME.materialPricingDP.Shingles[i].Default;
+        // Find the "included" selected material for each category (which in most cases is just one item...)
+        //
+        for (var i = 0; i < ME.materialPricingDP.Field.length; i++) {
+            include = ME.materialPricingDP.Field[i].Checked;
             if (include) {
-                ME.ShingleTotal += parseInt(ME.materialPricingDP.Shingles[i].Total)
+                ME.ShinglesFieldTotal += parseInt(ME.materialPricingDP.Field[i].Total)
+            }
+        };
+
+        for (var i = 0; i < ME.materialPricingDP.Ridge.length; i++) {
+            include = ME.materialPricingDP.Ridge[i].Checked;
+            if (include) {
+                ME.ShinglesRidgeTotal += parseInt(ME.materialPricingDP.Ridge[i].Total)
             }
         };
 
         for (var i = 0; i < ME.materialPricingDP.Vents.length; i++) {
-            include = ME.materialPricingDP.Vents[i].Default;
+            include = ME.materialPricingDP.Vents[i].Checked;
             if (include) {
                 ME.VentsTotal += parseInt(ME.materialPricingDP.Vents[i].Total)
             }
         };
 
         for (var i = 0; i < ME.materialPricingDP.Edge.length; i++) {
-            include = ME.materialPricingDP.Edge[i].Default;
+            include = ME.materialPricingDP.Edge[i].Checked;
             if (include) {
-                ME.EdgeTotal += parseInt(ME.materialPricingDP.Edge[i].Total)
+                ME.FlashingTotal += parseInt(ME.materialPricingDP.Edge[i].Total)
             }
         };
 
         for (var i = 0; i < ME.materialPricingDP.Flat.length; i++) {
-            include = ME.materialPricingDP.Flat[i].Default;
+            include = ME.materialPricingDP.Flat[i].Checked;
             if (include) {
                 ME.FlatTotal += parseInt(ME.materialPricingDP.Flat[i].Total)
             }
         };
 
         for (var i = 0; i < ME.materialPricingDP.Caps.length; i++) {
-            include = ME.materialPricingDP.Caps[i].Default;
+            include = ME.materialPricingDP.Caps[i].Checked;
             if (include) {
                 ME.CapsTotal += parseInt(ME.materialPricingDP.Caps[i].Total)
             }
         };
 
         for (var i = 0; i < ME.materialPricingDP.Other.length; i++) {
-            include = ME.materialPricingDP.Other[i].Default;
+            include = ME.materialPricingDP.Other[i].Checked;
             if (include) {
                 ME.OtherTotal += parseInt(ME.materialPricingDP.Other[i].Total)
             }

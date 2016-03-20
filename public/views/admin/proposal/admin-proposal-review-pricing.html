@@ -12,7 +12,7 @@
         <button type="button" class="button radius" ng-click="ChildCtrl.saveJobMaterials()">Save</button>
     </div>
     <div class="section-header">
-        <h2>Shingles</h2>
+        <h2>Field Shingles</h2>
     </div>
     <div>
         <table st-table="ChildCtrl.propertyInputParams" class="table table-striped" style="width:100%;">
@@ -29,7 +29,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="row in ChildCtrl.materialPricingDP.Shingles">
+                <tr ng-repeat="row in ChildCtrl.materialPricingDP.Field">
                     <td>
 						<div class="check-radio-container">
 							<input type="checkbox" id="{{row.Sort}}" ng-model="row.Default" ng-change="ChildCtrl.toggleCheckBox()"></input>
@@ -49,7 +49,48 @@
     </div>
 
     <div class="pricingCategoryTotal">
-    	<h2>Total Shingles: {{ChildCtrl.ShingleTotal | currency:"$":2}}</h2>
+    	<h2>Total Field Shingles: {{ChildCtrl.ShinglesFieldTotal | currency:"$":2}}</h2>
+    </div>
+
+    <div class="section-header">
+        <h2>Ridges</h2>
+    </div>
+    <div>
+        <table st-table="ChildCtrl.propertyInputParams" class="table table-striped" style="width:100%;">
+            <thead>
+                <tr>
+                    <th>Include</th>
+                    <th>Item</th>
+                    <th>Price</th>
+                    <th>Unit</th>
+                    <th>Qty</th>
+                    <td>Pkg</td>
+                    <td>Margin</td>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="row in ChildCtrl.materialPricingDP.Ridge">
+                    <td>
+                        <div class="check-radio-container">
+                            <input type="checkbox" id="{{row.Sort}}" ng-model="row.Default" ng-change="ChildCtrl.toggleCheckBox()"></input>
+                            <label for="{{row.Sort}}"><span></span></label>
+                        </div>
+                    </td>
+                    <td>{{row.Item}}</td>
+                    <td>{{row.PkgPrice | currency:"$":2}}</td>
+                    <td>{{row.UnitPkg}}</td>
+                    <td>{{row.Qty}}</td>
+                    <td>{{row.QtyPkg}}</td>
+                    <td>{{row.Margin}}</td>
+                    <td>{{row.Total | currency:"$":2}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="pricingCategoryTotal">
+        <h2>Total Ridge: {{ChildCtrl.ShinglesFieldTotal | currency:"$":2}}</h2>
     </div>
 
     <div class="section-header">
@@ -110,7 +151,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr  ng-repeat="row in ChildCtrl.materialPricingDP.Edge">
+                <tr  ng-repeat="row in ChildCtrl.materialPricingDP.Flashing">
                     <td>
 						<div class="check-radio-container">
 							<input type="checkbox" id="{{row.Sort}}" ng-model="row.Default" ng-change="ChildCtrl.toggleCheckBox()"></input>
@@ -129,7 +170,7 @@
         </table>
     </div>
     <div class="pricingCategoryTotal">
-    	<h2>Total Edge: {{ChildCtrl.EdgeTotal | currency:"$":2}}</h2>
+    	<h2>Total Edge and Flashing: {{ChildCtrl.FlashingTotal | currency:"$":2}}</h2>
     </div>
     <div class="section-header">
         <h2>Roof Caps and Other Accessories</h2>

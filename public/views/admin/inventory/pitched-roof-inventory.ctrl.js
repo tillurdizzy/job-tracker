@@ -39,6 +39,11 @@ app.controller('PitchedRoofInventoryCtrl',['$state','$scope','SharedSrvc','Admin
 				ME.inputDataObj = ME.pitchedInventoryList[i];
 			}
 		}
+
+		ME.selectDataObj_dp.Package = ME.S.returnObjByLabel(ME.S.packageOptions,ME.inputDataObj.Package);
+		ME.selectDataObj_dp.UnitPkg = ME.S.returnObjByLabel(ME.S.unitOptions,ME.inputDataObj.UnitPkg);
+		ME.selectDataObj_dp.UnitCoverage = ME.S.returnObjByLabel(ME.S.unitOptions,ME.inputDataObj.UnitCoverage);
+		ME.selectDataObj_dp.InputParam = ME.S.returnObjByLabel(ME.S.propertyParams,ME.inputDataObj.InputParam);
 	};
 
 	ME.selectDataObj_dp = {Package:ME.S.packageOptions[0],UnitPkg:ME.S.unitOptions[0],UnitCoverage:ME.S.unitOptions[0],InputParam:ME.S.propertyParams[0]};

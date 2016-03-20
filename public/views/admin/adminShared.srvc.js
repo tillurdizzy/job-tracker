@@ -35,7 +35,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'underscore', fun
 
     // self.materialsList sorted into categories
     // Consumed by view controller as data provider for Pricing Tab
-    self.materialsCatergorized = { Shingles: [], Vents: [], Edge: [], Caps: [], Flat: [], Other: [] };
+    self.materialsCatergorized = { Field:[],Ridge:[],Vents: [], Flashing:[],Caps: [], Flat: [], Other: [] };
 
     // 
     self.selectProposal = function(ndx) {
@@ -84,6 +84,8 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'underscore', fun
         });
     };
 
+
+    // !!!!!!!!!!!!!!!!!!!!! Move these functions concerning specific job to ClientSelectionsService!!!!!!!!!!!!!!!!!!
     var getJobMaterials = function() {
         var dataObj = { jobID: self.proposalUnderReview.jobID };
         DB.getJobMaterials(dataObj).then(function(result) {
@@ -100,24 +102,26 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'underscore', fun
         });
     };
 
-    var parseMaterialsResult =  function(obj){
+    var parseMaterialsResult =  function(ar){
         self.materialsJob = [];
-        var strData = obj[0].strData;
-        if(strData != ""){
-            var rootArr = strData.split('!');
-            for (var i = 0; i < rootArr.length; i++) {
-               var thisArr = rootArr[i].split(';');
-               var materialObj = {};
-               materialObj.Code = thisArr[0];
-               materialObj.Qty = thisArr[1];
-               materialObj.Checked = thisArr[2];
-               materialObj.Price = thisArr[3];
-               self.materialsJob.push(materialObj);
-            }
+        if(ar.length > 0){
+            var strData = ar[0].strData;
+            if(strData != ""){
+                var rootArr = strData.split('!');
+                for (var i = 0; i < rootArr.length; i++) {
+                   var thisArr = rootArr[i].split(';');
+                   var materialObj = {};
+                   materialObj.Code = thisArr[0];
+                   materialObj.Qty = thisArr[1];
+                   materialObj.Checked = thisArr[2];
+                   materialObj.Price = thisArr[3];
+                   self.materialsJob.push(materialObj);
+                }
+            } 
         } 
     };
 
-    // Checks to make sure both params and materials are up to date from DB before processing
+    // Checks to make sure both params and materials are up to date from DB before calling formatParams();
     var validateData = function() {
         if (proposalDataFlag.params == true && proposalDataFlag.materials == true) {
             formatParams();
@@ -153,14 +157,15 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'underscore', fun
             var paramKey = self.materialsList[i].InputParam;
             var customObj = returnCustomMaterial(self.materialsList[i].Code);
 
-            if (customObj != null) {
+            // If the client has a 'Saved' obj for this material, use that Price and Qty, otherwise use current pricing
+            if (customObj != null && customObj.Checked != undefined) {
                 var itemPrice = Number(customObj.Price);
                 var parameterVal = Number(customObj.Qty);
                 var checked = customObj.Checked;
             } else {
                 itemPrice = Number(self.materialsList[i].PkgPrice);
                 parameterVal = Number(self.proposalUnderReview.propertyInputParams[paramKey]);
-                checked = self.materialsList[i].Default;
+                checked = self.materialsList[i].Checked;
             }
 
             var usage = Number(self.materialsList[i].QtyPkg);
@@ -181,18 +186,20 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'underscore', fun
 
             
             if (checked === "true" || checked === true || checked === 1) {
-                self.materialsList[i].Default = true;
+                self.materialsList[i].Checked = true;
             } else {
-                self.materialsList[i].Default = false;
+                self.materialsList[i].Checked = false;
             }
         }
         categorizeMaterials();
     };
 
-    // If a Proposal has been Saved from the Proposal Review Pricing page, then it will have custom (rather than default) pricing and qty.
+    // If a Proposal has been Saved from the Proposal Review Pricing page, then it will have custom config (rather than default) pricing and qty.
     // The formatMaterials() function will call this function for each item to see if there is a saved value
+    // If there is NOT a custom saved config, self.materialsJob will be an empty array
     var returnCustomMaterial = function(code) {
         var rtnObj = null;
+
         for (var i = 0; i < self.materialsJob.length; i++) {
             if (self.materialsJob[i].Code === code) {
                rtnObj = self.materialsJob[i];
@@ -202,42 +209,47 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'underscore', fun
         return rtnObj;
     };
 
+    // Categorizes and sorts the complete materials list into roof sections
     var categorizeMaterials = function() {
         self.materialsCatergorized = {};
-        var shingles = [];
+        var field = [];
+        var ridge = [];
         var caps = [];
         var vents = [];
-        var edge = [];
+        var flashing = [];
         var flat = [];
         var other = [];
         for (var i = 0; i < self.materialsList.length; i++) {
-            var sortNum = parseInt(self.materialsList[i].Sort);
-            if (sortNum > 100 && sortNum < 200) {
-                shingles.push(self.materialsList[i]);
-            } else if (sortNum > 200 && sortNum < 300) {
+            var cat = self.materialsList[i].Category;
+            if (cat == "Field") {
+                field.push(self.materialsList[i]);
+            } else if (cat == "Ridge") {
+                ridge.push(self.materialsList[i]);
+            } else if (cat == "Caps") {
                 caps.push(self.materialsList[i]);
-            } else if (sortNum > 300 && sortNum < 400) {
+            } else if (cat == "Ventilation") {
                 vents.push(self.materialsList[i]);
-            } else if (sortNum > 400 && sortNum < 500) {
-                edge.push(self.materialsList[i]);
-            } else if (sortNum > 600 && sortNum < 700) {
+            } else if (cat == "Flashing") {
+                flashing.push(self.materialsList[i]);
+            } else if (cat == "LowSlope") {
                 flat.push(self.materialsList[i]);
-            } else if (sortNum > 800 && sortNum < 900) {
+            } else if (cat == "Other") {
                 other.push(self.materialsList[i]);
             }
         };
 
-        underscore.sortBy(shingles, 'Sort');
+        underscore.sortBy(field, 'Sort');
+        underscore.sortBy(ridge, 'Sort');
         underscore.sortBy(caps, 'Sort');
         underscore.sortBy(vents, 'Sort');
-        underscore.sortBy(edge, 'Sort');
+        underscore.sortBy(flashing, 'Sort');
         underscore.sortBy(flat, 'Sort');
         underscore.sortBy(other, 'Sort');
-
-        self.materialsCatergorized.Shingles = shingles;
+        self.materialsCatergorized.Field = field;
+        self.materialsCatergorized.Ridge = ridge;
         self.materialsCatergorized.Caps = caps;
         self.materialsCatergorized.Vents = vents;
-        self.materialsCatergorized.Edge = edge;
+        self.materialsCatergorized.Flashing = flashing;
         self.materialsCatergorized.Flat = flat;
         self.materialsCatergorized.Other = other;
 
