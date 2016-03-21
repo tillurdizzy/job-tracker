@@ -9,7 +9,7 @@
         <h2>Grand Total: {{ChildCtrl.GrandTotal | currency:"$":2}}</h2>
     </div>
     <div>
-        <button type="button" class="button radius" ng-click="ChildCtrl.saveJobMaterials()">Save</button>
+        <button type="button" class="button radius" ng-click="ChildCtrl.saveJobConfig()">Save</button>
     </div>
     <div class="section-header">
         <h2>Field Shingles</h2>
@@ -32,7 +32,7 @@
                 <tr ng-repeat="row in ChildCtrl.materialPricingDP.Field">
                     <td>
 						<div class="check-radio-container">
-							<input type="checkbox" id="{{row.Sort}}" ng-model="row.Default" ng-change="ChildCtrl.toggleCheckBox()"></input>
+							<input type="checkbox" id="{{row.Sort}}" ng-model="row.Checked" ng-change="ChildCtrl.toggleCheckBox()"></input>
 							<label for="{{row.Sort}}"><span></span></label>
 						</div>
                     </td>
@@ -73,7 +73,7 @@
                 <tr ng-repeat="row in ChildCtrl.materialPricingDP.Ridge">
                     <td>
                         <div class="check-radio-container">
-                            <input type="checkbox" id="{{row.Sort}}" ng-model="row.Default" ng-change="ChildCtrl.toggleCheckBox()"></input>
+                            <input type="checkbox" id="{{row.Sort}}" ng-model="row.Checked" ng-change="ChildCtrl.toggleCheckBox()"></input>
                             <label for="{{row.Sort}}"><span></span></label>
                         </div>
                     </td>
@@ -90,7 +90,7 @@
     </div>
 
     <div class="pricingCategoryTotal">
-        <h2>Total Ridge: {{ChildCtrl.ShinglesFieldTotal | currency:"$":2}}</h2>
+        <h2>Total Ridge: {{ChildCtrl.ShinglesRidgeTotal | currency:"$":2}}</h2>
     </div>
 
     <div class="section-header">
@@ -115,7 +115,7 @@
                 <tr  ng-repeat="row in ChildCtrl.materialPricingDP.Vents">
                     <td>
 						<div class="check-radio-container">
-							<input type="checkbox" id="{{row.Sort}}" ng-model="row.Default" ng-change="ChildCtrl.toggleCheckBox()"></input>
+							<input type="checkbox" id="{{row.Sort}}" ng-model="row.Checked" ng-change="ChildCtrl.toggleCheckBox()"></input>
 							<label for="{{row.Sort}}"><span></span></label>
 						</div>
                     </td>
@@ -154,7 +154,7 @@
                 <tr  ng-repeat="row in ChildCtrl.materialPricingDP.Flashing">
                     <td>
 						<div class="check-radio-container">
-							<input type="checkbox" id="{{row.Sort}}" ng-model="row.Default" ng-change="ChildCtrl.toggleCheckBox()"></input>
+							<input type="checkbox" id="{{row.Sort}}" ng-model="row.Checked" ng-change="ChildCtrl.toggleCheckBox()"></input>
 							<label for="{{row.Sort}}"><span></span></label>
 						</div>
                     </td>
@@ -193,7 +193,7 @@
                 <tr  ng-repeat="row in ChildCtrl.materialPricingDP.Caps">
                     <td>
 						<div class="check-radio-container">
-							<input type="checkbox" id="{{row.Sort}}" ng-model="row.Default" ng-change="ChildCtrl.toggleCheckBox()"></input>
+							<input type="checkbox" id="{{row.Sort}}" ng-model="row.Checked" ng-change="ChildCtrl.toggleCheckBox()"></input>
 							<label for="{{row.Sort}}"><span></span></label>
 						</div>
                     </td>
@@ -232,7 +232,7 @@
                 <tr  ng-repeat="row in ChildCtrl.materialPricingDP.Flat">
                     <td>
 						<div class="check-radio-container">
-							<input type="checkbox" id="{{row.Sort}}" ng-model="row.Default" ng-change="ChildCtrl.toggleCheckBox()"></input>
+							<input type="checkbox" id="{{row.Sort}}" ng-model="row.Checked" ng-change="ChildCtrl.toggleCheckBox()"></input>
 							<label for="{{row.Sort}}"><span></span></label>
 						</div>
                     </td>
@@ -271,7 +271,7 @@
                 <tr  ng-repeat="row in ChildCtrl.materialPricingDP.Other">
                     <td>
 						<div class="check-radio-container">
-							<input type="checkbox" id="{{row.Sort}}" ng-model="row.Default" ng-change="ChildCtrl.toggleCheckBox()"></input>
+							<input type="checkbox" id="{{row.Sort}}" ng-model="row.Checked" ng-change="ChildCtrl.toggleCheckBox()"></input>
 							<label for="{{row.Sort}}"><span></span></label>
 						</div>
                     </td>

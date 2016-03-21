@@ -22,7 +22,7 @@ app.controller('ClientLoginCtrl', ['$scope', '$state', 'ClientSharedSrvc', 'Clie
         };
 
         $scope.submitLoginForm = function() {
-           
+
             $scope.submissionInvalid = false;
 
             var dataObj = new Object();
@@ -54,7 +54,7 @@ app.controller('ClientLoginCtrl', ['$scope', '$state', 'ClientSharedSrvc', 'Clie
             // C.LogIn also triggers pulling the Client's job(s)
             // Which will in turn pull the associated Property VO's
             // When complete broadcasts "on-client-properties-complete"
-            C.LogIn($scope.displayName,$scope.clientObj);
+            C.LogIn($scope.displayName, $scope.clientObj);
         };
 
         var onLogInFail = function() {
@@ -62,10 +62,10 @@ app.controller('ClientLoginCtrl', ['$scope', '$state', 'ClientSharedSrvc', 'Clie
         };
 
 
-       
+
 
         $scope.$on('on-client-properties-complete', function(event, data) {
-            
+
         });
 
         $scope.$watch('$viewContentLoaded', function() {

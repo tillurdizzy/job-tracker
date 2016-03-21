@@ -20,12 +20,12 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'underscore', fun
     self.proposalUnderReview = {};
 
     // Received from DB - default selections amd current pricing
-    // Then Merged with self.materialsJob for custom selections and pricing
+    // Then Merged with self.jobConfig for custom selections and pricing
     // Totals calculated
     self.materialsList = [];
 
     // Selections and pricing specific to a job
-    self.materialsJob = [];
+    self.jobConfig = [];
 
     // Temporary (short-term ) vars
     var proposalDataFlag = {};
@@ -35,7 +35,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'underscore', fun
 
     // self.materialsList sorted into categories
     // Consumed by view controller as data provider for Pricing Tab
-    self.materialsCatergorized = { Field:[],Ridge:[],Vents: [], Flashing:[],Caps: [], Flat: [], Other: [] };
+    self.materialsCatergorized = { Field: [], Ridge: [], Vents: [], Flashing: [], Caps: [], Flat: [], Other: [] };
 
     // 
     self.selectProposal = function(ndx) {
@@ -56,7 +56,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'underscore', fun
             proposalDataFlag.materials = false;
             // Call queries
             getJobParameters();
-            getJobMaterials();
+            getJobConfig();
         }
         return rtnRepName;
     };
@@ -67,7 +67,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'underscore', fun
     };
 
     // Data for the "Input" Tab on Proposal Review Page
-    // Job Parameters AND Job Materials must BOTH be updated after selecting a proposal before we can
+    // Job Parameters AND Job Config must BOTH be updated after selecting a proposal before we can
     // call formatParams()
     // We'll use a flag to make sure both are updated...
     var getJobParameters = function() {
@@ -84,41 +84,40 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'underscore', fun
         });
     };
 
-
-    // !!!!!!!!!!!!!!!!!!!!! Move these functions concerning specific job to ClientSelectionsService!!!!!!!!!!!!!!!!!!
-    var getJobMaterials = function() {
+    var getJobConfig = function() {
         var dataObj = { jobID: self.proposalUnderReview.jobID };
-        DB.getJobMaterials(dataObj).then(function(result) {
+        DB.getJobConfig(dataObj).then(function(result) {
             if (result === false) {
-                alert("FALSE returned for DB.getJobMaterials() at AdminSharedSrvc >>> getJobMaterials()");
+                alert("FALSE returned for DB.getJobConfig() at AdminSharedSrvc >>> getJobConfig()");
             } else {
                 proposalDataFlag.materials = true;
                 var resultObj = result;
-                parseMaterialsResult(resultObj);
+                parseJobConfig(resultObj);
                 validateData();
             }
         }, function(error) {
-            alert("ERROR returned for DB.getJobMaterials() at AdminSharedSrvc >>> getJobMaterials()");
+            alert("ERROR returned for DB.getJobConfig() at AdminSharedSrvc >>> getJobConfig()");
         });
     };
 
-    var parseMaterialsResult =  function(ar){
-        self.materialsJob = [];
-        if(ar.length > 0){
+    // Converts the long string saved in DB into array of objects
+    var parseJobConfig = function(ar) {
+        self.jobConfig = [];
+        if (ar.length > 0) {
             var strData = ar[0].strData;
-            if(strData != ""){
+            if (strData != "") {
                 var rootArr = strData.split('!');
                 for (var i = 0; i < rootArr.length; i++) {
-                   var thisArr = rootArr[i].split(';');
-                   var materialObj = {};
-                   materialObj.Code = thisArr[0];
-                   materialObj.Qty = thisArr[1];
-                   materialObj.Checked = thisArr[2];
-                   materialObj.Price = thisArr[3];
-                   self.materialsJob.push(materialObj);
+                    var thisArr = rootArr[i].split(';');
+                    var materialObj = {};
+                    materialObj.Code = thisArr[0];
+                    materialObj.Qty = thisArr[1];
+                    materialObj.Checked = thisArr[2];
+                    materialObj.Price = thisArr[3];
+                    self.jobConfig.push(materialObj);
                 }
-            } 
-        } 
+            }
+        }
     };
 
     // Checks to make sure both params and materials are up to date from DB before calling formatParams();
@@ -148,10 +147,13 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'underscore', fun
         self.proposalUnderReview.propertyInputParams = jobParams;
         $rootScope.$broadcast('onRefreshParamsData', jobParams);
 
-        formatMaterials();
+        mergeConfig();
     };
 
-    var formatMaterials = function() {
+    // This is where the magic happens
+    // Take the generic materialList and merge it with the job-specific config (insert qty and price)
+
+    var mergeConfig = function() {
         for (var i = 0; i < self.materialsList.length; i++) {
 
             var paramKey = self.materialsList[i].InputParam;
@@ -184,7 +186,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'underscore', fun
             self.materialsList[i].Qty = parameterVal;
             self.materialsList[i].Total = total;
 
-            
+
             if (checked === "true" || checked === true || checked === 1) {
                 self.materialsList[i].Checked = true;
             } else {
@@ -196,14 +198,14 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'underscore', fun
 
     // If a Proposal has been Saved from the Proposal Review Pricing page, then it will have custom config (rather than default) pricing and qty.
     // The formatMaterials() function will call this function for each item to see if there is a saved value
-    // If there is NOT a custom saved config, self.materialsJob will be an empty array
+    // If there is NOT a custom saved config, self.jobConfig will be an empty array
     var returnCustomMaterial = function(code) {
         var rtnObj = null;
 
-        for (var i = 0; i < self.materialsJob.length; i++) {
-            if (self.materialsJob[i].Code === code) {
-               rtnObj = self.materialsJob[i];
-               break;
+        for (var i = 0; i < self.jobConfig.length; i++) {
+            if (self.jobConfig[i].Code === code) {
+                rtnObj = self.jobConfig[i];
+                break;
             };
         };
         return rtnObj;
@@ -258,6 +260,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'underscore', fun
 
 
     //Queries the properties table based on proposal status
+    // Called from init() in adminProposal.ctrl
     self.getProposalsByProperty = function() {
         DB.queryDB('views/admin/http/getJobProposals.php').then(function(result) {
             if (typeof result != "boolean") {
@@ -272,7 +275,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'underscore', fun
         });
     };
 
-    //Queries the job_list table for open proposals
+    // Queries the job_list table for open proposals
     self.getProposalsByJob = function() {
         DB.queryDB('views/admin/http/getJobsWithProposalStatus.php').then(function(result) {
             if (typeof result != "boolean") {
@@ -290,14 +293,6 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'underscore', fun
         console.log(res);
     };
 
-    // Remove elements with "X" in the Default field
-    var parseMaterialList = function() {
-        for (var i = self.materialsList.length - 1; i >= 0; i--) {
-            if (self.materialsList[i].Default == "X") {
-                self.materialsList.splice(i, 1);
-            }
-        }
-    };
 
     self.returnSalesRep = function(id) {
         var rtn = "";
@@ -310,86 +305,107 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'underscore', fun
         return rtn;
     };
 
+
+    //Called on init
     var getMaterialsList = function() {
-        var query = DB.queryDB("views/admin/http/getMaterialsShingle.php").then(function(result) {
-            if (result != false) {
-                self.materialsList = result;
-                self.materialsList = underscore.sortBy(self.materialsList, 'Sort');
-                parseMaterialList();
+        var dataObj = {};
+        DB.query("getMaterialsShingle", dataObj).then(function(resultObj) {
+            if (resultObj.result == "Error") {
+                alert("Query Error - see console for details");
             } else {
-                alert("FALSE returned from DB at AdminSharedSrvc >>> getMaterialsList()");
+                self.materialsList = resultObj.data;
+                self.materialsList = underscore.sortBy(self.materialsList, 'Sort');
+                removeCategoryHeaders();
             }
         }, function(error) {
-            alert("ERROR returned returned from DB at AdminSharedSrvc >>> getMaterialsList()");
+            alert("Query Error - AdminSharedSrvc >> getMaterialsList");
         });
+    };
+
+    // Remove entries with "X" in the Checked field
+    var removeCategoryHeaders = function() {
+        for (var i = self.materialsList.length - 1; i >= 0; i--) {
+            if (self.materialsList[i].Default == "X") {
+                self.materialsList.splice(i, 1);
+            }
+        }
     };
 
     var getSalesReps = function() {
-        var query = DB.queryDB("views/admin/http/getSalesReps.php").then(function(result) {
-            if (result != false) {
-                self.salesReps = result;
+        DB.query("getSalesReps", null).then(function(resultObj) {
+            if (resultObj.result == "Error") {
+                alert("Query Error - see console for details");
             } else {
-                alert("FALSE returned from DB at AdminSharedSrvc >>> getSalesReps()");
+                self.salesReps = resultObj.data;
             }
         }, function(error) {
-            alert("ERROR returned returned from DB at AdminSharedSrvc >>> getSalesReps()");
+            alert("Query Error - AdminSharedSrvc >> getSalesReps");
         });
     };
 
-    self.saveJobMaterials = function() {
-        var dataObj =  {};
+
+    self.saveJobConfig = function() {
+        var dataObj = {};
         var dataStr = "";
         dataObj.jobID = self.proposalUnderReview.jobID;
 
-        for (var i = 0; i < self.materialsCatergorized.Shingles.length; i++) {
-            var a=self.materialsCatergorized.Shingles[i].Code;
-            var b=self.materialsCatergorized.Shingles[i].Qty;
-            var c=self.materialsCatergorized.Shingles[i].Default;
-            var d=self.materialsCatergorized.Shingles[i].PkgPrice;
-            dataStr+=a + ';' + b + ';' + c + ';' + d + '!';
+        for (var i = 0; i < self.materialsCatergorized.Field.length; i++) {
+            var a = self.materialsCatergorized.Field[i].Code;
+            var b = self.materialsCatergorized.Field[i].Qty;
+            var c = self.materialsCatergorized.Field[i].Default;
+            var d = self.materialsCatergorized.Field[i].PkgPrice;
+            dataStr += a + ';' + b + ';' + c + ';' + d + '!';
+        };
+
+        for (var i = 0; i < self.materialsCatergorized.Ridge.length; i++) {
+            var a = self.materialsCatergorized.Ridge[i].Code;
+            var b = self.materialsCatergorized.Ridge[i].Qty;
+            var c = self.materialsCatergorized.Ridge[i].Default;
+            var d = self.materialsCatergorized.Ridge[i].PkgPrice;
+            dataStr += a + ';' + b + ';' + c + ';' + d + '!';
         };
 
         for (i = 0; i < self.materialsCatergorized.Vents.length; i++) {
-            var a=self.materialsCatergorized.Vents[i].Code;
-            var b=self.materialsCatergorized.Vents[i].Qty;
-            var c=self.materialsCatergorized.Vents[i].Default;
-            var d=self.materialsCatergorized.Vents[i].PkgPrice;
-            dataStr+=a + ';' + b + ';' + c + ';' + d + '!';
+            var a = self.materialsCatergorized.Vents[i].Code;
+            var b = self.materialsCatergorized.Vents[i].Qty;
+            var c = self.materialsCatergorized.Vents[i].Default;
+            var d = self.materialsCatergorized.Vents[i].PkgPrice;
+            dataStr += a + ';' + b + ';' + c + ';' + d + '!';
         };
 
-        for (i = 0; i < self.materialsCatergorized.Edge.length; i++) {
-            var a=self.materialsCatergorized.Edge[i].Code;
-            var b=self.materialsCatergorized.Edge[i].Qty;
-            var c=self.materialsCatergorized.Edge[i].Default;
-            var d=self.materialsCatergorized.Edge[i].PkgPrice;
-            dataStr+=a + ';' + b + ';' + c + ';' + d + '!';
+        for (i = 0; i < self.materialsCatergorized.Flashing.length; i++) {
+            var a = self.materialsCatergorized.Flashing[i].Code;
+            var b = self.materialsCatergorized.Flashing[i].Qty;
+            var c = self.materialsCatergorized.Flashing[i].Default;
+            var d = self.materialsCatergorized.Flashing[i].PkgPrice;
+            dataStr += a + ';' + b + ';' + c + ';' + d + '!';
         };
 
         for (i = 0; i < self.materialsCatergorized.Flat.length; i++) {
-            var a=self.materialsCatergorized.Flat[i].Code;
-            var b=self.materialsCatergorized.Flat[i].Qty;
-            var c=self.materialsCatergorized.Flat[i].Default;
-            var d=self.materialsCatergorized.Flat[i].PkgPrice;
-            dataStr+=a + ';' + b + ';' + c + ';' + d + '!';
+            var a = self.materialsCatergorized.Flat[i].Code;
+            var b = self.materialsCatergorized.Flat[i].Qty;
+            var c = self.materialsCatergorized.Flat[i].Default;
+            var d = self.materialsCatergorized.Flat[i].PkgPrice;
+            dataStr += a + ';' + b + ';' + c + ';' + d + '!';
         };
 
         for (i = 0; i < self.materialsCatergorized.Caps.length; i++) {
-            var a=self.materialsCatergorized.Caps[i].Code;
-            var b=self.materialsCatergorized.Caps[i].Qty;
-            var c=self.materialsCatergorized.Caps[i].Default;
-            var d=self.materialsCatergorized.Caps[i].PkgPrice;
-            dataStr+=a + ';' + b + ';' + c + ';' + d + '!';
+            var a = self.materialsCatergorized.Caps[i].Code;
+            var b = self.materialsCatergorized.Caps[i].Qty;
+            var c = self.materialsCatergorized.Caps[i].Default;
+            var d = self.materialsCatergorized.Caps[i].PkgPrice;
+            dataStr += a + ';' + b + ';' + c + ';' + d + '!';
         };
 
         for (i = 0; i < self.materialsCatergorized.Other.length; i++) {
-            var a=self.materialsCatergorized.Other[i].Code;
-            var b=self.materialsCatergorized.Other[i].Qty;
-            var c=self.materialsCatergorized.Other[i].Default;
-            var d=self.materialsCatergorized.Other[i].PkgPrice;
-            dataStr+=a + ';' + b + ';' + c + ';' + d + '!';
+            var a = self.materialsCatergorized.Other[i].Code;
+            var b = self.materialsCatergorized.Other[i].Qty;
+            var c = self.materialsCatergorized.Other[i].Default;
+            var d = self.materialsCatergorized.Other[i].PkgPrice;
+            dataStr += a + ';' + b + ';' + c + ';' + d + '!';
         };
         dataObj.strData = dataStr;
-        var query = DB.queryDBWithObj("views/admin/http/updateJobMaterial.php",dataObj).then(function(result) {
+        var query = DB.queryDBWithObj("views/admin/http/updateJobMaterial.php", dataObj).then(function(result) {
             if (result != false) {
                 return true;
             } else {
@@ -399,7 +415,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'underscore', fun
         }, function(error) {
             alert("ERROR returned returned from DB at AdminSharedSrvc >>> getMaterialsList()");
         });
-    }
+    };
 
     getMaterialsList();
     getSalesReps();

@@ -18,7 +18,7 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'underscore', f
     self.jobParameters = {};
     self.multiVents = {};
     self.multiLevels = {};
-    self.jobMaterials = {};
+    self.jobConfig = {};
     self.photoGallery =[];
     self.existingRoofDescription = {
         shingles: "",
@@ -169,27 +169,71 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'underscore', f
                 console.log("getMultiVents ---- " + resultObj.data);
             } else {
                 self.multiLevels = resultObj.data[0];
-                getJobMaterials();
+                buildRoofDescription();
+                getJobConfig();
             }
         }, function(error) {
             alert("Query Error - ClientSharedSrvc >> getMultiVents");
         });
     }
 
-    var getJobMaterials = function() {
+    var getJobConfig = function() {
         var dataObj = { jobID: self.jobObj.PRIMARY_ID };
-        DB.queryDB("getJobMaterials", dataObj).then(function(resultObj) {
+        DB.queryDB("getJobConfig", dataObj).then(function(resultObj) {
             if (resultObj.result === "Error" || typeof resultObj.data === "string") {
                 alert("Query Error - see console for details");
-                console.log("getJobMaterials ---- " + resultObj.data);
+                console.log("getJobConfig ---- " + resultObj.data);
             } else {
-                buildRoofDescription();
-                self.jobMaterials = resultObj.data[0];
+                self.jobConfig = resultObj.data[0];
+
                 getPhotoGallery();
             }
         }, function(error) {
-            alert("Query Error - ClientSharedSrvc >> getJobMaterials");
+            alert("Query Error - ClientSharedSrvc >> getJobConfig");
         });
+    };
+
+    var mergeConfig = function() {
+        for (var i = 0; i < self.materialsList.length; i++) {
+
+            var paramKey = self.materialsList[i].InputParam;
+            var customObj = returnCustomMaterial(self.materialsList[i].Code);
+
+            // If the client has a 'Saved' obj for this material, use that Price and Qty, otherwise use current pricing
+            if (customObj != null && customObj.Checked != undefined) {
+                var itemPrice = Number(customObj.Price);
+                var parameterVal = Number(customObj.Qty);
+                var checked = customObj.Checked;
+            } else {
+                itemPrice = Number(self.materialsList[i].PkgPrice);
+                parameterVal = Number(self.proposalUnderReview.propertyInputParams[paramKey]);
+                checked = self.materialsList[i].Checked;
+            }
+
+            var usage = Number(self.materialsList[i].QtyPkg);
+            var over = Number(self.materialsList[i].Margin);
+            var roundUp = Number(self.materialsList[i].RoundUp);
+
+            var isNum = isNaN(parameterVal);
+            var total = 0;
+            if (isNum) {
+                parameterVal = 0;
+                total = 0;
+            } else {
+                total = (((parameterVal / usage) * itemPrice * over) * roundUp) / roundUp;
+            }
+
+            self.materialsList[i].Qty = parameterVal;
+            self.materialsList[i].Total = total;
+
+
+            if (checked === "true" || checked === true || checked === 1) {
+                self.materialsList[i].Checked = true;
+            } else {
+                self.materialsList[i].Checked = false;
+            }
+        }
+        categorizeMaterials();
     };
 
     var getPhotoGallery = function() {
@@ -207,7 +251,6 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'underscore', f
     };
 
     var parseGalleryResult = function(result){
-        
         var clientDirectory = self.clientObj.name_last.toLowerCase();
         photoGalleryPath = "client/img/" + clientDirectory + "/";
         self.photoGallery =[];

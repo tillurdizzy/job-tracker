@@ -1,14 +1,15 @@
 'use strict';
 
-app.controller('AdminPropPricing', ['$state', '$scope', 'AdminSharedSrvc','ClientSelectionsSrvc',function($state, $scope, AdminSharedSrvc,ClientSelectionsSrvc) {
+app.controller('AdminPropPricing', ['$state', '$scope', 'AdminSharedSrvc', 'ClientSelectionsSrvc', function($state, $scope, AdminSharedSrvc, ClientSelectionsSrvc) {
 
     var ME = this;
     ME.S = AdminSharedSrvc;
     ME.C = ClientSelectionsSrvc;
     ME.GrandTotal = 0;
-    ME.ShingleTotal = 0;
+    ME.ShinglesFieldTotal = 0;
+    ME.ShinglesRidgeTotal = 0;
     ME.VentsTotal = 0;
-    ME.EdgeTotal = 0;
+    ME.FlashingTotal = 0;
     ME.CapsTotal = 0;
     ME.FlatTotal = 0;
     ME.OtherTotal = 0;
@@ -17,19 +18,18 @@ app.controller('AdminPropPricing', ['$state', '$scope', 'AdminSharedSrvc','Clien
     ME.materialPricingDP = ME.S.materialsCatergorized;
 
     ME.toggleCheckBox = function() {
-      ME.dataIsSaved = false;
-      ME.getTotal();
+        ME.dataIsSaved = false;
+        ME.getTotal();
     };
 
-    ME.saveJobMaterials = function() {
-       ME.dataIsSaved = ME.S.saveJobMaterials();
+    ME.saveJobConfig = function() {
+        ME.dataIsSaved = ME.S.saveJobConfig();
     };
-
 
     // ME.getTotal() called every time a checkbox is changed on pricing tab view
     ME.getTotal = function() {
         ME.ShinglesFieldTotal = 0;
-        ME.ShingleRidgeTotal = 0;
+        ME.ShinglesRidgeTotal = 0;
         ME.VentsTotal = 0;
         ME.FlashingTotal = 0;
         ME.CapsTotal = 0;
@@ -62,10 +62,10 @@ app.controller('AdminPropPricing', ['$state', '$scope', 'AdminSharedSrvc','Clien
             }
         };
 
-        for (var i = 0; i < ME.materialPricingDP.Edge.length; i++) {
-            include = ME.materialPricingDP.Edge[i].Checked;
+        for (var i = 0; i < ME.materialPricingDP.Flashing.length; i++) {
+            include = ME.materialPricingDP.Flashing[i].Checked;
             if (include) {
-                ME.FlashingTotal += parseInt(ME.materialPricingDP.Edge[i].Total)
+                ME.FlashingTotal += parseInt(ME.materialPricingDP.Flashing[i].Total)
             }
         };
 
@@ -90,7 +90,7 @@ app.controller('AdminPropPricing', ['$state', '$scope', 'AdminSharedSrvc','Clien
             }
         };
 
-        ME.GrandTotal = ME.ShingleTotal + ME.VentsTotal + ME.EdgeTotal + ME.FlatTotal + ME.CapsTotal + ME.OtherTotal;
+        ME.GrandTotal = ME.ShinglesFieldTotal + ME.ShinglesRidgeTotal + ME.VentsTotal + ME.FlashingTotal + ME.FlatTotal + ME.CapsTotal + ME.OtherTotal;
     }
 
     // Broadcast from AdminSharedSrvc >>> setParams

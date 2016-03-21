@@ -1,17 +1,15 @@
 <div class="page" ng-controller="AdminProposalCtrl as Ctrl">
     <div class="title-with-btn">
-      <i ng-click="Ctrl.backToHome()" class="fa fa-arrow-circle-left fa-3x"></i>
-      <h2>Proposal Review</h2>
+        <i ng-click="Ctrl.backToHome()" class="fa fa-arrow-circle-left fa-3x"></i>
+        <h2>Proposal Review</h2>
     </div>
-   
-   <div>
-        <select ng-model="Ctrl.selectedProposal" ng-options="c.label for c in Ctrl.selectDataProvider" 
-        ng-change="Ctrl.selectProposal()" style="width:50%";></select>
-   </div>
-   <div>
-     <h2>Sales Rep: {{Ctrl.salesRep}}</h2>
-   </div>
-   <div id='cssmenu' ng-controller="TabbedMenuCtrl">
+    <div>
+        <select ng-model="Ctrl.selectedProposal" ng-options="c.label for c in Ctrl.selectDataProvider" ng-change="Ctrl.selectProposal()" style="width:50%" ;></select>
+    </div>
+    <div>
+        <h2>Sales Rep: {{Ctrl.salesRep}}</h2>
+    </div>
+    <div id='cssmenu' ng-controller="TabbedMenuCtrl">
         <ul>
             <li ng-class="{ active: isCurrentPath('/admin/proposal-review/input')}"><a ui-sref='admin.proposalsReview.input'>Input</a></li>
             <li ng-class="{ active: isCurrentPath('/admin/proposal-review/pricing')}"><a ui-sref='admin.proposalsReview.pricing'>Pricing</a></li>
@@ -19,5 +17,4 @@
         </ul>
     </div>
     <div ui-view></div>
-    
 </div>

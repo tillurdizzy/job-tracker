@@ -14,9 +14,30 @@ app.service('AdminDataSrvc',['$http','$q','SharedSrvc','LogInSrvc',function admi
 	var globalPathPrefix="js/php/";
 
 	var queryPaths = {
-		
+		getMaterialsShingle:localPathPrefix + "getMaterialsShingle.php",
+		getSalesReps:localPathPrefix + "getSalesReps.php"
 	};
 
+	self.query = function(query,dataObj){
+		var rtnObj = {};
+		var phpPath = queryPaths[query];
+		var deferred = $q.defer();
+		$http({method: 'POST', url:phpPath,data:dataObj})
+		.success(function(data, status) {
+			rtnObj.result = "Success";
+			rtnObj.data = data;
+			deferred.resolve(rtnObj);
+	    })
+	    .error(function(data, status, headers, config) {
+			rtnObj.result = "Error";
+			rtnObj.data = data;
+			deferred.reject(rtnObj);
+	    });
+	    return deferred.promise;
+	};
+
+
+// Phases this one out in favor of above
 	self.queryDB = function(phpFile){
 		var deferred = $q.defer();
 		$http({method: 'POST', url:phpFile}).
@@ -55,9 +76,9 @@ app.service('AdminDataSrvc',['$http','$q','SharedSrvc','LogInSrvc',function admi
 	};
 
 	
-	self.getJobMaterials = function(dataObj){
+	self.getJobConfig = function(dataObj){
 		var deferred = $q.defer();
-		$http({method: 'POST', url: 'views/admin/http/getJobMaterials.php',data:dataObj}).
+		$http({method: 'POST', url: 'views/admin/http/getJobConfig.php',data:dataObj}).
 		success(function(data, status) {
 			if(data === false){
 				deferred.resolve(false);

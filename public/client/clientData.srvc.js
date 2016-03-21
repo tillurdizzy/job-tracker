@@ -20,7 +20,7 @@ app.service('ClientDataSrvc',['$http','$q',function ($http,$q){
 		getMultiVents:globalPathPrefix + "getMultiVents.php",
 		getMultiLevel:globalPathPrefix + "getMultiLevel.php",
 		getMaterialsList:"views/admin/http/getMaterialsShingle.php",
-		getJobMaterials:"views/admin/http/getJobMaterials.php",
+		getJobConfig:"views/admin/http/getJobConfig.php",
 		getPhotoGallery:"views/proposals/http/getPhotos.php"
 	};
 
