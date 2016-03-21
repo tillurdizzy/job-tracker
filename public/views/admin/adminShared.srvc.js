@@ -1,9 +1,10 @@
 'use strict';
-app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'underscore', function adminShared($rootScope, AdminDataSrvc, underscore) {
+app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'underscore', 'JobConfigSrvc',function adminShared($rootScope, AdminDataSrvc, underscore,JobConfigSrvc) {
 
     var self = this;
     self.ME = "AdminSharedSrvc: ";
     var DB = AdminDataSrvc;
+    var CONFIG = JobConfigSrvc;
 
     //jobVO's related to jobs that are in Proposal State
     var proposalsAsJob = [];
@@ -102,22 +103,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'underscore', fun
 
     // Converts the long string saved in DB into array of objects
     var parseJobConfig = function(ar) {
-        self.jobConfig = [];
-        if (ar.length > 0) {
-            var strData = ar[0].strData;
-            if (strData != "") {
-                var rootArr = strData.split('!');
-                for (var i = 0; i < rootArr.length; i++) {
-                    var thisArr = rootArr[i].split(';');
-                    var materialObj = {};
-                    materialObj.Code = thisArr[0];
-                    materialObj.Qty = thisArr[1];
-                    materialObj.Checked = thisArr[2];
-                    materialObj.Price = thisArr[3];
-                    self.jobConfig.push(materialObj);
-                }
-            }
-        }
+        self.jobConfig = CONFIG.parseJobConfig(ar);
     };
 
     // Checks to make sure both params and materials are up to date from DB before calling formatParams();
@@ -154,62 +140,11 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'underscore', fun
     // Take the generic materialList and merge it with the job-specific config (insert qty and price)
 
     var mergeConfig = function() {
-        for (var i = 0; i < self.materialsList.length; i++) {
-
-            var paramKey = self.materialsList[i].InputParam;
-            var customObj = returnCustomMaterial(self.materialsList[i].Code);
-
-            // If the client has a 'Saved' obj for this material, use that Price and Qty, otherwise use current pricing
-            if (customObj != null && customObj.Checked != undefined) {
-                var itemPrice = Number(customObj.Price);
-                var parameterVal = Number(customObj.Qty);
-                var checked = customObj.Checked;
-            } else {
-                itemPrice = Number(self.materialsList[i].PkgPrice);
-                parameterVal = Number(self.proposalUnderReview.propertyInputParams[paramKey]);
-                checked = self.materialsList[i].Checked;
-            }
-
-            var usage = Number(self.materialsList[i].QtyPkg);
-            var over = Number(self.materialsList[i].Margin);
-            var roundUp = Number(self.materialsList[i].RoundUp);
-
-            var isNum = isNaN(parameterVal);
-            var total = 0;
-            if (isNum) {
-                parameterVal = 0;
-                total = 0;
-            } else {
-                total = (((parameterVal / usage) * itemPrice * over) * roundUp) / roundUp;
-            }
-
-            self.materialsList[i].Qty = parameterVal;
-            self.materialsList[i].Total = total;
-
-
-            if (checked === "true" || checked === true || checked === 1) {
-                self.materialsList[i].Checked = true;
-            } else {
-                self.materialsList[i].Checked = false;
-            }
-        }
+        self.materialsList = CONFIG.mergeConfig(self.materialsList,self.proposalUnderReview.propertyInputParams);
         categorizeMaterials();
     };
 
-    // If a Proposal has been Saved from the Proposal Review Pricing page, then it will have custom config (rather than default) pricing and qty.
-    // The formatMaterials() function will call this function for each item to see if there is a saved value
-    // If there is NOT a custom saved config, self.jobConfig will be an empty array
-    var returnCustomMaterial = function(code) {
-        var rtnObj = null;
-
-        for (var i = 0; i < self.jobConfig.length; i++) {
-            if (self.jobConfig[i].Code === code) {
-                rtnObj = self.jobConfig[i];
-                break;
-            };
-        };
-        return rtnObj;
-    };
+    
 
     // Categorizes and sorts the complete materials list into roof sections
     var categorizeMaterials = function() {
@@ -325,7 +260,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'underscore', fun
     // Remove entries with "X" in the Checked field
     var removeCategoryHeaders = function() {
         for (var i = self.materialsList.length - 1; i >= 0; i--) {
-            if (self.materialsList[i].Default == "X") {
+            if (self.materialsList[i].Checked == "X") {
                 self.materialsList.splice(i, 1);
             }
         }

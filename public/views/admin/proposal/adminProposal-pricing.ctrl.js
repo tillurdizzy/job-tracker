@@ -1,10 +1,9 @@
 'use strict';
 
-app.controller('AdminPropPricing', ['$state', '$scope', 'AdminSharedSrvc', 'ClientSelectionsSrvc', function($state, $scope, AdminSharedSrvc, ClientSelectionsSrvc) {
+app.controller('AdminPropPricing', ['$state', '$scope', 'AdminSharedSrvc', function($state, $scope, AdminSharedSrvc) {
 
     var ME = this;
     ME.S = AdminSharedSrvc;
-    ME.C = ClientSelectionsSrvc;
     ME.GrandTotal = 0;
     ME.ShinglesFieldTotal = 0;
     ME.ShinglesRidgeTotal = 0;
