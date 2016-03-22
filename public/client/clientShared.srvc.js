@@ -1,15 +1,18 @@
 'use strict';
-app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'underscore', function adminShared($rootScope, ClientDataSrvc, underscore) {
+app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'JobConfigSrvc', 'underscore', function adminShared($rootScope, ClientDataSrvc, JobConfigSrvc, underscore) {
 
     var self = this;
     self.ME = "ClientSharedSrvc: ";
     var DB = ClientDataSrvc;
+    var CONFIG = JobConfigSrvc;
 
     self.displayName = "";
     self.loggedIn = false;
     self.jobID = 0;
 
-    //Client data
+    self.materialsList = [];
+    self.baseLineTotal = 0;
+    var mergeDataFlag = { params: false, config: false };
     self.jobResults = []; // Original array from DB
     self.propertyResults = []; // Original array from DB
     self.jobObj = {};
@@ -19,7 +22,7 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'underscore', f
     self.multiVents = {};
     self.multiLevels = {};
     self.jobConfig = {};
-    self.photoGallery =[];
+    self.photoGallery = [];
     self.existingRoofDescription = {
         shingles: "",
         deck: "",
@@ -43,10 +46,10 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'underscore', f
         getJobsByClient();
     };
 
-
+    // Called from  self.LogIn()
     // This function starts a chain of DB calls
     // 1.getJobsByClient()  2.getPropertiesByClient() 3.getJobParameters() 4.getMultiVents(); 5. getMultiLevels() 
-    // 6. getJobMaterials(); 7.getMaterialsList() 8. getPhotos()
+    // 6. getJobMaterials(); 7.getMaterialsList() 8. getJobConfig() 9. getPhotos()
     // Ending on buildRoofDescription() which creates a DOM dataProvider from all these different sources
     var getJobsByClient = function() {
         var dataObj = { clientID: self.clientObj.PRIMARY_ID };
@@ -138,7 +141,9 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'underscore', f
                 alert("Query Error - see console for details");
                 console.log("getJobParameters ---- " + resultObj.data);
             } else {
-                self.jobParameters = resultObj.data[0];
+                self.jobParameters = CONFIG.formatParams(resultObj.data[0]);
+                mergeDataFlag.params = true;
+                validateMergeData();
                 getMultiVents();
             }
         }, function(error) {
@@ -184,57 +189,29 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'underscore', f
                 alert("Query Error - see console for details");
                 console.log("getJobConfig ---- " + resultObj.data);
             } else {
-                self.jobConfig = resultObj.data[0];
-
-                getPhotoGallery();
+                onGetJobConfig(resultObj.data);
             }
         }, function(error) {
             alert("Query Error - ClientSharedSrvc >> getJobConfig");
         });
     };
 
-    var mergeConfig = function() {
-        for (var i = 0; i < self.materialsList.length; i++) {
-
-            var paramKey = self.materialsList[i].InputParam;
-            var customObj = returnCustomMaterial(self.materialsList[i].Code);
-
-            // If the client has a 'Saved' obj for this material, use that Price and Qty, otherwise use current pricing
-            if (customObj != null && customObj.Checked != undefined) {
-                var itemPrice = Number(customObj.Price);
-                var parameterVal = Number(customObj.Qty);
-                var checked = customObj.Checked;
-            } else {
-                itemPrice = Number(self.materialsList[i].PkgPrice);
-                parameterVal = Number(self.proposalUnderReview.propertyInputParams[paramKey]);
-                checked = self.materialsList[i].Checked;
-            }
-
-            var usage = Number(self.materialsList[i].QtyPkg);
-            var over = Number(self.materialsList[i].Margin);
-            var roundUp = Number(self.materialsList[i].RoundUp);
-
-            var isNum = isNaN(parameterVal);
-            var total = 0;
-            if (isNum) {
-                parameterVal = 0;
-                total = 0;
-            } else {
-                total = (((parameterVal / usage) * itemPrice * over) * roundUp) / roundUp;
-            }
-
-            self.materialsList[i].Qty = parameterVal;
-            self.materialsList[i].Total = total;
-
-
-            if (checked === "true" || checked === true || checked === 1) {
-                self.materialsList[i].Checked = true;
-            } else {
-                self.materialsList[i].Checked = false;
-            }
-        }
-        categorizeMaterials();
+    // Converts the long string saved in DB into array of objects
+    var onGetJobConfig = function(ar) {
+        self.jobConfig = CONFIG.parseJobConfig(ar); // CONFIG keeps a copy!!!!  Don't really need it returned
+        mergeDataFlag.config = true;
+        validateMergeData();
+        getPhotoGallery();
     };
+
+    // Checks to make sure both config and materials are up to date from DB before calling formatParams();
+    var validateMergeData = function() {
+        if (mergeDataFlag.config == true && mergeDataFlag.params == true) {
+            self.materialsList = CONFIG.mergeConfig(self.materialsList, self.jobParameters);
+            self.getBaseTotal();
+        }
+    };
+
 
     var getPhotoGallery = function() {
         var dataObj = { ID: self.jobObj.PRIMARY_ID };
@@ -250,23 +227,21 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'underscore', f
         });
     };
 
-    var parseGalleryResult = function(result){
+    var parseGalleryResult = function(result) {
         var clientDirectory = self.clientObj.name_last.toLowerCase();
         photoGalleryPath = "client/img/" + clientDirectory + "/";
-        self.photoGallery =[];
+        self.photoGallery = [];
         for (var i = 0; i < result.length; i++) {
-           var obj = {};
-           obj.full = photoGalleryPath + "full/" + result[i].url;
-           obj.thumb = photoGalleryPath + "thumb/" + result[i].url;
-           obj.category = result[i].category;
-           obj.cap = result[i].caption;
-           self.photoGallery.push(obj);
+            var obj = {};
+            obj.full = photoGalleryPath + "full/" + result[i].url;
+            obj.thumb = photoGalleryPath + "thumb/" + result[i].url;
+            obj.category = result[i].category;
+            obj.cap = result[i].caption;
+            self.photoGallery.push(obj);
         }
     };
 
-
     // These do not require specific ID's - get them as soon as srvc in initialized.
-
     var getMaterialsList = function() {
         DB.queryDB("getMaterialsList").then(function(resultObj) {
             if (resultObj.result == "Error" || typeof resultObj.data === "string") {
@@ -278,7 +253,7 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'underscore', f
         }, function(error) {
             alert("Query Error - ClientSharedSrvc >> getJobMaterials");
         });
-    }
+    };
 
     var getKeyValuePairs = function() {
         var dataObj = {};
@@ -292,13 +267,56 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'underscore', f
         }, function(error) {
             alert("Query Error - ClientSharedSrvc >> getKeyValuePairs");
         });
-    }
+    };
 
-    var validateIsNumber = function(n){
-        if(n === ""){
+
+    self.getBaseTotal = function() {
+        var include = false;
+        for (var i = 0; i < self.materialsList.length; i++) {
+            include = self.materialsList[i].Checked;
+            if (include) {
+                self.baseLineTotal += parseInt(self.materialsList[i].Total)
+            }
+        }
+
+        // This completes the data calls
+        $rootScope.$broadcast("on-proposal-data-complete", self.propertyResults);
+    };
+
+    self.getUpgrades = function(cat) {
+        var basePrice = 0;
+        var thisCategory = [];
+        var rtnArray = [];
+        // Step 1: Extract Field Category
+        for (var i = 0; i < self.materialsList.length; i++) {
+            var category = self.materialsList[i].Category;
+            if (category === cat) {
+                thisCategory.push(self.materialsList[i]);
+            }
+        };
+        // Step 2: Find Base Price
+        for (i = 0; i < thisCategory.length; i++) {
+            var ckd = thisCategory[i].Checked;
+            if (ckd == true) {
+                basePrice = parseInt(thisCategory[i].Total);
+                break;
+            }
+        };
+        // Step 3: Calculate upgrade price and insert into list as new property
+        for (i = 0; i < thisCategory.length; i++) {
+            var t = parseInt(thisCategory[i].Total);
+            var upgradePrice = t - basePrice;
+            thisCategory[i].upgradePrice = upgradePrice;
+        };
+        return thisCategory;
+    };
+
+
+    var validateIsNumber = function(n) {
+        if (n === "") {
             n = 0;
         }
-        if(isNaN(n)){
+        if (isNaN(n)) {
             n = 0;
         }
         return n;

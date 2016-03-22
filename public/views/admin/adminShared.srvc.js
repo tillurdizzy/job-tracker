@@ -29,9 +29,9 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'underscore', 'Jo
     self.jobConfig = [];
 
     // Temporary (short-term ) vars
-    var proposalDataFlag = {};
-    proposalDataFlag.params = false;
-    proposalDataFlag.materials = false;
+    var mergeDataFlag = {};
+    mergeDataFlag.config = false;
+    mergeDataFlag.materials = false;
     var jobParams = {};
 
     // self.materialsList sorted into categories
@@ -53,8 +53,8 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'underscore', 'Jo
             }
             rtnRepName = self.returnSalesRep(self.proposalUnderReview.manager);
             // Set flags to false
-            proposalDataFlag.params = false;
-            proposalDataFlag.materials = false;
+            mergeDataFlag.config = false;
+            mergeDataFlag.materials = false;
             // Call queries
             getJobParameters();
             getJobConfig();
@@ -74,8 +74,10 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'underscore', 'Jo
     var getJobParameters = function() {
         DB.getJobParameters(self.proposalUnderReview.jobID).then(function(jobData) {
             if (jobData != false) {
-                proposalDataFlag.params = true;
                 jobParams = jobData[0];
+                mergeDataFlag.params = true;
+                self.proposalUnderReview.propertyInputParams = CONFIG.formatParams(jobParams);
+                $rootScope.$broadcast('onRefreshParamsData', jobParams);
                 validateData();
             } else {
                 alert("FALSE returned for DB.getJobParameters() at AdminSharedSrvc >>> getJobParameters()");
@@ -85,66 +87,40 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'underscore', 'Jo
         });
     };
 
+
     var getJobConfig = function() {
         var dataObj = { jobID: self.proposalUnderReview.jobID };
         DB.getJobConfig(dataObj).then(function(result) {
             if (result === false) {
                 alert("FALSE returned for DB.getJobConfig() at AdminSharedSrvc >>> getJobConfig()");
             } else {
-                proposalDataFlag.materials = true;
                 var resultObj = result;
-                parseJobConfig(resultObj);
-                validateData();
+                onGetJobConfig(resultObj); 
             }
         }, function(error) {
             alert("ERROR returned for DB.getJobConfig() at AdminSharedSrvc >>> getJobConfig()");
         });
     };
 
-    // Converts the long string saved in DB into array of objects
-    var parseJobConfig = function(ar) {
+    // Send results over to CONFIG
+    var onGetJobConfig = function(ar) {
         self.jobConfig = CONFIG.parseJobConfig(ar);
+        mergeDataFlag.config = true;
+        validateData();
     };
 
-    // Checks to make sure both params and materials are up to date from DB before calling formatParams();
+    // Checks to make sure both config and params are up to date from DB before calling formatParams();
     var validateData = function() {
-        if (proposalDataFlag.params == true && proposalDataFlag.materials == true) {
-            formatParams();
+        if (mergeDataFlag.config == true && mergeDataFlag.params == true) {
+            mergeConfig();
         }
     };
 
-    // Called from getJobParameters() >> validateData() after successful result from DB
-    // Format, set to var, and broadcast 
-    var formatParams = function() {
-        // If the field is empty, set a dash "-" for display purposes
-        underscore.each(jobParams, function(value, key, obj) {
-            if (value == "" || value == null) {
-                obj[key] = "-";
-            }
-        });
-        // Alias items
-        // Add Ridges
-        var top = parseInt(jobParams.TOPRDG);
-        var rake = parseInt(jobParams.RKERDG);
-        if (isNaN(top)) { top = 0; };
-        if (isNaN(rake)) { rake = 0; };
-        var rdg = top + rake;
-        jobParams.RIDGETOTAL = rdg;
-        self.proposalUnderReview.propertyInputParams = jobParams;
-        $rootScope.$broadcast('onRefreshParamsData', jobParams);
-
-        mergeConfig();
-    };
-
-    // This is where the magic happens
     // Take the generic materialList and merge it with the job-specific config (insert qty and price)
-
     var mergeConfig = function() {
         self.materialsList = CONFIG.mergeConfig(self.materialsList,self.proposalUnderReview.propertyInputParams);
         categorizeMaterials();
     };
-
-    
 
     // Categorizes and sorts the complete materials list into roof sections
     var categorizeMaterials = function() {
@@ -166,7 +142,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'underscore', 'Jo
                 caps.push(self.materialsList[i]);
             } else if (cat == "Ventilation") {
                 vents.push(self.materialsList[i]);
-            } else if (cat == "Flashing") {
+            } else if (cat == "Flashing" || cat == "Valley"  || cat == "Edge") {
                 flashing.push(self.materialsList[i]);
             } else if (cat == "LowSlope") {
                 flat.push(self.materialsList[i]);

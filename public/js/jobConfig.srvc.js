@@ -28,6 +28,24 @@ app.service('JobConfigSrvc',['$rootScope','underscore',function service($rootSco
         return self.jobConfigArray;
     };
 
+     self.formatParams = function(jobParams) {
+        // If the field is empty, set a dash "-" for display purposes
+        underscore.each(jobParams, function(value, key, obj) {
+            if (value == "" || value == null) {
+                obj[key] = "-";
+            }
+        });
+        // Alias items
+        // Add Ridges
+        var top = parseInt(jobParams.TOPRDG);
+        var rake = parseInt(jobParams.RKERDG);
+        if (isNaN(top)) { top = 0; };
+        if (isNaN(rake)) { rake = 0; };
+        var rdg = top + rake;
+        jobParams.RIDGETOTAL = rdg;
+        return jobParams;
+    };
+
     self.mergeConfig = function(materials,params) {
         materialsConfigured = [];
         for (var i = 0; i < materials.length; i++) {
@@ -86,10 +104,6 @@ app.service('JobConfigSrvc',['$rootScope','underscore',function service($rootSco
         };
         return rtnObj;
     };
-
-
-
-    
 
     return self;
 }]);

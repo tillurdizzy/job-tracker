@@ -1,10 +1,8 @@
 'use strict';
 app.service('ClientDataSrvc',['$http','$q',function ($http,$q){
 	
-
 	var self = this;
 	self.ME = "ClientDataSrvc: ";
-	
 	
 	self.UserID = "";
 	self.UserName = "";
@@ -61,21 +59,7 @@ app.service('ClientDataSrvc',['$http','$q',function ($http,$q){
 	    });
 
 	    return deferred.promise;
-	}
-
-	var returnQueryPath = function(q){
-		var rtnStr = "";
-		switch(q){
-			case "getJobsByClient":rtnStr = queryPaths.getJobsByClient;break;
-			case "getPropertiesByClient":rtnStr = queryPaths.getPropertiesByClient;break;
-			case "getKeyValuePairs":rtnStr = queryPaths.getKeyValuePairs;break;
-			case "getJobParameters":rtnStr = queryPaths.getJobParameters;break;
-		}
-		return rtnStr;
 	};
-		
-
-	
 
 	
 	return self;

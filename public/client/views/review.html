@@ -118,14 +118,14 @@
             </div>
         </div>
         <div class="upgrade-selections" ng-show="CTRL.showUpgrades.field">
-            <h2>GAF</h2>
-            <div class="upgrade-item">
+            
+            <div class="upgrade-item" ng-repeat="x in CTRL.shingleUpgrades">
                 <div class="check-radio-container" style="margin-bottom:10px;">
-                    <input type="radio" id="Grp1Z" name="Grp1" value="GAFROYSOV" ng-model="CTRL.UpgradeFieldShingleSelection" ng-change="CTRL.calculateTotal()"></input>
-                    <label for="Grp1Z"><span></span>GAF Royal Sovereign Three-Tab (+ $0)<a href="http://www.gaf.com/Roofing/Residential/Products/Shingles/3_Tab" target="_blank"> More</a></label>
+                    <input type="radio" id="{{x.Code}}" name="Grp1" value="{{x.Code}}" ng-model="CTRL.UpgradeFieldShingleSelection" ng-change="CTRL.calculateTotal($index)"></input>
+                    <label for="{{x.Code}}"><span></span>{{x.Item}} (+{{x.upgradePrice}})<a href="{{x.url}}" target="_blank"> More</a></label>
                 </div>
             </div>
-            <div class="upgrade-item">
+           <!--  <div class="upgrade-item">
                 <div class="check-radio-container" style="margin-bottom:10px;">
                     <input type="radio" id="Grp1A" name="Grp1" value="GAFTBRNAT" ng-model="CTRL.UpgradeFieldShingleSelection" ng-change="CTRL.calculateTotal()"></input>
                     <label for="Grp1A"><span></span>GAF Timberline Natural Shadow (+ $0)<a href="http://www.gaf.com/Roofing/Residential/Products/Shingles/Timberline/Natural_Shadow" target="_blank"> More</a></label>
@@ -161,7 +161,7 @@
                     <label for="Grp1F"><span></span>GAF Timberline Grand Sequoia (+ {{CTRL.shingleUpgradePrices.GAFGRNSEQ | currency:'$':2}})<a href="http://www.gaf.com/Roofing/Residential/Products/Shingles/Designer/Sequoia_IR" target="_blank"> More</a></label>
                 </div>
             </div>
-            <h2>Owens Corning</h2>
+           
             <div class="upgrade-item">
                 <div class="check-radio-container" style="margin-bottom:10px;">
                     <input type="radio" id="Grp1G" name="Grp1" value="OCSUPRM" ng-model="CTRL.UpgradeFieldShingleSelection" ng-change="CTRL.calculateTotal()"></input>
@@ -197,7 +197,7 @@
                     <input type="radio" id="Grp1M" name="Grp1" value="OCBRKSHR" ng-model="CTRL.UpgradeFieldShingleSelection" ng-change="CTRL.calculateTotal()"></input>
                     <label for="Grp1M"><span></span>Owens Corning Berkshire (+ {{CTRL.shingleUpgradePrices.OCBRKSHR | currency:'$':2}})<a href="https://w.owenscorning.com/roofing/shingles/berkshire" target="_blank"> More</a></label>
                 </div>
-            </div>
+            </div> -->
             <horiz-rule margintop="5" marginbottom="15"></horiz-rule>
         </div>
         <div class="upgrade-level">
