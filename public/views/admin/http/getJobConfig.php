@@ -14,7 +14,7 @@ $query = sprintf("SELECT * FROM job_materials WHERE jobID = '".$jobID."'");
 $result = mysqli_query($con,$query);
 $resultValueObjects = array();
 while ($row = mysqli_fetch_object($result)) {
-	$oneVO = new jobMaterialsVO();
+	$oneVO = new jobConfigVO();
 	$oneVO->PRIMARY_ID = $row->PRIMARY_ID;
 	$oneVO->strData = $row->strData;
 	array_push( $resultValueObjects, $oneVO );

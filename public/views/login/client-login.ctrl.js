@@ -9,6 +9,7 @@ app.controller('ClientLoginCtrl', ['$scope', '$state', 'ClientSharedSrvc', 'Clie
 
         $scope.displayName = "";
         $scope.clientObj = {};
+        $scope.continueFlag = false;
 
         $scope.continueBtn = function() {
             $state.transitionTo("review");
@@ -61,7 +62,9 @@ app.controller('ClientLoginCtrl', ['$scope', '$state', 'ClientSharedSrvc', 'Clie
             $state.transitionTo("login.invalid");
         };
 
-
+        $scope.$on('on-data-collection-complete', function(event, data) {
+            $scope.continueFlag = true;
+        });
 
 
         $scope.$on('on-client-properties-complete', function(event, data) {

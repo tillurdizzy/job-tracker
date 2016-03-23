@@ -3,13 +3,13 @@ app.service('JobConfigSrvc',['$rootScope','underscore',function service($rootSco
 
     var self = this;
     self.ME = "JobConfigSrvc: ";
-    var jobConfigArray = [];
+    self.jobConfigArray = [];
     var jobConfigStr = "";
     var materialsConfigured = [];
 
     // Converts the long string saved in DB into array of objects
     self.parseJobConfig = function(ar) {
-        jobConfigArray = [];
+        self.jobConfigArray = [];
         if (ar.length > 0) {
            jobConfigStr = ar[0].strData;
             if (jobConfigStr != "") {
@@ -80,7 +80,6 @@ app.service('JobConfigSrvc',['$rootScope','underscore',function service($rootSco
             materials[i].Qty = parameterVal;
             materials[i].Total = total;
 
-
             if (checked === "true" || checked === true || checked === 1) {
                 materials[i].Checked = true;
             } else {
@@ -91,14 +90,16 @@ app.service('JobConfigSrvc',['$rootScope','underscore',function service($rootSco
         return materialsConfigured;
     };
 
+    
+
     // If a Proposal has been Saved from the Proposal Review Pricing page, then it will have custom config (rather than default) pricing and qty.
     // The formatMaterials() function will call this function for each item to see if there is a saved value
     // If there is NOT a custom saved config, self.jobConfigArray will be an empty array
     var returnCustomMaterial = function(code) {
         var rtnObj = null;
-        for (var i = 0; i < jobConfigArray.length; i++) {
-            if (jobConfigArray[i].Code === code) {
-                rtnObj = jobConfigArray[i];
+        for (var i = 0; i < self.jobConfigArray.length; i++) {
+            if (self.jobConfigArray[i].Code === code) {
+                rtnObj = self.jobConfigArray[i];
                 break;
             };
         };

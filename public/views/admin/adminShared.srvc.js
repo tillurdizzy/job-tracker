@@ -49,6 +49,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'underscore', 'Jo
             for (var i = 0; i < proposalsAsJob.length; i++) {
                 if (proposalsAsJob[i].property === self.proposalUnderReview.PRIMARY_ID) {
                     self.proposalUnderReview.jobID = proposalsAsJob[i].PRIMARY_ID;
+                    break;
                 }
             }
             rtnRepName = self.returnSalesRep(self.proposalUnderReview.manager);
@@ -263,7 +264,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'underscore', 'Jo
         for (var i = 0; i < self.materialsCatergorized.Field.length; i++) {
             var a = self.materialsCatergorized.Field[i].Code;
             var b = self.materialsCatergorized.Field[i].Qty;
-            var c = self.materialsCatergorized.Field[i].Default;
+            var c = self.materialsCatergorized.Field[i].Checked;
             var d = self.materialsCatergorized.Field[i].PkgPrice;
             dataStr += a + ';' + b + ';' + c + ';' + d + '!';
         };
@@ -271,7 +272,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'underscore', 'Jo
         for (var i = 0; i < self.materialsCatergorized.Ridge.length; i++) {
             var a = self.materialsCatergorized.Ridge[i].Code;
             var b = self.materialsCatergorized.Ridge[i].Qty;
-            var c = self.materialsCatergorized.Ridge[i].Default;
+            var c = self.materialsCatergorized.Ridge[i].Checked;
             var d = self.materialsCatergorized.Ridge[i].PkgPrice;
             dataStr += a + ';' + b + ';' + c + ';' + d + '!';
         };
@@ -279,7 +280,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'underscore', 'Jo
         for (i = 0; i < self.materialsCatergorized.Vents.length; i++) {
             var a = self.materialsCatergorized.Vents[i].Code;
             var b = self.materialsCatergorized.Vents[i].Qty;
-            var c = self.materialsCatergorized.Vents[i].Default;
+            var c = self.materialsCatergorized.Vents[i].Checked;
             var d = self.materialsCatergorized.Vents[i].PkgPrice;
             dataStr += a + ';' + b + ';' + c + ';' + d + '!';
         };
@@ -287,7 +288,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'underscore', 'Jo
         for (i = 0; i < self.materialsCatergorized.Flashing.length; i++) {
             var a = self.materialsCatergorized.Flashing[i].Code;
             var b = self.materialsCatergorized.Flashing[i].Qty;
-            var c = self.materialsCatergorized.Flashing[i].Default;
+            var c = self.materialsCatergorized.Flashing[i].Checked;
             var d = self.materialsCatergorized.Flashing[i].PkgPrice;
             dataStr += a + ';' + b + ';' + c + ';' + d + '!';
         };
@@ -295,7 +296,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'underscore', 'Jo
         for (i = 0; i < self.materialsCatergorized.Flat.length; i++) {
             var a = self.materialsCatergorized.Flat[i].Code;
             var b = self.materialsCatergorized.Flat[i].Qty;
-            var c = self.materialsCatergorized.Flat[i].Default;
+            var c = self.materialsCatergorized.Flat[i].Checked;
             var d = self.materialsCatergorized.Flat[i].PkgPrice;
             dataStr += a + ';' + b + ';' + c + ';' + d + '!';
         };
@@ -303,7 +304,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'underscore', 'Jo
         for (i = 0; i < self.materialsCatergorized.Caps.length; i++) {
             var a = self.materialsCatergorized.Caps[i].Code;
             var b = self.materialsCatergorized.Caps[i].Qty;
-            var c = self.materialsCatergorized.Caps[i].Default;
+            var c = self.materialsCatergorized.Caps[i].Checked;
             var d = self.materialsCatergorized.Caps[i].PkgPrice;
             dataStr += a + ';' + b + ';' + c + ';' + d + '!';
         };
@@ -311,7 +312,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'underscore', 'Jo
         for (i = 0; i < self.materialsCatergorized.Other.length; i++) {
             var a = self.materialsCatergorized.Other[i].Code;
             var b = self.materialsCatergorized.Other[i].Qty;
-            var c = self.materialsCatergorized.Other[i].Default;
+            var c = self.materialsCatergorized.Other[i].Checked;
             var d = self.materialsCatergorized.Other[i].PkgPrice;
             dataStr += a + ';' + b + ';' + c + ';' + d + '!';
         };

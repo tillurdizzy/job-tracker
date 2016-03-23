@@ -86,8 +86,15 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'JobConfigSrvc'
     // Eliminate or revise when user can select between multiple properties
     // For now set to the first object in array
     var setClientJob = function() {
-        self.jobObj = self.jobResults[0];
         self.propertyObj = self.propertyResults[0];
+        var propID = self.propertyObj.PRIMARY_ID;
+        for (var i = 0; i < self.jobResults.length; i++) {
+           if(self.jobResults[i].property == propID){
+            self.jobObj = self.jobResults[i];
+            break;
+           }
+        }
+        
         self.jobID = self.jobObj.PRIMARY_ID;
     };
 
@@ -278,9 +285,7 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'JobConfigSrvc'
                 self.baseLineTotal += parseInt(self.materialsList[i].Total)
             }
         }
-
-        // This completes the data calls
-        $rootScope.$broadcast("on-proposal-data-complete", self.propertyResults);
+         $rootScope.$broadcast("on-data-collection-complete");
     };
 
     self.getUpgrades = function(cat) {

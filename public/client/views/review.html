@@ -3,7 +3,7 @@
         <h2>Work Proposal</h2>
     </div>
     <div class="section-header-client">
-        <h2>Proposal For</h2>
+        <h2>A. Proposal For:</h2>
     </div>
     <div class="block-section-width text-block-display" style="padding-right: 2rem;">
         <div class="flex-space-between">
@@ -26,7 +26,7 @@
         </div>
     </div>
     <div class="section-header-client">
-        <h2>Existing Roof Assembly</h2>
+        <h2>B. Existing Roof Assembly</h2>
     </div>
     <div class="block-section-width text-block-display">
         <p>A strictly visual inspection of the existing roof assembly on the above referenced property was made on {{CTRL.C.propertyObj.createdDate | date:'fullDate'}}. To the best of our knowledge the following statements represent as accurate a description as possible from the limited observations.</p>
@@ -60,53 +60,56 @@
         </div>
     </div>
     <div class="section-header-client">
-        <h2>Photo Gallery</h2>
+        <h2>C. Photo Gallery</h2>
     </div>
     <div class="photo-gallery">
         <thumb ng-repeat="img in CTRL.C.photoGallery" ndx={{$index}} path="{{img.thumb}}" click="CTRL.thumbClick"></thumb>
     </div>
     <div class="section-header-client">
-        <h2>Baseline Proposal and Scope of Work</h2>
+        <h2>D. Baseline Proposal and Scope of Work</h2>
     </div>
     <div class="block-section-width text-block-display">
         <p>The following installation represents a <span class="bold">baseline</span> roof assembly, which meets or exceeds all applicable building codes. However, these are the minimum standards. Evolution Roofing highly recommends upgrading several of these components in the following <span class="bold">Premium Upgrade Options</span> section.</p>
         <div class="indent-block-client">
             <h3 class="first-item">1. Pre-install</h3>
             <p>Remove existing roof system from the roof deck and haul from the site. Prepare the roof deck by nailing all raised nails and clearing debris from the roof surface left from the previous application.</p>
-            <h3>2. Install Felt Underlayment</h3>
+            <h3>2. Felt Underlayment</h3>
             <p>Install new #15 Asphalt Saturated Organic Felt underlayment over entire roof deck.</p>
             <a href="http://evolutionroofingsystems.com/#/pitched/underlayments" target="_blank">Learn More</a>
-            <h3>3. Install Drip  Edge Extension (if selected)</h3>
+            <h3>3. Drip Edge Extender (if selected)</h3>
             <p class="hilite">See below to select this Premium Upgrade.</p>
-            <h3>4. Install New Drip Edge</h3>
-            <p>2" x 2" pre-painted to match the fascia or the roof color as chosen by owner (minimum IBC Building Code Standard).</p>
+            <h3>4. New Drip Edge</h3>
+            <p>Install 2" x 2" pre-painted to match the fascia or the roof color as chosen by owner (minimum IBC Building Code Standard).</p>
             <a href="http://evolutionroofingsystems.com/#/pitched/edge" target="_blank">Learn More</a>
-            <h3>5. Install New Valley Flashing</h3>
-            <p>36" wide valley underlayment covered with laced shingles; tail ends extending a minimum of 1" past the fascia board intersection.</p>
+            <h3>5. Valley Flashing</h3>
+            <p>Install 36" wide valley underlayment covered with laced shingles; tail ends extending a minimum of 1" past the fascia board intersection.</p>
             <p class="hilite">Premium upgrade available below for this product.</p>
             <a href="http://evolutionroofingsystems.com/#/pitched/valley" target="_blank">Learn More</a>
-            <h3>6. Install Starter Shingles</h3>
-            <p>Starter shingles are the first row of shingles installed along the entire perimeter of the roof. Evolution will install pre-cut starter strips. Some contractors try to use a cut-up field shingle as the 'starter' course on your roof. Unfortunately, cut-up shingles may not have properly positioned adhesive to ensure adequate wind resistance.</p>
-            <h3>7. Install Field Shingles</h3>
-            <p>Evolution will install the standard three-tab economy field shingles using four (4) nails per shingle. High wind or steep pitch application shall receive six (6) nails per shingle in accordance with manufacturers specifications when applicable.</p>
+            <h3>6. Starter Shingles</h3>
+            <p>Install Pre-cut starter strips.</p>
+            <a href="http://www.gaf.com/Roofing/Residential/Products/Starter_Strip_Shingles/ProStart" target="_blank">Learn More</a>
+            <h3>7. Field Shingles</h3>
+            <p>Install standard three-tab economy field shingles using four (4) nails per shingle. High wind or steep pitch application shall receive six (6) nails per shingle in accordance with manufacturers specifications when applicable.</p>
             <p class="hilite">Premium upgrade available below for this product.</p>
             <a href="http://evolutionroofingsystems.com/#/pitched/compositionshingles" target="_blank">Learn More</a>
             <h3>8. Attic Ventilation</h3>
-            <a href="http://www.gaf.com/Roofing/Residential/Products/Roof_Vents/Cobra_Rigid_Vent_3" target="_blank"><h5>Cobra Ridge Vent 3 </h5></a>
-            <p>Evolution will install a ridge vent attic ventilation system in accordance with the manufacturer's recommendations.</p>
+            <p>Install ridge vent attic ventilation system in accordance with the manufacturer's recommendations.</p>
             <a href="http://evolutionroofingsystems.com/#/pitched/ventilation" target="_blank">Learn More</a>
             <h3>9. Ridge Shingles</h3>
-            <p>Evolution will install standard economy-grade shingles along hips and ridges and over the ventilation system.</p>
+            <p>Economy-grade shingles along hips and ridges and over the ventilation system.</p>
             <p class="hilite">Premium upgrade available below for this product.</p>
+
             <h3>10. Pipes and Vents</h3>
-            <p>Evolution will install new plumbing pipes and vent stacks as needed, and paint to match roof color as close as possible</p>
+            <p>Install new plumbing pipes and vent stacks as needed, and paint to match roof color as close as possible</p>
             <total-bar price="{{CTRL.baseLineTotal}}" label="Baseline Total"></total-bar>
         </div>
     </div>
     <div class="section-header-client">
-        <h2>Premium Upgrade Options</h2>
+        <h2>E. Choose Upgrade Options</h2>
     </div>
     <div class="block-section-width text-block-display">
+        <!-- -->
+        <!-- Field -->
         <div class="upgrade-level">
             <div class="upgrade-icon">
                 <i class="fa fa-arrow-circle-down" ng-click="CTRL.showUpgrades.field=true" ng-hide="CTRL.showUpgrades.field"></i>
@@ -114,92 +117,21 @@
             </div>
             <div class="upgrade-label">
                 <h2>Premium Field Shingles</h2>
-                <i class="fa fa-check-square" ng-show="CTRL.UpgradeFieldShingleSelection!='GAFROYSOV'"></i>
+                <i class="fa fa-check-square" ng-show="CTRL.UpgradeFieldNdx!='GAFROYSOV'"></i>
             </div>
         </div>
         <div class="upgrade-selections" ng-show="CTRL.showUpgrades.field">
-            
             <div class="upgrade-item" ng-repeat="x in CTRL.shingleUpgrades">
                 <div class="check-radio-container" style="margin-bottom:10px;">
-                    <input type="radio" id="{{x.Code}}" name="Grp1" value="{{x.Code}}" ng-model="CTRL.UpgradeFieldShingleSelection" ng-change="CTRL.calculateTotal($index)"></input>
-                    <label for="{{x.Code}}"><span></span>{{x.Item}} (+{{x.upgradePrice}})<a href="{{x.url}}" target="_blank"> More</a></label>
+                    <input type="radio" id="{{x.Code}}" name="Grp1" value="{{x.Code}}" ng-model="CTRL.UpgradeFieldNdx" ng-change="CTRL.calculateTotal()"></input>
+                    <label for="{{x.Code}}"><span></span>{{x.Item}} (+{{x.upgradePrice | currency:$:2}})<a href="{{x.url}}" target="_blank"> More</a></label>
                 </div>
             </div>
-           <!--  <div class="upgrade-item">
-                <div class="check-radio-container" style="margin-bottom:10px;">
-                    <input type="radio" id="Grp1A" name="Grp1" value="GAFTBRNAT" ng-model="CTRL.UpgradeFieldShingleSelection" ng-change="CTRL.calculateTotal()"></input>
-                    <label for="Grp1A"><span></span>GAF Timberline Natural Shadow (+ $0)<a href="http://www.gaf.com/Roofing/Residential/Products/Shingles/Timberline/Natural_Shadow" target="_blank"> More</a></label>
-                </div>
-            </div>
-            <div class="upgrade-item">
-                <div class="check-radio-container" style="margin-bottom:10px;">
-                    <input type="radio" id="Grp1B" name="Grp1" value="GAFTBRHD" ng-model="CTRL.UpgradeFieldShingleSelection" ng-change="CTRL.calculateTotal()"></input>
-                    <label for="Grp1B"><span></span>GAF Timberline HD (+ {{CTRL.shingleUpgradePrices.GAFTBRHD | currency:'$':2}})<a href="http://www.gaf.com/Roofing/Residential/Products/Shingles/Timberline/Natural_Shadow" target="_blank"> More</a></label>
-                </div>
-            </div>
-            <div class="upgrade-item">
-                <div class="check-radio-container" style="margin-bottom:10px;">
-                    <input type="radio" id="Grp1C" name="Grp1" value="GAFTBRUHD" ng-model="CTRL.UpgradeFieldShingleSelection" ng-change="CTRL.calculateTotal()"></input>
-                    <label for="Grp1C"><span></span>GAF Timberline UltraHD (+ {{CTRL.shingleUpgradePrices.GAFTBRUHD | currency:'$':2}})<a href="http://www.gaf.com/Roofing/Residential/Products/Shingles/Timberline/Natural_Shadow" target="_blank"> More</a></label>
-                </div>
-            </div>
-            <div class="upgrade-item">
-                <div class="check-radio-container" style="margin-bottom:10px;">
-                    <input type="radio" id="Grp1D" name="Grp1" value="GAFTBRCOOL" ng-model="CTRL.UpgradeFieldShingleSelection" ng-change="CTRL.calculateTotal()"></input>
-                    <label for="Grp1D"><span></span>GAF Timberline Cool Series (+ {{CTRL.shingleUpgradePrices.GAFTBRCOOL | currency:'$':2}})<a href="http://www.gaf.com/Roofing/Residential/Products/Shingles/Timberline/Cool_Series" target="_blank"> More</a></label>
-                </div>
-            </div>
-            <div class="upgrade-item">
-                <div class="check-radio-container" style="margin-bottom:10px;">
-                    <input type="radio" id="Grp1E" name="Grp1" value="GAFARMSH" ng-model="CTRL.UpgradeFieldShingleSelection" ng-change="CTRL.calculateTotal()"></input>
-                    <label for="Grp1E"><span></span>GAF Timberline II ArmorShield (+ {{CTRL.shingleUpgradePrices.GAFARMSH | currency:'$':2}})<a href="http://www.gaf.com/Roofing/Residential/Products/Shingles/Timberline/ArmorShield" target="_blank"> More</a></label>
-                </div>
-            </div>
-            <div class="upgrade-item">
-                <div class="check-radio-container" style="margin-bottom:10px;">
-                    <input type="radio" id="Grp1F" name="Grp1" value="GAFGRNSEQ" ng-model="CTRL.UpgradeFieldShingleSelection" ng-change="CTRL.calculateTotal()"></input>
-                    <label for="Grp1F"><span></span>GAF Timberline Grand Sequoia (+ {{CTRL.shingleUpgradePrices.GAFGRNSEQ | currency:'$':2}})<a href="http://www.gaf.com/Roofing/Residential/Products/Shingles/Designer/Sequoia_IR" target="_blank"> More</a></label>
-                </div>
-            </div>
-           
-            <div class="upgrade-item">
-                <div class="check-radio-container" style="margin-bottom:10px;">
-                    <input type="radio" id="Grp1G" name="Grp1" value="OCSUPRM" ng-model="CTRL.UpgradeFieldShingleSelection" ng-change="CTRL.calculateTotal()"></input>
-                    <label for="Grp1G"><span></span>Owens Corning Supreme (+ {{CTRL.shingleUpgradePrices.OCSUPRM | currency:'$':2}})<a href="https://w.owenscorning.com/roofing/shingles/supreme" target="_blank"> More</a></label>
-                </div>
-            </div>
-            <div class="upgrade-item">
-                <div class="check-radio-container" style="margin-bottom:10px;">
-                    <input type="radio" id="Grp1H" name="Grp1" value="OCOAKRDG" ng-model="CTRL.UpgradeFieldShingleSelection" ng-change="CTRL.calculateTotal()"></input>
-                    <label for="Grp1H"><span></span>Owens Corning Oakridge (+ {{CTRL.shingleUpgradePrices.OCOAKRDG | currency:'$':2}})<a href="https://w.owenscorning.com/roofing/shingles/oakridge" target="_blank"> More</a></label>
-                </div>
-            </div>
-            <div class="upgrade-item">
-                <div class="check-radio-container" style="margin-bottom:10px;">
-                    <input type="radio" id="Grp1J" name="Grp1" value="OCDURATN" ng-model="CTRL.UpgradeFieldShingleSelection" ng-change="CTRL.calculateTotal()"></input>
-                    <label for="Grp1J"><span></span>Owens Corning Duration (+ {{CTRL.shingleUpgradePrices.OCDURATN | currency:'$':2}})<a href="https://w.owenscorning.com/roofing/shingles/trudefinition-duration" target="_blank"> More</a></label>
-                </div>
-            </div>
-            <div class="upgrade-item">
-                <div class="check-radio-container" style="margin-bottom:10px;">
-                    <input type="radio" id="Grp1K" name="Grp1" value="OCDURPRCL" ng-model="CTRL.UpgradeFieldShingleSelection" ng-change="CTRL.calculateTotal()"></input>
-                    <label for="Grp1K"><span></span>Owens Corning Duration Premium Cool (+ {{CTRL.shingleUpgradePrices.OCDURPRCL | currency:'$':2}})<a href="https://w.owenscorning.com/roofing/shingles/duration-premium-cool" target="_blank"> More</a></label>
-                </div>
-            </div>
-            <div class="upgrade-item">
-                <div class="check-radio-container" style="margin-bottom:10px;">
-                    <input type="radio" id="Grp1L" name="Grp1" value="OCWTHRGRD" ng-model="CTRL.UpgradeFieldShingleSelection" ng-change="CTRL.calculateTotal()"></input>
-                    <label for="Grp1L"><span></span>Owens Corning Weatherguard (+ {{CTRL.shingleUpgradePrices.OCWTHRGRD | currency:'$':2}})<a href="https://w.owenscorning.com/roofing/shingles/duration-premium-cool" target="_blank"> More</a></label>
-                </div>
-            </div>
-            <div class="upgrade-item">
-                <div class="check-radio-container" style="margin-bottom:10px;">
-                    <input type="radio" id="Grp1M" name="Grp1" value="OCBRKSHR" ng-model="CTRL.UpgradeFieldShingleSelection" ng-change="CTRL.calculateTotal()"></input>
-                    <label for="Grp1M"><span></span>Owens Corning Berkshire (+ {{CTRL.shingleUpgradePrices.OCBRKSHR | currency:'$':2}})<a href="https://w.owenscorning.com/roofing/shingles/berkshire" target="_blank"> More</a></label>
-                </div>
-            </div> -->
             <horiz-rule margintop="5" marginbottom="15"></horiz-rule>
         </div>
+
+        <!-- -->
+        <!-- Ridge -->
         <div class="upgrade-level">
             <div class="upgrade-icon">
                 <i class="fa fa-arrow-circle-down" ng-click="CTRL.showUpgrades.ridge=true" ng-hide="CTRL.showUpgrades.ridge"></i>
@@ -207,58 +139,22 @@
             </div>
             <div class="upgrade-label">
                 <h2>Enhanced Ridge Shingles</h2>
-                <i class="fa fa-check-square" ng-show="CTRL.UpgradeRidgeSelection!='Default'"></i>
+                <i class="fa fa-check-square" ng-show="CTRL.UpgradeRidgeNdx!='GAFRDG'"></i>
             </div>
         </div>
+        
         <div class="upgrade-selections" ng-show="CTRL.showUpgrades.ridge">
-       <!--  GAF -->
-            <div ng-show="CTRL.shingleManufacturer == 'GAF'">
-                <div class="upgrade-item">
-                    <div class="check-radio-container" style="margin-bottom:10px;">
-                        <input type="radio" id="Grp2A1" name="Grp2A" value="Default" ng-model="CTRL.UpgradeRidgeSelection" ng-change="CTRL.calculateTotal()"></input>
-                        <label for="Grp2A1"><span></span>GAF Royal Sovereign (+ $0)</label>
-                    </div>
-                </div>
-                <div class="upgrade-item">
-                    <div class="check-radio-container" style="margin-bottom:10px;">
-                        <input type="radio" id="Grp2A2" name="Grp2A" value="Upgrade" ng-model="CTRL.UpgradeRidgeSelection" ng-change="CTRL.calculateTotal()"></input>
-                        <label for="Grp2A2"><span></span>GAF Hip and Ridge Cap Shingles (+ {{CTRL.ridgeUpgradePrices.GAFRDG | currency:'$':2}})<a href="http://www.gaf.com/Roofing/Residential/Products/Ridge_Cap_Shingles" target="_blank"> More</a></label>
-                    </div>
-                </div>
-                <div>
-                    <img src="img/icon-timbertex2.jpg" alt="">
-                    <img src="img/Z-Ridge_02.gif" alt="">
+            <div class="upgrade-item" ng-repeat="x in CTRL.ridgeUpgrades">
+                <div class="check-radio-container" style="margin-bottom:10px;">
+                    <input type="radio" id="{{x.Code}}" name="Grp2" value="{{x.Code}}" ng-model="CTRL.UpgradeRidgeNdx" ng-change="CTRL.calculateTotal()"></input>
+                    <label for="{{x.Code}}"><span></span>{{x.Item}} (+{{x.upgradePrice | currency:$:2}})<a href="{{x.url}}" target="_blank"> More</a></label>
                 </div>
             </div>
-
-            <!--  Owens Corning -->
-            <div ng-show="CTRL.shingleManufacturer == 'OC'">
-                <div class="upgrade-item">
-                    <div class="check-radio-container" style="margin-bottom:10px;">
-                        <input type="radio" id="Grp2B1" name="Grp2B" value="Default" ng-model="CTRL.UpgradeRidgeSelection" ng-change="CTRL.calculateTotal()"></input>
-                        <label for="Grp2B1"><span></span>Owens Corning Supreme (+ $0)</label>
-                    </div>
-                </div>
-                <div class="upgrade-item">
-                    <div class="check-radio-container" style="margin-bottom:10px;">
-                        <input type="radio" id="Grp2B2" name="Grp2B" value="Upgrade" ng-model="CTRL.UpgradeRidgeSelection" ng-change="CTRL.calculateTotal()"></input>
-                        <label for="Grp2B2"><span></span>Owens Corning Pro-Edge (+ {{CTRL.ridgeUpgradePrices.OCPROEDG | currency:'$':2}})<a href="http://www.owenscorning.com/roofing/accessories/proedge-hip-ridge-shingles/" target="_blank"> More</a></label>
-                    </div>
-                     <img src="img/ProEdge.jpg" alt="">
-                </div>
-                <div class="upgrade-item">
-                    <div class="check-radio-container" style="margin-bottom:10px;">
-                        <input type="radio" id="Grp2B3" name="Grp2B" value="Upgrade" ng-model="CTRL.UpgradeRidgeSelection" ng-change="CTRL.calculateTotal()"></input>
-                        <label for="Grp2B3"><span></span>Owens Corning DuraRidge (+ {{CTRL.ridgeUpgradePrices.OCDURARDG | currency:'$':2}})<a href="http://www.owenscorning.com/roofing/accessories/duraridge/" target="_blank"> More</a></label>
-                    </div>
-                     <img src="img/DuraRidge.jpg" alt="">
-                </div>
-                
-            </div>
-
-
             <horiz-rule margintop="5" marginbottom="15"></horiz-rule>
         </div>
+
+        <!-- -->
+        <!-- Valley -->
         <div class="upgrade-level">
             <div class="upgrade-icon">
                 <i class="fa fa-arrow-circle-down" ng-click="CTRL.showUpgrades.valley=true" ng-hide="CTRL.showUpgrades.valley"></i>
@@ -266,75 +162,48 @@
             </div>
             <div class="upgrade-label">
                 <h2>Premium Valley Flashing</h2>
-                <i class="fa fa-check-square" ng-show="CTRL.UpgradeValleySelection!='Default'"></i>
+                <i class="fa fa-check-square" ng-show="CTRL.UpgradeValleyNdx!='GLVVAL'"></i>
             </div>
         </div>
         <div class="upgrade-selections" ng-show="CTRL.showUpgrades.valley">
-            <div class="upgrade-item">
+           <div class="upgrade-item" ng-repeat="x in CTRL.valleyUpgrades">
                 <div class="check-radio-container" style="margin-bottom:10px;">
-                    <input type="radio" id="Grp3A" name="Grp3" value="Default" ng-model="CTRL.UpgradeValleySelection" ng-change="CTRL.calculateTotal()"></input>
-                    <label for="Grp3A"><span></span>20" Rolled Galvanized Steel (+ $0)</label>
+                    <input type="radio" id="{{x.Code}}" name="Grp3" value="{{x.Code}}" ng-model="CTRL.UpgradeValleyNdx" ng-change="CTRL.calculateTotal()"></input>
+                    <label for="{{x.Code}}"><span></span>{{x.Item}} (+{{x.upgradePrice | currency:$:2}})<a href="{{x.url}}" target="_blank"> More</a></label>
                 </div>
             </div>
-            <div class="upgrade-item">
-                <div class="check-radio-container" style="margin-bottom:10px;">
-                    <input type="radio" id="Grp3B" name="Grp3" value="Upgrade" ng-model="CTRL.UpgradeValleySelection" ng-change="CTRL.calculateTotal()"></input>
-                    <label for="Grp3B"><span></span>W-Valley Flashing (+ {{CTRL.valleyUpgradePrices.Upgrade | currency:'$':2}})</label>
-                </div>
-            </div>
-            <div>
-                <img src="img/w-valley.jpg" alt="">
-                <img src="img/w-valley2.jpg" alt="">
-            </div>
-            <p>W-Valleys conduct water away from the shingles and down into your gutters smoother and quicker than any other valley available.</p>
             <horiz-rule margintop="5" marginbottom="15"></horiz-rule>
         </div>
+
+        <!-- -->
+        <!-- Trim -->
         <div class="upgrade-level">
             <div class="upgrade-icon">
                 <i class="fa fa-arrow-circle-down" ng-click="CTRL.showUpgrades.trim=true" ng-hide="CTRL.showUpgrades.trim"></i>
                 <i class="fa fa-arrow-circle-up hilite" ng-click="CTRL.showUpgrades.trim=false" ng-show="CTRL.showUpgrades.trim"></i>
             </div>
             <div class="upgrade-label">
-                <h2>Enhanced Edge Trim Boards</h2>
-                <i class="fa fa-check-square" ng-show="CTRL.UpgradeTrimSelection!='Default'"></i>
+                <h2>Drip Edge Extender</h2>
+                <i class="fa fa-check-square" ng-show="CTRL.UpgradeTrimNdx!='NOTRIM'"></i>
             </div>
         </div>
         <p>This upgrade consists of placing a 1” x 2” board behind the drip edge, effectivley extending the edge further out from the building. This will prevent all water from coming into contact with the fascia board, greatly extending the life of the paint on the building.</p>
         <div class="upgrade-selections" ng-show="CTRL.showUpgrades.trim">
-            <div class="upgrade-item">
+            <div class="upgrade-item" ng-repeat="x in CTRL.trimUpgrades">
                 <div class="check-radio-container" style="margin-bottom:10px;">
-                    <input type="radio" id="Grp4A" name="Grp4" value="Default" ng-model="CTRL.UpgradeTrimSelection" ng-change="CTRL.calculateTotal()"></input>
-                    <label for="Grp4A"><span></span>None (+ $0) </label>
-                </div>
-            </div>
-            <div class="upgrade-item">
-                <div class="check-radio-container" style="margin-bottom:10px;">
-                    <input type="radio" id="Grp4B" name="Grp4" value="Upgrade" ng-model="CTRL.UpgradeTrimSelection" ng-change="CTRL.calculateTotal()"></input>
-                    <label for="Grp4B"><span></span>1" x 2" Treated Lumber (+ {{CTRL.trimUpgradePrices.Upgrade | currency:'$':2}})</label>
+                    <input type="radio" id="{{x.Code}}" name="Grp4" value="{{x.Code}}" ng-model="CTRL.UpgradeTrimNdx" ng-change="CTRL.calculateTotal()"></input>
+                    <label for="{{x.Code}}"><span></span>{{x.Item}} (+{{x.upgradePrice | currency:$:2}})<a href="{{x.url}}" target="_blank"> More</a></label>
                 </div>
             </div>
         </div>
         <total-bar price="{{CTRL.grandTotal}}" label="Total With Upgrades"></total-bar>
+        <button type="button" style="width:100%;" ng-click="saveConfig();">Save Upgrade Options</button>
     </div>
+   
     <div class="section-header-client">
-        <h2>Disclaimers</h2>
+        <h2>F. What Next</h2>
     </div>
-    <div class="block-section-width text-block-display">
-        <div class="indent-block-client">
-            
-        </div>
-    </div>
-    <div class="section-header-client">
-        <h2>Agreement Terms</h2>
-    </div>
-    <div class="block-section-width text-block-display">
-    </div>
-    <div class="section-header-client">
-        <h2>Acceptance of Contract</h2>
-    </div>
-    <div class="block-section-width text-block-display">
-        
-    </div>
+   
 </div>
 <div style="margin-bottom:5rem;">
 </div>
