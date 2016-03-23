@@ -11,6 +11,7 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'JobConfigSrvc'
     self.jobID = 0;
 
     self.materialsList = [];
+    self.materialsListConfig = [];
     self.baseLineTotal = 0;
     var mergeDataFlag = { params: false, config: false };
     self.jobResults = []; // Original array from DB
@@ -35,6 +36,7 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'JobConfigSrvc'
         plumbingVents: "",
         heatingVents: ""
     };
+    var basePriceConfig = {};
     var photoGalleryPath = "";
     var keyValPairs = [];
 
@@ -213,8 +215,9 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'JobConfigSrvc'
 
     // Checks to make sure both config and materials are up to date from DB before calling formatParams();
     var validateMergeData = function() {
+        var listCopy = self.materialsList.slice();
         if (mergeDataFlag.config == true && mergeDataFlag.params == true) {
-            self.materialsList = CONFIG.mergeConfig(self.materialsList, self.jobParameters);
+            self.materialsListConfig = CONFIG.mergeConfig(listCopy, self.jobParameters);
             self.getBaseTotal();
         }
     };
@@ -256,11 +259,58 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'JobConfigSrvc'
                 console.log("getJobMaterials ---- " + resultObj.data);
             } else {
                 self.materialsList = resultObj.data;
+                getDefaultSelections();
             }
         }, function(error) {
             alert("Query Error - ClientSharedSrvc >> getJobMaterials");
         });
     };
+
+    var getDefaultSelections = function(){
+       for (var i = 0; i < self.materialsList.length; i++) {
+            var category = self.materialsList[i].Category;
+            if (category === "Field") {
+                var ckd = self.materialsList[i].Checked;
+                 if (ckd === "true"){
+                    basePriceConfig.Field = self.materialsList[i].Code;
+                    break;
+                }
+            }
+        };
+
+        for (var i = 0; i < self.materialsList.length; i++) {
+            var category = self.materialsList[i].Category;
+            if (category === "Valley") {
+                var ckd = self.materialsList[i].Checked;
+                 if (ckd === "true"){
+                    basePriceConfig.Valley = self.materialsList[i].Code;
+                    break;
+                }
+            }
+        };
+
+        for (var i = 0; i < self.materialsList.length; i++) {
+            var category = self.materialsList[i].Category;
+            if (category === "EdgeTrim") {
+                var ckd = self.materialsList[i].Checked;
+                 if (ckd === "true"){
+                    basePriceConfig.EdgeTrim = self.materialsList[i].Code;
+                    break;
+                }
+            }
+        };
+
+        for (var i = 0; i < self.materialsList.length; i++) {
+            var category = self.materialsList[i].Category;
+            if (category === "Ridge") {
+                var ckd = self.materialsList[i].Checked;
+                 if (ckd === "true"){
+                    basePriceConfig.Ridge = self.materialsList[i].Code;
+                    break;
+                }
+            }
+        };
+    }
 
     var getKeyValuePairs = function() {
         var dataObj = {};
@@ -279,41 +329,46 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'JobConfigSrvc'
 
     self.getBaseTotal = function() {
         var include = false;
-        for (var i = 0; i < self.materialsList.length; i++) {
-            include = self.materialsList[i].Checked;
+        for (var i = 0; i < self.materialsListConfig.length; i++) {
+            include = self.materialsListConfig[i].Checked;
             if (include) {
-                self.baseLineTotal += parseInt(self.materialsList[i].Total)
+                self.baseLineTotal += parseInt(self.materialsListConfig[i].Total)
             }
         }
          $rootScope.$broadcast("on-data-collection-complete");
     };
 
     self.getUpgrades = function(cat) {
+        // The users Prices are in the Configured List, but the default selection is in the Original List
         var basePrice = 0;
-        var thisCategory = [];
+        var thisCategoryConfigured = [];
         var rtnArray = [];
-        // Step 1: Extract Field Category
-        for (var i = 0; i < self.materialsList.length; i++) {
-            var category = self.materialsList[i].Category;
+
+        // Step 1: Extract Field Category from Configured AND Original List
+        for (var i = 0; i < self.materialsListConfig.length; i++) {
+            var category = self.materialsListConfig[i].Category;
             if (category === cat) {
-                thisCategory.push(self.materialsList[i]);
+                thisCategoryConfigured.push(self.materialsListConfig[i]);
             }
         };
+       
         // Step 2: Find Base Price
-        for (i = 0; i < thisCategory.length; i++) {
-            var ckd = thisCategory[i].Checked;
-            if (ckd == true) {
-                basePrice = parseInt(thisCategory[i].Total);
+        var defaultItemCode = basePriceConfig[cat];
+        for (i = 0; i < self.materialsListConfig.length; i++) {
+            var itemCode = self.materialsListConfig[i].Code;
+            if (itemCode === defaultItemCode) {
+                basePrice = parseInt(self.materialsListConfig[i].Total);
                 break;
             }
         };
+
         // Step 3: Calculate upgrade price and insert into list as new property
-        for (i = 0; i < thisCategory.length; i++) {
-            var t = parseInt(thisCategory[i].Total);
+        for (i = 0; i < thisCategoryConfigured.length; i++) {
+            var t = parseInt(thisCategoryConfigured[i].Total);
             var upgradePrice = t - basePrice;
-            thisCategory[i].upgradePrice = upgradePrice;
+            thisCategoryConfigured[i].upgradePrice = upgradePrice;
         };
-        return thisCategory;
+        return thisCategoryConfigured;
     };
 
 

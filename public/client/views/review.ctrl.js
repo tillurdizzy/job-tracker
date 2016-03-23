@@ -94,7 +94,7 @@ app.controller('ReviewCtrl',['$scope','$state','ClientSharedSrvc','ngDialog','$c
 		ME.trimUpgrades = ME.C.getUpgrades("EdgeTrim");
 	};
 
-	var setDefaultSelections = function(){
+	var setSelections = function(){
 		for (var i = 0; i < ME.shingleUpgrades.length; i++) {
 			if(ME.shingleUpgrades[i].Checked === true){
 				ME.UpgradeFieldNdx = ME.shingleUpgrades[i].Code;
@@ -134,6 +134,6 @@ app.controller('ReviewCtrl',['$scope','$state','ClientSharedSrvc','ngDialog','$c
     });
 
 	getUpgradeOptions();
-	setDefaultSelections();
+	setSelections();
   
  }]);
