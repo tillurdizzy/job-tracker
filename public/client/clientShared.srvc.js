@@ -205,6 +205,11 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'JobConfigSrvc'
         });
     };
 
+    self.saveJobConfig = function(dataObj){
+        self.jobConfig = CONFIG.updateCheckedItemInCategory(dataObj);
+    };
+
+
     // Converts the long string saved in DB into array of objects
     var onGetJobConfig = function(ar) {
         self.jobConfig = CONFIG.parseJobConfig(ar); // CONFIG keeps a copy!!!!  Don't really need it returned

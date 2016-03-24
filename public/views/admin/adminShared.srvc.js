@@ -1,5 +1,5 @@
 'use strict';
-app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'underscore', 'JobConfigSrvc',function adminShared($rootScope, AdminDataSrvc, underscore,JobConfigSrvc) {
+app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'underscore', 'JobConfigSrvc', function adminShared($rootScope, AdminDataSrvc, underscore, JobConfigSrvc) {
 
     var self = this;
     self.ME = "AdminSharedSrvc: ";
@@ -96,7 +96,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'underscore', 'Jo
                 alert("FALSE returned for DB.getJobConfig() at AdminSharedSrvc >>> getJobConfig()");
             } else {
                 var resultObj = result;
-                onGetJobConfig(resultObj); 
+                onGetJobConfig(resultObj);
             }
         }, function(error) {
             alert("ERROR returned for DB.getJobConfig() at AdminSharedSrvc >>> getJobConfig()");
@@ -119,7 +119,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'underscore', 'Jo
 
     // Take the generic materialList and merge it with the job-specific config (insert qty and price)
     var mergeConfig = function() {
-        self.materialsList = CONFIG.mergeConfig(self.materialsList,self.proposalUnderReview.propertyInputParams);
+        self.materialsList = CONFIG.mergeConfig(self.materialsList, self.proposalUnderReview.propertyInputParams);
         categorizeMaterials();
     };
 
@@ -143,7 +143,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'underscore', 'Jo
                 caps.push(self.materialsList[i]);
             } else if (cat == "Ventilation") {
                 vents.push(self.materialsList[i]);
-            } else if (cat == "Flashing" || cat == "Valley"  || cat == "Edge") {
+            } else if (cat == "Flashing" || cat == "Valley" || cat == "Edge") {
                 flashing.push(self.materialsList[i]);
             } else if (cat == "LowSlope") {
                 flat.push(self.materialsList[i]);
@@ -266,58 +266,66 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'underscore', 'Jo
             var b = self.materialsCatergorized.Field[i].Qty;
             var c = self.materialsCatergorized.Field[i].Checked;
             var d = self.materialsCatergorized.Field[i].PkgPrice;
-            dataStr += a + ';' + b + ';' + c + ';' + d + '!';
+            var e = self.materialsCatergorized.Field[i].Category;
+            dataStr += a + ';' + b + ';' + c + ';' + d + ';' + e + '!';
         };
 
-        for (var i = 0; i < self.materialsCatergorized.Ridge.length; i++) {
-            var a = self.materialsCatergorized.Ridge[i].Code;
-            var b = self.materialsCatergorized.Ridge[i].Qty;
-            var c = self.materialsCatergorized.Ridge[i].Checked;
-            var d = self.materialsCatergorized.Ridge[i].PkgPrice;
-            dataStr += a + ';' + b + ';' + c + ';' + d + '!';
+        for (i = 0; i < self.materialsCatergorized.Ridge.length; i++) {
+            a = self.materialsCatergorized.Ridge[i].Code;
+            b = self.materialsCatergorized.Ridge[i].Qty;
+            c = self.materialsCatergorized.Ridge[i].Checked;
+            d = self.materialsCatergorized.Ridge[i].PkgPrice;
+            e = self.materialsCatergorized.Ridge[i].Category;
+            dataStr += a + ';' + b + ';' + c + ';' + d + ';' + e + '!';
         };
 
         for (i = 0; i < self.materialsCatergorized.Vents.length; i++) {
-            var a = self.materialsCatergorized.Vents[i].Code;
-            var b = self.materialsCatergorized.Vents[i].Qty;
-            var c = self.materialsCatergorized.Vents[i].Checked;
-            var d = self.materialsCatergorized.Vents[i].PkgPrice;
-            dataStr += a + ';' + b + ';' + c + ';' + d + '!';
+            a = self.materialsCatergorized.Vents[i].Code;
+            b = self.materialsCatergorized.Vents[i].Qty;
+            c = self.materialsCatergorized.Vents[i].Checked;
+            d = self.materialsCatergorized.Vents[i].PkgPrice;
+            e = self.materialsCatergorized.Vents[i].Category;
+            dataStr += a + ';' + b + ';' + c + ';' + d + ';' + e + '!';
         };
 
         for (i = 0; i < self.materialsCatergorized.Flashing.length; i++) {
-            var a = self.materialsCatergorized.Flashing[i].Code;
-            var b = self.materialsCatergorized.Flashing[i].Qty;
-            var c = self.materialsCatergorized.Flashing[i].Checked;
-            var d = self.materialsCatergorized.Flashing[i].PkgPrice;
-            dataStr += a + ';' + b + ';' + c + ';' + d + '!';
+            a = self.materialsCatergorized.Flashing[i].Code;
+            b = self.materialsCatergorized.Flashing[i].Qty;
+            c = self.materialsCatergorized.Flashing[i].Checked;
+            d = self.materialsCatergorized.Flashing[i].PkgPrice;
+            e = self.materialsCatergorized.Flashing[i].Category;
+            dataStr += a + ';' + b + ';' + c + ';' + d + ';' + e + '!';
         };
 
         for (i = 0; i < self.materialsCatergorized.Flat.length; i++) {
-            var a = self.materialsCatergorized.Flat[i].Code;
-            var b = self.materialsCatergorized.Flat[i].Qty;
-            var c = self.materialsCatergorized.Flat[i].Checked;
-            var d = self.materialsCatergorized.Flat[i].PkgPrice;
-            dataStr += a + ';' + b + ';' + c + ';' + d + '!';
+            a = self.materialsCatergorized.Flat[i].Code;
+            b = self.materialsCatergorized.Flat[i].Qty;
+            c = self.materialsCatergorized.Flat[i].Checked;
+            d = self.materialsCatergorized.Flat[i].PkgPrice;
+            e = self.materialsCatergorized.Flat[i].Category;
+            dataStr += a + ';' + b + ';' + c + ';' + d + ';' + e + '!';
         };
 
         for (i = 0; i < self.materialsCatergorized.Caps.length; i++) {
-            var a = self.materialsCatergorized.Caps[i].Code;
-            var b = self.materialsCatergorized.Caps[i].Qty;
-            var c = self.materialsCatergorized.Caps[i].Checked;
-            var d = self.materialsCatergorized.Caps[i].PkgPrice;
-            dataStr += a + ';' + b + ';' + c + ';' + d + '!';
+            a = self.materialsCatergorized.Caps[i].Code;
+            b = self.materialsCatergorized.Caps[i].Qty;
+            c = self.materialsCatergorized.Caps[i].Checked;
+            d = self.materialsCatergorized.Caps[i].PkgPrice;
+            e = self.materialsCatergorized.Caps[i].Category;
+            dataStr += a + ';' + b + ';' + c + ';' + d + ';' + e + '!';
         };
 
         for (i = 0; i < self.materialsCatergorized.Other.length; i++) {
-            var a = self.materialsCatergorized.Other[i].Code;
-            var b = self.materialsCatergorized.Other[i].Qty;
-            var c = self.materialsCatergorized.Other[i].Checked;
-            var d = self.materialsCatergorized.Other[i].PkgPrice;
-            dataStr += a + ';' + b + ';' + c + ';' + d + '!';
+            a = self.materialsCatergorized.Other[i].Code;
+            b = self.materialsCatergorized.Other[i].Qty;
+            c = self.materialsCatergorized.Other[i].Checked;
+            d = self.materialsCatergorized.Other[i].PkgPrice;
+            e = self.materialsCatergorized.Other[i].Category;
+            dataStr += a + ';' + b + ';' + c + ';' + d + ';' + e + '!';
         };
+
         dataObj.strData = dataStr;
-        var query = DB.queryDBWithObj("views/admin/http/updateJobMaterial.php", dataObj).then(function(result) {
+        var query = DB.queryDBWithObj("http/update/updateConfig.php", dataObj).then(function(result) {
             if (result != false) {
                 return true;
             } else {

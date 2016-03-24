@@ -70,10 +70,15 @@ app.controller('ReviewCtrl',['$scope','$state','ClientSharedSrvc','ngDialog','$c
 		}
 	};
 
-	ME.saveConfig = function(){
-		
-	}
-
+	ME.saveJobConfig = function(){
+        var dataObj = [
+			{Category:'Field',Code:ME.UpgradeFieldNdx},
+			{Category:'Ridge',Code:ME.UpgradeRidgeNdx},
+			{Category:'Valley',Code:ME.UpgradeValleyNdx},
+			{Category:'EdgeTrim',Code:ME.UpgradeTrimNdx}];
+        
+        ME.C.saveJobConfig(dataObj);	
+    };
 
 
 	ME.thumbClick = function(ndx){

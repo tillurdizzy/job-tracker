@@ -9,6 +9,7 @@ app.service('ClientDataSrvc',['$http','$q',function ($http,$q){
 
 	var localPathPrefix="client/http/";
 	var globalPathPrefix="js/php/";
+	var httpPathPrefix="http/";
 
 	var queryPaths = {
 		getJobsByClient:localPathPrefix + "getJobsByClient.php",
@@ -19,7 +20,8 @@ app.service('ClientDataSrvc',['$http','$q',function ($http,$q){
 		getMultiLevel:globalPathPrefix + "getMultiLevel.php",
 		getMaterialsList:"views/admin/http/getMaterialsShingle.php",
 		getJobConfig:"views/admin/http/getJobConfig.php",
-		getPhotoGallery:"views/proposals/http/getPhotos.php"
+		getPhotoGallery:"views/proposals/http/getPhotos.php",
+		updateConfig:httpPathPrefix + "update/updateConfig.php"
 	};
 
 

@@ -21,11 +21,47 @@ app.service('JobConfigSrvc',['$rootScope','underscore',function service($rootSco
                     jobConfigObj.Qty = thisArr[1];
                     jobConfigObj.Checked = thisArr[2];
                     jobConfigObj.Price = thisArr[3];
+                    jobConfigObj.Category = thisArr[4];
                     self.jobConfigArray.push(jobConfigObj);
                 }
             }
         }
         return self.jobConfigArray;
+    };
+
+    // Takes object with Category and Code
+    // Sets Checked=false to every Item within the Category 
+    // Sets Checked=true on the item matching the Code
+    // i.e. Replaces the current Checked item with the new one
+    self.updateCheckedItemInCategory = function(catCodeArrObj){
+    	for (var i = 0; i < catCodeArrObj.length; i++) {
+    		var cat = catCodeArrObj[i].Category;
+    		var code = catCodeArrObj[i].Code;
+    		for (var i2 = 0; i2 < self.jobConfigArray.length; i2++) {
+    			if(self.jobConfigArray[i2].Category === cat){
+    				self.jobConfigArray[i2].Checked === false;
+    			}
+    		}
+    		for (var i3 = 0; i3 < self.jobConfigArray.length; i3++) {
+    			if(self.jobConfigArray[i3].Code === code){
+    				self.jobConfigArray[i3].Checked === true;
+    			}
+    		}
+    	}
+
+    	DB.queryDB("getMaterialsList").then(function(resultObj) {
+            if (resultObj.result == "Error" || typeof resultObj.data === "string") {
+                alert("Query Error - see console for details");
+                console.log("getJobMaterials ---- " + resultObj.data);
+            } else {
+                self.materialsList = resultObj.data;
+                getDefaultSelections();
+            }
+        }, function(error) {
+            alert("Query Error - ClientSharedSrvc >> getJobMaterials");
+        });
+
+    	return self.jobConfigArray;
     };
 
      self.formatParams = function(jobParams) {
@@ -90,7 +126,7 @@ app.service('JobConfigSrvc',['$rootScope','underscore',function service($rootSco
         return materialsConfigured;
     };
 
-    
+
 
     // If a Proposal has been Saved from the Proposal Review Pricing page, then it will have custom config (rather than default) pricing and qty.
     // The formatMaterials() function will call this function for each item to see if there is a saved value
