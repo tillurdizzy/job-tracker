@@ -22,12 +22,12 @@ app.controller('PitchedRoofInventoryCtrl',['$state','$scope','SharedSrvc','Admin
 		ME.EditMode = "Remove Item";
 	};
 
-	ME.backToHome = function(){
-		$state.transitionTo('admin');
-	}
-
 	ME.formChange = function(){
 		ME.formStatus = "Dirty";
+	}
+
+	ME.backToHome = function(){
+		$state.transitionTo('admin');
 	}
 
 	ME.clickTableRow = function(code){

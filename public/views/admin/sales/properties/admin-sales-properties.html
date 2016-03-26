@@ -1,0 +1,41 @@
+<div class="page" ng-controller="AdminSalesPropertiesCtrl as Ctrl">
+    <div class="title-with-btn">
+        <i ng-click="Ctrl.backToHome();" class="fa fa-arrow-circle-left fa-3x"></i>
+        <h2>Clients</h2>
+    </div>
+    <div class="admin-menu">
+        <div class="btn-grp">
+            <button type="button" class="button radius" ng-click="Ctrl.addItem()">Add Client</button>
+            <button type="button" class="button radius" ng-click="Ctrl.updateItem()">Update Client</button>
+            <button type="button" class="button radius" ng-click="Ctrl.removeItem()">Remove Client</button>
+        </div>
+    </div>
+    <H2>{{Ctrl.EditMode}}</H2>
+    <horiz-rule margintop="5" marginbottom="5"></horiz-rule>
+    <div>
+        <table st-table="Ctrl.tableDataProvider" class="table table-striped" style="width:100%;">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Company</th>
+                    <th>Sales Rep</th>
+                    <th>City</th>
+                    <th>Edit</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="row in Ctrl.tableDataProvider">
+                    <td>{{row.displayName}}</td>
+                    <td>{{row.company}}</td>
+                    <td>{{row.rep}}</td>
+                    <td>{{row.city}}</td>
+                    <td>
+                        <button type="button" ng-click="Ctrl.clickTableRow(row.PRIMARY_ID)">
+                            <i class="fa fa-pencil"></i>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

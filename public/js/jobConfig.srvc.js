@@ -1,19 +1,23 @@
 'use strict';
-app.service('JobConfigSrvc',['$rootScope','underscore',function service($rootScope,underscore) {
+app.service('JobConfigSrvc', ['$rootScope', 'underscore',function service($rootScope, underscore) {
 
     var self = this;
-    self.ME = "JobConfigSrvc: ";
-    self.jobConfigArray = [];
-    var jobConfigStr = "";
+    var Me = "JobConfigSrvc: ";
+    
     var materialsConfigured = [];
+    self.jobConfigStr = "";
+    self.jobConfigArray = [];
+    self.materialsList = [];
+    self.defaultConfigSelections = [];
 
     // Converts the long string saved in DB into array of objects
     self.parseJobConfig = function(ar) {
+        console.log("JobConfigSrvc ---- parseJobConfig(()");
         self.jobConfigArray = [];
         if (ar.length > 0) {
-           jobConfigStr = ar[0].strData;
-            if (jobConfigStr != "") {
-                var rootArr = jobConfigStr.split('!');
+            self.jobConfigStr = ar[0].strData;
+            if (self.jobConfigStr != "") {
+                var rootArr = self.jobConfigStr.split('!');
                 for (var i = 0; i < rootArr.length; i++) {
                     var thisArr = rootArr[i].split(';');
                     var jobConfigObj = {};
@@ -32,39 +36,45 @@ app.service('JobConfigSrvc',['$rootScope','underscore',function service($rootSco
     // Takes object with Category and Code
     // Sets Checked=false to every Item within the Category 
     // Sets Checked=true on the item matching the Code
-    // i.e. Replaces the current Checked item with the new one
-    self.updateCheckedItemInCategory = function(catCodeArrObj){
-    	for (var i = 0; i < catCodeArrObj.length; i++) {
-    		var cat = catCodeArrObj[i].Category;
-    		var code = catCodeArrObj[i].Code;
-    		for (var i2 = 0; i2 < self.jobConfigArray.length; i2++) {
-    			if(self.jobConfigArray[i2].Category === cat){
-    				self.jobConfigArray[i2].Checked === false;
-    			}
-    		}
-    		for (var i3 = 0; i3 < self.jobConfigArray.length; i3++) {
-    			if(self.jobConfigArray[i3].Code === code){
-    				self.jobConfigArray[i3].Checked === true;
-    			}
-    		}
-    	}
-
-    	DB.queryDB("getMaterialsList").then(function(resultObj) {
-            if (resultObj.result == "Error" || typeof resultObj.data === "string") {
-                alert("Query Error - see console for details");
-                console.log("getJobMaterials ---- " + resultObj.data);
-            } else {
-                self.materialsList = resultObj.data;
-                getDefaultSelections();
+    self.updateCheckedItemInCategory = function(catCodeArrObj) {
+        for (var i = 0; i < catCodeArrObj.length; i++) {
+            var cat = catCodeArrObj[i].Category;
+            var code = catCodeArrObj[i].Code;
+            for (var i2 = 0; i2 < self.jobConfigArray.length; i2++) {
+                if (self.jobConfigArray[i2].Category === cat) {
+                    self.jobConfigArray[i2].Checked === false;
+                }
             }
-        }, function(error) {
-            alert("Query Error - ClientSharedSrvc >> getJobMaterials");
-        });
+            for (var i3 = 0; i3 < self.jobConfigArray.length; i3++) {
+                if (self.jobConfigArray[i3].Code === code) {
+                    self.jobConfigArray[i3].Checked === true;
+                }
+            }
+        };
 
-    	return self.jobConfigArray;
+        var dataObj = convertConfigToString();
+
+       // Broadcast here with dataObj for DataSrvc to save....
+
+        return self.jobConfigArray;
     };
 
-     self.formatParams = function(jobParams) {
+    self.convertConfigToString = function() {
+        for (var i = 0; i < self.jobConfigArray.length; i++) {
+            var thisObj = self.jobConfigArray[i];
+            var a = thisObj.Code;
+            var b = thisObj.Qty;
+            var c = thisObj.Checked;
+            var d = thisObj.PkgPrice;
+            var e = thisObj.Category;
+            dataStr += a + ';' + b + ';' + c + ';' + d + ';' + e + '!';
+        }
+        var dataObj = {};
+        dataObj.strData = dataStr;
+        return dataObj;
+    }
+
+    self.formatParams = function(jobParams) {
         // If the field is empty, set a dash "-" for display purposes
         underscore.each(jobParams, function(value, key, obj) {
             if (value == "" || value == null) {
@@ -82,19 +92,30 @@ app.service('JobConfigSrvc',['$rootScope','underscore',function service($rootSco
         return jobParams;
     };
 
-    self.mergeConfig = function(materials,params) {
-        materialsConfigured = [];
+    self.mergeConfig = function(materials, params,useConfig) {
+       
         for (var i = 0; i < materials.length; i++) {
 
             var paramKey = materials[i].InputParam;
             var customObj = returnCustomMaterial(materials[i].Code);
 
             // If the client has a 'Saved' obj for this material, use that Price and Qty, otherwise use current pricing
-            if (customObj != null && customObj.Checked != undefined) {
+            if (customObj != null && customObj.Checked != undefined && useConfig===true) {
+                // There is a config and useConfig === true
+                // All values are from config
                 var itemPrice = Number(customObj.Price);
                 var parameterVal = Number(customObj.Qty);
                 var checked = customObj.Checked;
+            }else if (customObj != null && customObj.Checked != undefined && useConfig===false) {
+                // There is a config and useConfig === false
+                // This will retain the Checked values from database, but uses Price from Config
+                // This is specifically to get the default selections but uses price from wheever it was saved
+                // !!!! Maybe we sould save a default config so if defauls change over time!!  YES do this.
+                itemPrice = Number(customObj.Price);
+                parameterVal = Number(params[paramKey]);
+                checked = materials[i].Checked;
             } else {
+                // There is no config... use the current values from database
                 itemPrice = Number(materials[i].PkgPrice);
                 parameterVal = Number(params[paramKey]);
                 checked = materials[i].Checked;
@@ -122,8 +143,8 @@ app.service('JobConfigSrvc',['$rootScope','underscore',function service($rootSco
                 materials[i].Checked = false;
             }
         }
-        materialsConfigured = materials.slice();
-        return materialsConfigured;
+       
+        return materials;
     };
 
 
@@ -142,5 +163,19 @@ app.service('JobConfigSrvc',['$rootScope','underscore',function service($rootSco
         return rtnObj;
     };
 
+    self.returnDefaultMaterial = function(cat){
+        var rtnObject = {};
+        for (var i = 0; i < self.defaultConfigSelections.length; i++) {
+            var category = self.defaultConfigSelections[i].Category;
+            if (category === cat) {
+                rtnObject = self.defaultConfigSelections[i];
+                break;
+            }
+        };
+        return rtnObject;
+    };
+
+   
+    console.log("jobConfig Complete");
     return self;
 }]);

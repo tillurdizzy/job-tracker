@@ -10,7 +10,7 @@ define( "DATABASE_NAME", "jobtracker");
 
 $con = mysqli_connect(DATABASE_SERVER, DATABASE_USERNAME, DATABASE_PASSWORD,DATABASE_NAME) or die ('ERROR!!!');
 $jobID = mysqli_real_escape_string($con,$data->jobID);
-$query = sprintf("SELECT * FROM job_materials WHERE jobID = '".$jobID."'");
+$query = sprintf("SELECT * FROM job_config WHERE jobID = '".$jobID."'");
 $result = mysqli_query($con,$query);
 $resultValueObjects = array();
 while ($row = mysqli_fetch_object($result)) {

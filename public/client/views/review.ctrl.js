@@ -1,9 +1,9 @@
 'use strict';
 
-app.controller('ReviewCtrl',['$scope','$state','ClientSharedSrvc','ngDialog','$controller',function ($scope,$state,ClientSharedSrvc,ngDialog,$controller) {
+app.controller('ReviewCtrl',['$scope','$state','ClientSharedSrvc','ngDialog','$controller','JobConfigSrvc',function ($scope,$state,ClientSharedSrvc,ngDialog,$controller,JobConfigSrvc) {
 	
 	var ME = this;
-
+	var CONFIG = JobConfigSrvc;
 	// Selections and pricing specific to a job
     ME.jobConfig = [];
     var jobParams = {};
@@ -97,6 +97,7 @@ app.controller('ReviewCtrl',['$scope','$state','ClientSharedSrvc','ngDialog','$c
 		ME.ridgeUpgrades = ME.C.getUpgrades("Ridge");
 		ME.valleyUpgrades = ME.C.getUpgrades("Valley");
 		ME.trimUpgrades = ME.C.getUpgrades("EdgeTrim");
+
 	};
 
 	var setSelections = function(){
@@ -140,5 +141,8 @@ app.controller('ReviewCtrl',['$scope','$state','ClientSharedSrvc','ngDialog','$c
 
 	getUpgradeOptions();
 	setSelections();
+	ME.calculateTotal();
+	
+	console.log("ReviewCtrl Complete");
   
  }]);

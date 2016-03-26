@@ -1,5 +1,5 @@
 'use strict';
-app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'JobConfigSrvc', 'underscore', function adminShared($rootScope, ClientDataSrvc, JobConfigSrvc, underscore) {
+app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'JobConfigSrvc', 'underscore', function($rootScope, ClientDataSrvc, JobConfigSrvc, underscore) {
 
     var self = this;
     self.ME = "ClientSharedSrvc: ";
@@ -12,6 +12,9 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'JobConfigSrvc'
 
     self.materialsList = [];
     self.materialsListConfig = [];
+    self.defaultConfigSelections = [];
+    self.jobConfig = {};
+
     self.baseLineTotal = 0;
     var mergeDataFlag = { params: false, config: false };
     self.jobResults = []; // Original array from DB
@@ -22,7 +25,6 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'JobConfigSrvc'
     self.jobParameters = {};
     self.multiVents = {};
     self.multiLevels = {};
-    self.jobConfig = {};
     self.photoGallery = [];
     self.existingRoofDescription = {
         shingles: "",
@@ -42,6 +44,7 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'JobConfigSrvc'
 
     //Called after successful Log In
     self.LogIn = function(name, clientObj) {
+        console.log("ClientShared LogIn " + name);
         self.displayName = name;
         self.clientObj = clientObj;
         self.loggedIn = true;
@@ -91,12 +94,11 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'JobConfigSrvc'
         self.propertyObj = self.propertyResults[0];
         var propID = self.propertyObj.PRIMARY_ID;
         for (var i = 0; i < self.jobResults.length; i++) {
-           if(self.jobResults[i].property == propID){
-            self.jobObj = self.jobResults[i];
-            break;
-           }
+            if (self.jobResults[i].property == propID) {
+                self.jobObj = self.jobResults[i];
+                break;
+            }
         }
-        
         self.jobID = self.jobObj.PRIMARY_ID;
     };
 
@@ -205,7 +207,7 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'JobConfigSrvc'
         });
     };
 
-    self.saveJobConfig = function(dataObj){
+    self.saveJobConfig = function(dataObj) {
         self.jobConfig = CONFIG.updateCheckedItemInCategory(dataObj);
     };
 
@@ -220,11 +222,51 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'JobConfigSrvc'
 
     // Checks to make sure both config and materials are up to date from DB before calling formatParams();
     var validateMergeData = function() {
-        var listCopy = self.materialsList.slice();
-        if (mergeDataFlag.config == true && mergeDataFlag.params == true) {
-            self.materialsListConfig = CONFIG.mergeConfig(listCopy, self.jobParameters);
+        var listCopy = clone(self.materialsList);
+        if (mergeDataFlag.config === true && mergeDataFlag.params === true) {
+            self.defaultConfigSelections = CONFIG.mergeConfig(self.defaultConfigSelections, self.jobParameters,false);
+            self.materialsList = CONFIG.mergeConfig(self.materialsList, self.jobParameters,false);
+            self.materialsListConfig = CONFIG.mergeConfig(listCopy, self.jobParameters,true);
+
+            CONFIG.defaultConfigSelections = self.defaultConfigSelections
+            getDefaultSelections();
+
             self.getBaseTotal();
         }
+    };
+
+    var clone = function(obj) {
+        var copy;
+
+        // Handle the 3 simple types, and null or undefined
+        if (null == obj || "object" != typeof obj) return obj;
+
+        // Handle Date
+        if (obj instanceof Date) {
+            copy = new Date();
+            copy.setTime(obj.getTime());
+            return copy;
+        }
+
+        // Handle Array
+        if (obj instanceof Array) {
+            copy = [];
+            for (var i = 0, len = obj.length; i < len; i++) {
+                copy[i] = clone(obj[i]);
+            }
+            return copy;
+        }
+
+        // Handle Object
+        if (obj instanceof Object) {
+            copy = {};
+            for (var attr in obj) {
+                if (obj.hasOwnProperty(attr)) copy[attr] = clone(obj[attr]);
+            }
+            return copy;
+        }
+
+        throw new Error("Unable to copy obj! Its type isn't supported.");
     };
 
 
@@ -256,91 +298,23 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'JobConfigSrvc'
         }
     };
 
-    // These do not require specific ID's - get them as soon as srvc in initialized.
-    var getMaterialsList = function() {
-        DB.queryDB("getMaterialsList").then(function(resultObj) {
-            if (resultObj.result == "Error" || typeof resultObj.data === "string") {
-                alert("Query Error - see console for details");
-                console.log("getJobMaterials ---- " + resultObj.data);
-            } else {
-                self.materialsList = resultObj.data;
-                getDefaultSelections();
-            }
-        }, function(error) {
-            alert("Query Error - ClientSharedSrvc >> getJobMaterials");
-        });
-    };
-
-    var getDefaultSelections = function(){
-       for (var i = 0; i < self.materialsList.length; i++) {
-            var category = self.materialsList[i].Category;
-            if (category === "Field") {
-                var ckd = self.materialsList[i].Checked;
-                 if (ckd === "true"){
-                    basePriceConfig.Field = self.materialsList[i].Code;
-                    break;
-                }
-            }
-        };
-
-        for (var i = 0; i < self.materialsList.length; i++) {
-            var category = self.materialsList[i].Category;
-            if (category === "Valley") {
-                var ckd = self.materialsList[i].Checked;
-                 if (ckd === "true"){
-                    basePriceConfig.Valley = self.materialsList[i].Code;
-                    break;
-                }
-            }
-        };
-
-        for (var i = 0; i < self.materialsList.length; i++) {
-            var category = self.materialsList[i].Category;
-            if (category === "EdgeTrim") {
-                var ckd = self.materialsList[i].Checked;
-                 if (ckd === "true"){
-                    basePriceConfig.EdgeTrim = self.materialsList[i].Code;
-                    break;
-                }
-            }
-        };
-
-        for (var i = 0; i < self.materialsList.length; i++) {
-            var category = self.materialsList[i].Category;
-            if (category === "Ridge") {
-                var ckd = self.materialsList[i].Checked;
-                 if (ckd === "true"){
-                    basePriceConfig.Ridge = self.materialsList[i].Code;
-                    break;
-                }
-            }
-        };
-    }
-
-    var getKeyValuePairs = function() {
-        var dataObj = {};
-        DB.queryDB("getKeyValuePairs", dataObj).then(function(resultObj) {
-            if (resultObj.result == "Error" || typeof resultObj.data === "string") {
-                alert("Query Error - see console for details");
-                console.log("getKeyValuePairs ---- " + resultObj.data);
-            } else {
-                self.keyValPairs = resultObj.data;
-            }
-        }, function(error) {
-            alert("Query Error - ClientSharedSrvc >> getKeyValuePairs");
-        });
+    var getDefaultSelections = function() {
+        basePriceConfig.Field = CONFIG.returnDefaultMaterial("Field");
+        basePriceConfig.Valley = CONFIG.returnDefaultMaterial("Valley");
+        basePriceConfig.EdgeTrim = CONFIG.returnDefaultMaterial("EdgeTrim");
+        basePriceConfig.Ridge = CONFIG.returnDefaultMaterial("Ridge");
     };
 
 
     self.getBaseTotal = function() {
         var include = false;
-        for (var i = 0; i < self.materialsListConfig.length; i++) {
-            include = self.materialsListConfig[i].Checked;
-            if (include) {
-                self.baseLineTotal += parseInt(self.materialsListConfig[i].Total)
+        for (var i = 0; i < self.materialsList.length; i++) {
+            include = self.materialsList[i].Checked;
+            if (include === true) {
+                self.baseLineTotal += parseInt(self.materialsList[i].Total)
             }
         }
-         $rootScope.$broadcast("on-data-collection-complete");
+        $rootScope.$broadcast("on-data-collection-complete");
     };
 
     self.getUpgrades = function(cat) {
@@ -356,13 +330,13 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'JobConfigSrvc'
                 thisCategoryConfigured.push(self.materialsListConfig[i]);
             }
         };
-       
+
         // Step 2: Find Base Price
-        var defaultItemCode = basePriceConfig[cat];
-        for (i = 0; i < self.materialsListConfig.length; i++) {
-            var itemCode = self.materialsListConfig[i].Code;
+        var defaultItemCode = basePriceConfig[cat].Code;
+        for (i = 0; i < self.materialsList.length; i++) {
+            var itemCode = self.materialsList[i].Code;
             if (itemCode === defaultItemCode) {
-                basePrice = parseInt(self.materialsListConfig[i].Total);
+                basePrice = parseInt(self.materialsList[i].Total);
                 break;
             }
         };
@@ -387,8 +361,64 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'JobConfigSrvc'
         return n;
     }
 
-    getKeyValuePairs();
-    getMaterialsList();
+    // Init functions
+    var getMaterialsList = function() {
+        console.log("getMaterialsList Called");
+        DB.queryDB("getMaterialsList").then(function(resultObj) {
+            if (resultObj.result == "Error" || typeof resultObj.data === "string") {
+                alert("Query Error - see console for details");
+                console.log("getJobMaterials ---- " + resultObj.data);
+            } else {
+                self.materialsList = resultObj.data;
+                //self.materialsList = CONFIG.parseMergeMaterials();
+            }
+        }, function(error) {
+            alert("Query Error - ClientSharedSrvc >> getJobMaterials");
+        });
+    };
+
+    var getDefaultConfigSelections = function() {
+        DB.queryDB("getDefaultConfigMaterials", null).then(function(resultObj) {
+            if (resultObj.result == "Error" || typeof resultObj.data === "string") {
+                alert("Query Error - see console for details");
+                console.log("jobConfig >> getDefaultConfigMaterials ---- " + resultObj.data);
+            } else {
+                self.defaultConfigSelections = resultObj.data;
+                //CONFIG.defaultConfigSelections = resultObj.data;
+                //getDefaultSelections();
+                getMaterialsList();
+            }
+        }, function(error) {
+            alert("Query Error - jobConfig >> getDefaultConfigMaterials");
+        });
+    };
+
+    var getKeyValuePairs = function() {
+        var dataObj = {};
+        DB.queryDB("getKeyValuePairs", dataObj).then(function(resultObj) {
+            if (resultObj.result == "Error" || typeof resultObj.data === "string") {
+                alert("Query Error - see console for details");
+                console.log("getKeyValuePairs ---- " + resultObj.data);
+            } else {
+                self.keyValPairs = resultObj.data;
+                getDefaultConfigSelections();
+            }
+        }, function(error) {
+            alert("Query Error - ClientSharedSrvc >> getKeyValuePairs");
+        });
+    };
+
+    var init = function() {
+        getKeyValuePairs();
+
+        // The following 2 are chained to above
+        //getDefaultConfigSelections();
+        //getMaterialsList();
+    };
+
+
+    init();
+    console.log("ClientShared Complete");
 
     return self;
 }]);

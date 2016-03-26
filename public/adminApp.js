@@ -51,6 +51,19 @@ app.config(function($stateProvider, $urlRouterProvider) {
 			templateUrl:"views/admin/reports/jobs-active.html"
 		})
 
+		.state('admin.clientManagement', {
+			url: "/clientManagement",
+			templateUrl:"views/admin/sales/clients/admin-sales-clients.html"
+		})
+		.state('admin.propertyManagement', {
+			url: "/propertyManagement",
+			templateUrl:"views/admin/sales/properties/admin-sales-properties.html"
+		})
+		.state('admin.jobManagement', {
+			url: "/jobManagement",
+			templateUrl:"views/admin/sales/jobs/admin-sales-jobs.html"
+		})
+
 		
 
 		//  <<<<<<<<<< Begin Jobs Review  > Proposal >>>>>>>>>>>>>

@@ -1,11 +1,10 @@
 'use strict';
-app.controller('ClientLoginCtrl', ['$scope', '$state', 'ClientSharedSrvc', 'ClientDataSrvc', 'serviceAWS',
-    function($scope, $state, ClientSharedSrvc, ClientDataSrvc, serviceAWS) {
+app.controller('ClientLoginCtrl', ['$scope', '$state', 'ClientSharedSrvc', 'ClientDataSrvc',
+    function($scope, $state, ClientSharedSrvc, ClientDataSrvc) {
 
         // Inject all these Services so they get initiated and are ready for use later
         var DB = ClientDataSrvc;
         var C = ClientSharedSrvc;
-        var A = serviceAWS;
 
         $scope.displayName = "";
         $scope.clientObj = {};

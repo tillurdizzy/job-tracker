@@ -12,10 +12,15 @@ app.service('AdminDataSrvc',['$http','$q','SharedSrvc','LogInSrvc',function admi
 	
 	var localPathPrefix="views/admin/http/";
 	var globalPathPrefix="js/php/";
+	var httpPathPrefix = "http/";
 
 	var queryPaths = {
 		getMaterialsShingle:localPathPrefix + "getMaterialsShingle.php",
-		getSalesReps:localPathPrefix + "getSalesReps.php"
+		getSalesReps:localPathPrefix + "getSalesReps.php",
+		getClients:httpPathPrefix + "get/getClients.php",
+		getJobs:httpPathPrefix + "get/getJobs.php",
+		getProperties:httpPathPrefix + "get/getProperties.php",
+		putProperty:httpPathPrefix + "put/putProperty.php"
 	};
 
 	self.query = function(query,dataObj){
@@ -23,16 +28,16 @@ app.service('AdminDataSrvc',['$http','$q','SharedSrvc','LogInSrvc',function admi
 		var phpPath = queryPaths[query];
 		var deferred = $q.defer();
 		$http({method: 'POST', url:phpPath,data:dataObj})
-		.success(function(data, status) {
-			rtnObj.result = "Success";
-			rtnObj.data = data;
-			deferred.resolve(rtnObj);
-	    })
-	    .error(function(data, status, headers, config) {
-			rtnObj.result = "Error";
-			rtnObj.data = data;
-			deferred.reject(rtnObj);
-	    });
+			.success(function(data, status) {
+				rtnObj.result = "Success";
+				rtnObj.data = data;
+				deferred.resolve(rtnObj);
+		    })
+		    .error(function(data, status, headers, config) {
+				rtnObj.result = "Error";
+				rtnObj.data = data;
+				deferred.reject(rtnObj);
+		    });
 	    return deferred.promise;
 	};
 
@@ -197,6 +202,41 @@ app.service('AdminDataSrvc',['$http','$q','SharedSrvc','LogInSrvc',function admi
 	    });
 	    return deferred.promise;
 	}
+
+	self.clone = function(obj) {
+        var copy;
+
+        // Handle the 3 simple types, and null or undefined
+        if (null == obj || "object" != typeof obj) return obj;
+
+        // Handle Date
+        if (obj instanceof Date) {
+            copy = new Date();
+            copy.setTime(obj.getTime());
+            return copy;
+        }
+
+        // Handle Array
+        if (obj instanceof Array) {
+            copy = [];
+            for (var i = 0, len = obj.length; i < len; i++) {
+                copy[i] = clone(obj[i]);
+            }
+            return copy;
+        }
+
+        // Handle Object
+        if (obj instanceof Object) {
+            copy = {};
+            for (var attr in obj) {
+                if (obj.hasOwnProperty(attr)) copy[attr] = clone(obj[attr]);
+            }
+            return copy;
+        }
+
+        throw new Error("Unable to copy obj! Its type isn't supported.");
+    };
+
 
 
 	return self;
