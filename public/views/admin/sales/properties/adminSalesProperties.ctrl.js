@@ -7,20 +7,24 @@ app.controller('AdminSalesPropertiesCtrl', ['$state', '$scope', 'AdminSharedSrvc
     var S = AdminSharedSrvc;
     var DB = AdminDataSrvc;
     ME.tableDataProvider = [];
-    ME.EditMode = "";
-
-    var PROPERTIES = [];
+    ME.EditMode = "Add Item";
     ME.formStatus = "Pristine";
+
+    ME.
     
     ME.addItem = function(){
         ME.EditMode = "Add Item";
+        ME.modePrompt = "Add New Property: Fill in the form and submit."
+        resetInputFields();
     };
     ME.updateItem = function(){
         ME.EditMode = "Update Item";
+        ME.modePrompt = "Update Property: Choose a Property from the list, update and submit."
     };
 
     ME.removeItem = function(){
         ME.EditMode = "Remove Item";
+        ME.modePrompt = "Remove Property: Choose a Property from the list and submit."
     };
 
     ME.formChange = function(){
@@ -32,12 +36,15 @@ app.controller('AdminSalesPropertiesCtrl', ['$state', '$scope', 'AdminSharedSrvc
     };
 
     ME.clickTableRow = function(ID){
+        ME.EditMode = "Update Item";
+        ME.formStatus = "Pristine";
+        ME.inputDataObj = {};
         for (var i = 0; i <  ME.tableDataProvider.length; i++) {
             if(ME.tableDataProvider[i].PRIMARY_ID == ID){
-
+                 ME.inputDataObj = ME.tableDataProvider[i];
             }
         }
-    }
+    };
 
     ME.submit = function(){
         switch(ME.EditMode){
@@ -48,8 +55,7 @@ app.controller('AdminSalesPropertiesCtrl', ['$state', '$scope', 'AdminSharedSrvc
     };
 
     var add_Item = function(){
-        var dataObj = {};
-        DB.query("putProperty",dataObj).then(function(resultObj) {
+        DB.query("putProperty",ME.inputDataObj).then(function(resultObj) {
             if (resultObj.result == "Error" || typeof resultObj.data === "string") {
                 alert("FALSE returned for DB.putProperty() at "+myName+" >>> putProperty()");
             } else {
@@ -58,7 +64,6 @@ app.controller('AdminSalesPropertiesCtrl', ['$state', '$scope', 'AdminSharedSrvc
         }, function(error) {
             alert("ERROR returned for DB.putProperty() at "+myName+" >>> putProperty()");
         });
-
     };
 
     var update_Item = function(){
@@ -69,31 +74,32 @@ app.controller('AdminSalesPropertiesCtrl', ['$state', '$scope', 'AdminSharedSrvc
         
     };
 
-    var getClients = function() {
-        DB.query("getClients").then(function(resultObj) {
+    var getProperties = function() {
+        DB.query("getProperties").then(function(resultObj) {
             if (resultObj.result == "Error" || typeof resultObj.data === "string") {
-                alert("FALSE returned for DB.getClients() at "+myName+" >>> getClients()");
+                alert("FALSE returned for DB.getProperties() at "+myName+" >>> getProperties()");
             } else {
                 PROPERTIES = resultObj.data;
                 createDP();
             }
         }, function(error) {
-            alert("ERROR returned for DB.getClients() at "+myName+" >>> getClients()");
+            alert("ERROR returned for DB.getProperties() at "+myName+" >>> getProperties()");
         });
     };
 
     var resetForm = function(){
         ME.formStatus = "Pristine";
-        if(ME.EditMode == "Add Item"){
-            var sortNum = parseInt(ME.inputDataObj.Sort);
-            sortNum+=1;
-            ME.inputDataObj.Sort =  sortNum;
-        }
     };
 
 
     var createDP = function() {
-        ME.tableDataProvider = DB.clone(PROPERTIES);
+        ME.tableDataProvider = DB.clone(S.PROPERTIES);
+        for (var i = 0; i < ME.tableDataProvider.length; i++) {
+            var clientID = ME.tableDataProvider[i].client;
+            ME.tableDataProvider[i].clientDisplayName = S.returnClientNameByID(clientID);
+            var managerID = ME.tableDataProvider[i].manager;
+            ME.tableDataProvider[i].managerDisplayName = S.returnManagerNameByID(managerID);
+        }
     };
 
 
@@ -102,6 +108,13 @@ app.controller('AdminSalesPropertiesCtrl', ['$state', '$scope', 'AdminSharedSrvc
         console.log("AdminSalesClientsCtrl >>> $viewContentLoaded");
     });
 
-    getClients();
+    var resetInputFields = function(){
+        ME.inputDataObj = {manager:"",client:"",createdDate:"",name:"",street:"",city:"",state:"",zip:"",numLevels:"",shingleGrade:"",roofDeck:"",
+    layers:"",edgeDetail:"",edgeTrim:"",valleyDetail:"ridgeCap",roofVents:"",pitch:"",multiLevel:"",multiVents:""};
+    };
+
+   
+    resetInputFields();
+    createDP();
 
 }]);

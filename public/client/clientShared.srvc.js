@@ -74,9 +74,9 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'JobConfigSrvc'
     var getPropertiesByClient = function() {
         var dataObj = { clientID: self.clientObj.PRIMARY_ID };
         DB.queryDB("getPropertiesByClient", dataObj).then(function(resultObj) {
-            if (resultObj.result == "Error") {
+            if (resultObj.result == "Error" || typeof resultObj.data === "string") {
                 alert("Query Error - see console for details");
-                console.log("getPropertiesByClient ---- " + resultObj.data);
+                console.log("getJobParameters ---- " + resultObj.data);
             } else {
                 self.propertyResults = resultObj.data;
                 $rootScope.$broadcast("on-client-properties-complete", self.propertyResults);

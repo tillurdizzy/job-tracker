@@ -10,8 +10,19 @@
             <button type="button" class="button radius" ng-click="Ctrl.removeItem()">Remove Job</button>
         </div>
     </div>
-    <H2>{{Ctrl.EditMode}}</H2>
+    <H2>{{Ctrl.modePrompt}}</H2>
     <horiz-rule margintop="5" marginbottom="5"></horiz-rule>
+    <div style="width:50%">
+        <div class="text-input-form-item">
+            <label>Client</label>
+            <select ng-model="Ctrl.inputDataObj.client" ng-options="c.displayName for c in Ctrl.S.CLIENTS" ng-change="Ctrl.selectClient();"></select>
+        </div>
+        <div class="text-input-form-item">
+            <label>Property</label>
+            <select ng-model="Ctrl.inputDataObj.property" ng-options="c.name for c in Ctrl.propertyOptions" ng-change="Ctrl.formChange();"></select>
+        </div>
+    </div>
+    <button type="button" class="button radius" ng-click="Ctrl.submit()" style="margin-top: 1rem; width:100%;">SUBMIT</button>
     <div>
         <table st-table="Ctrl.tableDataProvider" class="table table-striped" style="width:100%;">
             <thead>
@@ -26,13 +37,13 @@
             <tbody>
                 <tr ng-repeat="row in Ctrl.tableDataProvider">
                     <td>{{row.status}}</td>
-                    <td>{{row.property}}</td>
-                    <td>{{row.client}}</td>
-                    <td>{{row.manager}}</td>
+                    <td>{{row.propertyDisplayName}}</td>
+                    <td>{{row.clientDisplayName}}</td>
+                    <td>{{row.managerDisplayName}}</td>
                     <td>
-                        <button type="button" ng-click="Ctrl.clickTableRow(row.PRIMARY_ID)">
-                            <i class="fa fa-pencil"></i>
-                        </button>
+                        <div class="table-icon-btn">
+                            <i class="fa fa-pencil" ng-click="Ctrl.clickTableRow(row.PRIMARY_ID)"></i>
+                        </div>
                     </td>
                 </tr>
             </tbody>

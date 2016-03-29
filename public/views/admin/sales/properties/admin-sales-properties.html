@@ -1,41 +1,124 @@
 <div class="page" ng-controller="AdminSalesPropertiesCtrl as Ctrl">
     <div class="title-with-btn">
         <i ng-click="Ctrl.backToHome();" class="fa fa-arrow-circle-left fa-3x"></i>
-        <h2>Clients</h2>
+        <h2>Properties</h2>
     </div>
     <div class="admin-menu">
         <div class="btn-grp">
-            <button type="button" class="button radius" ng-click="Ctrl.addItem()">Add Client</button>
-            <button type="button" class="button radius" ng-click="Ctrl.updateItem()">Update Client</button>
-            <button type="button" class="button radius" ng-click="Ctrl.removeItem()">Remove Client</button>
+            <button type="button" class="button radius" ng-click="Ctrl.addItem()">Add Property</button>
+            <button type="button" class="button radius" ng-click="Ctrl.updateItem()">Update Property</button>
+            <button type="button" class="button radius" ng-click="Ctrl.removeItem()">Remove Property</button>
         </div>
     </div>
-    <H2>{{Ctrl.EditMode}}</H2>
+    <H2>{{Ctrl.modePrompt}}</H2>
     <horiz-rule margintop="5" marginbottom="5"></horiz-rule>
-    <div>
-        <table st-table="Ctrl.tableDataProvider" class="table table-striped" style="width:100%;">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Company</th>
-                    <th>Sales Rep</th>
-                    <th>City</th>
-                    <th>Edit</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="row in Ctrl.tableDataProvider">
-                    <td>{{row.displayName}}</td>
-                    <td>{{row.company}}</td>
-                    <td>{{row.rep}}</td>
-                    <td>{{row.city}}</td>
-                    <td>
-                        <button type="button" ng-click="Ctrl.clickTableRow(row.PRIMARY_ID)">
-                            <i class="fa fa-pencil"></i>
-                        </button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+    <div class="flex-row">
+        <div style="width:50%">
+            <div class="text-input-form-item">
+                <label>Sales Rep</label>
+                <select ng-model="Ctrl.selectedSalesRep" ng-options="c.displayName for c in Ctrl.S.salesReps" ng-change="Ctrl.formChange();"></select>
+            </div>
+            <div class="text-input-form-item">
+                <label>Client</label>
+                <select ng-model="Ctrl.selectedSalesRep" ng-options="c.displayName for c in Ctrl.S.CLIENTS" ng-change="Ctrl.formChange();"></select>
+            </div>
+            <div class="text-input-form-item">
+                <label>Property Name</label>
+                <input type="text" ng-model="Ctrl.inputDataObj.name" ng-change="Ctrl.formChange();">
+            </div>
+            <div class="text-input-form-item">
+                <label>Street</label>
+                <input type="text" ng-model="Ctrl.inputDataObj.name_last" ng-change="Ctrl.formChange();">
+            </div>
+        </div>
+        <div style="width:50%">
+            <div class="text-input-form-item">
+                <label>City</label>
+                <input type="text" ng-model="Ctrl.inputDataObj.company" ng-change="Ctrl.formChange();">
+            </div>
+            <div class="text-input-form-item">
+                <label>State</label>
+                <input type="text" ng-model="Ctrl.inputDataObj.street" ng-change="Ctrl.formChange();">
+            </div>
+            <div class="text-input-form-item">
+                <label>Zip</label>
+                <input type="text" ng-model="Ctrl.inputDataObj.city">
+            </div>
+        </div>
     </div>
+    <div class="flex-row">
+        <div style="width:50%">
+            <div class="text-input-form-item">
+                <label>Levels</label>
+                <input type="text" ng-model="Ctrl.inputDataObj.state" ng-change="Ctrl.formChange();">
+            </div>
+            <div class="text-input-form-item">
+                <label>Shingles</label>
+                <input type="text" ng-model="Ctrl.inputDataObj.zip" ng-change="Ctrl.formChange();">
+            </div>
+            <div class="text-input-form-item">
+                <label>Deck</label>
+                <input type="text" ng-model="Ctrl.inputDataObj.phone_cell" ng-change="Ctrl.formChange();">
+            </div>
+            <div class="text-input-form-item">
+                <label>Layers</label>
+                <input type="text" ng-model="Ctrl.inputDataObj.phone_bus" ng-change="Ctrl.formChange();">
+            </div>
+            <div class="text-input-form-item">
+                <label>Edge Detail</label>
+                <input type="text" ng-model="Ctrl.inputDataObj.email" ng-change="Ctrl.formChange();">
+            </div>
+        </div>
+         <div style="width:50%">
+            <div class="text-input-form-item">
+                <label>Edge Trim</label>
+                <input type="text" ng-model="Ctrl.inputDataObj.state" ng-change="Ctrl.formChange();">
+            </div>
+            <div class="text-input-form-item">
+                <label>Valley Detail</label>
+                <input type="text" ng-model="Ctrl.inputDataObj.zip" ng-change="Ctrl.formChange();">
+            </div>
+            <div class="text-input-form-item">
+                <label>Ridge Cap</label>
+                <input type="text" ng-model="Ctrl.inputDataObj.phone_cell" ng-change="Ctrl.formChange();">
+            </div>
+            <div class="text-input-form-item">
+                <label>Vents</label>
+                <input type="text" ng-model="Ctrl.inputDataObj.phone_bus" ng-change="Ctrl.formChange();">
+            </div>
+            <div class="text-input-form-item">
+                <label>Pitch</label>
+                <input type="text" ng-model="Ctrl.inputDataObj.email" ng-change="Ctrl.formChange();">
+            </div>
+        </div>
+    </div>
+
+<button type="button" class="button radius" ng-click="Ctrl.submit()" style="margin-top: 1rem; width:100%;">SUBMIT</button>
+<horiz-rule margintop="15" marginbottom="15"></horiz-rule>
+<div>
+    <table st-table="Ctrl.tableDataProvider" class="table table-striped" style="width:100%;">
+        <thead>
+            <tr>
+                <th>Address</th>
+                <th>City</th>
+                <th>Client</th>
+                <th>Sales Rep</th>
+                <th>Edit</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="row in Ctrl.tableDataProvider">
+                <td>{{row.street}}</td>
+                <td>{{row.city}}</td>
+                <td>{{row.clientDisplayName}}</td>
+                <td>{{row.managerDisplayName}}</td>
+                <td>
+                    <div class="table-icon-btn">
+                        <i class="fa fa-pencil" ng-click="Ctrl.clickTableRow(row.PRIMARY_ID)"></i>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
 </div>

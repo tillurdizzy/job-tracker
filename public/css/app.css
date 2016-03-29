@@ -1658,7 +1658,7 @@ table {
   background-color: #fff; }
   table caption {
     font-weight: 700;
-    padding: 0.5em; }
+    padding: 4px 8px; }
   table thead,
   table tfoot {
     background: smart-scale(#fff, 2.5%);
@@ -1670,14 +1670,14 @@ table {
     table thead td,
     table tfoot th,
     table tfoot td {
-      padding: 0.5em;
+      padding: 4px 8px;
       font-weight: 700;
       text-align: left; }
   table tbody tr:nth-child(even) {
     background-color: smart-scale(#fff, 5%); }
   table tbody th,
   table tbody td {
-    padding: 0.5em; }
+    padding: 4px 8px; }
 
 .table-scroll {
   display: block;
@@ -1731,6 +1731,9 @@ table {
   #editForm .btnContainer button {
     float: left;
     margin-right: 1em; }
+
+.table-icon-btn {
+  cursor: pointer; }
 
 table {
   margin-bottom: 1em;
@@ -1739,7 +1742,7 @@ table {
   background-color: #fff; }
   table caption {
     font-weight: 700;
-    padding: 0.5em; }
+    padding: 4px 8px; }
   table thead,
   table tfoot {
     background: smart-scale(#fff, 2.5%);
@@ -1751,14 +1754,14 @@ table {
     table thead td,
     table tfoot th,
     table tfoot td {
-      padding: 0.5em;
+      padding: 4px 8px;
       font-weight: 700;
       text-align: left; }
   table tbody tr:nth-child(even) {
     background-color: smart-scale(#fff, 5%); }
   table tbody th,
   table tbody td {
-    padding: 0.5em; }
+    padding: 4px 8px; }
 
 .table-scroll {
   display: block;
@@ -1812,6 +1815,9 @@ table {
   #editForm .btnContainer button {
     float: left;
     margin-right: 1em; }
+
+.table-icon-btn {
+  cursor: pointer; }
 
 .login-form {
   display: inline-block; }

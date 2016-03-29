@@ -50,13 +50,13 @@ app.controller('PitchedRoofInventoryCtrl',['$state','$scope','SharedSrvc','Admin
 
 	ME.submit = function(){
 		switch(ME.EditMode){
-			case "Add Item": addItem();break;
-			case "Update Item": updateItem();break;
-			case "Remove Item": removeItem();break;
+			case "Add Item": add_Item();break;
+			case "Update Item": update_Item();break;
+			case "Remove Item": remove_Item();break;
 		}
 	};
 
-	var addItem = function(){
+	var add_Item = function(){
 		parseSelectionProviders();
         var query = DB.queryDBWithObj("views/admin/http/putPitchedInventoryItem.php",ME.inputDataObj).then(function(result) {
             if (result != false) {
@@ -71,7 +71,7 @@ app.controller('PitchedRoofInventoryCtrl',['$state','$scope','SharedSrvc','Admin
         });
 	};
 
-	var updateItem = function(){
+	var update_Item = function(){
 		parseSelectionProviders();
         var query = DB.queryDBWithObj("js/php/updateMaterialsShingle.php",ME.inputDataObj).then(function(result) {
             if (result != false) {

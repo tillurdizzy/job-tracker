@@ -17,10 +17,10 @@ app.service('AdminDataSrvc',['$http','$q','SharedSrvc','LogInSrvc',function admi
 	var queryPaths = {
 		getMaterialsShingle:localPathPrefix + "getMaterialsShingle.php",
 		getSalesReps:localPathPrefix + "getSalesReps.php",
-		getClients:httpPathPrefix + "get/getClients.php",
-		getJobs:httpPathPrefix + "get/getJobs.php",
-		getProperties:httpPathPrefix + "get/getProperties.php",
-		putProperty:httpPathPrefix + "put/putProperty.php"
+		getClients:httpPathPrefix + "getClients.php",
+		getJobs:httpPathPrefix + "getJobs.php",
+		getProperties:httpPathPrefix + "getProperties.php",
+		putProperty:httpPathPrefix + "putProperty.php"
 	};
 
 	self.query = function(query,dataObj){
@@ -220,7 +220,7 @@ app.service('AdminDataSrvc',['$http','$q','SharedSrvc','LogInSrvc',function admi
         if (obj instanceof Array) {
             copy = [];
             for (var i = 0, len = obj.length; i < len; i++) {
-                copy[i] = clone(obj[i]);
+                copy[i] = self.clone(obj[i]);
             }
             return copy;
         }
@@ -229,7 +229,7 @@ app.service('AdminDataSrvc',['$http','$q','SharedSrvc','LogInSrvc',function admi
         if (obj instanceof Object) {
             copy = {};
             for (var attr in obj) {
-                if (obj.hasOwnProperty(attr)) copy[attr] = clone(obj[attr]);
+                if (obj.hasOwnProperty(attr)) copy[attr] = self.clone(obj[attr]);
             }
             return copy;
         }

@@ -12,7 +12,7 @@ $table-border: 1px solid #999999 !default;
 
 /// Defualt padding for table.
 /// @type Number
-$table-padding: .5em !default;
+$table-padding: 4px 8px !default;
 
 /// Defualt scale for darkening the table rows on hover.
 /// @type Number
@@ -197,4 +197,9 @@ table{
 			margin-right: 1em;
 		}
 	}
+}
+
+.table-icon-btn{
+	cursor:pointer;
+	
 }
