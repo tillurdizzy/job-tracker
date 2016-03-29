@@ -1,5 +1,5 @@
 'use strict';
-app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'underscore', 'JobConfigSrvc', function($rootScope, AdminDataSrvc, underscore, JobConfigSrvc) {
+app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'underscore', 'JobConfigSrvc', function adminShared($rootScope, AdminDataSrvc, underscore, JobConfigSrvc) {
 
     var self = this;
     self.ME = "AdminSharedSrvc: ";

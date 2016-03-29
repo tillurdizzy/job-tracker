@@ -1,6 +1,6 @@
 'use strict';
 
-app.service('invtDb',['$http','$q',function eventQueries($http,$q){
+app.service('invtDb',['$http','$q',function invtQueries($http,$q){
 	var self = this;
 	self.ME = "invtDB: ";
 

@@ -1,5 +1,5 @@
 'use strict';
-app.service('JobConfigSrvc', ['$rootScope', 'underscore',function service($rootScope, underscore) {
+app.service('JobConfigSrvc', ['$rootScope', 'underscore',function jobConfigSrvc($rootScope, underscore) {
 
     var self = this;
     var Me = "JobConfigSrvc: ";

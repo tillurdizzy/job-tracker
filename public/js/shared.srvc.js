@@ -1,6 +1,6 @@
 'use strict';
 
-app.service('SharedSrvc',['$rootScope',function sharedVars($rootScope){
+app.service('SharedSrvc',['$rootScope',function sharedSrvc($rootScope){
 	var self = this;
 	
 	self.myID = "SharedVars: ";
