@@ -253,12 +253,12 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'underscore', 'Jo
         DB.query("getClients", null).then(function(resultObj) {
             if (resultObj.result == "Error" || typeof resultObj.data === "string") {
                 alert("Query Error - see console for details");
-                console.log("getJobParameters ---- " + resultObj.data);
+                console.log("getClients ---- " + resultObj.data);
             } else {
                 self.CLIENTS = resultObj.data;
             }
         }, function(error) {
-            alert("Query Error - AdminSharedSrvc >> getSalesReps");
+            alert("Query Error - AdminSharedSrvc >> getClients");
         });
     };
 
@@ -266,12 +266,12 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'underscore', 'Jo
         DB.query("getProperties", null).then(function(resultObj) {
             if (resultObj.result == "Error" || typeof resultObj.data === "string") {
                 alert("Query Error - see console for details");
-                console.log("getJobParameters ---- " + resultObj.data);
+                console.log("getProperties ---- " + resultObj.data);
             } else {
                 self.PROPERTIES = resultObj.data;
             }
         }, function(error) {
-            alert("Query Error - AdminSharedSrvc >> getSalesReps");
+            alert("Query Error - AdminSharedSrvc >> getProperties");
         });
     };
 
@@ -279,12 +279,37 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'underscore', 'Jo
         DB.query("getJobs", null).then(function(resultObj) {
             if (resultObj.result == "Error" || typeof resultObj.data === "string") {
                 alert("Query Error - see console for details");
-                console.log("getJobParameters ---- " + resultObj.data);
+                console.log("getJobs ---- " + resultObj.data);
             } else {
                 self.JOBS = resultObj.data;
             }
         }, function(error) {
-            alert("Query Error - AdminSharedSrvc >> getSalesReps");
+            alert("Query Error - AdminSharedSrvc >> getJobs");
+        });
+    };
+
+    self.getMultiVents = function() {
+        DB.query("getMultiVents", null).then(function(resultObj) {
+            if (resultObj.result == "Error" || typeof resultObj.data === "string") {
+                alert("Query Error - see console for details");
+                console.log("getMultiVents ---- " + resultObj.data);
+            } else {
+                self.MULTIVENTS = resultObj.data;
+            }
+        }, function(error) {
+            alert("Query Error - AdminSharedSrvc >> getMultiVents");
+        });
+    };
+    self.getMultiLevels = function() {
+        DB.query("getMultiLevels", null).then(function(resultObj) {
+            if (resultObj.result == "Error" || typeof resultObj.data === "string") {
+                alert("Query Error - see console for details");
+                console.log("getMultiLevels ---- " + resultObj.data);
+            } else {
+                self.MULTILEVELS = resultObj.data;
+            }
+        }, function(error) {
+            alert("Query Error - AdminSharedSrvc >> getMultiLevels");
         });
     };
 
@@ -388,7 +413,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'underscore', 'Jo
                 return self.CLIENTS[i].displayName;
             };
         };
-    }
+    };
 
     self.returnManagerNameByID = function(id){
         for (var i = 0; i < self.salesReps.length; i++) {
@@ -396,7 +421,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'underscore', 'Jo
                 return self.salesReps[i].displayName;
             };
         };
-    }
+    };
 
     self.returnPropertyNameByID = function(id){
         for (var i = 0; i < self.PROPERTIES.length; i++) {
@@ -404,7 +429,27 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'underscore', 'Jo
                 return self.PROPERTIES[i].name;
             };
         };
-    }
+    };
+
+
+    self.returnObjByPropID = function(set,id){
+        var rtnObj = {};
+        for (var i = 0; i < set.length; i++) {
+            if(set[i].propertyID === id){
+                rtnObj = set[i];
+                break;
+            };
+        };
+        return rtnObj;
+    };
+
+    self.returnObjFromSetByPrimaryID = function(set,id){
+        for (var i = 0; i < set.length; i++) {
+            if(set[i].PRIMARY_ID === id){
+                return set[i];
+            };
+        };
+    };
 
     getMaterialsList();
     getSalesReps();

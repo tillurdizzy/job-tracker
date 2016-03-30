@@ -51,6 +51,7 @@ app.service('ListSrvc',[function sharedLists(){
 		{label:"Ceramic",id:3},
 		{label:"Wood",id:4}];
 
+		// Do not change {label:"Multi-level",id:6} without revising references to it 
 	self.pitchOptions = [
 		{label:"Flat (0-2)",id:1},
 		{label:"Low (3-4)",id:2},
@@ -155,6 +156,16 @@ app.service('ListSrvc',[function sharedLists(){
 	    {label:"Other"}];
 
 	self.returnIdValue = function(set,id){
+		var rtnObj = {};
+		for (var i = 0; i < set.length; i++) {
+			if (set[i].id == id) {
+				rtnObj = set[i];
+			}
+		}
+		return rtnObj;
+	};
+
+	self.returnObjById = function(set,id){
 		var rtnObj = {};
 		for (var i = 0; i < set.length; i++) {
 			if (set[i].id == id) {
