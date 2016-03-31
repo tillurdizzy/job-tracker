@@ -1,6 +1,6 @@
 'use strict';
 
-app.controller('AdminSalesPropertiesCtrl', ['$state', '$scope', 'AdminSharedSrvc', 'AdminDataSrvc', 'ListSrvc', function($state, $scope, AdminSharedSrvc, AdminDataSrvc, ListSrvc) {
+app.controller('AdminSalesPropertiesCtrl', ['$state', '$scope', 'AdminSharedSrvc', 'AdminDataSrvc', 'ListSrvc', 'ngDialog', function($state, $scope, AdminSharedSrvc, AdminDataSrvc, ListSrvc, ngDialog) {
 
     var ME = this;
     var myName = "AdminSalesPropertiesCtrl";
@@ -31,14 +31,15 @@ app.controller('AdminSalesPropertiesCtrl', ['$state', '$scope', 'AdminSharedSrvc
         ME.modePrompt = "Add New Property: Fill in the form and submit."
         resetInputFields();
     };
+
     ME.updateItem = function() {
         ME.EditMode = "Update Item";
-        ME.modePrompt = "Update Property: Choose a Property from the list by clicking the icon in the Edit column."
+        ME.modePrompt = "Update Property: Choose a Property from the list to edit/update."
     };
 
     ME.removeItem = function() {
         ME.EditMode = "Remove Item";
-        ME.modePrompt = "Remove Property: Choose a Property from the list and submit."
+        ME.modePrompt = "Remove Property: Choose a property from the list to remove."
     };
 
     ME.formChange = function() {
@@ -86,8 +87,8 @@ app.controller('AdminSalesPropertiesCtrl', ['$state', '$scope', 'AdminSharedSrvc
         ME.multiVentObj.SLRVNT = ME.multiVentModel.SLRVNT.id;
     };
 
+
     ME.clickTableRow = function(ID) {
-        ME.updateItem();
 
         ME.formStatus = "Pristine";
         ME.inputDataObj = {};
@@ -95,9 +96,11 @@ app.controller('AdminSalesPropertiesCtrl', ['$state', '$scope', 'AdminSharedSrvc
             if (ME.tableDataProvider[i].PRIMARY_ID == ID) {
                 ME.inputDataObj = ME.tableDataProvider[i];
                 break;
-            }
-        }
-        ME.inputDataObj.client = returnObjById(ME.S.returnObjFromSetByPrimaryID(ME.S.CLIENTS, ME.inputDataObj.client));
+            };
+        };
+
+
+        ME.inputDataObj.client = ME.S.returnObjFromSetByPrimaryID(ME.S.CLIENTS, ME.inputDataObj.client);
         ME.inputDataObj.edgeDetail = returnObjById(ME.L.edgeDetail, ME.inputDataObj.edgeDetail);
         ME.inputDataObj.edgeTrim = returnObjById(ME.L.yesNo, ME.inputDataObj.edgeTrim);
         ME.inputDataObj.layers = returnObjById(ME.L.numbersToFive, ME.inputDataObj.layers);
@@ -126,7 +129,7 @@ app.controller('AdminSalesPropertiesCtrl', ['$state', '$scope', 'AdminSharedSrvc
                 levelThree: { percent: ME.L.percentOptions[0] },
                 levelFour: { percent: ME.L.percentOptions[0] }
             };
-        }
+        };
 
         if (ME.inputDataObj.roofVents.id == 2) {
             ME.isMultiVented = true;
@@ -147,7 +150,7 @@ app.controller('AdminSalesPropertiesCtrl', ['$state', '$scope', 'AdminSharedSrvc
                 AIRHWK: ME.L.numbersToTen[0],
                 SLRVNT: ME.L.numbersToTen[0]
             };
-        }
+        };
     };
 
     var returnObjById = function(set, id) {
@@ -166,10 +169,10 @@ app.controller('AdminSalesPropertiesCtrl', ['$state', '$scope', 'AdminSharedSrvc
     ME.submit = function() {
         switch (ME.EditMode) {
             case "Add Item":
-                add_Item();
+                createDataObj();
                 break;
             case "Update Item":
-                update_Item();
+                createDataObj();
                 break;
             case "Remove Item":
                 remove_Item();
@@ -177,29 +180,33 @@ app.controller('AdminSalesPropertiesCtrl', ['$state', '$scope', 'AdminSharedSrvc
         }
     };
 
-    var add_Item = function() {
+    var createDataObj = function() {
         var outputDataObj = {};
         // Validate Multilevel selections
-        if(ME.isMultiLevel===true){
+        if (ME.isMultiLevel === true) {
             ME.multiLevelObj.LEVONE = ME.multiLevelModel.levelOne.percent.id;
             ME.multiLevelObj.LEVTWO = ME.multiLevelModel.levelTwo.percent.id;
             ME.multiLevelObj.LEVTHR = ME.multiLevelModel.levelThree.percent.id;
             ME.multiLevelObj.LEVFOU = ME.multiLevelModel.levelFour.percent.id;
-            
-            var percentTotal = ME.multiLevelObj.LEVONE + ME.multiLevelObj.LEVTWO + 
-            ME.multiLevelObj.LEVTHR + ME.multiLevelObj.LEVFOU;
-            if(percentTotal != 10){
-              alert("Percent column must total 100.");
-              return;
+
+            var percentTotal = ME.multiLevelObj.LEVONE + ME.multiLevelObj.LEVTWO +
+                ME.multiLevelObj.LEVTHR + ME.multiLevelObj.LEVFOU;
+            if (percentTotal != 10) {
+                alert("Percent column must total 100.");
+                return;
             }
+        } else {
+            ME.multiLevelObj = { propertyID: 0, LEVONE: 0, LEVTWO: 0, LEVTHR: 0, LEVFOU: 0 };
         };
 
-        if(ME.isMultiVented === true){
-           ME.multiVentObj.TURBNS = ME.multiVentModel.TURBNS.id;
-           ME.multiVentObj.STATIC = ME.multiVentModel.STATIC.id;
-           ME.multiVentObj.PWRVNT = ME.multiVentModel.PWRVNT.id;
-           ME.multiVentObj.AIRHWK = ME.multiVentModel.AIRHWK.id;
-           ME.multiVentObj.SLRVNT = ME.multiVentModel.SLRVNT.id;
+        if (ME.isMultiVented === true) {
+            ME.multiVentObj.TURBNS = ME.multiVentModel.TURBNS.id;
+            ME.multiVentObj.STATIC = ME.multiVentModel.STATIC.id;
+            ME.multiVentObj.PWRVNT = ME.multiVentModel.PWRVNT.id;
+            ME.multiVentObj.AIRHWK = ME.multiVentModel.AIRHWK.id;
+            ME.multiVentObj.SLRVNT = ME.multiVentModel.SLRVNT.id;
+        } else {
+            ME.multiVentObj = { propertyID: 0, TURBNS: 0, STATIC: 0, PWRVNT: 0, AIRHWK: 0, SLRVNT: 0 };
         };
 
         outputDataObj.manager = ME.inputDataObj.client.manager;
@@ -222,18 +229,111 @@ app.controller('AdminSalesPropertiesCtrl', ['$state', '$scope', 'AdminSharedSrvc
         outputDataObj.roofVents = ME.inputDataObj.roofVents.id;
         outputDataObj.pitch = ME.inputDataObj.roofPitch.id;
 
+        switch (ME.EditMode) {
+            case "Add Item":
+                putProperty(outputDataObj);
+                break;
+            case "Update Item":
+                updateProperty(outputDataObj);                
+                break;
+        }
+    };
 
-        DB.query("putProperty", outputDataObj).then(function(resultObj) {
+    var putProperty = function(dataObj){
+        DB.query("putProperty", dataObj).then(function(resultObj) {
             if (resultObj.result == "Error" || typeof resultObj.data === "string") {
                 alert("FALSE returned for DB.putProperty() at " + myName + " >>> putProperty()");
                 console.log(resultObj.data);
             } else {
-                //var lastID = resultObj.id;
+                var thisPropertyID = resultObj.data.id;
                 ME.submitMultiLevels(thisPropertyID);
                 ME.submitMultiVents(thisPropertyID);
+                ngDialog.open({
+                    template: '<h2>Property has been added.</h2>',
+                    className: 'ngdialog-theme-default',
+                    plain: true,
+                    overlay: false
+                });
             }
         }, function(error) {
             alert("ERROR returned for DB.putProperty() at " + myName + " >>> putProperty()");
+        });
+    };
+
+    var updateProperty = function(dataObj){
+        DB.query("updateProperty", dataObj).then(function(resultObj) {
+            if (resultObj.result == "Error" || typeof resultObj.data === "string") {
+                alert("FALSE returned for DB.updateProperty() at " + myName + " >>> updateProperty()");
+                console.log(resultObj.data);
+            } else {
+                var thisPropertyID = resultObj.data.id;
+                ME.updateMultiLevels(thisPropertyID);
+                ME.updateMultiVents(thisPropertyID);
+                ngDialog.open({
+                    template: '<h2>Property has been updated.</h2>',
+                    className: 'ngdialog-theme-default',
+                    plain: true,
+                    overlay: false
+                });
+            }
+        }, function(error) {
+            alert("ERROR returned for DB.updateProperty() at " + myName + " >>> updateProperty()");
+        });
+    };
+
+    ME.submitMultiLevels = function(id) {
+        ME.multiLevelObj.propertyID = id;
+        DB.query("putMultiLevels", ME.multiLevelObj).then(function(resultObj) {
+            if (resultObj.result == "Error" || typeof resultObj.data === "string") {
+                alert("FALSE returned for DB.MultiLevels() at " + myName + " >>> MultiLevels()");
+                console.log(resultObj.data);
+            } else {
+
+            }
+        }, function(error) {
+            alert("ERROR returned for DB.MultiLevels() at " + myName + " >>> MultiLevels()");
+        });
+    };
+
+    ME.submitMultiVents = function(id) {
+        ME.multiVentObj.propertyID = id;
+        DB.query("putMultiVents", ME.multiVentObj).then(function(resultObj) {
+            if (resultObj.result == "Error" || typeof resultObj.data === "string") {
+                alert("FALSE returned for DB.putMultiVents() at " + myName + " >>> putMultiVents()");
+                console.log(resultObj.data);
+            } else {
+
+            }
+        }, function(error) {
+            alert("ERROR returned for DB.putMultiVents() at " + myName + " >>> putMultiVents()");
+        });
+    };
+
+     ME.updateMultiLevels = function(id) {
+        ME.multiLevelObj.propertyID = id;
+        DB.query("updateMultiLevels", ME.multiLevelObj).then(function(resultObj) {
+            if (resultObj.result == "Error" || typeof resultObj.data === "string") {
+                alert("FALSE returned for DB.updateMultiLevels() at " + myName + " >>> updateMultiLevels()");
+                console.log(resultObj.data);
+            } else {
+
+            }
+        }, function(error) {
+            alert("ERROR returned for DB.updateMultiLevels() at " + myName + " >>> updateMultiLevels()");
+        });
+    };
+
+    ME.updateMultiVents = function(id) {
+        ME.multiVentObj.propertyID = id;
+        DB.query("updateMultiVents", ME.multiVentObj).then(function(resultObj) {
+            if (resultObj.result == "Error" || typeof resultObj.data === "string") {
+                alert("FALSE returned for DB.updateMultiVents() at " + myName + " >>> updateMultiVents()");
+                console.log(resultObj.data);
+            } else {
+
+            }
+        }, function(error) {
+            alert("ERROR returned for DB.updateMultiVents() at " + myName + " >>> updateMultiVents()");
         });
     };
 
@@ -242,6 +342,23 @@ app.controller('AdminSalesPropertiesCtrl', ['$state', '$scope', 'AdminSharedSrvc
     };
 
     var remove_Item = function() {
+        var dataObj = { propertyID: ME.inputDataObj.PRIMARY_ID };
+        DB.query("deleteProperty", dataObj).then(function(resultObj) {
+            if (resultObj.result == "Error") {
+                alert("FALSE returned for DB.deleteProperty() at " + myName + " >>> remove_Item()");
+                console.log(resultObj.data);
+            } else {
+                var x = resultObj.data;
+                ngDialog.open({
+                    template: '<h2>Property has been deleted.</h2>',
+                    className: 'ngdialog-theme-default',
+                    plain: true,
+                    overlay: false
+                });
+            }
+        }, function(error) {
+            alert("ERROR returned for DB.deleteProperty() at " + myName + " >>> remove_Item()");
+        });
 
     };
 
@@ -266,7 +383,7 @@ app.controller('AdminSalesPropertiesCtrl', ['$state', '$scope', 'AdminSharedSrvc
     var resetInputFields = function() {
         ME.inputDataObj = {
             manager: "",
-            client: ME.S.CLIENTS[0],
+            client: null,
             createdDate: "",
             name: "",
             street: "",
@@ -300,6 +417,8 @@ app.controller('AdminSalesPropertiesCtrl', ['$state', '$scope', 'AdminSharedSrvc
             AIRHWK: ME.L.numbersToTen[0],
             SLRVNT: ME.L.numbersToTen[0]
         };
+        ME.multiLevelObj = { propertyID: 0, LEVONE: 0, LEVTWO: 0, LEVTHR: 0, LEVFOU: 0 };
+        ME.multiVentObj = { propertyID: 0, TURBNS: 0, STATIC: 0, PWRVNT: 0, AIRHWK: 0, SLRVNT: 0 };
     };
 
 

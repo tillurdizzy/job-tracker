@@ -444,11 +444,14 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'underscore', 'Jo
     };
 
     self.returnObjFromSetByPrimaryID = function(set,id){
+        var rtnObj = {};
         for (var i = 0; i < set.length; i++) {
             if(set[i].PRIMARY_ID === id){
-                return set[i];
+                rtnObj = set[i];
+                break;
             };
         };
+        return rtnObj;
     };
 
     getMaterialsList();

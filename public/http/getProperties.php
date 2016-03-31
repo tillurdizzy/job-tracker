@@ -29,6 +29,7 @@ while ($row = mysqli_fetch_object($result)) {
 	$oneVO->roofDeck = $row->roofDeck;
 	$oneVO->layers = $row->layers;
 	$oneVO->edgeDetail = $row->edgeDetail;
+	$oneVO->edgeTrim = $row->edgeTrim;
 	$oneVO->valleyDetail = $row->valleyDetail;
 	$oneVO->ridgeCap = $row->ridgeCap;
 	$oneVO->roofVents = $row->roofVents;

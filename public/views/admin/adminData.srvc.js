@@ -22,7 +22,13 @@ app.service('AdminDataSrvc',['$http','$q','SharedSrvc','LogInSrvc',function admi
 		getMultiVents:httpPathPrefix + "getMultiVents.php",
 		getMultiLevels:httpPathPrefix + "getMultiLevels.php",
 		getProperties:httpPathPrefix + "getProperties.php",
-		putProperty:httpPathPrefix + "putProperty.php"
+		putProperty:httpPathPrefix + "putProperty.php",
+		putMultiLevels:httpPathPrefix + "putMultiLevels.php",
+		putMultiVents:httpPathPrefix + "putMultiVents.php",
+		updateProperty:httpPathPrefix + "updateProperty.php",
+		updateMultiLevels:httpPathPrefix + "updateMultiLevels.php",
+		updateMultiVents:httpPathPrefix + "updateMultiVents.php",
+		deleteProperty:httpPathPrefix + "deleteProperty.php"
 	};
 
 	self.query = function(query,dataObj){
