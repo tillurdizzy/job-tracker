@@ -11,9 +11,14 @@ app.controller('AdminSalesClientsCtrl', ['$state', '$scope', 'AdminSharedSrvc', 
     ME.modePrompt = "Add New Client: Fill in the form and submit."
     ME.inputDataObj = {};
     ME.selectedSalesRep = ME.S.salesReps[0];
+    ME.clientSelector = null;
 
     var CLIENTS = [];
     ME.formStatus = "Pristine";
+
+    ME.selectClient = function() {
+        ME.configPropObj(ME.clientSelector.PRIMARY_ID);
+    };
     
     ME.addItem = function(){
         ME.EditMode = "Add Item";
@@ -22,12 +27,12 @@ app.controller('AdminSalesClientsCtrl', ['$state', '$scope', 'AdminSharedSrvc', 
     };
     ME.updateItem = function(){
         ME.EditMode = "Update Item";
-        ME.modePrompt = "Update Client: Choose a Client from the list, update and submit."
+        ME.modePrompt = "Update Client: Choose a Client to edit/update."
     };
 
     ME.removeItem = function(){
         ME.EditMode = "Remove Item";
-        ME.modePrompt = "Remove Client: Choose a Client from the list and submit."
+        ME.modePrompt = "Remove Client: Choose a Client to remove."
     };
 
     ME.formChange = function(){
@@ -38,7 +43,7 @@ app.controller('AdminSalesClientsCtrl', ['$state', '$scope', 'AdminSharedSrvc', 
         $state.transitionTo('admin');
     };
 
-    ME.clickTableRow = function(ID){
+    ME.configPropObj = function(ID){
         ME.EditMode = "Update Item";
         ME.formStatus = "Pristine";
         ME.inputDataObj = {};
@@ -65,6 +70,12 @@ app.controller('AdminSalesClientsCtrl', ['$state', '$scope', 'AdminSharedSrvc', 
                 alert("FALSE returned for "+thisQuery+" at "+myName+" >>> "+thisFunc);
             } else {
                 resetInputFields();
+                ngDialog.open({
+                    template: '<h2>Client has been added.</h2>',
+                    className: 'ngdialog-theme-default',
+                    plain: true,
+                    overlay: false
+                });
             }
         }, function(error) {
             alert("ERROR returned for  "+thisQuery+" at "+myName+" >>> "+thisFunc);
@@ -100,7 +111,7 @@ app.controller('AdminSalesClientsCtrl', ['$state', '$scope', 'AdminSharedSrvc', 
         ME.tableDataProvider = DB.clone(CLIENTS);
         for (var i = 0; i < ME.tableDataProvider.length; i++) {
             var managerID = ME.tableDataProvider[i].manager;
-            ME.tableDataProvider[i].managerDisplayName = S.returnManagerNameByID(managerID);
+            ME.tableDataProvider[i].managerDisplayName = ME.S.returnManagerNameByID(managerID);
         }
     };
 

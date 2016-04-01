@@ -18,6 +18,7 @@ app.controller('AdminSalesPropertiesCtrl', ['$state', '$scope', 'AdminSharedSrvc
     ME.inputDataObj = {};
     ME.multiVentModel = {};
     ME.multiLevelModel = {};
+    ME.propertySelector = null;
 
     ME.multiLevelObj = { propertyID: 0, LEVONE: 0, LEVTWO: 0, LEVTHR: 0, LEVFOU: 0 };
     ME.multiVentObj = { propertyID: 0, TURBNS: 0, STATIC: 0, PWRVNT: 0, AIRHWK: 0, SLRVNT: 0 };
@@ -34,16 +35,20 @@ app.controller('AdminSalesPropertiesCtrl', ['$state', '$scope', 'AdminSharedSrvc
 
     ME.updateItem = function() {
         ME.EditMode = "Update Item";
-        ME.modePrompt = "Update Property: Choose a Property from the list to edit/update."
+        ME.modePrompt = "Update Property: Choose a property to edit/update."
     };
 
     ME.removeItem = function() {
         ME.EditMode = "Remove Item";
-        ME.modePrompt = "Remove Property: Choose a property from the list to remove."
+        ME.modePrompt = "Remove Property: Choose a property to remove."
     };
 
     ME.formChange = function() {
         ME.formStatus = "Dirty";
+    };
+
+    ME.selectProperty = function() {
+        ME.configPropObj(ME.propertySelector.PRIMARY_ID);
     };
 
     ME.selectVentilation = function() {
@@ -88,7 +93,7 @@ app.controller('AdminSalesPropertiesCtrl', ['$state', '$scope', 'AdminSharedSrvc
     };
 
 
-    ME.clickTableRow = function(ID) {
+    ME.configPropObj = function(ID) {
 
         ME.formStatus = "Pristine";
         ME.inputDataObj = {};
@@ -208,7 +213,7 @@ app.controller('AdminSalesPropertiesCtrl', ['$state', '$scope', 'AdminSharedSrvc
         } else {
             ME.multiVentObj = { propertyID: 0, TURBNS: 0, STATIC: 0, PWRVNT: 0, AIRHWK: 0, SLRVNT: 0 };
         };
-
+        outputDataObj.PRIMARY_ID = ME.inputDataObj.PRIMARY_ID;
         outputDataObj.manager = ME.inputDataObj.client.manager;
         outputDataObj.client = ME.inputDataObj.client.PRIMARY_ID;
         var d = new Date();
@@ -234,20 +239,22 @@ app.controller('AdminSalesPropertiesCtrl', ['$state', '$scope', 'AdminSharedSrvc
                 putProperty(outputDataObj);
                 break;
             case "Update Item":
-                updateProperty(outputDataObj);                
+                updateProperty(outputDataObj);
+                updateMultiLevels(outputDataObj.PRIMARY_ID);
+                updateMultiVents(outputDataObj.PRIMARY_ID);
                 break;
         }
     };
 
-    var putProperty = function(dataObj){
+    var putProperty = function(dataObj) {
         DB.query("putProperty", dataObj).then(function(resultObj) {
             if (resultObj.result == "Error" || typeof resultObj.data === "string") {
                 alert("FALSE returned for DB.putProperty() at " + myName + " >>> putProperty()");
                 console.log(resultObj.data);
             } else {
                 var thisPropertyID = resultObj.data.id;
-                ME.submitMultiLevels(thisPropertyID);
-                ME.submitMultiVents(thisPropertyID);
+                submitMultiLevels(thisPropertyID);
+                submitMultiVents(thisPropertyID);
                 ngDialog.open({
                     template: '<h2>Property has been added.</h2>',
                     className: 'ngdialog-theme-default',
@@ -260,15 +267,12 @@ app.controller('AdminSalesPropertiesCtrl', ['$state', '$scope', 'AdminSharedSrvc
         });
     };
 
-    var updateProperty = function(dataObj){
+    var updateProperty = function(dataObj) {
         DB.query("updateProperty", dataObj).then(function(resultObj) {
             if (resultObj.result == "Error" || typeof resultObj.data === "string") {
-                alert("FALSE returned for DB.updateProperty() at " + myName + " >>> updateProperty()");
                 console.log(resultObj.data);
+                alert("FALSE returned for DB.updateProperty() at " + myName + " >>> updateProperty()");
             } else {
-                var thisPropertyID = resultObj.data.id;
-                ME.updateMultiLevels(thisPropertyID);
-                ME.updateMultiVents(thisPropertyID);
                 ngDialog.open({
                     template: '<h2>Property has been updated.</h2>',
                     className: 'ngdialog-theme-default',
@@ -281,7 +285,7 @@ app.controller('AdminSalesPropertiesCtrl', ['$state', '$scope', 'AdminSharedSrvc
         });
     };
 
-    ME.submitMultiLevels = function(id) {
+    var submitMultiLevels = function(id) {
         ME.multiLevelObj.propertyID = id;
         DB.query("putMultiLevels", ME.multiLevelObj).then(function(resultObj) {
             if (resultObj.result == "Error" || typeof resultObj.data === "string") {
@@ -295,7 +299,7 @@ app.controller('AdminSalesPropertiesCtrl', ['$state', '$scope', 'AdminSharedSrvc
         });
     };
 
-    ME.submitMultiVents = function(id) {
+    var submitMultiVents = function(id) {
         ME.multiVentObj.propertyID = id;
         DB.query("putMultiVents", ME.multiVentObj).then(function(resultObj) {
             if (resultObj.result == "Error" || typeof resultObj.data === "string") {
@@ -309,7 +313,7 @@ app.controller('AdminSalesPropertiesCtrl', ['$state', '$scope', 'AdminSharedSrvc
         });
     };
 
-     ME.updateMultiLevels = function(id) {
+    var updateMultiLevels = function(id) {
         ME.multiLevelObj.propertyID = id;
         DB.query("updateMultiLevels", ME.multiLevelObj).then(function(resultObj) {
             if (resultObj.result == "Error" || typeof resultObj.data === "string") {
@@ -323,7 +327,7 @@ app.controller('AdminSalesPropertiesCtrl', ['$state', '$scope', 'AdminSharedSrvc
         });
     };
 
-    ME.updateMultiVents = function(id) {
+    var updateMultiVents = function(id) {
         ME.multiVentObj.propertyID = id;
         DB.query("updateMultiVents", ME.multiVentObj).then(function(resultObj) {
             if (resultObj.result == "Error" || typeof resultObj.data === "string") {

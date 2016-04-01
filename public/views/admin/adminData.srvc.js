@@ -28,7 +28,9 @@ app.service('AdminDataSrvc',['$http','$q','SharedSrvc','LogInSrvc',function admi
 		updateProperty:httpPathPrefix + "updateProperty.php",
 		updateMultiLevels:httpPathPrefix + "updateMultiLevels.php",
 		updateMultiVents:httpPathPrefix + "updateMultiVents.php",
-		deleteProperty:httpPathPrefix + "deleteProperty.php"
+		updateClient:httpPathPrefix + "updateClient.php",
+		deleteProperty:httpPathPrefix + "deleteProperty.php",
+		deleteClient:httpPathPrefix + "deleteClient.php"
 	};
 
 	self.query = function(query,dataObj){

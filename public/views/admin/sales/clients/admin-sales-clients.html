@@ -10,9 +10,12 @@
             <button type="button" class="button radius" ng-click="Ctrl.removeItem()">Remove Client</button>
         </div>
     </div>
-    <H2>{{Ctrl.modePrompt}}</H2>
+    <div class="text-input-form-item">
+        <h2 style="margin-right:15px;">{{Ctrl.modePrompt}}</h2>
+        <select ng-model="Ctrl.clientSelector" ng-options="c.displayName for c in Ctrl.tableDataProvider" ng-change="Ctrl.selectClient();" ng-hide="Ctrl.EditMode=='Add Item'"></select>
+    </div>
     <horiz-rule margintop="5px" marginbottom="5px"></horiz-rule>
-    <H2>Form Status: {{Ctrl.formStatus}}</H2>
+   
     <div class="text-input-form-item">
         <label>Sales Rep</label>
         <select ng-model="Ctrl.selectedSalesRep" ng-options="c.displayName for c in Ctrl.S.salesReps" ng-change="Ctrl.formChange();"></select>
