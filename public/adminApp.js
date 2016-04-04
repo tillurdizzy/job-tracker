@@ -1,5 +1,5 @@
 'use strict';
-var app = angular.module('AdminApp', ['ui.router','ngSanitize','ngUnderscore','directive.g+signin','ngDialog']);
+var app = angular.module('AdminApp', ['ui.router','ngSanitize','ngUnderscore','directive.g+signin','ngDialog','ng-fusioncharts']);
 
 app.config(function($stateProvider, $urlRouterProvider) {
  	

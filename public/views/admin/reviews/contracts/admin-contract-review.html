@@ -16,7 +16,7 @@
             </thead>
             <tbody>
                 <tr ng-repeat="row in ChildCtrl.tableDataProvider">
-                    <td>{{row.date}}</td>
+                    <td>{{row.date | date:"MM/dd/yyyy"}}</td>
                     <td>{{row.rep}}</td>
                     <td>{{row.name}}</td>
                     <td>{{row.street}}</td>

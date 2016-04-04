@@ -34,6 +34,9 @@ gulp.task('jsbundle',function(){
 		'bower_components/angular-ui-router/release/angular-ui-router.min.js',
 		'bower_components/angular-directive.g-signin/google-plus-signin.js',
 		'bower_components/ng-dialog/ngDialog.min.js',
+		'bower_components/angularjs-plugin/wrappers/angularjs/angular-fusioncharts.min.js',
+		'bower_components/fusioncharts-suite-xt/js/fusioncharts.js',
+		'bower_components/fusioncharts-suite-xt/js/fusioncharts.charts.js',
 		'bower_components/angular-smart-table/dist/smart-table.min.js'])
 	.pipe(concat('bundle.js'))
 	.pipe(gulp.dest('public'));

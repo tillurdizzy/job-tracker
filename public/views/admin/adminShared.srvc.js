@@ -423,6 +423,14 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'underscore', 'Jo
         };
     };
 
+    self.returnManagerObjByID = function(id){
+        for (var i = 0; i < self.salesReps.length; i++) {
+            if(self.salesReps[i].PRIMARY_ID === id){
+                return self.salesReps[i];
+            };
+        };
+    };
+
     self.returnPropertyNameByID = function(id){
         for (var i = 0; i < self.PROPERTIES.length; i++) {
             if(self.PROPERTIES[i].PRIMARY_ID === id){

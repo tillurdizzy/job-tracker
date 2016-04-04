@@ -29,6 +29,11 @@ app.service('AdminDataSrvc',['$http','$q','SharedSrvc','LogInSrvc',function admi
 		updateMultiLevels:httpPathPrefix + "updateMultiLevels.php",
 		updateMultiVents:httpPathPrefix + "updateMultiVents.php",
 		updateClient:httpPathPrefix + "updateClient.php",
+		updateProspectDate:httpPathPrefix + "updateProspectDate.php",
+		updateProposalDate:httpPathPrefix + "updateProposalDate.php",
+		updateContractDate:httpPathPrefix + "updateContractDate.php",
+		updateActiveDate:httpPathPrefix + "updateActiveDate.php",
+		updateCompleteDate:httpPathPrefix + "updateCompleteDate.php",
 		deleteProperty:httpPathPrefix + "deleteProperty.php",
 		deleteClient:httpPathPrefix + "deleteClient.php"
 	};

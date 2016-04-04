@@ -12,55 +12,52 @@
     </div>
     <div class="text-input-form-item-min">
         <h2>{{Ctrl.modePrompt}}</h2>
-        <select ng-model="Ctrl.jobSelected" ng-options="c.propertyDisplayName for c in Ctrl.tableDataProvider" ng-change="Ctrl.selectJob();" ng-hide="Ctrl.EditMode=='Add Item'"></select>
+        <select ng-model="Ctrl.jobSelected" ng-options="c.jobLabel for c in Ctrl.tableDataProvider" ng-change="Ctrl.selectJob();" ng-hide="Ctrl.EditMode=='Add Item'"></select>
+        
     </div>
     <horiz-rule margintop="5" marginbottom="5"></horiz-rule>
-    <div style="width:100%">
+    <!-- Add Item Tab -->
+    <div ng-show="Ctrl.EditMode=='Add Item'">
         <div class="text-input-form-item">
-            <label>Client</label>
-            <select ng-model="Ctrl.clientSelected" ng-options="c.displayName for c in Ctrl.S.CLIENTS" ng-change="Ctrl.selectClient();" ng-show="Ctrl.EditMode=='Add Item'"></select>
-            <h2 ng-hide="Ctrl.EditMode=='Add Item'">{{Ctrl.clientDisplayName}}</h2>
+            <label>Client:</label>
+            <select ng-model="Ctrl.clientSelected" ng-options="c.displayName for c in Ctrl.S.CLIENTS" ng-change="Ctrl.selectClient();"></select>
         </div>
         <div class="text-input-form-item">
-            <label>Sales Mgr </label>
+            <label>Sales Mgr:</label>
             <h2>{{Ctrl.salesMgrDisplayName}}</h2>
         </div>
         <div class="text-input-form-item">
-            <label>Property</label>
-            <select ng-model="Ctrl.propertySelected" ng-options="c.name for c in Ctrl.propertyOptions" ng-change="Ctrl.formChange();" ng-disabled="Ctrl.clientSelected==null" ng-show="Ctrl.EditMode=='Add Item'"></select>
-            <h2 ng-hide="Ctrl.EditMode=='Add Item'">{{Ctrl.propertyDisplayName}}</h2>
+            <label>Property:</label>
+            <select ng-model="Ctrl.propertySelected" ng-options="c.name for c in Ctrl.propertyOptions" ng-change="Ctrl.formChange();" ng-disabled="Ctrl.clientSelected==null"></select>
         </div>
         <div class="text-input-form-item">
-            <label>Status</label>
+            <label>Status:</label>
             <select ng-model="Ctrl.statusSelected" ng-options="c.label for c in Ctrl.L.jobStatusOptions" ng-change="Ctrl.formChange();"></select>
         </div>
     </div>
+
+    <!-- Update and Remove Tabs Tab -->
+    <div ng-hide="Ctrl.EditMode=='Add Item'">
+        <div class="text-input-form-item">
+            <label>Client:</label>
+            <h2>{{Ctrl.jobSelected.clientDisplayName}}</h2>
+        </div>
+        <div class="text-input-form-item">
+            <label>Sales Mgr:</label>
+            <h2>{{Ctrl.jobSelected.managerDisplayName}}</h2>
+        </div>
+        <div class="text-input-form-item">
+            <label>Property:</label>
+            <h2>{{Ctrl.jobSelected.propertyDisplayName}}</h2>
+        </div>
+        <div class="text-input-form-item">
+            <label>Status:</label>
+            <h2 style="width:200px;">{{Ctrl.jobSelected.status}}</h2>
+            <label>Update Status:</label>
+            <select ng-model="Ctrl.statusSelected" ng-options="c.label for c in Ctrl.L.jobStatusOptions" ng-change="Ctrl.formChange();"></select>
+        </div>
+    </div>
+
     <button type="button" class="button radius" ng-click="Ctrl.submit()" style="margin-top: 1rem; width:100%;">SUBMIT</button>
-    <div class="tiny-text">Form Status: {{Ctrl.formStatus}}</div>
-    <!-- <div>
-        <table st-table="Ctrl.tableDataProvider" class="table table-striped" style="width:100%;">
-            <thead>
-                <tr>
-                    <th>Status</th>
-                    <th>Property</th>
-                    <th>Client</th>
-                    <th>Sales Rep</th>
-                    <th>Edit</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="row in Ctrl.tableDataProvider">
-                    <td>{{row.status}}</td>
-                    <td>{{row.propertyDisplayName}}</td>
-                    <td>{{row.clientDisplayName}}</td>
-                    <td>{{row.managerDisplayName}}</td>
-                    <td>
-                        <div class="table-icon-btn">
-                            <i class="fa fa-pencil" ng-click="Ctrl.clickTableRow(row.PRIMARY_ID)"></i>
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div> -->
+    <div class="tiny-text">Form Status: {{Ctrl.formStatus}} Job ID: {{Ctrl.jobSelected.PRIMARY_ID}}</div>
 </div>

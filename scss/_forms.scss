@@ -43,6 +43,7 @@
 	height:30px;
 	h2{
 		margin-right:15px;
+		font-size: 1rem;
 	}
 	select{
 		width:200px;
@@ -50,7 +51,7 @@
 	}
 	label{
 		font-size: 1rem;
-		width:100px;
+		min-width:100px;
 		text-align: left;
 	}
 }
@@ -62,7 +63,7 @@
 	margin-bottom:.8rem;
 	label{
 		font-size: 1rem;
-		width:100px;
+		min-width:100px;
 		text-align: left;
 	}
 	input[type="text"]{
@@ -74,6 +75,9 @@
 	}
 	select{
 		width:200px;
+	}
+	h2{
+		font-size: 1rem;
 	}
 }
 
