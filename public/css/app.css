@@ -408,6 +408,10 @@ p {
   font-size: .9em;
   line-height: 1.1rem; }
 
+.tiny-text {
+  font-size: .7em;
+  line-height: 1rem; }
+
 .fui-triangle-up:before {
   content: "\e600"; }
 
@@ -1476,7 +1480,8 @@ div.upload input {
 #cssmenu > ul > li.active > a,
 #cssmenu > ul > li:hover > a,
 #cssmenu > ul > li > a:hover {
-  color: #ffffff; }
+  color: #ffffff;
+  cursor: pointer; }
 
 #cssmenu > ul > li > a:after {
   position: absolute;
@@ -1502,7 +1507,8 @@ div.upload input {
 #cssmenu > ul > li.active > a:after,
 #cssmenu > ul > li:hover > a:after,
 #cssmenu > ul > li > a:hover:after {
-  background: #47c9af; }
+  background: #47c9af;
+  cursor: pointer; }
 
 button:focus {
   outline: none; }
@@ -1904,6 +1910,20 @@ table {
     font-size: .9rem;
     margin: 8px 0;
     padding: 0 0 0 20px; }
+
+.text-input-form-item-min {
+  margin-top: 5px;
+  display: flex;
+  height: 30px; }
+  .text-input-form-item-min h2 {
+    margin-right: 15px; }
+  .text-input-form-item-min select {
+    width: 200px;
+    height: 30px; }
+  .text-input-form-item-min label {
+    font-size: 1rem;
+    width: 100px;
+    text-align: left; }
 
 .text-input-form-item {
   display: flex;

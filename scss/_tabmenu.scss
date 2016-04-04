@@ -69,6 +69,7 @@
 #cssmenu > ul > li:hover > a,
 #cssmenu > ul > li > a:hover {
   color: #ffffff;
+  cursor:pointer;
 }
 #cssmenu > ul > li > a:after {
   position: absolute;
@@ -95,4 +96,5 @@
 #cssmenu > ul > li:hover > a:after,
 #cssmenu > ul > li > a:hover:after {
   background: #47c9af;
+  cursor:pointer;
 }

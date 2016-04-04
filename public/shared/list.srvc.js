@@ -2,6 +2,13 @@
 
 app.service('ListSrvc',[function sharedLists(){
 	var self = this;
+
+	self.jobStatusOptions = [
+		{label:"Prospect",id:1},
+		{label:"Proposal",id:2},
+		{label:"Contract",id:3},
+		{label:"Active",id:4},
+		{label:"Complete",id:5}];
 	
 	self.propertyParams = [
 		{label:"FIELD",id:1},

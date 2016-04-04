@@ -37,6 +37,24 @@
 	}
 }
 
+.text-input-form-item-min{
+	margin-top:5px;
+	display:flex;
+	height:30px;
+	h2{
+		margin-right:15px;
+	}
+	select{
+		width:200px;
+		height:30px;
+	}
+	label{
+		font-size: 1rem;
+		width:100px;
+		text-align: left;
+	}
+}
+
 
 // Used internally (admin) for inventory 
 .text-input-form-item{

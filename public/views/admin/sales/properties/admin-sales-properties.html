@@ -3,16 +3,16 @@
         <i ng-click="Ctrl.backToHome();" class="fa fa-arrow-circle-left fa-3x"></i>
         <h2>Properties</h2>
     </div>
-    <div class="admin-menu">
-        <div class="btn-grp">
-            <button type="button" class="button radius" ng-click="Ctrl.addItem()">Add Property</button>
-            <button type="button" class="button radius" ng-click="Ctrl.updateItem()">Update Property</button>
-            <button type="button" class="button radius" ng-click="Ctrl.removeItem()">Remove Property</button>
-        </div>
+    <div id='cssmenu' ng-controller="TabbedMenuCtrl">
+        <ul>
+            <li ng-class="{ active: Ctrl.EditMode == 'Add Item'}" ng-click="Ctrl.addItem()"><a>Add Property</a></li>
+            <li ng-class="{ active: Ctrl.EditMode == 'Update Item'}" ng-click="Ctrl.updateItem()"><a>Update Property</a></li>
+            <li ng-class="{ active: Ctrl.EditMode == 'Remove Item'}" ng-click="Ctrl.removeItem()"><a>Remove Property</a></li>
+        </ul>
     </div>
     <horiz-rule margintop="5" marginbottom="5"></horiz-rule>
-    <div class="text-input-form-item">
-        <h2 style="margin-right:15px;">{{Ctrl.modePrompt}}</h2>
+    <div class="text-input-form-item-min">
+        <h2>{{Ctrl.modePrompt}}</h2>
         <select ng-model="Ctrl.propertySelector" ng-options="c.street for c in Ctrl.tableDataProvider" ng-change="Ctrl.selectProperty();" ng-hide="Ctrl.EditMode=='Add Item'"></select>
     </div>
     

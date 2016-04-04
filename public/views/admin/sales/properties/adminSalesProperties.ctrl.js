@@ -363,7 +363,6 @@ app.controller('AdminSalesPropertiesCtrl', ['$state', '$scope', 'AdminSharedSrvc
         }, function(error) {
             alert("ERROR returned for DB.deleteProperty() at " + myName + " >>> remove_Item()");
         });
-
     };
 
     var resetForm = function() {

@@ -1,60 +1,109 @@
 'use strict';
 
-app.controller('AdminSalesJobsCtrl', ['$state', '$scope', 'AdminSharedSrvc', 'AdminDataSrvc', function($state, $scope, AdminSharedSrvc, AdminDataSrvc) {
+app.controller('AdminSalesJobsCtrl', ['AdminSharedSrvc', 'AdminDataSrvc', 'ListSrvc', 'ngDialog', '$state',function(AdminSharedSrvc, AdminDataSrvc,ListSrvc,ngDialog,$state) {
 
     var ME = this;
+    var myName = "AdminSalesJobsCtrl";
     ME.S = AdminSharedSrvc;
     var DB = AdminDataSrvc;
+    ME.L = ListSrvc;
+    var JOBS = [];
+
     ME.tableDataProvider = [];
     ME.EditMode = "Add Item";
-    ME.inputDataObj = {};
-    ME.selectedSalesRep
-
-    var JOBS = [];
+    ME.modePrompt = "Add New Job: Fill in the form and submit.";
     ME.formStatus = "Pristine";
+    ME.ouputDataObj = {};
+    
+    ME.jobSelected = {};
+    ME.clientSelected = null;
+    ME.propertySelected = {};
+    ME.statusSelected = {};
+
+    ME.clientDisplayName = "";
+    ME.propertyDisplayName = "";
+    ME.salesMgrDisplayName = "";
+
+    ME.selectJob = function() {
+        configOutObj();
+    };
+
+    ME.selectClient = function() {
+        getClientSalesMgr();
+        getClientProperties();
+    };
+
+    ME.selectProperty = function() {
+        
+    };
+
+    ME.selectStatus = function() {
+        
+    };
+
 
     ME.addItem = function(){
         ME.EditMode = "Add Item";
         ME.modePrompt = "Add New Job: Fill in the form and submit."
         resetInputFields();
     };
+
     ME.updateItem = function(){
         ME.EditMode = "Update Item";
-        ME.modePrompt = "Update Job: Choose a Job from the list, update and submit."
+        ME.modePrompt = "Update Job: Choose a Job from the list to update/edit."
+        resetInputFields();
     };
 
     ME.removeItem = function(){
         ME.EditMode = "Remove Item";
-        ME.modePrompt = "Remove Job: Choose a Job from the list and submit."
+        ME.modePrompt = "Remove Job: Choose a Job from the list to remove."
+        resetInputFields();
     };
 
     ME.formChange = function() {
-        ME.formStatus = "Dirty";
+        ME.formStatus = "Submit";
     }
-     ME.selectClient = function() {
-        ME.formStatus = "Dirty";
-        getClientProperties();
-    }
+
+    
     ME.backToHome = function() {
         $state.transitionTo('admin');
     };
 
-    var getClientProperties = function(){
-        Me.propertyOptions = [];
+    var getClientSalesMgr = function(){
+        ME.salesMgr = "";
         for (var i = 0; i < ME.S.PROPERTIES.length; i++) {
             if(ME.S.PROPERTIES[i].client == ME.inputDataObj.client.PRIMARY_ID){
                 Me.propertyOptions.push(Me.propertyList[i]);
             }
         };
-    }
+    };
 
-    ME.clickTableRow = function(ID) {
-        ME.EditMode = "Update Item";
-        ME.formStatus = "Pristine";
-        ME.inputDataObj = {};
+    var getClientProperties = function(){
+        ME.propertyOptions = [];
+        for (var i = 0; i < ME.S.PROPERTIES.length; i++) {
+            if(ME.S.PROPERTIES[i].client == ME.inputDataObj.client.PRIMARY_ID){
+                Me.propertyOptions.push(Me.propertyList[i]);
+            }
+        };
+    };
+
+    ME.configOutputObj = function(ID) {
+        if(ID === "-1"){
+            resetInputFields();
+            ME.formStatus = "Pristine";
+            return;
+        }
+
+        ME.clientSelected = {};
+        ME.propertySelected = {};
+        ME.statusSelected = {};
+        ME.salesMgr = "";
+
+        ME.ouputDataObj = { property: null, client: null, status: "Prospect", manager: null, dateProspect:null};
+
         for (var i = 0; i < ME.tableDataProvider.length; i++) {
             if (ME.tableDataProvider[i].PRIMARY_ID == ID) {
-                ME.inputDataObj = ME.tableDataProvider[i];
+               
             }
         }
     };
@@ -96,11 +145,6 @@ app.controller('AdminSalesJobsCtrl', ['$state', '$scope', 'AdminSharedSrvc', 'Ad
     };
 
 
-    var resetForm = function() {
-        ME.formStatus = "Pristine";
-
-    };
-
     var createDP = function() {
         ME.tableDataProvider = DB.clone(ME.S.JOBS);
         for (var i = 0; i < ME.tableDataProvider.length; i++) {
@@ -111,19 +155,24 @@ app.controller('AdminSalesJobsCtrl', ['$state', '$scope', 'AdminSharedSrvc', 'Ad
             var propertyID = ME.tableDataProvider[i].property;
             ME.tableDataProvider[i].propertyDisplayName = ME.S.returnPropertyNameByID(propertyID);
         }
+        ME.tableDataProvider.splice(0,0,{propertyDisplayName:"-- Select --",PRIMARY_ID:"-1"});
+        ME.jobSelected = ME.tableDataProvider[0];
     };
 
     var resetInputFields = function() {
         var date = new Date();
         var val = date.valueOf();
-        ME.inputDataObj = { property: ME.S.PROPERTIES[0], client: ME.S.CLIENTS[0], status: "Prospect", manager: ME.S.salesReps[0], dateProspect: val };
+        ME.ouputDataObj = { property: null, client: null, status: "Prospect", manager: null, dateProspect:val };
+        ME.jobSelected = ME.tableDataProvider[0];
+        ME.statusSelected = ME.L.jobStatusOptions[0];
+        ME.clientSelected = null;
+        ME.propertySelected = null;
+        ME.formStatus = "Pristine";
+
+        ME.clientDisplayName = "--";
+        ME.propertyDisplayName = "--";
+        ME.salesMgrDisplayName = "--";
     };
-
-
-
-    $scope.$watch('$viewContentLoaded', function() {
-        console.log("AdminSalesClientsCtrl >>> $viewContentLoaded");
-    });
 
 
     resetInputFields();

@@ -3,18 +3,19 @@
         <i ng-click="Ctrl.backToHome();" class="fa fa-arrow-circle-left fa-3x"></i>
         <h2>Clients</h2>
     </div>
-    <div class="admin-menu">
-        <div class="btn-grp">
-            <button type="button" class="button radius" ng-click="Ctrl.addItem()">Add Client</button>
-            <button type="button" class="button radius" ng-click="Ctrl.updateItem()">Update Client</button>
-            <button type="button" class="button radius" ng-click="Ctrl.removeItem()">Remove Client</button>
-        </div>
+    <div id='cssmenu' ng-controller="TabbedMenuCtrl">
+        <ul>
+            <li ng-class="{ active: Ctrl.EditMode == 'Add Item'}" ng-click="Ctrl.addItem()"><a>Add Client</a></li>
+            <li ng-class="{ active: Ctrl.EditMode == 'Update Item'}" ng-click="Ctrl.updateItem()"><a>Update Client</a></li>
+            <li ng-class="{ active: Ctrl.EditMode == 'Remove Item'}" ng-click="Ctrl.removeItem()"><a>Remove Client</a></li>
+        </ul>
     </div>
-    <div class="text-input-form-item">
-        <h2 style="margin-right:15px;">{{Ctrl.modePrompt}}</h2>
+    
+    <div class="text-input-form-item-min">
+        <h2>{{Ctrl.modePrompt}}</h2>
         <select ng-model="Ctrl.clientSelector" ng-options="c.displayName for c in Ctrl.tableDataProvider" ng-change="Ctrl.selectClient();" ng-hide="Ctrl.EditMode=='Add Item'"></select>
     </div>
-    <horiz-rule margintop="5px" marginbottom="5px"></horiz-rule>
+    <horiz-rule margintop="5" marginbottom="10"></horiz-rule>
    
     <div class="text-input-form-item">
         <label>Sales Rep</label>
@@ -66,9 +67,10 @@
             </div>
         </div>
     </div>
-    <button type="button" class="button radius" ng-click="Ctrl.submit()" style="margin-top: 1rem; width:100%;">SUBMIT</button>
-    <horiz-rule margintop="15px" marginbottom="15px"></horiz-rule>
-    <div>
+    <button type="button" class="button radius" ng-click="Ctrl.submit()" style="margin-top: 1rem; width:100%;">{{Ctrl.EditMode}}</button>
+    <div class="tiny-text">Form Status: {{Ctrl.formStatus}}</div>
+    <horiz-rule margintop="15" marginbottom="15"></horiz-rule>
+    <!-- <div>
         <table st-table="Ctrl.tableDataProvider" class="table table-striped" style="width:100%;">
             <thead>
                 <tr>
@@ -93,5 +95,5 @@
                 </tr>
             </tbody>
         </table>
-    </div>
+    </div> -->
 </div>
