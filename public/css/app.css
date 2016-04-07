@@ -1529,6 +1529,16 @@ button,
   color: #FFFFFF;
   overflow: visible; }
 
+button:disabled, .button:disabled {
+  background-color: #BDC3C7;
+  transition: none; }
+
+button:hover:disabled, .button:hover:disabled {
+  background-color: #BDC3C7; }
+
+.background-alert, .background-alert:hover {
+  background-color: #E74C3C; }
+
 button:hover,
 button:focus,
 .button:hover,

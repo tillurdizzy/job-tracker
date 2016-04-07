@@ -22,7 +22,9 @@ app.service('AdminDataSrvc',['$http','$q','SharedSrvc','LogInSrvc',function admi
 		getMultiVents:httpPathPrefix + "getMultiVents.php",
 		getMultiLevels:httpPathPrefix + "getMultiLevels.php",
 		getProperties:httpPathPrefix + "getProperties.php",
+		doesJobExist:httpPathPrefix + "getDoesJobExist.php",
 		putProperty:httpPathPrefix + "putProperty.php",
+		putJob:httpPathPrefix + "putJob.php",
 		putMultiLevels:httpPathPrefix + "putMultiLevels.php",
 		putMultiVents:httpPathPrefix + "putMultiVents.php",
 		updateProperty:httpPathPrefix + "updateProperty.php",
@@ -35,7 +37,8 @@ app.service('AdminDataSrvc',['$http','$q','SharedSrvc','LogInSrvc',function admi
 		updateActiveDate:httpPathPrefix + "updateActiveDate.php",
 		updateCompleteDate:httpPathPrefix + "updateCompleteDate.php",
 		deleteProperty:httpPathPrefix + "deleteProperty.php",
-		deleteClient:httpPathPrefix + "deleteClient.php"
+		deleteClient:httpPathPrefix + "deleteClient.php",
+		deleteJob:httpPathPrefix + "deleteJob.php"
 	};
 
 	self.query = function(query,dataObj){

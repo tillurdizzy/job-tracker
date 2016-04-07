@@ -56,6 +56,19 @@ button,
 	overflow: visible;
 }
 
+button:disabled,.button:disabled{
+  background-color: $silver-grey;
+  transition: none;
+}
+button:hover:disabled,.button:hover:disabled{
+  background-color: $silver-grey;
+}
+
+.background-alert,.background-alert:hover{
+  background-color: $tertiary-color;
+}
+
+
 button:hover, 
 button:focus, 
 .button:hover, 

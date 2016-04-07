@@ -48,7 +48,6 @@ app.controller('AdminLoginCtrl',['$scope','$state','AdminDataSrvc','AdminSharedS
 
     $scope.logOut = function(){
         $scope.displayName="";
-        S.logOut();
         L.logOut();
         DB.logOut();
         $state.transitionTo("splash");

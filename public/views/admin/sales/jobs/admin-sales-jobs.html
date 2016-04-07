@@ -20,7 +20,7 @@
     <div ng-show="Ctrl.EditMode=='Add Item'">
         <div class="text-input-form-item">
             <label>Client:</label>
-            <select ng-model="Ctrl.clientSelected" ng-options="c.displayName for c in Ctrl.S.CLIENTS" ng-change="Ctrl.selectClient();"></select>
+            <select ng-model="Ctrl.clientSelected" ng-options="c.displayName for c in Ctrl.clientsDP" ng-change="Ctrl.selectClient();"></select>
         </div>
         <div class="text-input-form-item">
             <label>Sales Mgr:</label>
@@ -28,11 +28,12 @@
         </div>
         <div class="text-input-form-item">
             <label>Property:</label>
-            <select ng-model="Ctrl.propertySelected" ng-options="c.name for c in Ctrl.propertyOptions" ng-change="Ctrl.formChange();" ng-disabled="Ctrl.clientSelected==null"></select>
+            <select ng-model="Ctrl.propertySelected" ng-options="c.name for c in Ctrl.propertyOptions" ng-change="Ctrl.selectProperty();" 
+            ng-disabled="Ctrl.clientSelected.PRIMARY_ID=='-1'"></select>
         </div>
         <div class="text-input-form-item">
             <label>Status:</label>
-            <select ng-model="Ctrl.statusSelected" ng-options="c.label for c in Ctrl.L.jobStatusOptions" ng-change="Ctrl.formChange();"></select>
+            <h2>Prospect</h2>
         </div>
     </div>
 
@@ -53,11 +54,13 @@
         <div class="text-input-form-item">
             <label>Status:</label>
             <h2 style="width:200px;">{{Ctrl.jobSelected.status}}</h2>
-            <label>Update Status:</label>
-            <select ng-model="Ctrl.statusSelected" ng-options="c.label for c in Ctrl.L.jobStatusOptions" ng-change="Ctrl.formChange();"></select>
+            <label ng-show="Ctrl.EditMode=='Update Item'">Update Status:</label>
+            <select ng-show="Ctrl.EditMode=='Update Item'" ng-model="Ctrl.statusSelected" ng-options="c.label for c in Ctrl.L.jobStatusOptions" 
+            ng-change="Ctrl.selectStatusUpdate();" ng-disabled="Ctrl.jobSelected.PRIMARY_ID=='-1'"></select>
         </div>
     </div>
 
-    <button type="button" class="button radius" ng-click="Ctrl.submit()" style="margin-top: 1rem; width:100%;">SUBMIT</button>
+    <button type="button" ng-click="Ctrl.submit()" style="margin-top: 1rem; width:100%;" ng-disabled="Ctrl.submitInValid" ng-hide="Ctrl.EditMode=='Remove Item'">SUBMIT</button>
+    <button type="button" class="background-alert" ng-click="Ctrl.submit()" style="margin-top: 1rem; width:100%;" ng-disabled="Ctrl.submitInValid" ng-show="Ctrl.EditMode=='Remove Item'">DELETE</button>
     <div class="tiny-text">Form Status: {{Ctrl.formStatus}} Job ID: {{Ctrl.jobSelected.PRIMARY_ID}}</div>
 </div>
