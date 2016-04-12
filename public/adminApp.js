@@ -1,12 +1,26 @@
 'use strict';
 var app = angular.module('AdminApp', ['ui.router','ngSanitize','ngUnderscore','directive.g+signin','ngDialog','ng-fusioncharts']);
 
-app.config(function($stateProvider, $urlRouterProvider) {
+app.run(function($rootScope) {
+  $rootScope.addExceptionAlert = function(exceptionObj) {
+        alert("$exceptionHandler :: \n" + exceptionObj.message + " : \n" + exceptionObj.reason);
+    };
+});
+
+app.config(function($stateProvider, $urlRouterProvider,$provide) {
  	
+ 	$provide.decorator("$exceptionHandler", function ($delegate, $injector) {
+        return function (exception, cause) {
+            var $rootScope = $injector.get("$rootScope");
+            $rootScope.addExceptionAlert({message: "Exception", reason: exception});
+            $delegate(exception, cause);
+        };
+    });
+
+
  	$urlRouterProvider.otherwise("/splash");
   	
 	$stateProvider
-		$stateProvider
 
 		.state('login', {
 			url: "/login",
@@ -102,10 +116,9 @@ app.config(function($stateProvider, $urlRouterProvider) {
 			url: "/complete-review",
 			templateUrl:"views/admin/reviews/complete/admin-complete-review.html"
 		})
+	
+});
 
 
-		
-		
-});	
 
 
