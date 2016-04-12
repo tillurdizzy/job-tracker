@@ -12,7 +12,6 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore',function jobConfigSrvc(
 
     // Converts the long string saved in DB into array of objects
     self.parseJobConfig = function(ar) {
-        console.log("JobConfigSrvc ---- parseJobConfig(()");
         self.jobConfigArray = [];
         if (ar.length > 0) {
             self.jobConfigStr = ar[0].strData;

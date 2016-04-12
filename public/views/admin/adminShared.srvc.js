@@ -1,5 +1,5 @@
 'use strict';
-app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'underscore', 'JobConfigSrvc', function adminShared($rootScope, AdminDataSrvc, underscore, JobConfigSrvc) {
+app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'underscore', 'JobConfigSrvc', 'ngDialog', function adminShared($rootScope, AdminDataSrvc, underscore, JobConfigSrvc,ngDialog) {
 
     var self = this;
     self.ME = "AdminSharedSrvc: ";
@@ -84,7 +84,12 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'underscore', 'Jo
                 $rootScope.$broadcast('onRefreshParamsData', jobParams);
                 validateData();
             } else {
-                alert("FALSE returned for DB.getJobParameters() at AdminSharedSrvc >>> getJobParameters()");
+                ngDialog.open({
+                        template: '<h2>ERROR: This job has no parameters.</h2>',
+                        className: 'ngdialog-theme-default',
+                        plain: true,
+                        overlay: false
+                    });
             }
         }, function(error) {
             alert("ERROR returned for DB.getJobParameters() at AdminSharedSrvc >>> getJobParameters()");
@@ -94,16 +99,17 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'underscore', 'Jo
 
     var getJobConfig = function() {
         var dataObj = { jobID: self.proposalUnderReview.jobID };
-        DB.getJobConfig(dataObj).then(function(result) {
-            if (result === false) {
-                alert("FALSE returned for DB.getJobConfig() at AdminSharedSrvc >>> getJobConfig()");
+        DB.query("getJobConfig", dataObj).then(function(resultObj) {
+            if (resultObj.result == "Error" || typeof resultObj.data === "string") {
+                alert("FALSE returned for getJobConfig()");
             } else {
-                var resultObj = result;
-                onGetJobConfig(resultObj);
+                onGetJobConfig(resultObj.data);
             }
         }, function(error) {
-            alert("ERROR returned for DB.getJobConfig() at AdminSharedSrvc >>> getJobConfig()");
+            alert("ERROR returned for  getJobConfig()");
         });
+
+       
     };
 
     // Send results over to CONFIG

@@ -22,6 +22,7 @@ app.service('AdminDataSrvc',['$http','$q','SharedSrvc','LogInSrvc',function admi
 		getMultiVents:httpPathPrefix + "getMultiVents.php",
 		getMultiLevels:httpPathPrefix + "getMultiLevels.php",
 		getProperties:httpPathPrefix + "getProperties.php",
+		getJobConfig:httpPathPrefix + "getJobConfig.php",
 		doesJobExist:httpPathPrefix + "getDoesJobExist.php",
 		putProperty:httpPathPrefix + "putProperty.php",
 		putJob:httpPathPrefix + "putJob.php",
@@ -101,7 +102,7 @@ app.service('AdminDataSrvc',['$http','$q','SharedSrvc','LogInSrvc',function admi
 	
 	self.getJobConfig = function(dataObj){
 		var deferred = $q.defer();
-		$http({method: 'POST', url: 'views/admin/http/getJobConfig.php',data:dataObj}).
+		$http({method: 'POST', url: 'http/getJobConfig.php',data:dataObj}).
 		success(function(data, status) {
 			if(data === false){
 				deferred.resolve(false);
