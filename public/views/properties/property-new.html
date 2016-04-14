@@ -1,4 +1,4 @@
-<div ng-controller="NewPropertyCtrl as Ctrl" class="page">
+<div ng-controller="NewPropertyCtrl as Ctrl" class="top page">
     <div class="page-title">
         <h2>New Property</h2>
     </div>
@@ -6,17 +6,14 @@
     <div class="ez-form">
         <div class="ez-form-item" ng-show="Ctrl.inputField == 'T1'">
             <h3>Choose the Client / Owner for this Property</h3>
-            <select id="selectClient" ng-model="Ctrl.T1" ng-options="c.company for c in Ctrl.clientList">
-            </select>
+            <select id="selectClient" ng-model="Ctrl.T1" ng-options="c.company for c in Ctrl.clientList"></select>
             <div class="page-nav">
-                <div class="page-nav-left">
-                </div>
+                <div class="page-nav-left"></div>
                 <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">
                     {{Ctrl.inputMsg}}
                 </div>
                 <div class="page-nav-right">
-                    <i ng-click="Ctrl.submitT1();" class="fa fa-arrow-circle-right fa-3x">
-                    </i>
+                    <i ng-click="Ctrl.submitT1();" class="fa fa-arrow-circle-right fa-3x"></i>
                 </div>
             </div>
         </div>
@@ -44,15 +41,13 @@
             <input name="T3" type="text" ng-model="Ctrl.T3" />
             <div class="page-nav">
                 <div class="page-nav-left">
-                    <i ng-click="Ctrl.goPrevious('2')" class="fa fa-arrow-circle-left fa-3x">
-                    </i>
+                    <i ng-click="Ctrl.goPrevious('2')" class="fa fa-arrow-circle-left fa-3x"></i>
                 </div>
                 <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">
                     {{Ctrl.inputMsg}}
                 </div>
                 <div class="page-nav-right">
-                    <i ng-click="Ctrl.submitT3();" class="fa fa-arrow-circle-right fa-3x">
-                    </i>
+                    <i ng-click="Ctrl.submitT3();" class="fa fa-arrow-circle-right fa-3x"></i>
                 </div>
             </div>
         </div>
@@ -256,9 +251,7 @@
             </div>
         </div>
         <div class="ez-form-item" ng-show="Ctrl.inputField == 'T12'">
-            <h3>
-                Edge Detail
-            </h3>
+            <h3>Edge Detail</h3>
             <div class="radio-btns">
                 <div>
                     <label>
@@ -286,9 +279,7 @@
             </div>
         </div>
         <div class="ez-form-item" ng-show="Ctrl.inputField == 'T13'">
-            <h3>
-                Valleys
-            </h3>
+            <h3>Valleys</h3>
             <div class="radio-btns">
                 <div>
                     <label>
@@ -303,8 +294,7 @@
             </div>
             <div class="page-nav">
                 <div class="page-nav-left">
-                    <i ng-click="Ctrl.goPrevious('12')" class="fa fa-arrow-circle-left fa-3x">
-                    </i>
+                    <i ng-click="Ctrl.goPrevious('12')" class="fa fa-arrow-circle-left fa-3x"></i>
                 </div>
                 <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">
                     {{Ctrl.inputMsg}}
@@ -316,9 +306,7 @@
             </div>
         </div>
         <div class="ez-form-item" ng-show="Ctrl.inputField == 'T14'">
-            <h3>
-                Ridges
-            </h3>
+            <h3>Ridges</h3>
             <div class="radio-btns">
                 <div>
                     <label>
@@ -333,22 +321,18 @@
             </div>
             <div class="page-nav">
                 <div class="page-nav-left">
-                    <i ng-click="Ctrl.goPrevious('13')" class="fa fa-arrow-circle-left fa-3x">
-                    </i>
+                    <i ng-click="Ctrl.goPrevious('13')" class="fa fa-arrow-circle-left fa-3x"></i>
                 </div>
                 <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">
                     {{Ctrl.inputMsg}}
                 </div>
                 <div class="page-nav-right">
-                    <i ng-click="Ctrl.submitT14();" class="fa fa-arrow-circle-right fa-3x">
-                    </i>
+                    <i ng-click="Ctrl.submitT14();" class="fa fa-arrow-circle-right fa-3x"></i>
                 </div>
             </div>
         </div>
         <div class="ez-form-item" ng-show="Ctrl.inputField == 'T15'">
-            <h3>
-                Ventilation
-            </h3>
+            <h3>Ventilation</h3>
             <div class="radio-btns">
                 <div>
                     <label>
@@ -378,15 +362,13 @@
             </div>
             <div class="page-nav">
                 <div class="page-nav-left">
-                    <i ng-click="Ctrl.goPrevious('14')" class="fa fa-arrow-circle-left fa-3x">
-                    </i>
+                    <i ng-click="Ctrl.goPrevious('14')" class="fa fa-arrow-circle-left fa-3x"></i>
                 </div>
                 <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">
                     {{Ctrl.inputMsg}}
                 </div>
                 <div class="page-nav-right">
-                    <i ng-click="Ctrl.submitT15();" class="fa fa-arrow-circle-right fa-3x">
-                    </i>
+                    <i ng-click="Ctrl.submitT15();" class="fa fa-arrow-circle-right fa-3x"></i>
                 </div>
             </div>
         </div>
@@ -396,95 +378,48 @@
             </h3>
             <div class="page-nav">
                 <div class="page-nav-left">
-                    <i ng-click="Ctrl.goPrevious('11')" class="fa fa-arrow-circle-left fa-3x">
-                    </i>
+                    <i ng-click="Ctrl.goPrevious('11')" class="fa fa-arrow-circle-left fa-3x"></i>
                 </div>
                 <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">
                     {{Ctrl.inputMsg}}
                 </div>
                 <div class="page-nav-right">
-                    <button type="button" ng-click="Ctrl.submitForm()">
-                        Submit
-                    </button>
+                    <button type="button" ng-click="Ctrl.submitForm()">Submit</button>
                 </div>
             </div>
         </div>
         <div class="ez-form-item" ng-show="Ctrl.inputField == 'SUCCESS'">
-            <h3>
-                Success!
-            </h3>
-            <p>
-                {{Ctrl.T3}} has been added as a property for {{Ctrl.T1.company}}.
-            </p>
+            <h3>Success!</h3>
+            <p>{{Ctrl.T3}} has been added as a property for {{Ctrl.T1.company}}.</p>
         </div>
         <div class="ez-form-item" ng-show="Ctrl.inputField == 'ERROR'">
-            <h3>
-                Oops!  An error occured saving the data.
-            </h3>
-            <p>
-                Try again later or click below to reset and try again now.
-            </p>
-            <button type="button" ng-click="Ctrl.clearForm()">
-                Reset
-            </button>
+            <h3>Oops!  An error occured saving the data.</h3>
+            <p>Try again later or click below to reset and try again now.</p>
+            <button type="button" ng-click="Ctrl.clearForm()">Reset</button>
         </div>
     </div>
     <div class="ez-form" ng-show="Ctrl.">
         <div id="liveReview" class="review-section">
             <div class="text-block-display">
-                <h4>
-                    Property:
-                </h4>
-                <h4>
-                    Owner: {{Ctrl.T1.company}}
-                </h4>
-                <h3>
-                    Name: {{Ctrl.T2}}
-                </h3>
-                <h3>
-                    Street: {{Ctrl.T3}}
-                </h3>
-                <h3>
-                    City: {{Ctrl.T4}}
-                </h3>
-                <h3>
-                    State: {{Ctrl.T5}}
-                </h3>
-                <h3>
-                    Zip: {{Ctrl.T6}}
-                </h3>
+                <h4>Property:</h4>
+                <h4>Owner: {{Ctrl.T1.company}}</h4>
+                <h3>Name: {{Ctrl.T2}}</h3>
+                <h3>Street: {{Ctrl.T3}}</h3>
+                <h3>City: {{Ctrl.T4}}</h3>
+                <h3>State: {{Ctrl.T5}}</h3>
+                <h3>Zip: {{Ctrl.T6}}</h3>
             </div>
             <div class="text-block-display" style="margin-left:3rem;">
-                <h4>
-                    Existing Conditions:
-                </h4>
-                <h3>
-                    Levels: {{Ctrl.T7}}
-                </h3>
-                <h3>
-                   Shingle Style: {{Ctrl.T8}}
-                </h3>
-                <h3>
-                    Decking: {{Ctrl.T9}}
-                </h3>
-                <h3>
-                    Roof: {{Ctrl.T10}}
-                </h3>
-                <h3>
-                    Layers: {{Ctrl.T11}}
-                </h3>
-                <h3>
-                    Edge Detail: {{Ctrl.T12}}
-                </h3>
-                <h3>
-                    Valley: {{Ctrl.T13}}
-                </h3>
-                <h3>
-                    Ridge: {{Ctrl.T14}}
-                </h3>
-                <h3>
-                    Ventilation: {{Ctrl.T15}}
-                </h3>
+                <h4>Existing Conditions:</h4>
+                <h3>Levels: {{Ctrl.T7}}</h3>
+                <h3>Shingle Style: {{Ctrl.T8}}</h3>
+                <h3>Decking: {{Ctrl.T9}}</h3>
+                <h3>Roof: {{Ctrl.T10}}</h3>
+                <h3>Layers: {{Ctrl.T11}}</h3>
+                <h3>Edge Detail: {{Ctrl.T12}}</h3>
+                <h3>Valley: {{Ctrl.T13}}</h3>
+                <h3>Ridge: {{Ctrl.T14}}</h3>
+                <h3>Ventilation: {{Ctrl.T15}}</h3>
             </div>
         </div>
     </div>

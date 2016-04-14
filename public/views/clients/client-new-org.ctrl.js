@@ -5,148 +5,150 @@ app.controller('NewClientOrgCtrl',['$state','evoDb','SharedSrvc',function ($stat
 	var ME = this;
     var S = SharedSrvc;
     ME.managerName = S.managerName;
-    // Form elements
-   
-    ME.T1="";//company name
-    ME.T2="";//street
-    ME.T3="";//cilty
-    ME.T4="";//state
-    ME.T5="";//zip
-    ME.T6="";//phone
-    ME.T7="";//first
-    ME.T8="";//last
-    ME.T9="";//cell
-    ME.T10="";//email
+
+    ME.inputModelObj = {companyName:"",companyStreet:"",companyCity:"",companyState:"",companyZip:"",
+    companyPhone:"",contactFirstName:"",contactLastName:"",contactCell:"",contactEmail:""};
    
     var currentFieldNum = "1";
     var numFields = "10";
-    ME.inputField = "T1";
+    ME.inputField = "companyName";
     ME.inputMsg = "Field 1 of 10";
     ME.isError = false;
 
-    ME.goPrevious = function(num){
-        currentFieldNum = num;
-        ME.inputField="T" + num;
-        ME.inputMsg = "Field " + num +  " of " + numFields;
-    }
+    ME.goPrevious = function(field){
+        switch(field){
+            case "companyName":currentFieldNum = "1";break;
+            case "companyStreet":currentFieldNum = "2";break;
+            case "companyCity":currentFieldNum = "3";break;
+            case "companyState":currentFieldNum = "4";break;
+            case "companyZip":currentFieldNum = "5";break;
+            case "companyPhone":currentFieldNum = "6";break;
+            case "contactFirstName":currentFieldNum = "7";break;
+            case "contactLastName":currentFieldNum = "8";break;
+            case "contactCell":currentFieldNum = "9";break;
+            case "contactEmail":currentFieldNum = "10";break;
+        };
+        ME.inputField=field;
+        ME.inputMsg = "Field " + currentFieldNum +  " of " + numFields;
+    };
 
     ME.goStart=  function(){
         $state.transitionTo("addNewClient");
-    }
+    };
 
     
-    ME.submitT1=function(){
+    ME.submit_companyName=function(){
         ME.inputMsg = "";
         ME.isError = false;
-        if(ME.T1==""){//company
+        if(ME.inputModelObj.companyName==""){
             ME.isError = true;
             ME.inputMsg = "This field cannot be blank.";
         }else{
-            ME.inputField="T2";
+            ME.inputField="companyStreet";
             ME.inputMsg = "Field 2 of " + numFields;;
         };
     };
 
-    ME.submitT2=function(){
+    ME.submit_companyStreet=function(){
         ME.inputMsg = "";
         ME.isError = false;
-        if(ME.T2==""){//street
+        if(ME.inputModelObj.companyStreet==""){
             ME.isError = true;
             ME.inputMsg = "This field cannot be blank.";
         }else{
-            ME.inputField="T3";
+            ME.inputField="companyCity";
             ME.inputMsg = "Field 3 of " + numFields;;
         }
     };
 
-    ME.submitT3=function(){
+    ME.submit_companyCity=function(){
         ME.inputMsg = "";
         ME.isError = false;
-        if(ME.T3==""){//city
+        if(ME.inputModelObj.companyCity==""){
             ME.isError = true;
             ME.inputMsg = "This field cannot be blank.";
         }else{
-            ME.inputField="T4";
+            ME.inputField="companyState";
             ME.inputMsg = "Field 4 of " + numFields;;
         }
     };
 
-    ME.submitT4=function(){
+    ME.submit_companyState=function(){
         ME.inputMsg = "";
         ME.isError = false;
-       if(ME.T4==""){//state
+       if(ME.inputModelObj.companyState==""){
             ME.isError = true;
             ME.inputMsg = "This field cannot be blank.";
         }else{
-            ME.inputField="T5";
+            ME.inputField="companyZip";
             ME.inputMsg = "Field 5 of " + numFields;;
         }
     };
 
-    ME.submitT5=function(){//zip
+    ME.submit_companyZip=function(){//zip
         ME.inputMsg = "";
         ME.isError = false;
-       if(ME.T5==""){
+       if(ME.inputModelObj.companyZip==""){
             ME.isError = true;
             ME.inputMsg = "This field cannot be blank.";
         }else{
-            ME.inputField="T6";
+            ME.inputField="companyPhone";
             ME.inputMsg = "Field 6 of " + numFields;;
         }
     };
 
-    ME.submitT6=function(){//phone
+    ME.submit_companyPhone=function(){//phone
         ME.inputMsg = "";
         ME.isError = false;
-       if(ME.T6==""){
+       if(ME.inputModelObj.companyPhone==""){
             ME.isError = true;
             ME.inputMsg = "This field cannot be blank.";
         }else{
-            ME.inputField="T7";
+            ME.inputField="contactFirstName";
             ME.inputMsg = "Field 7 of 10";
         }
     };
 
-    ME.submitT7=function(){
+    ME.submit_contactFirstName=function(){
         ME.inputMsg = "";
         ME.isError = false;
-        if(ME.T7==""){//first
+        if(ME.inputModelObj.contactFirstName==""){
             ME.isError = true;
             ME.inputMsg = "This field cannot be blank.";
         }else{
-            ME.inputField="T8";
+            ME.inputField="contactLastName";
             ME.inputMsg = "Field 8 of 10";
         }
     };
 
-    ME.submitT8=function(){
+    ME.submit_contactLastName=function(){
         ME.inputMsg = "";
         ME.isError = false;
-        if(ME.T8==""){//last
+        if(ME.inputModelObj.contactLastName==""){
             ME.isError = true;
             ME.inputMsg = "This field cannot be blank.";
         }else{
-            ME.inputField="T9";
+            ME.inputField="contactCell";
             ME.inputMsg = "Field 9 of 10";
         }
     };
 
-    ME.submitT9=function(){
+    ME.submit_contactCell=function(){
         ME.inputMsg = "";
         ME.isError = false;
-        if(ME.T9==""){//mobile
+        if(ME.inputModelObj.contactCell==""){
             ME.isError = true;
             ME.inputMsg = "This field cannot be blank.";
         }else{
-            ME.inputField="T10";
+            ME.inputField="contactEmail";
             ME.inputMsg = "Field 10 of 10";
         }
     };
 
-    ME.submitT10=function(){
+    ME.submitT_contactEmail=function(){
         ME.inputMsg = "";
         ME.isError = false;
-       if(ME.T10==""){//email
+       if(ME.inputModelObj.contactEmail==""){//email
             ME.isError = true;
             ME.inputMsg = "This field cannot be blank.";
         }else{
@@ -155,24 +157,22 @@ app.controller('NewClientOrgCtrl',['$state','evoDb','SharedSrvc',function ($stat
         }
     };
 
-  
     ME.submitForm = function(){
         ME.isError = false;
         var dataObj = {};
         dataObj.manager = S.manager;
         dataObj.client_type = "Organization";
-        dataObj.company = ME.T1;
-        dataObj.street = ME.T2;
-        dataObj.city = ME.T3;
-        dataObj.state = ME.T4;
-        dataObj.zip = ME.T5;
-        dataObj.phone_bus = ME.T6;
-        dataObj.name_first = ME.T7;
-        dataObj.name_last = ME.T8;
-        dataObj.phone_cell = ME.T9;
-        dataObj.email = ME.T10;
-        var result = DB.putClient(dataObj)
-        .then(function(result){
+        dataObj.company = ME.inputModelObj.companyName;
+        dataObj.street = ME.inputModelObj.companyStreet;
+        dataObj.city = ME.inputModelObj.companyCity;
+        dataObj.state = ME.inputModelObj.companyState;
+        dataObj.zip = ME.inputModelObj.companyZip;
+        dataObj.phone_bus = ME.inputModelObj.companyPhone;
+        dataObj.name_first = ME.inputModelObj.contactFirstName;
+        dataObj.name_last = ME.inputModelObj.contactLastName;
+        dataObj.phone_cell = ME.inputModelObj.contactCell;
+        dataObj.email = ME.inputModelObj.contactEmail;
+        DB.putClient(dataObj).then(function(result){
             if(typeof result != "boolean"){
                ME.inputField="SUCCESS";
                ME.getManagerProperties();
@@ -191,21 +191,10 @@ app.controller('NewClientOrgCtrl',['$state','evoDb','SharedSrvc',function ($stat
     };
 
     ME.clearForm = function(){
-        ME.T1 = "";
-        ME.T2 = "";
-        ME.T3 = "";
-        ME.T4 = "";
-        ME.T5 = "";
-        ME.T6 = "";
-        ME.T7 = "";
-        ME.T8 = "";
-        ME.T9 = "";
-        ME.T10 = "";
+       ME.inputModelObj = {companyName:"",companyStreet:"",companyCity:"",companyState:"",companyZip:"",companyPhone:"",contactFirstName:"",contactLastName:"",contactCell:"",contactEmail:""}
         ME.isError = false;
-        ME.inputField="T1";
+        ME.inputField="companyName";
     };
-
-   
 
     ME.dataError = function(loc,error){
         console.log(loc + " : " + error);
