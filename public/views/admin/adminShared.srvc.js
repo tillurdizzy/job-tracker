@@ -41,7 +41,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'underscore', 'Jo
     // Consumed by view controller as data provider for Pricing Tab
     self.materialsCatergorized = { Field: [], Ridge: [], Vents: [], Flashing: [], Caps: [], Flat: [], Other: [] };
 
-    
+    // Step 1 : Select proposal from dropdown on Admin Proposal Review
     self.selectProposal = function(ndx) {
         var rtnRepName = "";
         if (ndx == -1) {
@@ -61,7 +61,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'underscore', 'Jo
             mergeDataFlag.materials = false;
             // Call queries
             getJobParameters();
-            getJobConfig();
+            
         }
         return rtnRepName;
     };
@@ -71,10 +71,11 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'underscore', 'Jo
         self.proposalUnderReview = {};
     };
 
+    //Step 2
     // Data for the "Input" Tab on Proposal Review Page
     // Job Parameters AND Job Config must BOTH be updated after selecting a proposal before we can
     // call formatParams()
-    // We'll use a flag to make sure both are updated...
+    // We'll use a flag (mergeDataFlag.params) to make sure both are updated...
     var getJobParameters = function() {
         DB.getJobParameters(self.proposalUnderReview.jobID).then(function(jobData) {
             if (jobData != false) {
@@ -83,9 +84,10 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'underscore', 'Jo
                 self.proposalUnderReview.propertyInputParams = CONFIG.formatParams(jobParams);
                 $rootScope.$broadcast('onRefreshParamsData', jobParams);
                 validateData();
+                getJobConfig();
             } else {
                 ngDialog.open({
-                        template: '<h2>ERROR: This job has no parameters.</h2>',
+                        template: '<h2>ERROR: This job has no proposal parameters.</h2>',
                         className: 'ngdialog-theme-default',
                         plain: true,
                         overlay: false
@@ -96,7 +98,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'underscore', 'Jo
         });
     };
 
-
+    //Step 3
     var getJobConfig = function() {
         var dataObj = { jobID: self.proposalUnderReview.jobID };
         DB.query("getJobConfig", dataObj).then(function(resultObj) {
@@ -126,6 +128,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'underscore', 'Jo
         }
     };
 
+    // Step 4
     // Take the generic materialList and merge it with the job-specific config (insert qty and price)
     var mergeConfig = function() {
         self.materialsList = CONFIG.mergeConfig(self.materialsList, self.proposalUnderReview.propertyInputParams);
