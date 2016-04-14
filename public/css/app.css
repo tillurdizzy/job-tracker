@@ -779,9 +779,13 @@ body {
   background: #eee; }
 
 .view-container {
-  margin: 0 auto;
-  max-width: 800px;
   padding-top: .7rem; }
+  .view-container .top {
+    margin: 0 auto;
+    max-width: 800px; }
+  .view-container .bottom {
+    margin: 0 auto;
+    max-width: 1600px; }
 
 .page {
   width: 100%; }

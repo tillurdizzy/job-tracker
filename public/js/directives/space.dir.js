@@ -3,7 +3,8 @@ app.directive('addSpace',[function () {
       restrict: 'E',
       scope:{
         margintop:'@',
-        marginbottom:'@'
+        marginbottom:'@',
+        heightpx:'@'
       },
       templateUrl:'js/directives/add-space.tpl.html'
     }

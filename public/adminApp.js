@@ -6,8 +6,6 @@ app.config(function($stateProvider, $urlRouterProvider) {
  	$urlRouterProvider.otherwise("/splash");
   	
 	$stateProvider
-		$stateProvider
-
 		.state('login', {
 			url: "/login",
 			templateUrl:"views/login/admin-login.html",
@@ -101,11 +99,15 @@ app.config(function($stateProvider, $urlRouterProvider) {
 		.state('admin.completeReview', {
 			url: "/complete-review",
 			templateUrl:"views/admin/reviews/complete/admin-complete-review.html"
-		})
-
-
-		
-		
+		})	
 });	
+
+app.config(['ngDialogProvider', function(ngDialogProvider) {
+    ngDialogProvider.setDefaults({
+        showClose: true,
+        closeByDocument: true,
+        closeByEscape: true
+    });
+}]);
 
 

@@ -1,12 +1,11 @@
 'use strict';
-var app = angular.module('MyApp', ['ui.router','ngSanitize','ngUnderscore','directive.g+signin']);
+var app = angular.module('MyApp', ['ui.router','ngSanitize','ngUnderscore','directive.g+signin','ngDialog']);
 
 app.config(function($stateProvider, $urlRouterProvider) {
  	
  	$urlRouterProvider.otherwise("/splash");
   	
 	$stateProvider
-		$stateProvider
 		.state('test', {
 			url: "/test",
 			templateUrl:"views/test/test.html"
@@ -128,5 +127,13 @@ app.config(function($stateProvider, $urlRouterProvider) {
 		
 		
 });	
+
+app.config(['ngDialogProvider', function(ngDialogProvider) {
+    ngDialogProvider.setDefaults({
+        showClose: true,
+        closeByDocument: true,
+        closeByEscape: true
+    });
+}]);
 
 

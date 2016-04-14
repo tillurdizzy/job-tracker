@@ -89,9 +89,17 @@ body{
 }
 
 .view-container{
-  margin:0 auto;
-  max-width:800px;
+ 
   padding-top:.7rem;
+
+  .top{
+    margin:0 auto;
+    max-width:800px;
+  }
+  .bottom{
+    margin:0 auto;
+    max-width:1600px;
+  }
 }
 
 .page{

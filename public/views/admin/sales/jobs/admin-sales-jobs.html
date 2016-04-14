@@ -1,4 +1,4 @@
-<div class="page" ng-controller="AdminSalesJobsCtrl as Ctrl">
+<div class="top" ng-controller="AdminSalesJobsCtrl as Ctrl">
     <div class="title-with-btn">
         <i ng-click="Ctrl.backToHome();" class="fa fa-arrow-circle-left fa-3x"></i>
         <h2>Jobs</h2>
@@ -13,7 +13,6 @@
     <div class="text-input-form-item-min">
         <h2>{{Ctrl.modePrompt}}</h2>
         <select ng-model="Ctrl.jobSelected" ng-options="c.jobLabel for c in Ctrl.tableDataProvider" ng-change="Ctrl.selectJob();" ng-hide="Ctrl.EditMode=='Add Item'"></select>
-        
     </div>
     <horiz-rule margintop="5" marginbottom="5"></horiz-rule>
     <!-- Add Item Tab -->
