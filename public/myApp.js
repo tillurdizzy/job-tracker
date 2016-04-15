@@ -67,18 +67,20 @@ app.config(function($stateProvider, $urlRouterProvider) {
 			url: "/details",
 			templateUrl:"views/properties/property-details.html"
 		})
+		
 		.state('addNewProperty', {
 			url: "/property-new",
-			templateUrl:"views/properties/property-new-view.html"
+			templateUrl:"views/properties/property-new-view0.html"
 		})
-		.state('addNewProperty.organization', {
-			url: "/organization",
-			templateUrl:"views/properties/property-new-org.html"
+		.state('addNewProperty.address', {
+			url: "/address",
+			templateUrl:"views/properties/property-new-view1-address.html"
 		})
-		.state('addNewProperty.individual', {
-			url: "/individual",
-			templateUrl:"views/properties/property-new-ind.html"
+		.state('addNewProperty.roof', {
+			url: "/roof",
+			templateUrl:"views/properties/property-new-view2-roof.html"
 		})
+		
 		
 		.state('proposal', {
 			url: "/proposal",

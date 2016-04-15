@@ -1,12 +1,12 @@
 'use strict';
-app.controller('NewPropertyIndCtrl', ['$state', '$scope', 'evoDb', 'SharedSrvc', 'underscore', function($state, $scope, evoDb, SharedSrvc, underscore) {
+app.controller('NewPropertyRoofCtrl', ['$state', '$scope', 'evoDb', 'SharedSrvc', 'underscore', function($state, $scope, evoDb, SharedSrvc, underscore) {
 
     var DB = evoDb;
     var ME = this;
     ME.S = SharedSrvc;
     ME.managerName = ME.S.managerName;
     ME.selectedClientObj = ME.S.selectedClientObj;
-    ME.multiUnit = S.multiUnit;
+    ME.multiUnit = ME.S.multiUnitProperty;                  // Business client with multi-unit property (apartments)
 
     //Form models
     ME.clientName = ME.selectedClientObj.name_first + " " + ME.selectedClientObj.name_last;
@@ -345,7 +345,7 @@ app.controller('NewPropertyIndCtrl', ['$state', '$scope', 'evoDb', 'SharedSrvc',
         if ( ME.selectedClientObj.type == "Individual") {
             ME.propertyName = ME.selectedClientObj.name_last + " Residence";
         }else{
-            ME.propertyName = "Apartment Complex Bldg A";
+            ME.propertyName = "Apartment Complex Name";
         }
     }
 

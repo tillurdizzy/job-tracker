@@ -1,40 +1,4 @@
-<div ng-controller="NewPropertyIndCtrl as Ctrl">
-    <div class="ez-form-item" ng-show="Ctrl.inputField == 'propertyName'">
-        <h3>Building Name or Discriptive Reference</h3>
-        <input name="propertyName" type="text" ng-model="Ctrl.propertyName" placeholder="Smith Residence" />
-        <div class="page-nav">
-            <div class="page-nav-left">
-                <i ng-click="Ctrl.goPrevious('propertyName')" class="fa fa-arrow-circle-left fa-3x"></i>
-            </div>
-            <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">
-                {{Ctrl.inputMsg}}
-            </div>
-            <div class="page-nav-right">
-                <i ng-click="Ctrl.submit_propertyName();" class="fa fa-arrow-circle-right fa-3x"></i>
-            </div>
-        </div>
-    </div>
-    <div class="ez-form-item" ng-show="Ctrl.inputField=='propertyAddress'">
-        <h3>Street Address</h3>
-        <input type="text" ng-model="Ctrl.streetAddress" />
-        <h3>City</h3>
-        <input type="text" ng-model="Ctrl.propertyCity" />
-        <h3>State</h3>
-        <input type="text" ng-model="Ctrl.propertyState" placeholder="USPS 2-Letter Code" />
-        <h3>Zip</h3>
-        <input type="text" ng-model="Ctrl.propertyZip" placeholder="USPS 5-digit zip code" />
-        <div class="page-nav">
-            <div class="page-nav-left">
-                <i ng-click="Ctrl.goPrevious('propertyName')" class="fa fa-arrow-circle-left fa-3x"></i>
-            </div>
-            <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">
-                {{Ctrl.inputMsg}}
-            </div>
-            <div class="page-nav-right">
-                <i ng-click="Ctrl.submit_propertyAddress();" class="fa fa-arrow-circle-right fa-3x"></i>
-            </div>
-        </div>
-    </div>
+<div ng-controller="NewPropertyRoofCtrl as Ctrl">
     <div class="ez-form-item" ng-show="Ctrl.inputField == 'numLevels'">
         <h3>Levels (number of stories)</h3>
         <div class="dropDownSelector">

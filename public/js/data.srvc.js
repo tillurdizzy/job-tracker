@@ -10,6 +10,31 @@ app.service('evoDb',['$http','$q','SharedSrvc','LogInSrvc',function eventQueries
 	var serverAvailable = false;
 	self.keyValues = [];
 
+	var globalPathPrefix="js/php/";
+	var httpPathPrefix = "http/";
+
+	var queryPaths = {
+		putPropertyAddress:httpPathPrefix + "putPropertyAddress.php",
+	};
+
+	self.query = function(query,dataObj){
+		var rtnObj = {};
+		var phpPath = queryPaths[query];
+		var deferred = $q.defer();
+		$http({method: 'POST', url:phpPath,data:dataObj})
+			.success(function(data, status) {
+				rtnObj.result = "Success";
+				rtnObj.data = data;
+				deferred.resolve(rtnObj);
+		    })
+		    .error(function(data, status, headers, config) {
+				rtnObj.result = "Error";
+				rtnObj.data = data;
+				deferred.reject(rtnObj);
+		    });
+	    return deferred.promise;
+	};
+
 	self.setManagerID = function(id){
 		self.managerID = id;
 		self.managerName = "Admin";

@@ -60,7 +60,6 @@ app.controller('PropertiesCtrl',['$scope','$state','evoDb','SharedSrvc',function
 		console.log(loc + " : " + error);
 	};
 
-
     $scope.$watch( function () { return S.managerProperties; }, function ( jobs ) {
 	  ME.properties = S.managerProperties;
 	});
@@ -69,6 +68,8 @@ app.controller('PropertiesCtrl',['$scope','$state','evoDb','SharedSrvc',function
        var loggedIn = S.loggedIn;
        if(!loggedIn){
        		$state.transitionTo('login');
+       }else{
+       		ME.getManagerJobs();
        }
     });
 
