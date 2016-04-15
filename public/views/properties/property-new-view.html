@@ -1,4 +1,4 @@
-<div ng-controller="NewPropertyViewCtrl as VIEW" class="page">
+<div ng-controller="NewPropertyViewCtrl as VIEW" class="top page">
     <div class="page-title-bar" ng-controller="NavCtrl as NAV">
         <button ng-click="NAV.goClients()" type="button" class="button">CLIENTS</button>
         <button ng-click="NAV.goProperties()" type="button" class="button middle inactive">PROPERTIES</button>
@@ -9,7 +9,18 @@
     <div ui-view>
         <div class="ez-form-item">
             <h3>Choose the Client / Owner for this Property</h3>
-            <select ng-model="VIEW.selectedClient" ng-options="c.displayName for c in VIEW.clientList"></select>
+            <select ng-model="VIEW.selectedClient" ng-options="c.displayName for c in VIEW.clientList" ng-change="VIEW.selectClient();"></select>
+            
+            <div ng-show="VIEW.clientType == 'Business'">
+                <h3>Is this a multi-unit property? (more than one building/roof at the same address)</h3>
+                <div class="check-radio-container">
+                    <input type="radio" id="Rad1A" name="Rad1" value="No" ng-model="Ctrl.multiUnit"></input>
+                    <label for="Rad1A"><span></span>No</label>
+
+                    <input type="radio" id="Rad1B" name="Rad1" value="Yes" ng-model="Ctrl.multiUnit"></input>
+                    <label for="Rad1B"><span></span>Yes</label>
+                </div>
+            </div>
             <div class="page-nav">
                 <div class="page-nav-left">
                 </div>

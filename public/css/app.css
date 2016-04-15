@@ -1603,6 +1603,8 @@ input[type="radio"]:checked + label span {
 .check-radio-container {
   height: 30px;
   margin: 5px 0; }
+  .check-radio-container label {
+    margin-right: 15px; }
 
 a:visited {
   color: #C0392B; }

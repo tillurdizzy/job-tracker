@@ -1,7 +1,7 @@
 
     <div class="top ez-form" ng-controller="NewClientOrgCtrl as Ctrl">
         <div class="ez-form-item" ng-show="Ctrl.inputField=='companyName'">
-            <h3>Name of Organization</h3>
+            <h3>Name of Business / Organization</h3>
             <input type="text" ng-model="Ctrl.inputModelObj.companyName" placeholder="name"/>
             <div class="page-nav">
                 <div class="page-nav-left">
@@ -170,11 +170,6 @@
         <div class="ez-form-item" ng-show="Ctrl.inputField == 'SUCCESS'">
             <h3>Success!</h3>
             <p>{{Ctrl.inputModelObj.companyName}} has been added as a client.</p>
-            <div>
-                <div>
-                    <a ui-sref="addNewProperty" class="button">New Property</a>
-                </div>
-            </div>
         </div>
         <div class="ez-form-item" ng-show="Ctrl.inputField == 'ERROR'">
             <h3>Oops!  An error occured saving the data.</h3>
@@ -185,7 +180,7 @@
     <div class="ez-form">
         <div id="liveReview" class="review-section">
             <div class="text-block-display">
-                <h4 style="margin-bottom:.5rem;">Organization:</h4>
+                <h4 style="margin-bottom:.5rem;">Business:</h4>
                 <h3>Name: {{Ctrl.inputModelObj.companyName}}</h3>
                 <h3>Street: {{Ctrl.inputModelObj.companyStreet}}</h3>
                 <h3>City: {{Ctrl.inputModelObj.companyCity}}</h3>

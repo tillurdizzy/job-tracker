@@ -6,6 +6,7 @@ app.controller('NewPropertyIndCtrl', ['$state', '$scope', 'evoDb', 'SharedSrvc',
     ME.S = SharedSrvc;
     ME.managerName = ME.S.managerName;
     ME.selectedClientObj = ME.S.selectedClientObj;
+    ME.multiUnit = S.multiUnit;
 
     //Form models
     ME.clientName = ME.selectedClientObj.name_first + " " + ME.selectedClientObj.name_last;
@@ -340,6 +341,14 @@ app.controller('NewPropertyIndCtrl', ['$state', '$scope', 'evoDb', 'SharedSrvc',
         $state.transitionTo("addNewProperty");
     };
 
+    var init = function(){
+        if ( ME.selectedClientObj.type == "Individual") {
+            ME.propertyName = ME.selectedClientObj.name_last + " Residence";
+        }else{
+            ME.propertyName = "Apartment Complex Bldg A";
+        }
+    }
+
     $scope.$watch('$viewContentLoaded', function() {
         var loggedIn = ME.S.loggedIn;
         if (!loggedIn) {
@@ -348,5 +357,7 @@ app.controller('NewPropertyIndCtrl', ['$state', '$scope', 'evoDb', 'SharedSrvc',
 
         }
     });
+
+    init();
 
 }]);

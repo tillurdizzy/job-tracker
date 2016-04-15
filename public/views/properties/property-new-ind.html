@@ -1,4 +1,4 @@
-<div ng-controller="NewPropertyIndCtrl as Ctrl" class="page">
+<div ng-controller="NewPropertyIndCtrl as Ctrl">
     <div class="ez-form-item" ng-show="Ctrl.inputField == 'propertyName'">
         <h3>Building Name or Discriptive Reference</h3>
         <input name="propertyName" type="text" ng-model="Ctrl.propertyName" placeholder="Smith Residence" />
@@ -68,29 +68,25 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>
-                            <h3>Flat (0-2)</h3></td>
+                        <td><h3>Flat (0-2)</h3></td>
                         <td>
                             <select ng-model="Ctrl.multiLevelModel.levelOne.percent" ng-options="c.label for c in Ctrl.S.percentOptions"></select>
                         </td>
                     </tr>
                     <tr>
-                        <td>
-                            <h3>Low (3-6)</h3></td>
+                        <td><h3>Low (3-6)</h3></td>
                         <td>
                             <select ng-model="Ctrl.multiLevelModel.levelTwo.percent" ng-options="c.label for c in Ctrl.S.percentOptions"></select>
                         </td>
                     </tr>
                     <tr>
-                        <td>
-                            <h3>Medium (7-9)</h3></td>
+                        <td><h3>Medium (7-9)</h3></td>
                         <td>
                             <select ng-model="Ctrl.multiLevelModel.levelThree.percent" ng-options="c.label for c in Ctrl.S.percentOptions"></select>
                         </td>
                     </tr>
                     <tr>
-                        <td>
-                            <h3>Steep (8+)</h3></td>
+                        <td><h3>Steep (8+)</h3></td>
                         <td>
                             <select ng-model="Ctrl.multiLevelModel.levelFour.percent" ng-options="c.label for c in Ctrl.S.percentOptions"></select>
                         </td>
@@ -294,21 +290,16 @@
         <p>Check all that apply</p>
         <div>
             <div>
-                <label>
-                    <input type="checkbox" ng-model="specialFlashing.chimney">Chimney</label>
+                <label><input type="checkbox" ng-model="specialFlashing.chimney">Chimney</label>
                 <br/>
-                <label>
-                    <input type="checkbox" ng-model="specialFlashing.pipes">Pipe Jacks</label>
+                <label><input type="checkbox" ng-model="specialFlashing.pipes">Pipe Jacks</label>
                 <br/>
-                <label>
-                    <input type="checkbox" ng-model="specialFlashing.skylights">Skylights</label>
+                <label><input type="checkbox" ng-model="specialFlashing.skylights">Skylights</label>
             </div>
             <div>
-                <label>
-                    <input type="checkbox" ng-model="specialFlashing.joints">Solar Panels</label>
+                <label><input type="checkbox" ng-model="specialFlashing.joints">Solar Panels</label>
                 <br/>
-                <label>
-                    <input type="checkbox" ng-model="specialFlashing.equipment">Equipment</label>
+                <label><input type="checkbox" ng-model="specialFlashing.equipment">Equipment</label>
             </div>
         </div>
         <div class="page-nav">

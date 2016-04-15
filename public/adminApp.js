@@ -114,16 +114,10 @@ app.config(function($stateProvider, $urlRouterProvider,$provide) {
 		.state('admin.completeReview', {
 			url: "/complete-review",
 			templateUrl:"views/admin/reviews/complete/admin-complete-review.html"
-<<<<<<< HEAD
+
 		})	
 });	
-=======
-		})
-	
-});
 
-
->>>>>>> 57cfa67908f4ca3b449bc06fd195172422bbe148
 
 app.config(['ngDialogProvider', function(ngDialogProvider) {
     ngDialogProvider.setDefaults({

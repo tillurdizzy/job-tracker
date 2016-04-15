@@ -22,8 +22,9 @@ $zip = mysqli_real_escape_string($con,$data->zip);
 $phone_cell = mysqli_real_escape_string($con,$data->phone_cell);
 $phone_bus = mysqli_real_escape_string($con,$data->phone_bus);
 $email = mysqli_real_escape_string($con,$data->email);
+$username = mysqli_real_escape_string($con,$data->username);
 
-$query = "INSERT INTO clients(manager,company,displayName,type,name_first,name_last,street,city,state,zip,phone_cell,phone_bus,email)
+$query = "INSERT INTO clients(manager,company,displayName,type,name_first,name_last,street,city,state,zip,phone_cell,phone_bus,username,email)
 VALUES(
 '" . $manager . "', " .
 "'" . $company . "', " .
@@ -37,6 +38,7 @@ VALUES(
 "'" . $zip . "', " .
 "'" . $phone_cell . "', " .
 "'" . $phone_bus . "', " .
+"'" . $username . "', " .
 "'" . $email . "')";
 $qry_res = mysqli_query($con,$query);
 if ($qry_res) {

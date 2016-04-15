@@ -9,14 +9,23 @@ app.controller('NewPropertyViewCtrl',['$scope','$state','SharedSrvc','evoDb',fun
     var S = SharedSrvc;
     ME.clientList = S.managerClients;
     ME.selectedClient = ME.clientList[0];
+    ME.clientType = null;
+    ME.multiUnit = "No";
 
-    ME.submitClient=function(){
-        S.selectedClientObj =  ME.selectedClient;
+    ME.selectClient = function(){
+         S.selectedClientObj =  ME.selectedClient;
+          // both using same form as of 4/2016
         if(ME.selectedClient.type=="Individual"){  
             $state.transitionTo('addNewProperty.individual');
         }else{
-            $state.transitionTo('addNewProperty.organization');
+            // This will show the second question on form if client is a business
+           ME.clientType ="Business";
         };
+    }
+
+    ME.submitForm=function(){
+        S.multiUnitProperty = ME.multiUnit;
+        $state.transitionTo('addNewProperty.individual');
     };
 
     ME.goNewClient = function(){

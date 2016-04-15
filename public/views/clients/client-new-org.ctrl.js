@@ -1,5 +1,5 @@
 'use strict';
-app.controller('NewClientOrgCtrl',['$state','evoDb','SharedSrvc',function ($state,evoDb,SharedSrvc) {
+app.controller('NewClientOrgCtrl',['$state','evoDb','SharedSrvc', 'ngDialog',function ($state,evoDb,SharedSrvc,ngDialog) {
 
 	var DB = evoDb;
 	var ME = this;
@@ -161,8 +161,9 @@ app.controller('NewClientOrgCtrl',['$state','evoDb','SharedSrvc',function ($stat
         ME.isError = false;
         var dataObj = {};
         dataObj.manager = S.manager;
-        dataObj.client_type = "Organization";
+        dataObj.type = "Business";
         dataObj.company = ME.inputModelObj.companyName;
+        dataObj.displayName = ME.inputModelObj.companyName;
         dataObj.street = ME.inputModelObj.companyStreet;
         dataObj.city = ME.inputModelObj.companyCity;
         dataObj.state = ME.inputModelObj.companyState;
@@ -172,15 +173,28 @@ app.controller('NewClientOrgCtrl',['$state','evoDb','SharedSrvc',function ($stat
         dataObj.name_last = ME.inputModelObj.contactLastName;
         dataObj.phone_cell = ME.inputModelObj.contactCell;
         dataObj.email = ME.inputModelObj.contactEmail;
+        dataObj.username = ME.inputModelObj.contactEmail;
         DB.putClient(dataObj).then(function(result){
             if(typeof result != "boolean"){
-               ME.inputField="SUCCESS";
-               ME.getManagerProperties();
+                openNotify();
             }else{
                 ME.dataError();
             }                 
         },function(error){
             ME.dataError();
+        });
+    };
+
+    var openNotify = function () {
+        var dialog = ngDialog.open({
+            template:
+                '<p>' + ME.inputModelObj.companyName + 'has been added as a client.</p>' +
+                '<div class="ngdialog-buttons"><button type="button" class="ngdialog-button ngdialog-button-primary" ng-click="closeThisDialog(1)">Close Me</button></div>',
+            plain: true
+        });
+        dialog.closePromise.then(function (data) {
+            console.log('ngDialog closed' + (data.value === 1 ? ' using the button' : '') + ' and notified by promise: ' + data.id);
+            $state.transitionTo("clients");
         });
     };
 
@@ -190,8 +204,8 @@ app.controller('NewClientOrgCtrl',['$state','evoDb','SharedSrvc',function ($stat
         ME.inputMsg = "Submit Error.  Try again.";
     };
 
-    ME.clearForm = function(){
-       ME.inputModelObj = {companyName:"",companyStreet:"",companyCity:"",companyState:"",companyZip:"",companyPhone:"",contactFirstName:"",contactLastName:"",contactCell:"",contactEmail:""}
+    var clearForm = function(){
+        ME.inputModelObj = {companyName:"",companyStreet:"",companyCity:"",companyState:"",companyZip:"",companyPhone:"",contactFirstName:"",contactLastName:"",contactCell:"",contactEmail:""}
         ME.isError = false;
         ME.inputField="companyName";
     };
