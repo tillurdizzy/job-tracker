@@ -67,6 +67,10 @@ app.config(function($stateProvider, $urlRouterProvider) {
 			url: "/details",
 			templateUrl:"views/properties/property-details.html"
 		})
+		.state('properties.detailsMultiUnit', {
+			url: "/details",
+			templateUrl:"views/properties/property-details-multiUnit.html"
+		})
 		
 		.state('addNewProperty', {
 			url: "/property-new",

@@ -20,7 +20,7 @@ app.service('SharedSrvc',['$rootScope',function sharedSrvc($rootScope){
 	self.managerJobs = [];
 	self.managerClients = [];
 	self.managerProperties = [];
-	self.multiUnitProperty = null; //Used on New Property form when Client is a Business and property is a multi-unit like apartments.
+	
 	
 	//User selections when editing
 	self.selectedJobObj = {};

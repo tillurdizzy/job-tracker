@@ -23,7 +23,14 @@ app.controller('PropertiesCtrl',['$scope','$state','evoDb','SharedSrvc',function
 		
 		// Send client selection to shared
 		S.selectProperty(ME.selectedPropertyObj);
-		$state.transitionTo("properties.details");
+
+		// Single or Multi-unit details page
+		if(ME.selectedPropertyObj.multiUnit == "0" || ME.selectedPropertyObj.multiUnit == 0){
+			$state.transitionTo("properties.details");
+		}else{
+			$state.transitionTo("properties.detailsMultiUnit");
+		};
+		
 	};
 
 	ME.goClients = function(){

@@ -1,8 +1,10 @@
 <div ng-controller="NewPropertyAddressCtrl as Ctrl">
+    <h2>{{Ctrl.formTitleDescription}}</h2>
+    <horiz-rule margintop="5px" marginbottom="10px"></horiz-rule>
     <div class="ez-form-item" ng-show="Ctrl.inputField == 'propertyName'">
         <h3>Building Name or Discriptive Reference</h3>
         <input name="propertyName" type="text" ng-model="Ctrl.propertyName" placeholder="Smith Residence" />
-        <div>
+        <div ng-show="Ctrl.multiUnit=='Yes'">
             <h3>Number of Buildings</h3>
             <input type="text" ng-model="Ctrl.multiUnitNumber" />
         </div>

@@ -4,9 +4,9 @@
         <button ng-click="NAV.goProperties()" type="button" class="button middle inactive">PROPERTIES</button>
         <button ng-click="NAV.goJobs()" type="button" class="button">JOBS</button>
     </div>
-    <h2>New Property</h2>
-    <horiz-rule margintop="5px" marginbottom="10px"></horiz-rule>
     <div ui-view>
+        <h2>New Property - Client</h2>
+        <horiz-rule margintop="5px" marginbottom="10px"></horiz-rule>
         <div class="ez-form-item">
             <h3>Choose the Client / Owner for this Property</h3>
             <select ng-model="VIEW.selectedClient" ng-options="c.displayName for c in VIEW.clientList" ng-change="VIEW.selectClient();"></select>
@@ -33,10 +33,7 @@
             </div>
         </div>
         <div class="block-outline-red">
-            <p>
-                If the Client for this Property is not listed,
-                <a ui-sref="addNewClient">Add a New Client</a>, then return here.
-            </p>
+            <p>If the Client for this Property is not listed,<a ui-sref="addNewClient">Add a New Client</a>, then return here.</p>
         </div>
     </div>
 </div>

@@ -1,0 +1,23 @@
+<div class="section-header">
+    <h2>Property</h2>
+</div>
+<div class="text-block-display">
+    <div>
+        <h3><span class="bold">{{Ctrl.selectedPropertyObj.name}}</span></h3>
+        <h3>{{Ctrl.selectedPropertyObj.street}}</h3>
+        <h3>{{Ctrl.selectedPropertyObj.city + ", " + Ctrl.selectedPropertyObj.state + " " + Ctrl.selectedPropertyObj.zip}}</h3>
+        <h3 style="margin-top:.5em;">Client: {{Ctrl.selectedPropertyObj.clientName}}</h3>
+    </div>
+    <div>
+        <h3></h3>
+    </div>
+</div>
+<div class="section-header">
+    <h2>Multi-unit Buildings</h2>
+</div>
+<div>
+    <div class="property-list-container">
+        <div property-item id="{{e.PRIMARY_ID}}" name="{{e.name}}" details="Ctrl.showDetails" address="" ng-repeat="e in Ctrl.multiUnitsList"></div>
+    </div>
+</div>
+<button type="button" class="button nav-btn" ng-click="Ctrl.backToList()">Back</button>

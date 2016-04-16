@@ -8,7 +8,10 @@ app.controller('NewPropertyAddressCtrl', ['$state', '$scope', 'evoDb', 'SharedSr
         var T = TempVarSrvc;
         ME.managerName = ME.S.managerName;
         ME.selectedClientObj = ME.S.selectedClientObj;
-        ME.multiUnit = T.multiUnitProperty; // Business client with multi-unit property (apartments)
+
+        // Business client with multi-unit property (apartments)
+        // At this point!!!! T.multiUnitProperty will simply be Yes or No
+        ME.multiUnit = T.multiUnitProperty; 
 
         //Form models
         ME.clientName = ME.selectedClientObj.name_first + " " + ME.selectedClientObj.name_last;
@@ -21,10 +24,12 @@ app.controller('NewPropertyAddressCtrl', ['$state', '$scope', 'evoDb', 'SharedSr
 
         ME.formFields = ['', 'propertyName', 'propertyAddress', 'SUBMIT'];
 
+        // DOM vars
         var numFields = ME.formFields.length - 2;
         ME.inputField = ME.formFields[1];
         ME.inputMsg = "Page 1 of 2";
         ME.isError = false;
+        ME.formTitleDescription = "New Property Address";
 
         ME.goNewJob = function() {
             $state.transitionTo('addNewJob');
@@ -93,7 +98,7 @@ app.controller('NewPropertyAddressCtrl', ['$state', '$scope', 'evoDb', 'SharedSr
                  dataObj.multiUnit = ME.multiUnitNumber;
             }else{
                 dataObj.multiUnit = "0";
-            }
+            };
            
 
             DB.query("putPropertyAddress", dataObj).then(function(resultObj) {
@@ -101,22 +106,44 @@ app.controller('NewPropertyAddressCtrl', ['$state', '$scope', 'evoDb', 'SharedSr
                     alert("FALSE returned for putPropertyAddress >>> submitForm >>> property-new-view1-address.ctrl.js");
                 } else {
                     T.lastResultID = resultObj.data.id;
-                    openNotify();
+                    T.propertyStreetAddress = ME.streetAddress;
+
+                    // For Single unit continue with roof description
+                    if(ME.multiUnit == "No"){
+                        openContinueDialog();
+                    // For Multi-unit they must add roof descriptions from the Property Detail/Edit page
+                    }else{
+                        openCompleteDialog();
+                    }
                 }
             }, function(error) {
                 alert("ERROR returned for putPropertyAddress >>> submitForm >>> property-new-view1-address.ctrl.js");
             });
         };
 
-        var openNotify = function() {
+
+        // Transitions to the roof description state
+        var openContinueDialog = function() {
             var dialog = ngDialog.open({
                 template: '<p>' + ME.propertyName + ' has been added as a property. You will now continue with the roof description.</p>' +
-                    '<div class="ngdialog-buttons"><button type="button" class="ngdialog-button ngdialog-button-primary" ng-click="closeThisDialog(1)">Close Me</button></div>',
+                    '<div class="ngdialog-buttons"><button type="button" class="ngdialog-button ngdialog-button-primary" ng-click="closeThisDialog(1)">Continue</button></div>',
                 plain: true
             });
             dialog.closePromise.then(function(data) {
                 console.log('ngDialog closed' + (data.value === 1 ? ' using the button' : '') + ' and notified by promise: ' + data.id);
                 $state.transitionTo("addNewProperty.roof");
+            });
+        };
+        // Transitions to the Properties Page
+        var openCompleteDialog = function() {
+            var dialog = ngDialog.open({
+                template: '<p>' + ME.propertyName + ' has been added as a property.\n Add the roof descriptions from the Property Details page.</p>' +
+                    '<div class="ngdialog-buttons"><button type="button" class="ngdialog-button ngdialog-button-primary" ng-click="closeThisDialog(1)">Continue</button></div>',
+                plain: true
+            });
+            dialog.closePromise.then(function(data) {
+                console.log('ngDialog closed' + (data.value === 1 ? ' using the button' : '') + ' and notified by promise: ' + data.id);
+                $state.transitionTo("properties");
             });
         };
 

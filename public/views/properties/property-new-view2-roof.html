@@ -190,36 +190,31 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>
-                            <h3>Static / RV151</h3></td>
+                        <td><h3>Static / RV151</h3></td>
                         <td>
                             <select ng-model="Ctrl.multiVentModel.STATIC" ng-options="c.label for c in Ctrl.S.numbersToTen"></select>
                         </td>
                     </tr>
                     <tr>
-                        <td>
-                            <h3>Turbine</h3></td>
+                        <td><h3>Turbine</h3></td>
                         <td>
                             <select ng-model="Ctrl.multiVentModel.TURBNS" ng-options="c.label for c in Ctrl.S.numbersToTen"></select>
                         </td>
                     </tr>
                     <tr>
-                        <td>
-                            <h3>Power</h3></td>
+                        <td><h3>Power</h3></td>
                         <td>
                             <select ng-model="Ctrl.multiVentModel.PWRVNT" ng-options="c.label for c in Ctrl.S.numbersToTen"></select>
                         </td>
                     </tr>
                     <tr>
-                        <td>
-                            <h3>Air Hawks</h3></td>
+                        <td><h3>Air Hawks</h3></td>
                         <td>
                             <select ng-model="Ctrl.multiVentModel.AIRHWK" ng-options="c.label for c in Ctrl.S.numbersToTen"></select>
                         </td>
                     </tr>
                     <tr>
-                        <td>
-                            <h3>Solar</h3></td>
+                        <td><h3>Solar</h3></td>
                         <td>
                             <select ng-model="Ctrl.multiVentModel.SLRVNT" ng-options="c.label for c in Ctrl.S.numbersToTen"></select>
                         </td>
@@ -296,17 +291,8 @@
         <button type="button" ng-click="Ctrl.clearForm()">Reset</button>
     </div>
     <div class="review-section" ng-show="Ctrl.inputField == 'SUBMIT'">
-        <div>
-            <h4 style="margin-bottom:.5rem;">Property:</h4>
-            <h3>Owner: {{Ctrl.clientName}}</h3>
-            <h3>Name: {{Ctrl.propertyName}}</h3>
-            <h3>Street: {{Ctrl.streetAddress}}</h3>
-            <h3>City: {{Ctrl.propertyCity}}</h3>
-            <h3>State: {{Ctrl.propertyState}}</h3>
-            <h3>Zip: {{Ctrl.propertyZip}}</h3>
-        </div>
         <div style="margin-left:1rem;">
-            <h4 style="margin-bottom:.5rem;">Existing Roof Description</h4>
+            <h4 style="margin-bottom:.5rem;">Roof Description for {{Ctrl.T.propertyStreetAddress}}</h4>
             <h3>Levels: <span class="bold">{{Ctrl.numLevels.label}}</span></h3>
             <h3>Pitch: <span class="bold">{{Ctrl.roofPitch.label}}</span></h3>
             <h3>Shingle Grade: <span class="bold">{{Ctrl.shingleGrade.label}}</span></h3>

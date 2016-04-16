@@ -3,7 +3,16 @@
 app.service('TempVarSrvc',[function sharedTemp(){
 	var self = this;
 
-	self.multiUnitProperty = null; //Used on New Property form when Client is a Business and property is a multi-unit like apartments.
-	self.lastResultID = null; 
+	self.multiUnitProperty;
+	self.lastResultID;
+	self.propertyStreetAddress;
+
+	self.resetAll = function(){
+		self.multiUnitProperty = null;
+		self.lastResultID = null;
+		self.propertyStreetAddress = null;
+	}
+
+	self.resetAll();
 	
 }]);
