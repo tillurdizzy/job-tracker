@@ -8,7 +8,6 @@ define( "DATABASE_USERNAME", "jobtracker");
 define( "DATABASE_PASSWORD", "Sadie9954!");
 define( "DATABASE_NAME", "jobtracker");
 
-//connect to the database.
 $con = mysqli_connect(DATABASE_SERVER, DATABASE_USERNAME, DATABASE_PASSWORD,DATABASE_NAME) or die ('ERROR!!!');
 $jobID = mysqli_real_escape_string($con,$data->jobID);
 $query = sprintf("SELECT * FROM job_config WHERE jobID = '".$jobID."'");

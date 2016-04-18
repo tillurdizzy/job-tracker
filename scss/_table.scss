@@ -73,6 +73,7 @@ table{
       // Rows within head and foot
       tr {
         background: transparent;
+
       }
 
       // Cells within head and foot
@@ -81,6 +82,7 @@ table{
         padding: $table-padding;
         font-weight: 700;
         text-align: left;
+        overflow: hidden;
       }
     }
 
@@ -105,6 +107,7 @@ table{
       th,
       td {
         padding: $table-padding;
+        overflow: hidden;
       }
     }
  }

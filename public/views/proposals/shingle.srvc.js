@@ -13,7 +13,7 @@ app.service('ShingleSrvc',['$http','$q','SharedSrvc',function shingleJobForm($ht
 
 	var getShingleIntputFields = function(){
 		var deferred = $q.defer();
-		$http({method: 'POST', url: 'views/proposals/http/getShingleFields.php'}).
+		$http({method: 'POST', url: 'http/getShingleFields.php'}).
 		success(function(data, status) {
 			if(typeof data != 'string' && data.length > 0){
      			deferred.resolve(data);
@@ -33,7 +33,7 @@ app.service('ShingleSrvc',['$http','$q','SharedSrvc',function shingleJobForm($ht
 		var dataObj = {};
 		dataObj.ID = S.selectedJobObj.PRIMARY_ID;
 		var deferred = $q.defer();
-		$http({method: 'POST', url: 'views/proposals/http/getJobParameters.php',data:dataObj}).
+		$http({method: 'POST', url: 'http/getJobParameters.php',data:dataObj}).
 		success(function(data, status) {
 			if(typeof data != 'string' && data.length > 0){
      			deferred.resolve(data);
@@ -50,7 +50,7 @@ app.service('ShingleSrvc',['$http','$q','SharedSrvc',function shingleJobForm($ht
 	
 	self.submitParams = function(dataObj){
 		var deferred = $q.defer();
-		$http({method: 'POST', url: 'views/proposals/http/updateJobParameters.php',data:dataObj}).
+		$http({method: 'POST', url: 'http/updateJobParameters.php',data:dataObj}).
 		success(function(data, status) {
 			if(typeof data != 'string' && data.result != false){
      			deferred.resolve(data);
@@ -66,7 +66,7 @@ app.service('ShingleSrvc',['$http','$q','SharedSrvc',function shingleJobForm($ht
 	// Inserts a field to the DB
 	self.insertJobItem = function(dataObj){
 		var deferred = $q.defer();
-		$http({method: 'POST', url: 'views/proposals/http/insertJobParameter.php',data:dataObj}).
+		$http({method: 'POST', url: 'http/insertJobParameter.php',data:dataObj}).
 		success(function(data, status) {
 			if(typeof data != 'string' && data.result != false){
      			deferred.resolve(data);

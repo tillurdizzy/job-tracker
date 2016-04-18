@@ -106,7 +106,7 @@ app.controller('ProposalCtrl', ['$state','$scope','evoDb','SharedSrvc','ShingleS
         dataObj.jobID = ME.S.selectedJobObj.PRIMARY_ID;
         dataObj.body = ME.specialText;
         dataObj.cost = ME.specialCost;
-        DB.runQueryWithObj('views/proposals/http/updateSpecialConsiderations.php',dataObj).then(function(result) {
+        DB.runQueryWithObj('http/updateSpecialConsiderations.php',dataObj).then(function(result) {
             if (result != false) { 
                 alert("OK");
             } else {
@@ -144,13 +144,12 @@ app.controller('ProposalCtrl', ['$state','$scope','evoDb','SharedSrvc','ShingleS
 
     var setParams = function(dataObj){
         ME.params = dataObj;
-        
     };
 
     var getSpecial = function(){
         var dataObj = {};
         dataObj.jobID = ME.S.selectedJobObj.PRIMARY_ID;
-        DB.runQueryWithObj('views/proposals/http/getSpecialConsiderations.php',dataObj).then(function(result) {
+        DB.runQueryWithObj('http/getSpecialConsiderations.php',dataObj).then(function(result) {
             if (result != false) { 
                 ME.specialText = result[0].body;
                 ME.specialCost = result[0].cost;

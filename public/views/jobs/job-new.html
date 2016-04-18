@@ -1,4 +1,4 @@
-<div ng-controller="NewJobCtrl as Ctrl" class="page">
+<div ng-controller="NewJobCtrl as Ctrl" class="top page">
     <div class="page-title-bar" ng-controller="NavCtrl as NAV">
         <button ng-click="NAV.goClients()" type="button" class="button">CLIENTS</button>
         <button ng-click="NAV.goProperties()" type="button" class="button middle inactive">PROPERTIES</button>
@@ -57,6 +57,25 @@
                 </div>
                 <div class="page-nav-right">
                     <i ng-click="Ctrl.submitS2();" class="fa fa-arrow-circle-right fa-3x">
+                    </i>
+                </div>
+            </div>
+        </div>
+        <div class="ez-form-item" ng-show="Ctrl.inputField=='S3'">
+            <div class="input-label">
+                <div><h3>This is a multi-unit property. Select the building for this job.</h3></div>
+            </div>
+            <select ng-model="Ctrl.S3" ng-options="c.name for c in Ctrl.propertyRoofs" ng-change="Ctrl.selectRoof();">
+            </select>
+            <div class="page-nav">
+                <div class="page-nav-left">
+                    
+                </div>
+                <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">
+                    {{Ctrl.inputMsg}}
+                </div>
+                <div class="page-nav-right">
+                    <i ng-click="Ctrl.submitS3();" class="fa fa-arrow-circle-right fa-3x">
                     </i>
                 </div>
             </div>

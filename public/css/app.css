@@ -1694,12 +1694,14 @@ table {
     table tfoot td {
       padding: 4px 8px;
       font-weight: 700;
-      text-align: left; }
+      text-align: left;
+      overflow: hidden; }
   table tbody tr:nth-child(even) {
     background-color: smart-scale(#fff, 5%); }
   table tbody th,
   table tbody td {
-    padding: 4px 8px; }
+    padding: 4px 8px;
+    overflow: hidden; }
 
 .table-scroll {
   display: block;
@@ -1778,12 +1780,14 @@ table {
     table tfoot td {
       padding: 4px 8px;
       font-weight: 700;
-      text-align: left; }
+      text-align: left;
+      overflow: hidden; }
   table tbody tr:nth-child(even) {
     background-color: smart-scale(#fff, 5%); }
   table tbody th,
   table tbody td {
-    padding: 4px 8px; }
+    padding: 4px 8px;
+    overflow: hidden; }
 
 .table-scroll {
   display: block;

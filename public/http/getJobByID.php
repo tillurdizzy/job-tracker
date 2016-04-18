@@ -11,8 +11,8 @@ define( "DATABASE_NAME", "jobtracker");
 
 //connect to the database.
 $con = mysqli_connect(DATABASE_SERVER, DATABASE_USERNAME, DATABASE_PASSWORD,DATABASE_NAME) or die ('ERROR!!!');
-$manager = mysqli_real_escape_string($con,$data->manager);
-$query = sprintf("SELECT * FROM jobs_list WHERE manager = '".$manager."'");
+$ID = mysqli_real_escape_string($con,$data->ID);
+$query = sprintf("SELECT * FROM jobs_list WHERE PRIMARY_ID = '".$ID."'");
 $result = mysqli_query($con,$query);
 $resultValueObjects = array();
 while ($row = mysqli_fetch_object($result)) {
@@ -20,6 +20,7 @@ while ($row = mysqli_fetch_object($result)) {
 	$oneVO->PRIMARY_ID = $row->PRIMARY_ID;
 	$oneVO->jobNumber = $row->jobNumber;
 	$oneVO->property = $row->property;
+	$oneVO->roofID = $row->roofID;
 	$oneVO->client = $row->client;
 	$oneVO->manager = $row->manager;
 	$oneVO->status = $row->status;

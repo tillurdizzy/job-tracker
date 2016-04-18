@@ -122,7 +122,7 @@ app.service('AdminDataSrvc',['$http','$q','SharedSrvc','LogInSrvc',function admi
 
 	var getShingleIntputFields = function(){
 		var deferred = $q.defer();
-		$http({method: 'POST', url: 'views/proposals/http/getShingleFields.php'}).
+		$http({method: 'POST', url: 'http/getShingleFields.php'}).
 		success(function(data, status) {
 			if(typeof data != 'string' && data.length > 0){
      			deferred.resolve(data);
@@ -141,7 +141,7 @@ app.service('AdminDataSrvc',['$http','$q','SharedSrvc','LogInSrvc',function admi
 		var dataObj = {};
 		dataObj.ID = id;
 		var deferred = $q.defer();
-		$http({method: 'POST', url: 'views/admin/http/getJobParameters.php',data:dataObj}).
+		$http({method: 'POST', url: 'http/getJobParameters.php',data:dataObj}).
 		success(function(data, status) {
 			if(typeof data != 'string' && data.length > 0){
      			deferred.resolve(data);
@@ -158,7 +158,7 @@ app.service('AdminDataSrvc',['$http','$q','SharedSrvc','LogInSrvc',function admi
 	
 	self.submitParams = function(dataObj){
 		var deferred = $q.defer();
-		$http({method: 'POST', url: 'views/proposals/http/updateJobParameters.php',data:dataObj}).
+		$http({method: 'POST', url: 'http/updateJobParameters.php',data:dataObj}).
 		success(function(data, status) {
 			if(typeof data != 'string'){
      			deferred.resolve(data);
@@ -174,7 +174,7 @@ app.service('AdminDataSrvc',['$http','$q','SharedSrvc','LogInSrvc',function admi
 	
 	self.insertJobItem = function(dataObj){
 		var deferred = $q.defer();
-		$http({method: 'POST', url: 'views/proposals/http/insertJobParameter.php',data:dataObj}).
+		$http({method: 'POST', url: 'http/insertJobParameter.php',data:dataObj}).
 		success(function(data, status) {
 			if(typeof data != 'string'){
      			deferred.resolve(data);
@@ -190,7 +190,7 @@ app.service('AdminDataSrvc',['$http','$q','SharedSrvc','LogInSrvc',function admi
 
 	self.queryLogInGoogle = function(dataObj){
 		var deferred = $q.defer();
-		$http({method: 'POST', url: 'views/login/http/getGoogleUser.php',data:dataObj}).
+		$http({method: 'POST', url: 'http/getGoogleUser.php',data:dataObj}).
 		success(function(data, status) {
 			if(typeof data != 'string' && data.length > 0){
      			self.UserID = data[0].PRIMARY_ID;
@@ -213,7 +213,7 @@ app.service('AdminDataSrvc',['$http','$q','SharedSrvc','LogInSrvc',function admi
 
 	self.getIdValues = function(){
 		var deferred = $q.defer();
-		$http({method: 'POST', url: 'js/php/getIdVals.php'}).
+		$http({method: 'POST', url: 'http/getIdVals.php'}).
 		success(function(data, status, headers, config) {
 			self.keyValues = data;
      		deferred.resolve(data);

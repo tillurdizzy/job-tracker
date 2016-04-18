@@ -10,7 +10,7 @@ define( "DATABASE_PASSWORD", "Sadie9954!");
 define( "DATABASE_NAME", "jobtracker");
 //connect to the database.
 $con = mysqli_connect(DATABASE_SERVER, DATABASE_USERNAME, DATABASE_PASSWORD,DATABASE_NAME) or die ('ERROR!!!');
-$query = sprintf("SELECT * FROM properties");
+$query = sprintf("SELECT * FROM property");
 $result = mysqli_query($con,$query);
 $resultValueObjects = array();
 while ($row = mysqli_fetch_object($result)) {
@@ -18,22 +18,13 @@ while ($row = mysqli_fetch_object($result)) {
 	$oneVO->PRIMARY_ID = $row->PRIMARY_ID;
 	$oneVO->createdDate = $row->createdDate;
 	$oneVO->manager = $row->manager;
+	$oneVO->multiUnit = $row->multiUnit;
 	$oneVO->client = $row->client;
 	$oneVO->name = $row->name;
 	$oneVO->street = $row->street;
 	$oneVO->city = $row->city;
 	$oneVO->state = $row->state;
 	$oneVO->zip = $row->zip;
-	$oneVO->numLevels = $row->numLevels;
-	$oneVO->shingleGrade = $row->shingleGrade;
-	$oneVO->roofDeck = $row->roofDeck;
-	$oneVO->layers = $row->layers;
-	$oneVO->edgeDetail = $row->edgeDetail;
-	$oneVO->edgeTrim = $row->edgeTrim;
-	$oneVO->valleyDetail = $row->valleyDetail;
-	$oneVO->ridgeCap = $row->ridgeCap;
-	$oneVO->roofVents = $row->roofVents;
-	$oneVO->pitch = $row->pitch;
 	
 	array_push( $resultValueObjects, $oneVO );
 }

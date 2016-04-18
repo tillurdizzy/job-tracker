@@ -106,7 +106,7 @@ app.service('evoDb',['$http','$q','SharedSrvc','LogInSrvc',function eventQueries
 	self.putClient = function(dataObj){
 		dataObj.manager = self.managerID;
 		var deferred = $q.defer();
-		$http({method: 'POST', url: 'js/php/putClient.php',data:dataObj}).
+		$http({method: 'POST', url: httpPathPrefix + 'putClient.php',data:dataObj}).
 		success(function(data, status, headers, config) {
 			self.getManagerClients();
      		deferred.resolve(data);
@@ -121,7 +121,7 @@ app.service('evoDb',['$http','$q','SharedSrvc','LogInSrvc',function eventQueries
 	self.putProperty = function(dataObj){
 		dataObj.manager = self.managerID;
 		var deferred = $q.defer();
-		$http({method: 'POST', url: 'js/php/putProperty.php',data:dataObj}).
+		$http({method: 'POST', url: httpPathPrefix + 'putProperty.php',data:dataObj}).
 		success(function(data, status, headers, config) {
 			self.getManagerProperties();
      		deferred.resolve(data);
@@ -135,7 +135,7 @@ app.service('evoDb',['$http','$q','SharedSrvc','LogInSrvc',function eventQueries
 	self.putJob = function(dataObj){
 		dataObj.manager = self.managerID;
 		var deferred = $q.defer();
-		$http({method: 'POST', url: 'views/jobs/http/putJob.php',data:dataObj}).
+		$http({method: 'POST', url: httpPathPrefix + 'putJob.php',data:dataObj}).
 		success(function(data, status, headers, config) {
 			var newJobID = data.params;
 			var dataObj = {jobID:newJobID};
@@ -154,7 +154,7 @@ app.service('evoDb',['$http','$q','SharedSrvc','LogInSrvc',function eventQueries
 
 	self.putJobMaterials = function(dataObj){
 		var deferred = $q.defer();
-		$http({method: 'POST', url: 'views/jobs/http/insertJobMaterial.php',data:dataObj}).
+		$http({method: 'POST', url: httpPathPrefix + 'insertJobMaterial.php',data:dataObj}).
 		success(function(data, status, headers, config) {
      		deferred.resolve(data);
 	    }).
@@ -166,7 +166,7 @@ app.service('evoDb',['$http','$q','SharedSrvc','LogInSrvc',function eventQueries
 
 	self.putJobParams = function(dataObj){
 		var deferred = $q.defer();
-		$http({method: 'POST', url: 'views/jobs/http/insertJobParameters.php',data:dataObj}).
+		$http({method: 'POST', url: httpPathPrefix + 'insertJobParameters.php',data:dataObj}).
 		success(function(data, status, headers, config) {
      		deferred.resolve(data);
 	    }).
@@ -178,7 +178,7 @@ app.service('evoDb',['$http','$q','SharedSrvc','LogInSrvc',function eventQueries
 
 	self.putMaterialOptions = function(dataObj){
 		var deferred = $q.defer();
-		$http({method: 'POST', url: 'views/jobs/http/insertMaterialOptions.php',data:dataObj}).
+		$http({method: 'POST', url: httpPathPrefix + 'insertMaterialOptions.php',data:dataObj}).
 		success(function(data, status, headers, config) {
      		deferred.resolve(data);
 	    }).
@@ -190,7 +190,7 @@ app.service('evoDb',['$http','$q','SharedSrvc','LogInSrvc',function eventQueries
 
 	self.putSpecialConsiderations = function(dataObj){
 		var deferred = $q.defer();
-		$http({method: 'POST', url: 'views/jobs/http/insertSpecialConsiderations.php',data:dataObj}).
+		$http({method: 'POST', url: httpPathPrefix + 'insertSpecialConsiderations.php',data:dataObj}).
 		success(function(data, status, headers, config) {
      		deferred.resolve(data);
 	    }).
@@ -202,7 +202,7 @@ app.service('evoDb',['$http','$q','SharedSrvc','LogInSrvc',function eventQueries
 
 	self.putMultiLevel = function(dataObj){
 		var deferred = $q.defer();
-		$http({method: 'POST', url: 'views/properties/http/putMultiLevel.php',data:dataObj}).
+		$http({method: 'POST', url: httpPathPrefix + 'putMultiLevel.php',data:dataObj}).
 		success(function(data, status, headers, config) {
      		deferred.resolve(data);
 	    }).
@@ -214,7 +214,7 @@ app.service('evoDb',['$http','$q','SharedSrvc','LogInSrvc',function eventQueries
 
 	self.putMultiVents = function(dataObj){
 		var deferred = $q.defer();
-		$http({method: 'POST', url: 'views/properties/http/putMultiVents.php',data:dataObj}).
+		$http({method: 'POST', url: httpPathPrefix + 'putMultiVents.php',data:dataObj}).
 		success(function(data, status, headers, config) {
      		deferred.resolve(data);
 	    }).
@@ -226,7 +226,7 @@ app.service('evoDb',['$http','$q','SharedSrvc','LogInSrvc',function eventQueries
 
 	self.updateMultiLevel = function(dataObj){
 		var deferred = $q.defer();
-		$http({method: 'POST', url: 'views/properties/http/updateMultiLevel.php',data:dataObj}).
+		$http({method: 'POST', url: httpPathPrefix + 'updateMultiLevel.php',data:dataObj}).
 		success(function(data, status, headers, config) {
      		deferred.resolve(data);
 	    }).
@@ -238,7 +238,7 @@ app.service('evoDb',['$http','$q','SharedSrvc','LogInSrvc',function eventQueries
 
 	self.putManager = function(dataObj){
 		var deferred = $q.defer();
-		$http({method: 'POST', url: 'js/php/putManager.php',data:dataObj}).
+		$http({method: 'POST', url: httpPathPrefix + 'putManager.php',data:dataObj}).
 		success(function(data, status, headers, config) {
      		deferred.resolve(data);
 	    }).
@@ -251,7 +251,7 @@ app.service('evoDb',['$http','$q','SharedSrvc','LogInSrvc',function eventQueries
 	// Called from login page to verify name/password
 	self.queryLogIn = function(dataObj){
 		var deferred = $q.defer();
-		$http({method: 'POST', url: 'views/login/http/getUser.php',data:dataObj}).
+		$http({method: 'POST', url: httpPathPrefix + 'getUser.php',data:dataObj}).
 		success(function(data, status) {
 			if(typeof data != 'string' && data.length > 0){
 				self.lastResult = data;
@@ -275,7 +275,7 @@ app.service('evoDb',['$http','$q','SharedSrvc','LogInSrvc',function eventQueries
 
 	self.queryLogInGoogle = function(dataObj){
 		var deferred = $q.defer();
-		$http({method: 'POST', url: 'views/login/http/getGoogleUser.php',data:dataObj}).
+		$http({method: 'POST', url: httpPathPrefix + 'getGoogleUser.php',data:dataObj}).
 		success(function(data, status) {
 			if(typeof data != 'string' && data.length > 0){
 				self.lastResult = data;
@@ -299,7 +299,7 @@ app.service('evoDb',['$http','$q','SharedSrvc','LogInSrvc',function eventQueries
 
 	self.putLogIn = function(dataObj){
 		var deferred = $q.defer();
-		$http({method: 'POST', url: 'views/login/putUser.php',data:dataObj}).
+		$http({method: 'POST', url: httpPathPrefix + 'putUser.php',data:dataObj}).
 		success(function(data, status, headers, config) {
      		deferred.resolve(data);
 	    }).
@@ -312,7 +312,7 @@ app.service('evoDb',['$http','$q','SharedSrvc','LogInSrvc',function eventQueries
 	
 	self.getAllClients = function(){
 		var deferred = $q.defer();
-		$http({method: 'POST', url: 'js/php/getClients.php'}).
+		$http({method: 'POST', url:httpPathPrefix +  'getClients.php'}).
 		success(function(data, status) {
 			if(typeof data != 'string'){
 				self.lastResult = data;
@@ -331,7 +331,7 @@ app.service('evoDb',['$http','$q','SharedSrvc','LogInSrvc',function eventQueries
 	self.getManagerClients = function(){
 		var dataObj = {manager:S.managerID};
 		var deferred = $q.defer();
-		$http({method: 'POST', url: 'js/php/getClientsByManager.php',data:dataObj}).
+		$http({method: 'POST', url: httpPathPrefix + 'getClientsByManager.php',data:dataObj}).
 		success(function(data, status) {
 			if(typeof data != 'string'){
 				self.lastResult = data;
@@ -350,7 +350,7 @@ app.service('evoDb',['$http','$q','SharedSrvc','LogInSrvc',function eventQueries
 
 	self.getAllProperties = function(){
 		var deferred = $q.defer();
-		$http({method: 'POST', url: 'js/php/getProperties.php'}).
+		$http({method: 'POST', url: httpPathPrefix + 'getProperties.php'}).
 		success(function(data, status) {
 			if(typeof data != 'string'){
 				self.lastResult = data;
@@ -369,7 +369,7 @@ app.service('evoDb',['$http','$q','SharedSrvc','LogInSrvc',function eventQueries
 	self.getManagerProperties = function(){
 		var dataObj = {manager:S.managerID};
 		var deferred = $q.defer();
-		$http({method: 'POST', url: 'js/php/getPropertiesByManager.php',data:dataObj}).
+		$http({method: 'POST', url: httpPathPrefix + 'getPropertiesByManager.php',data:dataObj}).
 		success(function(data, status) {
 			if(typeof data != 'string'){
 				self.lastResult = data;
@@ -393,7 +393,7 @@ app.service('evoDb',['$http','$q','SharedSrvc','LogInSrvc',function eventQueries
 		}
 		var dataObj = {manager:S.managerID};
 		var deferred = $q.defer();
-		$http({method: 'POST', url: 'views/jobs/http/getJobsByManager.php',data:dataObj}).
+		$http({method: 'POST', url:httpPathPrefix +  'getJobsByManager.php',data:dataObj}).
 		success(function(data, status) {
 			if(typeof data != 'string'){
 				self.lastResult = data;
@@ -412,7 +412,7 @@ app.service('evoDb',['$http','$q','SharedSrvc','LogInSrvc',function eventQueries
 
 	self.getActiveProposals = function(){
 		var deferred = $q.defer();
-		$http({method: 'POST', url: 'views/admin/http/getJobProposals.php'}).
+		$http({method: 'POST', url: httpPathPrefix + 'getJobProposals.php'}).
 		success(function(data, status) {
 			if(typeof data != 'string'){
 				self.lastResult = data;
@@ -429,7 +429,7 @@ app.service('evoDb',['$http','$q','SharedSrvc','LogInSrvc',function eventQueries
 
 	self.getJobByID = function(dataObj){
 		var deferred = $q.defer();
-		$http({method: 'POST', url: 'js/php/getJobByID.php',data:dataObj}).
+		$http({method: 'POST', url: httpPathPrefix + 'getJobByID.php',data:dataObj}).
 		success(function(data, status) {
 			if(typeof data != 'string'){
 				self.lastResult = data;
@@ -457,7 +457,7 @@ app.service('evoDb',['$http','$q','SharedSrvc','LogInSrvc',function eventQueries
 			case "Complete":query="updateCompleteDate.php";break;
 		}
 		var deferred = $q.defer();
-		$http({method: 'POST', url: 'js/php/'+ query,data:dataObj}).
+		$http({method: 'POST', url: httpPathPrefix + query,data:dataObj}).
 		success(function(data, status) {
 			if(typeof data != 'string'){
 				self.lastResult = data;
@@ -474,7 +474,7 @@ app.service('evoDb',['$http','$q','SharedSrvc','LogInSrvc',function eventQueries
 
 	self.getClientByID = function(dataObj){
 		var deferred = $q.defer();
-		$http({method: 'POST', url: 'js/php/getClientByID.php',data:dataObj}).
+		$http({method: 'POST', url: httpPathPrefix + 'getClientByID.php',data:dataObj}).
 		success(function(data, status) {
 			if(typeof data != 'string'){
 				self.lastResult = data;
@@ -490,7 +490,7 @@ app.service('evoDb',['$http','$q','SharedSrvc','LogInSrvc',function eventQueries
 	};
 	self.getPropertyByID = function(dataObj){
 		var deferred = $q.defer();
-		$http({method: 'POST', url: 'js/php/getPropertyByID.php',data:dataObj}).
+		$http({method: 'POST', url: httpPathPrefix + 'getPropertyByID.php',data:dataObj}).
 		success(function(data, status) {
 			if(typeof data != 'string'){
 				self.lastResult = data;
@@ -508,7 +508,7 @@ app.service('evoDb',['$http','$q','SharedSrvc','LogInSrvc',function eventQueries
 	// Called form Edit-form
 	self.updateStatus = function(dataObj){
 		var deferred = $q.defer();
-		$http({method: 'POST', url: 'js/php/updateStatus.php',data:dataObj}).
+		$http({method: 'POST', url: httpPathPrefix + 'updateStatus.php',data:dataObj}).
 		success(function(data, status, headers, config) {
      		deferred.resolve(data);
 	    }).
@@ -521,7 +521,7 @@ app.service('evoDb',['$http','$q','SharedSrvc','LogInSrvc',function eventQueries
 	// Called form Edit-form
 	self.updateDetails = function(dataObj){
 		var deferred = $q.defer();
-		$http({method: 'POST', url: 'js/php/updateDetails.php',data:dataObj}).
+		$http({method: 'POST', url:httpPathPrefix +  'updateDetails.php',data:dataObj}).
 		success(function(data, status, headers, config) {
      		deferred.resolve(data);
 	    }).
@@ -533,7 +533,7 @@ app.service('evoDb',['$http','$q','SharedSrvc','LogInSrvc',function eventQueries
 
 	self.putSpecial = function(dataObj){
 		var deferred = $q.defer();
-		$http({method: 'POST', url: 'views/proposal/putSpecial.php',data:dataObj}).
+		$http({method: 'POST', url: httpPathPrefix + 'putSpecial.php',data:dataObj}).
 		success(function(data, status, headers, config) {
      		deferred.resolve(data);
 	    }).
@@ -545,7 +545,7 @@ app.service('evoDb',['$http','$q','SharedSrvc','LogInSrvc',function eventQueries
 
 	self.getJobMaterials = function(jobIDObj){
 		var deferred = $q.defer();
-		$http({method: 'POST', url: 'js/php/getJobMaterials.php',data:jobIDObj}).
+		$http({method: 'POST', url: httpPathPrefix + 'getJobMaterials.php',data:jobIDObj}).
 		success(function(data, status, headers, config) {
      		deferred.resolve(data);
 	    }).
@@ -557,7 +557,7 @@ app.service('evoDb',['$http','$q','SharedSrvc','LogInSrvc',function eventQueries
 
 	self.updateMaterialsItem = function(primaryIDObj){
 		var deferred = $q.defer();
-		$http({method: 'POST', url: 'js/php/updateMaterialsItem.php',data:primaryIDObj}).
+		$http({method: 'POST', url: httpPathPrefix + 'updateMaterialsItem.php',data:primaryIDObj}).
 		success(function(data, status, headers, config) {
      		deferred.resolve(data);
 	    }).
@@ -569,7 +569,7 @@ app.service('evoDb',['$http','$q','SharedSrvc','LogInSrvc',function eventQueries
 
 	self.getIdValues = function(){
 		var deferred = $q.defer();
-		$http({method: 'POST', url: 'js/php/getIdVals.php'}).
+		$http({method: 'POST', url: httpPathPrefix + 'getIdVals.php'}).
 		success(function(data, status, headers, config) {
 			self.keyValues = data;
      		deferred.resolve(data);

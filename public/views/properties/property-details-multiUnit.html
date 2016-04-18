@@ -20,25 +20,31 @@
     <div><i ng-click="Ctrl.goAddMultiUnit();" class="fa fa-plus fa-2x"></i></div>
     <div><h3>Add Unit</h3></div>
 </div>
-<div>
-    <table st-table="Ctrl.roofDescriptions" class="table table-striped">
+<div style="width:100%; margin-top: 10px;">
+    <table st-table="Ctrl.roofDescriptions" class="table table-striped" style="width:100%;">
     <thead>
-    <tr>
-        <th>Building</th>
-        <th>Levels</th>
-        <th>Edge</th>
-        <th>Valley</th>
-        <th>Ridge</th>
-    </tr>
+        <tr>
+            <th>Building</th>
+            <th>Levels</th>
+            <th>Pitch</th>
+            <th>Shingles</th>
+            <th>Edge</th>
+            <th>Valley</th>
+            <th>Ridge</th>
+            <th>Edit</th>
+        </tr>
     </thead>
     <tbody>
-    <tr ng-repeat="row in Ctrl.roofDescriptions">
-        <td>{{row.name}}</td>
-        <td>{{row.numLevels.label}}</td>
-        <td>{{row.edgeDetail.label}}</td>
-        <td>{{row.valleyDetail.label}}</td>
-        <td>{{row.ridgeCap.label}}</td>
-    </tr>
+        <tr ng-repeat="row in Ctrl.roofDescriptions">
+            <td>{{row.name}}</td>
+            <td>{{row.numLevels.label}}</td>
+            <td>{{row.pitch.label}}</td>
+            <td>{{row.shingleGrade.label}}</td>
+            <td>{{row.edgeDetail.label}}</td>
+            <td>{{row.valleyDetail.label}}</td>
+            <td>{{row.ridgeCap.label}}</td>
+            <td><i class="fa fa-pencil-square fa-2x"></i></td>
+        </tr>
     </tbody>
 </table>
 </div>

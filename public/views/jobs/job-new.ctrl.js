@@ -8,14 +8,15 @@ app.controller('NewJobCtrl',['$scope','$state','evoDb','SharedSrvc',function ($s
     Me.managerName = Me.S.managerName;
     Me.clientList = Me.S.managerClients;
     Me.propertyList = Me.S.managerProperties;
+    Me.propertyRoofs; // The buildings/roofs for a multiUnit property
     var numFields = 2;
     Me.inputMsg = "Field 1 of " + numFields;
     // Form elements
     Me.S1 = Me.clientList[0];
     Me.S2 = ""; // Property
-    Me.T1;
-    Me.T2;
-    
+
+    Me.isMultiUnit = false;
+   
     Me.submitS1 = function(){
         Me.inputMsg = "";
         Me.isError = false;
@@ -33,6 +34,32 @@ app.controller('NewJobCtrl',['$scope','$state','evoDb','SharedSrvc',function ($s
    Me.submitS2 = function(){
         Me.inputMsg = "";
         Me.isError = false;
+
+        Me.isMultiUnit = returnMultiUnit();
+
+        if(Me.isMultiUnit == true){
+            numFields = 3;
+            getRoof();
+            Me.inputField="S3";
+        }else{
+            var isDupe = Me.S.jobExists(Me.S1.PRIMARY_ID,Me.S2.PRIMARY_ID);
+            if(isDupe){
+                Me.isError = true;
+                Me.inputMsg = "This Job already exists.";
+            }else{
+                Me.T1 = "Prospect";
+                var d = new Date();
+                Me.T2 = d.valueOf();
+                Me.inputField="REVIEW";
+                Me.inputMsg = "";
+                Me.S.selectedPropertyObj = Me.S2;
+            };
+        }
+   };
+
+   Me.submitS3 = function(){
+        Me.inputMsg = "";
+        Me.isError = false;
         var isDupe = Me.S.jobExists(Me.S1.PRIMARY_ID,Me.S2.PRIMARY_ID);
         
         if(isDupe){
@@ -47,6 +74,31 @@ app.controller('NewJobCtrl',['$scope','$state','evoDb','SharedSrvc',function ($s
             Me.S.selectedPropertyObj = Me.S2;
         };
    };
+
+   Me.returnMultiUnit = function(){
+        for (var i = 0; i <  Me.propertyList.length; i++) {
+            if(Me.S2.PRIMARY_ID == Me.propertyList[i].PRIMARY_ID){
+                var num = parseInt(Me.propertyList[i].multiUnit);
+                if(num > 0){
+                    return true;
+                }
+            }
+        }
+        return false;
+   };
+
+   var getRoof = function() {
+        var dataObj = { propID: ME.S2.PRIMARY_ID };
+        DB.query("getRoof",dataObj).then(function(resultObj) {
+            if (resultObj.result == "Error" || typeof resultObj.data === "string") {
+                alert("FALSE returned for DB.getRoof() at >>> PropertiesCtrl.getRoof()");
+            } else {
+                Me.propertyRoofs = resultObj.data;
+            }
+        }, function(error) {
+            alert("ERROR returned for DB.getRoof() at >>> PropertiesCtrl.getRoof()");
+        });
+    };
 
 
     // When user selects Client, filter properties for only tha client
@@ -63,6 +115,10 @@ app.controller('NewJobCtrl',['$scope','$state','evoDb','SharedSrvc',function ($s
     Me.selectProperty = function(){
         Me.inputMsg = "";
         Me.isError = false;
+    };
+
+    Me.selectRoof = function(){
+       
     };
 
     Me.resetForm = function(){

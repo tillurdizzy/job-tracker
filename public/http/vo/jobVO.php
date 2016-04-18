@@ -3,6 +3,7 @@ class jobVO{
 	var $PRIMARY_ID;// auto unique
 	var $jobNumber;
 	var $property;// ID
+	var $roofID;// ID
 	var $client;// ID
 	var $manager;
 	var $status;//proposal; contract; active; complete

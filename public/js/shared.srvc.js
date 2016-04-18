@@ -205,34 +205,36 @@ app.service('SharedSrvc', ['$rootScope', function sharedSrvc($rootScope) {
     self.decodeRoofVals = function(dataObj) {
     	var returnVO = {};
 
-        var val = dataObj.numLevels;
+        returnVO.name = dataObj.name;
+
+        var val = parseInt(dataObj.numLevels);
         returnVO.numLevels = self.returnIdValue(self.levelOptions, val);
 
-        val = dataObj.shingleGrade;
+        val = parseInt(dataObj.shingleGrade);
         returnVO.shingleGrade = self.returnIdValue(self.shingleGradeOptions, val);
 
-        val = dataObj.roofDeck;
+        val = parseInt(dataObj.roofDeck);
         returnVO.roofDeck = self.returnIdValue(self.roofDeckOptions, val);
 
-        val = dataObj.layers;
+        val = parseInt(dataObj.layers);
         returnVO.layers = self.returnIdValue(self.numbersToTen, val);
 
-        val = dataObj.edgeDetail;
+        val = parseInt(dataObj.edgeDetail);
         returnVO.edgeDetail = self.returnIdValue(self.edgeDetail, val);
 
-        val = dataObj.edgeTrim;
+        val = parseInt(dataObj.edgeTrim);
         returnVO.edgeTrim = self.returnIdValue(self.yesNo, val);
 
-        val = dataObj.valleyDetail;
+        val = parseInt(dataObj.valleyDetail);
         returnVO.valleyDetail = self.returnIdValue(self.valleyOptions, val);
 
-        val = dataObj.ridgeCap;
+        val = parseInt(dataObj.ridgeCap);
         returnVO.ridgeCap = self.returnIdValue(self.ridgeCapShingles, val);
 
-        val = dataObj.roofVents;
+        val = parseInt(dataObj.roofVents);
         returnVO.roofVents = self.returnIdValue(self.ventOptions, val);
 
-        val = dataObj.pitch;
+        val = parseInt(dataObj.pitch);
         returnVO.pitch = self.returnIdValue(self.pitchOptions, val);
 
         return returnVO;

@@ -9,25 +9,27 @@ define( "DATABASE_PASSWORD", "Sadie9954!");
 define( "DATABASE_NAME", "jobtracker");
 
 $con = mysqli_connect(DATABASE_SERVER, DATABASE_USERNAME, DATABASE_PASSWORD,DATABASE_NAME) or die ('ERROR!!!');
-$jobNumber = "0";
+$jobNumber = mysqli_real_escape_string($con,$data->jobNumber);
 $manager = mysqli_real_escape_string($con,$data->manager);
 $property = mysqli_real_escape_string($con,$data->property);
+$roofID = mysqli_real_escape_string($con,$data->roofID);
 $client = mysqli_real_escape_string($con,$data->client);
 $status = mysqli_real_escape_string($con,$data->status);
 $dateProspect = mysqli_real_escape_string($con,$data->dateProspect);
 
-$query = "INSERT INTO jobs_list(jobNumber,manager,property,client,status,dateProspect)
+$query = "INSERT INTO jobs_list(jobNumber,manager,property,roofID,client,status,dateProspect)
 VALUES(
 '" . $jobNumber . "', " .
 "'" . $manager . "', " .
 "'" . $property . "', " .
+"'" . $roofID . "', " .
 "'" . $client . "', " .
 "'" . $status . "', " .
 "'" . $dateProspect . "')";
 $qry_res = mysqli_query($con,$query);
 if ($qry_res) {
 	$last_id = mysqli_insert_id($con);
-	$arr = array('msg' => "Success", 'result' => $qry_res, 'insertID' => $last_id);
+	$arr = array('msg' => "Success", 'result' => $qry_res, 'params' => $last_id);
 	$jsn = json_encode($arr);
 	echo($jsn);
 } else {
