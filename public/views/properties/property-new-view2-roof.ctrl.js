@@ -270,25 +270,26 @@ app.controller('NewPropertyRoofCtrl', ['$state', '$scope', 'evoDb', 'SharedSrvc'
                 if (resultObj.result == "Error" || typeof resultObj.data === "string") {
                     alert("FALSE returned for putPropertyAddress >>> submitForm >>> property-new-view1-address.ctrl.js");
                 } else {
-                    if(ME.multiUnit = "0"){
+                    var roofID = resultObj.data.id;
+                    if(ME.multiUnit == "0"){
                         ME.inputField = "SUCCESS";
                     }else{
                         ME.inputField = "SUCCESS_Multi";
-                    }  
+                    }
+                    ME.submitMultiLevels(ME.propID,roofID);
+                    ME.submitMultiVents(ME.propID,roofID); 
                 }
             }, function(error) {
                 alert("ERROR returned for putPropertyAddress >>> submitForm >>> property-new-view2-roof.ctrl.js");
             });
-
-            ME.submitMultiLevels(ME.propID);
-            ME.submitMultiVents(ME.propID);
         };
 
        
 
-        ME.submitMultiLevels = function(id) {
-            ME.multiLevelObj.propertyID = id;
-            DB.query("putMultiLevel", ME.multiLevelObj).then(function(resultObj) {
+        ME.submitMultiLevels = function(prop,roof) {
+            ME.multiLevelObj.propertyID = prop;
+            ME.multiLevelObj.roofID = roof;
+            DB.query("putMultiLevels", ME.multiLevelObj).then(function(resultObj) {
                 if (resultObj.result == "Error" || typeof resultObj.data === "string") {
                     alert("FALSE returned for submitMultiLevels >>> property-new-view2-roof.ctrl.js");
                 } else {
@@ -299,9 +300,10 @@ app.controller('NewPropertyRoofCtrl', ['$state', '$scope', 'evoDb', 'SharedSrvc'
             });
         };
 
-        ME.submitMultiVents = function(id) {
-            ME.multiVentObj.propertyID = id;
-            DB.query("putMultiLevel", ME.multiVentObj).then(function(resultObj) {
+        ME.submitMultiVents = function(prop,roof) {
+            ME.multiVentObj.propertyID = prop;
+            ME.multiVentObj.roofID = roof;
+            DB.query("putMultiVents", ME.multiVentObj).then(function(resultObj) {
                 if (resultObj.result == "Error" || typeof resultObj.data === "string") {
                     alert("FALSE returned for submitMultiVents >>> property-new-view2-roof.ctrl.js");
                 } else {

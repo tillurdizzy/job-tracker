@@ -9,15 +9,17 @@ define( "DATABASE_NAME", "jobtracker");
 
 $con = mysqli_connect(DATABASE_SERVER, DATABASE_USERNAME, DATABASE_PASSWORD,DATABASE_NAME) or die ('ERROR!!!');
 $propertyID = mysqli_real_escape_string($con,$data->propertyID);
+$roofID = mysqli_real_escape_string($con,$data->roofID);
 $TURBNS = mysqli_real_escape_string($con,$data->TURBNS);
 $STATIC = mysqli_real_escape_string($con,$data->STATIC);
 $PWRVNT = mysqli_real_escape_string($con,$data->PWRVNT);
 $AIRHWK = mysqli_real_escape_string($con,$data->AIRHWK);
 $SLRVNT = mysqli_real_escape_string($con,$data->SLRVNT);
 
-$query = "INSERT INTO multi_vents(propertyID,TURBNS,STATIC,PWRVNT,AIRHWK,SLRVNT)
+$query = "INSERT INTO multi_vents(propertyID,roofID,TURBNS,STATIC,PWRVNT,AIRHWK,SLRVNT)
 VALUES(
 '" . $propertyID . "', " .
+"'" . $roofID . "', " .
 "'" . $TURBNS . "', " .
 "'" . $STATIC . "', " .
 "'" . $PWRVNT . "', " .

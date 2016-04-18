@@ -14,6 +14,7 @@ app.controller('PropertiesCtrl', ['$scope', '$state', 'evoDb', 'SharedSrvc', 'Te
     ME.properties = S.managerProperties;
     ME.roofDescriptions = [];
 
+
     ME.showDetails = function(ndxStr) {
         var ndx = Number(ndxStr);
         for (var i = 0; i < ME.properties.length; i++) {
@@ -40,12 +41,20 @@ app.controller('PropertiesCtrl', ['$scope', '$state', 'evoDb', 'SharedSrvc', 'Te
             if (resultObj.result == "Error" || typeof resultObj.data === "string") {
                 alert("FALSE returned for DB.getRoof() at >>> PropertiesCtrl.getRoof()");
             } else {
-                ME.roofDescriptions = resultObj.data;
+            	decodeRoofVals(resultObj.data);
             }
         }, function(error) {
             alert("ERROR returned for DB.getRoof() at >>> PropertiesCtrl.getRoof()");
         });
-    }
+    };
+
+    var decodeRoofVals = function(dataArr){
+    	 ME.roofDescriptions = [];
+    	for (var i = 0; i < dataArr.length; i++) {
+    		var decoded = S.decodeRoofVals(dataArr[i]);
+    		ME.roofDescriptions.push(decoded);
+    	}
+    };
 
     ME.goClients = function() {
         $state.transitionTo("clients");

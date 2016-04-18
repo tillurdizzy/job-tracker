@@ -15,6 +15,7 @@ $resultValueObjects = array();
 while ($row = mysqli_fetch_object($result)) {
 	$oneVO = new levelsVO();
 	$oneVO->PRIMARY_ID = $row->PRIMARY_ID;
+	$oneVO->roofID = $row->roofID;
 	$oneVO->propertyID = $row->propertyID;
 	$oneVO->LEVONE = $row->LEVONE;
 	$oneVO->LEVTWO = $row->LEVTWO;

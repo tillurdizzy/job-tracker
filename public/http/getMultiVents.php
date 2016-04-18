@@ -16,6 +16,7 @@ while ($row = mysqli_fetch_object($result)) {
 	$oneVO = new ventsVO();
 	$oneVO->PRIMARY_ID = $row->PRIMARY_ID;
 	$oneVO->propertyID = $row->propertyID;
+	$oneVO->roofID = $row->roofID;
 	$oneVO->TURBNS = $row->TURBNS;
 	$oneVO->STATIC = $row->STATIC;
 	$oneVO->PWRVNT = $row->PWRVNT;

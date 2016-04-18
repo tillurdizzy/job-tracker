@@ -11,6 +11,7 @@ define( "DATABASE_NAME", "jobtracker");
 $con = mysqli_connect(DATABASE_SERVER, DATABASE_USERNAME, DATABASE_PASSWORD,DATABASE_NAME) or die ('cannot reach database');
 
 $propertyID = mysqli_real_escape_string($con,$data->propertyID);
+$roofID = mysqli_real_escape_string($con,$data->roofID);
 $TURBNS = mysqli_real_escape_string($con,$data->TURBNS);
 $STATIC = mysqli_real_escape_string($con,$data->STATIC);
 $PWRVNT = mysqli_real_escape_string($con,$data->PWRVNT);
@@ -25,7 +26,7 @@ STATIC='".$STATIC."',
 AIRHWK='".$AIRHWK."',
 SLRVNT='".$SLRVNT."',
 LEVSIX='".$LEVSIX."'
-WHERE propertyID='".$propertyID."'";
+WHERE propertyID='".$propertyID."' AND roofID='".$roofID."'";
 
 $qry_res = mysqli_query($con,$query);
 

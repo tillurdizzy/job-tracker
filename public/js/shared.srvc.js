@@ -202,7 +202,7 @@ app.service('SharedSrvc', ['$rootScope', function sharedSrvc($rootScope) {
         $rootScope.$broadcast("data-refreshed");
     };
 
-    self.decodeRoofVals = function(roofVO) {
+    self.decodeRoofVals = function(dataObj) {
     	var returnVO = {};
 
         var val = dataObj.numLevels;

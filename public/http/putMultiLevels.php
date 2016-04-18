@@ -10,22 +10,20 @@ define( "DATABASE_NAME", "jobtracker");
 
 $con = mysqli_connect(DATABASE_SERVER, DATABASE_USERNAME, DATABASE_PASSWORD,DATABASE_NAME) or die ('ERROR!!!');
 $propertyID = mysqli_real_escape_string($con,$data->propertyID);
+$roofID = mysqli_real_escape_string($con,$data->roofID);
 $LEVONE = mysqli_real_escape_string($con,$data->LEVONE);
 $LEVTWO = mysqli_real_escape_string($con,$data->LEVTWO);
 $LEVTHR = mysqli_real_escape_string($con,$data->LEVTHR);
 $LEVFOU = mysqli_real_escape_string($con,$data->LEVFOU);
-$LEVFIV = mysqli_real_escape_string($con,$data->LEVFIV);
-$LEVSIX = mysqli_real_escape_string($con,$data->LEVSIX);
 
-$query = "INSERT INTO multi_level(propertyID,LEVONE,LEVTWO,LEVTHR,LEVFOU,LEVFIV,LEVSIX)
+$query = "INSERT INTO multi_level(propertyID,roofID,LEVONE,LEVTWO,LEVTHR,LEVFOU)
 VALUES(
 '" . $propertyID . "', " .
+"'" . $roofID . "', " .
 "'" . $LEVONE . "', " .
 "'" . $LEVTWO . "', " .
 "'" . $LEVTHR . "', " .
-"'" . $LEVFOU . "', " .
-"'" . $LEVFIV . "', " .
-"'" . $LEVSIX . "')";
+"'" . $LEVFOU . "')";
 $qry_res = mysqli_query($con,$query);
 if ($qry_res) {
 	$last_id = mysqli_insert_id($con);

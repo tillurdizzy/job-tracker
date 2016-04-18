@@ -6,5 +6,6 @@ class levelsVO{
 	var $LEVTHR;
 	var $LEVFOU;
 	var $propertyID;
+	var $roofID;
 }
 ?>

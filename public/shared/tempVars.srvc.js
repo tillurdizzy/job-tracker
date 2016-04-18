@@ -1,6 +1,6 @@
 'use strict';
 // This service is used only for passing short term vars between views/controllers.
-app.service('DropBox',[function sharedTemp(){
+app.service('TempVarSrvc',[function sharedTemp(){
 	var self = this;
 
 	self.multiUnitProperty;
