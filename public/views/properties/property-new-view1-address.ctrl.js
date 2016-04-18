@@ -100,13 +100,16 @@ app.controller('NewPropertyAddressCtrl', ['$state', '$scope', 'evoDb', 'SharedSr
                 dataObj.multiUnit = "0";
             };
            
-
             DB.query("putPropertyAddress", dataObj).then(function(resultObj) {
                 if (resultObj.result == "Error" || typeof resultObj.data === "string") {
                     alert("FALSE returned for putPropertyAddress >>> submitForm >>> property-new-view1-address.ctrl.js");
                 } else {
-                    T.lastResultID = resultObj.data.id;
-                    T.propertyStreetAddress = ME.streetAddress;
+                    T.roofDescriptionData.propID = resultObj.data.id;
+                    T.roofDescriptionData.address = ME.streetAddress;
+                    T.roofDescriptionData.multiUnit = ME.multiUnit;
+                    T.roofDescriptionData.bldgName = ME.propertyName;
+                    // Insert blank roof table to be updated later
+                    putRoof(resultObj.data.id);
 
                     // For Single unit continue with roof description
                     if(ME.multiUnit == "No"){
@@ -118,6 +121,20 @@ app.controller('NewPropertyAddressCtrl', ['$state', '$scope', 'evoDb', 'SharedSr
                 }
             }, function(error) {
                 alert("ERROR returned for putPropertyAddress >>> submitForm >>> property-new-view1-address.ctrl.js");
+            });
+        };
+
+        // Insert a default roof entry
+        var putRoof = function(id){
+            var dataObj = {propID:id};
+            DB.query("putRoof", dataObj).then(function(resultObj) {
+                if (resultObj.result == "Error" || typeof resultObj.data === "string") {
+                    alert("FALSE returned for putRoof >>> property-new-view1-address.ctrl.js");
+                } else {
+                   
+                }
+            }, function(error) {
+                alert("ERROR returned for putRoof >>> property-new-view1-address.ctrl.js");
             });
         };
 
@@ -146,6 +163,8 @@ app.controller('NewPropertyAddressCtrl', ['$state', '$scope', 'evoDb', 'SharedSr
                 $state.transitionTo("properties");
             });
         };
+
+
 
         ME.dataError = function() {
             ME.inputField = "ERROR";

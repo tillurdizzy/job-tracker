@@ -16,20 +16,10 @@ $street = mysqli_real_escape_string($con,$data->street);
 $city = mysqli_real_escape_string($con,$data->city);
 $state = mysqli_real_escape_string($con,$data->state);
 $zip = mysqli_real_escape_string($con,$data->zip);
-$numLevels = mysqli_real_escape_string($con,$data->numLevels);
-$shingleGrade = mysqli_real_escape_string($con,$data->shingleGrade);
-$roofDeck = mysqli_real_escape_string($con,$data->roofDeck);
-$layers = mysqli_real_escape_string($con,$data->layers);
-$edgeDetail = mysqli_real_escape_string($con,$data->edgeDetail);
-$edgeTrim = mysqli_real_escape_string($con,$data->edgeTrim);
-$valleyDetail = mysqli_real_escape_string($con,$data->valleyDetail);
-$ridgeCap = mysqli_real_escape_string($con,$data->ridgeCap);
-$roofVents = mysqli_real_escape_string($con,$data->roofVents);
-$pitch = mysqli_real_escape_string($con,$data->pitch);
+$multiUnit = mysqli_real_escape_string($con,$data->multiUnit);
 
-$query = "INSERT INTO properties(manager,createdDate,client,name,street,city,state,zip,
-numLevels,shingleGrade,roofDeck,layers,edgeDetail,edgeTrim,valleyDetail,
-ridgeCap,roofVents,pitch)
+
+$query = "INSERT INTO properties(manager,createdDate,client,name,street,city,state,zip,multiUnit)
 VALUES(
 '" . $manager . "', " .
 "'" . $createdDate . "', " .
@@ -39,16 +29,7 @@ VALUES(
 "'" . $city . "', " .
 "'" . $state . "', " .
 "'" . $zip . "', " .
-"'" . $numLevels . "', " .
-"'" . $shingleGrade . "', " .
-"'" . $roofDeck . "', " .
-"'" . $layers . "', " .
-"'" . $edgeDetail . "', " .
-"'" . $edgeTrim . "', " .
-"'" . $valleyDetail . "', " .
-"'" . $ridgeCap . "', " .
-"'" . $roofVents . "', " .
-"'" . $pitch . "')";
+"'" . $multiUnit . "')";
 $qry_res = mysqli_query($con,$query);
 if ($qry_res) {
 	$last_id = mysqli_insert_id($con);

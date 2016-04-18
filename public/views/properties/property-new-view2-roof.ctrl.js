@@ -1,16 +1,17 @@
 'use strict';
-app.controller('NewPropertyRoofCtrl', ['$state', '$scope', 'evoDb', 'SharedSrvc', 'underscore', 'ngDialog','TempVarSrvc',
-    function($state, $scope, evoDb, SharedSrvc, underscore, ngDialog,TempVarSrvc) {
+app.controller('NewPropertyRoofCtrl', ['$state', '$scope', 'evoDb', 'SharedSrvc', 'underscore', 'ngDialog', 'TempVarSrvc',
+    function($state, $scope, evoDb, SharedSrvc, underscore, ngDialog, TempVarSrvc) {
 
         var DB = evoDb;
         var ME = this;
         ME.S = SharedSrvc;
-        var T = TempVarSrvc;
+        ME.T = TempVarSrvc;
         ME.managerName = ME.S.managerName;
         ME.selectedClientObj = ME.S.selectedClientObj;
         ME.multiUnit = ME.S.multiUnitProperty; // Business client with multi-unit property (apartments)
+        ME.propID;
 
-
+        ME.bldgName = "";
         ME.numLevels = ME.S.levelOptions[0];
         ME.roofPitch = ME.S.pitchOptions[0];
         ME.shingleGrade = ME.S.shingleGradeOptions[0];
@@ -27,7 +28,7 @@ app.controller('NewPropertyRoofCtrl', ['$state', '$scope', 'evoDb', 'SharedSrvc'
         ME.multiVentObj = { propertyID: 0, TURBNS: 0, STATIC: 0, PWRVNT: 0, AIRHWK: 0, SLRVNT: 0 };
         // Form fields to show and in this order
         // the goPrevious and goNext use this list to find destination
-        ME.formFields = ['', 'numLevels', 'roofPitch', 'shingleGrade', 'roofDeck', 'layers', 'edgeDetail',
+        ME.formFields = ['', 'bldgName', 'numLevels', 'roofPitch', 'shingleGrade', 'roofDeck', 'layers', 'edgeDetail',
             'valleyDetail', 'ridgeCap', 'roofVents', 'SUBMIT'
         ];
 
@@ -46,12 +47,15 @@ app.controller('NewPropertyRoofCtrl', ['$state', '$scope', 'evoDb', 'SharedSrvc'
             SLRVNT: ME.S.numbersToTen[0]
         };
 
+        // Next 3 set in Init() function
+        var firstField; // For single unit this is 1, for multiUnit is 2
+        ME.inputField;
+        ME.formTitleDescription = "";
+
         var numFields = ME.formFields.length - 2;
-        ME.inputField = ME.formFields[1];
         ME.inputMsg = "Field 1 of " + numFields;
         ME.isError = false;
 
-        ME.formTitleDescription = "";
 
         // ME.DOM used to store vars that are only used to show/hide DOM elements
         ME.DOM = {};
@@ -65,7 +69,8 @@ app.controller('NewPropertyRoofCtrl', ['$state', '$scope', 'evoDb', 'SharedSrvc'
         ME.goPrevious = function(_from) {
             var currentField = returnNdx(_from);
             var goToFieldNum = currentField - 1;
-            if (goToFieldNum == 0) {
+
+            if (goToFieldNum == firstField) {
                 $state.transitionTo("addNewProperty");
             } else {
                 ME.inputField = ME.formFields[goToFieldNum]
@@ -87,27 +92,17 @@ app.controller('NewPropertyRoofCtrl', ['$state', '$scope', 'evoDb', 'SharedSrvc'
             return underscore.indexOf(ME.formFields, item);
         };
 
-        ME.submit_propertyName = function() {
+        ME.submit_bldgName = function() {
             ME.inputMsg = "";
             ME.isError = false;
-            if (ME.propertyName == "") {
+            if (ME.bldgName == "") {
                 ME.isError = true;
                 ME.inputMsg = "This field cannot be blank.";
             } else {
-                ME.goNext('propertyName');
+                ME.goNext('bldgName');
             };
         };
 
-        ME.submit_propertyAddress = function() {
-            ME.inputMsg = "";
-            ME.isError = false;
-            if (ME.streetAddress === "" || ME.propertyCity === "" || ME.propertyState === "" || ME.propertyZip === "") {
-                ME.isError = true;
-                ME.inputMsg = "Please complete all fields.";
-            } else {
-                ME.goNext('propertyAddress');
-            };
-        };
 
         ME.submit_numLevels = function() {
             ME.inputMsg = "";
@@ -258,7 +253,8 @@ app.controller('NewPropertyRoofCtrl', ['$state', '$scope', 'evoDb', 'SharedSrvc'
             ME.isError = false;
             var d = new Date();
             var dataObj = {};
-            dataObj.propertyID = T.lastResultID;
+            dataObj.propertyID = ME.propID;
+            dataObj.name = ME.bldgName;
             dataObj.numLevels = ME.numLevels.id;
             dataObj.shingleGrade = ME.shingleGrade.id;
             dataObj.roofDeck = ME.roofDeck.id;
@@ -270,31 +266,25 @@ app.controller('NewPropertyRoofCtrl', ['$state', '$scope', 'evoDb', 'SharedSrvc'
             dataObj.roofVents = ME.roofVents.id;
             dataObj.pitch = ME.roofPitch.id;
 
-            DB.query("putPropertyRoof", dataObj).then(function(resultObj) {
+            DB.query("putRoof", dataObj).then(function(resultObj) {
                 if (resultObj.result == "Error" || typeof resultObj.data === "string") {
                     alert("FALSE returned for putPropertyAddress >>> submitForm >>> property-new-view1-address.ctrl.js");
                 } else {
-                    ME.inputField = "SUCCESS";
+                    if(ME.multiUnit = "0"){
+                        ME.inputField = "SUCCESS";
+                    }else{
+                        ME.inputField = "SUCCESS_Multi";
+                    }  
                 }
             }, function(error) {
                 alert("ERROR returned for putPropertyAddress >>> submitForm >>> property-new-view2-roof.ctrl.js");
             });
 
-            ME.submitMultiLevels(T.lastResultID);
-            ME.submitMultiVents(T.lastResultID);
+            ME.submitMultiLevels(ME.propID);
+            ME.submitMultiVents(ME.propID);
         };
 
-        var openNotify = function() {
-            var dialog = ngDialog.open({
-                template: '<p>' + ME.propertyName + ' has been added as a property. You will now continue with the roof description.</p>' +
-                    '<div class="ngdialog-buttons"><button type="button" class="ngdialog-button ngdialog-button-primary" ng-click="closeThisDialog(1)">Close Me</button></div>',
-                plain: true
-            });
-            dialog.closePromise.then(function(data) {
-                console.log('ngDialog closed' + (data.value === 1 ? ' using the button' : '') + ' and notified by promise: ' + data.id);
-                $state.transitionTo("addNewProperty.roof");
-            });
-        };
+       
 
         ME.submitMultiLevels = function(id) {
             ME.multiLevelObj.propertyID = id;
@@ -332,6 +322,10 @@ app.controller('NewPropertyRoofCtrl', ['$state', '$scope', 'evoDb', 'SharedSrvc'
 
         };
 
+        ME.resetMe = function() {
+            ME.inputField = ME.formFields[firstField];
+        };
+
         ME.goNewClient = function() {
             $state.transitionTo("addNewClient");
         };
@@ -340,19 +334,27 @@ app.controller('NewPropertyRoofCtrl', ['$state', '$scope', 'evoDb', 'SharedSrvc'
             $state.transitionTo("addNewProperty");
         };
 
-        var init = function() {
-            if (ME.selectedClientObj.type == "Individual") {
-                ME.propertyName = ME.selectedClientObj.name_last + " Residence";
-            } else {
-                ME.propertyName = "Apartment Complex Name";
-            }
+        ME.goProperties = function() {
+            $state.transitionTo("properties");
+        };
 
-            if(T.propertyStreetAddress != null && T.propertyStreetAddress != ""){
-                ME.formTitleDescription = "Roof Description for " + T.propertyStreetAddress;
-            }else{
-                ME.formTitleDescription = "Roof Description";
+        var init = function() {
+            // For multiUnit OR Single Unit
+            if (ME.S.selectedPropertyObj.multiUnit != "0") {
+                firstField = 1;
+                ME.inputField = ME.formFields[firstField];
+                ME.formTitleDescription = "Roof Description for " + ME.S.selectedPropertyObj.name;
+                ME.multiUnit = ME.S.selectedPropertyObj.multiUnit;
+                ME.propID = ME.S.selectedPropertyObj.PRIMARY_ID;
+            } else {
+                ME.multiUnit = "0";
+                ME.bldgName =  ME.T.roofDescriptionData.bldgName;
+                firstField = 2;
+                ME.inputField = ME.formFields[firstField];
+                ME.propID = ME.T.roofDescriptionData.propID;
+                ME.formTitleDescription = "Roof Description for " + ME.T.roofDescriptionData.name;
             }
-        }
+        };
 
         $scope.$watch('$viewContentLoaded', function() {
             var loggedIn = ME.S.loggedIn;

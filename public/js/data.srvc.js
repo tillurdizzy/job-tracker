@@ -14,8 +14,9 @@ app.service('evoDb',['$http','$q','SharedSrvc','LogInSrvc',function eventQueries
 	var httpPathPrefix = "http/";
 
 	var queryPaths = {
+		getRoof:httpPathPrefix + "getRoof.php",
 		putPropertyAddress:httpPathPrefix + "putPropertyAddress.php",
-		putPropertyRoof:httpPathPrefix + "putPropertyRoof.php",
+		putRoof:httpPathPrefix + "putRoof.php",
 		putMultiLevel:httpPathPrefix + "putMultiLevel.php",
 		putMultiVents:httpPathPrefix + "putMultiVents.php"
 	};

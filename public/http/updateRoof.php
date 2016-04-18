@@ -1,4 +1,5 @@
 <?php
+//Just makes an entry into the jobs_details table using the ID auto-created from the jobs_list table.
 ini_set('display_errors', 'On');
 error_reporting(E_ALL | E_STRICT);
 $data = json_decode(file_get_contents("php://input"));
@@ -8,14 +9,11 @@ define( "DATABASE_PASSWORD", "Sadie9954!");
 define( "DATABASE_NAME", "jobtracker");
 
 $con = mysqli_connect(DATABASE_SERVER, DATABASE_USERNAME, DATABASE_PASSWORD,DATABASE_NAME) or die ('ERROR!!!');
-$manager = mysqli_real_escape_string($con,$data->manager);
-$createdDate = mysqli_real_escape_string($con,$data->createdDate);
+
+$PRIMARY_ID = mysqli_real_escape_string($con,$data->PRIMARY_ID);
+$propertyID = mysqli_real_escape_string($con,$data->propertyID);
 $client = mysqli_real_escape_string($con,$data->client);
 $name = mysqli_real_escape_string($con,$data->name);
-$street = mysqli_real_escape_string($con,$data->street);
-$city = mysqli_real_escape_string($con,$data->city);
-$state = mysqli_real_escape_string($con,$data->state);
-$zip = mysqli_real_escape_string($con,$data->zip);
 $numLevels = mysqli_real_escape_string($con,$data->numLevels);
 $shingleGrade = mysqli_real_escape_string($con,$data->shingleGrade);
 $roofDeck = mysqli_real_escape_string($con,$data->roofDeck);
@@ -27,36 +25,27 @@ $ridgeCap = mysqli_real_escape_string($con,$data->ridgeCap);
 $roofVents = mysqli_real_escape_string($con,$data->roofVents);
 $pitch = mysqli_real_escape_string($con,$data->pitch);
 
-$query = "INSERT INTO properties(manager,createdDate,client,name,street,city,state,zip,
-numLevels,shingleGrade,roofDeck,layers,edgeDetail,edgeTrim,valleyDetail,
-ridgeCap,roofVents,pitch)
-VALUES(
-'" . $manager . "', " .
-"'" . $createdDate . "', " .
-"'" . $client . "', " .
-"'" . $name . "', " .
-"'" . $street . "', " .
-"'" . $city . "', " .
-"'" . $state . "', " .
-"'" . $zip . "', " .
-"'" . $numLevels . "', " .
-"'" . $shingleGrade . "', " .
-"'" . $roofDeck . "', " .
-"'" . $layers . "', " .
-"'" . $edgeDetail . "', " .
-"'" . $edgeTrim . "', " .
-"'" . $valleyDetail . "', " .
-"'" . $ridgeCap . "', " .
-"'" . $roofVents . "', " .
-"'" . $pitch . "')";
+$query = "UPDATE roof SET 
+propertyID='".$propertyID."',
+name='".$name."',
+numLevels='".$numLevels."',
+shingleGrade='".$shingleGrade."',
+roofDeck='".$roofDeck."',
+layers='".$layers."',
+edgeDetail='".$edgeDetail."',
+edgeTrim='".$edgeTrim."',
+valleyDetail='".$valleyDetail."',
+ridgeCap='".$ridgeCap."',
+roofVents='".$roofVents."',
+pitch='".$pitch."',
+WHERE PRIMARY_ID='".$PRIMARY_ID."'";
 $qry_res = mysqli_query($con,$query);
 if ($qry_res) {
-	$last_id = mysqli_insert_id($con);
-	$arr = array('msg' => "Success", 'result' => $qry_res, 'id' => $last_id);
+	$arr = array('msg' => "Success", 'result' => $qry_res);
 	$jsn = json_encode($arr);
 	echo($jsn);
 } else {
-	$arr = array('msg' => "Fail", 'result' => $qry_res,'params' => $manager);
+	$arr = array('msg' => "Error inserting record", 'result' => $qry_res,'params' => $PRIMARY_ID);
 	$jsn = json_encode($arr);
 	echo($jsn);
 }

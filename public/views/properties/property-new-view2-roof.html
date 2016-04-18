@@ -1,4 +1,20 @@
 <div ng-controller="NewPropertyRoofCtrl as Ctrl">
+    <div><h3>{{Ctrl.formTitleDescription}}</h3></div>
+    <div class="ez-form-item" ng-show="Ctrl.inputField == 'bldgName'">
+        <h3>Multi-Unit Building Name</h3>
+        <input type="text" ng-model="Ctrl.bldgName" placeholder="Building A; Bldg. 17..."/>
+        <div class="page-nav">
+            <div class="page-nav-left">
+                <i ng-click="Ctrl.goPrevious('bldgName')" class="fa fa-arrow-circle-left fa-3x"></i>
+            </div>
+            <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">
+                {{Ctrl.inputMsg}}
+            </div>
+            <div class="page-nav-right">
+                <i ng-click="Ctrl.submit_bldgName();" class="fa fa-arrow-circle-right fa-3x"></i>
+            </div>
+        </div>
+    </div>
     <div class="ez-form-item" ng-show="Ctrl.inputField == 'numLevels'">
         <h3>Levels (number of stories)</h3>
         <div class="dropDownSelector">
@@ -281,9 +297,15 @@
     </div>
     <div class="ez-form-item" ng-show="Ctrl.inputField == 'SUCCESS'">
         <h3>Success!</h3>
-        <p>{{Ctrl.propertyName}} has been added as a property for {{Ctrl.clientName}}.</p>
-        <p>You can now create Job by clicking below.</p>
-        <button type="button" ng-click="Ctrl.goNewJob()">Create Job</button>
+        <p>Roof description for {{Ctrl.bldgName}} has been accepted.</p>
+        <button type="button" ng-click="Ctrl.goProperties()">Create Job</button>
+    </div>
+    <div class="ez-form-item" ng-show="Ctrl.inputField == 'SUCCESS_Multi'">
+        <h3>Success!</h3>
+        <p>Roof description for {{Ctrl.bldgName}} has been accepted.</p>
+       
+        <button type="button" ng-click="Ctrl.resetMe()">Add Another Building</button>
+        <button type="button" ng-click="Ctrl.goProperties()">Home</button>
     </div>
     <div class="ez-form-item" ng-show="Ctrl.inputField == 'ERROR'">
         <h3>Oops!  An error occured saving the data.</h3>
@@ -292,7 +314,7 @@
     </div>
     <div class="review-section" ng-show="Ctrl.inputField == 'SUBMIT'">
         <div style="margin-left:1rem;">
-            <h4 style="margin-bottom:.5rem;">Roof Description for {{Ctrl.T.propertyStreetAddress}}</h4>
+            <h4 style="margin-bottom:.5rem;">Roof Description for {{Ctrl.bldgName}}</h4>
             <h3>Levels: <span class="bold">{{Ctrl.numLevels.label}}</span></h3>
             <h3>Pitch: <span class="bold">{{Ctrl.roofPitch.label}}</span></h3>
             <h3>Shingle Grade: <span class="bold">{{Ctrl.shingleGrade.label}}</span></h3>

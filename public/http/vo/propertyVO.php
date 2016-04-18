@@ -19,6 +19,7 @@ class propertyVO{
 	var $ridgeCap;
 	var $roofVents;
 	var $pitch;
+	var $multiUnit;
 	var $multiLevel;
 	var $multiVents;
 }
