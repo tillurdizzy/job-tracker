@@ -2,8 +2,7 @@
     <h2>Client</h2>
 </div>
 <div class="text-block-display">
-    <h3>{{Ctrl.selectedClientObj.displayName}}</h3>
-    <h4>{{Ctrl.selectedClientObj.company}}</h4>
+    <h4>{{Ctrl.selectedClientObj.displayName}}</h4>
     <h3>{{Ctrl.selectedClientObj.street}}</h3>
     <h3>{{Ctrl.selectedClientObj.city + ", " + Ctrl.selectedClientObj.state + " " + Ctrl.selectedClientObj.zip}}</h3>
     <h3>{{Ctrl.selectedClientObj.phone_cell}}</h3>
@@ -14,7 +13,7 @@
     <h2>Property</h2>
 </div>
 <div class="text-block-display">
-    <h4>{{Ctrl.selectedPropertyObj.name}}</h4>
+    <h4>{{Ctrl.selectedPropertyObj.name}} {{Ctrl.selectedJobObj.bldgName}}</h4>
     <h3>{{Ctrl.selectedPropertyObj.street}}</h3>
     <h3>{{Ctrl.selectedPropertyObj.city + ", " + Ctrl.selectedPropertyObj.state + " " + Ctrl.selectedPropertyObj.zip}}</h3>
 </div>

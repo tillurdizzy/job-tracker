@@ -27,6 +27,11 @@ app.controller('JobsCtrl',['$location','$state','evoDb','$scope','SharedSrvc',fu
 
 
     var setStatusVars = function(){
+        ME.isProposal = false;
+        ME.isContract = false;
+        ME.isActive = false;
+        ME.isComplete = false;
+        
     	if(ME.selectedJobObj.dateProposal != "0"){
     		 ME.isProposal = true;
     	}
@@ -42,14 +47,15 @@ app.controller('JobsCtrl',['$location','$state','evoDb','$scope','SharedSrvc',fu
     	if(ME.selectedJobObj.dateComplete != "0"){
     		 ME.isComplete = true;
     	}
-    }
+    };
 
 
-	ME.showDetails = function(ndxStr){
-		var ndx = Number(ndxStr);
+	ME.showDetails = function(jobID){
+		var ndx = Number(jobID);
 		for (var i = 0; i < ME.jobs.length; i++) {
 			if(ME.jobs[i].PRIMARY_ID == ndx){
 				ME.selectedJobObj = ME.jobs[i];
+                break;
 			}
 		};
 		setStatusVars();
@@ -80,11 +86,9 @@ app.controller('JobsCtrl',['$location','$state','evoDb','$scope','SharedSrvc',fu
 	// Get all jobs for current manager
 	// DB already has manager_id
 	ME.getManagerJobs = function(){
-		var result = DB.getManagerJobs()
-        .then(function(result){
-             if(typeof result != "boolean"){
+		var result = DB.getManagerJobs().then(function(result){
+            if(typeof result != "boolean"){
             	// DB sent the data to the SharedSrvc
-				
             }else{
               ME.dataError("JobsCtrl-getManagerJobs()-1",result); 
             }
@@ -93,9 +97,8 @@ app.controller('JobsCtrl',['$location','$state','evoDb','$scope','SharedSrvc',fu
         });
 	};
 
-	ME.getManagerClients = function(){
-		var result = DB.getManagerClients()
-        .then(function(result){
+	/*ME.getManagerClients = function(){
+		var result = DB.getManagerClients().then(function(result){
             if(result != false){
             	// DB sent the data to the SharedSrvc
 				// Don't do anything here
@@ -119,7 +122,7 @@ app.controller('JobsCtrl',['$location','$state','evoDb','$scope','SharedSrvc',fu
         },function(error){
             ME.dataError("JobsCtrl-getManagerProperties()-2",result);
         });
-	};
+	};*/
 
 	ME.updateStatus = function(status){
 		var d = new Date();
@@ -155,7 +158,7 @@ app.controller('JobsCtrl',['$location','$state','evoDb','$scope','SharedSrvc',fu
        if(!loggedIn){
        		$state.transitionTo('login');
        }else{
-       	//initMe();
+       	    ME.getManagerJobs();
        }
     });
 

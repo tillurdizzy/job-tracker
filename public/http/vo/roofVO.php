@@ -1,6 +1,6 @@
 <?php
 class roofVO{
-	var $roofID;
+	var $PRIMARY_ID;
 	var $propertyID;
 	var $name;
 	var $numLevels;//stories

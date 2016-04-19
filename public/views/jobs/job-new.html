@@ -31,6 +31,7 @@
             </select>
             <div class="page-nav">
                 <div class="page-nav-left">
+                     <i ng-click="Ctrl.goPrevious('S1')" class="fa fa-arrow-circle-left fa-3x"></i>
                 </div>
                 <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">
                     {{Ctrl.inputMsg}}
@@ -50,7 +51,7 @@
             </select>
             <div class="page-nav">
                 <div class="page-nav-left">
-                    <i ng-click="Ctrl.inputField='S1'" class="fa fa-arrow-circle-left fa-3x"></i>
+                    <i ng-click="Ctrl.goPrevious('S2')" class="fa fa-arrow-circle-left fa-3x"></i>
                 </div>
                 <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">
                     {{Ctrl.inputMsg}}
@@ -70,7 +71,7 @@
             </select>
             <div class="page-nav">
                 <div class="page-nav-left">
-                    <i ng-click="Ctrl.inputField='S2'" class="fa fa-arrow-circle-left fa-3x"></i>
+                    <i ng-click="Ctrl.goPrevious('S3')" class="fa fa-arrow-circle-left fa-3x"></i>
                 </div>
                 <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">
                     {{Ctrl.inputMsg}}
@@ -95,7 +96,7 @@
             </div>
             <div class="page-nav">
                 <div class="page-nav-left">
-                    <i ng-click="Ctrl.inputField='T10'" class="fa fa-arrow-circle-left fa-3x"></i>
+                    <i ng-click="Ctrl.goPrevious('Review')" class="fa fa-arrow-circle-left fa-3x"></i>
                 </div>
                 <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">{{Ctrl.inputMsg}}</div>
                 <div class="page-nav-right">
@@ -107,6 +108,12 @@
             <h3>Success!</h3>
             <p><span class="bold">{{Ctrl.S2.name}}</span> has been added as a job prospect for <span class="bold">{{Ctrl.S1.displayName}}</span>.</p>
             <button type="button" ng-click="Ctrl.goProposal()">Create Proposal</button>
+        </div>
+        <div class="ez-form-item" ng-show="Ctrl.inputField == 'SUCCESS-MultiUnit'">
+            <h3>Success!</h3>
+            <p><span class="bold">{{Ctrl.S3.name}}</span> has been added as a job prospect at <span class="bold">{{Ctrl.S2.name}}</span> for <span class="bold">{{Ctrl.S1.displayName}}</span>.</p>
+            <button type="button" ng-click="Ctrl.resetForm()">Add Another Job</button>
+            <button type="button" ng-click="Ctrl.goJobs()">Done</button>
         </div>
         <div class="ez-form-item" ng-show="Ctrl.inputField == 'ERROR'">
             <h3>Oops!  An error occured saving the data.</h3>

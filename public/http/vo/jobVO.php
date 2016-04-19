@@ -15,5 +15,6 @@ class jobVO{
 	// Not from database - added in shared Service
 	var $propertyName;
 	var $clientName;
+	var $bldgName="";
 }
 ?>

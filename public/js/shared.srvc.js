@@ -10,6 +10,7 @@ app.service('SharedSrvc', ['$rootScope', function sharedSrvc($rootScope) {
     self.fullClientList = [];
     self.fullPropertyList = [];
     self.fullJobList = [];
+    self.roofTable = [];
 
     // User vars
     self.loggedIn = false;
@@ -20,7 +21,6 @@ app.service('SharedSrvc', ['$rootScope', function sharedSrvc($rootScope) {
     self.managerJobs = [];
     self.managerClients = [];
     self.managerProperties = [];
-
 
     //User selections when editing
     self.selectedJobObj = {};
@@ -57,11 +57,20 @@ app.service('SharedSrvc', ['$rootScope', function sharedSrvc($rootScope) {
         self.managerProperties = [];
     };
 
-    self.jobExists = function(ClientID, PropID) {
+    self.jobExists = function(id, isMulti) {
         var rtn = false;
-        for (var i = 0; i < self.managerJobs.length; i++) {
-            if (self.managerJobs[i].property == PropID && self.managerJobs[i].client == ClientID) {
-                rtn = true;
+
+        if(isMulti){
+            for (var i = 0; i < self.managerJobs.length; i++) {
+                if (self.managerJobs[i].roofID == id) {
+                    rtn = true;
+                }
+            }
+        }else{
+            for (var i = 0; i < self.managerJobs.length; i++) {
+                if (self.managerJobs[i].property == id) {
+                    rtn = true;
+                }
             }
         }
         return rtn;
@@ -113,14 +122,15 @@ app.service('SharedSrvc', ['$rootScope', function sharedSrvc($rootScope) {
     };
 
 
-    // Jobs, Clients and Properties will always be refreshed together in that order
-    // This is the first of 3 calls from DB as each one is completed
+    // Jobs, Clients and Properties and Roofs will always be refreshed together in that order
+    // This is the first of 4 calls from DB as each one is completed
     self.setManagerJobsList = function(d) {
         // Reset all 3 lists
         self.dataRefreshed = false;
         self.managerClients = [];
         self.managerProperties = [];
         self.managerJobs = [];
+        self.roofTable = [];
         self.managerJobs = d;
     };
 
@@ -137,14 +147,24 @@ app.service('SharedSrvc', ['$rootScope', function sharedSrvc($rootScope) {
     self.setManagerProperties = function(p) {
         var arr = p;
         self.managerProperties = [];
+
         for (var i = 0; i < arr.length; i++) {
             if (arr[i].manager == self.managerID) {
                 self.managerProperties.push(arr[i]);
             }
         };
+        for (var i = 0; i < self.managerProperties.length; i++) {
+            self.managerProperties[i].multiUnit = parseInt(self.managerProperties[i].multiUnit);
+        }
         // Should have all 3 lists complete now
         // Collate Jobs with their Client and Property
         translateRelations();
+    };
+    // This is the last one... of the 4
+    self.setRoofTable = function(c) {
+        self.roofTable = c;
+        conjugateRoofs();
+        $rootScope.$broadcast("data-refreshed");
     };
 
 
@@ -199,7 +219,7 @@ app.service('SharedSrvc', ['$rootScope', function sharedSrvc($rootScope) {
             self.managerProperties[i].clientName = returnDisplayNameFromClient(clientID);
         }
         self.dataRefreshed = true;
-        $rootScope.$broadcast("data-refreshed");
+        
     };
 
     self.decodeRoofVals = function(dataObj) {
@@ -238,6 +258,32 @@ app.service('SharedSrvc', ['$rootScope', function sharedSrvc($rootScope) {
         returnVO.pitch = self.returnIdValue(self.pitchOptions, val);
 
         return returnVO;
+    };
+
+    // Add the roof/building name from roof table to the jobs list
+    var conjugateRoofs = function(){
+        for (var i = 0; i <  self.managerProperties.length; i++) {
+            if(self.managerProperties[i].multiUnit > 0){
+                var propID = parseInt(self.managerProperties[i].PRIMARY_ID);
+                for (var x = 0; x < self.roofTable.length; x++) {
+                    var prop = parseInt(self.roofTable[x].propertyID);
+                    if(prop===propID){
+                        var bldgName = self.roofTable[x].name;
+                        var roofID = parseInt(self.roofTable[x].PRIMARY_ID);
+                        insertBldgName(roofID,bldgName);
+                    }
+                }
+            }
+        }
+    };
+
+    var insertBldgName = function(id,n){
+        for (var i = 0; i < self.managerJobs.length; i++) {
+            var roofID = parseInt(self.managerJobs[i].roofID);
+            if(roofID===id){
+                self.managerJobs[i].bldgName = n;
+            }
+        }
     };
 
     var convertDateToString = function(m) {

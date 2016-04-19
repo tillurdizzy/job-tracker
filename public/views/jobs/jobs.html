@@ -8,40 +8,26 @@
     <div ui-view>
         <div class="top-page-menu">
             <div><i ng-click="Ctrl.goNewJob();" class="fa fa-plus fa-2x"></i></div>
-            <div>
-                <h3>New Job</h3></div>
+            <div><h3>New Job</h3></div>
         </div>
         <div class="list-container">
-            <div job-item id="{{e.PRIMARY_ID}}" status="{{e.status}}" details="Ctrl.showDetails" property="{{e.propertyName}}" ng-repeat="e in Ctrl.jobs">
-            </div>
+            <div job-item id="{{e.PRIMARY_ID}}" status="{{e.status}}" details="Ctrl.showDetails" property="{{e.propertyName}}" bldgname="{{e.bldgName}}" ng-repeat="e in Ctrl.jobs"></div>
         </div>
         <div class="block-section" style="margin-top:20px;">
             <div class="text-block-display">
-                <p>
-                    The <span class="bold">JOBS</span> page is where you create, track and update the roofing jobs you currently have in progress.
-                </p>
+                <p>The <span class="bold">JOBS</span> page is where you create, track and update the roofing jobs you currently have in progress.</p>
                 <p>To create a new job, you first need:</p>
                 <ol>
                     <li>A Client - create a new client under the CLIENTS tab, or use an existing one.</li>
                     <li>A Property - create a new property for the Client under the PROPERTIES tab.</li>
                     <li>After you have a Client and a Property, click the New Job (+) button above.</li>
                 </ol>
-                <p>
-                    On the left edge of each Job listing is a red containing the <span class="bold">Job Status</span> . All new Jobs are created with the Status of <span class="bold">Prospect</span> , and progresses through successive stages as follows:
-                </p>
+                <p>On the left edge of each Job listing is a red containing the <span class="bold">Job Status</span> . All new Jobs are created with the Status of <span class="bold">Prospect</span> , and progresses through successive stages as follows:</p>
                 <ul>
-                    <li>
-                        <span class="bold">Proposal</span> - Bid and Scope of Work have been created and submitted to client. Waiting approval.
-                    </li>
-                    <li>
-                        <span class="bold">Contract</span> - Bid and Scope of Work have been approved and accepted by client, and initial payment has been received.
-                    </li>
-                    <li>
-                        <span class="bold">Active</span> - Materials have been delivered and a crew is on the job site.
-                    </li>
-                    <li>
-                        <span class="bold">Complete</span> - All payments has been received.
-                    </li>
+                    <li><span class="bold">Proposal</span> - Bid and Scope of Work have been created and submitted to client. Waiting approval.</li>
+                    <li><span class="bold">Contract</span> - Bid and Scope of Work have been approved and accepted by client, and initial payment has been received.</li>
+                    <li><span class="bold">Active</span> - Materials have been delivered and a crew is on the job site.</li>
+                    <li><span class="bold">Complete</span> - All payments has been received.</li>
                 </ul>
                 <p>Click the green Pencil Icon at the end of each listing to create a Proposal, update the Status, or make other changes.</p>
             </div>

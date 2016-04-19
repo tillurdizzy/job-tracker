@@ -22,6 +22,7 @@ while ($row = mysqli_fetch_object($result)) {
 	$oneVO->property = $row->property;
 	$oneVO->client = $row->client;
 	$oneVO->manager = $row->manager;
+	$oneVO->roofID = $row->roofID;
 	$oneVO->status = $row->status;
 	$oneVO->dateProspect = $row->dateProspect;
 	$oneVO->dateProposal = $row->dateProposal;

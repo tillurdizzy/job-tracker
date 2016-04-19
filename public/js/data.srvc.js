@@ -17,7 +17,6 @@ app.service('evoDb',['$http','$q','SharedSrvc','LogInSrvc',function eventQueries
 		getRoof:httpPathPrefix + "getRoof.php",
 		putPropertyAddress:httpPathPrefix + "putPropertyAddress.php",
 		putRoof:httpPathPrefix + "putRoof.php",
-		putJob:httpPathPrefix + "putJob.php",
 		putMultiLevels:httpPathPrefix + "putMultiLevels.php",
 		putMultiVents:httpPathPrefix + "putMultiVents.php"
 	};
@@ -138,14 +137,18 @@ app.service('evoDb',['$http','$q','SharedSrvc','LogInSrvc',function eventQueries
 		var deferred = $q.defer();
 		$http({method: 'POST', url: httpPathPrefix + 'putJob.php',data:dataObj}).
 		success(function(data, status, headers, config) {
-			var newJobID = data.params;
+			var newJobID = data.id;
 			var dataObj = {jobID:newJobID};
 			self.putJobParams(dataObj);
 			self.putMaterialOptions(dataObj);
 			self.putSpecialConsiderations(dataObj);
 			self.putMultiLevel(dataObj);
 			self.putJobMaterials(dataObj);
-     		deferred.resolve(data);
+
+			var rtnObj = {};
+			rtnObj.result = "Success";
+			rtnObj.data = data;
+			deferred.resolve(rtnObj);
 	    }).
 	    error(function(data, status, headers, config) {
 			deferred.reject(data);
@@ -203,7 +206,7 @@ app.service('evoDb',['$http','$q','SharedSrvc','LogInSrvc',function eventQueries
 
 	self.putMultiLevel = function(dataObj){
 		var deferred = $q.defer();
-		$http({method: 'POST', url: httpPathPrefix + 'putMultiLevel.php',data:dataObj}).
+		$http({method: 'POST', url: httpPathPrefix + 'putMultiLevels.php',data:dataObj}).
 		success(function(data, status, headers, config) {
      		deferred.resolve(data);
 	    }).
@@ -373,8 +376,25 @@ app.service('evoDb',['$http','$q','SharedSrvc','LogInSrvc',function eventQueries
 		$http({method: 'POST', url: httpPathPrefix + 'getPropertiesByManager.php',data:dataObj}).
 		success(function(data, status) {
 			if(typeof data != 'string'){
-				self.lastResult = data;
 				S.setManagerProperties(data);
+				self.getRoofTable();
+     			deferred.resolve(data);
+     		}else{
+				deferred.resolve(false);
+     		}
+	    }).
+		error(function(data, status, headers, config) {
+			deferred.reject(false);
+	    });
+	    return deferred.promise; //return the data
+	};
+
+	self.getRoofTable = function(){
+		var deferred = $q.defer();
+		$http({method: 'POST', url: httpPathPrefix + 'getRoofTable.php'}).
+		success(function(data, status) {
+			if(typeof data != 'string'){
+				S.setRoofTable(data);
      			deferred.resolve(data);
      		}else{
 				deferred.resolve(false);

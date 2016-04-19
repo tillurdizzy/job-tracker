@@ -4,6 +4,7 @@ app.directive('jobItem',[function () {
       scope:{
         id:'@',
         property:'@',
+        bldgname:'@',
         status:'@',
         details:'&'
       },

@@ -18,6 +18,7 @@ while ($row = mysqli_fetch_object($result)) {
 	$oneVO->PRIMARY_ID = $row->PRIMARY_ID;
 	$oneVO->jobNumber = $row->jobNumber;
 	$oneVO->property = $row->property;
+	$oneVO->roofID = $row->roofID;
 	$oneVO->client = $row->client;
 	$oneVO->manager = $row->manager;
 	$oneVO->status = $row->status;

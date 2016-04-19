@@ -19,6 +19,7 @@ while ($row = mysqli_fetch_object($result)) {
 	$oneVO->jobNumber = $row->jobNumber;
 	$oneVO->property = $row->property;
 	$oneVO->client = $row->client;
+	$oneVO->roofID = $row->roofID;
 	$oneVO->manager = $row->manager;
 	$oneVO->status = $row->status;
 	$oneVO->dateProspect = $row->dateProspect;
