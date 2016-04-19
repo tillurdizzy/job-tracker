@@ -1,5 +1,5 @@
 'use strict';
-app.controller('NewJobCtrl',['$scope','$state','evoDb','SharedSrvc',function ($scope,$state,evoDb,SharedSrvc) {
+app.controller('NewJobCtrl',['$scope','$state','evoDb','SharedSrvc','ngDialog',function ($scope,$state,evoDb,SharedSrvc,ngDialog) {
 
 	var DB = evoDb;
 	var Me = this;
@@ -14,6 +14,9 @@ app.controller('NewJobCtrl',['$scope','$state','evoDb','SharedSrvc',function ($s
     // Form elements
     Me.S1 = Me.clientList[0];
     Me.S2 = ""; // Property
+    Me.S3 = ""; // Building
+    Me.status;
+    Me.currentDate;
 
     Me.isMultiUnit = false;
    
@@ -35,7 +38,7 @@ app.controller('NewJobCtrl',['$scope','$state','evoDb','SharedSrvc',function ($s
         Me.inputMsg = "";
         Me.isError = false;
 
-        Me.isMultiUnit = returnMultiUnit();
+        Me.isMultiUnit = Me.returnMultiUnit();
 
         if(Me.isMultiUnit == true){
             numFields = 3;
@@ -47,9 +50,9 @@ app.controller('NewJobCtrl',['$scope','$state','evoDb','SharedSrvc',function ($s
                 Me.isError = true;
                 Me.inputMsg = "This Job already exists.";
             }else{
-                Me.T1 = "Prospect";
+                Me.status = "Prospect";
                 var d = new Date();
-                Me.T2 = d.valueOf();
+                Me.currentDate = d.valueOf();
                 Me.inputField="REVIEW";
                 Me.inputMsg = "";
                 Me.S.selectedPropertyObj = Me.S2;
@@ -66,9 +69,9 @@ app.controller('NewJobCtrl',['$scope','$state','evoDb','SharedSrvc',function ($s
             Me.isError = true;
             Me.inputMsg = "This Job already exists.";
         }else{
-            Me.T1 = "Prospect";
+            Me.status = "Prospect";
             var d = new Date();
-            Me.T2 = d.valueOf();
+            Me.currentDate = d.valueOf();
             Me.inputField="REVIEW";
             Me.inputMsg = "";
             Me.S.selectedPropertyObj = Me.S2;
@@ -88,17 +91,38 @@ app.controller('NewJobCtrl',['$scope','$state','evoDb','SharedSrvc',function ($s
    };
 
    var getRoof = function() {
-        var dataObj = { propID: ME.S2.PRIMARY_ID };
+        var dataObj = { propID: Me.S2.PRIMARY_ID };
         DB.query("getRoof",dataObj).then(function(resultObj) {
             if (resultObj.result == "Error" || typeof resultObj.data === "string") {
                 alert("FALSE returned for DB.getRoof() at >>> PropertiesCtrl.getRoof()");
             } else {
                 Me.propertyRoofs = resultObj.data;
+                validateRoofs();
             }
         }, function(error) {
             alert("ERROR returned for DB.getRoof() at >>> PropertiesCtrl.getRoof()");
         });
     };
+
+    var validateRoofs= function(){
+        if(Me.propertyRoofs.length > 0){
+            Me.S3 = Me.propertyRoofs[0];
+        }else{
+            openRoofsInvalidDialog();
+        }
+    };
+
+    var openRoofsInvalidDialog = function() {
+            var dialog = ngDialog.open({
+                template: '<p>Cannot create job. This multi-unit property does not have any buildings/roofs added to it.</p>' +
+                    '<div class="ngdialog-buttons"><button type="button" class="ngdialog-button ngdialog-button-primary" ng-click="closeThisDialog(1)">Close</button></div>',
+                plain: true
+            });
+            dialog.closePromise.then(function(data) {
+                console.log('ngDialog closed' + (data.value === 1 ? ' using the button' : '') + ' and notified by promise: ' + data.id);
+                $state.transitionTo("addNewProperty.roof");
+            });
+        };
 
 
     // When user selects Client, filter properties for only tha client
@@ -110,11 +134,17 @@ app.controller('NewJobCtrl',['$scope','$state','evoDb','SharedSrvc',function ($s
             }
         };
         Me.S2 = Me.propertyOptions[0];
+        if(Me.returnMultiUnit()){
+            numFields = 3;
+        }
     };
 
     Me.selectProperty = function(){
         Me.inputMsg = "";
         Me.isError = false;
+        if(Me.returnMultiUnit()){
+            numFields = 3;
+        }
     };
 
     Me.selectRoof = function(){
@@ -122,7 +152,9 @@ app.controller('NewJobCtrl',['$scope','$state','evoDb','SharedSrvc',function ($s
     };
 
     Me.resetForm = function(){
-        Me.clearForm();
+        numFields = 2;
+        Me.inputMsg = "Field 1 of " + numFields;
+        Me.inputField = "S1";
     };
 
     Me.submitForm = function(){
@@ -132,21 +164,20 @@ app.controller('NewJobCtrl',['$scope','$state','evoDb','SharedSrvc',function ($s
         dataObj.manager = Me.S.manager;
         dataObj.client = Me.S1.PRIMARY_ID;
         dataObj.property = Me.S2.PRIMARY_ID;
-        dataObj.status = Me.T1;
-        dataObj.dateProspect = Me.T2;
+        dataObj.roofID = Me.S3.PRIMARY_ID;
+        dataObj.status = Me.status;
+        dataObj.dateProspect = Me.currentDate;
         dataObj.dateProposal = "0";
 
-        var result = DB.putJob(dataObj).then(function(result){
-            if(typeof result != "boolean"){
+        DB.query("putJob", dataObj).then(function(resultObj) {
+            if (resultObj.result == "Error" || typeof resultObj.data === "string") {
+                alert("FALSE returned for putRoof >>> property-new-view1-address.ctrl.js");
+            } else {
                Me.inputField="SUCCESS";
-               var jobID = result.insertID;
-               dataObj.PRIMARY_ID = jobID;
-               Me.S.selectedJobObj = dataObj;
-            }else{
-                Me.dataError();
-            }                 
-        },function(error){
-            Me.dataError();
+                var jobID = resultObj.data.id;
+            }
+        }, function(error) {
+            alert("ERROR returned for putRoof >>> property-new-view1-address.ctrl.js");
         });
     };
 

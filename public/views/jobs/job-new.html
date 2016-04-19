@@ -4,20 +4,20 @@
         <button ng-click="NAV.goProperties()" type="button" class="button middle inactive">PROPERTIES</button>
         <button ng-click="NAV.goJobs()" type="button" class="button">JOBS</button>
     </div>
-    <h2>New Property</h2>
+    <h2>New Job</h2>
     <horiz-rule margintop="5px" marginbottom="10px"></horiz-rule>
     <div class="ez-form">
         <div class="ez-form-item" ng-show="Ctrl.inputField=='INFO'">
             <add-space margintop="10"></add-space>
-                <div class="text-block-display">
-                    <h4>What is a Job?</h4>
-                    <p>A job simply consists of one of your <a ui-sref="clients"><span class="bold">Clients</span></a> matched with one your <a ui-sref="properties"><span class="bold">Properties.</span></a></p>
-                    <p>Before creating a new <span class="bold">Job</span>, you should already have the <span class="bold">Client</span> and the <span class="bold">Property</span> created.</p>
-                    <add-space margintop="12" marginbottom="0"></add-space> 
-                </div>
+            <div class="text-block-display">
+                <h4>What is a Job?</h4>
+                <p>A job simply consists of one of your <a ui-sref="clients"><span class="bold">Clients</span></a> matched with one your <a ui-sref="properties"><span class="bold">Properties.</span></a></p>
+                <p>Before creating a new <span class="bold">Job</span>, you should already have the <span class="bold">Client</span> and the <span class="bold">Property</span> created.</p>
+                <add-space margintop="12" marginbottom="0"></add-space>
+            </div>
             <div class="flex-row-start">
                 <div>
-                     <button type="button" ng-click="Ctrl.inputField='S1'">Continue</button>
+                    <button type="button" ng-click="Ctrl.inputField='S1'">Continue</button>
                 </div>
             </div>
         </div>
@@ -31,7 +31,6 @@
             </select>
             <div class="page-nav">
                 <div class="page-nav-left">
-                   
                 </div>
                 <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">
                     {{Ctrl.inputMsg}}
@@ -44,13 +43,14 @@
         </div>
         <div class="ez-form-item" ng-show="Ctrl.inputField=='S2'">
             <div class="input-label">
-                <div><h3>Select the Property for this Job</h3></div>
+                <div>
+                    <h3>Select the Property for this Job</h3></div>
             </div>
             <select ng-model="Ctrl.S2" ng-options="c.name for c in Ctrl.propertyOptions" ng-change="Ctrl.selectProperty();">
             </select>
             <div class="page-nav">
                 <div class="page-nav-left">
-                    
+                    <i ng-click="Ctrl.inputField='S1'" class="fa fa-arrow-circle-left fa-3x"></i>
                 </div>
                 <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">
                     {{Ctrl.inputMsg}}
@@ -63,13 +63,14 @@
         </div>
         <div class="ez-form-item" ng-show="Ctrl.inputField=='S3'">
             <div class="input-label">
-                <div><h3>This is a multi-unit property. Select the building for this job.</h3></div>
+                <div>
+                    <h3>This is a multi-unit property. Select the building for this job.</h3></div>
             </div>
             <select ng-model="Ctrl.S3" ng-options="c.name for c in Ctrl.propertyRoofs" ng-change="Ctrl.selectRoof();">
             </select>
             <div class="page-nav">
                 <div class="page-nav-left">
-                    
+                    <i ng-click="Ctrl.inputField='S2'" class="fa fa-arrow-circle-left fa-3x"></i>
                 </div>
                 <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">
                     {{Ctrl.inputMsg}}
@@ -87,8 +88,10 @@
                 <h3>{{Ctrl.S1.displayName}}</h3>
                 <h4>Property:</h4>
                 <h3>{{Ctrl.S2.name}}</h3>
+                <h4>Building:</h4>
+                <h3>{{Ctrl.S3.name}}</h3>
                 <h4>Status:</h4>
-                <h3>{{Ctrl.T1}}</h3>
+                <h3>{{Ctrl.status}}</h3>
             </div>
             <div class="page-nav">
                 <div class="page-nav-left">
