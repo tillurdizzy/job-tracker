@@ -297,15 +297,15 @@
     </div>
     <div class="ez-form-item" ng-show="Ctrl.inputField == 'SUCCESS'">
         <h3>Success!</h3>
-        <p>Roof description for {{Ctrl.bldgName}} has been accepted.</p>
-        <button type="button" ng-click="Ctrl.goProperties()">Create Job</button>
+        <p>Roof description for {{Ctrl.bldgName}} has been accepted. Create a Job under the JOBS tab.</p>
+        <button type="button" ng-click="Ctrl.goProperties()">Back</button>
     </div>
     <div class="ez-form-item" ng-show="Ctrl.inputField == 'SUCCESS_Multi'">
         <h3>Success!</h3>
         <p>Roof description for {{Ctrl.bldgName}} has been accepted.</p>
        
         <button type="button" ng-click="Ctrl.resetMe()">Add Another Building</button>
-        <button type="button" ng-click="Ctrl.goProperties()">Home</button>
+        <button type="button" ng-click="Ctrl.goProperties()">Back</button>
     </div>
     <div class="ez-form-item" ng-show="Ctrl.inputField == 'ERROR'">
         <h3>Oops!  An error occured saving the data.</h3>

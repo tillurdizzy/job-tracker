@@ -26,6 +26,7 @@ app.service('SharedSrvc', ['$rootScope', function sharedSrvc($rootScope) {
     self.selectedJobObj = {};
     self.selectedClientObj = {};
     self.selectedPropertyObj = {};
+    self.selectedRoofObj = {};// not using this yet
     self.selectedPropertyRoofDescriptions = [];
 
     // AWS Bucket Vars
@@ -40,12 +41,12 @@ app.service('SharedSrvc', ['$rootScope', function sharedSrvc($rootScope) {
         self.logInObj = obj;
         self.loggedIn = true;
 
-
         //... Get rid of these and adjust reference to above obj
         self.managerID = obj.PRIMARY_ID;
         self.managerName = obj.name_first + " " + obj.name_last;
-
     };
+
+
 
     self.logOut = function() {
         self.logInObj = {};
@@ -93,7 +94,6 @@ app.service('SharedSrvc', ['$rootScope', function sharedSrvc($rootScope) {
     };
 
 
-
     self.setJobByID = function(id) {
         for (var i = 0; i < self.managerJobs.length; i++) {
             if (self.managerJobs[i].PRIMARY_ID == id) {
@@ -117,8 +117,20 @@ app.service('SharedSrvc', ['$rootScope', function sharedSrvc($rootScope) {
             if (self.managerProperties[i].PRIMARY_ID == id) {
                 self.selectedPropertyObj = self.managerProperties[i];
                 break;
-            }
+            };
         };
+    };
+
+    self.setPropertyByObj = function(obj){
+        self.selectedPropertyObj.PRIMARY_ID = obj.PRIMARY_ID;
+        self.selectedPropertyObj.manager = obj.manager;
+        self.selectedPropertyObj.client = obj.client;
+        self.selectedPropertyObj.multiUnit = obj.multiUnit;
+        self.selectedPropertyObj.name = obj.name;
+        self.selectedPropertyObj.street = obj.street;
+        self.selectedPropertyObj.city = obj.city;
+        self.selectedPropertyObj.state = obj.state;
+        self.selectedPropertyObj.zip = obj.zip;
     };
 
 

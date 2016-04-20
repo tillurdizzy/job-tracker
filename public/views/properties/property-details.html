@@ -1,5 +1,10 @@
+
+<div class="title-with-btn">
+    <i ng-click="Ctrl.backToList();" class="fa fa-arrow-circle-left fa-3x"></i>
+    <h2>Property Details</h2>
+</div>
 <div class="section-header">
-    <h2>Property</h2>
+    <h2>Client/Owner</h2>
 </div>
 <div class="text-block-display">
     <div>
@@ -8,10 +13,6 @@
         <h3>{{Ctrl.selectedPropertyObj.city + ", " + Ctrl.selectedPropertyObj.state + " " + Ctrl.selectedPropertyObj.zip}}</h3>
         <h3 style="margin-top:.5em;">Client: {{Ctrl.selectedPropertyObj.clientName}}</h3>
     </div>
-    <div>
-        <h3></h3>
-    </div>
-    
 </div>
 <div class="section-header">
     <h2>Roof Description</h2>
@@ -36,6 +37,5 @@
 
 <div>
     <i ng-click="Ctrl.editRoofDetails()" class="fa fa-pencil-square fa-2x"></i>
-    <button type="button" class="button nav-btn" ng-click="Ctrl.backToList()">Back</button>
 </div>
 

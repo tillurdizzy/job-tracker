@@ -342,19 +342,19 @@ app.controller('NewPropertyRoofCtrl', ['$state', '$scope', 'evoDb', 'SharedSrvc'
 
         var init = function() {
             // For multiUnit OR Single Unit
-            if (ME.S.selectedPropertyObj.multiUnit != "0") {
+            ME.multiUnit = parseInt(ME.S.selectedPropertyObj.multiUnit);
+            if (ME.multiUnit > 0) {
                 firstField = 1;
                 ME.inputField = ME.formFields[firstField];
                 ME.formTitleDescription = "Roof Description for " + ME.S.selectedPropertyObj.name;
                 ME.multiUnit = ME.S.selectedPropertyObj.multiUnit;
                 ME.propID = ME.S.selectedPropertyObj.PRIMARY_ID;
             } else {
-                ME.multiUnit = "0";
-                ME.bldgName =  ME.T.roofDescriptionData.bldgName;
+                ME.bldgName =  ME.S.selectedPropertyObj.name;
                 firstField = 2;
                 ME.inputField = ME.formFields[firstField];
-                ME.propID = ME.T.roofDescriptionData.propID;
-                ME.formTitleDescription = "Roof Description for " + ME.T.roofDescriptionData.name;
+                ME.propID = ME.S.selectedPropertyObj.PRIMARY_ID;
+                ME.formTitleDescription = "Roof Description for " + ME.S.selectedPropertyObj.name;
             }
         };
 

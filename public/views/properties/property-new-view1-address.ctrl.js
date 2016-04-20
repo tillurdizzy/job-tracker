@@ -11,7 +11,7 @@ app.controller('NewPropertyAddressCtrl', ['$state', '$scope', 'evoDb', 'SharedSr
 
         // Business client with multi-unit property (apartments)
         // At this point!!!! T.multiUnitProperty will simply be Yes or No
-        ME.multiUnit = T.multiUnitProperty; 
+        ME.multiUnit = T.multiUnitProperty;
 
         //Form models
         ME.clientName = ME.selectedClientObj.name_first + " " + ME.selectedClientObj.name_last;
@@ -94,28 +94,25 @@ app.controller('NewPropertyAddressCtrl', ['$state', '$scope', 'evoDb', 'SharedSr
             dataObj.city = ME.propertyCity;
             dataObj.state = ME.propertyState;
             dataObj.zip = ME.propertyZip;
-            if(ME.multiUnit == "Yes"){
-                 dataObj.multiUnit = ME.multiUnitNumber;
-            }else{
+            if (ME.multiUnit == "Yes") {
+                dataObj.multiUnit = ME.multiUnitNumber;
+            } else {
                 dataObj.multiUnit = "0";
             };
-           
+
             DB.query("putPropertyAddress", dataObj).then(function(resultObj) {
                 if (resultObj.result == "Error" || typeof resultObj.data === "string") {
                     alert("FALSE returned for putPropertyAddress >>> submitForm >>> property-new-view1-address.ctrl.js");
                 } else {
-                    T.roofDescriptionData.propID = resultObj.data.id;
-                    T.roofDescriptionData.address = ME.streetAddress;
-                    T.roofDescriptionData.multiUnit = ME.multiUnit;
-                    T.roofDescriptionData.bldgName = ME.propertyName;
-                    // Insert blank roof table to be updated later
-                    putRoof(resultObj.data.id);
-
+                    var propID = resultObj.data.id;
+                    dataObj.PRIMARY_ID = propID;
+                    ME.S.setPropertyByObj(dataObj);
                     // For Single unit continue with roof description
-                    if(ME.multiUnit == "No"){
+                    if (ME.multiUnit == "No") {
+                        //insertRoof(propID);
                         openContinueDialog();
-                    // For Multi-unit they must add roof descriptions from the Property Detail/Edit page
-                    }else{
+                        // For Multi-unit they must add roof descriptions from the Property Detail/Edit page
+                    } else {
                         openCompleteDialog();
                     }
                 }
@@ -124,17 +121,17 @@ app.controller('NewPropertyAddressCtrl', ['$state', '$scope', 'evoDb', 'SharedSr
             });
         };
 
-        // Insert a default roof entry
-        var putRoof = function(id){
-            var dataObj = {propID:id};
-            DB.query("putRoof", dataObj).then(function(resultObj) {
+        // Insert a default roof entry - only for single units
+        var insertRoof = function(id) {
+            var dataObj = { propertyID: id };
+            DB.query("insertRoof", dataObj).then(function(resultObj) {
                 if (resultObj.result == "Error" || typeof resultObj.data === "string") {
-                    alert("FALSE returned for putRoof >>> property-new-view1-address.ctrl.js");
+                    alert("FALSE returned for insertRoof >>> property-new-view1-address.ctrl.js");
                 } else {
-                   
+                    openContinueDialog();
                 }
             }, function(error) {
-                alert("ERROR returned for putRoof >>> property-new-view1-address.ctrl.js");
+                alert("ERROR returned for insertRoof >>> property-new-view1-address.ctrl.js");
             });
         };
 

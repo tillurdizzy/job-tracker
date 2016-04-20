@@ -1,5 +1,10 @@
-<div class="top section-header">
+<div class="title-with-btn">
+    <i ng-click="Ctrl.backToList();" class="fa fa-arrow-circle-left fa-3x"></i>
     <h2>Client Details</h2>
+</div>
+
+<div class="top section-header">
+    <h2>Name/Address</h2>
 </div>
 <div class="text-block-display" ng-show="Ctrl.selectedClientObj.type=='Business'">
     <h4>{{Ctrl.selectedClientObj.company}}</h4>
@@ -10,6 +15,7 @@
     <h3>{{Ctrl.selectedClientObj.phone_cell}}</h3>
     <h3>{{Ctrl.selectedClientObj.email}}</h3>
 </div>
+
 <div class="text-block-display" ng-show="Ctrl.selectedClientObj.type=='Individual'">
     <h4>{{Ctrl.selectedClientObj.displayName}}</h4>
     <h3>{{Ctrl.selectedClientObj.street}}</h3>
@@ -17,4 +23,28 @@
     <h3>{{Ctrl.selectedClientObj.phone_cell}}</h3>
     <h3>{{Ctrl.selectedClientObj.email}}</h3>
 </div>
-<button type="button" class="button nav-btn" ng-click="Ctrl.backToList()">Back</button>
+
+<div class="top section-header">
+    <h2>Properties</h2>
+</div>
+
+<div style="width:100%; margin-top: 10px;">
+    <table st-table="Ctrl.clientPropreties" class="table table-striped" style="width:100%;">
+        <thead>
+            <tr>
+                <th>Address</th>
+                <th>City</th>
+                <th>State</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="row in Ctrl.roofDescriptions">
+                <td>{{row.street}}</td>
+                <td>{{row.city}}</td>
+                <td>{{row.state}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+

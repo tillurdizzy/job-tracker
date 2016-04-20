@@ -31,7 +31,7 @@ app.controller('JobsCtrl',['$location','$state','evoDb','$scope','SharedSrvc',fu
         ME.isContract = false;
         ME.isActive = false;
         ME.isComplete = false;
-        
+
     	if(ME.selectedJobObj.dateProposal != "0"){
     		 ME.isProposal = true;
     	}
@@ -149,9 +149,10 @@ app.controller('JobsCtrl',['$location','$state','evoDb','$scope','SharedSrvc',fu
 		console.log(loc + " : " + error);
 	};
 
-    $scope.$watch( function () { return ME.S.managerJobs; }, function ( jobs ) {
+    // updates jobs if changed but is redundant here....!!
+    /*$scope.$watch( function () { return ME.S.managerJobs; }, function ( jobs ) {
 	  ME.jobs = jobs;
-	});
+	});*/
 
 	$scope.$watch('$viewContentLoaded', function() {
        var loggedIn = ME.S.loggedIn;
