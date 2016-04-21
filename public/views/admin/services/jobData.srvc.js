@@ -6,7 +6,7 @@ app.service('JobDataSrvc', ['$http', '$q', 'LogInSrvc', function adminData($http
     var L = LogInSrvc;
     var job_list = [];
 
-    var pathPrefix = "views/admin/http/";
+    var pathPrefix = "http/";
     var queryPaths = {};
     var propertyStatusPaths = {};
 

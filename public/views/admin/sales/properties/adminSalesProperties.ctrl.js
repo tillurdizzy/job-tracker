@@ -13,6 +13,9 @@ app.controller('AdminSalesPropertiesCtrl', ['$state', '$scope', 'AdminSharedSrvc
     ME.formStatus = "Pristine";
     ME.isMultiLevel = false;
     ME.isMultiVented = false;
+    ME.isMultiUnit = false;
+
+    ME.formVisibility = {propertySelection:false,clientSelection:true,locationInput:true,roofSelection:false,roofInput:false};
 
     // Model Vars
     ME.inputDataObj = {};
@@ -92,7 +95,6 @@ app.controller('AdminSalesPropertiesCtrl', ['$state', '$scope', 'AdminSharedSrvc
         ME.multiVentObj.SLRVNT = ME.multiVentModel.SLRVNT.id;
     };
 
-
     ME.configPropObj = function(ID) {
 
         ME.formStatus = "Pristine";
@@ -103,7 +105,6 @@ app.controller('AdminSalesPropertiesCtrl', ['$state', '$scope', 'AdminSharedSrvc
                 break;
             };
         };
-
 
         ME.inputDataObj.client = ME.S.returnObjFromSetByPrimaryID(ME.S.CLIENTS, ME.inputDataObj.client);
         ME.inputDataObj.edgeDetail = returnObjById(ME.L.edgeDetail, ME.inputDataObj.edgeDetail);
@@ -377,6 +378,12 @@ app.controller('AdminSalesPropertiesCtrl', ['$state', '$scope', 'AdminSharedSrvc
             var managerID = ME.tableDataProvider[i].manager;
             ME.tableDataProvider[i].managerDisplayName = ME.S.returnManagerNameByID(managerID);
         }
+
+        ME.tableDataProvider.unshift({street:"-- Select --",PRIMARY_ID:-1});
+
+        ME.CLIENTS = DB.clone(ME.S.CLIENTS);
+        ME.CLIENTS.unshift({displayName:"-- Select --",PRIMARY_ID:-1});
+        ME.inputDataObj.client = ME.CLIENTS[0];
     };
 
     $scope.$watch('$viewContentLoaded', function() {

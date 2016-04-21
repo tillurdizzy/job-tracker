@@ -162,6 +162,10 @@ app.service('ListSrvc',[function sharedLists(){
 	    {label:"Ventilation"},
 	    {label:"Other"}];
 
+	self.multiRoof = [
+		{label:"Single Contiguous Roof",id:0},
+		{label:"Multiple Roofs",id:1}];
+
 	self.returnIdValue = function(set,id){
 		var rtnObj = {};
 		for (var i = 0; i < set.length; i++) {

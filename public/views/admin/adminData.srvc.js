@@ -15,8 +15,8 @@ app.service('AdminDataSrvc',['$http','$q','SharedSrvc','LogInSrvc',function admi
 	var httpPathPrefix = "http/";
 
 	var queryPaths = {
-		getMaterialsShingle:localPathPrefix + "getMaterialsShingle.php",
-		getSalesReps:localPathPrefix + "getSalesReps.php",
+		getMaterialsShingle:httpPathPrefix + "getMaterialsShingle.php",
+		getSalesReps:httpPathPrefix + "getSalesReps.php",
 		getClients:httpPathPrefix + "getClients.php",
 		getJobs:httpPathPrefix + "getJobs.php",
 		getMultiVents:httpPathPrefix + "getMultiVents.php",
