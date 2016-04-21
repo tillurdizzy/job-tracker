@@ -186,6 +186,21 @@ app.controller('AdminSalesPropertiesCtrl', ['$state', '$scope', 'AdminSharedSrvc
         }
     };
 
+    var createPropertyDataObj = function(){
+        var outputDataObj = {};
+        outputDataObj.manager = ME.inputDataObj.client.manager;
+        outputDataObj.client = ME.inputDataObj.client.PRIMARY_ID;
+        var d = new Date();
+        outputDataObj.createdDate = d.valueOf();
+        outputDataObj.name = ME.inputDataObj.name;
+        outputDataObj.street = ME.inputDataObj.street;
+        outputDataObj.city = ME.inputDataObj.city;
+        outputDataObj.state = ME.inputDataObj.state;
+        outputDataObj.zip = ME.inputDataObj.zip;
+        outputDataObj.roofDesign = ME.inputDataObj.roofDesign;
+        putProperty(outputDataObj);
+    };
+
     var createDataObj = function() {
         var outputDataObj = {};
         // Validate Multilevel selections
@@ -203,7 +218,7 @@ app.controller('AdminSalesPropertiesCtrl', ['$state', '$scope', 'AdminSharedSrvc
             }
         } else {
             ME.multiLevelObj = { propertyID: 0, LEVONE: 0, LEVTWO: 0, LEVTHR: 0, LEVFOU: 0 };
-        };
+        }
 
         if (ME.isMultiVented === true) {
             ME.multiVentObj.TURBNS = ME.multiVentModel.TURBNS.id;
@@ -213,7 +228,7 @@ app.controller('AdminSalesPropertiesCtrl', ['$state', '$scope', 'AdminSharedSrvc
             ME.multiVentObj.SLRVNT = ME.multiVentModel.SLRVNT.id;
         } else {
             ME.multiVentObj = { propertyID: 0, TURBNS: 0, STATIC: 0, PWRVNT: 0, AIRHWK: 0, SLRVNT: 0 };
-        };
+        }
         outputDataObj.PRIMARY_ID = ME.inputDataObj.PRIMARY_ID;
         outputDataObj.manager = ME.inputDataObj.client.manager;
         outputDataObj.client = ME.inputDataObj.client.PRIMARY_ID;
@@ -235,16 +250,10 @@ app.controller('AdminSalesPropertiesCtrl', ['$state', '$scope', 'AdminSharedSrvc
         outputDataObj.roofVents = ME.inputDataObj.roofVents.id;
         outputDataObj.pitch = ME.inputDataObj.roofPitch.id;
 
-        switch (ME.EditMode) {
-            case "Add Item":
-                putProperty(outputDataObj);
-                break;
-            case "Update Item":
-                updateProperty(outputDataObj);
-                updateMultiLevels(outputDataObj.PRIMARY_ID);
-                updateMultiVents(outputDataObj.PRIMARY_ID);
-                break;
-        }
+        updateProperty(outputDataObj);
+        updateMultiLevels(outputDataObj.PRIMARY_ID);
+        updateMultiVents(outputDataObj.PRIMARY_ID);
+
     };
 
     var putProperty = function(dataObj) {

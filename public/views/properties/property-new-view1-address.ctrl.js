@@ -95,9 +95,9 @@ app.controller('NewPropertyAddressCtrl', ['$state', '$scope', 'evoDb', 'SharedSr
             dataObj.state = ME.propertyState;
             dataObj.zip = ME.propertyZip;
             if (ME.multiUnit == "Yes") {
-                dataObj.multiUnit = ME.multiUnitNumber;
+                dataObj.roofDesign = 2;
             } else {
-                dataObj.multiUnit = "0";
+                dataObj.roofDesign = 0;
             };
 
             DB.query("putPropertyAddress", dataObj).then(function(resultObj) {

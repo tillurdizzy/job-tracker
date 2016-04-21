@@ -162,9 +162,11 @@ app.service('ListSrvc',[function sharedLists(){
 	    {label:"Ventilation"},
 	    {label:"Other"}];
 
-	self.multiRoof = [
-		{label:"Single Contiguous Roof",id:0},
-		{label:"Multiple Roofs",id:1}];
+	self.roofDesign = [
+		{label:"Single Pitched Roof",id:0},
+		{label:"Single Pitched Roof with Flat Portion",id:1},
+		{label:"Multiple Pitched Roofs",id:2},
+		{label:"Single Flat Roof",id:3}];
 
 	self.returnIdValue = function(set,id){
 		var rtnObj = {};

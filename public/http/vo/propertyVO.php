@@ -3,7 +3,7 @@ class propertyVO{
 	var $PRIMARY_ID;
 	var $manager;
 	var $client;
-	var $multiUnit;
+	var $roofDesign;
 	var $createdDate;
 	var $name;
 	var $street;
