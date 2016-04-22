@@ -21,7 +21,7 @@
         <div style="width:50%">
             <div class="text-input-form-item">
                 <h2 style="margin-right:15px;">Client</h2>
-                <select ng-model="Ctrl.inputDataObj.client" ng-options="c.displayName for c in Ctrl.CLIENTS" ng-change="Ctrl.formChange();"></select>
+                <select ng-model="Ctrl.inputDataObj.client" ng-options="c.displayName for c in Ctrl.CLIENTS" ng-change="Ctrl.selectClient();"></select>
             </div>
         </div>
     </div>
@@ -56,7 +56,7 @@
                 </div>
                 <div class="text-input-form-item">
                     <label>Roof</label>
-                    <input type="text" ng-model="Ctrl.inputDataObj.roofDesign">
+                    <select ng-model="Ctrl.inputDataObj.roofDesign" ng-options="c.label for c in Ctrl.L.roofDesign"></select>
                 </div>
             </div>
         </div>
@@ -123,39 +123,24 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td>
-                                    Static / RV151</td>
-                                <td>
-                                    <select ng-model="Ctrl.multiVentModel.STATIC" ng-options="c.label for c in Ctrl.L.numbersToTen"></select>
-                                </td>
+                                <td>Static / RV151</td>
+                                <td><select ng-model="Ctrl.multiVentModel.STATIC" ng-options="c.label for c in Ctrl.L.numbersToTen"></select></td>
                             </tr>
                             <tr>
-                                <td>
-                                    Turbine</td>
-                                <td>
-                                    <select ng-model="Ctrl.multiVentModel.TURBNS" ng-options="c.label for c in Ctrl.L.numbersToTen"></select>
-                                </td>
+                                <td>Turbine</td>
+                                <td><select ng-model="Ctrl.multiVentModel.TURBNS" ng-options="c.label for c in Ctrl.L.numbersToTen"></select></td>
                             </tr>
                             <tr>
-                                <td>
-                                    Power</td>
-                                <td>
-                                    <select ng-model="Ctrl.multiVentModel.PWRVNT" ng-options="c.label for c in Ctrl.L.numbersToTen"></select>
-                                </td>
+                                <td>Power</td>
+                                <td><select ng-model="Ctrl.multiVentModel.PWRVNT" ng-options="c.label for c in Ctrl.L.numbersToTen"></select></td>
                             </tr>
                             <tr>
-                                <td>
-                                    Air Hawks</td>
-                                <td>
-                                    <select ng-model="Ctrl.multiVentModel.AIRHWK" ng-options="c.label for c in Ctrl.L.numbersToTen"></select>
-                                </td>
+                                <td>Air Hawks</td>
+                                <td><select ng-model="Ctrl.multiVentModel.AIRHWK" ng-options="c.label for c in Ctrl.L.numbersToTen"></select></td>
                             </tr>
                             <tr>
-                                <td>
-                                    Solar</td>
-                                <td>
-                                    <select ng-model="Ctrl.multiVentModel.SLRVNT" ng-options="c.label for c in Ctrl.L.numbersToTen"></select>
-                                </td>
+                                <td>Solar</td>
+                                <td><select ng-model="Ctrl.multiVentModel.SLRVNT" ng-options="c.label for c in Ctrl.L.numbersToTen"></select></td>
                             </tr>
                         </tbody>
                     </table>
@@ -181,32 +166,20 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td>
-                                    Flat (0-2)</td>
-                                <td>
-                                    <select ng-model="Ctrl.multiLevelModel.levelOne.percent" ng-options="c.label for c in Ctrl.L.percentOptions"></select>
-                                </td>
+                                <td>Flat (0-2)</td>
+                                <td><select ng-model="Ctrl.multiLevelModel.levelOne.percent" ng-options="c.label for c in Ctrl.L.percentOptions"></select></td>
                             </tr>
                             <tr>
-                                <td>
-                                    Low (3-6)</td>
-                                <td>
-                                    <select ng-model="Ctrl.multiLevelModel.levelTwo.percent" ng-options="c.label for c in Ctrl.L.percentOptions"></select>
-                                </td>
+                                <td>Low (3-6)</td>
+                                <td><select ng-model="Ctrl.multiLevelModel.levelTwo.percent" ng-options="c.label for c in Ctrl.L.percentOptions"></select></td>
                             </tr>
                             <tr>
-                                <td>
-                                    Medium (7-9)</td>
-                                <td>
-                                    <select ng-model="Ctrl.multiLevelModel.levelThree.percent" ng-options="c.label for c in Ctrl.L.percentOptions"></select>
-                                </td>
+                                <td>Medium (7-9)</td>
+                                <td><select ng-model="Ctrl.multiLevelModel.levelThree.percent" ng-options="c.label for c in Ctrl.L.percentOptions"></select></td>
                             </tr>
                             <tr>
-                                <td>
-                                    Steep (8+)</td>
-                                <td>
-                                    <select ng-model="Ctrl.multiLevelModel.levelFour.percent" ng-options="c.label for c in Ctrl.L.percentOptions"></select>
-                                </td>
+                                <td>Steep (8+)</td>
+                                <td><select ng-model="Ctrl.multiLevelModel.levelFour.percent" ng-options="c.label for c in Ctrl.L.percentOptions"></select></td>
                             </tr>
                         </tbody>
                     </table>

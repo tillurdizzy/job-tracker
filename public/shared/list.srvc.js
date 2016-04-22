@@ -152,7 +152,7 @@ app.service('ListSrvc',[function sharedLists(){
 		{label:"Lbs",id:4}];
 
 	self.photoCats = [
-		{label:"Select"},
+		{label:"-- Select --"},
 	    {label:"Street View"},
 	    {label:"Shingles"},
 	    {label:"Deck"},
@@ -162,11 +162,16 @@ app.service('ListSrvc',[function sharedLists(){
 	    {label:"Ventilation"},
 	    {label:"Other"}];
 
+	self.clientType = [
+		{label:"-- Select --",id:-1},
+		{label:"Individual",id:1},
+		{label:"Business",id:2}];
+
 	self.roofDesign = [
+		{label:"-- Select --",id:-1},
 		{label:"Single Pitched Roof",id:0},
-		{label:"Single Pitched Roof with Flat Portion",id:1},
-		{label:"Multiple Pitched Roofs",id:2},
-		{label:"Single Flat Roof",id:3}];
+		{label:"Multiple Pitched Roofs",id:1},
+		{label:"Single Flat Roof",id:2}];
 
 	self.returnIdValue = function(set,id){
 		var rtnObj = {};

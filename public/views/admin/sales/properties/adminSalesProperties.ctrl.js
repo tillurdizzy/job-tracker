@@ -31,23 +31,38 @@ app.controller('AdminSalesPropertiesCtrl', ['$state', '$scope', 'AdminSharedSrvc
     };
 
     ME.addItem = function() {
-        ME.EditMode = "Add Item";
+        ME.EditMode = "Add Property";
         ME.modePrompt = "Add New Property: Fill in the form and submit."
         resetInputFields();
     };
 
     ME.updateItem = function() {
-        ME.EditMode = "Update Item";
+        ME.EditMode = "Update Property";
         ME.modePrompt = "Update Property: Choose a property to edit/update."
+        resetInputFields();
     };
 
     ME.removeItem = function() {
-        ME.EditMode = "Remove Item";
+        ME.EditMode = "Remove Property";
         ME.modePrompt = "Remove Property: Choose a property to remove."
+        resetInputFields();
     };
 
     ME.formChange = function() {
         ME.formStatus = "Dirty";
+    };
+
+    ME.selectClient = function() {
+        var clientType = parseInt(ME.inputDataObj.client.type);
+
+        if(clientType == 1){
+            var name = ME.inputDataObj.client.name_last;
+            ME.inputDataObj.name = lastname + " Residence";
+            ME.inputDataObj.street = ME.inputDataObj.client.street;
+            ME.inputDataObj.city = ME.inputDataObj.client.city;
+            ME.inputDataObj.state = ME.inputDataObj.client.state;
+            ME.inputDataObj.zip = ME.inputDataObj.client.zip;
+        }
     };
 
     ME.selectProperty = function() {
@@ -174,13 +189,13 @@ app.controller('AdminSalesPropertiesCtrl', ['$state', '$scope', 'AdminSharedSrvc
 
     ME.submit = function() {
         switch (ME.EditMode) {
-            case "Add Item":
+            case "Add Property":
+                createPropertyDataObj();
+                break;
+            case "Update Property":
                 createDataObj();
                 break;
-            case "Update Item":
-                createDataObj();
-                break;
-            case "Remove Item":
+            case "Remove Property":
                 remove_Item();
                 break;
         }
@@ -393,6 +408,7 @@ app.controller('AdminSalesPropertiesCtrl', ['$state', '$scope', 'AdminSharedSrvc
         ME.CLIENTS = DB.clone(ME.S.CLIENTS);
         ME.CLIENTS.unshift({displayName:"-- Select --",PRIMARY_ID:-1});
         ME.inputDataObj.client = ME.CLIENTS[0];
+        ME.inputDataObj.roofDesign = ME.L.roofDesign[0];
     };
 
     $scope.$watch('$viewContentLoaded', function() {

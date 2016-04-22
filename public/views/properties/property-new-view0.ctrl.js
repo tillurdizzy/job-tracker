@@ -16,12 +16,12 @@ app.controller('NewPropertyViewCtrl',['$scope','$state','SharedSrvc','evoDb','Te
     ME.selectClient = function(){
          S.selectedClientObj =  ME.selectedClient;
           // both using same form as of 4/2016
-        if(ME.selectedClient.type=="Individual"){ 
+        if(ME.selectedClient.type=="1"){ 
             T.multiUnitProperty = "No"; 
             $state.transitionTo('addNewProperty.address');
         }else{
             // This will show the second question on form if client is a business
-           ME.clientType ="Business";
+           ME.clientType ="2";
         };
     };
 
