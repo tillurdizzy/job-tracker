@@ -36,13 +36,19 @@ app.controller('AdminSalesJobsCtrl', ['AdminSharedSrvc', 'AdminDataSrvc', 'ListS
         }
     };
 
-
     // Add uses selectClient() and selectProperty()
     ME.selectClient = function() {
         ME.submitInValid = true;
-        getClientSalesMgr();
-        getClientProperties();
+        var id = parseInt(ME.clientSelected.PRIMARY_ID);
+        if (id > -1) {
+            getClientSalesMgr();
+            getClientProperties();
+        }else{
+            ME.salesMgrDisplayName = "--";
+            ME.propertySelected = null;
+        }
     };
+
     ME.selectProperty = function() {
         doesJobExist();
     };
@@ -67,9 +73,10 @@ app.controller('AdminSalesJobsCtrl', ['AdminSharedSrvc', 'AdminDataSrvc', 'ListS
             } else {
                 ME.submitInValid = true;
                 if (resultObj.data.length != 0) {
+                    ME.propertySelected = ME.propertyOptions[0];
                     ngDialog.open({
                         template: '<h2>Job already exists.</h2>',
-                        className: 'ngdialog-theme-default',
+                        className: 'ngdialog-theme-alert',
                         plain: true,
                         overlay: false
                     });
@@ -268,21 +275,12 @@ app.controller('AdminSalesJobsCtrl', ['AdminSharedSrvc', 'AdminDataSrvc', 'ListS
 
     var createDP = function() {
         ME.JOBS = DB.clone(ME.S.JOBS);
-        /*for (var i = 0; i < ME.JOBS.length; i++) {
-            var clientID = ME.JOBS[i].client;
-            ME.JOBS[i].clientDisplayName = ME.S.returnClientNameByID(clientID);
-            var managerID = ME.JOBS[i].manager;
-            ME.JOBS[i].managerDisplayName = ME.S.returnManagerNameByID(managerID);
-            var propertyID = ME.JOBS[i].property;
-            ME.JOBS[i].propertyDisplayName = ME.S.returnPropertyNameByID(propertyID);
-
-            ME.JOBS[i].jobLabel = ME.S.returnPropertyNameByID(propertyID);
-        }*/
+       
         ME.JOBS.splice(0, 0, { jobLabel: "-- Select --", propertyDisplayName: "--", clientDisplayName: "--", managerDisplayName: "--", status: "--", PRIMARY_ID: "-1" });
         ME.jobSelected = ME.JOBS[0];
 
         ME.clientsDP = DB.clone(ME.S.CLIENTS);
-        ME.clientsDP.splice(0, 0, { displayName: "-- Select --", PRIMARY_ID: "-1" });
+        ME.clientsDP.splice(0, 0, { clientDisplayName: "-- Select --", PRIMARY_ID: "-1" });
         ME.clientSelected = ME.clientsDP[0];
     };
 
@@ -294,7 +292,6 @@ app.controller('AdminSalesJobsCtrl', ['AdminSharedSrvc', 'AdminDataSrvc', 'ListS
         ME.propertySelected = null;
         ME.clientManager = null;
         ME.formStatus = "Pristine";
-
         ME.salesMgrDisplayName = "--";
 
     };

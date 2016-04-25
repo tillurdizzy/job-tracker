@@ -55,9 +55,9 @@
                     <label>Zip</label>
                     <input type="text" ng-model="Ctrl.inputDataObj.zip">
                 </div>
-                <div class="text-input-form-item" ng-show="Ctrl.formVisibility.roofDesign">
+                <div class="text-input-form-item" ng-show="Ctrl.formVisibility.roofCode">
                     <label>Roof</label>
-                    <select ng-model="Ctrl.inputDataObj.roofDesign" ng-options="c.label for c in Ctrl.L.roofCode"></select>
+                    <select ng-model="Ctrl.inputDataObj.roofCode" ng-options="c.label for c in Ctrl.L.roofCode" ng-change="Ctrl.formChange();"></select>
                 </div>
             </div>
         </div>
@@ -190,8 +190,7 @@
         <horiz-rule margintop="10" marginbottom="10"></horiz-rule>
     </div>
     
-    <button type="button" class="button radius" ng-click="Ctrl.submit()" style="margin-top: 1rem; width:100%;">
-        <h3>{{Ctrl.EditMode}}</h3></button>
+    <button type="button" class="button radius" ng-click="Ctrl.submit()" ng-disabled="Ctrl.submitInValid" style="margin-top: 1rem; width:100%;"><h3>{{Ctrl.EditMode}}</h3></button>
     <horiz-rule margintop="30" marginbottom="15"></horiz-rule>
    
 </div>

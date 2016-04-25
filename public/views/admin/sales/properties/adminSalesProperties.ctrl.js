@@ -11,11 +11,12 @@ app.controller('AdminSalesPropertiesCtrl', ['$state', '$scope', 'AdminSharedSrvc
     ME.EditMode = "Add Item";
     ME.modePrompt = "Add New Property: Fill in the form and submit."
     ME.formStatus = "Pristine";
+    ME.submitInValid = true;
     ME.isMultiLevel = false;
     ME.isMultiVented = false;
     ME.isMultiUnit = false;
 
-    ME.formVisibility = {propertySelection:false,clientSelection:true,locationInput:true,roofDesign:true,roofInput:false};
+    ME.formVisibility = {propertySelection:false,clientSelection:true,locationInput:true,roofCode:true,roofInput:false};
 
     // Model Vars
     ME.inputDataObj = {};
@@ -58,6 +59,12 @@ app.controller('AdminSalesPropertiesCtrl', ['$state', '$scope', 'AdminSharedSrvc
 
     ME.formChange = function() {
         ME.formStatus = "Dirty";
+        if(ME.EditMode = "Add Property"){
+            ME.submitInValid = true;
+            if(ME.inputDataObj.client.PRIMARY_ID > -1 && ME.inputDataObj.name != "" &&  ME.inputDataObj.roofCode.id > -1){
+                ME.submitInValid = false;
+            }
+        }
     };
 
     ME.selectClient = function() {
@@ -77,10 +84,12 @@ app.controller('AdminSalesPropertiesCtrl', ['$state', '$scope', 'AdminSharedSrvc
             ME.inputDataObj.state = "";
             ME.inputDataObj.zip = "";
         }
+        ME.formChange();
     };
 
     ME.selectProperty = function() {
         ME.configPropObj(ME.propertySelector.PRIMARY_ID);
+        ME.formChange();
     };
 
     ME.selectVentilation = function() {
@@ -410,17 +419,11 @@ app.controller('AdminSalesPropertiesCtrl', ['$state', '$scope', 'AdminSharedSrvc
 
     var createDP = function() {
         ME.PROPERTIES = DB.clone(ME.S.PROPERTIES);
-        for (var i = 0; i < ME.PROPERTIES.length; i++) {
-            var clientID = ME.PROPERTIES[i].client;
-            ME.PROPERTIES[i].clientDisplayName = ME.S.returnClientNameByID(clientID);
-            var managerID = ME.PROPERTIES[i].manager;
-            ME.PROPERTIES[i].managerDisplayName = ME.S.returnManagerNameByID(managerID);
-        }
-
+        
         ME.PROPERTIES.unshift({street:"-- Select --",PRIMARY_ID:-1});
        
         ME.CLIENTS = DB.clone(ME.S.CLIENTS);
-        ME.CLIENTS.unshift({displayName:"-- Select --",PRIMARY_ID:-1});
+        ME.CLIENTS.unshift({clientDisplayName:"-- Select --",PRIMARY_ID:-1});
 
         resetInputFields();
         
@@ -440,7 +443,7 @@ app.controller('AdminSalesPropertiesCtrl', ['$state', '$scope', 'AdminSharedSrvc
             city: "",
             state: "",
             zip: "",
-            roofDesign: ME.L.roofDesign[0],
+            roofCode: ME.L.roofCode[0],
             numLevels: ME.L.levelOptions[0],
             shingleGrade: ME.L.shingleGradeOptions[0],
             roofDeck: ME.L.roofDeckOptions[0],

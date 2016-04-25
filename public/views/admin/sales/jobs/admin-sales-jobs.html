@@ -19,7 +19,7 @@
     <div ng-show="Ctrl.EditMode=='Add Item'">
         <div class="text-input-form-item">
             <label>Client:</label>
-            <select ng-model="Ctrl.clientSelected" ng-options="c.displayName for c in Ctrl.clientsDP" ng-change="Ctrl.selectClient();"></select>
+            <select ng-model="Ctrl.clientSelected" ng-options="c.clientDisplayName for c in Ctrl.clientsDP" ng-change="Ctrl.selectClient();"></select>
         </div>
         <div class="text-input-form-item">
             <label>Sales Mgr:</label>
@@ -27,7 +27,7 @@
         </div>
         <div class="text-input-form-item">
             <label>Property:</label>
-            <select ng-model="Ctrl.propertySelected" ng-options="c.jobLabel for c in Ctrl.propertyOptions" ng-change="Ctrl.selectProperty();" 
+            <select ng-model="Ctrl.propertySelected" ng-options="c.propertyDisplayName for c in Ctrl.propertyOptions" ng-change="Ctrl.selectProperty();" 
             ng-disabled="Ctrl.clientSelected.PRIMARY_ID=='-1'"></select>
         </div>
         <div class="text-input-form-item">
@@ -48,7 +48,7 @@
         </div>
         <div class="text-input-form-item">
             <label>Property:</label>
-            <h2>{{Ctrl.jobSelected.propertyDisplayName}}</h2>
+            <h2>{{Ctrl.jobSelected.jobLabel}}</h2>
         </div>
         <div class="text-input-form-item">
             <label>Status:</label>

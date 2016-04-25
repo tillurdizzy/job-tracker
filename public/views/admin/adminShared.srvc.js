@@ -331,6 +331,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc','ListSrvc', 'under
             self.JOBS[i].managerDisplayName = self.returnManagerNameByID(managerID);
 
             var propID = self.JOBS[i].property;
+
             var thisPropertyName = returnPropertyName(propID);
             self.JOBS[i].propertyDisplayName = thisPropertyName;
 
@@ -342,23 +343,38 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc','ListSrvc', 'under
                 self.JOBS[i].jobLabel = thisPropertyName;
             }
         };
-
-        
     };
 
     var doPropertiesMerge = function(){
+        var tempProperties = [];
         for (var i = 0; i < self.PROPERTIES.length; i++) {
-            clientID = self.PROPERTIES[i].client;
-            self.PROPERTIES[i].clientName = returnDisplayNameFromClient(clientID);
+            var clientID = self.PROPERTIES[i].client;
+            self.PROPERTIES[i].clientDisplayName = returnDisplayNameFromClient(clientID);
+
+            var managerID = self.PROPERTIES[i].manager;
+            self.PROPERTIES[i].managerDisplayName = self.returnManagerNameByID(managerID);
 
             // PropertyDisplayName same as name unless multiple roofs, then append roof name to property name
             var roofCode = parseInt(self.PROPERTIES[i].roofDesign);
+            var roofNamesAndId = returnBldgNameFromRoofsByPropID(self.PROPERTIES[i].PRIMARY_ID);
             if(roofCode === 0){
                 self.PROPERTIES[i].displayName = self.PROPERTIES[i].name;
+                self.PROPERTIES[i].roofID = roofNamesAndId[0].roofID;
             }else{
-                var namePlusArray = returnRoofNamesFromByPropID(self.PROPERTIES[i].PRIMARY_ID);
-                
+                self.PROPERTIES[i].displayName = self.PROPERTIES[i].name + " - " + roofNamesAndId[0].bldgName;
+                self.PROPERTIES[i].roofID = roofNamesAndId[0].roofID;
+                roofNamesAndId.shift();
+                var propToClone = self.PROPERTIES[i];
+                for (var x = 0; x < roofNamesAndId.length; x++) {
+                    var clonedProp = DB.clone(propToClone);
+                    clonedProp.displayName = clonedProp.name + " - " + roofNamesAndId[x].bldgName;
+                    clonedProp.roofID = roofNamesAndId[x].roofID;
+                    tempProperties.push(clonedProp);
+                }
             }
+        }
+        for (i = 0; i < tempProperties.length; i++) {
+            self.PROPERTIES.push(tempProperties[i]);
         }
     }
 
@@ -398,6 +414,8 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc','ListSrvc', 'under
         };
         return "";
     };
+
+
 
     var returnRoofCode = function(id) {
         for (var i = 0; i < self.PROPERTIES.length; i++) {
