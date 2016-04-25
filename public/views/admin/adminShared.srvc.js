@@ -1,13 +1,16 @@
 'use strict';
-app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'underscore', 'JobConfigSrvc', 'ngDialog', function adminShared($rootScope, AdminDataSrvc, underscore, JobConfigSrvc,ngDialog) {
+app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc','ListSrvc', 'underscore', 'JobConfigSrvc', 'ngDialog', function adminShared($rootScope, AdminDataSrvc,ListSrvc, underscore, JobConfigSrvc,ngDialog) {
 
     var self = this;
     self.ME = "AdminSharedSrvc: ";
     var DB = AdminDataSrvc;
+    var L = ListSrvc;
     var CONFIG = JobConfigSrvc;
-    var CLIENTS = [];
-    var PROPERTIES = [];
-    var JOBS = [];
+    self.CLIENTS = [];
+    self.PROPERTIES = [];
+    self.JOBS = [];
+    self.ROOFS = [];
+    self.PROPERTIES_PLUS = [];// Integrates roof data into properties
 
     //jobVO's related to jobs that are in Proposal State
     var proposalsAsJob = [];
@@ -258,19 +261,8 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'underscore', 'Jo
         });
     };
 
-    var getClients = function() {
-        DB.query("getClients", null).then(function(resultObj) {
-            if (resultObj.result == "Error" || typeof resultObj.data === "string") {
-                alert("Query Error - see console for details");
-                console.log("getClients ---- " + resultObj.data);
-            } else {
-                self.CLIENTS = resultObj.data;
-            }
-        }, function(error) {
-            alert("Query Error - AdminSharedSrvc >> getClients");
-        });
-    };
 
+    // Properties, Clients, Roofs and Jobs -- async gets -- after Jobs decodeJobData called
     var getProperties = function() {
         DB.query("getProperties", null).then(function(resultObj) {
             if (resultObj.result == "Error" || typeof resultObj.data === "string") {
@@ -278,9 +270,24 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'underscore', 'Jo
                 console.log("getProperties ---- " + resultObj.data);
             } else {
                 self.PROPERTIES = resultObj.data;
+                getClients();
             }
         }, function(error) {
             alert("Query Error - AdminSharedSrvc >> getProperties");
+        });
+    };
+
+    var getClients = function() {
+        DB.query("getClients", null).then(function(resultObj) {
+            if (resultObj.result == "Error" || typeof resultObj.data === "string") {
+                alert("Query Error - see console for details");
+                console.log("getClients ---- " + resultObj.data);
+            } else {
+                self.CLIENTS = resultObj.data;
+                getJobs();
+            }
+        }, function(error) {
+            alert("Query Error - AdminSharedSrvc >> getClients");
         });
     };
 
@@ -291,10 +298,152 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'underscore', 'Jo
                 console.log("getJobs ---- " + resultObj.data);
             } else {
                 self.JOBS = resultObj.data;
+                getRoofs();
             }
         }, function(error) {
             alert("Query Error - AdminSharedSrvc >> getJobs");
         });
+    };
+
+    var getRoofs = function() {
+        DB.query("getRoofTable", null).then(function(resultObj) {
+            if (resultObj.result == "Error" || typeof resultObj.data === "string") {
+                alert("Query Error - see console for details");
+                console.log("getRoofTable ---- " + resultObj.data);
+            } else {
+                self.ROOFS = resultObj.data;
+                doJobsMerge();
+                doPropertiesMerge();
+            }
+        }, function(error) {
+            alert("Query Error - AdminSharedSrvc >> getRoofTable");
+        });
+    };
+
+    var doJobsMerge = function() {
+        // Translate related Client and Property ID #'s from Jobs into Names
+        for (var i = 0; i < self.JOBS.length; i++) {
+            var clientID = self.JOBS[i].client;
+            var thisClient = returnDisplayNameFromClient(clientID);
+            self.JOBS[i].clientDisplayName = thisClient;
+
+            var managerID = self.JOBS[i].manager;
+            self.JOBS[i].managerDisplayName = self.returnManagerNameByID(managerID);
+
+            var propID = self.JOBS[i].property;
+            var thisPropertyName = returnPropertyName(propID);
+            self.JOBS[i].propertyDisplayName = thisPropertyName;
+
+            var roofID = parseInt(self.JOBS[i].roofID);
+            if(roofID > 0){
+                var bldgName = returnBldgNameFromRoofsByRoofID(roofID);
+                self.JOBS[i].jobLabel = thisPropertyName + "-" + bldgName;
+            }else{
+                self.JOBS[i].jobLabel = thisPropertyName;
+            }
+        };
+
+        
+    };
+
+    var doPropertiesMerge = function(){
+        for (var i = 0; i < self.PROPERTIES.length; i++) {
+            clientID = self.PROPERTIES[i].client;
+            self.PROPERTIES[i].clientName = returnDisplayNameFromClient(clientID);
+
+            // PropertyDisplayName same as name unless multiple roofs, then append roof name to property name
+            var roofCode = parseInt(self.PROPERTIES[i].roofDesign);
+            if(roofCode === 0){
+                self.PROPERTIES[i].displayName = self.PROPERTIES[i].name;
+            }else{
+                var namePlusArray = returnRoofNamesFromByPropID(self.PROPERTIES[i].PRIMARY_ID);
+                
+            }
+        }
+    }
+
+    var returnDisplayNameFromClient = function(id) {
+        for (var i = 0; i < self.CLIENTS.length; i++) {
+            if (self.CLIENTS[i].PRIMARY_ID == id) {
+                return self.CLIENTS[i].displayName;
+            }
+        };
+        return "";
+    };
+
+    var returnBldgNameFromRoofsByPropID = function(id) {
+        var rtnArray = [];
+        for (var i = 0; i < self.ROOFS.length; i++) {
+            if (self.ROOFS[i].propertyID == id) {
+                rtnArray.push({bldgName:self.ROOFS[i].name,roofID:self.ROOFS[i].PRIMARY_ID});
+            }
+        };
+        return rtnArray;
+    };
+
+    var returnBldgNameFromRoofsByRoofID = function(id) {
+        for (var i = 0; i < self.ROOFS.length; i++) {
+            if (self.ROOFS[i].PRIMARY_ID == id) {
+                return self.ROOFS[i].name;
+            }
+        };
+        return "";
+    };
+
+    var returnPropertyName = function(id) {
+        for (var i = 0; i < self.PROPERTIES.length; i++) {
+            if (self.PROPERTIES[i].PRIMARY_ID == id) {
+                return self.PROPERTIES[i].name;
+            }
+        };
+        return "";
+    };
+
+    var returnRoofCode = function(id) {
+        for (var i = 0; i < self.PROPERTIES.length; i++) {
+            if (self.PROPERTIES[i].PRIMARY_ID == id) {
+                return parseInt(self.PROPERTIES[i].roofDesign);
+            }
+        };
+        return -1;
+    };
+
+    var decodeRoofVals = function(dataObj) {
+        var returnVO = {};
+
+        returnVO.name = dataObj.name;
+
+        var val = parseInt(dataObj.numLevels);
+        returnVO.numLevels = L.returnIdValue(L.levelOptions, val);
+
+        val = parseInt(dataObj.shingleGrade);
+        returnVO.shingleGrade = L.returnIdValue(L.shingleGradeOptions, val);
+
+        val = parseInt(dataObj.roofDeck);
+        returnVO.roofDeck = L.returnIdValue(L.roofDeckOptions, val);
+
+        val = parseInt(dataObj.layers);
+        returnVO.layers = L.returnIdValue(L.numbersToTen, val);
+
+        val = parseInt(dataObj.edgeDetail);
+        returnVO.edgeDetail = L.returnIdValue(L.edgeDetail, val);
+
+        val = parseInt(dataObj.edgeTrim);
+        returnVO.edgeTrim = L.returnIdValue(L.yesNo, val);
+
+        val = parseInt(dataObj.valleyDetail);
+        returnVO.valleyDetail = L.returnIdValue(L.valleyOptions, val);
+
+        val = parseInt(dataObj.ridgeCap);
+        returnVO.ridgeCap = L.returnIdValue(L.ridgeCapShingles, val);
+
+        val = parseInt(dataObj.roofVents);
+        returnVO.roofVents = L.returnIdValue(L.ventOptions, val);
+
+        val = parseInt(dataObj.pitch);
+        returnVO.pitch = L.returnIdValue(L.pitchOptions, val);
+
+        return returnVO;
     };
 
     self.getMultiVents = function() {
@@ -474,8 +623,6 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'underscore', 'Jo
     getMaterialsList();
     getSalesReps();
     getProperties();
-    getClients();
-    getJobs();
 
     return self;
 }]);

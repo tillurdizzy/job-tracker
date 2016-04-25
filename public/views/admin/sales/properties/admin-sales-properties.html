@@ -14,7 +14,8 @@
     <!--  h2 prompt always visible.  select only visible while mode is update or remove -->
     <div class="text-input-form-item-min">
         <h2>{{Ctrl.modePrompt}}</h2>
-        <select ng-model="Ctrl.propertySelector" ng-options="c.street for c in Ctrl.tableDataProvider" ng-change="Ctrl.selectProperty();" ng-hide="Ctrl.EditMode=='Add Item'"></select>
+        <select ng-model="Ctrl.propertySelector" ng-options="c.street for c in Ctrl.PROPERTIES" ng-change="Ctrl.selectProperty();" 
+        ng-show="Ctrl.formVisibility.propertySelection"></select>
     </div>
     <horiz-rule margintop="0" marginbottom="5"></horiz-rule>
     <div class="flex-row">
@@ -54,9 +55,9 @@
                     <label>Zip</label>
                     <input type="text" ng-model="Ctrl.inputDataObj.zip">
                 </div>
-                <div class="text-input-form-item">
+                <div class="text-input-form-item" ng-show="Ctrl.formVisibility.roofDesign">
                     <label>Roof</label>
-                    <select ng-model="Ctrl.inputDataObj.roofDesign" ng-options="c.label for c in Ctrl.L.roofDesign"></select>
+                    <select ng-model="Ctrl.inputDataObj.roofDesign" ng-options="c.label for c in Ctrl.L.roofCode"></select>
                 </div>
             </div>
         </div>

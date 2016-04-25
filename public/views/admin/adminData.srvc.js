@@ -19,6 +19,7 @@ app.service('AdminDataSrvc',['$http','$q','SharedSrvc','LogInSrvc',function admi
 		getSalesReps:httpPathPrefix + "getSalesReps.php",
 		getClients:httpPathPrefix + "getClients.php",
 		getJobs:httpPathPrefix + "getJobs.php",
+		getRoofTable:httpPathPrefix + "getRoofTable.php",
 		getMultiVents:httpPathPrefix + "getMultiVents.php",
 		getMultiLevels:httpPathPrefix + "getMultiLevels.php",
 		getProperties:httpPathPrefix + "getProperties.php",

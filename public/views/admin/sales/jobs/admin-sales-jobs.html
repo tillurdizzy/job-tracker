@@ -12,7 +12,7 @@
     </div>
     <div class="text-input-form-item-min">
         <h2>{{Ctrl.modePrompt}}</h2>
-        <select ng-model="Ctrl.jobSelected" ng-options="c.jobLabel for c in Ctrl.tableDataProvider" ng-change="Ctrl.selectJob();" ng-hide="Ctrl.EditMode=='Add Item'"></select>
+        <select ng-model="Ctrl.jobSelected" ng-options="c.jobLabel for c in Ctrl.JOBS" ng-change="Ctrl.selectJob();" ng-hide="Ctrl.EditMode=='Add Item'"></select>
     </div>
     <horiz-rule margintop="5" marginbottom="5"></horiz-rule>
     <!-- Add Item Tab -->
@@ -27,7 +27,7 @@
         </div>
         <div class="text-input-form-item">
             <label>Property:</label>
-            <select ng-model="Ctrl.propertySelected" ng-options="c.name for c in Ctrl.propertyOptions" ng-change="Ctrl.selectProperty();" 
+            <select ng-model="Ctrl.propertySelected" ng-options="c.jobLabel for c in Ctrl.propertyOptions" ng-change="Ctrl.selectProperty();" 
             ng-disabled="Ctrl.clientSelected.PRIMARY_ID=='-1'"></select>
         </div>
         <div class="text-input-form-item">

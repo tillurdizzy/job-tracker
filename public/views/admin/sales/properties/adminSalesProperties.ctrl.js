@@ -7,7 +7,7 @@ app.controller('AdminSalesPropertiesCtrl', ['$state', '$scope', 'AdminSharedSrvc
     ME.S = AdminSharedSrvc;
     var DB = AdminDataSrvc;
     ME.L = ListSrvc;
-    ME.tableDataProvider = [];
+    ME.PROPERTIES = [];
     ME.EditMode = "Add Item";
     ME.modePrompt = "Add New Property: Fill in the form and submit."
     ME.formStatus = "Pristine";
@@ -15,7 +15,7 @@ app.controller('AdminSalesPropertiesCtrl', ['$state', '$scope', 'AdminSharedSrvc
     ME.isMultiVented = false;
     ME.isMultiUnit = false;
 
-    ME.formVisibility = {propertySelection:false,clientSelection:true,locationInput:true,roofSelection:false,roofInput:false};
+    ME.formVisibility = {propertySelection:false,clientSelection:true,locationInput:true,roofDesign:true,roofInput:false};
 
     // Model Vars
     ME.inputDataObj = {};
@@ -33,18 +33,26 @@ app.controller('AdminSalesPropertiesCtrl', ['$state', '$scope', 'AdminSharedSrvc
     ME.addItem = function() {
         ME.EditMode = "Add Property";
         ME.modePrompt = "Add New Property: Fill in the form and submit."
+        ME.formVisibility.propertySelection = false;
+        ME.formVisibility.clientSelection = true;
+        ME.formVisibility.locationInput = true;
+        ME.formVisibility.roofDesign = true;
         resetInputFields();
     };
 
     ME.updateItem = function() {
         ME.EditMode = "Update Property";
         ME.modePrompt = "Update Property: Choose a property to edit/update."
+        ME.formVisibility.propertySelection = true;
+        ME.formVisibility.roofDesign = false;
         resetInputFields();
     };
 
     ME.removeItem = function() {
         ME.EditMode = "Remove Property";
         ME.modePrompt = "Remove Property: Choose a property to remove."
+        ME.formVisibility.propertySelection = true;
+        ME.formVisibility.roofDesign = false;
         resetInputFields();
     };
 
@@ -57,11 +65,17 @@ app.controller('AdminSalesPropertiesCtrl', ['$state', '$scope', 'AdminSharedSrvc
 
         if(clientType == 1){
             var name = ME.inputDataObj.client.name_last;
-            ME.inputDataObj.name = lastname + " Residence";
+            ME.inputDataObj.name = name + " Residence";
             ME.inputDataObj.street = ME.inputDataObj.client.street;
             ME.inputDataObj.city = ME.inputDataObj.client.city;
             ME.inputDataObj.state = ME.inputDataObj.client.state;
             ME.inputDataObj.zip = ME.inputDataObj.client.zip;
+        }else{
+            ME.inputDataObj.name = "Business Property";
+            ME.inputDataObj.street = "";
+            ME.inputDataObj.city = "";
+            ME.inputDataObj.state = "";
+            ME.inputDataObj.zip = "";
         }
     };
 
@@ -114,9 +128,9 @@ app.controller('AdminSalesPropertiesCtrl', ['$state', '$scope', 'AdminSharedSrvc
 
         ME.formStatus = "Pristine";
         ME.inputDataObj = {};
-        for (var i = 0; i < ME.tableDataProvider.length; i++) {
-            if (ME.tableDataProvider[i].PRIMARY_ID == ID) {
-                ME.inputDataObj = ME.tableDataProvider[i];
+        for (var i = 0; i < ME.PROPERTIES.length; i++) {
+            if (ME.PROPERTIES[i].PRIMARY_ID == ID) {
+                ME.inputDataObj = ME.PROPERTIES[i];
                 break;
             };
         };
@@ -395,20 +409,21 @@ app.controller('AdminSalesPropertiesCtrl', ['$state', '$scope', 'AdminSharedSrvc
     };
 
     var createDP = function() {
-        ME.tableDataProvider = DB.clone(ME.S.PROPERTIES);
-        for (var i = 0; i < ME.tableDataProvider.length; i++) {
-            var clientID = ME.tableDataProvider[i].client;
-            ME.tableDataProvider[i].clientDisplayName = ME.S.returnClientNameByID(clientID);
-            var managerID = ME.tableDataProvider[i].manager;
-            ME.tableDataProvider[i].managerDisplayName = ME.S.returnManagerNameByID(managerID);
+        ME.PROPERTIES = DB.clone(ME.S.PROPERTIES);
+        for (var i = 0; i < ME.PROPERTIES.length; i++) {
+            var clientID = ME.PROPERTIES[i].client;
+            ME.PROPERTIES[i].clientDisplayName = ME.S.returnClientNameByID(clientID);
+            var managerID = ME.PROPERTIES[i].manager;
+            ME.PROPERTIES[i].managerDisplayName = ME.S.returnManagerNameByID(managerID);
         }
 
-        ME.tableDataProvider.unshift({street:"-- Select --",PRIMARY_ID:-1});
-
+        ME.PROPERTIES.unshift({street:"-- Select --",PRIMARY_ID:-1});
+       
         ME.CLIENTS = DB.clone(ME.S.CLIENTS);
         ME.CLIENTS.unshift({displayName:"-- Select --",PRIMARY_ID:-1});
-        ME.inputDataObj.client = ME.CLIENTS[0];
-        ME.inputDataObj.roofDesign = ME.L.roofDesign[0];
+
+        resetInputFields();
+        
     };
 
     $scope.$watch('$viewContentLoaded', function() {
@@ -418,13 +433,14 @@ app.controller('AdminSalesPropertiesCtrl', ['$state', '$scope', 'AdminSharedSrvc
     var resetInputFields = function() {
         ME.inputDataObj = {
             manager: "",
-            client: null,
+            client: ME.CLIENTS[0],
             createdDate: "",
             name: "",
             street: "",
             city: "",
             state: "",
             zip: "",
+            roofDesign: ME.L.roofDesign[0],
             numLevels: ME.L.levelOptions[0],
             shingleGrade: ME.L.shingleGradeOptions[0],
             roofDeck: ME.L.roofDeckOptions[0],
@@ -438,6 +454,7 @@ app.controller('AdminSalesPropertiesCtrl', ['$state', '$scope', 'AdminSharedSrvc
             multiLevel: ME.multiLevelObj,
             multiVents: ME.multiVentObj
         };
+        ME.propertySelector = ME.PROPERTIES[0];
         ME.multiLevelModel = {
             levelOne: { percent: ME.L.percentOptions[0] },
             levelTwo: { percent: ME.L.percentOptions[0] },
@@ -454,11 +471,13 @@ app.controller('AdminSalesPropertiesCtrl', ['$state', '$scope', 'AdminSharedSrvc
         };
         ME.multiLevelObj = { propertyID: 0, LEVONE: 0, LEVTWO: 0, LEVTHR: 0, LEVFOU: 0 };
         ME.multiVentObj = { propertyID: 0, TURBNS: 0, STATIC: 0, PWRVNT: 0, AIRHWK: 0, SLRVNT: 0 };
+        
     };
 
 
-    resetInputFields();
+    
     createDP();
+   
     ME.S.getMultiVents();
     ME.S.getMultiLevels();
 

@@ -167,11 +167,12 @@ app.service('ListSrvc',[function sharedLists(){
 		{label:"Individual",id:1},
 		{label:"Business",id:2}];
 
-	self.roofDesign = [
+	self.roofCode = [
 		{label:"-- Select --",id:-1},
 		{label:"Single Pitched Roof",id:0},
-		{label:"Multiple Pitched Roofs",id:1},
-		{label:"Single Flat Roof",id:2}];
+		{label:"Multiple Pitched Roofs",id:2},
+		{label:"Single Flat Roof",id:5},
+		{label:"Multiple Flat Roofs",id:6}];
 
 	self.returnIdValue = function(set,id){
 		var rtnObj = {};

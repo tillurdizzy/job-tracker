@@ -9,7 +9,7 @@ app.controller('AdminSalesJobsCtrl', ['AdminSharedSrvc', 'AdminDataSrvc', 'ListS
     ME.L = ListSrvc;
 
 
-    ME.tableDataProvider = [];
+    ME.JOBS = [];
     ME.EditMode = "Add Item";
     ME.modePrompt = "Add New Job: Fill in the form and submit.";
     ME.formStatus = "Pristine";
@@ -124,10 +124,10 @@ app.controller('AdminSalesJobsCtrl', ['AdminSharedSrvc', 'AdminDataSrvc', 'ListS
 
     var getClientProperties = function() {
         ME.propertyOptions = [];
-        ME.propertyOptions.push({ name: "--Select--", PRIMARY_ID: "-1" });
-        for (var i = 0; i < ME.S.PROPERTIES.length; i++) {
-            if (ME.S.PROPERTIES[i].client == ME.clientSelected.PRIMARY_ID) {
-                ME.propertyOptions.push(ME.S.PROPERTIES[i]);
+        ME.propertyOptions.push({ propertyDisplayName: "--Select--", PRIMARY_ID: "-1" });
+        for (var i = 0; i < ME.JOBS.length; i++) {
+            if (ME.JOBS[i].client == ME.clientSelected.PRIMARY_ID) {
+                ME.propertyOptions.push(ME.JOBS[i]);
             }
         };
         if (ME.propertyOptions.length > 0) {
@@ -267,19 +267,19 @@ app.controller('AdminSalesJobsCtrl', ['AdminSharedSrvc', 'AdminDataSrvc', 'ListS
 
 
     var createDP = function() {
-        ME.tableDataProvider = DB.clone(ME.S.JOBS);
-        for (var i = 0; i < ME.tableDataProvider.length; i++) {
-            var clientID = ME.tableDataProvider[i].client;
-            ME.tableDataProvider[i].clientDisplayName = ME.S.returnClientNameByID(clientID);
-            var managerID = ME.tableDataProvider[i].manager;
-            ME.tableDataProvider[i].managerDisplayName = ME.S.returnManagerNameByID(managerID);
-            var propertyID = ME.tableDataProvider[i].property;
-            ME.tableDataProvider[i].propertyDisplayName = ME.S.returnPropertyNameByID(propertyID);
+        ME.JOBS = DB.clone(ME.S.JOBS);
+        /*for (var i = 0; i < ME.JOBS.length; i++) {
+            var clientID = ME.JOBS[i].client;
+            ME.JOBS[i].clientDisplayName = ME.S.returnClientNameByID(clientID);
+            var managerID = ME.JOBS[i].manager;
+            ME.JOBS[i].managerDisplayName = ME.S.returnManagerNameByID(managerID);
+            var propertyID = ME.JOBS[i].property;
+            ME.JOBS[i].propertyDisplayName = ME.S.returnPropertyNameByID(propertyID);
 
-            ME.tableDataProvider[i].jobLabel = ME.S.returnPropertyNameByID(propertyID);
-        }
-        ME.tableDataProvider.splice(0, 0, { jobLabel: "-- Select --", propertyDisplayName: "--", clientDisplayName: "--", managerDisplayName: "--", status: "--", PRIMARY_ID: "-1" });
-        ME.jobSelected = ME.tableDataProvider[0];
+            ME.JOBS[i].jobLabel = ME.S.returnPropertyNameByID(propertyID);
+        }*/
+        ME.JOBS.splice(0, 0, { jobLabel: "-- Select --", propertyDisplayName: "--", clientDisplayName: "--", managerDisplayName: "--", status: "--", PRIMARY_ID: "-1" });
+        ME.jobSelected = ME.JOBS[0];
 
         ME.clientsDP = DB.clone(ME.S.CLIENTS);
         ME.clientsDP.splice(0, 0, { displayName: "-- Select --", PRIMARY_ID: "-1" });
@@ -288,7 +288,7 @@ app.controller('AdminSalesJobsCtrl', ['AdminSharedSrvc', 'AdminDataSrvc', 'ListS
 
     var resetInputFields = function() {
         ME.submitInValid = true;
-        ME.jobSelected = ME.tableDataProvider[0];
+        ME.jobSelected = ME.JOBS[0];
         ME.statusSelected = ME.L.jobStatusOptions[0];
         ME.clientSelected = ME.clientsDP[0];
         ME.propertySelected = null;
@@ -299,7 +299,7 @@ app.controller('AdminSalesJobsCtrl', ['AdminSharedSrvc', 'AdminDataSrvc', 'ListS
 
     };
 
-
-    resetInputFields();
     createDP();
+    resetInputFields();
+    
 }]);
