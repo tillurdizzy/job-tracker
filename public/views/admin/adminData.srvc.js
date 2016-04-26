@@ -24,6 +24,8 @@ app.service('AdminDataSrvc',['$http','$q','SharedSrvc','LogInSrvc',function admi
 		getMultiLevels:httpPathPrefix + "getMultiLevels.php",
 		getProperties:httpPathPrefix + "getProperties.php",
 		getJobConfig:httpPathPrefix + "getJobConfig.php",
+		getJobProposals:httpPathPrefix + "getJobProposals.php",
+		getJobsWithProposalStatus:httpPathPrefix + "getJobsWithProposalStatus.php",
 		doesJobExist:httpPathPrefix + "getDoesJobExist.php",
 		putProperty:httpPathPrefix + "putProperty.php",
 		putJob:httpPathPrefix + "putJob.php",

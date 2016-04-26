@@ -148,15 +148,15 @@ app.controller('PitchedRoofInventoryCtrl',['$state','$scope','SharedSrvc','Admin
 	};
 
 	var getInventory = function(){
-		var query = DB.queryDB("views/admin/http/getMaterialsShingle.php").then(function(result) {
-            if (result != false && typeof result != "string") {
-               ME.pitchedInventoryList = result;
+		DB.query("getMaterialsShingle").then(function(resultObj) {
+            if (resultObj.result == "Error" || typeof resultObj.data === "string") {
+                alert("Query Error - see console for details");
+                console.log("getProposalsByJob ---- " + resultObj.data);
             } else {
-                alert("FALSE returned from DB at PitchedRoofInventoryCtrl >>> addItemSubmit()");
-                return false;
+               ME.pitchedInventoryList = resultObj.data;
             }
         }, function(error) {
-            alert("ERROR returned returned from DB at PitchedRoofInventoryCtrl >>> addItemSubmit()");
+            alert("Query Error - AdminSharedSrvc >> getMaterialsList");
         });
 	};
 

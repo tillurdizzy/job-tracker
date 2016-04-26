@@ -1,5 +1,5 @@
 'use strict';
-app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc','ListSrvc', 'underscore', 'JobConfigSrvc', 'ngDialog', function adminShared($rootScope, AdminDataSrvc,ListSrvc, underscore, JobConfigSrvc,ngDialog) {
+app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'underscore', 'JobConfigSrvc', 'ngDialog', function adminShared($rootScope, AdminDataSrvc, ListSrvc, underscore, JobConfigSrvc, ngDialog) {
 
     var self = this;
     self.ME = "AdminSharedSrvc: ";
@@ -10,7 +10,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc','ListSrvc', 'under
     self.PROPERTIES = [];
     self.JOBS = [];
     self.ROOFS = [];
-    self.PROPERTIES_PLUS = [];// Integrates roof data into properties
+
 
     //jobVO's related to jobs that are in Proposal State
     var proposalsAsJob = [];
@@ -44,7 +44,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc','ListSrvc', 'under
     // Consumed by view controller as data provider for Pricing Tab
     self.materialsCatergorized = { Field: [], Ridge: [], Vents: [], Flashing: [], Caps: [], Flat: [], Other: [] };
 
-    // Step 1 : Select proposal from dropdown on Admin Proposal Review
+    // Step 1 : Select proposal from dropdown on AdminProposalCtrl
     self.selectProposal = function(ndx) {
         var rtnRepName = "";
         if (ndx == -1) {
@@ -64,7 +64,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc','ListSrvc', 'under
             mergeDataFlag.materials = false;
             // Call queries
             getJobParameters();
-            
+
         }
         return rtnRepName;
     };
@@ -90,11 +90,11 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc','ListSrvc', 'under
                 getJobConfig();
             } else {
                 ngDialog.open({
-                        template: '<h2>ERROR: This job has no proposal parameters.</h2>',
-                        className: 'ngdialog-theme-default',
-                        plain: true,
-                        overlay: false
-                    });
+                    template: '<h2>ERROR: This job has no proposal parameters.</h2>',
+                    className: 'ngdialog-theme-default',
+                    plain: true,
+                    overlay: false
+                });
             }
         }, function(error) {
             alert("ERROR returned for DB.getJobParameters() at AdminSharedSrvc >>> getJobParameters()");
@@ -113,8 +113,6 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc','ListSrvc', 'under
         }, function(error) {
             alert("ERROR returned for  getJobConfig()");
         });
-
-       
     };
 
     // Send results over to CONFIG
@@ -189,29 +187,31 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc','ListSrvc', 'under
     //Queries the properties table based on proposal status
     // Called from init() in adminProposal.ctrl
     self.getProposalsByProperty = function() {
-        DB.queryDB('views/admin/http/getJobProposals.php').then(function(result) {
-            if (typeof result != "boolean") {
-                self.proposalsAsProperty = result;
+        DB.query('getJobProposals').then(function(resultObj) {
+            if (resultObj.result == "Error" || typeof resultObj.data === "string") {
+                alert("Query Error - see console for details");
+                console.log("getProposalsByJob ---- " + resultObj.data);
+            } else {
+                self.proposalsAsProperty = resultObj.data;
                 self.proposalUnderReview = self.proposalsAsProperty[0];
                 $rootScope.$broadcast('getProposalsByProperty');
-            } else {
-                dataError("AdminSharedSrvc-getProposalsByProperty()-1", result);
             }
         }, function(error) {
-            dataError("AdminSharedSrvc-getProposalsByProperty()-2", result);
+            alert("Query Error - AdminSharedSrvc >> getMaterialsList");
         });
     };
 
     // Queries the job_list table for open proposals
     self.getProposalsByJob = function() {
-        DB.queryDB('views/admin/http/getJobsWithProposalStatus.php').then(function(result) {
-            if (typeof result != "boolean") {
-                proposalsAsJob = result;
+        DB.query('getJobsWithProposalStatus').then(function(resultObj) {
+            if (resultObj.result == "Error" || typeof resultObj.data === "string") {
+                alert("Query Error - see console for details");
+                console.log("getProposalsByJob ---- " + resultObj.data);
             } else {
-                dataError("AdminSharedSrvc-getProposalsByJob()-1", result);
+                proposalsAsJob = resultObj.data;
             }
         }, function(error) {
-            dataError("AdminSharedSrvc-getProposalsByJob()-2", "404");
+            alert("Query Error - AdminSharedSrvc >> getMaterialsList");
         });
     };
 
@@ -226,7 +226,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc','ListSrvc', 'under
         DB.query("getMaterialsShingle", dataObj).then(function(resultObj) {
             if (resultObj.result == "Error" || typeof resultObj.data === "string") {
                 alert("Query Error - see console for details");
-                console.log("getJobParameters ---- " + resultObj.data);
+                console.log("getMaterialsShingle ---- " + resultObj.data);
             } else {
                 self.materialsList = resultObj.data;
                 self.materialsList = underscore.sortBy(self.materialsList, 'Sort');
@@ -253,7 +253,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc','ListSrvc', 'under
             } else {
                 self.salesReps = resultObj.data;
                 for (var i = 0; i < self.salesReps.length; i++) {
-                    self.salesReps[i].displayName=self.salesReps[i].name_first + " " + self.salesReps[i].name_last;
+                    self.salesReps[i].displayName = self.salesReps[i].name_first + " " + self.salesReps[i].name_last;
                 }
             }
         }, function(error) {
@@ -325,42 +325,42 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc','ListSrvc', 'under
         for (var i = 0; i < self.JOBS.length; i++) {
             var clientID = self.JOBS[i].client;
             var thisClient = returnDisplayNameFromClient(clientID);
-            self.JOBS[i].clientDisplayName = thisClient;
+            self.JOBS[i].clientName = thisClient;
 
             var managerID = self.JOBS[i].manager;
-            self.JOBS[i].managerDisplayName = self.returnManagerNameByID(managerID);
+            self.JOBS[i].managerName = self.returnManagerNameByID(managerID);
 
             var propID = self.JOBS[i].property;
 
             var thisPropertyName = returnPropertyName(propID);
-            self.JOBS[i].propertyDisplayName = thisPropertyName;
+            self.JOBS[i].propertyName = thisPropertyName;
 
             var roofID = parseInt(self.JOBS[i].roofID);
-            if(roofID > 0){
+            if (roofID > 0) {
                 var bldgName = returnBldgNameFromRoofsByRoofID(roofID);
                 self.JOBS[i].jobLabel = thisPropertyName + "-" + bldgName;
-            }else{
+            } else {
                 self.JOBS[i].jobLabel = thisPropertyName;
             }
         };
     };
 
-    var doPropertiesMerge = function(){
+    var doPropertiesMerge = function() {
         var tempProperties = [];
         for (var i = 0; i < self.PROPERTIES.length; i++) {
             var clientID = self.PROPERTIES[i].client;
             self.PROPERTIES[i].clientDisplayName = returnDisplayNameFromClient(clientID);
 
             var managerID = self.PROPERTIES[i].manager;
-            self.PROPERTIES[i].managerDisplayName = self.returnManagerNameByID(managerID);
+            self.PROPERTIES[i].managerName = self.returnManagerNameByID(managerID);
 
             // PropertyDisplayName same as name unless multiple roofs, then append roof name to property name
             var roofCode = parseInt(self.PROPERTIES[i].roofDesign);
             var roofNamesAndId = returnBldgNameFromRoofsByPropID(self.PROPERTIES[i].PRIMARY_ID);
-            if(roofCode === 0){
+            if (roofCode === 0) {
                 self.PROPERTIES[i].displayName = self.PROPERTIES[i].name;
                 self.PROPERTIES[i].roofID = roofNamesAndId[0].roofID;
-            }else{
+            } else {
                 self.PROPERTIES[i].displayName = self.PROPERTIES[i].name + " - " + roofNamesAndId[0].bldgName;
                 self.PROPERTIES[i].roofID = roofNamesAndId[0].roofID;
                 roofNamesAndId.shift();
@@ -391,7 +391,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc','ListSrvc', 'under
         var rtnArray = [];
         for (var i = 0; i < self.ROOFS.length; i++) {
             if (self.ROOFS[i].propertyID == id) {
-                rtnArray.push({bldgName:self.ROOFS[i].name,roofID:self.ROOFS[i].PRIMARY_ID});
+                rtnArray.push({ bldgName: self.ROOFS[i].name, roofID: self.ROOFS[i].PRIMARY_ID });
             }
         };
         return rtnArray;
@@ -582,44 +582,44 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc','ListSrvc', 'under
         return rtn;
     };
 
-   
-    self.returnClientNameByID = function(id){
+
+    self.returnClientNameByID = function(id) {
         for (var i = 0; i < self.CLIENTS.length; i++) {
-            if(self.CLIENTS[i].PRIMARY_ID === id){
+            if (self.CLIENTS[i].PRIMARY_ID === id) {
                 return self.CLIENTS[i].displayName;
             };
         };
     };
 
-    self.returnManagerNameByID = function(id){
+    self.returnManagerNameByID = function(id) {
         for (var i = 0; i < self.salesReps.length; i++) {
-            if(self.salesReps[i].PRIMARY_ID === id){
+            if (self.salesReps[i].PRIMARY_ID === id) {
                 return self.salesReps[i].displayName;
             };
         };
     };
 
-    self.returnManagerObjByID = function(id){
+    self.returnManagerObjByID = function(id) {
         for (var i = 0; i < self.salesReps.length; i++) {
-            if(self.salesReps[i].PRIMARY_ID === id){
+            if (self.salesReps[i].PRIMARY_ID === id) {
                 return self.salesReps[i];
             };
         };
     };
 
-    self.returnPropertyNameByID = function(id){
+    self.returnPropertyNameByID = function(id) {
         for (var i = 0; i < self.PROPERTIES.length; i++) {
-            if(self.PROPERTIES[i].PRIMARY_ID === id){
+            if (self.PROPERTIES[i].PRIMARY_ID === id) {
                 return self.PROPERTIES[i].name;
             };
         };
     };
 
 
-    self.returnObjByPropID = function(set,id){
+    self.returnObjByPropID = function(set, id) {
         var rtnObj = {};
         for (var i = 0; i < set.length; i++) {
-            if(set[i].propertyID === id){
+            if (set[i].propertyID === id) {
                 rtnObj = set[i];
                 break;
             };
@@ -627,10 +627,10 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc','ListSrvc', 'under
         return rtnObj;
     };
 
-    self.returnObjFromSetByPrimaryID = function(set,id){
+    self.returnObjFromSetByPrimaryID = function(set, id) {
         var rtnObj = {};
         for (var i = 0; i < set.length; i++) {
-            if(set[i].PRIMARY_ID === id){
+            if (set[i].PRIMARY_ID === id) {
                 rtnObj = set[i];
                 break;
             };

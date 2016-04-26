@@ -29,7 +29,7 @@ app.controller('AdminProposalCtrl',['$state','AdminDataSrvc','$scope','AdminShar
 
 
 	var parseProposals = function(){
-		ME.selectDataProvider = [{label:"Select a Property",id:-1}];
+		ME.selectDataProvider = [{label:"-- Select a Property --",id:-1}];
 		var arr = S.proposalsAsProperty;
 		for (var i = 0; i < arr.length; i++) {
 			var a =  arr[i].name;

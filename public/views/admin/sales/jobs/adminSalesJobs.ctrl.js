@@ -10,7 +10,7 @@ app.controller('AdminSalesJobsCtrl', ['AdminSharedSrvc', 'AdminDataSrvc', 'ListS
 
 
     ME.JOBS = [];
-    ME.EditMode = "Add Item";
+    ME.EditMode = "Add Job";
     ME.modePrompt = "Add New Job: Fill in the form and submit.";
     ME.formStatus = "Pristine";
     ME.outputDataObj = {};
@@ -29,9 +29,9 @@ app.controller('AdminSalesJobsCtrl', ['AdminSharedSrvc', 'AdminDataSrvc', 'ListS
     // Update and Remove use selectJob()
     ME.selectJob = function() {
         ME.statusSelected = ME.L.returnObjByLabel(ME.L.jobStatusOptions, ME.jobSelected.status);
-        if(ME.EditMode == "Update Item"){
+        if(ME.EditMode == "Update Job"){
 
-        }else if(ME.EditMode == "Remove Item"){
+        }else if(ME.EditMode == "Remove Job"){
             ME.submitInValid = false;
         }
     };
@@ -91,26 +91,26 @@ app.controller('AdminSalesJobsCtrl', ['AdminSharedSrvc', 'AdminDataSrvc', 'ListS
 
 
     ME.addItem = function() {
-        ME.EditMode = "Add Item";
+        ME.EditMode = "Add Job";
         ME.modePrompt = "Add New Job: Fill in the form and submit."
         resetInputFields();
 
     };
 
     ME.updateItem = function() {
-        ME.EditMode = "Update Item";
+        ME.EditMode = "Update Job";
         ME.modePrompt = "Update Job: Select a Job from the list to update/edit."
         resetInputFields();
     };
 
     ME.removeItem = function() {
-        ME.EditMode = "Remove Item";
+        ME.EditMode = "Remove Job";
         ME.modePrompt = "Remove Job: Select a Job from the list to remove."
         resetInputFields();
     };
 
     ME.formChange = function() {
-        if (ME.EditMode == "Add Item") {
+        if (ME.EditMode == "Add Job") {
 
         } else {
 
@@ -131,7 +131,7 @@ app.controller('AdminSalesJobsCtrl', ['AdminSharedSrvc', 'AdminDataSrvc', 'ListS
 
     var getClientProperties = function() {
         ME.propertyOptions = [];
-        ME.propertyOptions.push({ propertyDisplayName: "--Select--", PRIMARY_ID: "-1" });
+        ME.propertyOptions.push({ propertyName: "--Select--", PRIMARY_ID: "-1" });
         for (var i = 0; i < ME.JOBS.length; i++) {
             if (ME.JOBS[i].client == ME.clientSelected.PRIMARY_ID) {
                 ME.propertyOptions.push(ME.JOBS[i]);
@@ -145,13 +145,13 @@ app.controller('AdminSalesJobsCtrl', ['AdminSharedSrvc', 'AdminDataSrvc', 'ListS
 
     ME.submit = function() {
         switch (ME.EditMode) {
-            case "Add Item":
+            case "Add Job":
                 configAddOutputObj();
                 break;
-            case "Update Item":
+            case "Update Job":
                 configUpdateOutputObj();
                 break;
-            case "Remove Item":
+            case "Remove Job":
                 remove_Item();
                 break;
         }
@@ -276,11 +276,11 @@ app.controller('AdminSalesJobsCtrl', ['AdminSharedSrvc', 'AdminDataSrvc', 'ListS
     var createDP = function() {
         ME.JOBS = DB.clone(ME.S.JOBS);
        
-        ME.JOBS.splice(0, 0, { jobLabel: "-- Select --", propertyDisplayName: "--", clientDisplayName: "--", managerDisplayName: "--", status: "--", PRIMARY_ID: "-1" });
+        ME.JOBS.splice(0, 0, { jobLabel: "-- Select --", propertyName: "--", clientName: "--", managerName: "--", status: "--", PRIMARY_ID: "-1" });
         ME.jobSelected = ME.JOBS[0];
 
         ME.clientsDP = DB.clone(ME.S.CLIENTS);
-        ME.clientsDP.splice(0, 0, { clientDisplayName: "-- Select --", PRIMARY_ID: "-1" });
+        ME.clientsDP.splice(0, 0, { displayName: "-- Select --", PRIMARY_ID: "-1" });
         ME.clientSelected = ME.clientsDP[0];
     };
 

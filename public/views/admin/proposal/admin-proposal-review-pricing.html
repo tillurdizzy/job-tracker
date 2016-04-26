@@ -18,40 +18,36 @@
         <table st-table="ChildCtrl.propertyInputParams" class="table table-striped" style="width:100%;">
             <thead>
                 <tr>
-                	<th>Include</th>
+                    <th>Include</th>
                     <th>Item</th>
-                    <th>Price</th>
-                    <th>Unit</th>
                     <th>Qty</th>
-                    <td>Pkg</td>
-                    <td>Margin</td>
+                    <th>Pkg</th>
+                    <th>Price</th>
+                    <td>Overage</td>
                     <th>Total</th>
                 </tr>
             </thead>
             <tbody>
                 <tr ng-repeat="row in ChildCtrl.materialPricingDP.Field">
                     <td>
-						<div class="check-radio-container">
-							<input type="checkbox" id="{{row.Sort}}" ng-model="row.Checked" ng-change="ChildCtrl.toggleCheckBox()"></input>
-							<label for="{{row.Sort}}"><span></span></label>
-						</div>
+                        <div class="check-radio-container">
+                            <input type="checkbox" id="{{row.Sort}}" ng-model="row.Checked" ng-change="ChildCtrl.toggleCheckBox()"></input>
+                            <label for="{{row.Sort}}"><span></span></label>
+                        </div>
                     </td>
                     <td>{{row.Item}}</td>
+                    <td>{{row.Qty}} {{row.UnitPkg}}</td>
+                    <td>{{row.PkgQty}} {{row.Package}}</td>
                     <td>{{row.PkgPrice | currency:"$":2}}</td>
-                    <td>{{row.UnitPkg}}</td>
-                    <td>{{row.Qty}}</td>
-                    <td>{{row.QtyPkg}}</td>
                     <td>{{row.Margin}}</td>
                     <td>{{row.Total | currency:"$":2}}</td>
                 </tr>
             </tbody>
         </table>
     </div>
-
     <div class="pricingCategoryTotal">
-    	<h2>Total Field Shingles: {{ChildCtrl.ShinglesFieldTotal | currency:"$":2}}</h2>
+        <h2>Total Field Shingles: {{ChildCtrl.ShinglesFieldTotal | currency:"$":2}}</h2>
     </div>
-
     <div class="section-header">
         <h2>Ridges</h2>
     </div>
@@ -61,11 +57,10 @@
                 <tr>
                     <th>Include</th>
                     <th>Item</th>
-                    <th>Price</th>
-                    <th>Unit</th>
                     <th>Qty</th>
-                    <td>Pkg</td>
-                    <td>Margin</td>
+                    <th>Pkg</th>
+                    <th>Price</th>
+                    <td>Overage</td>
                     <th>Total</th>
                 </tr>
             </thead>
@@ -78,52 +73,46 @@
                         </div>
                     </td>
                     <td>{{row.Item}}</td>
+                    <td>{{row.Qty}} {{row.UnitPkg}}</td>
+                    <td>{{row.PkgQty}} {{row.Package}}</td>
                     <td>{{row.PkgPrice | currency:"$":2}}</td>
-                    <td>{{row.UnitPkg}}</td>
-                    <td>{{row.Qty}}</td>
-                    <td>{{row.QtyPkg}}</td>
                     <td>{{row.Margin}}</td>
                     <td>{{row.Total | currency:"$":2}}</td>
                 </tr>
             </tbody>
         </table>
     </div>
-
     <div class="pricingCategoryTotal">
         <h2>Total Ridge: {{ChildCtrl.ShinglesRidgeTotal | currency:"$":2}}</h2>
     </div>
-
     <div class="section-header">
         <h2>Ventilation</h2>
     </div>
-
     <div>
         <table st-table="ChildCtrl.propertyInputParams" class="table table-striped" style="width:100%;">
             <thead>
                 <tr>
-                	<th>Include</th>
+                    <th>Include</th>
                     <th>Item</th>
-                    <th>Price</th>
-                    <th>Unit</th>
                     <th>Qty</th>
-                    <td>Pkg</td>
-                    <td>Margin</td>
+                    <th>Pkg</th>
+                    <th>Price</th>
+                    <td>Overage</td>
                     <th>Total</th>
                 </tr>
             </thead>
             <tbody>
-                <tr  ng-repeat="row in ChildCtrl.materialPricingDP.Vents">
+                <tr ng-repeat="row in ChildCtrl.materialPricingDP.Vents">
                     <td>
-						<div class="check-radio-container">
-							<input type="checkbox" id="{{row.Sort}}" ng-model="row.Checked" ng-change="ChildCtrl.toggleCheckBox()"></input>
-							<label for="{{row.Sort}}"><span></span></label>
-						</div>
+                        <div class="check-radio-container">
+                            <input type="checkbox" id="{{row.Sort}}" ng-model="row.Checked" ng-change="ChildCtrl.toggleCheckBox()"></input>
+                            <label for="{{row.Sort}}"><span></span></label>
+                        </div>
                     </td>
                     <td>{{row.Item}}</td>
+                    <td>{{row.Qty}} {{row.UnitPkg}}</td>
+                    <td>{{row.PkgQty}} {{row.Package}}</td>
                     <td>{{row.PkgPrice | currency:"$":2}}</td>
-                    <td>{{row.UnitPkg}}</td>
-                    <td>{{row.Qty}}</td>
-                    <td>{{row.QtyPkg}}</td>
                     <td>{{row.Margin}}</td>
                     <td>{{row.Total | currency:"$":2}}</td>
                 </tr>
@@ -131,7 +120,7 @@
         </table>
     </div>
     <div class="pricingCategoryTotal">
-    	<h2>Total Ventilation: {{ChildCtrl.VentsTotal | currency:"$":2}}</h2>
+        <h2>Total Ventilation: {{ChildCtrl.VentsTotal | currency:"$":2}}</h2>
     </div>
     <div class="section-header">
         <h2>Edge and Flashing</h2>
@@ -140,29 +129,27 @@
         <table st-table="ChildCtrl.propertyInputParams" class="table table-striped" style="width:100%;">
             <thead>
                 <tr>
-                	<th>Include</th>
+                    <th>Include</th>
                     <th>Item</th>
-                    <th>Price</th>
-                    <th>Unit</th>
                     <th>Qty</th>
-                    <td>Pkg</td>
-                    <td>Margin</td>
+                    <th>Pkg</th>
+                    <th>Price</th>
+                    <td>Overage</td>
                     <th>Total</th>
                 </tr>
             </thead>
             <tbody>
-                <tr  ng-repeat="row in ChildCtrl.materialPricingDP.Flashing">
+                <tr ng-repeat="row in ChildCtrl.materialPricingDP.Flashing">
                     <td>
-						<div class="check-radio-container">
-							<input type="checkbox" id="{{row.Sort}}" ng-model="row.Checked" ng-change="ChildCtrl.toggleCheckBox()"></input>
-							<label for="{{row.Sort}}"><span></span></label>
-						</div>
+                        <div class="check-radio-container">
+                            <input type="checkbox" id="{{row.Sort}}" ng-model="row.Checked" ng-change="ChildCtrl.toggleCheckBox()"></input>
+                            <label for="{{row.Sort}}"><span></span></label>
+                        </div>
                     </td>
                     <td>{{row.Item}}</td>
+                    <td>{{row.Qty}} {{row.UnitPkg}}</td>
+                    <td>{{row.PkgQty}} {{row.Package}}</td>
                     <td>{{row.PkgPrice | currency:"$":2}}</td>
-                    <td>{{row.UnitPkg}}</td>
-                    <td>{{row.Qty}}</td>
-                    <td>{{row.QtyPkg}}</td>
                     <td>{{row.Margin}}</td>
                     <td>{{row.Total | currency:"$":2}}</td>
                 </tr>
@@ -170,7 +157,7 @@
         </table>
     </div>
     <div class="pricingCategoryTotal">
-    	<h2>Total Edge and Flashing: {{ChildCtrl.FlashingTotal | currency:"$":2}}</h2>
+        <h2>Total Edge and Flashing: {{ChildCtrl.FlashingTotal | currency:"$":2}}</h2>
     </div>
     <div class="section-header">
         <h2>Roof Caps and Other Accessories</h2>
@@ -179,29 +166,27 @@
         <table st-table="ChildCtrl.propertyInputParams" class="table table-striped" style="width:100%;">
             <thead>
                 <tr>
-                	<th>Include</th>
+                    <th>Include</th>
                     <th>Item</th>
-                    <th>Price</th>
-                    <th>Unit</th>
                     <th>Qty</th>
-                    <td>Pkg</td>
-                    <td>Margin</td>
+                    <th>Pkg</th>
+                    <th>Price</th>
+                    <td>Overage</td>
                     <th>Total</th>
                 </tr>
             </thead>
             <tbody>
-                <tr  ng-repeat="row in ChildCtrl.materialPricingDP.Caps">
+                <tr ng-repeat="row in ChildCtrl.materialPricingDP.Caps">
                     <td>
-						<div class="check-radio-container">
-							<input type="checkbox" id="{{row.Sort}}" ng-model="row.Checked" ng-change="ChildCtrl.toggleCheckBox()"></input>
-							<label for="{{row.Sort}}"><span></span></label>
-						</div>
+                        <div class="check-radio-container">
+                            <input type="checkbox" id="{{row.Sort}}" ng-model="row.Checked" ng-change="ChildCtrl.toggleCheckBox()"></input>
+                            <label for="{{row.Sort}}"><span></span></label>
+                        </div>
                     </td>
                     <td>{{row.Item}}</td>
+                    <td>{{row.Qty}} {{row.UnitPkg}}</td>
+                    <td>{{row.PkgQty}} {{row.Package}}</td>
                     <td>{{row.PkgPrice | currency:"$":2}}</td>
-                    <td>{{row.UnitPkg}}</td>
-                    <td>{{row.Qty}}</td>
-                    <td>{{row.QtyPkg}}</td>
                     <td>{{row.Margin}}</td>
                     <td>{{row.Total | currency:"$":2}}</td>
                 </tr>
@@ -209,7 +194,7 @@
         </table>
     </div>
     <div class="pricingCategoryTotal">
-    	<h2>Total Roof Caps: {{ChildCtrl.CapsTotal | currency:"$":2}}</h2>
+        <h2>Total Roof Caps: {{ChildCtrl.CapsTotal | currency:"$":2}}</h2>
     </div>
     <div class="section-header">
         <h2>Low Slope</h2>
@@ -218,29 +203,27 @@
         <table st-table="ChildCtrl.propertyInputParams" class="table table-striped" style="width:100%;">
             <thead>
                 <tr>
-                	<th>Include</th>
+                    <th>Include</th>
                     <th>Item</th>
-                    <th>Price</th>
-                    <th>Unit</th>
                     <th>Qty</th>
-                    <td>Pkg</td>
-                    <td>Margin</td>
+                    <th>Pkg</th>
+                    <th>Price</th>
+                    <td>Overage</td>
                     <th>Total</th>
                 </tr>
             </thead>
             <tbody>
-                <tr  ng-repeat="row in ChildCtrl.materialPricingDP.Flat">
+                <tr ng-repeat="row in ChildCtrl.materialPricingDP.Flat">
                     <td>
-						<div class="check-radio-container">
-							<input type="checkbox" id="{{row.Sort}}" ng-model="row.Checked" ng-change="ChildCtrl.toggleCheckBox()"></input>
-							<label for="{{row.Sort}}"><span></span></label>
-						</div>
+                        <div class="check-radio-container">
+                            <input type="checkbox" id="{{row.Sort}}" ng-model="row.Checked" ng-change="ChildCtrl.toggleCheckBox()"></input>
+                            <label for="{{row.Sort}}"><span></span></label>
+                        </div>
                     </td>
                     <td>{{row.Item}}</td>
+                    <td>{{row.Qty}} {{row.UnitPkg}}</td>
+                    <td>{{row.PkgQty}} {{row.Package}}</td>
                     <td>{{row.PkgPrice | currency:"$":2}}</td>
-                    <td>{{row.UnitPkg}}</td>
-                    <td>{{row.Qty}}</td>
-                    <td>{{row.QtyPkg}}</td>
                     <td>{{row.Margin}}</td>
                     <td>{{row.Total | currency:"$":2}}</td>
                 </tr>
@@ -248,7 +231,7 @@
         </table>
     </div>
     <div class="pricingCategoryTotal">
-    	<h2>Total Flat: {{ChildCtrl.FlatTotal | currency:"$":2}}</h2>
+        <h2>Total Flat: {{ChildCtrl.FlatTotal | currency:"$":2}}</h2>
     </div>
     <div class="section-header">
         <h2>Other Supplies</h2>
@@ -257,29 +240,27 @@
         <table st-table="ChildCtrl.propertyInputParams" class="table table-striped" style="width:100%;">
             <thead>
                 <tr>
-                	<th>Include</th>
+                    <th>Include</th>
                     <th>Item</th>
-                    <th>Price</th>
-                    <th>Unit</th>
                     <th>Qty</th>
-                    <td>Pkg</td>
-                    <td>Margin</td>
+                    <th>Pkg</th>
+                    <th>Price</th>
+                    <td>Overage</td>
                     <th>Total</th>
                 </tr>
             </thead>
             <tbody>
-                <tr  ng-repeat="row in ChildCtrl.materialPricingDP.Other">
+                <tr ng-repeat="row in ChildCtrl.materialPricingDP.Other">
                     <td>
-						<div class="check-radio-container">
-							<input type="checkbox" id="{{row.Sort}}" ng-model="row.Checked" ng-change="ChildCtrl.toggleCheckBox()"></input>
-							<label for="{{row.Sort}}"><span></span></label>
-						</div>
+                        <div class="check-radio-container">
+                            <input type="checkbox" id="{{row.Sort}}" ng-model="row.Checked" ng-change="ChildCtrl.toggleCheckBox()"></input>
+                            <label for="{{row.Sort}}"><span></span></label>
+                        </div>
                     </td>
                     <td>{{row.Item}}</td>
+                    <td>{{row.Qty}} {{row.UnitPkg}}</td>
+                    <td>{{row.PkgQty}} {{row.Package}}</td>
                     <td>{{row.PkgPrice | currency:"$":2}}</td>
-                    <td>{{row.Unit}}</td>
-                    <td>{{row.Qty}}</td>
-                    <td>{{row.QtyPkg}}</td>
                     <td>{{row.Margin}}</td>
                     <td>{{row.Total | currency:"$":2}}</td>
                 </tr>
@@ -287,7 +268,7 @@
         </table>
     </div>
     <div class="pricingCategoryTotal">
-    	<h2>Total Other: {{ChildCtrl.OtherTotal | currency:"$":2}}</h2>
+        <h2>Total Other: {{ChildCtrl.OtherTotal | currency:"$":2}}</h2>
     </div>
     <div class="section-header">
         <h2>Labor</h2>

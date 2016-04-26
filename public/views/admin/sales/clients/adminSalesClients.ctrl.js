@@ -8,37 +8,38 @@ app.controller('AdminSalesClientsCtrl', ['$state', '$scope', 'AdminSharedSrvc', 
     var DB = AdminDataSrvc;
     var CLIENTS = [];
 
-    ME.tableDataProvider = [];
-    ME.EditMode = "Add Item";
+    ME.clientsDP = [];
+    ME.EditMode = "Add Client";
     ME.modePrompt = "Add New Client: Fill in the form and submit.";
     ME.formStatus = "Pristine";
 
     ME.inputDataObj = {};
     ME.selectedSalesRep = ME.S.salesReps[0];
-    ME.clientSelector = null;
+    ME.selectedClient = null;
 
     ME.selectClient = function() {
-        ME.configPropObj(ME.clientSelector.PRIMARY_ID);
-        if(ME.EditMode == "Remove Item"){
+        ME.configDataObj();
+        if(ME.EditMode == "Remove Client"){
             ME.formStatus = "Submit";
-        }else if(ME.EditMode == "Update Item"){
+        }else if(ME.EditMode == "Update Client"){
             ME.formStatus = "Incomplete";
         }
     };
     
     ME.addItem = function(){
-        ME.EditMode = "Add Item";
+        ME.EditMode = "Add Client";
         ME.modePrompt = "Add New Client: Fill in the form and submit."
         resetInputFields();
     };
+
     ME.updateItem = function(){
-        ME.EditMode = "Update Item";
+        ME.EditMode = "Update Client";
         ME.modePrompt = "Update Client: Select a Client to edit/update."
         resetInputFields();
     };
 
     ME.removeItem = function(){
-        ME.EditMode = "Remove Item";
+        ME.EditMode = "Remove Client";
         ME.modePrompt = "Remove Client: Select a Client to remove."
         resetInputFields();
     };
@@ -51,19 +52,22 @@ app.controller('AdminSalesClientsCtrl', ['$state', '$scope', 'AdminSharedSrvc', 
         $state.transitionTo('admin');
     };
 
-    ME.configPropObj = function(ID){
-        if(ID === "-1"){
+    ME.configDataObj = function(){
+        var ID = parseInt(ME.selectedClient.PRIMARY_ID);
+        if(ID === -1){
             resetInputFields();
             ME.formStatus = "Pristine";
             return;
         }
         
         ME.inputDataObj = {};
-        for (var i = 0; i <  ME.tableDataProvider.length; i++) {
-            if(ME.tableDataProvider[i].PRIMARY_ID == ID){
-                 ME.inputDataObj = ME.tableDataProvider[i];
+        for (var i = 0; i <  ME.clientsDP.length; i++) {
+            if(ME.clientsDP[i].PRIMARY_ID == ID){
+                 ME.inputDataObj = ME.clientsDP[i];
             }
         };
+        var mgrID = ME.selectedClient.manager;
+        ME.selectedSalesRep = ME.S.returnManagerObjByID(mgrID);
     };
 
     ME.submit = function(){
@@ -76,9 +80,9 @@ app.controller('AdminSalesClientsCtrl', ['$state', '$scope', 'AdminSharedSrvc', 
                 });
         }else{
            switch(ME.EditMode){
-                case "Add Item": add_Item();break;
-                case "Update Item": update_Item();break;
-                case "Remove Item": remove_Item();break;
+                case "Add Client": add_Item();break;
+                case "Update Client": update_Item();break;
+                case "Remove Client": remove_Item();break;
             } 
         }
     };
@@ -156,18 +160,18 @@ app.controller('AdminSalesClientsCtrl', ['$state', '$scope', 'AdminSharedSrvc', 
 
     var resetForm = function(){
         ME.formStatus = "Pristine";
-        ME.clientSelector = ME.tableDataProvider[0];
+        ME.selectedClient = ME.clientsDP[0];
     };
 
     var createDP = function() {
-        ME.tableDataProvider = DB.clone(CLIENTS);
+        ME.clientsDP = DB.clone(CLIENTS);
         
-        for (var i = 0; i < ME.tableDataProvider.length; i++) {
-            var managerID = ME.tableDataProvider[i].manager;
-            ME.tableDataProvider[i].managerDisplayName = ME.S.returnManagerNameByID(managerID);
+        for (var i = 0; i < ME.clientsDP.length; i++) {
+            var managerID = ME.clientsDP[i].manager;
+            ME.clientsDP[i].managerName = ME.S.returnManagerNameByID(managerID);
         }
-        ME.tableDataProvider.splice(0,0,{displayName:"-- Select --",PRIMARY_ID:"-1"});
-        ME.clientSelector = ME.tableDataProvider[0];
+        ME.clientsDP.splice(0,0,{displayName:"-- Select --",PRIMARY_ID:"-1"});
+        ME.selectedClient = ME.clientsDP[0];
     };
 
     $scope.$watch('$viewContentLoaded', function() {
@@ -179,7 +183,7 @@ app.controller('AdminSalesClientsCtrl', ['$state', '$scope', 'AdminSharedSrvc', 
         ME.inputDataObj = {type:"",manager:"",company:"",displayName:"",name_first:"",name_last:"",street:"",city:"",state:"",zip:"",phone_bus:"",
         phone_cell:"",email:""};
         ME.selectedSalesRep = ME.S.salesReps[0];
-        ME.clientSelector = ME.tableDataProvider[0];
+        ME.selectedClient = ME.clientsDP[0];
     };
 
     getClients();

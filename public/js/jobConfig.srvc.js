@@ -10,7 +10,10 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore',function jobConfigSrvc(
     self.materialsList = [];
     self.defaultConfigSelections = [];
 
+
+    // Step 3 of events triggered by selection of a Proposal from Proposal Review
     // Converts the long string saved in DB into array of objects
+    // ar should be array with single object
     self.parseJobConfig = function(ar) {
         self.jobConfigArray = [];
         if (ar.length > 0) {
@@ -30,6 +33,68 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore',function jobConfigSrvc(
             }
         }
         return self.jobConfigArray;
+    };
+
+    // Step 4 of events triggered by selection of a Proposal from Proposal Review
+    self.mergeConfig = function(materials, params, useConfig) {
+       
+        for (var i = 0; i < materials.length; i++) {
+
+            var paramKey = materials[i].InputParam;
+            var customObj = returnCustomMaterial(materials[i].Code);
+
+            // If the client has a 'Saved' obj for this material, use that Price and Qty, otherwise use current pricing
+            if (customObj != null && customObj.Checked != undefined && useConfig===true) {
+                // There is a config and useConfig === true
+                // All values are from config
+                var itemPrice = Number(customObj.Price);
+                var parameterVal = Number(customObj.Qty);
+                var checked = customObj.Checked;
+            }else if (customObj != null && customObj.Checked != undefined && useConfig===false) {
+                // There is a config and useConfig === false
+                // This will retain the Checked values from database, but uses Price from Config
+                // This is specifically to get the default selections but uses price from whenever it was saved
+                // !!!! Maybe we sould save a default config so if defaults change over time!!  YES do this.
+                itemPrice = Number(customObj.Price);
+                parameterVal = Number(params[paramKey]);
+                checked = materials[i].Checked;
+            } else {
+                // There is no config... use the current values from database
+                itemPrice = Number(materials[i].PkgPrice);
+                parameterVal = Number(params[paramKey]);
+                checked = materials[i].Checked;
+            }
+
+            var unitsPerPkg = Number(materials[i].QtyPkg);
+            var over = Number(materials[i].Margin);
+            var roundUp = Number(materials[i].RoundUp);
+
+            var isNum = isNaN(parameterVal);
+            var total = 0;
+
+
+            if (isNum) {
+                parameterVal = 0;
+                total = 0;
+            } else {
+                var pkgQty = parameterVal / unitsPerPkg;
+                var pkgQtyRoundedUp = Math.ceil(pkgQty);
+
+                total = (pkgQtyRoundedUp * itemPrice * over);
+            }
+
+            materials[i].Qty = parameterVal;
+            materials[i].PkgQty = pkgQtyRoundedUp;
+            materials[i].Total = total;
+
+            if (checked === "True" || checked === "true" || checked === true || checked === 1) {
+                materials[i].Checked = true;
+            } else {
+                materials[i].Checked = false;
+            }
+        }
+       
+        return materials;
     };
 
     // Takes object with Category and Code
@@ -91,60 +156,8 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore',function jobConfigSrvc(
         return jobParams;
     };
 
-    self.mergeConfig = function(materials, params,useConfig) {
-       
-        for (var i = 0; i < materials.length; i++) {
 
-            var paramKey = materials[i].InputParam;
-            var customObj = returnCustomMaterial(materials[i].Code);
 
-            // If the client has a 'Saved' obj for this material, use that Price and Qty, otherwise use current pricing
-            if (customObj != null && customObj.Checked != undefined && useConfig===true) {
-                // There is a config and useConfig === true
-                // All values are from config
-                var itemPrice = Number(customObj.Price);
-                var parameterVal = Number(customObj.Qty);
-                var checked = customObj.Checked;
-            }else if (customObj != null && customObj.Checked != undefined && useConfig===false) {
-                // There is a config and useConfig === false
-                // This will retain the Checked values from database, but uses Price from Config
-                // This is specifically to get the default selections but uses price from wheever it was saved
-                // !!!! Maybe we sould save a default config so if defauls change over time!!  YES do this.
-                itemPrice = Number(customObj.Price);
-                parameterVal = Number(params[paramKey]);
-                checked = materials[i].Checked;
-            } else {
-                // There is no config... use the current values from database
-                itemPrice = Number(materials[i].PkgPrice);
-                parameterVal = Number(params[paramKey]);
-                checked = materials[i].Checked;
-            }
-
-            var usage = Number(materials[i].QtyPkg);
-            var over = Number(materials[i].Margin);
-            var roundUp = Number(materials[i].RoundUp);
-
-            var isNum = isNaN(parameterVal);
-            var total = 0;
-            if (isNum) {
-                parameterVal = 0;
-                total = 0;
-            } else {
-                total = (((parameterVal / usage) * itemPrice * over) * roundUp) / roundUp;
-            }
-
-            materials[i].Qty = parameterVal;
-            materials[i].Total = total;
-
-            if (checked === "true" || checked === true || checked === 1) {
-                materials[i].Checked = true;
-            } else {
-                materials[i].Checked = false;
-            }
-        }
-       
-        return materials;
-    };
 
 
 
