@@ -9,6 +9,8 @@ var sass			= require('gulp-sass');
 var postcss			= require('gulp-postcss');
 var csswring		= require('csswring');
 var autoprefixer	= require('autoprefixer');
+var browserify 		= require('browserify');
+var buffer 			= require('vinyl-buffer');
 
 /* tasks */
 gulp.task('devjs', function () {

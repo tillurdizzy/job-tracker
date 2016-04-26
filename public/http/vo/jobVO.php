@@ -13,8 +13,9 @@ class jobVO{
 	var $dateActive;
 	var $dateComplete;
 	// Not from database - added in shared Service
-	var $propertyName;
-	var $clientName;
+	var $propertyDisplayName;
+	var $clientDisplayName;
+	var $jobLabel;
 	var $bldgName="";
 }
 ?>
