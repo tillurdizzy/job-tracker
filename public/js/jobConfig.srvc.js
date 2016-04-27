@@ -10,7 +10,6 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore',function jobConfigSrvc(
     self.materialsList = [];
     self.defaultConfigSelections = [];
 
-
     // Step 3 of events triggered by selection of a Proposal from Proposal Review
     // Converts the long string saved in DB into array of objects
     // ar should be array with single object
@@ -49,7 +48,7 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore',function jobConfigSrvc(
                 // All values are from config
                 var itemPrice = Number(customObj.Price);
                 var parameterVal = Number(customObj.Qty);
-                var checked = customObj.Checked;
+                var checked = convertToBoolean(customObj.Checked);
             }else if (customObj != null && customObj.Checked != undefined && useConfig===false) {
                 // There is a config and useConfig === false
                 // This will retain the Checked values from database, but uses Price from Config
@@ -57,12 +56,12 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore',function jobConfigSrvc(
                 // !!!! Maybe we sould save a default config so if defaults change over time!!  YES do this.
                 itemPrice = Number(customObj.Price);
                 parameterVal = Number(params[paramKey]);
-                checked = materials[i].Checked;
+                checked = convertToBoolean(materials[i].Checked);
             } else {
                 // There is no config... use the current values from database
                 itemPrice = Number(materials[i].PkgPrice);
                 parameterVal = Number(params[paramKey]);
-                checked = materials[i].Checked;
+                checked = convertToBoolean(materials[i].Checked);
             }
 
             var unitsPerPkg = Number(materials[i].QtyPkg);
@@ -72,29 +71,33 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore',function jobConfigSrvc(
             var isNum = isNaN(parameterVal);
             var total = 0;
 
-
             if (isNum) {
                 parameterVal = 0;
                 total = 0;
             } else {
+
                 var pkgQty = parameterVal / unitsPerPkg;
                 var pkgQtyRoundedUp = Math.ceil(pkgQty);
-
-                total = (pkgQtyRoundedUp * itemPrice * over);
+                var pkgQtyWithOverageRoundedUp = Math.ceil(pkgQty * over);
+                total = (pkgQtyWithOverageRoundedUp * itemPrice);
             }
 
             materials[i].Qty = parameterVal;
-            materials[i].PkgQty = pkgQtyRoundedUp;
+            materials[i].PkgQty = pkgQtyWithOverageRoundedUp;
             materials[i].Total = total;
-
-            if (checked === "True" || checked === "true" || checked === true || checked === 1) {
-                materials[i].Checked = true;
-            } else {
-                materials[i].Checked = false;
-            }
+            materials[i].Checked = checked;
+           
         }
        
         return materials;
+    };
+
+    var convertToBoolean = function(input){
+        var boolOut = false;
+        if (input === "1" || input === "true" || input === "True" || input === "TRUE" || input === 1 || input === true) {
+            boolOut = true;
+        }
+        return boolOut;
     };
 
     // Takes object with Category and Code
@@ -106,12 +109,12 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore',function jobConfigSrvc(
             var code = catCodeArrObj[i].Code;
             for (var i2 = 0; i2 < self.jobConfigArray.length; i2++) {
                 if (self.jobConfigArray[i2].Category === cat) {
-                    self.jobConfigArray[i2].Checked === false;
+                    self.jobConfigArray[i2].Checked = false;
                 }
             }
             for (var i3 = 0; i3 < self.jobConfigArray.length; i3++) {
                 if (self.jobConfigArray[i3].Code === code) {
-                    self.jobConfigArray[i3].Checked === true;
+                    self.jobConfigArray[i3].Checked = true;
                 }
             }
         };
@@ -155,10 +158,6 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore',function jobConfigSrvc(
         jobParams.RIDGETOTAL = rdg;
         return jobParams;
     };
-
-
-
-
 
 
     // If a Proposal has been Saved from the Proposal Review Pricing page, then it will have custom config (rather than default) pricing and qty.

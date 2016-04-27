@@ -124,7 +124,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
 
     // Checks to make sure both config and params are up to date from DB before calling formatParams();
     var validateData = function() {
-        if (mergeDataFlag.config == true && mergeDataFlag.params == true) {
+        if (mergeDataFlag.config === true && mergeDataFlag.params === true) {
             mergeConfig();
         }
     };
@@ -132,7 +132,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
     // Step 4
     // Take the generic materialList and merge it with the job-specific config (insert qty and price)
     var mergeConfig = function() {
-        self.materialsList = CONFIG.mergeConfig(self.materialsList, self.proposalUnderReview.propertyInputParams);
+        self.materialsList = CONFIG.mergeConfig(self.materialsList, self.proposalUnderReview.propertyInputParams,true);
         categorizeMaterials();
     };
 

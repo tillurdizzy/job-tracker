@@ -1,7 +1,8 @@
 <div class="top page" ng-controller="AdminPropPricing as ChildCtrl">
     <div class="standardParagraph">
-        <p>The <span class="bold">Quantities</span> listed here are derived from the values shown on the 'Input' tab.</p>
-        <p>The <span class="bold">Include</span> column should be adjusted to reflect the client options and choices. </p>
+        <p>The <span class="bold">Quantities</span> listed here are derived from the parameters shown on the 'Input' tab.</p>
+        <p>The <span class="bold">Units</span> quantity includes overage of up to 5% on some items.</p>
+        <p>Adjust the <span class="bold">Include</span> column to reflect the client options and choices. </p>
         <p><span class="hilite">IMPORTANT!</span> This screen will always reflect the default selections and current pricing until it is Saved.</p>
     </div>
     <horiz-rule margintop="5" marginbottom="5"></horiz-rule>
@@ -21,9 +22,8 @@
                     <th>Include</th>
                     <th>Item</th>
                     <th>Qty</th>
-                    <th>Pkg</th>
+                    <th>Units</th>
                     <th>Price</th>
-                    <td>Overage</td>
                     <th>Total</th>
                 </tr>
             </thead>
@@ -39,7 +39,6 @@
                     <td>{{row.Qty}} {{row.UnitPkg}}</td>
                     <td>{{row.PkgQty}} {{row.Package}}</td>
                     <td>{{row.PkgPrice | currency:"$":2}}</td>
-                    <td>{{row.Margin}}</td>
                     <td>{{row.Total | currency:"$":2}}</td>
                 </tr>
             </tbody>
@@ -58,9 +57,8 @@
                     <th>Include</th>
                     <th>Item</th>
                     <th>Qty</th>
-                    <th>Pkg</th>
+                    <th>Units</th>
                     <th>Price</th>
-                    <td>Overage</td>
                     <th>Total</th>
                 </tr>
             </thead>
@@ -76,7 +74,6 @@
                     <td>{{row.Qty}} {{row.UnitPkg}}</td>
                     <td>{{row.PkgQty}} {{row.Package}}</td>
                     <td>{{row.PkgPrice | currency:"$":2}}</td>
-                    <td>{{row.Margin}}</td>
                     <td>{{row.Total | currency:"$":2}}</td>
                 </tr>
             </tbody>
@@ -92,12 +89,11 @@
         <table st-table="ChildCtrl.propertyInputParams" class="table table-striped" style="width:100%;">
             <thead>
                 <tr>
-                    <th>Include</th>
+                   <th>Include</th>
                     <th>Item</th>
                     <th>Qty</th>
-                    <th>Pkg</th>
+                    <th>Units</th>
                     <th>Price</th>
-                    <td>Overage</td>
                     <th>Total</th>
                 </tr>
             </thead>
@@ -113,7 +109,6 @@
                     <td>{{row.Qty}} {{row.UnitPkg}}</td>
                     <td>{{row.PkgQty}} {{row.Package}}</td>
                     <td>{{row.PkgPrice | currency:"$":2}}</td>
-                    <td>{{row.Margin}}</td>
                     <td>{{row.Total | currency:"$":2}}</td>
                 </tr>
             </tbody>
@@ -132,9 +127,8 @@
                     <th>Include</th>
                     <th>Item</th>
                     <th>Qty</th>
-                    <th>Pkg</th>
+                    <th>Units</th>
                     <th>Price</th>
-                    <td>Overage</td>
                     <th>Total</th>
                 </tr>
             </thead>
@@ -150,7 +144,6 @@
                     <td>{{row.Qty}} {{row.UnitPkg}}</td>
                     <td>{{row.PkgQty}} {{row.Package}}</td>
                     <td>{{row.PkgPrice | currency:"$":2}}</td>
-                    <td>{{row.Margin}}</td>
                     <td>{{row.Total | currency:"$":2}}</td>
                 </tr>
             </tbody>
@@ -169,9 +162,8 @@
                     <th>Include</th>
                     <th>Item</th>
                     <th>Qty</th>
-                    <th>Pkg</th>
+                    <th>Units</th>
                     <th>Price</th>
-                    <td>Overage</td>
                     <th>Total</th>
                 </tr>
             </thead>
@@ -187,7 +179,6 @@
                     <td>{{row.Qty}} {{row.UnitPkg}}</td>
                     <td>{{row.PkgQty}} {{row.Package}}</td>
                     <td>{{row.PkgPrice | currency:"$":2}}</td>
-                    <td>{{row.Margin}}</td>
                     <td>{{row.Total | currency:"$":2}}</td>
                 </tr>
             </tbody>
@@ -206,9 +197,8 @@
                     <th>Include</th>
                     <th>Item</th>
                     <th>Qty</th>
-                    <th>Pkg</th>
+                    <th>Units</th>
                     <th>Price</th>
-                    <td>Overage</td>
                     <th>Total</th>
                 </tr>
             </thead>
@@ -224,7 +214,6 @@
                     <td>{{row.Qty}} {{row.UnitPkg}}</td>
                     <td>{{row.PkgQty}} {{row.Package}}</td>
                     <td>{{row.PkgPrice | currency:"$":2}}</td>
-                    <td>{{row.Margin}}</td>
                     <td>{{row.Total | currency:"$":2}}</td>
                 </tr>
             </tbody>
@@ -243,9 +232,8 @@
                     <th>Include</th>
                     <th>Item</th>
                     <th>Qty</th>
-                    <th>Pkg</th>
+                    <th>Units</th>
                     <th>Price</th>
-                    <td>Overage</td>
                     <th>Total</th>
                 </tr>
             </thead>
@@ -261,7 +249,6 @@
                     <td>{{row.Qty}} {{row.UnitPkg}}</td>
                     <td>{{row.PkgQty}} {{row.Package}}</td>
                     <td>{{row.PkgPrice | currency:"$":2}}</td>
-                    <td>{{row.Margin}}</td>
                     <td>{{row.Total | currency:"$":2}}</td>
                 </tr>
             </tbody>
