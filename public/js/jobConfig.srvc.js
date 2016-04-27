@@ -41,6 +41,21 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore',function jobConfigSrvc(
 
             var paramKey = materials[i].InputParam;
             var customObj = returnCustomMaterial(materials[i].Code);
+            var checked = false;
+
+            // Checked by default only matters in certain categories because there are multiple choices
+            // using the same Input parameter
+            var defaultCheckCatList = ["FIELD","RIDGETOTAL","LPIPE1","LPIPE2","LPIPE3","LPIPE4"];
+            var useDefaultCheck = false;
+            for (var x = 0; x < defaultCheckCatList.length; x++) {
+               if(paramKey==defaultCheckCatList[x]){
+                    useDefaultCheck = true;
+                    break;
+               }
+            }
+           
+            var isCheckedByDefault = convertToBoolean(materials[i].Checked);
+
 
             // If the client has a 'Saved' obj for this material, use that Price and Qty, otherwise use current pricing
             if (customObj != null && customObj.Checked != undefined && useConfig===true) {
@@ -48,20 +63,40 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore',function jobConfigSrvc(
                 // All values are from config
                 var itemPrice = Number(customObj.Price);
                 var parameterVal = Number(customObj.Qty);
-                var checked = convertToBoolean(customObj.Checked);
+                checked = convertToBoolean(customObj.Checked);
             }else if (customObj != null && customObj.Checked != undefined && useConfig===false) {
                 // There is a config and useConfig === false
-                // This will retain the Checked values from database, but uses Price from Config
+                // This will retain the Checked items from database, but uses Price from Config
                 // This is specifically to get the default selections but uses price from whenever it was saved
-                // !!!! Maybe we sould save a default config so if defaults change over time!!  YES do this.
                 itemPrice = Number(customObj.Price);
                 parameterVal = Number(params[paramKey]);
-                checked = convertToBoolean(materials[i].Checked);
+               
+               // If useDefaultCheck id true, then only check the one with default... otherwise check everything that has a value > 0
+                if(useDefaultCheck){
+                    if(isCheckedByDefault && parameterVal > 0){
+                        checked = true;
+                    }
+                }else{
+                     if(parameterVal > 0){
+                        checked = true;
+                    }
+                }
+                
             } else {
                 // There is no config... use the current values from database
                 itemPrice = Number(materials[i].PkgPrice);
                 parameterVal = Number(params[paramKey]);
-                checked = convertToBoolean(materials[i].Checked);
+                
+                // If useDefaultCheck id true, then only check the one with default... otherwise check everything that has a value > 0
+                if(useDefaultCheck){
+                    if(isCheckedByDefault && parameterVal > 0){
+                        checked = true;
+                    }
+                }else{
+                     if(parameterVal > 0){
+                        checked = true;
+                    }
+                }
             }
 
             var unitsPerPkg = Number(materials[i].QtyPkg);
@@ -96,6 +131,13 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore',function jobConfigSrvc(
         var boolOut = false;
         if (input === "1" || input === "true" || input === "True" || input === "TRUE" || input === 1 || input === true) {
             boolOut = true;
+        }
+        var num = Number(input);
+        var isNum = isNaN(num);
+        if (!isNum) {
+            if(num > 0){
+                boolOut = true;
+            }
         }
         return boolOut;
     };

@@ -227,6 +227,21 @@ app.service('AdminDataSrvc',['$http','$q','SharedSrvc','LogInSrvc',function admi
 	    return deferred.promise;
 	}
 
+	self.convertToBoolean = function(input){
+        var boolOut = false;
+        if (input === "1" || input === "true" || input === "True" || input === "TRUE" || input === 1 || input === true) {
+            boolOut = true;
+        }
+        var num = Number(input);
+        var isNum = isNaN(num);
+        if (!isNum) {
+            if(num > 0){
+                boolOut = true;
+            }
+        }
+        return boolOut;
+    };
+
 	self.clone = function(obj) {
         var copy;
 

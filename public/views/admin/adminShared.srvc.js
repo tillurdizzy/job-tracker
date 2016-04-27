@@ -6,6 +6,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
     var DB = AdminDataSrvc;
     var L = ListSrvc;
     var CONFIG = JobConfigSrvc;
+    self.MATERIALS = [];
     self.CLIENTS = [];
     self.PROPERTIES = [];
     self.JOBS = [];
@@ -132,7 +133,8 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
     // Step 4
     // Take the generic materialList and merge it with the job-specific config (insert qty and price)
     var mergeConfig = function() {
-        self.materialsList = CONFIG.mergeConfig(self.materialsList, self.proposalUnderReview.propertyInputParams,true);
+        var aClone = DB.clone(self.MATERIALS);
+        self.materialsList = CONFIG.mergeConfig(aClone, self.proposalUnderReview.propertyInputParams,true);
         categorizeMaterials();
     };
 
@@ -228,24 +230,16 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
                 alert("Query Error - see console for details");
                 console.log("getMaterialsShingle ---- " + resultObj.data);
             } else {
-                self.materialsList = resultObj.data;
-                self.materialsList = underscore.sortBy(self.materialsList, 'Sort');
-                removeCategoryHeaders();
+                self.MATERIALS = resultObj.data;
+                self.MATERIALS = underscore.sortBy(self.MATERIALS, 'Sort');
+                self.materialsList = DB.clone(self.MATERIALS);
             }
         }, function(error) {
             alert("Query Error - AdminSharedSrvc >> getMaterialsList");
         });
     };
 
-    // Remove entries with "X" in the Checked field
-    var removeCategoryHeaders = function() {
-        for (var i = self.materialsList.length - 1; i >= 0; i--) {
-            if (self.materialsList[i].Checked == "X") {
-                self.materialsList.splice(i, 1);
-            }
-        }
-    };
-
+    
     var getSalesReps = function() {
         DB.query("getSalesReps", null).then(function(resultObj) {
             if (resultObj.result == "Error") {
