@@ -40,7 +40,6 @@ app.controller('AdminPropInput',['$state','$scope','AdminSharedSrvc','AdminDataS
 		ME.propertyInputParams = S.proposalUnderReview.propertyInputParams;
     });
 
-
     // Broadcast from AdminSharedSrvc >>> selectProposal (user selected prompt -1 from dropdown i.e. there is no proposal selected)
     $scope.$on('onResetProposalData', function(event, obj) {
 		ME.resetParams();

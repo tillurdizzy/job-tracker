@@ -59,7 +59,7 @@ app.controller('AdminSalesPropertiesCtrl', ['$state', '$scope', 'AdminSharedSrvc
 
     ME.formChange = function() {
         ME.formStatus = "Dirty";
-        if(ME.EditMode = "Add Property"){
+        if(ME.EditMode == "Add Property"){
             ME.submitInValid = true;
             if(ME.inputDataObj.client.PRIMARY_ID > -1 && ME.inputDataObj.name != "" &&  ME.inputDataObj.roofCode.id > -1){
                 ME.submitInValid = false;
@@ -133,7 +133,23 @@ app.controller('AdminSalesPropertiesCtrl', ['$state', '$scope', 'AdminSharedSrvc
         ME.multiVentObj.SLRVNT = ME.multiVentModel.SLRVNT.id;
     };
 
+
+
     ME.configPropObj = function(ID) {
+        ME.formStatus = "Pristine";
+        ME.inputDataObj = {};
+        for (var i = 0; i < ME.PROPERTIES.length; i++) {
+            if (ME.PROPERTIES[i].PRIMARY_ID == ID) {
+                ME.inputDataObj = ME.PROPERTIES[i];
+                break;
+            };
+        };
+       
+        ME.inputDataObj.client = ME.S.returnObjFromSetByPrimaryID(ME.CLIENTS, ME.inputDataObj.client);
+        ME.inputDataObj.roofCode = ME.L.returnObjById(ME.L.roofCode, ME.inputDataObj.roofDesign);
+    };
+
+    ME.configRoofObj = function(ID) {
 
         ME.formStatus = "Pristine";
         ME.inputDataObj = {};
@@ -235,7 +251,7 @@ app.controller('AdminSalesPropertiesCtrl', ['$state', '$scope', 'AdminSharedSrvc
         outputDataObj.city = ME.inputDataObj.city;
         outputDataObj.state = ME.inputDataObj.state;
         outputDataObj.zip = ME.inputDataObj.zip;
-        outputDataObj.roofDesign = ME.inputDataObj.roofDesign;
+        outputDataObj.roofDesign = ME.inputDataObj.roofCode;
         putProperty(outputDataObj);
     };
 
@@ -420,10 +436,10 @@ app.controller('AdminSalesPropertiesCtrl', ['$state', '$scope', 'AdminSharedSrvc
     var createDP = function() {
         ME.PROPERTIES = DB.clone(ME.S.PROPERTIES);
         
-        ME.PROPERTIES.unshift({street:"-- Select --",PRIMARY_ID:-1});
+        ME.PROPERTIES.unshift({displayName:"-- Select --",PRIMARY_ID:-1});
        
         ME.CLIENTS = DB.clone(ME.S.CLIENTS);
-        ME.CLIENTS.unshift({clientDisplayName:"-- Select --",PRIMARY_ID:-1});
+        ME.CLIENTS.unshift({displayName:"-- Select --",PRIMARY_ID:-1});
 
         resetInputFields();
         

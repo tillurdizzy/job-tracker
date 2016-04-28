@@ -10,7 +10,7 @@
         <h2>Grand Total: {{ChildCtrl.GrandTotal | currency:"$":2}}</h2>
     </div>
     <div>
-        <button type="button" class="button radius" ng-click="ChildCtrl.saveJobConfig()">Save</button>
+        <button type="button" class="button radius" style="width:100%;" ng-click="ChildCtrl.saveJobConfig()" ng-disabled="ChildCtrl.dataIsSaved">Save</button>
     </div>
     <div class="section-header">
         <h2>Field Shingles</h2>

@@ -13,6 +13,7 @@ app.controller('AdminPropPricing', ['$state', '$scope', 'AdminSharedSrvc', funct
     ME.FlatTotal = 0;
     ME.OtherTotal = 0;
     ME.dataIsSaved = true;
+    ME.proposalSelected = false;
 
     ME.materialPricingDP = ME.S.materialsCatergorized;
 
@@ -90,23 +91,37 @@ app.controller('AdminPropPricing', ['$state', '$scope', 'AdminSharedSrvc', funct
         };
 
         ME.GrandTotal = ME.ShinglesFieldTotal + ME.ShinglesRidgeTotal + ME.VentsTotal + ME.FlashingTotal + ME.FlatTotal + ME.CapsTotal + ME.OtherTotal;
-    }
+    };
 
-    // Broadcast from AdminSharedSrvc >>> setParams
+    var configExists = function(){
+        ME.dataIsSaved = true;
+        if(ME.S.jobConfig.length == 0 && ME.proposalSelected == true){
+            ME.dataIsSaved = false;
+        }
+    };
+
+    // Broadcast from AdminSharedSrvc >>> categorizeMaterials
+    // This happens each time a proposal is selected
     $scope.$on('onRefreshMaterialsData', function(event, obj) {
         ME.materialPricingDP = ME.S.materialsCatergorized;
+        ME.proposalSelected = true;
+        configExists();
         ME.getTotal();
     });
 
     // Broadcast from AdminSharedSrvc >>> selectProposal (user selected prompt -1 from dropdown i.e. there is no proposal selected)
     $scope.$on('onResetProposalData', function(event, obj) {
-        ME.materialPricingDP = ME.S.materialsCatergorized;
+        ME.materialPricingDP = [];
+        ME.proposalSelected = false;
+        ME.dataIsSaved = true;
         ME.getTotal();
     });
 
     $scope.$watch('$viewContentLoaded', function() {
         console.log("AdminPropPRICINGCtrl >>> $viewContentLoaded");
         ME.materialPricingDP = ME.S.materialsCatergorized;
+        ME.proposalSelected = false;
+        ME.dataIsSaved = true;
         ME.getTotal();
     });
 

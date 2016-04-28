@@ -167,13 +167,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
             }
         };
 
-        underscore.sortBy(field, 'Sort');
-        underscore.sortBy(ridge, 'Sort');
-        underscore.sortBy(caps, 'Sort');
-        underscore.sortBy(vents, 'Sort');
-        underscore.sortBy(flashing, 'Sort');
-        underscore.sortBy(flat, 'Sort');
-        underscore.sortBy(other, 'Sort');
+       
         self.materialsCatergorized.Field = field;
         self.materialsCatergorized.Ridge = ridge;
         self.materialsCatergorized.Caps = caps;
@@ -195,7 +189,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
                 console.log("getProposalsByJob ---- " + resultObj.data);
             } else {
                 self.proposalsAsProperty = resultObj.data;
-                self.proposalUnderReview = self.proposalsAsProperty[0];
+                //self.proposalUnderReview = self.proposalsAsProperty[0];
                 $rootScope.$broadcast('getProposalsByProperty');
             }
         }, function(error) {
@@ -330,6 +324,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
             self.JOBS[i].propertyName = thisPropertyName;
 
             var roofID = parseInt(self.JOBS[i].roofID);
+
             if (roofID > 0) {
                 var bldgName = returnBldgNameFromRoofsByRoofID(roofID);
                 self.JOBS[i].jobLabel = thisPropertyName + "-" + bldgName;
@@ -366,11 +361,20 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
                     tempProperties.push(clonedProp);
                 }
             }
-        }
+        };
         for (i = 0; i < tempProperties.length; i++) {
             self.PROPERTIES.push(tempProperties[i]);
+        };
+
+        self.PROPERTIES = underscore.sortBy(self.PROPERTIES, 'displayName');
+
+        var stooges = [{name: 'moe', age: 60}, {name: 'larry', age: 50}, {name: 'curly', age: 40}];
+        stooges = underscore.sortBy(stooges, 'age');
+        for (var i = 0; i < stooges.length; i++) {
+            console.log(stooges[i]);
         }
-    }
+        
+    };
 
     var returnDisplayNameFromClient = function(id) {
         for (var i = 0; i < self.CLIENTS.length; i++) {
