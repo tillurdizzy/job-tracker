@@ -1,0 +1,28 @@
+<div class="top page" ng-controller="AdminPropLabor as ChildCtrl">
+    <div class="standardParagraph">
+        <p></p>
+    </div>
+    <div style="margin-top: .5rem;">
+        <h2>Labor Total: {{ChildCtrl.LaborTotal | currency:"$":2}}</h2>
+    </div>
+    <div>
+        <table st-table="ChildCtrl.supplies" class="table table-striped" style="width:100%;">
+            <thead>
+                <tr>
+                    <th>Labor</th>
+                    <th>Qty</th>
+                    <th>Cost</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="row in ChildCtrl.labor">
+                    <td>{{row.labor}}</td>
+                    <td>{{row.qty}} </td>
+                    <td>{{row.cost}}</td>
+                    <td>{{row.total}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -44,53 +44,55 @@ app.controller('AdminPropPricing', ['$state', '$scope', 'AdminSharedSrvc', funct
         for (var i = 0; i < ME.materialPricingDP.Field.length; i++) {
             include = ME.materialPricingDP.Field[i].Checked;
             if (include) {
-                ME.ShinglesFieldTotal += parseInt(ME.materialPricingDP.Field[i].Total)
+                ME.ShinglesFieldTotal += parseInt(ME.materialPricingDP.Field[i].Total);
             }
         };
 
         for (var i = 0; i < ME.materialPricingDP.Ridge.length; i++) {
             include = ME.materialPricingDP.Ridge[i].Checked;
             if (include) {
-                ME.ShinglesRidgeTotal += parseInt(ME.materialPricingDP.Ridge[i].Total)
+                ME.ShinglesRidgeTotal += parseInt(ME.materialPricingDP.Ridge[i].Total);
             }
         };
 
         for (var i = 0; i < ME.materialPricingDP.Vents.length; i++) {
             include = ME.materialPricingDP.Vents[i].Checked;
             if (include) {
-                ME.VentsTotal += parseInt(ME.materialPricingDP.Vents[i].Total)
+                ME.VentsTotal += parseInt(ME.materialPricingDP.Vents[i].Total);
             }
         };
 
         for (var i = 0; i < ME.materialPricingDP.Flashing.length; i++) {
             include = ME.materialPricingDP.Flashing[i].Checked;
             if (include) {
-                ME.FlashingTotal += parseInt(ME.materialPricingDP.Flashing[i].Total)
+                ME.FlashingTotal += parseInt(ME.materialPricingDP.Flashing[i].Total);
             }
         };
 
         for (var i = 0; i < ME.materialPricingDP.Flat.length; i++) {
             include = ME.materialPricingDP.Flat[i].Checked;
             if (include) {
-                ME.FlatTotal += parseInt(ME.materialPricingDP.Flat[i].Total)
+                ME.FlatTotal += parseInt(ME.materialPricingDP.Flat[i].Total);
             }
         };
 
         for (var i = 0; i < ME.materialPricingDP.Caps.length; i++) {
             include = ME.materialPricingDP.Caps[i].Checked;
             if (include) {
-                ME.CapsTotal += parseInt(ME.materialPricingDP.Caps[i].Total)
+                ME.CapsTotal += parseInt(ME.materialPricingDP.Caps[i].Total);
             }
         };
 
         for (var i = 0; i < ME.materialPricingDP.Other.length; i++) {
             include = ME.materialPricingDP.Other[i].Checked;
             if (include) {
-                ME.OtherTotal += parseInt(ME.materialPricingDP.Other[i].Total)
+                ME.OtherTotal += parseInt(ME.materialPricingDP.Other[i].Total);
             }
         };
 
         ME.GrandTotal = ME.ShinglesFieldTotal + ME.ShinglesRidgeTotal + ME.VentsTotal + ME.FlashingTotal + ME.FlatTotal + ME.CapsTotal + ME.OtherTotal;
+        
+
     };
 
     var configExists = function(){
