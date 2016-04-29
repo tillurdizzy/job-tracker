@@ -16,10 +16,10 @@ $street = mysqli_real_escape_string($con,$data->street);
 $city = mysqli_real_escape_string($con,$data->city);
 $state = mysqli_real_escape_string($con,$data->state);
 $zip = mysqli_real_escape_string($con,$data->zip);
-$roofDesign = mysqli_real_escape_string($con,$data->roofDesign);
+$roofCode = mysqli_real_escape_string($con,$data->roofCode);
 
 
-$query = "INSERT INTO properties(manager,createdDate,client,name,street,city,state,zip,roofDesign)
+$query = "INSERT INTO properties(manager,createdDate,client,name,street,city,state,zip,roofCode)
 VALUES(
 '" . $manager . "', " .
 "'" . $createdDate . "', " .
@@ -29,7 +29,7 @@ VALUES(
 "'" . $city . "', " .
 "'" . $state . "', " .
 "'" . $zip . "', " .
-"'" . $roofDesign . "')";
+"'" . $roofCode . "')";
 $qry_res = mysqli_query($con,$query);
 if ($qry_res) {
 	$last_id = mysqli_insert_id($con);

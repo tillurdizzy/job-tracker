@@ -26,7 +26,7 @@ while ($row = mysqli_fetch_object($result)) {
 	$oneVO->city = $row->city;
 	$oneVO->state = $row->state;
 	$oneVO->zip = $row->zip;
-	$oneVO->roofDesign = $row->roofDesign;
+	$oneVO->roofCode = $row->roofCode;
 	array_push( $resultValueObjects, $oneVO );
 }
 echo json_encode($resultValueObjects);

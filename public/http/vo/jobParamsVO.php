@@ -5,14 +5,15 @@ class jobParamsVO{
 	var $FIELD;
 	var $TOPRDG;
 	var $RKERDG;
+	var $RKEWALL;
+	var $EAVE;
 	var $PRMITR;
 	var $VALLEY;
 	var $LPIPE1;
 	var $LPIPE2;
 	var $LPIPE3;
 	var $LPIPE4;
-	var $JKVNT8;
-	var $FLHSH8;
+	var $VENT8;
 	var $TURBNS;
 	var $PWRVNT;
 	var $AIRHWK;

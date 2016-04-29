@@ -5,7 +5,6 @@ app.controller('ProposalCtrl', ['$state','$scope','evoDb','SharedSrvc','ShingleS
     var ME = this;
     ME.S = SharedSrvc;
     ME.SRVC = ShingleSrvc;
-    //var CALCS = ShingleCalcs;
 
     ME.controllerName = "ProposalCtrl";
     ME.managerID = DB.managerID;
@@ -32,14 +31,15 @@ app.controller('ProposalCtrl', ['$state','$scope','evoDb','SharedSrvc','ShingleS
         FIELD:"",
         TOPRDG:"",
         RKERDG:"",
+        RKEWALL:"",
+        EAVE:"",
         PRMITR:"",
         VALLEY:"",
         LPIPE1:"",
         LPIPE2:"",
         LPIPE3:"",
         LPIPE4:"",
-        JKVNT8:"",
-        FLHSH8:"",
+        VENT8:"",
         TURBNS:"",
         PWRVNT:"",
         AIRHWK:"",

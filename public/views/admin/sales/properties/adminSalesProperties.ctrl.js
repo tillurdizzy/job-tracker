@@ -37,7 +37,7 @@ app.controller('AdminSalesPropertiesCtrl', ['$state', '$scope', 'AdminSharedSrvc
         ME.formVisibility.propertySelection = false;
         ME.formVisibility.clientSelection = true;
         ME.formVisibility.locationInput = true;
-        ME.formVisibility.roofDesign = true;
+        ME.formVisibility.roofCode = true;
         resetInputFields();
     };
 
@@ -45,7 +45,7 @@ app.controller('AdminSalesPropertiesCtrl', ['$state', '$scope', 'AdminSharedSrvc
         ME.EditMode = "Update Property";
         ME.modePrompt = "Update Property: Choose a property to edit/update."
         ME.formVisibility.propertySelection = true;
-        ME.formVisibility.roofDesign = false;
+        ME.formVisibility.roofCode = false;
         resetInputFields();
     };
 
@@ -53,7 +53,7 @@ app.controller('AdminSalesPropertiesCtrl', ['$state', '$scope', 'AdminSharedSrvc
         ME.EditMode = "Remove Property";
         ME.modePrompt = "Remove Property: Choose a property to remove."
         ME.formVisibility.propertySelection = true;
-        ME.formVisibility.roofDesign = false;
+        ME.formVisibility.roofCode = false;
         resetInputFields();
     };
 
@@ -146,7 +146,7 @@ app.controller('AdminSalesPropertiesCtrl', ['$state', '$scope', 'AdminSharedSrvc
         };
        
         ME.inputDataObj.client = ME.S.returnObjFromSetByPrimaryID(ME.CLIENTS, ME.inputDataObj.client);
-        ME.inputDataObj.roofCode = ME.L.returnObjById(ME.L.roofCode, ME.inputDataObj.roofDesign);
+        ME.inputDataObj.roofCode = ME.L.returnObjById(ME.L.roofCode, ME.inputDataObj.roofCode);
     };
 
     ME.configRoofObj = function(ID) {
@@ -251,7 +251,7 @@ app.controller('AdminSalesPropertiesCtrl', ['$state', '$scope', 'AdminSharedSrvc
         outputDataObj.city = ME.inputDataObj.city;
         outputDataObj.state = ME.inputDataObj.state;
         outputDataObj.zip = ME.inputDataObj.zip;
-        outputDataObj.roofDesign = ME.inputDataObj.roofCode;
+        outputDataObj.roofCode = ME.inputDataObj.roofCode;
         putProperty(outputDataObj);
     };
 

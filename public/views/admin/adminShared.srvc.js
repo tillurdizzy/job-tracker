@@ -167,7 +167,6 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
             }
         };
 
-       
         self.materialsCatergorized.Field = field;
         self.materialsCatergorized.Ridge = ridge;
         self.materialsCatergorized.Caps = caps;
@@ -344,7 +343,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
             self.PROPERTIES[i].managerName = self.returnManagerNameByID(managerID);
 
             // PropertyDisplayName same as name unless multiple roofs, then append roof name to property name
-            var roofCode = parseInt(self.PROPERTIES[i].roofDesign);
+            var roofCode = parseInt(self.PROPERTIES[i].roofCode);
             var roofNamesAndId = returnBldgNameFromRoofsByPropID(self.PROPERTIES[i].PRIMARY_ID);
             if (roofCode === 0) {
                 self.PROPERTIES[i].displayName = self.PROPERTIES[i].name;
@@ -418,7 +417,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
     var returnRoofCode = function(id) {
         for (var i = 0; i < self.PROPERTIES.length; i++) {
             if (self.PROPERTIES[i].PRIMARY_ID == id) {
-                return parseInt(self.PROPERTIES[i].roofDesign);
+                return parseInt(self.PROPERTIES[i].roofCode);
             }
         };
         return -1;

@@ -7,7 +7,7 @@
     </div>
     <horiz-rule margintop="5" marginbottom="5"></horiz-rule>
     <div style="margin-top: .5rem;">
-        <h2>Grand Total: {{ChildCtrl.GrandTotal | currency:"$":2}}</h2>
+        <h2>Design Total: {{ChildCtrl.GrandTotal | currency:"$":2}}</h2>
     </div>
     <div>
         <button type="button" class="button radius" style="width:100%;" ng-click="ChildCtrl.saveJobConfig()" ng-disabled="ChildCtrl.dataIsSaved">Save</button>
@@ -257,7 +257,5 @@
     <div class="pricingCategoryTotal">
         <h2>Total Other: {{ChildCtrl.OtherTotal | currency:"$":2}}</h2>
     </div>
-    <div class="section-header">
-        <h2>Labor</h2>
-    </div>
+   
 </div>

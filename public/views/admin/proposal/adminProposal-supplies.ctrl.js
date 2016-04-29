@@ -1,11 +1,13 @@
 'use strict';
 
-app.controller('AdminPropSupplies', ['$state', '$scope', 'AdminSharedSrvc', function($state, $scope, AdminSharedSrvc) {
+app.controller('AdminPropSupplies', ['$state', '$scope', 'AdminSharedSrvc', 'AdminProposalSrvc', function($state, $scope, AdminSharedSrvc,AdminProposalSrvc) {
 
     var ME = this;
     ME.S = AdminSharedSrvc;
+    ME.P = AdminProposalSrvc;
     
     ME.supplies = [];
+    ME.suppliesTotal = ME.P.CostSummary.supplies;
 
     ME.filterMaterials = function() {
         ME.supplies = [];

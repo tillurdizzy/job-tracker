@@ -1,0 +1,25 @@
+<div class="top page" ng-controller="AdminPropSummary as ChildCtrl">
+    <div class="standardParagraph">
+        <p></p>
+    </div>
+    <div style="margin-top: .5rem;">
+        <h2>Total Cost: {{ChildCtrl.totalCost | currency:"$":2}}</h2>
+    </div>
+    <div>
+        <table st-table="ChildCtrl.lsummaryItems;" class="table table-striped" style="width:100%;">
+            <thead>
+                <tr>
+                    <th>Cost Item</th>
+                    <th>Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="row in ChildCtrl.summaryItems;">
+                    <td>{{row.item}}</td>
+                    <td>{{row.amount | currency:"$":2}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <horiz-rule margintop="10" marginbottom="200"></horiz-rule>
+</div>

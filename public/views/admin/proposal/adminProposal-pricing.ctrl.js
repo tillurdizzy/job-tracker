@@ -1,9 +1,10 @@
 'use strict';
 
-app.controller('AdminPropPricing', ['$state', '$scope', 'AdminSharedSrvc', function($state, $scope, AdminSharedSrvc) {
+app.controller('AdminPropPricing', ['$state', '$scope', 'AdminSharedSrvc', 'AdminProposalSrvc', function($state, $scope, AdminSharedSrvc, AdminProposalSrvc) {
 
     var ME = this;
     ME.S = AdminSharedSrvc;
+    ME.P = AdminProposalSrvc;
     ME.GrandTotal = 0;
     ME.ShinglesFieldTotal = 0;
     ME.ShinglesRidgeTotal = 0;
@@ -91,13 +92,14 @@ app.controller('AdminPropPricing', ['$state', '$scope', 'AdminSharedSrvc', funct
         };
 
         ME.GrandTotal = ME.ShinglesFieldTotal + ME.ShinglesRidgeTotal + ME.VentsTotal + ME.FlashingTotal + ME.FlatTotal + ME.CapsTotal + ME.OtherTotal;
-        
+
+        ME.P.setSummaryItem("materials", ME.GrandTotal);
 
     };
 
-    var configExists = function(){
+    var configExists = function() {
         ME.dataIsSaved = true;
-        if(ME.S.jobConfig.length == 0 && ME.proposalSelected == true){
+        if (ME.S.jobConfig.length == 0 && ME.proposalSelected == true) {
             ME.dataIsSaved = false;
         }
     };

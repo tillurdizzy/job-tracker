@@ -18,7 +18,7 @@ $street = mysqli_real_escape_string($con,$data->street);
 $city = mysqli_real_escape_string($con,$data->city);
 $state = mysqli_real_escape_string($con,$data->state);
 $zip = mysqli_real_escape_string($con,$data->zip);
-$roofDesign = mysqli_real_escape_string($con,$data->roofDesign);
+$roofCode = mysqli_real_escape_string($con,$data->roofCode);
 
 $query = "UPDATE properties SET 
 manager='".$manager."',
@@ -28,7 +28,7 @@ street='".$street."',
 city='".$city."',
 state='".$state."',
 zip='".$zip."',
-roofDesign='".$roofDesign."',
+roofCode='".$roofCode."',
 WHERE PRIMARY_ID='".$PRIMARY_ID."'";
 $qry_res = mysqli_query($con,$query);
 if ($qry_res) {

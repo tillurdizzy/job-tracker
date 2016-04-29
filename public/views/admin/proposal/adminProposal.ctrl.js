@@ -32,7 +32,7 @@ app.controller('AdminProposalCtrl',['$state','AdminDataSrvc','$scope','AdminShar
 		ME.selectDataProvider = [{label:"-- Select a Property --",id:-1}];
 		var arr = S.proposalsAsProperty;
 		for (var i = 0; i < arr.length; i++) {
-			var roofCode =  arr[i].roofDesign;
+			var roofCode =  arr[i].roofCode;
 			var a =  arr[i].name;
 			var b =  arr[i].street;
 			var c =  arr[i].city;
