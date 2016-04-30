@@ -26,11 +26,12 @@ app.controller('PropertiesCtrl', ['$scope', '$state', 'evoDb', 'SharedSrvc', 'Te
 
         // Send client selection to shared
         S.selectProperty(ME.selectedPropertyObj);
+        
         getRoof();
         // Single or Multi-unit details page
-        if (ME.selectedPropertyObj.multiUnit == "0" || ME.selectedPropertyObj.multiUnit == 0) {
+        if (ME.selectedPropertyObj.roofCode == 0) {
             $state.transitionTo("properties.details");
-        } else {
+        } else if(ME.selectedPropertyObj.roofCode == 2) {
             $state.transitionTo("properties.detailsMultiUnit");
         };
     };

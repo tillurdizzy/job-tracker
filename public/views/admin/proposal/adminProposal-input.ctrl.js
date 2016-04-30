@@ -8,22 +8,21 @@ app.controller('AdminPropInput',['$state','$scope','AdminSharedSrvc','AdminDataS
 	var DB = AdminDataSrvc;
 
 	ME.propertyInputParams = S.proposalUnderReview.propertyInputParams;
+    ME.specialConsiderations = "";
 
     ME.resetParams =  function(){
     	ME.propertyInputParams = {};
     	ME.propertyInputParams.AIRHWK = "-";
     	ME.propertyInputParams.CARPRT = "-";
-    	ME.propertyInputParams.CAULK = "-";
     	ME.propertyInputParams.DECKNG = "-";
     	ME.propertyInputParams.FIELD = "-";
-    	ME.propertyInputParams.FLHSH8 = "-";
-    	ME.propertyInputParams.JKVNT8 = "-";
+    	ME.propertyInputParams.EAVE = "-";
+    	ME.propertyInputParams.RKEWALL = "-";
         ME.propertyInputParams.LOWSLOPE = "-";
     	ME.propertyInputParams.LPIPE1 = "-";
     	ME.propertyInputParams.LPIPE2 = "-";
     	ME.propertyInputParams.LPIPE3 = "-";
     	ME.propertyInputParams.LPIPE4 = "-";
-    	ME.propertyInputParams.PAINT = "-";
     	ME.propertyInputParams.PRMITR = "-";
     	ME.propertyInputParams.PWRVNT = "-";
     	ME.propertyInputParams.RKERDG = "-";
@@ -38,6 +37,7 @@ app.controller('AdminPropInput',['$state','$scope','AdminSharedSrvc','AdminDataS
     // Broadcast from AdminSharedSrvc >>> setParams
     $scope.$on('onRefreshParamsData', function(event, obj) {
 		ME.propertyInputParams = S.proposalUnderReview.propertyInputParams;
+        ME.specialConsiderations = S.SPECIAL;
     });
 
     // Broadcast from AdminSharedSrvc >>> selectProposal (user selected prompt -1 from dropdown i.e. there is no proposal selected)
@@ -48,6 +48,7 @@ app.controller('AdminPropInput',['$state','$scope','AdminSharedSrvc','AdminDataS
     $scope.$watch('$viewContentLoaded', function() {
        console.log("AdminPropINPUTCtrl >>> $viewContentLoaded");
        ME.propertyInputParams = S.proposalUnderReview.propertyInputParams;
+       ME.specialConsiderations = S.SPECIAL;
     });
 	
  }]);

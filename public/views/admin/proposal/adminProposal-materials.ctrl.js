@@ -1,6 +1,6 @@
 'use strict';
 
-app.controller('AdminPropSupplies', ['$state', '$scope', 'AdminSharedSrvc', 'AdminProposalSrvc', function($state, $scope, AdminSharedSrvc,AdminProposalSrvc) {
+app.controller('AdminPropMaterials', ['$state', '$scope', 'AdminSharedSrvc', 'AdminProposalSrvc', function($state, $scope, AdminSharedSrvc,AdminProposalSrvc) {
 
     var ME = this;
     ME.S = AdminSharedSrvc;
@@ -24,6 +24,13 @@ app.controller('AdminPropSupplies', ['$state', '$scope', 'AdminSharedSrvc', 'Adm
             include = ME.S.materialsCatergorized.Ridge[i].Checked;
             if (include) {
                  ME.supplies.push(ME.S.materialsCatergorized.Ridge[i]);
+            }
+        };
+
+        for (var i = 0; i < ME.S.materialsCatergorized.Starter.length; i++) {
+            include = ME.S.materialsCatergorized.Starter[i].Checked;
+            if (include) {
+                 ME.supplies.push(ME.S.materialsCatergorized.Starter[i]);
             }
         };
 

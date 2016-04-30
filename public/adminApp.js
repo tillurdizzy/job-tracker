@@ -17,7 +17,6 @@ app.config(function($stateProvider, $urlRouterProvider,$provide) {
         };
     });
 
-
  	$urlRouterProvider.otherwise("/splash");
   	
 	$stateProvider
@@ -58,7 +57,6 @@ app.config(function($stateProvider, $urlRouterProvider,$provide) {
 			templateUrl:"views/admin/inventory/pitched-roof-materials.html"
 		})
 		
-
 		.state('admin.reportJobsActive', {
 			url: "/reportJobsActive",
 			templateUrl:"views/admin/reports/jobs-active.html"
@@ -88,13 +86,13 @@ app.config(function($stateProvider, $urlRouterProvider,$provide) {
 			url: "/input",
 			templateUrl:"views/admin/proposal/admin-proposal-review-input.html"
 		})
-		.state('admin.proposalsReview.supplies', {
-			url: "/supplies",
-			templateUrl:"views/admin/proposal/admin-proposal-review-supplies.html"
+		.state('admin.proposalsReview.materials', {
+			url: "/materials",
+			templateUrl:"views/admin/proposal/admin-proposal-review-materials.html"
 		})
-		.state('admin.proposalsReview.pricing', {
-			url: "/pricing",
-			templateUrl:"views/admin/proposal/admin-proposal-review-pricing.html"
+		.state('admin.proposalsReview.design', {
+			url: "/design",
+			templateUrl:"views/admin/proposal/admin-proposal-review-design.html"
 		})
 		.state('admin.proposalsReview.labor', {
 			url: "/labor",

@@ -182,10 +182,10 @@ app.controller('NewPropertyAddressCtrl', ['$state', '$scope', 'evoDb', 'SharedSr
         };
 
         var init = function() {
-            if (ME.selectedClientObj.type == "Individual") {
+            if (ME.selectedClientObj.type == "1") {
                 ME.propertyName = ME.selectedClientObj.name_last + " Residence";
             } else {
-                ME.propertyName = "Apartment Complex Name";
+                ME.propertyName = "Multi-Unit Property Name";
             }
         };
 

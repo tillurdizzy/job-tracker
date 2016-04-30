@@ -1,4 +1,4 @@
-<div class="top page" ng-controller="AdminPropPricing as ChildCtrl">
+<div class="top page" ng-controller="AdminPropDesign as ChildCtrl">
     <div class="standardParagraph">
         <p>The <span class="bold">Quantities</span> listed here are derived from the parameters shown on the 'Input' tab.</p>
         <p>The <span class="bold">Units</span> quantity includes overage of up to 5% on some items.</p>
@@ -47,6 +47,43 @@
     <div class="pricingCategoryTotal">
         <h2>Total Field Shingles: {{ChildCtrl.ShinglesFieldTotal | currency:"$":2}}</h2>
     </div>
+
+    <div class="section-header">
+        <h2>Starter Shingles</h2>
+    </div>
+    <div>
+        <table st-table="ChildCtrl.propertyInputParams" class="table table-striped" style="width:100%;">
+            <thead>
+                <tr>
+                    <th>Include</th>
+                    <th>Item</th>
+                    <th>Qty</th>
+                    <th>Units</th>
+                    <th>Price</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="row in ChildCtrl.materialPricingDP.Starter">
+                    <td>
+                        <div class="check-radio-container">
+                            <input type="checkbox" id="{{row.Sort}}" ng-model="row.Checked" ng-change="ChildCtrl.toggleCheckBox()"></input>
+                            <label for="{{row.Sort}}"><span></span></label>
+                        </div>
+                    </td>
+                    <td>{{row.Item}}</td>
+                    <td>{{row.Qty}} {{row.UnitPkg}}</td>
+                    <td>{{row.PkgQty}} {{row.Package}}</td>
+                    <td>{{row.PkgPrice | currency:"$":2}}</td>
+                    <td>{{row.Total | currency:"$":2}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="pricingCategoryTotal">
+        <h2>Total Starter: {{ChildCtrl.ShinglesStarterTotal | currency:"$":2}}</h2>
+    </div>
+
     <div class="section-header">
         <h2>Ridges</h2>
     </div>

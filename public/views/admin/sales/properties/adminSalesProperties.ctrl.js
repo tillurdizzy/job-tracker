@@ -411,6 +411,7 @@ app.controller('AdminSalesPropertiesCtrl', ['$state', '$scope', 'AdminSharedSrvc
 
     var remove_Item = function() {
         var dataObj = { propertyID: ME.inputDataObj.PRIMARY_ID };
+        removeAssociatedPropertyData(dataObj);
         DB.query("deleteProperty", dataObj).then(function(resultObj) {
             if (resultObj.result == "Error") {
                 alert("FALSE returned for DB.deleteProperty() at " + myName + " >>> remove_Item()");
@@ -427,6 +428,12 @@ app.controller('AdminSalesPropertiesCtrl', ['$state', '$scope', 'AdminSharedSrvc
         }, function(error) {
             alert("ERROR returned for DB.deleteProperty() at " + myName + " >>> remove_Item()");
         });
+    };
+
+    var removeAssociatedPropertyData = function(dataObj){
+        DB.query("deleteMultiLevel", dataObj);
+        DB.query("deleteMultiVents", dataObj);
+        DB.query("deleteRoof", dataObj);
     };
 
     var resetForm = function() {

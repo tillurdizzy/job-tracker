@@ -45,14 +45,14 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore',function jobConfigSrvc(
 
             // Checked by default only matters in certain categories because there are multiple choices
             // using the same Input parameter
-            var defaultCheckCatList = ["FIELD","RIDGETOTAL","LPIPE1","LPIPE2","LPIPE3","LPIPE4"];
+            var defaultCheckCatList = ["FIELD","EAVE","RIDGETOTAL","LPIPE1","LPIPE2","LPIPE3","LPIPE4"];
             var useDefaultCheck = false;
             for (var x = 0; x < defaultCheckCatList.length; x++) {
                if(paramKey==defaultCheckCatList[x]){
                     useDefaultCheck = true;
                     break;
                }
-            }
+            };
            
             var isCheckedByDefault = convertToBoolean(materials[i].Checked);
 
@@ -80,7 +80,7 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore',function jobConfigSrvc(
                      if(parameterVal > 0){
                         checked = true;
                     }
-                }
+                };
                 
             } else {
                 // There is no config... use the current values from database
@@ -97,7 +97,7 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore',function jobConfigSrvc(
                         checked = true;
                     }
                 }
-            }
+            };
 
             var unitsPerPkg = Number(materials[i].QtyPkg);
             var over = Number(materials[i].Margin);
@@ -115,14 +115,14 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore',function jobConfigSrvc(
                 var pkgQtyRoundedUp = Math.ceil(pkgQty);
                 var pkgQtyWithOverageRoundedUp = Math.ceil(pkgQty * over);
                 total = (pkgQtyWithOverageRoundedUp * itemPrice);
-            }
+            };
 
             materials[i].Qty = parameterVal;
             materials[i].PkgQty = pkgQtyWithOverageRoundedUp;
             materials[i].Total = total;
             materials[i].Checked = checked;
            
-        }
+        };
        
         return materials;
     };
@@ -186,7 +186,7 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore',function jobConfigSrvc(
     self.formatParams = function(jobParams) {
         // If the field is empty, set a dash "-" for display purposes
         underscore.each(jobParams, function(value, key, obj) {
-            if (value == "" || value == null) {
+            if (value == "" || value == null || value == "0") {
                 obj[key] = "-";
             }
         });

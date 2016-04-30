@@ -11,6 +11,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
     self.PROPERTIES = [];
     self.JOBS = [];
     self.ROOFS = [];
+    self.SPECIAL;
 
 
     //jobVO's related to jobs that are in Proposal State
@@ -65,7 +66,6 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
             mergeDataFlag.materials = false;
             // Call queries
             getJobParameters();
-
         }
         return rtnRepName;
     };
@@ -136,6 +136,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
         var aClone = DB.clone(self.MATERIALS);
         self.materialsList = CONFIG.mergeConfig(aClone, self.proposalUnderReview.propertyInputParams,true);
         categorizeMaterials();
+        getSpecialConsiderations();
     };
 
     // Categorizes and sorts the complete materials list into roof sections
@@ -143,6 +144,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
         self.materialsCatergorized = {};
         var field = [];
         var ridge = [];
+        var starter = [];
         var caps = [];
         var vents = [];
         var flashing = [];
@@ -154,6 +156,8 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
                 field.push(self.materialsList[i]);
             } else if (cat == "Ridge") {
                 ridge.push(self.materialsList[i]);
+            } else if (cat == "Starter") {
+                starter.push(self.materialsList[i]);
             } else if (cat == "Caps") {
                 caps.push(self.materialsList[i]);
             } else if (cat == "Ventilation") {
@@ -169,6 +173,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
 
         self.materialsCatergorized.Field = field;
         self.materialsCatergorized.Ridge = ridge;
+        self.materialsCatergorized.Starter = starter;
         self.materialsCatergorized.Caps = caps;
         self.materialsCatergorized.Vents = vents;
         self.materialsCatergorized.Flashing = flashing;
@@ -176,6 +181,20 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
         self.materialsCatergorized.Other = other;
 
         $rootScope.$broadcast('onRefreshMaterialsData', self.materialsCatergorized);
+    };
+
+    var getSpecialConsiderations = function(){
+        var dataObj = {};
+        dataObj.jobID = self.proposalUnderReview.jobID;
+         DB.query("getSpecialConsiderations", dataObj).then(function(resultObj) {
+            if (resultObj.result == "Error" || typeof resultObj.data === "string") {
+                alert("FALSE returned for getSpecialConsiderations()");
+            } else {
+               self.SPECIAL = resultObj.data[0].body;
+            }
+        }, function(error) {
+            alert("ERROR returned for  getSpecialConsiderations()");
+        });
     };
 
 

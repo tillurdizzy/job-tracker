@@ -1,6 +1,6 @@
 'use strict';
 
-app.controller('ProposalCtrl', ['$state','$scope','evoDb','SharedSrvc','ShingleSrvc',function($state,$scope,evoDb,SharedSrvc,ShingleSrvc) {
+app.controller('ProposalCtrl', ['$state','$scope','evoDb','SharedSrvc','ShingleSrvc', 'ngDialog',function($state,$scope,evoDb,SharedSrvc,ShingleSrvc,ngDialog) {
     var DB = evoDb;
     var ME = this;
     ME.S = SharedSrvc;
@@ -53,9 +53,9 @@ app.controller('ProposalCtrl', ['$state','$scope','evoDb','SharedSrvc','ShingleS
    
 
     //pricing
-    ME.materialsCost = "";
-    ME.laborCost = "0.00";
-    ME.totalCost = "0.00";
+    //ME.materialsCost = "";
+    //ME.laborCost = "0.00";
+    //ME.totalCost = "0.00";
 
 
     ME.submitEdit = function(ndx) {
@@ -92,23 +92,33 @@ app.controller('ProposalCtrl', ['$state','$scope','evoDb','SharedSrvc','ShingleS
         var status="Proposal";
         DB.updateJobStatus(ME.selectedJobObj.PRIMARY_ID,status,v).then(function(result) {
             if (result != false) { 
-                alert("OK");
+                ngDialog.open({
+                    template: '<h2>Job Status has been updated.</h2>',
+                    className: 'ngdialog-theme-default',
+                    plain: true,
+                    overlay: false
+                });
             } else {
                
             }
         }, function(error) {
 
         });
-    }
+    };
 
     ME.submitSpecial = function(){
         var dataObj = {};
         dataObj.jobID = ME.S.selectedJobObj.PRIMARY_ID;
         dataObj.body = ME.specialText;
-        dataObj.cost = ME.specialCost;
+        dataObj.cost = "0";
         DB.runQueryWithObj('http/updateSpecialConsiderations.php',dataObj).then(function(result) {
             if (result != false) { 
-                alert("OK");
+                ngDialog.open({
+                    template: '<h2>Special Considerations have been saved.</h2>',
+                    className: 'ngdialog-theme-default',
+                    plain: true,
+                    overlay: false
+                });
             } else {
                
             }
@@ -121,7 +131,12 @@ app.controller('ProposalCtrl', ['$state','$scope','evoDb','SharedSrvc','ShingleS
         ME.params.jobID = ME.S.selectedJobObj.PRIMARY_ID;
         var result = ME.SRVC.submitParams(ME.params).then(function(result) {
             if (result != false) { 
-                alert("OK");
+                ngDialog.open({
+                    template: '<h2>Roof Parameters have been saved.</h2>',
+                    className: 'ngdialog-theme-default',
+                    plain: true,
+                    overlay: false
+                });
             } else {
                
             }
@@ -152,14 +167,13 @@ app.controller('ProposalCtrl', ['$state','$scope','evoDb','SharedSrvc','ShingleS
         DB.runQueryWithObj('http/getSpecialConsiderations.php',dataObj).then(function(result) {
             if (result != false) { 
                 ME.specialText = result[0].body;
-                ME.specialCost = result[0].cost;
             } else {
                
             }
         }, function(error) {
 
         });
-    }
+    };
 
     ME.dataError = function(loc, error) {
         console.log(loc + " : " + error);

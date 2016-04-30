@@ -1,10 +1,10 @@
 'use strict';
 
-app.service('SharedSrvc', ['$rootScope', function sharedSrvc($rootScope) {
+app.service('SharedSrvc', ['$rootScope','ListSrvc', function sharedSrvc($rootScope,ListSrvc) {
     var self = this;
 
     self.myID = "SharedVars: ";
-
+    self.L = ListSrvc;
     // Full Lists of all data
     // Not filtered by Manager
     self.fullClientList = [];
@@ -125,7 +125,7 @@ app.service('SharedSrvc', ['$rootScope', function sharedSrvc($rootScope) {
         self.selectedPropertyObj.PRIMARY_ID = obj.PRIMARY_ID;
         self.selectedPropertyObj.manager = obj.manager;
         self.selectedPropertyObj.client = obj.client;
-        self.selectedPropertyObj.multiUnit = obj.multiUnit;
+        self.selectedPropertyObj.roofCode = obj.roofCode;
         self.selectedPropertyObj.name = obj.name;
         self.selectedPropertyObj.street = obj.street;
         self.selectedPropertyObj.city = obj.city;
@@ -137,7 +137,7 @@ app.service('SharedSrvc', ['$rootScope', function sharedSrvc($rootScope) {
     // Jobs, Clients and Properties and Roofs will always be refreshed together in that order
     // This is the first of 4 calls from DB as each one is completed
     self.setManagerJobsList = function(d) {
-        // Reset all 3 lists
+        // Reset all 4 lists
         self.dataRefreshed = false;
         self.managerClients = [];
         self.managerProperties = [];
@@ -165,9 +165,9 @@ app.service('SharedSrvc', ['$rootScope', function sharedSrvc($rootScope) {
                 self.managerProperties.push(arr[i]);
             }
         };
-        for (var i = 0; i < self.managerProperties.length; i++) {
+        /*for (var i = 0; i < self.managerProperties.length; i++) {
             self.managerProperties[i].multiUnit = parseInt(self.managerProperties[i].multiUnit);
-        }
+        }*/
         // Should have all 3 lists complete now
         // Collate Jobs with their Client and Property
         translateRelations();
@@ -305,29 +305,29 @@ app.service('SharedSrvc', ['$rootScope', function sharedSrvc($rootScope) {
     };
 
     self.propertyParams = [
-        { label: "FIELD", id: 1 },
-        { label: "TOPRDG", id: 2 },
-        { label: "RKERDG", id: 3 },
-        { label: "RIDGETOTAL", id: 4 },
-        { label: "PRMITR", id: 5 },
-        { label: "VALLEY", id: 6 },
-        { label: "DECKNG", id: 7 },
-        { label: "LOWSLP", id: 8 },
-        { label: "LPIPE1", id: 9 },
-        { label: "LPIPE2", id: 10 },
-        { label: "LPIPE3", id: 11 },
-        { label: "LPIPE4", id: 12 },
-        { label: "FLHSH8", id: 13 },
-        { label: "JKVNT8", id: 14 },
-        { label: "TURBNS", id: 15 },
-        { label: "PWRVNT", id: 16 },
-        { label: "AIRHWK", id: 17 },
-        { label: "SLRVNT", id: 18 },
-        { label: "PAINT", id: 19 },
-        { label: "CAULK", id: 20 },
-        { label: "CARPRT", id: 21 },
-        { label: "SATDSH", id: 22 }
-    ];
+        {label:"FIELD",id:10},
+        {label:"TOPRDG",id:20},
+        {label:"RKERDG",id:21},
+        {label:"RKEWALL",id:22},
+        {label:"RIDGETOTAL",id:23},
+        {label:"EAVE",id:24},
+        {label:"PRMITR",id:25},
+        {label:"VALLEY",id:30},
+        {label:"DECKNG",id:40},
+        {label:"LOWSLP",id:50},
+        {label:"LPIPE1",id:60},
+        {label:"LPIPE2",id:61},
+        {label:"LPIPE3",id:62},
+        {label:"LPIPE4",id:63},
+        {label:"VENT8",id:64},
+        {label:"TURBNS",id:65},
+        {label:"PWRVNT",id:16},
+        {label:"AIRHWK",id:17},
+        {label:"SLRVNT",id:18},
+        {label:"PAINT",id:19},
+        {label:"CAULK",id:20},
+        {label:"CARPRT",id:21},
+        {label:"SATDSH",id:22}];
 
 
     self.levelOptions = [

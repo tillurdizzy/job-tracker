@@ -1,6 +1,6 @@
 'use strict';
 
-app.controller('AdminPropPricing', ['$state', '$scope', 'AdminSharedSrvc', 'AdminProposalSrvc', function($state, $scope, AdminSharedSrvc, AdminProposalSrvc) {
+app.controller('AdminPropDesign', ['$state', '$scope', 'AdminSharedSrvc', 'AdminProposalSrvc', function($state, $scope, AdminSharedSrvc, AdminProposalSrvc) {
 
     var ME = this;
     ME.S = AdminSharedSrvc;
@@ -8,6 +8,7 @@ app.controller('AdminPropPricing', ['$state', '$scope', 'AdminSharedSrvc', 'Admi
     ME.GrandTotal = 0;
     ME.ShinglesFieldTotal = 0;
     ME.ShinglesRidgeTotal = 0;
+    ME.ShinglesStarterTotal = 0;
     ME.VentsTotal = 0;
     ME.FlashingTotal = 0;
     ME.CapsTotal = 0;
@@ -30,6 +31,7 @@ app.controller('AdminPropPricing', ['$state', '$scope', 'AdminSharedSrvc', 'Admi
     // ME.getTotal() called every time a checkbox is changed on pricing tab view
     ME.getTotal = function() {
         ME.ShinglesFieldTotal = 0;
+        ME.ShinglesStarterTotal = 0;
         ME.ShinglesRidgeTotal = 0;
         ME.VentsTotal = 0;
         ME.FlashingTotal = 0;
@@ -46,6 +48,13 @@ app.controller('AdminPropPricing', ['$state', '$scope', 'AdminSharedSrvc', 'Admi
             include = ME.materialPricingDP.Field[i].Checked;
             if (include) {
                 ME.ShinglesFieldTotal += parseInt(ME.materialPricingDP.Field[i].Total);
+            }
+        };
+
+        for (var i = 0; i < ME.materialPricingDP.Starter.length; i++) {
+            include = ME.materialPricingDP.Starter[i].Checked;
+            if (include) {
+                ME.ShinglesStarterTotal += parseInt(ME.materialPricingDP.Starter[i].Total);
             }
         };
 

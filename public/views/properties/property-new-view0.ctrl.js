@@ -1,10 +1,10 @@
 'use strict';
-app.controller('NewPropertyViewCtrl',['$scope','$state','SharedSrvc','evoDb','TempVarSrvc',function ($scope,$state,SharedSrvc,evoDb,TempVarSrvc) {
+app.controller('NewPropertyViewCtrl', ['$scope', '$state', 'SharedSrvc', 'evoDb', 'TempVarSrvc', function($scope, $state, SharedSrvc, evoDb, TempVarSrvc) {
 
     //This controller is the Parent View and is only used to choose the Client - then the ui-view is loaded with 
     //address form then roof form
 
-    var DB = evoDb; 
+    var DB = evoDb;
     var ME = this;
     var S = SharedSrvc;
     var T = TempVarSrvc;
@@ -13,43 +13,48 @@ app.controller('NewPropertyViewCtrl',['$scope','$state','SharedSrvc','evoDb','Te
     ME.clientType = null;
     ME.multiUnit = "No";
 
-    ME.selectClient = function(){
-         S.selectedClientObj =  ME.selectedClient;
-          // both using same form as of 4/2016
-        if(ME.selectedClient.type=="1"){ 
-            T.multiUnitProperty = "No"; 
+    ME.selectClient = function() {
+        S.selectedClientObj = ME.selectedClient;
+        // both using same form as of 4/2016
+        if (ME.selectedClient.type == "1") {
+            T.multiUnitProperty = "No";
             $state.transitionTo('addNewProperty.address');
-        }else{
+        } else {
             // This will show the second question on form if client is a business
-           ME.clientType ="2";
+            ME.clientType = "2";
         };
     };
 
     // Only if clientType is business - otherwise just selecting the client will transition
-    ME.submitForm=function(){
-        T.multiUnitProperty = ME.multiUnit;
-        $state.transitionTo('addNewProperty.address');
+    ME.submitForm = function() {
+        var clientid = ME.selectedClient.PRIMARY_ID;
+        if(clientid > -1){
+            T.multiUnitProperty = ME.multiUnit;
+            $state.transitionTo('addNewProperty.address');
+        }else{
+            alert("Please select a client.");
+        };
     };
 
-    ME.goNewClient = function(){
+    ME.goNewClient = function() {
         $state.transitionTo("addNewClient");
     };
 
-    var init = function(){
-        ME.clientList.unshift({displayName:"-- Select Client --"});
+    var init = function() {
+        ME.clientList.unshift({ displayName: "-- Select Client --",PRIMARY_ID:-1});
         ME.selectedClient = ME.clientList[0];
     }
 
     $scope.$watch('$viewContentLoaded', function() {
         var loggedIn = S.loggedIn;
-        if(!loggedIn){
+        if (!loggedIn) {
             $state.transitionTo('login');
-        }else{
-        // Refresh the Client list every time we come to this page
+        } else {
+            // Refresh the Client list every time we come to this page
             DB.getManagerClients();
-       };
+        };
     });
 
     init();
 
- }]);
+}]);

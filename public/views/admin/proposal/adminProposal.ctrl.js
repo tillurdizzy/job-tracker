@@ -8,10 +8,12 @@ app.controller('AdminProposalCtrl',['$state','AdminDataSrvc','$scope','AdminShar
 	ME.selectedProposal = {};
 	ME.selectDataProvider = [];
 	ME.salesRep = "";
+	ME.specialText = "";
 	
 	ME.selectProposal = function(){
 		ME.salesRep = S.selectProposal(ME.selectedProposal.id);
 	};
+
 
 	ME.backToHome = function(){
 		$state.transitionTo('admin');

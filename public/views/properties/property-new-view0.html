@@ -11,7 +11,7 @@
             <h3>Choose the Client / Owner for this Property</h3>
             <select ng-model="VIEW.selectedClient" ng-options="c.displayName for c in VIEW.clientList" ng-change="VIEW.selectClient();"></select>
             
-            <div ng-show="VIEW.clientType == 'Business'">
+            <div ng-show="VIEW.clientType == '2'">
                 <h3>Is this a multi-unit property? (more than one building/roof at the same address)</h3>
                 <div class="check-radio-container">
                     <input type="radio" id="Rad1A" name="Rad1" value="No" ng-model="VIEW.multiUnit"></input>

@@ -271,7 +271,7 @@ app.controller('NewPropertyRoofCtrl', ['$state', '$scope', 'evoDb', 'SharedSrvc'
                     alert("FALSE returned for putPropertyAddress >>> submitForm >>> property-new-view1-address.ctrl.js");
                 } else {
                     var roofID = resultObj.data.id;
-                    if(ME.multiUnit == "0"){
+                    if(ME.multiUnit == 0){
                         ME.inputField = "SUCCESS";
                     }else{
                         ME.inputField = "SUCCESS_Multi";
