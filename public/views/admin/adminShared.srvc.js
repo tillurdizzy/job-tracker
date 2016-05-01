@@ -520,6 +520,15 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
             dataStr += a + ';' + b + ';' + c + ';' + d + ';' + e + '!';
         };
 
+        for (i = 0; i < self.materialsCatergorized.Starter.length; i++) {
+            a = self.materialsCatergorized.Starter[i].Code;
+            b = self.materialsCatergorized.Starter[i].Qty;
+            c = self.materialsCatergorized.Starter[i].Checked;
+            d = self.materialsCatergorized.Starter[i].PkgPrice;
+            e = self.materialsCatergorized.Starter[i].Category;
+            dataStr += a + ';' + b + ';' + c + ';' + d + ';' + e + '!';
+        };
+
         for (i = 0; i < self.materialsCatergorized.Ridge.length; i++) {
             a = self.materialsCatergorized.Ridge[i].Code;
             b = self.materialsCatergorized.Ridge[i].Qty;
@@ -528,6 +537,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
             e = self.materialsCatergorized.Ridge[i].Category;
             dataStr += a + ';' + b + ';' + c + ';' + d + ';' + e + '!';
         };
+
 
         for (i = 0; i < self.materialsCatergorized.Vents.length; i++) {
             a = self.materialsCatergorized.Vents[i].Code;

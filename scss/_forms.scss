@@ -1,3 +1,33 @@
+.ngDialogItemEdit{
+	display: flex;
+	flex-direction: row;
+	justify-content:flex-start;
+	align-items:center;
+	h3{
+		margin:10px 0;
+		padding:0;
+		font-size: 1.1em;
+		line-height: 1;
+		font-weight: 500;
+		font-family:  'Jaldi', sans-serif;
+	}
+	.label{
+		margin: 0 5px 0 15px;
+		line-height: 1;
+		font-weight: 400;
+		font-size: 1.1em;
+		font-family:  'Jaldi', sans-serif;
+	}
+	input[type="tel"]{
+		line-height:1rem;
+	    width:50px;
+	    font-size: 1rem;
+	    display:inline-block;
+	    box-sizing: content-box;
+	}
+
+}
+
 
 .input-msg{
 	color:#000000;

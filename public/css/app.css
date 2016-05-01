@@ -1696,6 +1696,11 @@ table {
       font-weight: 700;
       text-align: left;
       overflow: hidden; }
+      table thead th .check-radio-container label,
+      table thead td .check-radio-container label,
+      table tfoot th .check-radio-container label,
+      table tfoot td .check-radio-container label {
+        margin-right: 0; }
   table tbody tr:nth-child(even) {
     background-color: smart-scale(#fff, 5%); }
   table tbody th,
@@ -1782,6 +1787,11 @@ table {
       font-weight: 700;
       text-align: left;
       overflow: hidden; }
+      table thead th .check-radio-container label,
+      table thead td .check-radio-container label,
+      table tfoot th .check-radio-container label,
+      table tfoot td .check-radio-container label {
+        margin-right: 0; }
   table tbody tr:nth-child(even) {
     background-color: smart-scale(#fff, 5%); }
   table tbody th,
@@ -1900,6 +1910,27 @@ table {
       padding-top: 4px; }
     .inventory .short-form .formInlineItems select, .inventory .short-form .formInlineItems input {
       margin: 0; }
+
+.ngDialogItemEdit {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center; }
+  .ngDialogItemEdit h3 {
+    margin: 10px 0;
+    padding: 0;
+    font-size: 1.1em;
+    line-height: 1;
+    font-weight: 400;
+    font-family: 'Jaldi', sans-serif; }
+  .ngDialogItemEdit .label {
+    margin-left: 15px; }
+  .ngDialogItemEdit input[type="tel"] {
+    line-height: 1rem;
+    width: 50px;
+    font-size: 1rem;
+    display: inline-block;
+    box-sizing: content-box; }
 
 .input-msg {
   color: #000000; }
@@ -2058,9 +2089,6 @@ table {
 @media all and (max-height: 900px) {
   footer {
     display: none; } }
-
-.ngdialogBkgRed .ngdialog.ngdialog-theme-default .ngdialog-content {
-  background: #E74C3C; }
 
 .ngdialog.ngdialog-theme-default.custom-width .ngdialog-content {
   width: 685px; }

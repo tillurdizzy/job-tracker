@@ -1,16 +1,9 @@
 <div class="top page" ng-controller="AdminPropDesign as ChildCtrl">
-    <div class="standardParagraph">
-        <p>The <span class="bold">Quantities</span> listed here are derived from the parameters shown on the 'Input' tab.</p>
-        <p>The <span class="bold">Units</span> quantity includes overage of up to 5% on some items.</p>
-        <p>Adjust the <span class="bold">Include</span> column to reflect the client options and choices. </p>
-        <p><span class="hilite">IMPORTANT!</span> This screen will always reflect the default selections and current pricing until it is Saved.</p>
+    <div style="margin-top: .5rem;">
+        <button type="button" class="button radius" style="width:100%;" ng-click="ChildCtrl.saveJobConfig()" ng-disabled="ChildCtrl.dataIsSaved">Save</button>
     </div>
-    <horiz-rule margintop="5" marginbottom="5"></horiz-rule>
     <div style="margin-top: .5rem;">
         <h2>Design Total: {{ChildCtrl.GrandTotal | currency:"$":2}}</h2>
-    </div>
-    <div>
-        <button type="button" class="button radius" style="width:100%;" ng-click="ChildCtrl.saveJobConfig()" ng-disabled="ChildCtrl.dataIsSaved">Save</button>
     </div>
     <div class="section-header">
         <h2>Field Shingles</h2>
@@ -25,6 +18,7 @@
                     <th>Units</th>
                     <th>Price</th>
                     <th>Total</th>
+                    <th>Edit</th>
                 </tr>
             </thead>
             <tbody>
@@ -40,6 +34,7 @@
                     <td>{{row.PkgQty}} {{row.Package}}</td>
                     <td>{{row.PkgPrice | currency:"$":2}}</td>
                     <td>{{row.Total | currency:"$":2}}</td>
+                    <td><i class="fa fa-pencil" ng-click="ChildCtrl.editRowItem(row,'Field')" style="cursor:pointer;"></i></td>
                 </tr>
             </tbody>
         </table>
@@ -47,7 +42,6 @@
     <div class="pricingCategoryTotal">
         <h2>Total Field Shingles: {{ChildCtrl.ShinglesFieldTotal | currency:"$":2}}</h2>
     </div>
-
     <div class="section-header">
         <h2>Starter Shingles</h2>
     </div>
@@ -61,6 +55,7 @@
                     <th>Units</th>
                     <th>Price</th>
                     <th>Total</th>
+                    <th>Edit</th>
                 </tr>
             </thead>
             <tbody>
@@ -76,6 +71,7 @@
                     <td>{{row.PkgQty}} {{row.Package}}</td>
                     <td>{{row.PkgPrice | currency:"$":2}}</td>
                     <td>{{row.Total | currency:"$":2}}</td>
+                    <td><i class="fa fa-pencil" ng-click="ChildCtrl.editRowItem(row,'Starter')" style="cursor:pointer;"></i></td>
                 </tr>
             </tbody>
         </table>
@@ -83,7 +79,6 @@
     <div class="pricingCategoryTotal">
         <h2>Total Starter: {{ChildCtrl.ShinglesStarterTotal | currency:"$":2}}</h2>
     </div>
-
     <div class="section-header">
         <h2>Ridges</h2>
     </div>
@@ -97,6 +92,7 @@
                     <th>Units</th>
                     <th>Price</th>
                     <th>Total</th>
+                    <th>Edit</th>
                 </tr>
             </thead>
             <tbody>
@@ -112,6 +108,7 @@
                     <td>{{row.PkgQty}} {{row.Package}}</td>
                     <td>{{row.PkgPrice | currency:"$":2}}</td>
                     <td>{{row.Total | currency:"$":2}}</td>
+                    <td><i class="fa fa-pencil" ng-click="ChildCtrl.editRowItem(row,'Ridge')" style="cursor:pointer;"></i></td>
                 </tr>
             </tbody>
         </table>
@@ -126,12 +123,13 @@
         <table st-table="ChildCtrl.propertyInputParams" class="table table-striped" style="width:100%;">
             <thead>
                 <tr>
-                   <th>Include</th>
+                    <th>Include</th>
                     <th>Item</th>
                     <th>Qty</th>
                     <th>Units</th>
                     <th>Price</th>
                     <th>Total</th>
+                    <th>Edit</th>
                 </tr>
             </thead>
             <tbody>
@@ -147,6 +145,7 @@
                     <td>{{row.PkgQty}} {{row.Package}}</td>
                     <td>{{row.PkgPrice | currency:"$":2}}</td>
                     <td>{{row.Total | currency:"$":2}}</td>
+                    <td><i class="fa fa-pencil" ng-click="ChildCtrl.editRowItem(row,'Vents')" style="cursor:pointer;"></i></td>
                 </tr>
             </tbody>
         </table>
@@ -167,6 +166,7 @@
                     <th>Units</th>
                     <th>Price</th>
                     <th>Total</th>
+                    <th>Edit</th>
                 </tr>
             </thead>
             <tbody>
@@ -182,6 +182,7 @@
                     <td>{{row.PkgQty}} {{row.Package}}</td>
                     <td>{{row.PkgPrice | currency:"$":2}}</td>
                     <td>{{row.Total | currency:"$":2}}</td>
+                    <td><i class="fa fa-pencil" ng-click="ChildCtrl.editRowItem(row,'Flashing')" style="cursor:pointer;"></i></td>
                 </tr>
             </tbody>
         </table>
@@ -202,6 +203,7 @@
                     <th>Units</th>
                     <th>Price</th>
                     <th>Total</th>
+                    <th>Edit</th>
                 </tr>
             </thead>
             <tbody>
@@ -217,6 +219,7 @@
                     <td>{{row.PkgQty}} {{row.Package}}</td>
                     <td>{{row.PkgPrice | currency:"$":2}}</td>
                     <td>{{row.Total | currency:"$":2}}</td>
+                    <td><i class="fa fa-pencil" ng-click="ChildCtrl.editRowItem(row,'Caps')" style="cursor:pointer;"></i></td>
                 </tr>
             </tbody>
         </table>
@@ -237,6 +240,7 @@
                     <th>Units</th>
                     <th>Price</th>
                     <th>Total</th>
+                    <th>Edit</th>
                 </tr>
             </thead>
             <tbody>
@@ -252,6 +256,7 @@
                     <td>{{row.PkgQty}} {{row.Package}}</td>
                     <td>{{row.PkgPrice | currency:"$":2}}</td>
                     <td>{{row.Total | currency:"$":2}}</td>
+                    <td><i class="fa fa-pencil" ng-click="ChildCtrl.editRowItem(row,'Flat')" style="cursor:pointer;"></i></td>
                 </tr>
             </tbody>
         </table>
@@ -272,6 +277,7 @@
                     <th>Units</th>
                     <th>Price</th>
                     <th>Total</th>
+                    <th>Edit</th>
                 </tr>
             </thead>
             <tbody>
@@ -287,6 +293,7 @@
                     <td>{{row.PkgQty}} {{row.Package}}</td>
                     <td>{{row.PkgPrice | currency:"$":2}}</td>
                     <td>{{row.Total | currency:"$":2}}</td>
+                    <td><i class="fa fa-pencil" ng-click="ChildCtrl.editRowItem(row,'Other')" style="cursor:pointer;"></i></td>
                 </tr>
             </tbody>
         </table>
@@ -294,5 +301,11 @@
     <div class="pricingCategoryTotal">
         <h2>Total Other: {{ChildCtrl.OtherTotal | currency:"$":2}}</h2>
     </div>
-   
+    <horiz-rule margintop="10" marginbottom="10"></horiz-rule>
+    <div class="standardParagraph">
+        <p>The <span class="bold">Quantities</span> listed here are derived from the parameters shown on the 'Input' tab.</p>
+        <p>The <span class="bold">Units</span> quantity includes overage of up to 5% on some items.</p>
+        <p>Adjust the <span class="bold">Include</span> column to reflect the client options and choices. </p>
+        <p><span class="hilite">IMPORTANT!</span> This screen will always reflect the default selections and current pricing until it is Saved.</p>
+    </div>
 </div>

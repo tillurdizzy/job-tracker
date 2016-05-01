@@ -1,6 +1,6 @@
 'use strict';
 
-app.controller('AdminPropDesign', ['$state', '$scope', 'AdminSharedSrvc', 'AdminProposalSrvc', function($state, $scope, AdminSharedSrvc, AdminProposalSrvc) {
+app.controller('AdminPropDesign', ['$state', '$scope', 'AdminSharedSrvc', 'AdminProposalSrvc','ngDialog', function($state, $scope, AdminSharedSrvc, AdminProposalSrvc,ngDialog) {
 
     var ME = this;
     ME.S = AdminSharedSrvc;
@@ -16,6 +16,7 @@ app.controller('AdminPropDesign', ['$state', '$scope', 'AdminSharedSrvc', 'Admin
     ME.OtherTotal = 0;
     ME.dataIsSaved = true;
     ME.proposalSelected = false;
+    ME.itemBeingEdited =  {};
 
     ME.materialPricingDP = ME.S.materialsCatergorized;
 
@@ -27,6 +28,26 @@ app.controller('AdminPropDesign', ['$state', '$scope', 'AdminSharedSrvc', 'Admin
     ME.saveJobConfig = function() {
         ME.dataIsSaved = ME.S.saveJobConfig();
     };
+
+    ME.editRowItem = function(materialObj,cat){
+        ME.itemBeingEdited = materialObj;
+
+        $scope.dialogLabel = materialObj.Item;
+        var passedObj = {Price:materialObj.PkgPrice,Qty:materialObj.Qty};
+
+        var dialog = ngDialog.openConfirm({
+            template:"views/admin/proposal/ngdialog-editItem-template.html",
+            scope:$scope,
+            data:passedObj
+        }).then(function (value) {
+            
+            console.log('Modal promise resolved. Value: ', value);
+        }, function (reason) {
+            console.log('Modal promise rejected. Reason: ', reason);
+        });
+    };
+
+
 
     // ME.getTotal() called every time a checkbox is changed on pricing tab view
     ME.getTotal = function() {

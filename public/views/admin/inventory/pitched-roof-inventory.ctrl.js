@@ -48,6 +48,7 @@ app.controller('PitchedRoofInventoryCtrl',['$state','$scope','SharedSrvc','Admin
 	};
 
 	ME.configSelectedItemObj = function(code){
+		ME.updateItem();
 		ME.inputDataObj = {};
 		for (var i = 0; i < ME.pitchedInventoryList.length; i++) {
 			if(ME.pitchedInventoryList[i].Code == code){

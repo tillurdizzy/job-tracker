@@ -1,12 +1,12 @@
 {
   "name": "roofing-job-tracker",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Job track for roofing job.",
+  "main": "index.html",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "James Sheives",
   "license": "ISC",
   "devDependencies": {
     "autoprefixer": "^6.3.1",

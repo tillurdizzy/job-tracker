@@ -83,6 +83,9 @@ table{
         font-weight: 700;
         text-align: left;
         overflow: hidden;
+        .check-radio-container label{
+        	margin-right: 0;
+        }
       }
     }
 
