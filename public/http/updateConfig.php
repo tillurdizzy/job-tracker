@@ -12,7 +12,7 @@ $con = mysqli_connect(DATABASE_SERVER, DATABASE_USERNAME, DATABASE_PASSWORD,DATA
 $jobID = mysqli_real_escape_string($con,$data->jobID);
 $strData = mysqli_real_escape_string($con,$data->strData);
 
-$query = "UPDATE job_materials SET 
+$query = "UPDATE job_config SET 
 strData='".$strData."'
 WHERE jobID='".$jobID."'";
 $qry_res = mysqli_query($con,$query);

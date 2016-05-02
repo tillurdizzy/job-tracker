@@ -44,11 +44,11 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
 
     // self.materialsList sorted into categories
     // Consumed by view controller as data provider for Pricing Tab
-    self.materialsCatergorized = { Field: [], Ridge: [], Vents: [], Flashing: [], Caps: [], Flat: [], Other: [] };
+    self.materialsCatergorized = { Field: [], Ridge: [], Starter: [], Vents: [], Flashing: [], Caps: [], Flat: [], Other: [] };
 
     // Step 1 : Select proposal from dropdown on AdminProposalCtrl
     self.selectProposal = function(ndx) {
-        var rtnRepName = "";
+        var rtnObj = {};
         if (ndx == -1) {
             self.resetProposalData(); // Clear vars
         } else {
@@ -59,15 +59,18 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
                     self.proposalUnderReview.jobID = proposalsAsJob[i].PRIMARY_ID;
                     break;
                 }
-            }
-            rtnRepName = self.returnSalesRep(self.proposalUnderReview.manager);
+            };
+            rtnObj.propertyID = self.proposalUnderReview.PRIMARY_ID;
+            rtnObj.jobID = self.proposalUnderReview.jobID;
+            rtnObj.clientID = self.proposalUnderReview.client
+            rtnObj.salesRep = self.returnSalesRep(self.proposalUnderReview.manager);
             // Set flags to false
             mergeDataFlag.config = false;
             mergeDataFlag.materials = false;
             // Call queries
             getJobParameters();
         }
-        return rtnRepName;
+        return rtnObj;
     };
 
     self.resetProposalData = function() {
@@ -181,6 +184,30 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
         self.materialsCatergorized.Other = other;
 
         $rootScope.$broadcast('onRefreshMaterialsData', self.materialsCatergorized);
+    };
+
+    // Called from Proposal Review Design page to manually edit qty or price of material
+    self.editMaterial = function(vals){
+        var cat = vals.Category;
+        var catArray = [];
+        switch(cat){
+            case "Field":catArray = self.materialsCatergorized.Field;break;
+            case "Ridge":catArray = self.materialsCatergorized.Ridge;break;
+            case "Starter":catArray = self.materialsCatergorized.Starter;break;
+            case "Caps":catArray = self.materialsCatergorized.Caps;break;
+            case "Vents":catArray = self.materialsCatergorized.Vents;break;
+            case "Flashing":catArray = self.materialsCatergorized.Flashing;break;
+            case "Flat":catArray = self.materialsCatergorized.Flat;break;
+            case "Other":catArray = self.materialsCatergorized.Other;break;
+        }
+        for (var i = 0; i < catArray.length; i++) {
+            if(catArray[i].PRIMARY_ID == vals.ID){
+                catArray[i].PkgPrice = vals.Price;
+                catArray[i].Qty = parseInt(vals.Qty);
+                break;
+            }
+        }
+        self.saveJobConfig();
     };
 
     var getSpecialConsiderations = function(){
@@ -385,13 +412,6 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
         };
 
         self.PROPERTIES = underscore.sortBy(self.PROPERTIES, 'displayName');
-
-        var stooges = [{name: 'moe', age: 60}, {name: 'larry', age: 50}, {name: 'curly', age: 40}];
-        stooges = underscore.sortBy(stooges, 'age');
-        for (var i = 0; i < stooges.length; i++) {
-            console.log(stooges[i]);
-        }
-        
     };
 
     var returnDisplayNameFromClient = function(id) {
@@ -430,8 +450,6 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
         };
         return "";
     };
-
-
 
     var returnRoofCode = function(id) {
         for (var i = 0; i < self.PROPERTIES.length; i++) {
@@ -538,7 +556,6 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
             dataStr += a + ';' + b + ';' + c + ';' + d + ';' + e + '!';
         };
 
-
         for (i = 0; i < self.materialsCatergorized.Vents.length; i++) {
             a = self.materialsCatergorized.Vents[i].Code;
             b = self.materialsCatergorized.Vents[i].Qty;
@@ -585,15 +602,16 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
         };
 
         dataObj.strData = dataStr;
-        var query = DB.queryDBWithObj("http/update/updateConfig.php", dataObj).then(function(result) {
-            if (result != false) {
-                return true;
+
+        DB.query("updateConfig", dataObj).then(function(resultObj) {
+            if (resultObj.result == "Error" || typeof resultObj.data === "string") {
+                alert("Query Error - see console for details");
+                console.log("updateConfig ---- " + resultObj.data);
             } else {
-                alert("FALSE returned from DB at AdminSharedSrvc >>> getMaterialsList()");
-                return false;
+               $rootScope.$broadcast('onSaveJobConfig');
             }
         }, function(error) {
-            alert("ERROR returned returned from DB at AdminSharedSrvc >>> getMaterialsList()");
+            alert("Query Error - AdminSharedSrvc >> updateConfig");
         });
     };
 

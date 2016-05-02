@@ -7,7 +7,8 @@
         <select ng-model="Ctrl.selectedProposal" ng-options="c.label for c in Ctrl.selectDataProvider" ng-change="Ctrl.selectProposal()" style="width:50%" ;></select>
     </div>
     <div>
-        <h2>Sales Rep: {{Ctrl.salesRep}}</h2>
+        <h2>Sales Rep: {{Ctrl.proposalData.salesRep}}</h2>
+        <p class="tinyFont">Job ID: {{Ctrl.proposalData.jobID}}, Property ID: {{Ctrl.proposalData.propertyID}}, Client ID: {{Ctrl.proposalData.clientID}}</p>
     </div>
     <div id='cssmenu' ng-controller="TabbedMenuCtrl">
         <ul>

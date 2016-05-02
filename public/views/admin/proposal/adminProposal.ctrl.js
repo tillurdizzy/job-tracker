@@ -1,17 +1,17 @@
 'use strict';
 
-app.controller('AdminProposalCtrl',['$state','AdminDataSrvc','$scope','AdminSharedSrvc',function ($state,AdminDataSrvc,$scope,AdminSharedSrvc) {
+app.controller('AdminProposalCtrl',['$state','AdminDataSrvc','$scope','AdminSharedSrvc','ngDialog',function ($state,AdminDataSrvc,$scope,AdminSharedSrvc,ngDialog) {
 	var DB =  AdminDataSrvc;
 	var ME = this;
 	var S = AdminSharedSrvc;
 
 	ME.selectedProposal = {};
 	ME.selectDataProvider = [];
-	ME.salesRep = "";
 	ME.specialText = "";
+	ME.proposalData = {salesRep:"-",clientID:"-",propertyID:"-",jobID:"-"};
 	
 	ME.selectProposal = function(){
-		ME.salesRep = S.selectProposal(ME.selectedProposal.id);
+		ME.proposalData = S.selectProposal(ME.selectedProposal.id);
 	};
 
 
@@ -44,6 +44,8 @@ app.controller('AdminProposalCtrl',['$state','AdminDataSrvc','$scope','AdminShar
 		}
 		ME.selectedProposal = ME.selectDataProvider[0];
 	};
+
+	
 
 	$scope.$on('getProposalsByProperty', function() {
 		parseProposals();

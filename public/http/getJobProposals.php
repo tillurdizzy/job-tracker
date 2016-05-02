@@ -21,6 +21,7 @@ while ($row = mysqli_fetch_object($result)) {
 	$oneVO->createdDate = $row->createdDate;
 	$oneVO->manager = $row->manager;
 	$oneVO->client = $row->client;
+	$oneVO->roofCode = $row->roofCode;
 	$oneVO->name = $row->name;
 	$oneVO->street = $row->street;
 	$oneVO->city = $row->city;

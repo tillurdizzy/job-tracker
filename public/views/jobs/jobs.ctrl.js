@@ -97,33 +97,6 @@ app.controller('JobsCtrl',['$location','$state','evoDb','$scope','SharedSrvc',fu
         });
 	};
 
-	/*ME.getManagerClients = function(){
-		var result = DB.getManagerClients().then(function(result){
-            if(result != false){
-            	// DB sent the data to the SharedSrvc
-				// Don't do anything here
-            }else{
-              ME.dataError("JobsCtrl-getManagerClients()-1",result); 
-            }
-        },function(error){
-            ME.dataError("JobsCtrl-getManagerClients()-2",result);
-        });
-	};
-
-	ME.getManagerProperties = function(){
-		var result = DB.getManagerProperties()
-        .then(function(result){
-            if(result != false){
-            	// DB sent the data to the SharedSrvc
-				// Don't do anything here
-            }else{
-              ME.dataError("JobsCtrl-getManagerProperties()-1",result); 
-            }
-        },function(error){
-            ME.dataError("JobsCtrl-getManagerProperties()-2",result);
-        });
-	};*/
-
 	ME.updateStatus = function(status){
 		var d = new Date();
 		var v = d.valueOf();
@@ -149,10 +122,6 @@ app.controller('JobsCtrl',['$location','$state','evoDb','$scope','SharedSrvc',fu
 		console.log(loc + " : " + error);
 	};
 
-    // updates jobs if changed but is redundant here....!!
-    /*$scope.$watch( function () { return ME.S.managerJobs; }, function ( jobs ) {
-	  ME.jobs = jobs;
-	});*/
 
 	$scope.$watch('$viewContentLoaded', function() {
        var loggedIn = ME.S.loggedIn;

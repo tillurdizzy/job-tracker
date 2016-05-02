@@ -1,6 +1,6 @@
 'use strict';
 
-app.controller('AdminPropDesign', ['$state', '$scope', 'AdminSharedSrvc', 'AdminProposalSrvc','ngDialog', function($state, $scope, AdminSharedSrvc, AdminProposalSrvc,ngDialog) {
+app.controller('AdminPropDesign', ['$state', '$scope', 'AdminSharedSrvc', 'AdminProposalSrvc', 'ngDialog', function($state, $scope, AdminSharedSrvc, AdminProposalSrvc, ngDialog) {
 
     var ME = this;
     ME.S = AdminSharedSrvc;
@@ -16,7 +16,7 @@ app.controller('AdminPropDesign', ['$state', '$scope', 'AdminSharedSrvc', 'Admin
     ME.OtherTotal = 0;
     ME.dataIsSaved = true;
     ME.proposalSelected = false;
-    ME.itemBeingEdited =  {};
+    ME.itemBeingEdited = {};
 
     ME.materialPricingDP = ME.S.materialsCatergorized;
 
@@ -29,25 +29,23 @@ app.controller('AdminPropDesign', ['$state', '$scope', 'AdminSharedSrvc', 'Admin
         ME.dataIsSaved = ME.S.saveJobConfig();
     };
 
-    ME.editRowItem = function(materialObj,cat){
+    ME.editRowItem = function(materialObj, cat) {
         ME.itemBeingEdited = materialObj;
-
         $scope.dialogLabel = materialObj.Item;
-        var passedObj = {Price:materialObj.PkgPrice,Qty:materialObj.Qty};
+
+        var passedObj = { Price: materialObj.PkgPrice, Qty: materialObj.Qty, Category: materialObj.Category, ID: materialObj.PRIMARY_ID };
 
         var dialog = ngDialog.openConfirm({
-            template:"views/admin/proposal/ngdialog-editItem-template.html",
-            scope:$scope,
-            data:passedObj
-        }).then(function (value) {
-            
-            console.log('Modal promise resolved. Value: ', value);
-        }, function (reason) {
-            console.log('Modal promise rejected. Reason: ', reason);
+            template: "views/admin/proposal/ngdialog-editItem-template.html",
+            scope: $scope,
+            data: passedObj
+        }).then(function(value) {
+            ME.S.editMaterial(value);
+            ME.getTotal();
+        }, function(reason) {
+
         });
     };
-
-
 
     // ME.getTotal() called every time a checkbox is changed on pricing tab view
     ME.getTotal = function() {
@@ -122,9 +120,7 @@ app.controller('AdminPropDesign', ['$state', '$scope', 'AdminSharedSrvc', 'Admin
         };
 
         ME.GrandTotal = ME.ShinglesFieldTotal + ME.ShinglesRidgeTotal + ME.VentsTotal + ME.FlashingTotal + ME.FlatTotal + ME.CapsTotal + ME.OtherTotal;
-
         ME.P.setSummaryItem("materials", ME.GrandTotal);
-
     };
 
     var configExists = function() {
@@ -141,6 +137,16 @@ app.controller('AdminPropDesign', ['$state', '$scope', 'AdminSharedSrvc', 'Admin
         ME.proposalSelected = true;
         configExists();
         ME.getTotal();
+    });
+
+    $scope.$on('onSaveJobConfig', function() {
+        ME.dataIsSaved = true;
+        ngDialog.open({
+            template: '<h2>Job Config saved..</h2>',
+            className: 'ngdialog-theme-default',
+            plain: true,
+            overlay: false
+        });
     });
 
     // Broadcast from AdminSharedSrvc >>> selectProposal (user selected prompt -1 from dropdown i.e. there is no proposal selected)

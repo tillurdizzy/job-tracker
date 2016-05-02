@@ -948,6 +948,12 @@ body {
   display: flex;
   flex-direction: column; }
 
+.tinyFont {
+  font-size: 11px;
+  margin: 0;
+  line-height: 1;
+  padding: 0; }
+
 .flex-row {
   display: flex; }
 
@@ -1912,25 +1918,30 @@ table {
       margin: 0; }
 
 .ngDialogItemEdit {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center; }
+  font-family: 'Jaldi', sans-serif; }
   .ngDialogItemEdit h3 {
     margin: 10px 0;
     padding: 0;
     font-size: 1.1em;
     line-height: 1;
-    font-weight: 400;
-    font-family: 'Jaldi', sans-serif; }
-  .ngDialogItemEdit .label {
-    margin-left: 15px; }
-  .ngDialogItemEdit input[type="tel"] {
-    line-height: 1rem;
-    width: 50px;
-    font-size: 1rem;
-    display: inline-block;
-    box-sizing: content-box; }
+    font-weight: 500; }
+  .ngDialogItemEdit .inputFields {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center; }
+    .ngDialogItemEdit .inputFields label {
+      margin: 0 5px 0 15px;
+      line-height: 1;
+      font-weight: 400;
+      font-size: 1.1em; }
+    .ngDialogItemEdit .inputFields input[type="tel"] {
+      line-height: 1rem;
+      width: 75px;
+      font-size: 1.1rem;
+      text-align: right;
+      display: inline-block;
+      box-sizing: content-box; }
 
 .input-msg {
   color: #000000; }
@@ -2018,7 +2029,8 @@ table {
   border: 2px solid #BDC3C7;
   display: block;
   box-sizing: border-box; }
-  .ez-form-item input[type="text"], .ez-form-item input[type="email"] {
+  .ez-form-item input[type="text"],
+  .ez-form-item input[type="email"] {
     padding: .2rem;
     margin: 0 0 10px 0;
     padding: 2px 4px;
