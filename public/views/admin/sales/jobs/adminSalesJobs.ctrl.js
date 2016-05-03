@@ -8,7 +8,6 @@ app.controller('AdminSalesJobsCtrl', ['AdminSharedSrvc', 'AdminDataSrvc', 'ListS
     var DB = AdminDataSrvc;
     ME.L = ListSrvc;
 
-
     ME.JOBS = [];
     ME.EditMode = "Add Job";
     ME.modePrompt = "Add New Job: Fill in the form and submit.";
@@ -118,7 +117,6 @@ app.controller('AdminSalesJobsCtrl', ['AdminSharedSrvc', 'AdminDataSrvc', 'ListS
         //ME.formStatus = "Submit";
     }
 
-
     ME.backToHome = function() {
         $state.transitionTo('admin');
     };
@@ -131,7 +129,7 @@ app.controller('AdminSalesJobsCtrl', ['AdminSharedSrvc', 'AdminDataSrvc', 'ListS
 
     var getClientProperties = function() {
         ME.propertyOptions = [];
-        ME.propertyOptions.push({ propertyName: "--Select--", PRIMARY_ID: "-1" });
+        ME.propertyOptions.push({ propertyName: "--Select One --", PRIMARY_ID: "-1" });
         for (var i = 0; i < ME.JOBS.length; i++) {
             if (ME.JOBS[i].client == ME.clientSelected.PRIMARY_ID) {
                 ME.propertyOptions.push(ME.JOBS[i]);
@@ -244,7 +242,6 @@ app.controller('AdminSalesJobsCtrl', ['AdminSharedSrvc', 'AdminDataSrvc', 'ListS
                     plain: true,
                     overlay: false
                 });
-
             }
         }, function(error) {
             alert("ERROR returned for  " + thisQuery + " at " + myName + " >>> " + thisFunc);

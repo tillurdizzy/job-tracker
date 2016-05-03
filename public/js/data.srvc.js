@@ -19,6 +19,9 @@ app.service('evoDb', ['$http', '$q', 'SharedSrvc', 'LogInSrvc', 'underscore', fu
         putPropertyAddress: httpPathPrefix + "putPropertyAddress.php",
         putRoof: httpPathPrefix + "putRoof.php",
         insertRoof: httpPathPrefix + "insertRoof.php",
+        insertJobParameters: httpPathPrefix + "insertJobParameters.php",
+        insertSpecialConsiderations: httpPathPrefix + "insertJobParameters.php",
+        insertJobConfig: httpPathPrefix + "insertJobConfig.php",
         putMultiLevels: httpPathPrefix + "putMultiLevels.php",
         putMultiVents: httpPathPrefix + "putMultiVents.php"
     };
@@ -140,13 +143,8 @@ app.service('evoDb', ['$http', '$q', 'SharedSrvc', 'LogInSrvc', 'underscore', fu
         $http({ method: 'POST', url: httpPathPrefix + 'putJob.php', data: dataObj }).
         success(function(data, status, headers, config) {
             var newJobID = data.id;
-            var dataObj = { jobID: newJobID };
-            self.putJobParams(dataObj);
-            self.putMaterialOptions(dataObj);
-            self.putSpecialConsiderations(dataObj);
-            self.putMultiLevel(dataObj);
-            self.putJobMaterials(dataObj);
-
+            putJobPartTwo(newJobID);
+           
             var rtnObj = {};
             rtnObj.result = "Success";
             rtnObj.data = data;
@@ -158,53 +156,13 @@ app.service('evoDb', ['$http', '$q', 'SharedSrvc', 'LogInSrvc', 'underscore', fu
         return deferred.promise;
     };
 
-    self.putJobMaterials = function(dataObj) {
-        var deferred = $q.defer();
-        $http({ method: 'POST', url: httpPathPrefix + 'insertJobMaterial.php', data: dataObj }).
-        success(function(data, status, headers, config) {
-            deferred.resolve(data);
-        }).
-        error(function(data, status, headers, config) {
-            deferred.reject(data);
-        });
-        return deferred.promise;
+    var putJobPartTwo = function(jobID){
+        var dataObj = { jobID: jobID };
+        self.query('insertJobConfig',dataObj);
+        self.query('insertJobParameters',dataObj);
+        self.query('insertSpecialConsiderations',dataObj);
     };
 
-    self.putJobParams = function(dataObj) {
-        var deferred = $q.defer();
-        $http({ method: 'POST', url: httpPathPrefix + 'insertJobParameters.php', data: dataObj }).
-        success(function(data, status, headers, config) {
-            deferred.resolve(data);
-        }).
-        error(function(data, status, headers, config) {
-            deferred.reject(data);
-        });
-        return deferred.promise;
-    };
-
-    self.putMaterialOptions = function(dataObj) {
-        var deferred = $q.defer();
-        $http({ method: 'POST', url: httpPathPrefix + 'insertMaterialOptions.php', data: dataObj }).
-        success(function(data, status, headers, config) {
-            deferred.resolve(data);
-        }).
-        error(function(data, status, headers, config) {
-            deferred.reject(data);
-        });
-        return deferred.promise;
-    };
-
-    self.putSpecialConsiderations = function(dataObj) {
-        var deferred = $q.defer();
-        $http({ method: 'POST', url: httpPathPrefix + 'insertSpecialConsiderations.php', data: dataObj }).
-        success(function(data, status, headers, config) {
-            deferred.resolve(data);
-        }).
-        error(function(data, status, headers, config) {
-            deferred.reject(data);
-        });
-        return deferred.promise;
-    };
 
     self.putMultiLevel = function(dataObj) {
         var deferred = $q.defer();
@@ -423,7 +381,6 @@ app.service('evoDb', ['$http', '$q', 'SharedSrvc', 'LogInSrvc', 'underscore', fu
                     data[i].ridgeCap = parseInt(data[i].ridgeCap);
                     data[i].roofVents = parseInt(data[i].roofVents);
                 }
-
                 S.setRoofTable(data);
                 deferred.resolve(data);
             } else {

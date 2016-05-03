@@ -133,8 +133,6 @@ app.controller('AdminSalesPropertiesCtrl', ['$state', '$scope', 'AdminSharedSrvc
         ME.multiVentObj.SLRVNT = ME.multiVentModel.SLRVNT.id;
     };
 
-
-
     ME.configPropObj = function(ID) {
         ME.formStatus = "Pristine";
         ME.inputDataObj = {};
@@ -150,7 +148,6 @@ app.controller('AdminSalesPropertiesCtrl', ['$state', '$scope', 'AdminSharedSrvc
     };
 
     ME.configRoofObj = function(ID) {
-
         ME.formStatus = "Pristine";
         ME.inputDataObj = {};
         for (var i = 0; i < ME.PROPERTIES.length; i++) {

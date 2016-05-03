@@ -30,6 +30,7 @@ app.service('AdminDataSrvc',['$http','$q','SharedSrvc','LogInSrvc',function admi
 		doesJobExist:httpPathPrefix + "getDoesJobExist.php",
 		putProperty:httpPathPrefix + "putProperty.php",
 		putJob:httpPathPrefix + "putJob.php",
+		putClient:httpPathPrefix + "putClient.php",
 		putPitchedInvtItem:httpPathPrefix + "putPitchedInventoryItem.php",
 		putMultiLevels:httpPathPrefix + "putMultiLevels.php",
 		putMultiVents:httpPathPrefix + "putMultiVents.php",
@@ -123,7 +124,6 @@ app.service('AdminDataSrvc',['$http','$q','SharedSrvc','LogInSrvc',function admi
 		error(function(data, status, headers, config) {
 			deferred.reject(false);
 	    });
-
 	    return deferred.promise;
 	}
 	

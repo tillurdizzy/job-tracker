@@ -1,6 +1,6 @@
 'use strict';
 
-app.controller('AdminSalesClientsCtrl', ['$state', '$scope', 'AdminSharedSrvc', 'AdminDataSrvc', 'ngDialog', function($state, $scope, AdminSharedSrvc, AdminDataSrvc,ngDialog) {
+app.controller('AdminSalesClientsCtrl', ['$state', '$scope', 'AdminSharedSrvc', 'AdminDataSrvc', 'ngDialog', function($state, $scope, AdminSharedSrvc, AdminDataSrvc, ngDialog) {
 
     var ME = this;
     var myName = "AdminSalesClientsCtrl";
@@ -9,108 +9,147 @@ app.controller('AdminSalesClientsCtrl', ['$state', '$scope', 'AdminSharedSrvc', 
     var CLIENTS = [];
 
     ME.clientsDP = [];
+    ME.salesRepsDP = [];
     ME.EditMode = "Add Client";
     ME.modePrompt = "Add New Client: Fill in the form and submit.";
     ME.formStatus = "Pristine";
 
     ME.inputDataObj = {};
     ME.selectedSalesRep = ME.S.salesReps[0];
+    ME.ClientType = "Individual";
     ME.selectedClient = null;
+    ME.submitInValid = true;
 
     ME.selectClient = function() {
         ME.configDataObj();
-        if(ME.EditMode == "Remove Client"){
+        if (ME.EditMode == "Remove Client") {
             ME.formStatus = "Submit";
-        }else if(ME.EditMode == "Update Client"){
-            ME.formStatus = "Incomplete";
+            ME.submitInValid = false;
+        } else if (ME.EditMode == "Update Client") {
+            ME.formStatus = "Pristine";
+            ME.submitInValid = true;
+        };
+    };
+
+    ME.selectRep = function() {
+       ME.formStatus = "Dirty";
+       if (ME.EditMode == "Update Client") {
+            ME.formStatus = "Submit";
+            ME.submitInValid = false;
+        }else if(ME.EditMode == "Add Client"){
+            validateForm();
         }
     };
-    
-    ME.addItem = function(){
+
+    ME.addItem = function() {
         ME.EditMode = "Add Client";
         ME.modePrompt = "Add New Client: Fill in the form and submit."
         resetInputFields();
     };
 
-    ME.updateItem = function(){
+    ME.updateItem = function() {
         ME.EditMode = "Update Client";
         ME.modePrompt = "Update Client: Select a Client to edit/update."
         resetInputFields();
     };
 
-    ME.removeItem = function(){
+    ME.removeItem = function() {
         ME.EditMode = "Remove Client";
         ME.modePrompt = "Remove Client: Select a Client to remove."
         resetInputFields();
     };
 
-    ME.formChange = function(){
+    ME.formChange = function() {
         ME.formStatus = "Submit";
+        if (ME.EditMode == "Update Client") {
+            ME.formStatus = "Dirty";
+            ME.submitInValid = false;
+        }else if(ME.EditMode == "Add Client"){
+            validateForm();
+        }
+    };
+
+    var validateForm = function(){
+        // Make sure we have minimum of first and last name and sales rep
+        if(ME.inputDataObj.name_first.length > 0 && ME.inputDataObj.name_last.length > 2 && ME.selectedSalesRep.PRIMARY_ID > 0){
+            ME.formStatus = "Submit";
+            ME.submitInValid = false;
+        }
     };
 
     ME.backToHome = function() {
         $state.transitionTo('admin');
     };
 
-    ME.configDataObj = function(){
+    ME.configDataObj = function() {
         var ID = parseInt(ME.selectedClient.PRIMARY_ID);
-        if(ID === -1){
+        if (ID === -1) {
             resetInputFields();
             ME.formStatus = "Pristine";
             return;
-        }
-        
+        };
+
         ME.inputDataObj = {};
-        for (var i = 0; i <  ME.clientsDP.length; i++) {
-            if(ME.clientsDP[i].PRIMARY_ID == ID){
-                 ME.inputDataObj = ME.clientsDP[i];
+        for (var i = 0; i < ME.clientsDP.length; i++) {
+            if (ME.clientsDP[i].PRIMARY_ID == ID) {
+                ME.inputDataObj = ME.clientsDP[i];
             }
         };
         var mgrID = ME.selectedClient.manager;
         ME.selectedSalesRep = ME.S.returnManagerObjByID(mgrID);
     };
 
-    ME.submit = function(){
-        if(ME.formStatus != "Submit"){
+    ME.submit = function() {
+        if (ME.formStatus != "Submit") {
             ngDialog.open({
-                    template: '<h2>Form is invalid or incomplete.</h2>',
-                    className: 'ngdialog-theme-default',
-                    plain: true,
-                    overlay: false
-                });
-        }else{
-           switch(ME.EditMode){
-                case "Add Client": add_Item();break;
-                case "Update Client": update_Item();break;
-                case "Remove Client": remove_Item();break;
-            } 
+                template: '<h2>Form is invalid or incomplete.</h2>',
+                className: 'ngdialog-theme-default',
+                plain: true,
+                overlay: false
+            });
+        } else {
+            switch (ME.EditMode) {
+                case "Add Client":
+                    add_Item();
+                    break;
+                case "Update Client":
+                    update_Item();
+                    break;
+                case "Remove Client":
+                    remove_Item();
+                    break;
+            }
         }
     };
 
-    var add_Item = function(){
+    var add_Item = function() {
         var thisFunc = "add_Item()";
         var thisQuery = "DB.putClient()";
-        DB.query("putClient",ME.inputDataObj).then(function(resultObj) {
+        ME.inputDataObj.username = ME.inputDataObj.email;
+        ME.inputDataObj.displayName = ME.inputDataObj.name_first + " " + ME.inputDataObj.name_last;
+        ME.inputDataObj.manager = ME.selectedSalesRep.PRIMARY_ID;
+        ME.inputDataObj.type = ME.ClientType;
+        DB.query("putClient", ME.inputDataObj).then(function(resultObj) {
             if (resultObj.result == "Error" || typeof resultObj.data === "string") {
-                alert("FALSE returned for "+thisQuery+" at "+myName+" >>> "+thisFunc);
+                alert("FALSE returned for " + thisQuery + " at " + myName + " >>> " + thisFunc);
             } else {
                 resetInputFields();
                 ngDialog.open({
-                    template: '<h2>Client has been added.</h2>',
+                    template: '<h2>Client has been added successfully!</h2>',
                     className: 'ngdialog-theme-default',
                     plain: true,
                     overlay: false
                 });
             }
         }, function(error) {
-            alert("ERROR returned for  "+thisQuery+" at "+myName+" >>> "+thisFunc);
+            alert("ERROR returned for  " + thisQuery + " at " + myName + " >>> " + thisFunc);
         });
     };
 
-    var update_Item = function(){
-        DB.query("updateClient",ME.inputDataObj).then(function(resultObj) {
+    var update_Item = function() {
+        DB.query("updateClient", ME.inputDataObj).then(function(resultObj) {
             if (resultObj.result == "Error" || typeof resultObj.data === "string") {
-                alert("FALSE returned for "+thisQuery+" at "+myName+" >>> "+thisFunc);
+                alert("FALSE returned for " + thisQuery + " at " + myName + " >>> " + thisFunc);
             } else {
                 resetInputFields();
                 ngDialog.open({
@@ -121,11 +160,11 @@ app.controller('AdminSalesClientsCtrl', ['$state', '$scope', 'AdminSharedSrvc', 
                 });
             }
         }, function(error) {
-            alert("ERROR returned for  "+thisQuery+" at "+myName+" >>> "+thisFunc);
+            alert("ERROR returned for  " + thisQuery + " at " + myName + " >>> " + thisFunc);
         });
     };
 
-    var remove_Item = function(){
+    var remove_Item = function() {
         var dataObj = { ID: ME.inputDataObj.PRIMARY_ID };
         DB.query("deleteClient", dataObj).then(function(resultObj) {
             if (resultObj.result == "Error") {
@@ -148,45 +187,64 @@ app.controller('AdminSalesClientsCtrl', ['$state', '$scope', 'AdminSharedSrvc', 
     var getClients = function() {
         DB.query("getClients").then(function(resultObj) {
             if (resultObj.result == "Error" || typeof resultObj.data === "string") {
-                alert("FALSE returned for DB.getClients() at "+myName+" >>> getClients()");
+                alert("FALSE returned for DB.getClients() at " + myName + " >>> getClients()");
             } else {
                 CLIENTS = resultObj.data;
-                createDP();
             }
         }, function(error) {
-            alert("ERROR returned for DB.getClients() at "+myName+" >>> getClients()");
+            alert("ERROR returned for DB.getClients() at " + myName + " >>> getClients()");
         });
     };
 
-    var resetForm = function(){
+    var resetForm = function() {
         ME.formStatus = "Pristine";
         ME.selectedClient = ME.clientsDP[0];
     };
 
-    var createDP = function() {
+    var createDataProviders = function() {
         ME.clientsDP = DB.clone(CLIENTS);
-        
+
         for (var i = 0; i < ME.clientsDP.length; i++) {
             var managerID = ME.clientsDP[i].manager;
             ME.clientsDP[i].managerName = ME.S.returnManagerNameByID(managerID);
         }
-        ME.clientsDP.splice(0,0,{displayName:"-- Select --",PRIMARY_ID:"-1"});
+
+        ME.clientsDP.splice(0, 0, { displayName: "-- Select One --", PRIMARY_ID: "-1" });
         ME.selectedClient = ME.clientsDP[0];
+
+        ME.salesRepsDP = DB.clone(ME.S.salesReps);
+        ME.salesRepsDP.splice(0, 0, { displayName: "-- Select One --", PRIMARY_ID: "-1" });
     };
 
     $scope.$watch('$viewContentLoaded', function() {
-        console.log(myName+" >>> $viewContentLoaded");
+        console.log(myName + " >>> $viewContentLoaded");
     });
 
-    var resetInputFields = function(){
+    var resetInputFields = function() {
         ME.formStatus = "Pristine";
-        ME.inputDataObj = {type:"",manager:"",company:"",displayName:"",name_first:"",name_last:"",street:"",city:"",state:"",zip:"",phone_bus:"",
-        phone_cell:"",email:""};
-        ME.selectedSalesRep = ME.S.salesReps[0];
+        ME.inputDataObj = {
+            type: "",
+            manager: "",
+            company: "",
+            displayName: "",
+            name_first: "",
+            name_last: "",
+            street: "",
+            city: "",
+            state: "",
+            zip: "",
+            phone_bus: "",
+            phone_cell: "",
+            email: "",
+            username: ""
+        };
+        ME.selectedSalesRep = ME.salesRepsDP[0];
         ME.selectedClient = ME.clientsDP[0];
+        ME.submitInValid = true;
     };
 
     getClients();
+    createDataProviders();
     resetInputFields();
 
 }]);

@@ -143,7 +143,6 @@ app.controller('NewJobCtrl', ['$scope', '$state', 'evoDb', 'SharedSrvc', 'ngDial
         });
     };
 
-
     // When user selects Client, filter properties for only tha client
     Me.filterProperties = function() {
         Me.isError = false;
@@ -197,7 +196,8 @@ app.controller('NewJobCtrl', ['$scope', '$state', 'evoDb', 'SharedSrvc', 'ngDial
         dataObj.status = Me.status;
         dataObj.dateProspect = Me.currentDate;
         dataObj.dateProposal = "0";
-
+        // After successful insert, DB uses lastID to insert blank records for
+        // Config, Params, SpecialConsiderations 
         DB.putJob(dataObj).then(function(resultObj) {
             if (resultObj.result == "Error" || typeof resultObj.data === "string") {
                 alert("FALSE returned for putJob >>> job-new.ctrl.js");

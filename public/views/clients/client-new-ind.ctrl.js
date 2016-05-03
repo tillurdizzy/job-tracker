@@ -149,12 +149,13 @@ app.controller('NewClientIndCtrl',['$state','evoDb','SharedSrvc',function ($stat
         dataObj.name_last = ME.T2;
         dataObj.displayName = ME.T1 + " " + ME.T2;
         dataObj.phone_cell = ME.T3;
+        dataObj.phone_bus = ME.T3;
         dataObj.email = ME.T4;
-       
         dataObj.street = ME.T5;
         dataObj.city = ME.T6;
         dataObj.state = ME.T7;
         dataObj.zip = ME.T8;
+        dataObj.username = ME.T4;
         
         var result = DB.putClient(dataObj).then(function(result){
             if(typeof result != "boolean"){

@@ -20,7 +20,7 @@
    
     <div class="text-input-form-item">
         <label>Sales Rep</label>
-        <select ng-model="Ctrl.selectedSalesRep" ng-options="c.displayName for c in Ctrl.S.salesReps" ng-change="Ctrl.formChange();"></select>
+        <select ng-model="Ctrl.selectedSalesRep" ng-options="c.displayName for c in Ctrl.salesRepsDP" ng-change="Ctrl.selectRep();"></select>
     </div>
     <div class="flex-row">
         <div style="width:50%">
@@ -68,7 +68,15 @@
             </div>
         </div>
     </div>
-    <button type="button" class="button radius" ng-click="Ctrl.submit()" style="margin-top: 1rem; width:100%;"><h3>{{Ctrl.EditMode}}</h3></button>
+
+    <div class="check-radio-container" style="margin-bottom:5px;" ng-show="Ctrl.EditMode=='Add Client'">
+        <input type="radio" id="Rad1A" name="Rad1" value="Individual" ng-model="Ctrl.ClientType"></input>
+        <label for="Rad1A"><span></span>Individual / Residential / Homeowner</label>
+        <input type="radio" id="Rad1B" name="Rad1" value="Business" ng-model="Ctrl.ClientType"></input>
+        <label for="Rad1B"><span></span>Business / Organization</label>
+    </div>
+
+    <button type="button" class="button radius" ng-click="Ctrl.submit()" ng-disabled="Ctrl.submitInValid" style="margin-top: 1rem; width:100%;"><h3>{{Ctrl.EditMode}}</h3></button>
     <div class="tiny-text">Form Status: {{Ctrl.formStatus}}</div>
     <horiz-rule margintop="15" marginbottom="15"></horiz-rule>
    
