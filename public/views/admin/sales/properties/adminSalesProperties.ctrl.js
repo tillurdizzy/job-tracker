@@ -8,7 +8,7 @@ app.controller('AdminSalesPropertiesCtrl', ['$state', '$scope', 'AdminSharedSrvc
     var DB = AdminDataSrvc;
     ME.L = ListSrvc;
     ME.PROPERTIES = [];
-    ME.EditMode = "Add Item";
+    ME.EditMode = "Add Property";
     ME.modePrompt = "Add New Property: Fill in the form and submit."
     ME.formStatus = "Pristine";
     ME.submitInValid = true;
@@ -16,7 +16,9 @@ app.controller('AdminSalesPropertiesCtrl', ['$state', '$scope', 'AdminSharedSrvc
     ME.isMultiVented = false;
     ME.isMultiUnit = false;
 
-    ME.formVisibility = {propertySelection:false,clientSelection:true,locationInput:true,roofCode:true,roofInput:false};
+
+    // IMPORTANT!!! Add New Property is submitted in TWO steps... we need an ID from the database for the Address before we submit the Roof Assembly
+    ME.formVisibility = { propertySelection: false, clientSelection: true, locationInput: true, roofCode: true, roofInput: false };
 
     // Model Vars
     ME.inputDataObj = {};
@@ -59,25 +61,46 @@ app.controller('AdminSalesPropertiesCtrl', ['$state', '$scope', 'AdminSharedSrvc
 
     ME.formChange = function() {
         ME.formStatus = "Dirty";
-        if(ME.EditMode == "Add Property"){
-            ME.submitInValid = true;
-            if(ME.inputDataObj.client.PRIMARY_ID > -1 && ME.inputDataObj.name != "" &&  ME.inputDataObj.roofCode.id > -1){
+        ME.submitInValid = true;
+        var min = ME.validateMinimumRequirements();
+
+        if (ME.EditMode == "Add Property") {
+
+        } else if (ME.EditMode == "Update Property") {
+
+        } else if (ME.EditMode == "Remove Property") {
+
+        }
+
+    };
+
+    ME.validateMinimumRequirements = function() {
+        var rtnBol = false;
+        ME.submitInValid = true;
+        if (ME.EditMode == "Add Property") {
+            if (ME.inputDataObj.client.PRIMARY_ID > -1 && ME.inputDataObj.name != "" && ME.inputDataObj.roofCode.id > -1) {
                 ME.submitInValid = false;
             }
+        } else if (ME.EditMode == "Update Property") {
+            if (ME.inputDataObj.client.PRIMARY_ID > -1 && ME.inputDataObj.name != "") {
+                rtnBol = true;
+            }
+        } else if (ME.EditMode == "Remove Property") {
+
         }
+        return rtnBol;
     };
 
     ME.selectClient = function() {
         var clientType = parseInt(ME.inputDataObj.client.type);
-
-        if(clientType == 1){
+        if (clientType == 1) {
             var name = ME.inputDataObj.client.name_last;
             ME.inputDataObj.name = name + " Residence";
             ME.inputDataObj.street = ME.inputDataObj.client.street;
             ME.inputDataObj.city = ME.inputDataObj.client.city;
             ME.inputDataObj.state = ME.inputDataObj.client.state;
             ME.inputDataObj.zip = ME.inputDataObj.client.zip;
-        }else{
+        } else {
             ME.inputDataObj.name = "Business Property";
             ME.inputDataObj.street = "";
             ME.inputDataObj.city = "";
@@ -90,6 +113,17 @@ app.controller('AdminSalesPropertiesCtrl', ['$state', '$scope', 'AdminSharedSrvc
     ME.selectProperty = function() {
         ME.configPropObj(ME.propertySelector.PRIMARY_ID);
         ME.formChange();
+    };
+
+    ME.selectRoof = function() {
+        ME.formChange();
+        if (ME.EditMode == "Add Property") {
+
+        } else if (ME.EditMode == "Update Property") {
+
+        } else if (ME.EditMode == "Remove Property") {
+
+        }
     };
 
     ME.selectVentilation = function() {
@@ -133,6 +167,8 @@ app.controller('AdminSalesPropertiesCtrl', ['$state', '$scope', 'AdminSharedSrvc
         ME.multiVentObj.SLRVNT = ME.multiVentModel.SLRVNT.id;
     };
 
+
+    // Called on Update and Remove when Property selected
     ME.configPropObj = function(ID) {
         ME.formStatus = "Pristine";
         ME.inputDataObj = {};
@@ -142,7 +178,7 @@ app.controller('AdminSalesPropertiesCtrl', ['$state', '$scope', 'AdminSharedSrvc
                 break;
             };
         };
-       
+
         ME.inputDataObj.client = ME.S.returnObjFromSetByPrimaryID(ME.CLIENTS, ME.inputDataObj.client);
         ME.inputDataObj.roofCode = ME.L.returnObjById(ME.L.roofCode, ME.inputDataObj.roofCode);
     };
@@ -237,7 +273,8 @@ app.controller('AdminSalesPropertiesCtrl', ['$state', '$scope', 'AdminSharedSrvc
         }
     };
 
-    var createPropertyDataObj = function(){
+    // Step One of Add New Property
+    var createPropertyDataObj = function() {
         var outputDataObj = {};
         outputDataObj.manager = ME.inputDataObj.client.manager;
         outputDataObj.client = ME.inputDataObj.client.PRIMARY_ID;
@@ -252,7 +289,8 @@ app.controller('AdminSalesPropertiesCtrl', ['$state', '$scope', 'AdminSharedSrvc
         putProperty(outputDataObj);
     };
 
-    var createDataObj = function() {
+    // Step Two of Add New Property
+    var createRoofDataObj = function() {
         var outputDataObj = {};
         // Validate Multilevel selections
         if (ME.isMultiLevel === true) {
@@ -308,20 +346,32 @@ app.controller('AdminSalesPropertiesCtrl', ['$state', '$scope', 'AdminSharedSrvc
     };
 
     var putProperty = function(dataObj) {
+
         DB.query("putProperty", dataObj).then(function(resultObj) {
             if (resultObj.result == "Error" || typeof resultObj.data === "string") {
                 alert("FALSE returned for DB.putProperty() at " + myName + " >>> putProperty()");
                 console.log(resultObj.data);
             } else {
                 var thisPropertyID = resultObj.data.id;
-                submitMultiLevels(thisPropertyID);
-                submitMultiVents(thisPropertyID);
-                ngDialog.open({
-                    template: '<h2>Property has been added.</h2>',
-                    className: 'ngdialog-theme-default',
-                    plain: true,
-                    overlay: false
-                });
+                if (dataObj.roofCode == "0") {
+                    ME.formVisibility.roofInput = true;
+                    submitMultiLevels(thisPropertyID);
+                    submitMultiVents(thisPropertyID);
+                    ngDialog.open({
+                        template: '<h2>Property with single pitched roof has been added. Continue with Roof Assembly.</h2>',
+                        className: 'ngdialog-theme-calm',
+                        plain: true,
+                        overlay: false
+                    });
+                }else{
+                    ngDialog.open({
+                        template: '<h2>Property has been added.</h2>',
+                        className: 'ngdialog-theme-calm',
+                        plain: true,
+                        overlay: false
+                    });
+                }
+
             }
         }, function(error) {
             alert("ERROR returned for DB.putProperty() at " + myName + " >>> putProperty()");
@@ -427,7 +477,7 @@ app.controller('AdminSalesPropertiesCtrl', ['$state', '$scope', 'AdminSharedSrvc
         });
     };
 
-    var removeAssociatedPropertyData = function(dataObj){
+    var removeAssociatedPropertyData = function(dataObj) {
         DB.query("deleteMultiLevel", dataObj);
         DB.query("deleteMultiVents", dataObj);
         DB.query("deleteRoof", dataObj);
@@ -439,14 +489,14 @@ app.controller('AdminSalesPropertiesCtrl', ['$state', '$scope', 'AdminSharedSrvc
 
     var createDP = function() {
         ME.PROPERTIES = DB.clone(ME.S.PROPERTIES);
-        
-        ME.PROPERTIES.unshift({displayName:"-- Select --",PRIMARY_ID:-1});
-       
+
+        ME.PROPERTIES.unshift({ displayName: "-- Select --", PRIMARY_ID: -1 });
+
         ME.CLIENTS = DB.clone(ME.S.CLIENTS);
-        ME.CLIENTS.unshift({displayName:"-- Select --",PRIMARY_ID:-1});
+        ME.CLIENTS.unshift({ displayName: "-- Select --", PRIMARY_ID: -1 });
 
         resetInputFields();
-        
+
     };
 
     $scope.$watch('$viewContentLoaded', function() {
@@ -454,6 +504,7 @@ app.controller('AdminSalesPropertiesCtrl', ['$state', '$scope', 'AdminSharedSrvc
     });
 
     var resetInputFields = function() {
+        ME.submitInValid = true;
         ME.inputDataObj = {
             manager: "",
             client: ME.CLIENTS[0],
@@ -494,13 +545,13 @@ app.controller('AdminSalesPropertiesCtrl', ['$state', '$scope', 'AdminSharedSrvc
         };
         ME.multiLevelObj = { propertyID: 0, LEVONE: 0, LEVTWO: 0, LEVTHR: 0, LEVFOU: 0 };
         ME.multiVentObj = { propertyID: 0, TURBNS: 0, STATIC: 0, PWRVNT: 0, AIRHWK: 0, SLRVNT: 0 };
-        
+
     };
 
 
-    
+
     createDP();
-   
+
     ME.S.getMultiVents();
     ME.S.getMultiLevels();
 

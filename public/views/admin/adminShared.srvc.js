@@ -317,6 +317,11 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
                 console.log("getClients ---- " + resultObj.data);
             } else {
                 self.CLIENTS = resultObj.data;
+                for (var i = 0; i < self.CLIENTS.length; i++) {
+                    self.CLIENTS[i].type = parseInt(self.CLIENTS[i].type);
+                    self.CLIENTS[i].manager = parseInt(self.CLIENTS[i].manager);
+                    self.CLIENTS[i].PRIMARY_ID = parseInt(self.CLIENTS[i].PRIMARY_ID);
+                };
                 getJobs();
             }
         }, function(error) {
@@ -618,7 +623,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
     self.returnSalesRep = function(id) {
         var rtn = "";
         for (var i = 0; i < self.salesReps.length; i++) {
-            if (self.salesReps[i].PRIMARY_ID === id) {
+            if (self.salesReps[i].PRIMARY_ID == id) {
                 rtn = self.salesReps[i].name_first + " " + self.salesReps[i].name_last;
                 continue;
             }
@@ -629,7 +634,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
 
     self.returnClientNameByID = function(id) {
         for (var i = 0; i < self.CLIENTS.length; i++) {
-            if (self.CLIENTS[i].PRIMARY_ID === id) {
+            if (self.CLIENTS[i].PRIMARY_ID == id) {
                 return self.CLIENTS[i].displayName;
             };
         };
@@ -637,15 +642,15 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
 
     self.returnManagerNameByID = function(id) {
         for (var i = 0; i < self.salesReps.length; i++) {
-            if (self.salesReps[i].PRIMARY_ID === id) {
+            if (self.salesReps[i].PRIMARY_ID == id) {
                 return self.salesReps[i].displayName;
             };
         };
     };
 
-    self.returnManagerObjByID = function(id) {
+    self.returnManagerObjByID = function(id) { 
         for (var i = 0; i < self.salesReps.length; i++) {
-            if (self.salesReps[i].PRIMARY_ID === id) {
+            if (self.salesReps[i].PRIMARY_ID == id) {
                 return self.salesReps[i];
             };
         };
@@ -653,7 +658,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
 
     self.returnPropertyNameByID = function(id) {
         for (var i = 0; i < self.PROPERTIES.length; i++) {
-            if (self.PROPERTIES[i].PRIMARY_ID === id) {
+            if (self.PROPERTIES[i].PRIMARY_ID == id) {
                 return self.PROPERTIES[i].name;
             };
         };
@@ -663,7 +668,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
     self.returnObjByPropID = function(set, id) {
         var rtnObj = {};
         for (var i = 0; i < set.length; i++) {
-            if (set[i].propertyID === id) {
+            if (set[i].propertyID == id) {
                 rtnObj = set[i];
                 break;
             };
@@ -674,7 +679,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
     self.returnObjFromSetByPrimaryID = function(set, id) {
         var rtnObj = {};
         for (var i = 0; i < set.length; i++) {
-            if (set[i].PRIMARY_ID === id) {
+            if (set[i].PRIMARY_ID == id) {
                 rtnObj = set[i];
                 break;
             };

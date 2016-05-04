@@ -2,7 +2,7 @@
 app.controller('NewClientViewCtrl', ['$state', function($state) {
 
     var ME = this;
-    ME.ClientType = "Individual";
+    ME.ClientType = "1";
 
     ME.goJobs = function() {
         $state.transitionTo("jobs");
@@ -13,7 +13,7 @@ app.controller('NewClientViewCtrl', ['$state', function($state) {
     };
 
     ME.submitClientType = function() {
-        if (ME.ClientType == "Individual") {
+        if (ME.ClientType == "1") {
             $state.transitionTo("addNewClient.individual");
         } else {
             $state.transitionTo("addNewClient.organization");

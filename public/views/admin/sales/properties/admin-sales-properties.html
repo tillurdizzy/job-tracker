@@ -5,9 +5,9 @@
     </div>
     <div id='cssmenu' ng-controller="TabbedMenuCtrl">
         <ul>
-            <li ng-class="{ active: Ctrl.EditMode == 'Add Item'}" ng-click="Ctrl.addItem()"><a>Add Property</a></li>
-            <li ng-class="{ active: Ctrl.EditMode == 'Update Item'}" ng-click="Ctrl.updateItem()"><a>Update Property</a></li>
-            <li ng-class="{ active: Ctrl.EditMode == 'Remove Item'}" ng-click="Ctrl.removeItem()"><a>Remove Property</a></li>
+            <li ng-class="{ active: Ctrl.EditMode == 'Add Property'}" ng-click="Ctrl.addItem()"><a>Add Property</a></li>
+            <li ng-class="{ active: Ctrl.EditMode == 'Update Property'}" ng-click="Ctrl.updateItem()"><a>Update Property</a></li>
+            <li ng-class="{ active: Ctrl.EditMode == 'Remove Property'}" ng-click="Ctrl.removeItem()"><a>Remove Property</a></li>
         </ul>
     </div>
     <horiz-rule margintop="5" marginbottom="5"></horiz-rule>
@@ -29,12 +29,12 @@
     <horiz-rule margintop="-8" marginbottom="5"></horiz-rule>
     <div id="locationInput" ng-show="Ctrl.formVisibility.locationInput">
         <div class="text-input-form-item">
-            <h2>Location</h2>
+            <h2>Property</h2>
         </div>
         <div class="flex-row">
             <div style="width:50%">
                 <div class="text-input-form-item">
-                    <label>Property Name</label>
+                    <label>Name</label>
                     <input type="text" ng-model="Ctrl.inputDataObj.name" ng-change="Ctrl.formChange();">
                 </div>
                 <div class="text-input-form-item">
@@ -57,7 +57,7 @@
                 </div>
                 <div class="text-input-form-item" ng-show="Ctrl.formVisibility.roofCode">
                     <label>Roof</label>
-                    <select ng-model="Ctrl.inputDataObj.roofCode" ng-options="c.label for c in Ctrl.L.roofCode" ng-change="Ctrl.formChange();"></select>
+                    <select ng-model="Ctrl.inputDataObj.roofCode" ng-options="c.label for c in Ctrl.L.roofCode" ng-change="Ctrl.selectRoof();"></select>
                 </div>
             </div>
         </div>
@@ -191,6 +191,6 @@
     </div>
     
     <button type="button" class="button radius" ng-click="Ctrl.submit()" ng-disabled="Ctrl.submitInValid" style="margin-top: 1rem; width:100%;"><h3>{{Ctrl.EditMode}}</h3></button>
-    <horiz-rule margintop="30" marginbottom="15"></horiz-rule>
+    <horiz-rule margintop="15" marginbottom="600"></horiz-rule>
    
 </div>

@@ -16,7 +16,6 @@ app.controller('AdminSalesClientsCtrl', ['$state', '$scope', 'AdminSharedSrvc', 
 
     ME.inputDataObj = {};
     ME.selectedSalesRep = ME.S.salesReps[0];
-    ME.ClientType = "Individual";
     ME.selectedClient = null;
     ME.submitInValid = true;
 
@@ -51,12 +50,14 @@ app.controller('AdminSalesClientsCtrl', ['$state', '$scope', 'AdminSharedSrvc', 
         ME.EditMode = "Update Client";
         ME.modePrompt = "Update Client: Select a Client to edit/update."
         resetInputFields();
+        ME.inputDataObj.type = null;
     };
 
     ME.removeItem = function() {
         ME.EditMode = "Remove Client";
         ME.modePrompt = "Remove Client: Select a Client to remove."
         resetInputFields();
+        ME.inputDataObj.type = null;
     };
 
     ME.formChange = function() {
@@ -93,17 +94,19 @@ app.controller('AdminSalesClientsCtrl', ['$state', '$scope', 'AdminSharedSrvc', 
         for (var i = 0; i < ME.clientsDP.length; i++) {
             if (ME.clientsDP[i].PRIMARY_ID == ID) {
                 ME.inputDataObj = ME.clientsDP[i];
+                break;
             }
         };
+
         var mgrID = ME.selectedClient.manager;
-        ME.selectedSalesRep = ME.S.returnManagerObjByID(mgrID);
+        ME.selectedSalesRep = returnManagerObjByID(mgrID);
     };
 
     ME.submit = function() {
         if (ME.formStatus != "Submit") {
             ngDialog.open({
                 template: '<h2>Form is invalid or incomplete.</h2>',
-                className: 'ngdialog-theme-default',
+                className: 'ngdialog-theme-alert',
                 plain: true,
                 overlay: false
             });
@@ -128,15 +131,15 @@ app.controller('AdminSalesClientsCtrl', ['$state', '$scope', 'AdminSharedSrvc', 
         ME.inputDataObj.username = ME.inputDataObj.email;
         ME.inputDataObj.displayName = ME.inputDataObj.name_first + " " + ME.inputDataObj.name_last;
         ME.inputDataObj.manager = ME.selectedSalesRep.PRIMARY_ID;
-        ME.inputDataObj.type = ME.ClientType;
+        
         DB.query("putClient", ME.inputDataObj).then(function(resultObj) {
             if (resultObj.result == "Error" || typeof resultObj.data === "string") {
                 alert("FALSE returned for " + thisQuery + " at " + myName + " >>> " + thisFunc);
             } else {
                 resetInputFields();
                 ngDialog.open({
-                    template: '<h2>Client has been added successfully!</h2>',
-                    className: 'ngdialog-theme-default',
+                    template: '<h2>New client has been added!</h2>',
+                    className: 'ngdialog-theme-calm',
                     plain: true,
                     overlay: false
                 });
@@ -154,7 +157,7 @@ app.controller('AdminSalesClientsCtrl', ['$state', '$scope', 'AdminSharedSrvc', 
                 resetInputFields();
                 ngDialog.open({
                     template: '<h2>Client has been updated.</h2>',
-                    className: 'ngdialog-theme-default',
+                    className: 'ngdialog-theme-calm',
                     plain: true,
                     overlay: false
                 });
@@ -174,7 +177,7 @@ app.controller('AdminSalesClientsCtrl', ['$state', '$scope', 'AdminSharedSrvc', 
                 var x = resultObj.data;
                 ngDialog.open({
                     template: '<h2>Client has been deleted.</h2>',
-                    className: 'ngdialog-theme-default',
+                    className: 'ngdialog-theme-calm',
                     plain: true,
                     overlay: false
                 });
@@ -190,6 +193,7 @@ app.controller('AdminSalesClientsCtrl', ['$state', '$scope', 'AdminSharedSrvc', 
                 alert("FALSE returned for DB.getClients() at " + myName + " >>> getClients()");
             } else {
                 CLIENTS = resultObj.data;
+                createDataProviders();
             }
         }, function(error) {
             alert("ERROR returned for DB.getClients() at " + myName + " >>> getClients()");
@@ -220,10 +224,18 @@ app.controller('AdminSalesClientsCtrl', ['$state', '$scope', 'AdminSharedSrvc', 
         console.log(myName + " >>> $viewContentLoaded");
     });
 
+    var returnManagerObjByID = function(id) { 
+        for (var i = 0; i < ME.salesRepsDP.length; i++) {
+            if (ME.salesRepsDP[i].PRIMARY_ID == id) {
+                return ME.salesRepsDP[i];
+            };
+        };
+    };
+
     var resetInputFields = function() {
         ME.formStatus = "Pristine";
         ME.inputDataObj = {
-            type: "",
+            type: "1",
             manager: "",
             company: "",
             displayName: "",
@@ -244,7 +256,6 @@ app.controller('AdminSalesClientsCtrl', ['$state', '$scope', 'AdminSharedSrvc', 
     };
 
     getClients();
-    createDataProviders();
     resetInputFields();
 
 }]);

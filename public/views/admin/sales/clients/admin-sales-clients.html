@@ -55,11 +55,11 @@
                 <input type="text" ng-model="Ctrl.inputDataObj.zip" ng-change="Ctrl.formChange();">
             </div>
             <div class="text-input-form-item">
-                <label>Phone</label>
+                <label>Cell Phone</label>
                 <input type="text" ng-model="Ctrl.inputDataObj.phone_cell" ng-change="Ctrl.formChange();">
             </div>
             <div class="text-input-form-item">
-                <label>Business Phone</label>
+                <label>Bus Phone</label>
                 <input type="text" ng-model="Ctrl.inputDataObj.phone_bus" ng-change="Ctrl.formChange();">
             </div>
             <div class="text-input-form-item">
@@ -69,10 +69,10 @@
         </div>
     </div>
 
-    <div class="check-radio-container" style="margin-bottom:5px;" ng-show="Ctrl.EditMode=='Add Client'">
-        <input type="radio" id="Rad1A" name="Rad1" value="Individual" ng-model="Ctrl.ClientType"></input>
+    <div class="check-radio-container" style="margin-bottom:5px;">
+        <input type="radio" id="Rad1A" name="Rad1" value="1" ng-model="Ctrl.inputDataObj.type"></input>
         <label for="Rad1A"><span></span>Individual / Residential / Homeowner</label>
-        <input type="radio" id="Rad1B" name="Rad1" value="Business" ng-model="Ctrl.ClientType"></input>
+        <input type="radio" id="Rad1B" name="Rad1" value="2" ng-model="Ctrl.inputDataObj.type"></input>
         <label for="Rad1B"><span></span>Business / Organization</label>
     </div>
 
