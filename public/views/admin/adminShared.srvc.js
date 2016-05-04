@@ -396,7 +396,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
             // PropertyDisplayName same as name unless multiple roofs, then append roof name to property name
             var roofCode = parseInt(self.PROPERTIES[i].roofCode);
             var roofNamesAndId = returnBldgNameFromRoofsByPropID(self.PROPERTIES[i].PRIMARY_ID);
-            if (roofCode === 0) {
+            if (roofCode == 0) {
                 self.PROPERTIES[i].displayName = self.PROPERTIES[i].name;
                 self.PROPERTIES[i].roofID = roofNamesAndId[0].roofID;
             } else {

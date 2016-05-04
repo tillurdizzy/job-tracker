@@ -9,9 +9,14 @@ define( "DATABASE_PASSWORD", "Sadie9954!");
 define( "DATABASE_NAME", "jobtracker");
 
 $con = mysqli_connect(DATABASE_SERVER, DATABASE_USERNAME, DATABASE_PASSWORD,DATABASE_NAME) or die ('ERROR!!!');
-$jobID = mysqli_real_escape_string($con,$data->jobID);
+$propertyID = mysqli_real_escape_string($con,$data->propertyID);
+$roofID = mysqli_real_escape_string($con,$data->roofID);
 
-$query = "INSERT INTO multi_level(jobID)VALUES('" . $cost . "')";
+$query = "INSERT INTO multi_level(propertyID,roofID)
+VALUES(
+'" . $propertyID . "', " .
+"'" . $roofID . "')";
+
 $qry_res = mysqli_query($con,$query);
 if ($qry_res) {
 	$last_id = mysqli_insert_id($con);

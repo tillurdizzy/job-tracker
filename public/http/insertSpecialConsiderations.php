@@ -12,8 +12,7 @@ $jobID = mysqli_real_escape_string($con,$data->jobID);
 $body = mysqli_real_escape_string($con,$data->body);
 $cost = mysqli_real_escape_string($con,$data->cost);
 
-$query = "INSERT INTO special_considerations(jobID)VALUES(
-'" . $jobID . "')";
+$query = "INSERT INTO special_considerations(jobID)VALUES('" . $jobID . "')";
 
 $qry_res = mysqli_query($con,$query);
 if ($qry_res) {
