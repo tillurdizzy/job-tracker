@@ -122,6 +122,12 @@ app.config(function($stateProvider, $urlRouterProvider,$provide) {
 			templateUrl:"views/admin/reviews/complete/admin-complete-review.html"
 
 		})	
+
+		.state('admin.reportTables', {
+			url: "/reports-tables",
+			templateUrl:"views/admin/reports/tables.html"
+
+		})
 });	
 
 

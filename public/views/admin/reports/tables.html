@@ -1,0 +1,317 @@
+<div class="page" ng-controller="ReportTablesCtrl as Ctrl">
+    <div class="top">
+        <div class="title-with-btn">
+            <i ng-click="Ctrl.backToHome()" class="fa fa-arrow-circle-left fa-3x"></i>
+            <h2>Raw Data Tables</h2>
+        </div>
+        <horiz-rule margintop="5" marginbottom="5"></horiz-rule>
+        <div class="text-input-form-item-min">
+            <h2>Select Table</h2>
+            <select ng-model="Ctrl.tableSelected" ng-options="c.label for c in Ctrl.tableList" ng-change="Ctrl.selectTable();"></select>
+        </div>
+        <horiz-rule margintop="5" marginbottom="5"></horiz-rule>
+    </div>
+    <div class="bottom">
+        <horiz-rule margintop="15" marginbottom="5"></horiz-rule>
+        <button type="button" class="button radius" ng-click="Ctrl.refreshCurrentTable();" style="margin-bottom: 5px;">Refresh List</button>
+        <table st-table="Ctrl.materialsShingleData" class="table table-striped" style="width:100%;" ng-show="Ctrl.tableSelected.request=='getMaterialsShingle'">
+            <thead>
+                <tr>
+                    <th style="width:300px;">Item</th>
+                    <th>Sort</th>
+                    <th>Code</th>
+                    <th>Pkg</th>
+                    <th>Qty</th>
+                    <th>Unit</th>
+                    <th>Price</th>
+                    <th>QtyCov</th>
+                    <th>UnitCov</th>
+                    <th>Param</th>
+                    <th>Edit</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="row in Ctrl.materialsShingleData">
+                    <td style="overflow: hidden;">{{row.Item}}</td>
+                    <td>{{row.Sort}}</td>
+                    <td>{{row.Code}}</td>
+                    <td>{{row.Package}}</td>
+                    <td>{{row.QtyPkg}}</td>
+                    <td>{{row.UnitPkg}}</td>
+                    <td>{{row.PkgPrice}}</td>
+                    <td>{{row.QtyCoverage}}</td>
+                    <td>{{row.QtyPkg}}</td>
+                    <td>{{row.InputParam}}</td>
+                    <td>
+                        <i class="fa fa-pencil" ng-click="Ctrl.configSelectedItemObj(row.Code)" style="cursor:pointer;"></i>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table st-table="Ctrl.clientData" class="table table-striped" style="width:100%;" ng-show="Ctrl.tableSelected.request=='getClients'">
+            <thead>
+                <tr>
+                    <th>PRIMARY_ID</th>
+                    <th>type</th>
+                    <th>manager</th>
+                    <th>displayName</th>
+                    <th>company</th>
+                    <th>name_first</th>
+                    <th>name_last</th>
+                    <th>street</th>
+                    <th>city</th>
+                    <th>state</th>
+                    <th>zip</th>
+                    <th>phone_bus</th>
+                    <th>phone_cell</th>
+                    <th>email</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="row in Ctrl.clientData">
+                    <td>{{row.PRIMARY_ID}}</td>
+                    <td>{{row.type}}</td>
+                    <td>{{row.manager}}</td>
+                    <td>{{row.displayName}}</td>
+                    <td>{{row.company}}</td>
+                    <td>{{row.name_first}}</td>
+                    <td>{{row.name_last}}</td>
+                    <td>{{row.street}}</td>
+                    <td>{{row.city}}</td>
+                    <td>{{row.state}}</td>
+                    <td>{{row.zip}}</td>
+                    <td>{{row.phone_bus}}</td>
+                    <td>{{row.phone_cell}}</td>
+                    <td>{{row.email}}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table st-table="Ctrl.jobsData" class="table table-striped" style="width:100%;" ng-show="Ctrl.tableSelected.request=='getJobs'">
+            <thead>
+                <tr>
+                    <th>PRIMARY_ID</th>
+                    <th>manager</th>
+                    <th>property</th>
+                    <th>roofID</th>
+                    <th>client</th>
+                    <th>status</th>
+                    <th>dateProspect</th>
+                    <th>dateProposal</th>
+                    <th>dateContract</th>
+                    <th>dateActive</th>
+                    <th>dateComplete</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="row in Ctrl.jobsData">
+                    <td>{{row.PRIMARY_ID}}</td>
+                    <td>{{row.manager}}</td>
+                    <td>{{row.property}}</td>
+                    <td>{{row.roofID}}</td>
+                    <td>{{row.client}}</td>
+                    <td>{{row.status}}</td>
+                    <td>{{row.dateProspect}}</td>
+                    <td>{{row.dateProposal}}</td>
+                    <td>{{row.dateContract}}</td>
+                    <td>{{row.dateActive}}</td>
+                    <td>{{row.dateComplete}}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table st-table="Ctrl.propertyData" class="table table-striped" style="width:100%;" ng-show="Ctrl.tableSelected.request=='getProperties'">
+            <thead>
+                <tr>
+                    <th>PRIMARY_ID</th>
+                    <th>createdDate</th>
+                    <th>manager</th>
+                    <th>client</th>
+                    <th>roofCode</th>
+                    <th>name</th>
+                    <th>street</th>
+                    <th>city</th>
+                    <th>state</th>
+                    <th>zip</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="row in Ctrl.propertyData">
+                    <td>{{row.PRIMARY_ID}}</td>
+                    <td>{{row.createdDate}}</td>
+                    <td>{{row.manager}}</td>
+                    <td>{{row.client}}</td>
+                    <td>{{row.roofCode}}</td>
+                    <td>{{row.name}}</td>
+                    <td>{{row.street}}</td>
+                    <td>{{row.city}}</td>
+                    <td>{{row.state}}</td>
+                    <td>{{row.zip}}</td>
+                </tr>
+            </tbody>
+        </table>
+
+
+        <table st-table="Ctrl.jobConfigData" class="table table-striped" style="width:100%;" ng-show="Ctrl.tableSelected.request=='getAllJobConfigs'">
+            <thead>
+                <tr>
+                    <th>PRIMARY_ID</th>
+                    <th>jobID</th>
+                    <th>strDate</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="row in Ctrl.jobConfigData">
+                    <td>{{row.PRIMARY_ID}}</td>
+                    <td>{{row.jobID}}</td>
+                    <td>{{row.strDate}}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table st-table="Ctrl.loginData" class="table table-striped" style="width:100%;" ng-show="Ctrl.tableSelected.request=='getSalesReps'">
+            <thead>
+                <tr>
+                    <th>PRIMARY_ID</th>
+                    <th>name_first</th>
+                    <th>name_last</th>
+                    <th>pin</th>
+                    <th>userType</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="row in Ctrl.jobConfigData">
+                    <td>{{row.PRIMARY_ID}}</td>
+                    <td>{{row.name_first}}</td>
+                    <td>{{row.name_last}}</td>
+                    <td>{{row.pin}}</td>
+                    <td>{{row.userType}}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table st-table="Ctrl.laborData" class="table table-striped" style="width:100%;" ng-show="Ctrl.tableSelected.request=='getLabor'">
+            <thead>
+                <tr>
+                    <th>PRIMARY_ID</th>
+                    <th>square</th>
+                    <th>trim</th>
+                    <th>deck</th>
+                    <th>flat</th>
+                    <th>delivery</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="row in Ctrl.laborData">
+                    <td>{{row.PRIMARY_ID}}</td>
+                    <td>{{row.square}}</td>
+                    <td>{{row.trim}}</td>
+                    <td>{{row.deck}}</td>
+                    <td>{{row.flat}}</td>
+                    <td>{{row.delivery}}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table st-table="Ctrl.roofData" class="table table-striped" style="width:100%;" ng-show="Ctrl.tableSelected.request=='getRoofTable'">
+            <thead>
+                <tr>
+                    <th>PRIMARY_ID</th>
+                    <th>propertyID</th>
+                    <th>name</th>
+                    <th>numLevels</th>
+                    <th>flat</th>
+                    <th>shingleGrade</th>
+                    <th>roofDeck</th>
+                    <th>layers</th>
+                    <th>edgeDetail</th>
+                    <th>edgeTrim</th>
+                    <th>valleyDetail</th>
+                    <th>ridgeCap</th>
+                    <th>roofVents</th>
+                    <th>pitch</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="row in Ctrl.roofData">
+                    <td>{{row.PRIMARY_ID}}</td>
+                    <td>{{row.propertyID}}</td>
+                    <td>{{row.name}}</td>
+                    <td>{{row.numLevels}}</td>
+                    <td>{{row.flat}}</td>
+                    <td>{{row.shingleGrade}}</td>
+                    <td>{{row.roofDeck}}</td>
+                    <td>{{row.layers}}</td>
+                    <td>{{row.edgeDetail}}</td>
+                    <td>{{row.edgeTrim}}</td>
+                    <td>{{row.valleyDetail}}</td>
+                    <td>{{row.ridgeCap}}</td>
+                    <td>{{row.roofVents}}</td>
+                    <td>{{row.pitch}}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table st-table="Ctrl.jobParamData" class="table table-striped" style="width:100%;" ng-show="Ctrl.tableSelected.request=='getAllJobParameters'">
+            <thead>
+                <tr>
+                    <th>PRIMARY_ID</th>
+                    <th>FIELD</th>
+                    <th>TOPRDG</th>
+                    <th>RKERDG</th>
+                    <th>EAVE</th>
+                    <th>PRMITR</th>
+                    <th>VALLEY</th>
+                    <th>LPIPE1</th>
+                    <th>LPIPE2</th>
+                    <th>LPIPE3</th>
+                    <th>LPIPE4</th>
+                    <th>VENT8</th>
+                    <th>RKEWALL</th>
+                    <th>TURBNS</th>
+                    <th>PWRVNT</th>
+                    <th>AIRHWK</th>
+                    <th>SLRVNT</th>
+                    <th>LOWSLP</th>
+                    <th>DECKNG</th>
+                    <th>PAINT</th>
+                    <th>CAULK</th>
+                    <th>CARPRT</th>
+                    <th>SATDSH</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="row in Ctrl.jobParamData">
+                    <td>{{row.PRIMARY_ID}}</td>
+                    <td>{{row.FIELD}}</td>
+                    <td>{{row.TOPRDG}}</td>
+                    <td>{{row.RKERDG}}</td>
+                    <td>{{row.EAVE}}</td>
+                    <td>{{row.PRMITR}}</td>
+                    <td>{{row.VALLEY}}</td>
+                    <td>{{row.LPIPE1}}</td>
+                    <td>{{row.LPIPE2}}</td>
+                    <td>{{row.LPIPE3}}</td>
+                    <td>{{row.LPIPE4}}</td>
+                    <td>{{row.VENT8}}</td>
+                    <td>{{row.RKEWALL}}</td>
+                    <td>{{row.TURBNS}}</td>
+                    <td>{{row.PWRVNT}}</td>
+                    <td>{{row.AIRHWK}}</td>
+                    <td>{{row.SLRVNT}}</td>
+                    <td>{{row.LOWSLP}}</td>
+                    <td>{{row.DECKNG}}</td>
+                    <td>{{row.PAINT}}</td>
+                    <td>{{row.CAULK}}</td>
+                    <td>{{row.CARPRT}}</td>
+                    <td>{{row.SATDSH}}</td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+
+    <add-space margintop="1" marginbottom="1" heightpx="50"></add-space>
+</div>

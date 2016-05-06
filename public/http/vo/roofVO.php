@@ -4,6 +4,7 @@ class roofVO{
 	var $propertyID;
 	var $name;
 	var $numLevels;//stories
+	var $pitch;
 	var $shingleGrade;// style of existing shingle
 	var $roofDeck;// deck material - plywood etc.
 	var $layers;//number of previous coverings
@@ -12,8 +13,5 @@ class roofVO{
 	var $valleyDetail;
 	var $ridgeCap;
 	var $roofVents;
-	var $pitch;
-	var $multiLevel;
-	var $multiVents;
 }
 ?>

@@ -49,6 +49,11 @@ app.controller('AdminCtrl',['$location','$state','$scope','SharedSrvc',function 
 		$state.transitionTo("admin.jobManagement");
 	};
 
+	// Reports
+	ME.reportTables = function(){
+		$state.transitionTo("admin.reportTables");
+	};
+
 
 
  }]);
