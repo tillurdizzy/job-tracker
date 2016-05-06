@@ -17,15 +17,13 @@ $STATIC = mysqli_real_escape_string($con,$data->STATIC);
 $PWRVNT = mysqli_real_escape_string($con,$data->PWRVNT);
 $AIRHWK = mysqli_real_escape_string($con,$data->AIRHWK);
 $SLRVNT = mysqli_real_escape_string($con,$data->SLRVNT);
-$LEVSIX = mysqli_real_escape_string($con,$data->LEVSIX);
 
 $query = "UPDATE multi_vents SET 
 TURBNS='".$TURBNS."',
 PWRVNT='".$PWRVNT."',
 STATIC='".$STATIC."',
 AIRHWK='".$AIRHWK."',
-SLRVNT='".$SLRVNT."',
-LEVSIX='".$LEVSIX."'
+SLRVNT='".$SLRVNT."'
 WHERE propertyID='".$propertyID."' AND roofID='".$roofID."'";
 
 $qry_res = mysqli_query($con,$query);

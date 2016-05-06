@@ -191,6 +191,58 @@
             </tbody>
         </table>
 
+        <table st-table="Ctrl.multiLevelData" class="table table-striped" style="width:100%;" ng-show="Ctrl.tableSelected.request=='getMultiLevels'">
+            <thead>
+                <tr>
+                    <th>PRIMARY_ID</th>
+                    <th>propertyID</th>
+                    <th>roofID</th>
+                    <th>LEVONE</th>
+                    <th>LEVTWO</th>
+                    <th>LEVTHR</th>
+                    <th>LEVFOU</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="row in Ctrl.multiLevelData">
+                    <td>{{row.PRIMARY_ID}}</td>
+                    <td>{{row.propertyID}}</td>
+                    <td>{{row.roofID}}</td>
+                    <td>{{row.LEVONE}}</td>
+                    <td>{{row.LEVTWO}}</td>
+                    <td>{{row.LEVTHR}}</td>
+                    <td>{{row.LEVFOU}}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table st-table="Ctrl.multiVentData" class="table table-striped" style="width:100%;" ng-show="Ctrl.tableSelected.request=='getMultiVents'">
+            <thead>
+                <tr>
+                    <th>PRIMARY_ID</th>
+                    <th>propertyID</th>
+                    <th>roofID</th>
+                    <th>TURBNS</th>
+                    <th>STATIC</th>
+                    <th>PWRVNT</th>
+                    <th>AIRHWK</th>
+                    <th>SLRVNT</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="row in Ctrl.multiVentData">
+                    <td>{{row.PRIMARY_ID}}</td>
+                    <td>{{row.propertyID}}</td>
+                    <td>{{row.roofID}}</td>
+                    <td>{{row.TURBNS}}</td>
+                    <td>{{row.STATIC}}</td>
+                    <td>{{row.PWRVNT}}</td>
+                    <td>{{row.AIRHWK}}</td>
+                    <td>{{row.SLRVNT}}</td>
+                </tr>
+            </tbody>
+        </table>
+
         <table st-table="Ctrl.laborData" class="table table-striped" style="width:100%;" ng-show="Ctrl.tableSelected.request=='getLabor'">
             <thead>
                 <tr>
@@ -221,7 +273,6 @@
                     <th>propertyID</th>
                     <th>name</th>
                     <th>numLevels</th>
-                    <th>flat</th>
                     <th>shingleGrade</th>
                     <th>roofDeck</th>
                     <th>layers</th>
@@ -239,7 +290,6 @@
                     <td>{{row.propertyID}}</td>
                     <td>{{row.name}}</td>
                     <td>{{row.numLevels}}</td>
-                    <td>{{row.flat}}</td>
                     <td>{{row.shingleGrade}}</td>
                     <td>{{row.roofDeck}}</td>
                     <td>{{row.layers}}</td>

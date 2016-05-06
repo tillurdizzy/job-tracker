@@ -15,9 +15,9 @@ app.controller('AdminSalesPropertiesCtrl', ['$state', '$scope', 'AdminSharedSrvc
     ME.isMultiLevel = false;
     ME.isMultiVented = false;
     ME.isMultiUnit = false;
-    var newPropertyID = 0;
 
-
+    var newPropertyVars = {propertyID:0,street:"",roofID:0};
+   
     // IMPORTANT!!! Add New Property is submitted in TWO steps... we need an ID from the database for the Address before we submit the Roof Assembly
     ME.formVisibility = { propertySelection: false, clientSelection: true, locationInput: true, roofCode: true, roofInput: false };
 
@@ -34,29 +34,60 @@ app.controller('AdminSalesPropertiesCtrl', ['$state', '$scope', 'AdminSharedSrvc
         $state.transitionTo('admin');
     };
 
+    var setFormVisibility = function(form) {
+        switch (form) {
+            case "addStepOne":
+                ME.formVisibility = { propertySelection: false, clientSelection: true, locationInput: true, roofCode: true, roofInput: false };
+                break;
+            case "addStepTwo":
+                ME.EditMode = "Add Roof Description";
+                ME.modePrompt = "Add Roof Description for: " + newPropertyVars.street;
+                ME.formVisibility = { propertySelection: false, clientSelection: false, locationInput: false, roofCode: false, roofInput: true };
+                break;
+            case "update":
+                ME.formVisibility = { propertySelection: true, clientSelection: true, locationInput: true, roofCode: false, roofInput: true };
+                break;
+            case "remove":
+                ME.formVisibility = { propertySelection: true, clientSelection: true, locationInput: true, roofCode: false, roofInput: true };
+                break;
+        }
+    };
+
+    ME.submit = function() {
+        switch (ME.EditMode) {
+            case "Add Property":
+                createPropertyDataObj();
+                break;
+            case "Add Roof Description":
+                createRoofDataObj();
+                break;
+            case "Update Property":
+                createDataObj();
+                break;
+            case "Remove Property":
+                remove_Item();
+                break;
+        }
+    };
+
     ME.addItem = function() {
         ME.EditMode = "Add Property";
         ME.modePrompt = "Add New Property: Fill in the form and submit."
-        ME.formVisibility.propertySelection = false;
-        ME.formVisibility.clientSelection = true;
-        ME.formVisibility.locationInput = true;
-        ME.formVisibility.roofCode = true;
+        setFormVisibility("addStepOne");
         resetInputFields();
     };
 
     ME.updateItem = function() {
         ME.EditMode = "Update Property";
         ME.modePrompt = "Update Property: Choose a property to edit/update."
-        ME.formVisibility.propertySelection = true;
-        ME.formVisibility.roofCode = false;
+        setFormVisibility("update");
         resetInputFields();
     };
 
     ME.removeItem = function() {
         ME.EditMode = "Remove Property";
         ME.modePrompt = "Remove Property: Choose a property to remove."
-        ME.formVisibility.propertySelection = true;
-        ME.formVisibility.roofCode = false;
+        setFormVisibility("remove");
         resetInputFields();
     };
 
@@ -75,22 +106,6 @@ app.controller('AdminSalesPropertiesCtrl', ['$state', '$scope', 'AdminSharedSrvc
 
     };
 
-    ME.validateMinimumRequirements = function() {
-        var rtnBol = false;
-        ME.submitInValid = true;
-        if (ME.EditMode == "Add Property") {
-            if (ME.inputDataObj.client.PRIMARY_ID > -1 && ME.inputDataObj.name != "" && ME.inputDataObj.roofCode.id > -1) {
-                ME.submitInValid = false;
-            }
-        } else if (ME.EditMode == "Update Property") {
-            if (ME.inputDataObj.client.PRIMARY_ID > -1 && ME.inputDataObj.name != "") {
-                rtnBol = true;
-            }
-        } else if (ME.EditMode == "Remove Property") {
-
-        }
-        return rtnBol;
-    };
 
     ME.selectClient = function() {
         var clientType = parseInt(ME.inputDataObj.client.type);
@@ -110,6 +125,7 @@ app.controller('AdminSalesPropertiesCtrl', ['$state', '$scope', 'AdminSharedSrvc
         }
         ME.formChange();
     };
+
 
     ME.selectProperty = function() {
         ME.configPropObj(ME.propertySelector.PRIMARY_ID);
@@ -184,6 +200,8 @@ app.controller('AdminSalesPropertiesCtrl', ['$state', '$scope', 'AdminSharedSrvc
         ME.inputDataObj.roofCode = ME.L.returnObjById(ME.L.roofCode, ME.inputDataObj.roofCode);
     };
 
+
+    // Used by Update and Remove when retrieving roof data
     ME.configRoofObj = function(ID) {
         ME.formStatus = "Pristine";
         ME.inputDataObj = {};
@@ -260,22 +278,7 @@ app.controller('AdminSalesPropertiesCtrl', ['$state', '$scope', 'AdminSharedSrvc
         return rtnObj;
     };
 
-    ME.submit = function() {
-        switch (ME.EditMode) {
-            case "Add Property":
-                createPropertyDataObj();
-                break;
-            case "Add Roof Description":
-                createRoofDataObj();
-                break;
-            case "Update Property":
-                createDataObj();
-                break;
-            case "Remove Property":
-                remove_Item();
-                break;
-        }
-    };
+
 
     // Step One of Add New Property
     // Insert blank records for MultiVents, MultiLevels and Roof 
@@ -293,14 +296,20 @@ app.controller('AdminSalesPropertiesCtrl', ['$state', '$scope', 'AdminSharedSrvc
         outputDataObj.state = ME.inputDataObj.state;
         outputDataObj.zip = ME.inputDataObj.zip;
         outputDataObj.roofCode = ME.inputDataObj.roofCode.id;
+
+        newPropertyVars.street = outputDataObj.street;
+
         putProperty(outputDataObj);
     };
 
     // Step Two of Add New Property
     var createRoofDataObj = function() {
         var outputDataObj = {};
-        // Validate Multilevel selections
+        
+        // Multi-Levels
+        ME.multiLevelObj = {};
         if (ME.isMultiLevel === true) {
+            // Property and Roof IDs are inserted when update function called
             ME.multiLevelObj.LEVONE = ME.multiLevelModel.levelOne.percent.id;
             ME.multiLevelObj.LEVTWO = ME.multiLevelModel.levelTwo.percent.id;
             ME.multiLevelObj.LEVTHR = ME.multiLevelModel.levelThree.percent.id;
@@ -309,32 +318,36 @@ app.controller('AdminSalesPropertiesCtrl', ['$state', '$scope', 'AdminSharedSrvc
             var percentTotal = ME.multiLevelObj.LEVONE + ME.multiLevelObj.LEVTWO +
                 ME.multiLevelObj.LEVTHR + ME.multiLevelObj.LEVFOU;
             if (percentTotal != 10) {
-                alert("Percent column must total 100.");
+                ngDialog.open({
+                        template: '<h2>Levels must total 100%.</h2>' +
+                            '<div class="ngdialog-buttons"><button type="button" class="ngdialog-button ngdialog-button-primary" ng-click="closeThisDialog()">Close Me</button></div>',
+                        className: 'ngdialog-theme-alert',
+                        plain: true,
+                        overlay: false
+                    });
                 return;
+            }else{
+                updateMultiLevels();
             }
-        } else {
-            ME.multiLevelObj = { propertyID: 0, LEVONE: 0, LEVTWO: 0, LEVTHR: 0, LEVFOU: 0 };
-        }
+        };
 
+        // Multi-Vents
+        ME.multiVentObj = {};
         if (ME.isMultiVented === true) {
+            // Property and Roof IDs are inserted when update function called
             ME.multiVentObj.TURBNS = ME.multiVentModel.TURBNS.id;
             ME.multiVentObj.STATIC = ME.multiVentModel.STATIC.id;
             ME.multiVentObj.PWRVNT = ME.multiVentModel.PWRVNT.id;
             ME.multiVentObj.AIRHWK = ME.multiVentModel.AIRHWK.id;
             ME.multiVentObj.SLRVNT = ME.multiVentModel.SLRVNT.id;
-        } else {
-            ME.multiVentObj = { propertyID: 0, TURBNS: 0, STATIC: 0, PWRVNT: 0, AIRHWK: 0, SLRVNT: 0 };
-        }
-        outputDataObj.PRIMARY_ID = ME.inputDataObj.PRIMARY_ID;
-        outputDataObj.manager = ME.inputDataObj.client.manager;
-        outputDataObj.client = ME.inputDataObj.client.PRIMARY_ID;
+            updateMultiVents();
+        };
+
+        outputDataObj.propertyID = newPropertyVars.propertyID;
+       
         var d = new Date();
         outputDataObj.createdDate = d.valueOf();
-        outputDataObj.name = ME.inputDataObj.name;
-        outputDataObj.street = ME.inputDataObj.street;
-        outputDataObj.city = ME.inputDataObj.city;
-        outputDataObj.state = ME.inputDataObj.state;
-        outputDataObj.zip = ME.inputDataObj.zip;
+        outputDataObj.name = newPropertyVars.street;
         outputDataObj.numLevels = ME.inputDataObj.numLevels.id;
         outputDataObj.shingleGrade = ME.inputDataObj.shingleGrade.id;
         outputDataObj.roofDeck = ME.inputDataObj.roofDeck.id;
@@ -346,32 +359,28 @@ app.controller('AdminSalesPropertiesCtrl', ['$state', '$scope', 'AdminSharedSrvc
         outputDataObj.roofVents = ME.inputDataObj.roofVents.id;
         outputDataObj.pitch = ME.inputDataObj.roofPitch.id;
 
-        updateProperty(outputDataObj);
-        updateMultiLevels(outputDataObj.PRIMARY_ID);
-        updateMultiVents(outputDataObj.PRIMARY_ID);
-
+        updateRoof(outputDataObj);
     };
 
     var putProperty = function(dataObj) {
-        newPropertyID =  0;
+        newPropertyVars.propertyID = 0;
         DB.query("putProperty", dataObj).then(function(resultObj) {
             if (resultObj.result == "Error" || typeof resultObj.data === "string") {
                 alert("FALSE returned for DB.putProperty() at " + myName + " >>> putProperty()");
                 console.log(resultObj.data);
             } else {
-                newPropertyID = resultObj.data.id;
+                newPropertyVars.propertyID = resultObj.data.id;
                 if (dataObj.roofCode == "0") {
-                    ME.formVisibility.roofInput = true;
-                    ME.EditMode = "Add Roof Description";
-                    insertRoof(newPropertyID);
+                    setFormVisibility("addStepTwo");
+                    insertRoof();
                     ngDialog.open({
                         template: '<h2>Property with single pitched roof has been added. Continue with Roof Assembly.</h2>' +
-                        '<div class="ngdialog-buttons"><button type="button" class="ngdialog-button ngdialog-button-primary" ng-click="closeThisDialog()">Close Me</button></div>',
+                            '<div class="ngdialog-buttons"><button type="button" class="ngdialog-button ngdialog-button-primary" ng-click="closeThisDialog()">Close Me</button></div>',
                         className: 'ngdialog-theme-calm',
                         plain: true,
                         overlay: false
                     });
-                }else{
+                } else {
                     ngDialog.open({
                         template: '<h2>Property has been added.</h2>',
                         className: 'ngdialog-theme-calm',
@@ -417,17 +426,18 @@ app.controller('AdminSalesPropertiesCtrl', ['$state', '$scope', 'AdminSharedSrvc
         });
     };
 
-     var insertRoof = function(id) {
+    var insertRoof = function() {
         var dataObj = {};
-        dataObj.propertyID = id;
+        dataObj.propertyID = newPropertyVars.propertyID
         DB.query("insertRoof", dataObj).then(function(resultObj) {
             if (resultObj.result == "Error" || typeof resultObj.data === "string") {
                 alert("FALSE returned for DB.MultiLevels() at " + myName + " >>> MultiLevels()");
                 console.log(resultObj.data);
             } else {
+                newPropertyVars.roofID = resultObj.data.id;
                 var dataObj = {};
                 dataObj.roofID = resultObj.data.id;
-                dataObj.propertyID = newPropertyID;
+                dataObj.propertyID = newPropertyVars.propertyID;
                 insertMultiLevels(dataObj);
                 insertMultiVents(dataObj);
             }
@@ -436,30 +446,48 @@ app.controller('AdminSalesPropertiesCtrl', ['$state', '$scope', 'AdminSharedSrvc
         });
     };
 
-    var insertMultiVents = function(dataObj) {
-        
-        DB.query("insertMultiVents", dataObj).then(function(resultObj) {
+    var updateRoof = function(dataObj) {
+        DB.query("updateRoof", dataObj).then(function(resultObj) {
             if (resultObj.result == "Error" || typeof resultObj.data === "string") {
-                alert("FALSE returned for DB.putMultiVents() at " + myName + " >>> putMultiVents()");
+                alert("FALSE returned for DB.updateRoof() at " + myName + " >>> updateRoof()");
                 console.log(resultObj.data);
             } else {
-
+                ME.addItem();
+                ngDialog.open({
+                    template: '<h2>Roof Description accepted.  The next step would be to create a job for this property.</h2>',
+                    className: 'ngdialog-theme-calm',
+                    plain: true,
+                    overlay: false
+                });
             }
         }, function(error) {
-            alert("ERROR returned for DB.putMultiVents() at " + myName + " >>> putMultiVents()");
+            alert("ERROR returned for DB.updateRoof() at " + myName + " >>> updateRoof()");
         });
     };
-    var insertMultiLevels = function(dataObj) {
-        
-        DB.query("insertMultiLevels", dataObj).then(function(resultObj) {
+
+    var insertMultiVents = function(dataObj) {
+        DB.query("insertMultiVents", dataObj).then(function(resultObj) {
             if (resultObj.result == "Error" || typeof resultObj.data === "string") {
-                alert("FALSE returned for DB.MultiLevels() at " + myName + " >>> MultiLevels()");
+                alert("FALSE returned for DB.insertMultiVents() at " + myName + " >>> insertMultiVents()");
                 console.log(resultObj.data);
             } else {
 
             }
         }, function(error) {
-            alert("ERROR returned for DB.MultiLevels() at " + myName + " >>> MultiLevels()");
+            alert("ERROR returned for DB.insertMultiVents() at " + myName + " >>> insertMultiVents()");
+        });
+    };
+
+    var insertMultiLevels = function(dataObj) {
+        DB.query("insertMultiLevels", dataObj).then(function(resultObj) {
+            if (resultObj.result == "Error" || typeof resultObj.data === "string") {
+                alert("FALSE returned for DB.insertMultiLevels() at " + myName + " >>> insertMultiLevels()");
+                console.log(resultObj.data);
+            } else {
+
+            }
+        }, function(error) {
+            alert("ERROR returned for DB.insertMultiLevels() at " + myName + " >>> insertMultiLevels()");
         });
     };
 
@@ -467,19 +495,20 @@ app.controller('AdminSalesPropertiesCtrl', ['$state', '$scope', 'AdminSharedSrvc
         ME.multiVentObj.propertyID = id;
         DB.query("putMultiVents", ME.multiVentObj).then(function(resultObj) {
             if (resultObj.result == "Error" || typeof resultObj.data === "string") {
-                alert("FALSE returned for DB.putMultiVents() at " + myName + " >>> putMultiVents()");
+                alert("FALSE returned for DB.submitMultiVents() at " + myName + " >>> submitMultiVents()");
                 console.log(resultObj.data);
             } else {
 
             }
         }, function(error) {
-            alert("ERROR returned for DB.putMultiVents() at " + myName + " >>> putMultiVents()");
+            alert("ERROR returned for DB.submitMultiVents() at " + myName + " >>> submitMultiVents()");
         });
     };
-   
 
-    var updateMultiLevels = function(id) {
-        ME.multiLevelObj.propertyID = id;
+
+    var updateMultiLevels = function() {
+        ME.multiLevelObj.propertyID = newPropertyVars.propertyID;
+        ME.multiLevelObj.roofID = newPropertyVars.roofID;
         DB.query("updateMultiLevels", ME.multiLevelObj).then(function(resultObj) {
             if (resultObj.result == "Error" || typeof resultObj.data === "string") {
                 alert("FALSE returned for DB.updateMultiLevels() at " + myName + " >>> updateMultiLevels()");
@@ -492,8 +521,9 @@ app.controller('AdminSalesPropertiesCtrl', ['$state', '$scope', 'AdminSharedSrvc
         });
     };
 
-    var updateMultiVents = function(id) {
-        ME.multiVentObj.propertyID = id;
+    var updateMultiVents = function() {
+        ME.multiVentObj.propertyID = newPropertyVars.propertyID;
+        ME.multiVentObj.roofID = newPropertyVars.roofID;
         DB.query("updateMultiVents", ME.multiVentObj).then(function(resultObj) {
             if (resultObj.result == "Error" || typeof resultObj.data === "string") {
                 alert("FALSE returned for DB.updateMultiVents() at " + myName + " >>> updateMultiVents()");
@@ -551,6 +581,23 @@ app.controller('AdminSalesPropertiesCtrl', ['$state', '$scope', 'AdminSharedSrvc
 
         resetInputFields();
 
+    };
+
+    ME.validateMinimumRequirements = function() {
+        var rtnBol = false;
+        ME.submitInValid = true;
+        if (ME.EditMode == "Add Property") {
+            if (ME.inputDataObj.client.PRIMARY_ID > -1 && ME.inputDataObj.name != "" && ME.inputDataObj.roofCode.id > -1) {
+                ME.submitInValid = false;
+            }
+        } else if (ME.EditMode == "Update Property") {
+            if (ME.inputDataObj.client.PRIMARY_ID > -1 && ME.inputDataObj.name != "") {
+                rtnBol = true;
+            }
+        } else if (ME.EditMode == "Remove Property") {
+
+        }
+        return rtnBol;
     };
 
     $scope.$watch('$viewContentLoaded', function() {

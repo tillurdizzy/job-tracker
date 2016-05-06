@@ -51,6 +51,7 @@ app.service('AdminDataSrvc',['$http','$q','SharedSrvc','LogInSrvc',function admi
 		updateActiveDate:httpPathPrefix + "updateActiveDate.php",
 		updateCompleteDate:httpPathPrefix + "updateCompleteDate.php",
 		updateConfig:httpPathPrefix + "updateConfig.php",
+		updateRoof:httpPathPrefix + "updateRoof.php",
 		deleteProperty:httpPathPrefix + "deleteProperty.php",
 		deleteClient:httpPathPrefix + "deleteClient.php",
 		deleteJob:httpPathPrefix + "deleteJob.php",

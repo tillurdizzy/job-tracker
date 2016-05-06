@@ -14,19 +14,16 @@
     <!--  h2 prompt always visible.  select only visible while mode is update or remove -->
     <div class="text-input-form-item-min">
         <h2>{{Ctrl.modePrompt}}</h2>
-        <select ng-model="Ctrl.propertySelector" ng-options="c.displayName for c in Ctrl.PROPERTIES" ng-change="Ctrl.selectProperty();" 
-        ng-show="Ctrl.formVisibility.propertySelection"></select>
+        <select ng-model="Ctrl.propertySelector" ng-options="c.displayName for c in Ctrl.PROPERTIES" ng-change="Ctrl.selectProperty();" ng-show="Ctrl.formVisibility.propertySelection"></select>
     </div>
     <horiz-rule margintop="5" marginbottom="5"></horiz-rule>
-    <div class="flex-row">
-        <div style="width:50%">
-            <div class="text-input-form-item">
-                <h2 style="margin-right:15px;">Client</h2>
-                <select ng-model="Ctrl.inputDataObj.client" ng-options="c.displayName for c in Ctrl.CLIENTS" ng-change="Ctrl.selectClient();"></select>
-            </div>
+    <div ng-show="Ctrl.formVisibility.clientSelection">
+        <div class="text-input-form-item">
+            <h2 style="margin-right:15px;">Client</h2>
+            <select ng-model="Ctrl.inputDataObj.client" ng-options="c.displayName for c in Ctrl.CLIENTS" ng-change="Ctrl.selectClient();"></select>
         </div>
+        <horiz-rule margintop="-8" marginbottom="5"></horiz-rule>
     </div>
-    <horiz-rule margintop="-8" marginbottom="5"></horiz-rule>
     <div id="locationInput" ng-show="Ctrl.formVisibility.locationInput">
         <div class="text-input-form-item">
             <h2>Property</h2>
@@ -125,23 +122,33 @@
                         <tbody>
                             <tr>
                                 <td>Static / RV151</td>
-                                <td><select ng-model="Ctrl.multiVentModel.STATIC" ng-options="c.label for c in Ctrl.L.numbersToTen"></select></td>
+                                <td>
+                                    <select ng-model="Ctrl.multiVentModel.STATIC" ng-options="c.label for c in Ctrl.L.numbersToTen"></select>
+                                </td>
                             </tr>
                             <tr>
                                 <td>Turbine</td>
-                                <td><select ng-model="Ctrl.multiVentModel.TURBNS" ng-options="c.label for c in Ctrl.L.numbersToTen"></select></td>
+                                <td>
+                                    <select ng-model="Ctrl.multiVentModel.TURBNS" ng-options="c.label for c in Ctrl.L.numbersToTen"></select>
+                                </td>
                             </tr>
                             <tr>
                                 <td>Power</td>
-                                <td><select ng-model="Ctrl.multiVentModel.PWRVNT" ng-options="c.label for c in Ctrl.L.numbersToTen"></select></td>
+                                <td>
+                                    <select ng-model="Ctrl.multiVentModel.PWRVNT" ng-options="c.label for c in Ctrl.L.numbersToTen"></select>
+                                </td>
                             </tr>
                             <tr>
                                 <td>Air Hawks</td>
-                                <td><select ng-model="Ctrl.multiVentModel.AIRHWK" ng-options="c.label for c in Ctrl.L.numbersToTen"></select></td>
+                                <td>
+                                    <select ng-model="Ctrl.multiVentModel.AIRHWK" ng-options="c.label for c in Ctrl.L.numbersToTen"></select>
+                                </td>
                             </tr>
                             <tr>
                                 <td>Solar</td>
-                                <td><select ng-model="Ctrl.multiVentModel.SLRVNT" ng-options="c.label for c in Ctrl.L.numbersToTen"></select></td>
+                                <td>
+                                    <select ng-model="Ctrl.multiVentModel.SLRVNT" ng-options="c.label for c in Ctrl.L.numbersToTen"></select>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
@@ -168,19 +175,27 @@
                         <tbody>
                             <tr>
                                 <td>Flat (0-2)</td>
-                                <td><select ng-model="Ctrl.multiLevelModel.levelOne.percent" ng-options="c.label for c in Ctrl.L.percentOptions"></select></td>
+                                <td>
+                                    <select ng-model="Ctrl.multiLevelModel.levelOne.percent" ng-options="c.label for c in Ctrl.L.percentOptions"></select>
+                                </td>
                             </tr>
                             <tr>
                                 <td>Low (3-6)</td>
-                                <td><select ng-model="Ctrl.multiLevelModel.levelTwo.percent" ng-options="c.label for c in Ctrl.L.percentOptions"></select></td>
+                                <td>
+                                    <select ng-model="Ctrl.multiLevelModel.levelTwo.percent" ng-options="c.label for c in Ctrl.L.percentOptions"></select>
+                                </td>
                             </tr>
                             <tr>
                                 <td>Medium (7-9)</td>
-                                <td><select ng-model="Ctrl.multiLevelModel.levelThree.percent" ng-options="c.label for c in Ctrl.L.percentOptions"></select></td>
+                                <td>
+                                    <select ng-model="Ctrl.multiLevelModel.levelThree.percent" ng-options="c.label for c in Ctrl.L.percentOptions"></select>
+                                </td>
                             </tr>
                             <tr>
                                 <td>Steep (8+)</td>
-                                <td><select ng-model="Ctrl.multiLevelModel.levelFour.percent" ng-options="c.label for c in Ctrl.L.percentOptions"></select></td>
+                                <td>
+                                    <select ng-model="Ctrl.multiLevelModel.levelFour.percent" ng-options="c.label for c in Ctrl.L.percentOptions"></select>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
@@ -189,8 +204,7 @@
         </div>
         <horiz-rule margintop="10" marginbottom="10"></horiz-rule>
     </div>
-    
-    <button type="button" class="button radius" ng-click="Ctrl.submit()" ng-disabled="Ctrl.submitInValid" style="margin-top: 1rem; width:100%;"><h3>{{Ctrl.EditMode}}</h3></button>
-    <horiz-rule margintop="15" marginbottom="600"></horiz-rule>
-   
+    <button type="button" class="button radius" ng-click="Ctrl.submit()" ng-disabled="Ctrl.submitInValid" style="margin-top: 1rem; width:100%;">
+        <h3>{{Ctrl.EditMode}}</h3></button>
+    <add-space margintop="1" marginbottom="1" heightpx="600"></add-space>
 </div>
