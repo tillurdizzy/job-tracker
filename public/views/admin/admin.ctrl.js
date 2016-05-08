@@ -43,7 +43,7 @@ app.controller('AdminCtrl',['$location','$state','$scope','SharedSrvc',function 
 		$state.transitionTo("admin.clientManagement");
 	};
 	ME.propertyManagement = function(){
-		$state.transitionTo("admin.propertyManagement");
+		$state.transitionTo("admin.propertyManagement.add");
 	};
 	ME.jobManagement = function(){
 		$state.transitionTo("admin.jobManagement");

@@ -34,7 +34,7 @@ edgeTrim='".$edgeTrim."',
 valleyDetail='".$valleyDetail."',
 ridgeCap='".$ridgeCap."',
 roofVents='".$roofVents."',
-pitch='".$pitch."',
+pitch='".$pitch."'
 WHERE propertyID='".$propertyID."'";
 $qry_res = mysqli_query($con,$query);
 if ($qry_res) {
@@ -42,7 +42,7 @@ if ($qry_res) {
 	$jsn = json_encode($arr);
 	echo($jsn);
 } else {
-	$arr = array('msg' => "Error inserting record", 'result' => $qry_res,'params' => $propertyID);
+	$arr = array('msg' => "Error", 'query' => $query,'result' => $qry_res);
 	$jsn = json_encode($arr);
 	echo($jsn);
 }

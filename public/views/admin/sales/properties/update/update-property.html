@@ -1,0 +1,196 @@
+<div class="top" ng-controller="UpdatePropertyCtrl as Ctrl">
+     <div class="text-input-form-item-min">
+        <h2>{{Ctrl.modePrompt}}</h2>
+        <select ng-model="Ctrl.propertySelector" ng-options="c.displayName for c in Ctrl.PROPERTIES" ng-change="Ctrl.selectProperty();"></select>
+    </div>
+    <horiz-rule margintop="5" marginbottom="5"></horiz-rule>
+    <div>
+        <div class="text-input-form-item">
+            <h2 style="margin-right:15px;">Client</h2>
+            <select ng-model="Ctrl.inputDataObj.client" ng-options="c.displayName for c in Ctrl.CLIENTS" ng-change="Ctrl.selectClient();"></select>
+        </div>
+        <horiz-rule margintop="-8" marginbottom="5"></horiz-rule>
+    </div>
+    <div ng-show="Ctrl.formVisibility.stepOne">
+        <div class="text-input-form-item">
+            <h2>Property</h2>
+        </div>
+        <div class="flex-row">
+            <div style="width:50%">
+                <div class="text-input-form-item">
+                    <label>Name</label>
+                    <input type="text" ng-model="Ctrl.inputDataObj.name" ng-change="Ctrl.formChange();">
+                </div>
+                <div class="text-input-form-item">
+                    <label>Street</label>
+                    <input type="text" ng-model="Ctrl.inputDataObj.street" ng-change="Ctrl.formChange();">
+                </div>
+                <div class="text-input-form-item">
+                    <label>City</label>
+                    <input type="text" ng-model="Ctrl.inputDataObj.city" ng-change="Ctrl.formChange();">
+                </div>
+            </div>
+            <div style="width:50%">
+                <div class="text-input-form-item">
+                    <label>State</label>
+                    <input type="text" ng-model="Ctrl.inputDataObj.state" ng-change="Ctrl.formChange();">
+                </div>
+                <div class="text-input-form-item">
+                    <label>Zip</label>
+                    <input type="text" ng-model="Ctrl.inputDataObj.zip">
+                </div>
+                <div class="text-input-form-item">
+                    <label>Roof</label>
+                    <select ng-model="Ctrl.inputDataObj.roofCode" ng-options="c.label for c in Ctrl.L.roofCode" ng-change="Ctrl.selectRoof();"></select>
+                </div>
+            </div>
+        </div>
+        <horiz-rule margintop="5" marginbottom="5"></horiz-rule>
+    </div>
+    <div id="roofInput" ng-show="Ctrl.formVisibility.stepTwo">
+        <div class="text-input-form-item">
+            <h2>Roof Description</h2>
+        </div>
+        <div class="flex-row">
+            <div style="width:50%">
+                <div class="text-input-form-item">
+                    <label>Levels</label>
+                    <select ng-model="Ctrl.inputDataObj.numLevels" ng-options="c.label for c in Ctrl.L.levelOptions"></select>
+                </div>
+                <div class="text-input-form-item">
+                    <label>Field Shingles</label>
+                    <select ng-model="Ctrl.inputDataObj.shingleGrade" ng-options="c.label for c in Ctrl.L.shingleGradeOptions"></select>
+                </div>
+                <div class="text-input-form-item">
+                    <label>Deck</label>
+                    <select ng-model="Ctrl.inputDataObj.roofDeck" ng-options="c.label for c in Ctrl.L.roofDeckOptions"></select>
+                </div>
+                <div class="text-input-form-item">
+                    <label>Layers</label>
+                    <select ng-model="Ctrl.inputDataObj.layers" ng-options="c.label for c in Ctrl.L.numbersToFive"></select>
+                </div>
+            </div>
+            <div style="width:50%">
+                <div class="text-input-form-item">
+                    <label>Edge Detail</label>
+                    <select ng-model="Ctrl.inputDataObj.edgeDetail" ng-options="c.label for c in Ctrl.L.edgeDetail"></select>
+                </div>
+                <div class="text-input-form-item">
+                    <label>Edge Trim</label>
+                    <select ng-model="Ctrl.inputDataObj.edgeTrim" ng-options="c.label for c in Ctrl.L.yesNo"></select>
+                </div>
+                <div class="text-input-form-item">
+                    <label>Valley Detail</label>
+                    <select ng-model="Ctrl.inputDataObj.valleyDetail" ng-options="c.label for c in Ctrl.L.valleyOptions"></select>
+                </div>
+                <div class="text-input-form-item">
+                    <label>Ridge Cap</label>
+                    <select ng-model="Ctrl.inputDataObj.ridgeCap" ng-options="c.label for c in Ctrl.L.ridgeCapShingles"></select>
+                </div>
+            </div>
+        </div>
+        <horiz-rule margintop="10" marginbottom="10"></horiz-rule>
+        <div class="text-input-form-item">
+            <label>Vents</label>
+            <select ng-model="Ctrl.inputDataObj.roofVents" ng-options="c.label for c in Ctrl.L.ventOptions" ng-change="Ctrl.selectVentilation()"></select>
+        </div>
+        <div ng-show="Ctrl.isMultiVented">
+            <horiz-rule margintop="10" marginbottom="10"></horiz-rule>
+            <H2>Multiple Vent Options</H2>
+            <div class="flex-row">
+                <div style="width:50%">
+                    <table class="table table-striped" style="width:100%;">
+                        <thead>
+                            <tr>
+                                <th>Type</th>
+                                <th>Quantity</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Static / RV151</td>
+                                <td>
+                                    <select ng-model="Ctrl.multiVentModel.STATIC" ng-options="c.label for c in Ctrl.L.numbersToTen"></select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Turbine</td>
+                                <td>
+                                    <select ng-model="Ctrl.multiVentModel.TURBNS" ng-options="c.label for c in Ctrl.L.numbersToTen"></select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Power</td>
+                                <td>
+                                    <select ng-model="Ctrl.multiVentModel.PWRVNT" ng-options="c.label for c in Ctrl.L.numbersToTen"></select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Air Hawks</td>
+                                <td>
+                                    <select ng-model="Ctrl.multiVentModel.AIRHWK" ng-options="c.label for c in Ctrl.L.numbersToTen"></select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Solar</td>
+                                <td>
+                                    <select ng-model="Ctrl.multiVentModel.SLRVNT" ng-options="c.label for c in Ctrl.L.numbersToTen"></select>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <horiz-rule margintop="10" marginbottom="10"></horiz-rule>
+        <div class="text-input-form-item">
+            <label>Pitch</label>
+            <select ng-model="Ctrl.inputDataObj.roofPitch" ng-options="c.label for c in Ctrl.L.pitchOptions" ng-change="Ctrl.selectPitch()"></select>
+        </div>
+        <div ng-show="Ctrl.isMultiLevel">
+            <horiz-rule margintop="10" marginbottom="10"></horiz-rule>
+            <H2>Multiple Level Options</H2>
+            <div class="flex-row">
+                <div style="width:50%">
+                    <table class="table table-striped" style="width:100%;">
+                        <thead>
+                            <tr>
+                                <th>Pitch</th>
+                                <th>Percent</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Flat (0-2)</td>
+                                <td>
+                                    <select ng-model="Ctrl.multiLevelModel.levelOne.percent" ng-options="c.label for c in Ctrl.L.percentOptions"></select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Low (3-6)</td>
+                                <td>
+                                    <select ng-model="Ctrl.multiLevelModel.levelTwo.percent" ng-options="c.label for c in Ctrl.L.percentOptions"></select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Medium (7-9)</td>
+                                <td>
+                                    <select ng-model="Ctrl.multiLevelModel.levelThree.percent" ng-options="c.label for c in Ctrl.L.percentOptions"></select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Steep (8+)</td>
+                                <td>
+                                    <select ng-model="Ctrl.multiLevelModel.levelFour.percent" ng-options="c.label for c in Ctrl.L.percentOptions"></select>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <horiz-rule margintop="10" marginbottom="10"></horiz-rule>
+    </div>
+    <button type="button" class="button radius" ng-click="Ctrl.submit()" ng-disabled="Ctrl.submitInValid" style="margin-top: 1rem; width:100%;">
+        <h3>{{Ctrl.SubmitBtnLabel}}</h3></button>
+</div>

@@ -70,6 +70,18 @@ app.config(function($stateProvider, $urlRouterProvider,$provide) {
 			url: "/propertyManagement",
 			templateUrl:"views/admin/sales/properties/admin-sales-properties.html"
 		})
+		.state('admin.propertyManagement.add', {
+			url: "/propertyManagement-add",
+			templateUrl:"views/admin/sales/properties/add/add-property.html"
+		})
+		.state('admin.propertyManagement.update', {
+			url: "/propertyManagement-update",
+			templateUrl:"views/admin/sales/properties/update/update-property.html"
+		})
+		.state('admin.propertyManagement.remove', {
+			url: "/propertyManagement-remove",
+			templateUrl:"views/admin/sales/properties/remove/remove-property.html"
+		})
 		.state('admin.jobManagement', {
 			url: "/jobManagement",
 			templateUrl:"views/admin/sales/jobs/admin-sales-jobs.html"

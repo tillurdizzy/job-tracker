@@ -27,7 +27,7 @@
         </div>
         <div class="text-input-form-item">
             <label>Property:</label>
-            <select ng-model="Ctrl.propertySelected" ng-options="c.propertyName for c in Ctrl.propertyOptions" ng-change="Ctrl.selectProperty();" 
+            <select ng-model="Ctrl.propertySelected" ng-options="c.displayName for c in Ctrl.propertyOptions" ng-change="Ctrl.selectProperty();" 
             ng-disabled="Ctrl.clientSelected.PRIMARY_ID=='-1'"></select>
         </div>
         <div class="text-input-form-item">

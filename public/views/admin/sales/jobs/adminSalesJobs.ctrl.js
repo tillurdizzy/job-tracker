@@ -1,6 +1,6 @@
 'use strict';
 
-app.controller('AdminSalesJobsCtrl', ['AdminSharedSrvc', 'AdminDataSrvc', 'ListSrvc', 'ngDialog', '$state', function(AdminSharedSrvc, AdminDataSrvc, ListSrvc, ngDialog, $state) {
+app.controller('AdminSalesJobsCtrl', ['$scope','AdminSharedSrvc', 'AdminDataSrvc', 'ListSrvc', 'ngDialog', '$state', function($scope,AdminSharedSrvc, AdminDataSrvc, ListSrvc, ngDialog, $state) {
 
     var ME = this;
     var myName = "AdminSalesJobsCtrl";
@@ -129,10 +129,13 @@ app.controller('AdminSalesJobsCtrl', ['AdminSharedSrvc', 'AdminDataSrvc', 'ListS
 
     var getClientProperties = function() {
         ME.propertyOptions = [];
-        ME.propertyOptions.push({ propertyName: "--Select One --", PRIMARY_ID: "-1" });
-        for (var i = 0; i < ME.JOBS.length; i++) {
-            if (ME.JOBS[i].client == ME.clientSelected.PRIMARY_ID) {
-                ME.propertyOptions.push(ME.JOBS[i]);
+        ME.propertyOptions.push({ displayName: "--Select One --", PRIMARY_ID: "-1" });
+        for (var i = 0; i < ME.S.PROPERTIES.length; i++) {
+            if (ME.S.PROPERTIES[i].client == ME.clientSelected.PRIMARY_ID) {
+                if(parseInt(ME.S.PROPERTIES[i].roofID) > 0){
+                    // Cannot create a job without a roof description; 
+                     ME.propertyOptions.push(ME.S.PROPERTIES[i]);
+                }
             }
         };
         if (ME.propertyOptions.length > 0) {
@@ -290,10 +293,15 @@ app.controller('AdminSalesJobsCtrl', ['AdminSharedSrvc', 'AdminDataSrvc', 'ListS
         ME.clientManager = null;
         ME.formStatus = "Pristine";
         ME.salesMgrDisplayName = "--";
-
     };
 
-    createDP();
+    $scope.$on('onDataCascadeComplete', function() {
+        createDP();
+        console.log("AdminSalesJobsCtrl >>> $onDataCascadeComplete");
+    });
+
+    ME.S.triggerDataCascade();
+    
     resetInputFields();
     
 }]);

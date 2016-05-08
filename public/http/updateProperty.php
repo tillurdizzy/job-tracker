@@ -36,7 +36,7 @@ if ($qry_res) {
 	$jsn = json_encode($arr);
 	echo($jsn);
 } else {
-	$arr = array('msg' => "Error inserting record", 'result' => $qry_res,'params' => $PRIMARY_ID);
+	$arr = array('msg' => "Error", 'query' => $query,'result' => $qry_res);
 	$jsn = json_encode($arr);
 	echo($jsn);
 }

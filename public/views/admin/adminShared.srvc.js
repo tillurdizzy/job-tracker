@@ -137,7 +137,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
     // Take the generic materialList and merge it with the job-specific config (insert qty and price)
     var mergeConfig = function() {
         var aClone = DB.clone(self.MATERIALS);
-        self.materialsList = CONFIG.mergeConfig(aClone, self.proposalUnderReview.propertyInputParams,true);
+        self.materialsList = CONFIG.mergeConfig(aClone, self.proposalUnderReview.propertyInputParams, true);
         categorizeMaterials();
         getSpecialConsiderations();
     };
@@ -187,21 +187,37 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
     };
 
     // Called from Proposal Review Design page to manually edit qty or price of material
-    self.editMaterial = function(vals){
+    self.editMaterial = function(vals) {
         var cat = vals.Category;
         var catArray = [];
-        switch(cat){
-            case "Field":catArray = self.materialsCatergorized.Field;break;
-            case "Ridge":catArray = self.materialsCatergorized.Ridge;break;
-            case "Starter":catArray = self.materialsCatergorized.Starter;break;
-            case "Caps":catArray = self.materialsCatergorized.Caps;break;
-            case "Vents":catArray = self.materialsCatergorized.Vents;break;
-            case "Flashing":catArray = self.materialsCatergorized.Flashing;break;
-            case "Flat":catArray = self.materialsCatergorized.Flat;break;
-            case "Other":catArray = self.materialsCatergorized.Other;break;
+        switch (cat) {
+            case "Field":
+                catArray = self.materialsCatergorized.Field;
+                break;
+            case "Ridge":
+                catArray = self.materialsCatergorized.Ridge;
+                break;
+            case "Starter":
+                catArray = self.materialsCatergorized.Starter;
+                break;
+            case "Caps":
+                catArray = self.materialsCatergorized.Caps;
+                break;
+            case "Vents":
+                catArray = self.materialsCatergorized.Vents;
+                break;
+            case "Flashing":
+                catArray = self.materialsCatergorized.Flashing;
+                break;
+            case "Flat":
+                catArray = self.materialsCatergorized.Flat;
+                break;
+            case "Other":
+                catArray = self.materialsCatergorized.Other;
+                break;
         }
         for (var i = 0; i < catArray.length; i++) {
-            if(catArray[i].PRIMARY_ID == vals.ID){
+            if (catArray[i].PRIMARY_ID == vals.ID) {
                 catArray[i].PkgPrice = vals.Price;
                 catArray[i].Qty = parseInt(vals.Qty);
                 break;
@@ -210,14 +226,14 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
         self.saveJobConfig();
     };
 
-    var getSpecialConsiderations = function(){
+    var getSpecialConsiderations = function() {
         var dataObj = {};
         dataObj.jobID = self.proposalUnderReview.jobID;
-         DB.query("getSpecialConsiderations", dataObj).then(function(resultObj) {
+        DB.query("getSpecialConsiderations", dataObj).then(function(resultObj) {
             if (resultObj.result == "Error" || typeof resultObj.data === "string") {
                 alert("FALSE returned for getSpecialConsiderations()");
             } else {
-               self.SPECIAL = resultObj.data[0].body;
+                self.SPECIAL = resultObj.data[0].body;
             }
         }, function(error) {
             alert("ERROR returned for  getSpecialConsiderations()");
@@ -278,7 +294,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
         });
     };
 
-    
+
     var getSalesReps = function() {
         DB.query("getSalesReps", null).then(function(resultObj) {
             if (resultObj.result == "Error") {
@@ -395,28 +411,37 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
 
             // PropertyDisplayName same as name unless multiple roofs, then append roof name to property name
             var roofCode = parseInt(self.PROPERTIES[i].roofCode);
+            // roofNamesAndId = array with 1 element for roofID == 0, multiple elements for multi-roof properties
             var roofNamesAndId = returnBldgNameFromRoofsByPropID(self.PROPERTIES[i].PRIMARY_ID);
-            if (roofCode == 0) {
-                self.PROPERTIES[i].displayName = self.PROPERTIES[i].name;
-                self.PROPERTIES[i].roofID = roofNamesAndId[0].roofID;
-            } else {
-                self.PROPERTIES[i].displayName = self.PROPERTIES[i].name + " - " + roofNamesAndId[0].bldgName;
-                self.PROPERTIES[i].roofID = roofNamesAndId[0].roofID;
-                roofNamesAndId.shift();
-                var propToClone = self.PROPERTIES[i];
-                for (var x = 0; x < roofNamesAndId.length; x++) {
-                    var clonedProp = DB.clone(propToClone);
-                    clonedProp.displayName = clonedProp.name + " - " + roofNamesAndId[x].bldgName;
-                    clonedProp.roofID = roofNamesAndId[x].roofID;
-                    tempProperties.push(clonedProp);
-                }
-            }
+
+            if (roofNamesAndId.length > 0) { 
+                if (roofCode == 0) {
+                    self.PROPERTIES[i].displayName = self.PROPERTIES[i].name;
+                    self.PROPERTIES[i].roofID = roofNamesAndId[0].roofID;
+                } else {
+                    // The existing Property entry takes the first roof 
+                    // Then duplicate it so that each roof (bldg) has it's own Property entry
+                    self.PROPERTIES[i].displayName = self.PROPERTIES[i].name + " - " + roofNamesAndId[0].bldgName;
+                    self.PROPERTIES[i].roofID = roofNamesAndId[0].roofID;
+                    roofNamesAndId.shift();
+                    var propToClone = self.PROPERTIES[i];
+                    for (var x = 0; x < roofNamesAndId.length; x++) {
+                        var clonedProp = DB.clone(propToClone);
+                        clonedProp.displayName = clonedProp.name + " - " + roofNamesAndId[x].bldgName;
+                        clonedProp.roofID = roofNamesAndId[x].roofID;
+                        tempProperties.push(clonedProp);
+                    };
+                };
+            };
         };
+
         for (i = 0; i < tempProperties.length; i++) {
             self.PROPERTIES.push(tempProperties[i]);
         };
 
         self.PROPERTIES = underscore.sortBy(self.PROPERTIES, 'displayName');
+
+        $rootScope.$broadcast('onDataCascadeComplete');
     };
 
     var returnDisplayNameFromClient = function(id) {
@@ -435,6 +460,9 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
                 rtnArray.push({ bldgName: self.ROOFS[i].name, roofID: self.ROOFS[i].PRIMARY_ID });
             }
         };
+        if(rtnArray.length == 0){
+            rtnArray.push({ bldgName: "Missing Roof Description", roofID: -1 });
+        }
         return rtnArray;
     };
 
@@ -613,7 +641,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
                 alert("Query Error - see console for details");
                 console.log("updateConfig ---- " + resultObj.data);
             } else {
-               $rootScope.$broadcast('onSaveJobConfig');
+                $rootScope.$broadcast('onSaveJobConfig');
             }
         }, function(error) {
             alert("Query Error - AdminSharedSrvc >> updateConfig");
@@ -648,7 +676,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
         };
     };
 
-    self.returnManagerObjByID = function(id) { 
+    self.returnManagerObjByID = function(id) {
         for (var i = 0; i < self.salesReps.length; i++) {
             if (self.salesReps[i].PRIMARY_ID == id) {
                 return self.salesReps[i];
@@ -685,6 +713,10 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
             };
         };
         return rtnObj;
+    };
+
+    self.triggerDataCascade = function(){
+        getProperties();
     };
 
     getMaterialsList();

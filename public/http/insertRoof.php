@@ -19,7 +19,7 @@ if ($qry_res) {
 	$jsn = json_encode($arr);
 	echo($jsn);
 } else {
-	$arr = array('msg' => "Fail", 'result' => $qry_res,'params' => $name);
+	$arr = array('msg' => "Error", 'query' => $query,'result' => $qry_res);
 	$jsn = json_encode($arr);
 	echo($jsn);
 }

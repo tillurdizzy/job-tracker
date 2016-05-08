@@ -69,6 +69,10 @@ app.service('AdminDataSrvc',['$http','$q','SharedSrvc','LogInSrvc',function admi
 			.success(function(data, status) {
 				rtnObj.result = "Success";
 				rtnObj.data = data;
+				if(data.msg == "Error"){
+					alert("QUERY Error - see console.");
+					console.log(data.query);
+				}
 				deferred.resolve(rtnObj);
 		    })
 		    .error(function(data, status, headers, config) {
