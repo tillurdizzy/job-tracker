@@ -54,44 +54,44 @@
             <div style="width:50%">
                 <div class="text-input-form-item">
                     <label>Levels</label>
-                    <select ng-model="Ctrl.inputDataObj.numLevels" ng-options="c.label for c in Ctrl.L.levelOptions"></select>
+                    <select ng-model="Ctrl.inputDataObj.numLevels" ng-options="c.label for c in Ctrl.L.levelOptions" ng-change="Ctrl.formChange();"></select>
                 </div>
                 <div class="text-input-form-item">
                     <label>Field Shingles</label>
-                    <select ng-model="Ctrl.inputDataObj.shingleGrade" ng-options="c.label for c in Ctrl.L.shingleGradeOptions"></select>
+                    <select ng-model="Ctrl.inputDataObj.shingleGrade" ng-options="c.label for c in Ctrl.L.shingleGradeOptions" ng-change="Ctrl.formChange();"></select>
                 </div>
                 <div class="text-input-form-item">
                     <label>Deck</label>
-                    <select ng-model="Ctrl.inputDataObj.roofDeck" ng-options="c.label for c in Ctrl.L.roofDeckOptions"></select>
+                    <select ng-model="Ctrl.inputDataObj.roofDeck" ng-options="c.label for c in Ctrl.L.roofDeckOptions" ng-change="Ctrl.formChange();"></select>
                 </div>
                 <div class="text-input-form-item">
                     <label>Layers</label>
-                    <select ng-model="Ctrl.inputDataObj.layers" ng-options="c.label for c in Ctrl.L.numbersToFive"></select>
+                    <select ng-model="Ctrl.inputDataObj.layers" ng-options="c.label for c in Ctrl.L.numbersToFive" ng-change="Ctrl.formChange();"></select>
                 </div>
             </div>
             <div style="width:50%">
                 <div class="text-input-form-item">
                     <label>Edge Detail</label>
-                    <select ng-model="Ctrl.inputDataObj.edgeDetail" ng-options="c.label for c in Ctrl.L.edgeDetail"></select>
+                    <select ng-model="Ctrl.inputDataObj.edgeDetail" ng-options="c.label for c in Ctrl.L.edgeDetail" ng-change="Ctrl.formChange();"></select>
                 </div>
                 <div class="text-input-form-item">
                     <label>Edge Trim</label>
-                    <select ng-model="Ctrl.inputDataObj.edgeTrim" ng-options="c.label for c in Ctrl.L.yesNo"></select>
+                    <select ng-model="Ctrl.inputDataObj.edgeTrim" ng-options="c.label for c in Ctrl.L.yesNo" ng-change="Ctrl.formChange();"></select>
                 </div>
                 <div class="text-input-form-item">
                     <label>Valley Detail</label>
-                    <select ng-model="Ctrl.inputDataObj.valleyDetail" ng-options="c.label for c in Ctrl.L.valleyOptions"></select>
+                    <select ng-model="Ctrl.inputDataObj.valleyDetail" ng-options="c.label for c in Ctrl.L.valleyOptions" ng-change="Ctrl.formChange();"></select>
                 </div>
                 <div class="text-input-form-item">
                     <label>Ridge Cap</label>
-                    <select ng-model="Ctrl.inputDataObj.ridgeCap" ng-options="c.label for c in Ctrl.L.ridgeCapShingles"></select>
+                    <select ng-model="Ctrl.inputDataObj.ridgeCap" ng-options="c.label for c in Ctrl.L.ridgeCapShingles" ng-change="Ctrl.formChange();"></select>
                 </div>
             </div>
         </div>
         <horiz-rule margintop="10" marginbottom="10"></horiz-rule>
         <div class="text-input-form-item">
             <label>Vents</label>
-            <select ng-model="Ctrl.inputDataObj.roofVents" ng-options="c.label for c in Ctrl.L.ventOptions" ng-change="Ctrl.selectVentilation()"></select>
+            <select ng-model="Ctrl.inputDataObj.roofVents" ng-options="c.label for c in Ctrl.L.ventOptions" ng-change="Ctrl.selectVentilation()" ng-change="Ctrl.formChange();"></select>
         </div>
         <div ng-show="Ctrl.isMultiVented">
             <horiz-rule margintop="10" marginbottom="10"></horiz-rule>
@@ -109,31 +109,31 @@
                             <tr>
                                 <td>Static / RV151</td>
                                 <td>
-                                    <select ng-model="Ctrl.multiVentModel.STATIC" ng-options="c.label for c in Ctrl.L.numbersToTen"></select>
+                                    <select ng-model="Ctrl.multiVentModel.STATIC" ng-options="c.label for c in Ctrl.L.numbersToTen" ng-change="Ctrl.formChange();"></select>
                                 </td>
                             </tr>
                             <tr>
                                 <td>Turbine</td>
                                 <td>
-                                    <select ng-model="Ctrl.multiVentModel.TURBNS" ng-options="c.label for c in Ctrl.L.numbersToTen"></select>
+                                    <select ng-model="Ctrl.multiVentModel.TURBNS" ng-options="c.label for c in Ctrl.L.numbersToTen" ng-change="Ctrl.formChange();"></select>
                                 </td>
                             </tr>
                             <tr>
                                 <td>Power</td>
                                 <td>
-                                    <select ng-model="Ctrl.multiVentModel.PWRVNT" ng-options="c.label for c in Ctrl.L.numbersToTen"></select>
+                                    <select ng-model="Ctrl.multiVentModel.PWRVNT" ng-options="c.label for c in Ctrl.L.numbersToTen" ng-change="Ctrl.formChange();"></select>
                                 </td>
                             </tr>
                             <tr>
                                 <td>Air Hawks</td>
                                 <td>
-                                    <select ng-model="Ctrl.multiVentModel.AIRHWK" ng-options="c.label for c in Ctrl.L.numbersToTen"></select>
+                                    <select ng-model="Ctrl.multiVentModel.AIRHWK" ng-options="c.label for c in Ctrl.L.numbersToTen" ng-change="Ctrl.formChange();"></select>
                                 </td>
                             </tr>
                             <tr>
                                 <td>Solar</td>
                                 <td>
-                                    <select ng-model="Ctrl.multiVentModel.SLRVNT" ng-options="c.label for c in Ctrl.L.numbersToTen"></select>
+                                    <select ng-model="Ctrl.multiVentModel.SLRVNT" ng-options="c.label for c in Ctrl.L.numbersToTen" ng-change="Ctrl.formChange();"></select>
                                 </td>
                             </tr>
                         </tbody>
@@ -144,7 +144,7 @@
         <horiz-rule margintop="10" marginbottom="10"></horiz-rule>
         <div class="text-input-form-item">
             <label>Pitch</label>
-            <select ng-model="Ctrl.inputDataObj.roofPitch" ng-options="c.label for c in Ctrl.L.pitchOptions" ng-change="Ctrl.selectPitch()"></select>
+            <select ng-model="Ctrl.inputDataObj.roofPitch" ng-options="c.label for c in Ctrl.L.pitchOptions" ng-change="Ctrl.selectPitch()" ng-change="Ctrl.formChange();"></select>
         </div>
         <div ng-show="Ctrl.isMultiLevel">
             <horiz-rule margintop="10" marginbottom="10"></horiz-rule>
@@ -162,25 +162,25 @@
                             <tr>
                                 <td>Flat (0-2)</td>
                                 <td>
-                                    <select ng-model="Ctrl.multiLevelModel.levelOne.percent" ng-options="c.label for c in Ctrl.L.percentOptions"></select>
+                                    <select ng-model="Ctrl.multiLevelModel.levelOne.percent" ng-options="c.label for c in Ctrl.L.percentOptions" ng-change="Ctrl.formChange();"></select>
                                 </td>
                             </tr>
                             <tr>
                                 <td>Low (3-6)</td>
                                 <td>
-                                    <select ng-model="Ctrl.multiLevelModel.levelTwo.percent" ng-options="c.label for c in Ctrl.L.percentOptions"></select>
+                                    <select ng-model="Ctrl.multiLevelModel.levelTwo.percent" ng-options="c.label for c in Ctrl.L.percentOptions" ng-change="Ctrl.formChange();"></select>
                                 </td>
                             </tr>
                             <tr>
                                 <td>Medium (7-9)</td>
                                 <td>
-                                    <select ng-model="Ctrl.multiLevelModel.levelThree.percent" ng-options="c.label for c in Ctrl.L.percentOptions"></select>
+                                    <select ng-model="Ctrl.multiLevelModel.levelThree.percent" ng-options="c.label for c in Ctrl.L.percentOptions" ng-change="Ctrl.formChange();"></select>
                                 </td>
                             </tr>
                             <tr>
                                 <td>Steep (8+)</td>
                                 <td>
-                                    <select ng-model="Ctrl.multiLevelModel.levelFour.percent" ng-options="c.label for c in Ctrl.L.percentOptions"></select>
+                                    <select ng-model="Ctrl.multiLevelModel.levelFour.percent" ng-options="c.label for c in Ctrl.L.percentOptions" ng-change="Ctrl.formChange();"></select>
                                 </td>
                             </tr>
                         </tbody>

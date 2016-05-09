@@ -38,7 +38,7 @@ app.controller('UpdatePropertyCtrl', ['$state', '$scope', 'PropertiesSrvc', 'Adm
     };
 
     ME.submit = function() {
-
+        ME.createPropertyDataObj()
     };
 
     ME.formChange = function() {
@@ -64,31 +64,6 @@ app.controller('UpdatePropertyCtrl', ['$state', '$scope', 'PropertiesSrvc', 'Adm
         } else {
             ME.isMultiLevel = false;
         }
-    };
-
-    ME.submit_roofPitch = function() {
-        if (ME.isMultiLevel === true) {
-            ME.multiLevelObj.LEVONE = ME.multiLevelModel.levelOne.percent.id;
-            ME.multiLevelObj.LEVTWO = ME.multiLevelModel.levelTwo.percent.id;
-            ME.multiLevelObj.LEVTHR = ME.multiLevelModel.levelThree.percent.id;
-            ME.multiLevelObj.LEVFOU = ME.multiLevelModel.levelFour.percent.id;
-
-            var percentTotal = ME.multiLevelObj.LEVONE + ME.multiLevelObj.LEVTWO +
-                ME.multiLevelObj.LEVTHR + ME.multiLevelObj.LEVFOU;
-            if (percentTotal == 10) {
-
-            } else {
-                alert("Percent column must total 100.");
-            }
-        }
-    };
-
-    ME.submit_roofVents = function() {
-        ME.multiVentObj.TURBNS = ME.multiVentModel.TURBNS.id;
-        ME.multiVentObj.STATIC = ME.multiVentModel.STATIC.id;
-        ME.multiVentObj.PWRVNT = ME.multiVentModel.PWRVNT.id;
-        ME.multiVentObj.AIRHWK = ME.multiVentModel.AIRHWK.id;
-        ME.multiVentObj.SLRVNT = ME.multiVentModel.SLRVNT.id;
     };
 
 
@@ -204,7 +179,6 @@ app.controller('UpdatePropertyCtrl', ['$state', '$scope', 'PropertiesSrvc', 'Adm
 
 
     // Step One Update
-
     var createPropertyDataObj = function() {
         var outputDataObj = {};
         outputDataObj.manager = ME.inputDataObj.client.manager;
@@ -222,7 +196,7 @@ app.controller('UpdatePropertyCtrl', ['$state', '$scope', 'PropertiesSrvc', 'Adm
         createRoofDataObj();
     };
 
-    // Step Two of Add New Property
+    // Step Two
     var createRoofDataObj = function() {
         var outputRoofDataObj = {};
 
@@ -322,8 +296,6 @@ app.controller('UpdatePropertyCtrl', ['$state', '$scope', 'PropertiesSrvc', 'Adm
         });
     };
 
-
-
     var updateMultiLevels = function() {
         ME.multiLevelObj.propertyID = newPropertyVars.propertyID;
         ME.multiLevelObj.roofID = newPropertyVars.roofID;
@@ -355,22 +327,9 @@ app.controller('UpdatePropertyCtrl', ['$state', '$scope', 'PropertiesSrvc', 'Adm
     };
 
 
-
     ME.validateMinimumRequirements = function() {
-        var rtnBol = false;
+        // no validation at this time
         ME.submitInValid = true;
-        if (ME.EditMode == "Add Property") {
-            if (ME.inputDataObj.client.PRIMARY_ID > -1 && ME.inputDataObj.name != "" && ME.inputDataObj.roofCode.id > -1) {
-                ME.submitInValid = false;
-            }
-        } else if (ME.EditMode == "Update Property") {
-            if (ME.inputDataObj.client.PRIMARY_ID > -1 && ME.inputDataObj.name != "") {
-                rtnBol = true;
-            }
-        } else if (ME.EditMode == "Remove Property") {
-
-        }
-        return rtnBol;
     };
 
 
@@ -379,7 +338,7 @@ app.controller('UpdatePropertyCtrl', ['$state', '$scope', 'PropertiesSrvc', 'Adm
         ME.submitInValid = true;
         ME.inputDataObj = {};
         ME.propertySelector = ME.PROPERTIES[0];
-       
+
         ME.multiLevelObj = {};
         ME.multiVentObj = {};
 

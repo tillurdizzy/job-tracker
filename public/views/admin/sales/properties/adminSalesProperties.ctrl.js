@@ -7,7 +7,7 @@ app.controller('AdminSalesPropertiesCtrl', ['$state', 'PropertiesSrvc',function(
     ME.EditMode = "add";
 
     ME.backToHome = function() {
-        PropertiesSrvc.selfDestruct();
+        //PropertiesSrvc.selfDestruct();
         $state.transitionTo('admin');
     };
 

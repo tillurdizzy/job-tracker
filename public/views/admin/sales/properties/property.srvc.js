@@ -25,10 +25,8 @@ app.service('PropertiesSrvc', ['AdminSharedSrvc', 'AdminDataSrvc', function prop
     };
 
     self.logMultis = function() {
-    	self.MULTILEVELS = S.MULTIVENTS;
+    	self.MULTIVENTS = S.MULTIVENTS;
         self.MULTILEVELS = S.MULTILEVELS;
-        console.log(self.MultiVents);
-        console.log(self.MultiLevels);
     }
 
     var returnDisplayNameFromClient = function(id) {
