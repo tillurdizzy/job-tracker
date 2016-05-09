@@ -12,6 +12,8 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
     self.JOBS = [];
     self.ROOFS = [];
     self.SPECIAL;
+    self.MULTIVENTS = [];
+    self.MULTILEVELS = [];
 
 
     //jobVO's related to jobs that are in Proposal State

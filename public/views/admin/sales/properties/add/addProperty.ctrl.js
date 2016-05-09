@@ -11,7 +11,6 @@ app.controller('AddPropertyCtrl', ['$state', '$scope', 'PropertiesSrvc', 'AdminD
     ME.SubmitBtnLabel = "Add Property";
     ME.submitInValid = true;
     ME.isMultiLevel = false;
-
     ME.isMultiVented = false;
     ME.isMultiUnit = false;
 

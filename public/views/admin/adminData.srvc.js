@@ -31,6 +31,7 @@ app.service('AdminDataSrvc',['$http','$q','SharedSrvc','LogInSrvc',function admi
 		getSpecialConsiderations:httpPathPrefix + "getSpecialConsiderations.php",
 		getJobsWithProposalStatus:httpPathPrefix + "getJobsWithProposalStatus.php",
 		getLabor:httpPathPrefix + "getLabor.php",
+		getRoof:httpPathPrefix + "getRoof.php",
 		doesJobExist:httpPathPrefix + "getDoesJobExist.php",
 		insertMultiLevels: httpPathPrefix + "insertMultiLevels.php",
         insertMultiVents: httpPathPrefix + "insertMultiVents.php",

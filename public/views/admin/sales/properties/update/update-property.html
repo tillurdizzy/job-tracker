@@ -1,13 +1,12 @@
 <div class="top" ng-controller="UpdatePropertyCtrl as Ctrl">
-     <div class="text-input-form-item-min">
+    <div class="text-input-form-item-min">
         <h2>{{Ctrl.modePrompt}}</h2>
         <select ng-model="Ctrl.propertySelector" ng-options="c.displayName for c in Ctrl.PROPERTIES" ng-change="Ctrl.selectProperty();"></select>
     </div>
     <horiz-rule margintop="5" marginbottom="5"></horiz-rule>
-    <div>
+    <div ng-show="Ctrl.formVisibility.stepOne">
         <div class="text-input-form-item">
-            <h2 style="margin-right:15px;">Client</h2>
-            <select ng-model="Ctrl.inputDataObj.client" ng-options="c.displayName for c in Ctrl.CLIENTS" ng-change="Ctrl.selectClient();"></select>
+            <h2 style="margin-right:15px;">Client: {{Ctrl.inputDataObj.client.displayName}}</h2>
         </div>
         <horiz-rule margintop="-8" marginbottom="5"></horiz-rule>
     </div>
@@ -41,7 +40,7 @@
                 </div>
                 <div class="text-input-form-item">
                     <label>Roof</label>
-                    <select ng-model="Ctrl.inputDataObj.roofCode" ng-options="c.label for c in Ctrl.L.roofCode" ng-change="Ctrl.selectRoof();"></select>
+                    <select ng-model="Ctrl.inputDataObj.roofCode" ng-options="c.label for c in Ctrl.L.roofCode" ng-change="Ctrl.formChange();"></select>
                 </div>
             </div>
         </div>
@@ -49,7 +48,7 @@
     </div>
     <div id="roofInput" ng-show="Ctrl.formVisibility.stepTwo">
         <div class="text-input-form-item">
-            <h2>Roof Description</h2>
+            <h2>Roof Description for {{Ctrl.newPropertyVars.street}}</h2>
         </div>
         <div class="flex-row">
             <div style="width:50%">

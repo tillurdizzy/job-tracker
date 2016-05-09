@@ -2,11 +2,12 @@
 
 app.controller('UpdatePropertyCtrl', ['$state', '$scope', 'PropertiesSrvc', 'AdminDataSrvc', 'ListSrvc', 'ngDialog', function($state, $scope, PropertiesSrvc, AdminDataSrvc, ListSrvc, ngDialog) {
     var ME = this;
-    var myName = "AdminSalesPropertiesCtrl";
+    var myName = "UpdatePropertyCtrl";
     ME.P = PropertiesSrvc;
     var DB = AdminDataSrvc;
     ME.L = ListSrvc;
     ME.PROPERTIES = [];
+    ME.Roof = {};
     ME.EditMode = "Update Property";
     ME.modePrompt = "Update Property: Choose a property to edit/update."
     ME.SubmitBtnLabel = "Update Property";
@@ -16,56 +17,33 @@ app.controller('UpdatePropertyCtrl', ['$state', '$scope', 'PropertiesSrvc', 'Adm
     ME.isMultiVented = false;
     ME.isMultiUnit = false;
 
-    // IMPORTANT!!! Add New Property is submitted in TWO steps... we need an ID from the database for the Address before we submit the Roof Assembly
-    ME.formVisibility = { propertySelection: true, clientSelection: true, locationInput: true, roofCode: false, roofInput: true };
+    ME.formVisibility = { stepOne: true, stepTwo: false };
 
     // Model Vars
+    ME.propertySelector = null;
     ME.inputDataObj = {};
+
     ME.multiVentModel = {};
     ME.multiLevelModel = {};
-    ME.propertySelector = null;
 
-    ME.multiLevelObj = { propertyID: 0, LEVONE: 0, LEVTWO: 0, LEVTHR: 0, LEVFOU: 0 };
-    ME.multiVentObj = { propertyID: 0, TURBNS: 0, STATIC: 0, PWRVNT: 0, AIRHWK: 0, SLRVNT: 0 };
+    ME.multiLevelObj = {};
+    ME.multiVentObj = {};
 
     ME.backToHome = function() {
         $state.transitionTo('admin');
     };
 
+    ME.selectProperty = function() {
+        ME.configPropObj(ME.propertySelector.PRIMARY_ID);
+    };
+
     ME.submit = function() {
-        configRoofObj();
+
     };
 
     ME.formChange = function() {
-        ME.formStatus = "Dirty";
         ME.submitInValid = true;
         var min = ME.validateMinimumRequirements();
-    };
-
-
-    ME.selectClient = function() {
-        var clientType = parseInt(ME.inputDataObj.client.type);
-        if (clientType == 1) {
-            var name = ME.inputDataObj.client.name_last;
-            ME.inputDataObj.name = name + " Residence";
-            ME.inputDataObj.street = ME.inputDataObj.client.street;
-            ME.inputDataObj.city = ME.inputDataObj.client.city;
-            ME.inputDataObj.state = ME.inputDataObj.client.state;
-            ME.inputDataObj.zip = ME.inputDataObj.client.zip;
-        } else {
-            ME.inputDataObj.name = "Business Property";
-            ME.inputDataObj.street = "";
-            ME.inputDataObj.city = "";
-            ME.inputDataObj.state = "";
-            ME.inputDataObj.zip = "";
-        }
-        ME.formChange();
-    };
-
-
-    ME.selectProperty = function() {
-        ME.configPropObj(ME.propertySelector.PRIMARY_ID);
-        ME.formChange();
     };
 
     ME.selectRoof = function() {
@@ -115,8 +93,8 @@ app.controller('UpdatePropertyCtrl', ['$state', '$scope', 'PropertiesSrvc', 'Adm
 
 
     // Called on Update and Remove when Property selected
+    // Both this and ME.configRoofObj() called from propetySelected()
     ME.configPropObj = function(ID) {
-        ME.formStatus = "Pristine";
         ME.inputDataObj = {};
         for (var i = 0; i < ME.PROPERTIES.length; i++) {
             if (ME.PROPERTIES[i].PRIMARY_ID == ID) {
@@ -124,38 +102,39 @@ app.controller('UpdatePropertyCtrl', ['$state', '$scope', 'PropertiesSrvc', 'Adm
                 break;
             };
         };
-
-        ME.inputDataObj.client = ME.S.returnObjFromSetByPrimaryID(ME.CLIENTS, ME.inputDataObj.client);
+        getPropRoof();
+        ME.inputDataObj.client = ME.P.returnObjFromSetByPrimaryID(ME.CLIENTS, ME.inputDataObj.client);
         ME.inputDataObj.roofCode = ME.L.returnObjById(ME.L.roofCode, ME.inputDataObj.roofCode);
+
+        if (ME.inputDataObj.roofCode == 0) {
+            ME.configRoofObj(ME.propertySelector.PRIMARY_ID);
+
+        } else {
+            ME.formVisibility = { stepOne: true, stepTwo: false };
+        }
     };
 
-
     // Used by Update and Remove when retrieving roof data
-    ME.configRoofObj = function(ID) {
-        ME.formStatus = "Pristine";
-        ME.inputDataObj = {};
-        for (var i = 0; i < ME.PROPERTIES.length; i++) {
-            if (ME.PROPERTIES[i].PRIMARY_ID == ID) {
-                ME.inputDataObj = ME.PROPERTIES[i];
-                break;
-            };
-        };
+    var configRoofObj = function() {
 
-        ME.inputDataObj.client = ME.S.returnObjFromSetByPrimaryID(ME.S.CLIENTS, ME.inputDataObj.client);
-        ME.inputDataObj.edgeDetail = returnObjById(ME.L.edgeDetail, ME.inputDataObj.edgeDetail);
-        ME.inputDataObj.edgeTrim = returnObjById(ME.L.yesNo, ME.inputDataObj.edgeTrim);
-        ME.inputDataObj.layers = returnObjById(ME.L.numbersToFive, ME.inputDataObj.layers);
-        ME.inputDataObj.numLevels = returnObjById(ME.L.levelOptions, ME.inputDataObj.numLevels);
-        ME.inputDataObj.roofPitch = returnObjById(ME.L.pitchOptions, ME.inputDataObj.pitch);
-        ME.inputDataObj.ridgeCap = returnObjById(ME.L.ridgeCapShingles, ME.inputDataObj.ridgeCap);
-        ME.inputDataObj.roofDeck = returnObjById(ME.L.roofDeckOptions, ME.inputDataObj.roofDeck);
-        ME.inputDataObj.roofVents = returnObjById(ME.L.ventOptions, ME.inputDataObj.roofVents);
-        ME.inputDataObj.shingleGrade = returnObjById(ME.L.shingleGradeOptions, ME.inputDataObj.shingleGrade);
-        ME.inputDataObj.valleyDetail = returnObjById(ME.L.valleyOptions, ME.inputDataObj.valleyDetail);
+        ME.inputDataObj.edgeDetail = returnObjById(ME.L.edgeDetail, ME.Roof.edgeDetail);
+        ME.inputDataObj.edgeTrim = returnObjById(ME.L.yesNo, ME.Roof.edgeTrim);
+        ME.inputDataObj.layers = returnObjById(ME.L.numbersToFive, ME.Roof.layers);
+        ME.inputDataObj.numLevels = returnObjById(ME.L.levelOptions, ME.Roof.numLevels);
+        ME.inputDataObj.roofPitch = returnObjById(ME.L.pitchOptions, ME.Roof.pitch);
+        ME.inputDataObj.ridgeCap = returnObjById(ME.L.ridgeCapShingles, ME.Roof.ridgeCap);
+        ME.inputDataObj.roofDeck = returnObjById(ME.L.roofDeckOptions, ME.Roof.roofDeck);
+        ME.inputDataObj.roofVents = returnObjById(ME.L.ventOptions, ME.Roof.roofVents);
+        ME.inputDataObj.shingleGrade = returnObjById(ME.L.shingleGradeOptions, ME.Roof.shingleGrade);
+        ME.inputDataObj.valleyDetail = returnObjById(ME.L.valleyOptions, ME.Roof.valleyDetail);
+
+        ME.multiLevelObj = { LEVONE: 0, LEVTWO: 0, LEVTHR: 0, LEVFOU: 0 };
+        ME.multiVentObj = { TURBNS: 0, STATIC: 0, PWRVNT: 0, AIRHWK: 0, SLRVNT: 0 };
 
         if (ME.inputDataObj.roofPitch.id == 6) {
+            ME.P.logMultis();
             ME.isMultiLevel = true;
-            var myPitches = ME.S.returnObjByPropID(ME.S.MULTILEVELS, ME.inputDataObj.PRIMARY_ID);
+            var myPitches = ME.P.returnObjByRoofID(ME.P.MULTILEVELS, ME.Roof.PRIMARY_ID);
             if (myPitches.hasOwnProperty('LEVONE')) {
                 ME.multiLevelModel.levelOne.percent = returnObjById(ME.L.percentOptions, myPitches.LEVONE);
                 ME.multiLevelModel.levelTwo.percent = returnObjById(ME.L.percentOptions, myPitches.LEVTWO);
@@ -174,7 +153,7 @@ app.controller('UpdatePropertyCtrl', ['$state', '$scope', 'PropertiesSrvc', 'Adm
 
         if (ME.inputDataObj.roofVents.id == 2) {
             ME.isMultiVented = true;
-            var myVents = ME.S.returnObjByPropID(ME.S.MULTIVENTS, ME.inputDataObj.PRIMARY_ID);
+            var myVents = ME.P.returnObjByRoofID(ME.P.MULTIVENTS, ME.Roof.PRIMARY_ID);
             if (myVents.hasOwnProperty('TURBNS')) {
                 ME.multiVentModel.TURBNS = returnObjById(ME.L.numbersToTen, myVents.TURBNS);
                 ME.multiVentModel.STATIC = returnObjById(ME.L.numbersToTen, myVents.STATIC);
@@ -194,6 +173,21 @@ app.controller('UpdatePropertyCtrl', ['$state', '$scope', 'PropertiesSrvc', 'Adm
         };
     };
 
+    var getPropRoof = function() {
+        var dataObj = { propID: ME.propertySelector.PRIMARY_ID };
+        DB.query("getRoof", dataObj).then(function(resultObj) {
+            if (resultObj.result == "Error" || typeof resultObj.data === "string") {
+                alert("FALSE returned for getJobConfig()");
+            } else {
+                ME.Roof = resultObj.data[0];
+                ME.formVisibility = { stepOne: true, stepTwo: true };
+                configRoofObj();
+            }
+        }, function(error) {
+            alert("ERROR returned for  getJobConfig()");
+        });
+    };
+
     var returnObjById = function(set, id) {
         var rtnObj = {};
         if (id === null || id === undefined) {
@@ -209,10 +203,8 @@ app.controller('UpdatePropertyCtrl', ['$state', '$scope', 'PropertiesSrvc', 'Adm
 
 
 
-    // Step One of Add New Property
-    // Insert blank records for MultiVents, MultiLevels and Roof 
-    // Insert Roof when Propety ID is returned
-    // Insert Multi's when Roof ID is returnmed
+    // Step One Update
+
     var createPropertyDataObj = function() {
         var outputDataObj = {};
         outputDataObj.manager = ME.inputDataObj.client.manager;
@@ -226,14 +218,13 @@ app.controller('UpdatePropertyCtrl', ['$state', '$scope', 'PropertiesSrvc', 'Adm
         outputDataObj.zip = ME.inputDataObj.zip;
         outputDataObj.roofCode = ME.inputDataObj.roofCode.id;
 
-        newPropertyVars.street = outputDataObj.street;
-
-        putProperty(outputDataObj);
+        updateProperty(outputDataObj);
+        createRoofDataObj();
     };
 
     // Step Two of Add New Property
     var createRoofDataObj = function() {
-        var outputDataObj = {};
+        var outputRoofDataObj = {};
 
         // Multi-Levels
         ME.multiLevelObj = {};
@@ -272,23 +263,23 @@ app.controller('UpdatePropertyCtrl', ['$state', '$scope', 'PropertiesSrvc', 'Adm
             updateMultiVents();
         };
 
-        outputDataObj.propertyID = newPropertyVars.propertyID;
+        outputRoofDataObj.propertyID = newPropertyVars.propertyID;
 
         var d = new Date();
-        outputDataObj.createdDate = d.valueOf();
-        outputDataObj.name = newPropertyVars.street;
-        outputDataObj.numLevels = ME.inputDataObj.numLevels.id;
-        outputDataObj.shingleGrade = ME.inputDataObj.shingleGrade.id;
-        outputDataObj.roofDeck = ME.inputDataObj.roofDeck.id;
-        outputDataObj.layers = ME.inputDataObj.layers.id;
-        outputDataObj.edgeDetail = ME.inputDataObj.edgeDetail.id;
-        outputDataObj.edgeTrim = ME.inputDataObj.edgeTrim.id;
-        outputDataObj.valleyDetail = ME.inputDataObj.valleyDetail.id;
-        outputDataObj.ridgeCap = ME.inputDataObj.ridgeCap.id;
-        outputDataObj.roofVents = ME.inputDataObj.roofVents.id;
-        outputDataObj.pitch = ME.inputDataObj.roofPitch.id;
+        outputRoofDataObj.createdDate = d.valueOf();
+        outputRoofDataObj.name = newPropertyVars.street;
+        outputRoofDataObj.numLevels = ME.inputDataObj.numLevels.id;
+        outputRoofDataObj.shingleGrade = ME.inputDataObj.shingleGrade.id;
+        outputRoofDataObj.roofDeck = ME.inputDataObj.roofDeck.id;
+        outputRoofDataObj.layers = ME.inputDataObj.layers.id;
+        outputRoofDataObj.edgeDetail = ME.inputDataObj.edgeDetail.id;
+        outputRoofDataObj.edgeTrim = ME.inputDataObj.edgeTrim.id;
+        outputRoofDataObj.valleyDetail = ME.inputDataObj.valleyDetail.id;
+        outputRoofDataObj.ridgeCap = ME.inputDataObj.ridgeCap.id;
+        outputRoofDataObj.roofVents = ME.inputDataObj.roofVents.id;
+        outputRoofDataObj.pitch = ME.inputDataObj.roofPitch.id;
 
-        updateRoof(outputDataObj);
+        updateRoof(outputRoofDataObj);
     };
 
 
@@ -311,7 +302,6 @@ app.controller('UpdatePropertyCtrl', ['$state', '$scope', 'PropertiesSrvc', 'Adm
             alert("ERROR returned for DB.updateProperty() at " + myName + " >>> updateProperty()");
         });
     };
-
 
     var updateRoof = function(dataObj) {
         DB.query("updateRoof", dataObj).then(function(resultObj) {
@@ -387,30 +377,12 @@ app.controller('UpdatePropertyCtrl', ['$state', '$scope', 'PropertiesSrvc', 'Adm
 
     var resetInputFields = function() {
         ME.submitInValid = true;
-        ME.inputDataObj = {
-            manager: "",
-            client: ME.CLIENTS[0],
-            createdDate: "",
-            name: "",
-            street: "",
-            city: "",
-            state: "",
-            zip: "",
-            roofCode: ME.L.roofCode[0],
-            numLevels: ME.L.levelOptions[0],
-            shingleGrade: ME.L.shingleGradeOptions[0],
-            roofDeck: ME.L.roofDeckOptions[0],
-            layers: ME.L.numbersToFive[0],
-            edgeDetail: ME.L.edgeDetail[0],
-            edgeTrim: ME.L.yesNo[0],
-            valleyDetail: ME.L.valleyOptions[0],
-            ridgeCap: ME.L.ridgeCapShingles[0],
-            roofVents: ME.L.ventOptions[0],
-            roofPitch: ME.L.pitchOptions[0],
-            multiLevel: ME.multiLevelObj,
-            multiVents: ME.multiVentObj
-        };
+        ME.inputDataObj = {};
         ME.propertySelector = ME.PROPERTIES[0];
+       
+        ME.multiLevelObj = {};
+        ME.multiVentObj = {};
+
         ME.multiLevelModel = {
             levelOne: { percent: ME.L.percentOptions[0] },
             levelTwo: { percent: ME.L.percentOptions[0] },
@@ -425,8 +397,6 @@ app.controller('UpdatePropertyCtrl', ['$state', '$scope', 'PropertiesSrvc', 'Adm
             AIRHWK: ME.L.numbersToTen[0],
             SLRVNT: ME.L.numbersToTen[0]
         };
-        ME.multiLevelObj = { propertyID: 0, LEVONE: 0, LEVTWO: 0, LEVTHR: 0, LEVFOU: 0 };
-        ME.multiVentObj = { propertyID: 0, TURBNS: 0, STATIC: 0, PWRVNT: 0, AIRHWK: 0, SLRVNT: 0 };
 
     };
 

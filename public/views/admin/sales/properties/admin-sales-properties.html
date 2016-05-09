@@ -5,9 +5,9 @@
     </div>
     <div id='cssmenu' ng-controller="TabbedMenuCtrl">
         <ul>
-            <li ng-class="{ active: Ctrl.EditMode == 'Add Property'}" ng-click="Ctrl.addItem()"><a>Add Property</a></li>
-            <li ng-class="{ active: Ctrl.EditMode == 'Update Property'}" ng-click="Ctrl.updateItem()"><a>Update Property</a></li>
-            <li ng-class="{ active: Ctrl.EditMode == 'Remove Property'}" ng-click="Ctrl.removeItem()"><a>Remove Property</a></li>
+            <li ng-class="{ active: Ctrl.EditMode == 'add'}" ng-click="Ctrl.addItem()"><a>Add Property</a></li>
+            <li ng-class="{ active: Ctrl.EditMode == 'update'}" ng-click="Ctrl.updateItem()"><a>Update Property</a></li>
+            <li ng-class="{ active: Ctrl.EditMode == 'remove'}" ng-click="Ctrl.removeItem()"><a>Remove Property</a></li>
         </ul>
     </div>
     <horiz-rule margintop="5" marginbottom="5"></horiz-rule>
