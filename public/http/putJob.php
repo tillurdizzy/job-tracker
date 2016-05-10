@@ -9,7 +9,7 @@ define( "DATABASE_PASSWORD", "Sadie9954!");
 define( "DATABASE_NAME", "jobtracker");
 
 $con = mysqli_connect(DATABASE_SERVER, DATABASE_USERNAME, DATABASE_PASSWORD,DATABASE_NAME) or die ('ERROR!!!');
-$jobNumber = mysqli_real_escape_string($con,$data->jobNumber);
+$jobNumber = "0";
 $manager = mysqli_real_escape_string($con,$data->manager);
 $property = mysqli_real_escape_string($con,$data->property);
 $roofID = mysqli_real_escape_string($con,$data->roofID);

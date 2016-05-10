@@ -295,9 +295,9 @@ app.controller('AdminSalesJobsCtrl', ['$scope','AdminSharedSrvc', 'AdminDataSrvc
         ME.salesMgrDisplayName = "--";
     };
 
-    $scope.$on('onDataCascadeComplete', function() {
+    $scope.$on('onSalesDataRefreshed', function() {
         createDP();
-        console.log("AdminSalesJobsCtrl >>> $onDataCascadeComplete");
+        console.log("AdminSalesJobsCtrl >>> $onSalesDataRefreshed");
     });
 
     ME.S.triggerDataCascade();

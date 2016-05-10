@@ -70,9 +70,9 @@
     </div>
 
     <div class="check-radio-container" style="margin-bottom:5px;">
-        <input type="radio" id="Rad1A" name="Rad1" value="1" ng-model="Ctrl.inputDataObj.type"></input>
+        <input type="radio" id="Rad1A" name="Rad1" value="1" ng-model="Ctrl.inputDataObj.type" ng-change="Ctrl.formChange();"></input>
         <label for="Rad1A"><span></span>Individual / Residential / Homeowner</label>
-        <input type="radio" id="Rad1B" name="Rad1" value="2" ng-model="Ctrl.inputDataObj.type"></input>
+        <input type="radio" id="Rad1B" name="Rad1" value="2" ng-model="Ctrl.inputDataObj.type" ng-change="Ctrl.formChange();"></input>
         <label for="Rad1B"><span></span>Business / Organization</label>
     </div>
 

@@ -152,7 +152,6 @@
             </tbody>
         </table>
 
-
         <table st-table="Ctrl.jobConfigData" class="table table-striped" style="width:100%;" ng-show="Ctrl.tableSelected.request=='getAllJobConfigs'">
             <thead>
                 <tr>
@@ -176,20 +175,24 @@
                     <th>PRIMARY_ID</th>
                     <th>name_first</th>
                     <th>name_last</th>
-                    <th>pin</th>
+                    <th>name_user</th>
                     <th>userType</th>
+                    <th>pin</th>
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="row in Ctrl.jobConfigData">
+                <tr ng-repeat="row in Ctrl.loginData">
                     <td>{{row.PRIMARY_ID}}</td>
                     <td>{{row.name_first}}</td>
                     <td>{{row.name_last}}</td>
-                    <td>{{row.pin}}</td>
+                    <td>{{row.name_user}}</td>
                     <td>{{row.userType}}</td>
+                    <td>{{row.pin}}</td>
                 </tr>
             </tbody>
         </table>
+
+        
 
         <table st-table="Ctrl.multiLevelData" class="table table-striped" style="width:100%;" ng-show="Ctrl.tableSelected.request=='getMultiLevels'">
             <thead>

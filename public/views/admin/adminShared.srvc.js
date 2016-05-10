@@ -312,8 +312,12 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
         });
     };
 
+    self.refreshSalesData = function(){
+        getProperties();
+    };
 
-    // Properties, Clients, Roofs and Jobs -- async gets -- after Jobs decodeJobData called
+
+    // SALES DATA: Properties, Clients, Roofs and Jobs -- async GETs -- followed by merge and decode
     var getProperties = function() {
         DB.query("getProperties", null).then(function(resultObj) {
             if (resultObj.result == "Error" || typeof resultObj.data === "string") {
@@ -443,7 +447,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
 
         self.PROPERTIES = underscore.sortBy(self.PROPERTIES, 'displayName');
 
-        $rootScope.$broadcast('onDataCascadeComplete');
+        $rootScope.$broadcast('onSalesDataRefreshed');
     };
 
     var returnDisplayNameFromClient = function(id) {

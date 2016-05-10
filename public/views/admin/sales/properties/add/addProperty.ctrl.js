@@ -159,7 +159,14 @@ app.controller('AddPropertyCtrl', ['$state', '$scope', 'PropertiesSrvc', 'AdminD
             ME.isMultiVented = true;
         } else {
             ME.isMultiVented = false;
-        }
+            ME.multiVentModel = {
+                TURBNS: ME.L.numbersToTen[0],
+                STATIC: ME.L.numbersToTen[0],
+                PWRVNT: ME.L.numbersToTen[0],
+                AIRHWK: ME.L.numbersToTen[0],
+                SLRVNT: ME.L.numbersToTen[0]
+            };
+        };
     };
 
     ME.selectPitch = function() {
@@ -167,7 +174,13 @@ app.controller('AddPropertyCtrl', ['$state', '$scope', 'PropertiesSrvc', 'AdminD
             ME.isMultiLevel = true;
         } else {
             ME.isMultiLevel = false;
-        }
+            ME.multiLevelModel = {
+                levelOne: { percent: ME.L.percentOptions[0] },
+                levelTwo: { percent: ME.L.percentOptions[0] },
+                levelThree: { percent: ME.L.percentOptions[0] },
+                levelFour: { percent: ME.L.percentOptions[0] }
+            };
+        };
     };
 
     var returnObjById = function(set, id) {
@@ -195,6 +208,7 @@ app.controller('AddPropertyCtrl', ['$state', '$scope', 'PropertiesSrvc', 'AdminD
                     ME.formVisibility = { stepOne: false, stepTwo: true };
                     ME.SubmitBtnLabel = "Add Roof";
                     insertRoof();
+                    P.refreshSalesData();
                     ngDialog.open({
                         template: '<h2>Property with single pitched roof has been added. Continue with Roof Assembly.</h2>' +
                             '<div class="ngdialog-buttons"><button type="button" class="ngdialog-button ngdialog-button-primary" ng-click="closeThisDialog()">Close Me</button></div>',
@@ -374,6 +388,7 @@ app.controller('AddPropertyCtrl', ['$state', '$scope', 'PropertiesSrvc', 'AdminD
     };
 
     var createDP = function() {
+        //console.log("AddPropertyCtrl >>> createDP()");
         ME.PROPERTIES = DB.clone(ME.P.PROPERTIES);
         ME.CLIENTS = DB.clone(ME.P.CLIENTS);
         resetInputFields();
@@ -382,8 +397,9 @@ app.controller('AddPropertyCtrl', ['$state', '$scope', 'PropertiesSrvc', 'AdminD
     createDP();
     resetInputFields();
 
-    $scope.$watch('$viewContentLoaded', function() {
-        console.log("AdminSalesClientsCtrl >>> $viewContentLoaded");
+    $scope.$on('onSalesDataRefreshed', function() {
+        ME.P.refreshDataProviders();
+        createDP();
     });
 
 }]);

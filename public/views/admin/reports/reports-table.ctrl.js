@@ -100,9 +100,7 @@ app.controller('ReportTablesCtrl', ['$state', '$scope', 'AdminDataSrvc', functio
 
 
     ME.refreshData = function() {
-        switch (ME.tableSelected) {
-
-        }
+        getData();
     };
 
     var getData = function() {

@@ -10,6 +10,7 @@ app.service('PropertiesSrvc', ['AdminSharedSrvc', 'AdminDataSrvc', function prop
     self.MULTILEVELS = S.MULTILEVELS;
 
     var createDP = function() {
+        console.log("PropertiesSrvc >>> createDP()");
         self.PROPERTIES = DB.clone(S.PROPERTIES);
         self.PROPERTIES.unshift({ displayName: "-- Select --", PRIMARY_ID: -1 });
 
@@ -27,7 +28,7 @@ app.service('PropertiesSrvc', ['AdminSharedSrvc', 'AdminDataSrvc', function prop
     self.logMultis = function() {
     	self.MULTIVENTS = S.MULTIVENTS;
         self.MULTILEVELS = S.MULTILEVELS;
-    }
+    };
 
     var returnDisplayNameFromClient = function(id) {
         for (var i = 0; i < self.CLIENTS.length; i++) {
@@ -38,9 +39,11 @@ app.service('PropertiesSrvc', ['AdminSharedSrvc', 'AdminDataSrvc', function prop
         return "";
     };
 
-    self.selfDestruct = function() {
-        self.PROPERTIES = null;
-        self.CLIENTS = null;
+    self.refreshSalesData = function(){
+        S.refreshSalesData();
+    };
+    self.refreshDataProviders = function(){
+        createDP();
     };
 
     self.returnObjByPropID = function(set, id) {

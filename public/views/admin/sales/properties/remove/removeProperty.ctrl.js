@@ -1,13 +1,11 @@
 'use strict';
 
-app.controller('RemovePropertyCtrl', ['$state', '$scope', 'PropertiesSrvc', 'AdminDataSrvc', 'ListSrvc', 'ngDialog', function($state, $scope, PropertiesSrvc, AdminDataSrvc, ListSrvc, ngDialog) {
+app.controller('RemovePropertyCtrl', ['$state', '$scope', 'PropertiesSrvc', 'AdminDataSrvc', 'ngDialog', function($state, $scope, PropertiesSrvc, AdminDataSrvc, ngDialog) {
     var ME = this;
     var myName = "RemovePropertyCtrl";
     ME.P = PropertiesSrvc;
     var DB = AdminDataSrvc;
-    ME.L = ListSrvc;
     ME.PROPERTIES = [];
-    ME.Roof = {};
     ME.EditMode = "Remove Property";
     ME.modePrompt = "Remove Property: Choose a property to delete."
     ME.SubmitBtnLabel = "Remove Property";
@@ -17,6 +15,7 @@ app.controller('RemovePropertyCtrl', ['$state', '$scope', 'PropertiesSrvc', 'Adm
     // Model Vars
     ME.propertySelector = null;
     ME.inputDataObj = {};
+    var propertyVars = {propertyID:0,roofID:0,street:""};
 
 
     ME.backToHome = function() {
@@ -25,9 +24,12 @@ app.controller('RemovePropertyCtrl', ['$state', '$scope', 'PropertiesSrvc', 'Adm
 
     ME.selectProperty = function() {
         ME.configPropObj(ME.propertySelector.PRIMARY_ID);
+        propertyVars.propertyID = ME.propertySelector.PRIMARY_ID;
+        propertyVars.street = ME.propertySelector.street;
+        ME.submitInValid = false;
     };
 
-   
+
     ME.configPropObj = function(ID) {
         ME.inputDataObj = {};
         for (var i = 0; i < ME.PROPERTIES.length; i++) {
@@ -36,9 +38,7 @@ app.controller('RemovePropertyCtrl', ['$state', '$scope', 'PropertiesSrvc', 'Adm
                 break;
             };
         };
-
         ME.inputDataObj.client = ME.P.returnObjFromSetByPrimaryID(ME.CLIENTS, ME.inputDataObj.client);
-        ME.inputDataObj.roofCode = ME.L.returnObjById(ME.L.roofCode, ME.inputDataObj.roofCode);
     };
 
     ME.submit = function() {
@@ -50,6 +50,8 @@ app.controller('RemovePropertyCtrl', ['$state', '$scope', 'PropertiesSrvc', 'Adm
                 console.log(resultObj.data);
             } else {
                 var x = resultObj.data;
+                P.refreshSalesData();
+                resetInputFields();
                 ngDialog.open({
                     template: '<h2>Property has been deleted.</h2>',
                     className: 'ngdialog-theme-default',
@@ -62,12 +64,13 @@ app.controller('RemovePropertyCtrl', ['$state', '$scope', 'PropertiesSrvc', 'Adm
         });
     };
 
+
+    // Becase we are only using propertyID and not roofID this wili delete multi-roofs entries
     var removeAssociatedPropertyData = function(dataObj) {
         DB.query("deleteMultiLevel", dataObj);
         DB.query("deleteMultiVents", dataObj);
         DB.query("deleteRoof", dataObj);
     };
-
 
     var resetInputFields = function() {
         ME.submitInValid = true;
@@ -76,15 +79,22 @@ app.controller('RemovePropertyCtrl', ['$state', '$scope', 'PropertiesSrvc', 'Adm
     };
 
     var createDP = function() {
+        console.log("RemovePropertyCtrl >>> createDP()");
         ME.PROPERTIES = DB.clone(ME.P.PROPERTIES);
         ME.CLIENTS = DB.clone(ME.P.CLIENTS);
         resetInputFields();
     };
 
-    createDP();
-
+    
     $scope.$watch('$viewContentLoaded', function() {
-        console.log("AdminSalesClientsCtrl >>> $viewContentLoaded");
+        console.log("RemovePropertyCtrl >>> $viewContentLoaded");
     });
+
+    $scope.$on('onSalesDataRefreshed', function() {
+        ME.P.refreshDataProviders();
+        createDP();
+    });
+
+    createDP();
 
 }]);

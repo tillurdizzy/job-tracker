@@ -25,42 +25,44 @@ app.controller('AdminPropLabor', ['$state', '$scope', 'AdminSharedSrvc', 'AdminP
 
         LaborCosts.shingles = 55;
         propertyInputParams = ME.S.proposalUnderReview.propertyInputParams;
-        linerFt = parseInt(propertyInputParams.TOPRDG) + parseInt(propertyInputParams.RKERDG) + parseInt(propertyInputParams.PRMITR);
-        linearToSqs = (linerFt/35)/3.3;
-        totalSquares = parseInt(propertyInputParams.FIELD) + linearToSqs;
-        totalSquares = Math.ceil(totalSquares);
-        var laborShingles = parseInt(totalSquares * LaborCosts.shingles);
-        
-        var tableRow = {};
-        tableRow.labor = "Shingles";
-        tableRow.qty = totalSquares + " Sqs";
-        tableRow.cost = LaborCosts.shingles;
-        tableRow.total = laborShingles;
-        ME.laborCostItems.push(tableRow); 
+        if(propertyInputParams != undefined){
+            linerFt = parseInt(propertyInputParams.TOPRDG) + parseInt(propertyInputParams.RKERDG) + parseInt(propertyInputParams.PRMITR);
+            linearToSqs = (linerFt/35)/3.3;
+            totalSquares = parseInt(propertyInputParams.FIELD) + linearToSqs;
+            totalSquares = Math.ceil(totalSquares);
+            var laborShingles = parseInt(totalSquares * LaborCosts.shingles);
+            
+            var tableRow = {};
+            tableRow.labor = "Shingles";
+            tableRow.qty = totalSquares + " Sqs";
+            tableRow.cost = LaborCosts.shingles;
+            tableRow.total = laborShingles;
+            ME.laborCostItems.push(tableRow); 
 
-        tableRow = {};
-        tableRow.labor = "1x2 Trim";
-        tableRow.qty = "Ft.";
-        tableRow.cost = 0;
-        tableRow.total = 0;
-        ME.laborCostItems.push(tableRow); 
+            tableRow = {};
+            tableRow.labor = "1x2 Trim";
+            tableRow.qty = "Ft.";
+            tableRow.cost = 0;
+            tableRow.total = 0;
+            ME.laborCostItems.push(tableRow); 
 
-        tableRow = {};
-        tableRow.labor = "Re-Decking";
-        tableRow.qty = "Sqs.";
-        tableRow.cost = 0;
-        tableRow.total = 0;
-        ME.laborCostItems.push(tableRow); 
+            tableRow = {};
+            tableRow.labor = "Re-Decking";
+            tableRow.qty = "Sqs.";
+            tableRow.cost = 0;
+            tableRow.total = 0;
+            ME.laborCostItems.push(tableRow); 
 
-        tableRow = {};
-        tableRow.labor = "Delivery";
-        tableRow.qty = "Each";
-        tableRow.cost = 0;
-        tableRow.total = 0;
-        ME.laborCostItems.push(tableRow); 
+            tableRow = {};
+            tableRow.labor = "Delivery";
+            tableRow.qty = "Each";
+            tableRow.cost = 0;
+            tableRow.total = 0;
+            ME.laborCostItems.push(tableRow); 
 
-        ME.LaborTotal = laborShingles;
-        ME.P.setSummaryItem("labor",ME.LaborTotal);
+            ME.LaborTotal = laborShingles;
+            ME.P.setSummaryItem("labor",ME.LaborTotal);     
+        }
     };
 
     var configExists = function(){

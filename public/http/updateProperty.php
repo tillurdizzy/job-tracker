@@ -28,7 +28,7 @@ street='".$street."',
 city='".$city."',
 state='".$state."',
 zip='".$zip."',
-roofCode='".$roofCode."',
+roofCode='".$roofCode."'
 WHERE PRIMARY_ID='".$PRIMARY_ID."'";
 $qry_res = mysqli_query($con,$query);
 if ($qry_res) {

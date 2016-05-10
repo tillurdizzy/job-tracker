@@ -22,6 +22,7 @@ app.controller('UpdatePropertyCtrl', ['$state', '$scope', 'PropertiesSrvc', 'Adm
     // Model Vars
     ME.propertySelector = null;
     ME.inputDataObj = {};
+    var propertyVars = { propertyID: 0, roofID: 0, street: "" };
 
     ME.multiVentModel = {};
     ME.multiLevelModel = {};
@@ -35,15 +36,22 @@ app.controller('UpdatePropertyCtrl', ['$state', '$scope', 'PropertiesSrvc', 'Adm
 
     ME.selectProperty = function() {
         ME.configPropObj(ME.propertySelector.PRIMARY_ID);
+        propertyVars.propertyID = ME.propertySelector.PRIMARY_ID;
+        propertyVars.street = ME.propertySelector.street;
     };
 
     ME.submit = function() {
-        ME.createPropertyDataObj()
+        createPropertyDataObj();
     };
 
     ME.formChange = function() {
         ME.submitInValid = true;
         var min = ME.validateMinimumRequirements();
+    };
+
+    ME.validateMinimumRequirements = function() {
+        // no validation at this time
+        ME.submitInValid = false;
     };
 
     ME.selectRoof = function() {
@@ -55,6 +63,13 @@ app.controller('UpdatePropertyCtrl', ['$state', '$scope', 'PropertiesSrvc', 'Adm
             ME.isMultiVented = true;
         } else {
             ME.isMultiVented = false;
+            ME.multiVentModel = {
+                TURBNS: ME.L.numbersToTen[0],
+                STATIC: ME.L.numbersToTen[0],
+                PWRVNT: ME.L.numbersToTen[0],
+                AIRHWK: ME.L.numbersToTen[0],
+                SLRVNT: ME.L.numbersToTen[0]
+            };
         }
     };
 
@@ -63,6 +78,12 @@ app.controller('UpdatePropertyCtrl', ['$state', '$scope', 'PropertiesSrvc', 'Adm
             ME.isMultiLevel = true;
         } else {
             ME.isMultiLevel = false;
+            ME.multiLevelModel = {
+                levelOne: { percent: ME.L.percentOptions[0] },
+                levelTwo: { percent: ME.L.percentOptions[0] },
+                levelThree: { percent: ME.L.percentOptions[0] },
+                levelFour: { percent: ME.L.percentOptions[0] }
+            };
         }
     };
 
@@ -156,6 +177,7 @@ app.controller('UpdatePropertyCtrl', ['$state', '$scope', 'PropertiesSrvc', 'Adm
             } else {
                 ME.Roof = resultObj.data[0];
                 ME.formVisibility = { stepOne: true, stepTwo: true };
+                propertyVars.roofID = ME.Roof.PRIMARY_ID;
                 configRoofObj();
             }
         }, function(error) {
@@ -177,14 +199,12 @@ app.controller('UpdatePropertyCtrl', ['$state', '$scope', 'PropertiesSrvc', 'Adm
     };
 
 
-
     // Step One Update
     var createPropertyDataObj = function() {
         var outputDataObj = {};
+        outputDataObj.PRIMARY_ID = propertyVars.propertyID;
         outputDataObj.manager = ME.inputDataObj.client.manager;
         outputDataObj.client = ME.inputDataObj.client.PRIMARY_ID;
-        var d = new Date();
-        outputDataObj.createdDate = d.valueOf();
         outputDataObj.name = ME.inputDataObj.name;
         outputDataObj.street = ME.inputDataObj.street;
         outputDataObj.city = ME.inputDataObj.city;
@@ -193,6 +213,7 @@ app.controller('UpdatePropertyCtrl', ['$state', '$scope', 'PropertiesSrvc', 'Adm
         outputDataObj.roofCode = ME.inputDataObj.roofCode.id;
 
         updateProperty(outputDataObj);
+
         createRoofDataObj();
     };
 
@@ -237,11 +258,11 @@ app.controller('UpdatePropertyCtrl', ['$state', '$scope', 'PropertiesSrvc', 'Adm
             updateMultiVents();
         };
 
-        outputRoofDataObj.propertyID = newPropertyVars.propertyID;
+        outputRoofDataObj.propertyID = propertyVars.propertyID;
 
         var d = new Date();
         outputRoofDataObj.createdDate = d.valueOf();
-        outputRoofDataObj.name = newPropertyVars.street;
+        outputRoofDataObj.name = propertyVars.street;
         outputRoofDataObj.numLevels = ME.inputDataObj.numLevels.id;
         outputRoofDataObj.shingleGrade = ME.inputDataObj.shingleGrade.id;
         outputRoofDataObj.roofDeck = ME.inputDataObj.roofDeck.id;
@@ -255,8 +276,6 @@ app.controller('UpdatePropertyCtrl', ['$state', '$scope', 'PropertiesSrvc', 'Adm
 
         updateRoof(outputRoofDataObj);
     };
-
-
 
     var updateProperty = function(dataObj) {
         DB.query("updateProperty", dataObj).then(function(resultObj) {
@@ -283,13 +302,7 @@ app.controller('UpdatePropertyCtrl', ['$state', '$scope', 'PropertiesSrvc', 'Adm
                 alert("FALSE returned for DB.updateRoof() at " + myName + " >>> updateRoof()");
                 console.log(resultObj.data);
             } else {
-                ME.addItem();
-                ngDialog.open({
-                    template: '<h2>Roof Description accepted.  The next step would be to create a job for this property.</h2>',
-                    className: 'ngdialog-theme-calm',
-                    plain: true,
-                    overlay: false
-                });
+
             }
         }, function(error) {
             alert("ERROR returned for DB.updateRoof() at " + myName + " >>> updateRoof()");
@@ -297,8 +310,8 @@ app.controller('UpdatePropertyCtrl', ['$state', '$scope', 'PropertiesSrvc', 'Adm
     };
 
     var updateMultiLevels = function() {
-        ME.multiLevelObj.propertyID = newPropertyVars.propertyID;
-        ME.multiLevelObj.roofID = newPropertyVars.roofID;
+        ME.multiLevelObj.propertyID = propertyVars.propertyID;
+        ME.multiLevelObj.roofID = propertyVars.roofID;
         DB.query("updateMultiLevels", ME.multiLevelObj).then(function(resultObj) {
             if (resultObj.result == "Error" || typeof resultObj.data === "string") {
                 alert("FALSE returned for DB.updateMultiLevels() at " + myName + " >>> updateMultiLevels()");
@@ -312,8 +325,8 @@ app.controller('UpdatePropertyCtrl', ['$state', '$scope', 'PropertiesSrvc', 'Adm
     };
 
     var updateMultiVents = function() {
-        ME.multiVentObj.propertyID = newPropertyVars.propertyID;
-        ME.multiVentObj.roofID = newPropertyVars.roofID;
+        ME.multiVentObj.propertyID = propertyVars.propertyID;
+        ME.multiVentObj.roofID = propertyVars.roofID;
         DB.query("updateMultiVents", ME.multiVentObj).then(function(resultObj) {
             if (resultObj.result == "Error" || typeof resultObj.data === "string") {
                 alert("FALSE returned for DB.updateMultiVents() at " + myName + " >>> updateMultiVents()");
@@ -327,20 +340,19 @@ app.controller('UpdatePropertyCtrl', ['$state', '$scope', 'PropertiesSrvc', 'Adm
     };
 
 
-    ME.validateMinimumRequirements = function() {
-        // no validation at this time
-        ME.submitInValid = true;
-    };
-
-
-
     var resetInputFields = function() {
         ME.submitInValid = true;
-        ME.inputDataObj = {};
-        ME.propertySelector = ME.PROPERTIES[0];
 
+        ME.inputDataObj = {};
         ME.multiLevelObj = {};
         ME.multiVentObj = {};
+
+        ME.isMultiVented = false;
+        ME.isMultiUnit = false;
+
+        ME.formVisibility = { stepOne: true, stepTwo: false };
+
+        ME.propertySelector = ME.PROPERTIES[0];
 
         ME.multiLevelModel = {
             levelOne: { percent: ME.L.percentOptions[0] },
@@ -360,15 +372,12 @@ app.controller('UpdatePropertyCtrl', ['$state', '$scope', 'PropertiesSrvc', 'Adm
     };
 
     var createDP = function() {
+        //console.log("UpdatePropertyCtrl >>> createDP()");
         ME.PROPERTIES = DB.clone(ME.P.PROPERTIES);
         ME.CLIENTS = DB.clone(ME.P.CLIENTS);
         resetInputFields();
     };
 
     createDP();
-
-    $scope.$watch('$viewContentLoaded', function() {
-        console.log("AdminSalesClientsCtrl >>> $viewContentLoaded");
-    });
 
 }]);
