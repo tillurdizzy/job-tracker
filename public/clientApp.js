@@ -1,5 +1,4 @@
 'use strict';
-require('angular')
 var app = angular.module('ClientApp', ['ui.router', 'ngSanitize', 'ngUnderscore', 'ngDialog']);
 
 app.config(function($stateProvider, $urlRouterProvider) {

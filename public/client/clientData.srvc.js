@@ -7,22 +7,21 @@ app.service('ClientDataSrvc', ['$http', '$q', function($http, $q) {
     self.UserID = "";
     self.UserName = "";
 
-    var localPathPrefix = "client/http/";
-    var globalPathPrefix = "js/php/";
     var httpPathPrefix = "http/";
 
     var queryPaths = {
-        getJobsByClient: localPathPrefix + "getJobsByClient.php",
-        getPropertiesByClient: localPathPrefix + "getPropertiesByClient.php",
-        getJobParameters: "views/proposals/http/getJobParameters.php",
-        getKeyValuePairs: globalPathPrefix + "getIdVals.php",
-        getMultiVents: globalPathPrefix + "getMultiVents.php",
-        getMultiLevel: globalPathPrefix + "getMultiLevel.php",
-        getMaterialsList: "views/admin/http/getMaterialsShingle.php",
-        getJobConfig: "views/admin/http/getJobConfig.php",
-        getPhotoGallery: "views/proposals/http/getPhotos.php",
-        updateConfig: httpPathPrefix + "update/updateConfig.php",
-        getDefaultConfigMaterials: httpPathPrefix + "get/getDefaultConfigMaterials.php"
+        getJobsByClient: httpPathPrefix + "getJobsByClient.php",
+        getPropertiesByClient: httpPathPrefix + "getPropertiesByClient.php",
+        getClientByLogIn: httpPathPrefix + "getClientByLogIn.php",
+        getJobParameters: httpPathPrefix + "getJobParameters.php",
+        getKeyValuePairs: httpPathPrefix + "getIdVals.php",
+        getMultiVents: httpPathPrefix + "getMultiVents.php",
+        getMultiLevel: httpPathPrefix + "getMultiLevel.php",
+        getMaterialsList: httpPathPrefix + "getMaterialsShingle.php",
+        getJobConfig: httpPathPrefix + "getJobConfig.php",
+        getPhotoGallery: httpPathPrefix + "getPhotos.php",
+        updateConfig: httpPathPrefix + "updateConfig.php",
+        getDefaultConfigMaterials: httpPathPrefix + "getDefaultConfigMaterials.php"
     };
 
 
@@ -34,6 +33,10 @@ app.service('ClientDataSrvc', ['$http', '$q', function($http, $q) {
             .success(function(data, status) {
                 rtnObj.result = "Success";
                 rtnObj.data = data;
+                if(data.msg == "Error"){
+                    alert("QUERY Error - see console.");
+                    console.log(data.query);
+                }
                 deferred.resolve(rtnObj);
             })
             .error(function(data, status, headers, config) {
@@ -51,18 +54,7 @@ app.service('ClientDataSrvc', ['$http', '$q', function($http, $q) {
     };
 
 
-    self.clientLogIn = function(dataObj) {
-        var deferred = $q.defer();
-        $http({ method: 'POST', url: 'client/http/getClientByLogIn.php', data: dataObj })
-            .success(function(data, status) {
-                deferred.resolve(data);
-            })
-            .error(function(data, status, headers, config) {
-                deferred.reject(false);
-            });
-
-        return deferred.promise;
-    };
+   
 
     console.log("ClientData Complete");
     return self;

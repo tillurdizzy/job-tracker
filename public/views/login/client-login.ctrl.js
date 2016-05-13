@@ -9,6 +9,7 @@ app.controller('ClientLoginCtrl', ['$scope', '$state', 'ClientSharedSrvc', 'Clie
         $scope.displayName = "";
         $scope.clientObj = {};
         $scope.continueFlag = false;
+        $scope.isError = false;
 
         $scope.continueBtn = function() {
             $state.transitionTo("review");
@@ -23,8 +24,7 @@ app.controller('ClientLoginCtrl', ['$scope', '$state', 'ClientSharedSrvc', 'Clie
 
         $scope.submitLoginForm = function() {
 
-            $scope.submissionInvalid = false;
-
+            $scope.isError = false;
             var dataObj = new Object();
             dataObj.username = this._username;
             dataObj.PIN = this._pin;
@@ -32,16 +32,20 @@ app.controller('ClientLoginCtrl', ['$scope', '$state', 'ClientSharedSrvc', 'Clie
             dataObj.username = "rode";
             dataObj.PIN = "1234";
 
-            DB.clientLogIn(dataObj).then(function(result) {
-                if (result === false || typeof result === 'string') {
-                    onLogInFail();
-                    console.log("submitLoginForm ---- " + result);
+            DB.queryDB("getClientByLogIn",dataObj).then(function(resultObj) {
+                if (resultObj.result == "Error" || typeof resultObj.data === "string") {
+                    alert("Query Error - see console for details");
+                    console.log("getClientByLogIn ---- " + resultObj.data);
                 } else {
-                    $scope.clientObj = result[0];
-                    onLogInSuccess();
+                    if (resultObj.data.length == 0) {
+                        onLogInFail();
+                    } else {
+                        $scope.clientObj = resultObj.data[0];
+                        onLogInSuccess();
+                    }
                 }
             }, function(error) {
-                alert("clientLogIn Error");
+                alert("Query Error - ClientLoginCtrl >> getClientByLogIn");
             });
         };
 
@@ -58,7 +62,7 @@ app.controller('ClientLoginCtrl', ['$scope', '$state', 'ClientSharedSrvc', 'Clie
         };
 
         var onLogInFail = function() {
-            $state.transitionTo("login.invalid");
+            $scope.isError = true;
         };
 
         $scope.$on('on-data-collection-complete', function(event, data) {
