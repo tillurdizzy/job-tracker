@@ -1,6 +1,6 @@
 'use strict';
 
-app.service('SharedSrvc', ['$rootScope','ListSrvc', function sharedSrvc($rootScope,ListSrvc) {
+app.service('SharedSrvc', ['$rootScope', 'ListSrvc', function sharedSrvc($rootScope, ListSrvc) {
     var self = this;
 
     self.myID = "SharedVars: ";
@@ -26,7 +26,7 @@ app.service('SharedSrvc', ['$rootScope','ListSrvc', function sharedSrvc($rootSco
     self.selectedJobObj = {};
     self.selectedClientObj = {};
     self.selectedPropertyObj = {};
-    self.selectedRoofObj = {};// not using this yet
+    self.selectedRoofObj = {}; // not using this yet
     self.selectedPropertyRoofDescriptions = [];
 
     // AWS Bucket Vars
@@ -46,8 +46,6 @@ app.service('SharedSrvc', ['$rootScope','ListSrvc', function sharedSrvc($rootSco
         self.managerName = obj.name_first + " " + obj.name_last;
     };
 
-
-
     self.logOut = function() {
         self.logInObj = {};
         self.managerID = "";
@@ -61,13 +59,13 @@ app.service('SharedSrvc', ['$rootScope','ListSrvc', function sharedSrvc($rootSco
     self.jobExists = function(id, isMulti) {
         var rtn = false;
 
-        if(isMulti){
+        if (isMulti) {
             for (var i = 0; i < self.managerJobs.length; i++) {
                 if (self.managerJobs[i].roofID == id) {
                     rtn = true;
                 }
             }
-        }else{
+        } else {
             for (var i = 0; i < self.managerJobs.length; i++) {
                 if (self.managerJobs[i].property == id) {
                     rtn = true;
@@ -121,7 +119,7 @@ app.service('SharedSrvc', ['$rootScope','ListSrvc', function sharedSrvc($rootSco
         };
     };
 
-    self.setPropertyByObj = function(obj){
+    self.setPropertyByObj = function(obj) {
         self.selectedPropertyObj.PRIMARY_ID = obj.PRIMARY_ID;
         self.selectedPropertyObj.manager = obj.manager;
         self.selectedPropertyObj.client = obj.client;
@@ -179,7 +177,6 @@ app.service('SharedSrvc', ['$rootScope','ListSrvc', function sharedSrvc($rootSco
         $rootScope.$broadcast("data-refreshed");
     };
 
-
     self.setAllClients = function(c) {
         self.fullClientList = c;
     };
@@ -209,7 +206,13 @@ app.service('SharedSrvc', ['$rootScope','ListSrvc', function sharedSrvc($rootSco
     var returnProperty = function(id) {
         for (var i = 0; i < self.managerProperties.length; i++) {
             if (self.managerProperties[i].PRIMARY_ID === id) {
-                return self.managerProperties[i].name;
+                var roofCode = self.managerProperties[i].roofCode;
+                // This is being taken care of elsewhere... both IFs return same thing here...
+                if(roofCode == 0){
+                    return self.managerProperties[i].name;
+                }else{
+                    return self.managerProperties[i].name;
+                }
             }
         };
     };
@@ -224,6 +227,8 @@ app.service('SharedSrvc', ['$rootScope','ListSrvc', function sharedSrvc($rootSco
             var propID = self.managerJobs[i].property;
             var thisProperty = returnProperty(propID);
             self.managerJobs[i].propertyName = thisProperty;
+
+
         };
 
         for (var i = 0; i < self.managerProperties.length; i++) {
@@ -231,11 +236,11 @@ app.service('SharedSrvc', ['$rootScope','ListSrvc', function sharedSrvc($rootSco
             self.managerProperties[i].clientName = returnDisplayNameFromClient(clientID);
         }
         self.dataRefreshed = true;
-        
+
     };
 
     self.decodeRoofVals = function(dataObj) {
-    	var returnVO = {};
+        var returnVO = {};
 
         returnVO.name = dataObj.name;
 
@@ -273,26 +278,26 @@ app.service('SharedSrvc', ['$rootScope','ListSrvc', function sharedSrvc($rootSco
     };
 
     // Add the roof/building name from roof table to the jobs list
-    var conjugateRoofs = function(){
-        for (var i = 0; i <  self.managerProperties.length; i++) {
-            if(self.managerProperties[i].multiUnit > 0){
+    var conjugateRoofs = function() {
+        for (var i = 0; i < self.managerProperties.length; i++) {
+            if (self.managerProperties[i].roofCode > 0) {
                 var propID = parseInt(self.managerProperties[i].PRIMARY_ID);
                 for (var x = 0; x < self.roofTable.length; x++) {
                     var prop = parseInt(self.roofTable[x].propertyID);
-                    if(prop===propID){
+                    if (prop === propID) {
                         var bldgName = self.roofTable[x].name;
                         var roofID = parseInt(self.roofTable[x].PRIMARY_ID);
-                        insertBldgName(roofID,bldgName);
+                        insertBldgName(roofID, bldgName);
                     }
                 }
             }
         }
     };
 
-    var insertBldgName = function(id,n){
+    var insertBldgName = function(id, n) {
         for (var i = 0; i < self.managerJobs.length; i++) {
             var roofID = parseInt(self.managerJobs[i].roofID);
-            if(roofID===id){
+            if (roofID === id) {
                 self.managerJobs[i].bldgName = n;
             }
         }
@@ -305,29 +310,30 @@ app.service('SharedSrvc', ['$rootScope','ListSrvc', function sharedSrvc($rootSco
     };
 
     self.propertyParams = [
-        {label:"FIELD",id:10},
-        {label:"TOPRDG",id:20},
-        {label:"RKERDG",id:21},
-        {label:"RKEWALL",id:22},
-        {label:"RIDGETOTAL",id:23},
-        {label:"EAVE",id:24},
-        {label:"PRMITR",id:25},
-        {label:"VALLEY",id:30},
-        {label:"DECKNG",id:40},
-        {label:"LOWSLP",id:50},
-        {label:"LPIPE1",id:60},
-        {label:"LPIPE2",id:61},
-        {label:"LPIPE3",id:62},
-        {label:"LPIPE4",id:63},
-        {label:"VENT8",id:64},
-        {label:"TURBNS",id:65},
-        {label:"PWRVNT",id:16},
-        {label:"AIRHWK",id:17},
-        {label:"SLRVNT",id:18},
-        {label:"PAINT",id:19},
-        {label:"CAULK",id:20},
-        {label:"CARPRT",id:21},
-        {label:"SATDSH",id:22}];
+        { label: "FIELD", id: 10 },
+        { label: "TOPRDG", id: 20 },
+        { label: "RKERDG", id: 21 },
+        { label: "RKEWALL", id: 22 },
+        { label: "RIDGETOTAL", id: 23 },
+        { label: "EAVE", id: 24 },
+        { label: "PRMITR", id: 25 },
+        { label: "VALLEY", id: 30 },
+        { label: "DECKNG", id: 40 },
+        { label: "LOWSLP", id: 50 },
+        { label: "LPIPE1", id: 60 },
+        { label: "LPIPE2", id: 61 },
+        { label: "LPIPE3", id: 62 },
+        { label: "LPIPE4", id: 63 },
+        { label: "VENT8", id: 64 },
+        { label: "TURBNS", id: 65 },
+        { label: "PWRVNT", id: 16 },
+        { label: "AIRHWK", id: 17 },
+        { label: "SLRVNT", id: 18 },
+        { label: "PAINT", id: 19 },
+        { label: "CAULK", id: 20 },
+        { label: "CARPRT", id: 21 },
+        { label: "SATDSH", id: 22 }
+    ];
 
 
     self.levelOptions = [

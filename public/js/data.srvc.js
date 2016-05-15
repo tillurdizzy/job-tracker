@@ -15,15 +15,20 @@ app.service('evoDb', ['$http', '$q', 'SharedSrvc', 'LogInSrvc', 'underscore', fu
 
     var queryPaths = {
         getRoof: httpPathPrefix + "getRoof.php",
+        getShingleFields:httpPathPrefix + "getShingleFields.php",
         getRoofTable: httpPathPrefix + "getRoofTable.php",
+        getJobParameters: httpPathPrefix + "getJobParameters.php",
+        getSpecialConsiderations: httpPathPrefix + "getSpecialConsiderations.php",
         putPropertyAddress: httpPathPrefix + "putPropertyAddress.php",
         putRoof: httpPathPrefix + "putRoof.php",
         insertRoof: httpPathPrefix + "insertRoof.php",
         insertJobParameters: httpPathPrefix + "insertJobParameters.php",
-        insertSpecialConsiderations: httpPathPrefix + "insertJobParameters.php",
+        insertSpecialConsiderations: httpPathPrefix + "insertSpecialConsiderations.php",
         insertJobConfig: httpPathPrefix + "insertJobConfig.php",
         putMultiLevels: httpPathPrefix + "putMultiLevels.php",
-        putMultiVents: httpPathPrefix + "putMultiVents.php"
+        putMultiVents: httpPathPrefix + "putMultiVents.php",
+        updateJobParameters:httpPathPrefix + "updateJobParameters.php",
+        updateSpecialConsiderations:httpPathPrefix + "updateSpecialConsiderations.php"
     };
 
     self.query = function(query, dataObj) {
@@ -92,22 +97,7 @@ app.service('evoDb', ['$http', '$q', 'SharedSrvc', 'LogInSrvc', 'underscore', fu
         return deferred.promise;
     };
 
-    self.runQueryWithObj = function(phpFile, dataObj) {
-        var deferred = $q.defer();
-        $http({ method: 'POST', url: phpFile, data: dataObj }).
-        success(function(data, status) {
-            if (typeof data != 'string') {
-                deferred.resolve(data);
-            } else {
-                deferred.resolve(false);
-            }
-        }).
-        error(function(data, status, headers, config) {
-            deferred.reject(false);
-        });
-        return deferred.promise;
-    };
-
+    
     self.putClient = function(dataObj) {
         dataObj.manager = self.managerID;
         var deferred = $q.defer();

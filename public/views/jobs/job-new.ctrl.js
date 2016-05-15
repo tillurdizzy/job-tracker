@@ -14,13 +14,13 @@ app.controller('NewJobCtrl', ['$scope', '$state', 'evoDb', 'SharedSrvc', 'ngDial
     // Form elements
     Me.S1 = Me.clientList[0];
     Me.S2 = ""; // Property
-    Me.S3 = ""; // Building
+    Me.S3 = ""; // Roof
     Me.status;
     Me.currentDate;
 
     Me.isMultiUnit = false;
 
-    Me.submitS1 = function() {
+    Me.selectClient = function() {
         Me.inputMsg = "";
         Me.isError = false;
         if (Me.S1 == "") { //company/client
@@ -53,15 +53,15 @@ app.controller('NewJobCtrl', ['$scope', '$state', 'evoDb', 'SharedSrvc', 'ngDial
         }
     }
 
-    Me.submitS2 = function() {
+    Me.submitProperty = function() {
         Me.inputMsg = "";
         Me.isError = false;
 
         Me.isMultiUnit = Me.returnMultiUnit();
+        getRoof();
 
         if (Me.isMultiUnit == true) {
             numFields = 3;
-            getRoof();
             Me.inputField = "S3";
         } else {
             var isDupe = Me.S.jobExists(Me.S2.PRIMARY_ID,false);
@@ -100,7 +100,7 @@ app.controller('NewJobCtrl', ['$scope', '$state', 'evoDb', 'SharedSrvc', 'ngDial
     Me.returnMultiUnit = function() {
         for (var i = 0; i < Me.propertyList.length; i++) {
             if (Me.S2.PRIMARY_ID == Me.propertyList[i].PRIMARY_ID) {
-                var num = parseInt(Me.propertyList[i].multiUnit);
+                var num = parseInt(Me.propertyList[i].roofCode);
                 if (num > 0) {
                     return true;
                 }
@@ -184,6 +184,8 @@ app.controller('NewJobCtrl', ['$scope', '$state', 'evoDb', 'SharedSrvc', 'ngDial
         Me.inputMsg = "";
         Me.inputField = "S1";
     };
+
+   
 
     Me.submitForm = function() {
         Me.isError = false;

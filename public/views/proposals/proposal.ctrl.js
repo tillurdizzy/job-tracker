@@ -6,7 +6,7 @@ app.controller('ProposalCtrl', ['$state', '$scope', 'evoDb', 'SharedSrvc', 'Shin
     ME.S = SharedSrvc;
     ME.SRVC = ShingleSrvc;
 
-    ME.controllerName = "ProposalCtrl";
+    var myName = "ProposalCtrl";
     ME.managerID = DB.managerID;
     ME.managerName = DB.managerName;
 
@@ -26,7 +26,7 @@ app.controller('ProposalCtrl', ['$state', '$scope', 'evoDb', 'SharedSrvc', 'Shin
     ME.specialText = "";
     ME.specialCost = "";
 
-    ME.params = {
+    ME.PARAMS = {
         jobID: "",
         FIELD: "",
         TOPRDG: "",
@@ -52,13 +52,6 @@ app.controller('ProposalCtrl', ['$state', '$scope', 'evoDb', 'SharedSrvc', 'Shin
         SATDSH: ""
     };
 
-
-    //pricing
-    //ME.materialsCost = "";
-    //ME.laborCost = "0.00";
-    //ME.totalCost = "0.00";
-
-
     ME.submitEdit = function(ndx) {
         var ndx = Number(ndxStr);
     };
@@ -70,7 +63,6 @@ app.controller('ProposalCtrl', ['$state', '$scope', 'evoDb', 'SharedSrvc', 'Shin
     ME.printSummary = function() {
         var dataObj = {};
         dataObj.materialsCost = ME.materialsCost;
-        //PDF.newPDF(dataObj);
     };
 
     ME.goClients = function() {
@@ -97,7 +89,7 @@ app.controller('ProposalCtrl', ['$state', '$scope', 'evoDb', 'SharedSrvc', 'Shin
                     template: '<h2>Job Status has been updated.</h2>',
                     className: 'ngdialog-theme-default',
                     plain: true,
-                    overlay: false
+                    overlay: true
                 });
             } else {
 
@@ -112,67 +104,78 @@ app.controller('ProposalCtrl', ['$state', '$scope', 'evoDb', 'SharedSrvc', 'Shin
         dataObj.jobID = ME.S.selectedJobObj.PRIMARY_ID;
         dataObj.body = ME.specialText;
         dataObj.cost = "0";
-        DB.runQueryWithObj('http/updateSpecialConsiderations.php', dataObj).then(function(result) {
-            if (result != false) {
+        DB.query("updateSpecialConsiderations",dataObj).then(function(resultObj) {
+            if (resultObj.result == "Error" || typeof resultObj.data === "string") {
+                alert("ERROR returned for updateSpecialConsiderations at " + myName);
+                console.log(resultObj.data);
+            } else {
                 ngDialog.open({
                     template: '<h2>Special Considerations have been saved.</h2>',
                     className: 'ngdialog-theme-default',
                     plain: true,
-                    overlay: false
+                    overlay: true
                 });
-            } else {
-
             }
         }, function(error) {
-
+            alert("FALSE returned for updateSpecialConsiderations at " + myName);
         });
     };
 
+    
     ME.submitParams = function() {
-        ME.params.jobID = ME.S.selectedJobObj.PRIMARY_ID;
-        var result = ME.SRVC.submitParams(ME.params).then(function(result) {
-            if (result != false) {
+        DB.query("updateJobParameters",ME.PARAMS).then(function(resultObj) {
+            if (resultObj.result == "Error" || typeof resultObj.data === "string") {
+                alert("ERROR returned for updateJobParameters at " + myName);
+                console.log(resultObj.data);
+            } else {
                 ngDialog.open({
                     template: '<h2>Roof Parameters have been saved.</h2>',
                     className: 'ngdialog-theme-default',
                     plain: true,
-                    overlay: false
+                    overlay: true
                 });
-            } else {
-
             }
         }, function(error) {
-
+            alert("FALSE returned for updateJobParameters at " + myName);
         });
     };
 
-    var getJobParameters = function() {
-        var jobData = ME.SRVC.getJobParameters().then(function(jobData) {
-            if (jobData != false) {
-                setParams(jobData[0]);
-            } else {
 
+    var getJobParameters = function() {
+        var dataObj = {};
+        dataObj.ID = ME.S.selectedJobObj.PRIMARY_ID;
+        DB.query("getJobParameters",dataObj).then(function(resultObj) {
+            if (resultObj.result == "Error" || typeof resultObj.data === "string") {
+                alert("ERROR returned for getJobParameters at " + myName);
+                console.log(resultObj.data);
+            } else {
+                setParams(resultObj.data[0]);
             }
         }, function(error) {
-
+            alert("FALSE returned for getJobParameters at " + myName);
         });
     };
 
     var setParams = function(dataObj) {
-        ME.params = dataObj;
+        ME.PARAMS = dataObj;
+        console.log(ME.PARAMS);
     };
 
     var getSpecial = function() {
         var dataObj = {};
         dataObj.jobID = ME.S.selectedJobObj.PRIMARY_ID;
-        DB.runQueryWithObj('http/getSpecialConsiderations.php', dataObj).then(function(result) {
-            if (result != false) {
-                ME.specialText = result[0].body;
+        DB.query('getSpecialConsiderations', dataObj).then(function(resultObj) {
+            if (resultObj.result == "Error" || typeof resultObj.data === "string") {
+                alert("ERROR returned for getSpecialConsiderations at " + myName);
             } else {
-
+                if(resultObj.data.length > 0){
+                    ME.specialText = resultObj.data[0].body;
+                }else{
+                    ME.specialText = "";
+                }
             }
         }, function(error) {
-
+            alert("FALSE returned for getSpecialConsiderations at " + myName);
         });
     };
 
@@ -188,7 +191,6 @@ app.controller('ProposalCtrl', ['$state', '$scope', 'evoDb', 'SharedSrvc', 'Shin
     });
 
     var initPage = function() {
-        //CALCME.S.resetService();
         getJobParameters();
         getSpecial();
         console.log("INIT Proposal Ctrl");

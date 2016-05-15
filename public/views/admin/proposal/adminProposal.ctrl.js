@@ -7,21 +7,32 @@ app.controller('AdminProposalCtrl',['$state','AdminDataSrvc','$scope','AdminShar
 
 	ME.selectedProposal = {};
 	ME.selectDataProvider = [];
+	ME.roofSelectionsDP = [];// Second selection dropdown if multi-unit property
 	ME.specialText = "";
 	ME.proposalData = {salesRep:"-",clientID:"-",propertyID:"-",jobID:"-"};
 	
 	ME.selectProposal = function(){
 		ME.proposalData = S.selectProposal(ME.selectedProposal.id);
+		
+		if(ME.proposalData.roofCode == 2){
+			var propID = ME.selectedProposal.id;
+			ME.roofSelectionsDP = S.getRoofsForProperty(propID);
+			alert("Continue from here!");
+		};
 	};
 
 
 	ME.backToHome = function(){
 		$state.transitionTo('admin');
-	}
+	};
 
 	var init = function(){
 		if(S.proposalsAsProperty.length === 0){
+			//getJobsWithProposalStatus...Queries the job_list table for open proposals
 			S.getProposalsByJob();
+
+			//getProposalsByProperty...Queries the properties table based on proposal status
+			// braodcasts "getProposalsByProperty" on completion watched for below triggering parseProposals()
 			S.getProposalsByProperty();	
 		}else{
 			S.resetProposalData();

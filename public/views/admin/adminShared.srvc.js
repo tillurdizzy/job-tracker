@@ -64,13 +64,16 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
             };
             rtnObj.propertyID = self.proposalUnderReview.PRIMARY_ID;
             rtnObj.jobID = self.proposalUnderReview.jobID;
-            rtnObj.clientID = self.proposalUnderReview.client
+            rtnObj.clientID = self.proposalUnderReview.client;
+            rtnObj.roofCode = self.proposalUnderReview.roofCode;
             rtnObj.salesRep = self.returnSalesRep(self.proposalUnderReview.manager);
             // Set flags to false
             mergeDataFlag.config = false;
             mergeDataFlag.materials = false;
             // Call queries
-            getJobParameters();
+            if(rtnObj.roofCode == 0){
+                getJobParameters();
+            }
         }
         return rtnObj;
     };
@@ -249,10 +252,9 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
         DB.query('getJobProposals').then(function(resultObj) {
             if (resultObj.result == "Error" || typeof resultObj.data === "string") {
                 alert("Query Error - see console for details");
-                console.log("getProposalsByJob ---- " + resultObj.data);
+                console.log("getProposalsByProperty ---- " + resultObj.data);
             } else {
                 self.proposalsAsProperty = resultObj.data;
-                //self.proposalUnderReview = self.proposalsAsProperty[0];
                 $rootScope.$broadcast('getProposalsByProperty');
             }
         }, function(error) {
@@ -651,6 +653,21 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
             }
         }, function(error) {
             alert("Query Error - AdminSharedSrvc >> updateConfig");
+        });
+    };
+
+    self.getRoofsForProperty = function(propID) {
+        var dataObj = {};
+        dataObj.propID = propID;
+        DB.query("getRoof", dataObj).then(function(resultObj) {
+            if (resultObj.result == "Error" || typeof resultObj.data === "string") {
+                alert("Query Error - see console for details");
+                console.log("getRoofsForProperty ---- " + resultObj.data);
+            } else {
+                return(resultObj.data);
+            }
+        }, function(error) {
+            alert("Query Error - AdminSharedSrvc >> getRoofsForProperty");
         });
     };
 

@@ -81,7 +81,7 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'JobConfigSrvc'
                 self.propertyResults = resultObj.data;
                 $rootScope.$broadcast("on-client-properties-complete", self.propertyResults);
                 setClientJob();
-                getJobParameters();
+
             }
         }, function(error) {
             alert("Query Error - ClientSharedSrvc >> getPropertiesByClient");
@@ -90,16 +90,24 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'JobConfigSrvc'
 
     // Eliminate or revise when user can select between multiple properties
     // For now set to the first object in array
+    // Make sure Property is assigned to a Job and the Job has Parameters recorded
     var setClientJob = function() {
         self.propertyObj = self.propertyResults[0];
+        self.jobObj = null;
         var propID = self.propertyObj.PRIMARY_ID;
         for (var i = 0; i < self.jobResults.length; i++) {
             if (self.jobResults[i].property == propID) {
                 self.jobObj = self.jobResults[i];
                 break;
             }
+        };
+
+        if (self.jobObj == null) {
+            alert("This property has no associated Job.");
+        } else {
+            getJobParameters();
         }
-        self.jobID = self.jobObj.PRIMARY_ID;
+
     };
 
     var buildRoofDescription = function() {
@@ -152,10 +160,15 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'JobConfigSrvc'
                 alert("Query Error - see console for details");
                 console.log("getJobParameters ---- " + resultObj.data);
             } else {
-                self.jobParameters = CONFIG.formatParams(resultObj.data[0]);
-                mergeDataFlag.params = true;
-                validateMergeData();
-                getMultiVents();
+                var arr = resultObj.data;
+                if (arr.length > 0) {
+                    self.jobParameters = CONFIG.formatParams(resultObj.data[0]);
+                    mergeDataFlag.params = true;
+                    validateMergeData();
+                    getMultiVents();
+                }else{
+                    alert("Job has no parameters recorded.");
+                }
             }
         }, function(error) {
             alert("Query Error - ClientSharedSrvc >> getJobParameters");
@@ -224,9 +237,9 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'JobConfigSrvc'
     var validateMergeData = function() {
         var listCopy = clone(self.materialsList);
         if (mergeDataFlag.config === true && mergeDataFlag.params === true) {
-            self.defaultConfigSelections = CONFIG.mergeConfig(self.defaultConfigSelections, self.jobParameters,false);
-            self.materialsList = CONFIG.mergeConfig(self.materialsList, self.jobParameters,false);
-            self.materialsListConfig = CONFIG.mergeConfig(listCopy, self.jobParameters,true);
+            self.defaultConfigSelections = CONFIG.mergeConfig(self.defaultConfigSelections, self.jobParameters, false);
+            self.materialsList = CONFIG.mergeConfig(self.materialsList, self.jobParameters, false);
+            self.materialsListConfig = CONFIG.mergeConfig(listCopy, self.jobParameters, true);
 
             CONFIG.defaultConfigSelections = self.defaultConfigSelections
             getDefaultSelections();

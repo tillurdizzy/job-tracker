@@ -161,7 +161,7 @@ app.controller('NewClientOrgCtrl',['$state','evoDb','SharedSrvc', 'ngDialog',fun
         ME.isError = false;
         var dataObj = {};
         dataObj.manager = S.manager;
-        dataObj.type = "Business";
+        dataObj.type = "2";
         dataObj.company = ME.inputModelObj.companyName;
         dataObj.displayName = ME.inputModelObj.companyName;
         dataObj.street = ME.inputModelObj.companyStreet;
@@ -188,7 +188,7 @@ app.controller('NewClientOrgCtrl',['$state','evoDb','SharedSrvc', 'ngDialog',fun
     var openNotify = function () {
         var dialog = ngDialog.open({
             template:
-                '<p>' + ME.inputModelObj.companyName + 'has been added as a client.</p>' +
+                '<p>' + ME.inputModelObj.companyName + ' has been added as a client.</p>' +
                 '<div class="ngdialog-buttons"><button type="button" class="ngdialog-button ngdialog-button-primary" ng-click="closeThisDialog(1)">Close Me</button></div>',
             plain: true
         });

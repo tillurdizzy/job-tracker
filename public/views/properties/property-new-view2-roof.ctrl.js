@@ -8,7 +8,7 @@ app.controller('NewPropertyRoofCtrl', ['$state', '$scope', 'evoDb', 'SharedSrvc'
         ME.T = TempVarSrvc;
         ME.managerName = ME.S.managerName;
         ME.selectedClientObj = ME.S.selectedClientObj;
-        ME.multiUnit = ME.S.multiUnitProperty; // Business client with multi-unit property (apartments)
+        ME.roofCode = 0;
         ME.propID;
 
         ME.bldgName = "";
@@ -48,7 +48,7 @@ app.controller('NewPropertyRoofCtrl', ['$state', '$scope', 'evoDb', 'SharedSrvc'
         };
 
         // Next 3 set in Init() function
-        var firstField; // For single unit this is 1, for multiUnit is 2
+        var firstField; // For single unit this is 1, for roofCode is 2
         ME.inputField;
         ME.formTitleDescription = "";
 
@@ -271,7 +271,7 @@ app.controller('NewPropertyRoofCtrl', ['$state', '$scope', 'evoDb', 'SharedSrvc'
                     alert("FALSE returned for putPropertyAddress >>> submitForm >>> property-new-view1-address.ctrl.js");
                 } else {
                     var roofID = resultObj.data.id;
-                    if(ME.multiUnit == 0){
+                    if(ME.roofCode == 0){
                         ME.inputField = "SUCCESS";
                     }else{
                         ME.inputField = "SUCCESS_Multi";
@@ -341,13 +341,12 @@ app.controller('NewPropertyRoofCtrl', ['$state', '$scope', 'evoDb', 'SharedSrvc'
         };
 
         var init = function() {
-            // For multiUnit OR Single Unit
-            ME.multiUnit = parseInt(ME.S.selectedPropertyObj.multiUnit);
-            if (ME.multiUnit > 0) {
+            // For Multi OR Single Unit
+            ME.roofCode = parseInt(ME.S.selectedPropertyObj.roofCode);// 0 = Single, 2 = Multi
+            if (ME.roofCode > 0) {
                 firstField = 1;
                 ME.inputField = ME.formFields[firstField];
                 ME.formTitleDescription = "Roof Description for " + ME.S.selectedPropertyObj.name;
-                ME.multiUnit = ME.S.selectedPropertyObj.multiUnit;
                 ME.propID = ME.S.selectedPropertyObj.PRIMARY_ID;
             } else {
                 ME.bldgName =  ME.S.selectedPropertyObj.name;

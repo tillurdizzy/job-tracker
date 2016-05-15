@@ -6,7 +6,7 @@
 <div class="top section-header">
     <h2>Name/Address</h2>
 </div>
-<div class="text-block-display" ng-show="Ctrl.selectedClientObj.type=='Business'">
+<div class="text-block-display" ng-show="Ctrl.selectedClientObj.type=='2'">
     <h4>{{Ctrl.selectedClientObj.company}}</h4>
     <h3>{{Ctrl.selectedClientObj.street}}</h3>
     <h3>{{Ctrl.selectedClientObj.city + ", " + Ctrl.selectedClientObj.state + " " + Ctrl.selectedClientObj.zip}}</h3>
@@ -16,7 +16,7 @@
     <h3>{{Ctrl.selectedClientObj.email}}</h3>
 </div>
 
-<div class="text-block-display" ng-show="Ctrl.selectedClientObj.type=='Individual'">
+<div class="text-block-display" ng-show="Ctrl.selectedClientObj.type=='1'">
     <h4>{{Ctrl.selectedClientObj.displayName}}</h4>
     <h3>{{Ctrl.selectedClientObj.street}}</h3>
     <h3>{{Ctrl.selectedClientObj.city + ", " + Ctrl.selectedClientObj.state + " " + Ctrl.selectedClientObj.zip}}</h3>
@@ -25,7 +25,7 @@
 </div>
 
 <div class="top section-header">
-    <h2>Properties</h2>
+    <h2>Properties (work in progress)</h2>
 </div>
 
 <div style="width:100%; margin-top: 10px;">

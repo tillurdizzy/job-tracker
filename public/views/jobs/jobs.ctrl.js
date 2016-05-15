@@ -86,7 +86,7 @@ app.controller('JobsCtrl',['$location','$state','evoDb','$scope','SharedSrvc',fu
 	// Get all jobs for current manager
 	// DB already has manager_id
 	ME.getManagerJobs = function(){
-		var result = DB.getManagerJobs().then(function(result){
+		DB.getManagerJobs().then(function(result){
             if(typeof result != "boolean"){
             	// DB sent the data to the SharedSrvc
             }else{

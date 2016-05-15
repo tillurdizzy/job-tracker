@@ -199,9 +199,10 @@ app.controller('AdminSalesJobsCtrl', ['$scope','AdminSharedSrvc', 'AdminDataSrvc
                 console.log(resultObj.data);
             } else {
                 ME.addJobInsertID = resultObj.data.insertID;
+                putJobPartTwo(ME.addJobInsertID);
                 resetInputFields();
                 ngDialog.open({
-                    template: '<h2>Add Job Successful.</h2>',
+                    template: '<h2>New Job added successfully.</h2>',
                     className: 'ngdialog-theme-default',
                     plain: true,
                     overlay: false
@@ -210,6 +211,13 @@ app.controller('AdminSalesJobsCtrl', ['$scope','AdminSharedSrvc', 'AdminDataSrvc
         }, function(error) {
             alert("ERROR returned for  " + thisQuery + " at " + myName + " >>> " + thisFunc);
         });
+    };
+
+    var putJobPartTwo = function(jobID){
+        var dataObj = { jobID: jobID };
+        DB.query('insertJobConfig',dataObj);
+        DB.query('insertJobParameters',dataObj);
+        DB.query('insertSpecialConsiderations',dataObj);
     };
 
     var update_Item = function() {
