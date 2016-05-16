@@ -6,21 +6,25 @@ app.controller('AdminProposalCtrl',['$state','AdminDataSrvc','$scope','AdminShar
 	var S = AdminSharedSrvc;
 
 	ME.selectedProposal = {};
+	ME.selectedProposalRoof = {};
 	ME.selectDataProvider = [];
-	ME.roofSelectionsDP = [];// Second selection dropdown if multi-unit property
+	ME.roofSelectionsDP = null;// Second selection dropdown if multi-unit property
 	ME.specialText = "";
 	ME.proposalData = {salesRep:"-",clientID:"-",propertyID:"-",jobID:"-"};
 	
 	ME.selectProposal = function(){
+		ME.roofSelectionsDP = null;
 		ME.proposalData = S.selectProposal(ME.selectedProposal.id);
-		
+
 		if(ME.proposalData.roofCode == 2){
-			var propID = ME.selectedProposal.id;
-			ME.roofSelectionsDP = S.getRoofsForProperty(propID);
-			alert("Continue from here!");
+			ME.roofSelectionsDP = ME.proposalData.roofSelectionList;
+			ME.selectedProposalRoof = ME.roofSelectionsDP[0];
 		};
 	};
 
+    ME.selectRoof = function(){
+		S.selectRoof(ME.selectedProposalRoof.jobID);
+	};
 
 	ME.backToHome = function(){
 		$state.transitionTo('admin');

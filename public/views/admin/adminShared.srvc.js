@@ -14,6 +14,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
     self.SPECIAL;
     self.MULTIVENTS = [];
     self.MULTILEVELS = [];
+   
 
 
     //jobVO's related to jobs that are in Proposal State
@@ -48,35 +49,59 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
     // Consumed by view controller as data provider for Pricing Tab
     self.materialsCatergorized = { Field: [], Ridge: [], Starter: [], Vents: [], Flashing: [], Caps: [], Flat: [], Other: [] };
 
-    // Step 1 : Select proposal from dropdown on AdminProposalCtrl
+    // Step 1 : Select proposal/property from dropdown on AdminProposalCtrl
+    // Called for both roofCodes 0 and 2, but code 2 halts before retrieving jobParameters
     self.selectProposal = function(ndx) {
         var rtnObj = {};
         if (ndx == -1) {
             self.resetProposalData(); // Clear vars
         } else {
             self.proposalUnderReview = self.proposalsAsProperty[ndx];
-            // Get the Job ID
-            for (var i = 0; i < proposalsAsJob.length; i++) {
-                if (proposalsAsJob[i].property === self.proposalUnderReview.PRIMARY_ID) {
-                    self.proposalUnderReview.jobID = proposalsAsJob[i].PRIMARY_ID;
-                    break;
-                }
-            };
+
             rtnObj.propertyID = self.proposalUnderReview.PRIMARY_ID;
-            rtnObj.jobID = self.proposalUnderReview.jobID;
+            rtnObj.jobID = -1; // this will change below for roofCode 0
             rtnObj.clientID = self.proposalUnderReview.client;
             rtnObj.roofCode = self.proposalUnderReview.roofCode;
             rtnObj.salesRep = self.returnSalesRep(self.proposalUnderReview.manager);
             // Set flags to false
             mergeDataFlag.config = false;
             mergeDataFlag.materials = false;
-            // Call queries
-            if(rtnObj.roofCode == 0){
+
+            // If roofCode == 0, get the jobID and use that to get the job parameters
+            // there will only be ONE match here
+            if (rtnObj.roofCode == 0) {
+                for (var i = 0; i < proposalsAsJob.length; i++) {
+                    if (proposalsAsJob[i].property === self.proposalUnderReview.PRIMARY_ID) {
+                        self.proposalUnderReview.jobID = proposalsAsJob[i].PRIMARY_ID;
+                        break;
+                    }
+                };
+                rtnObj.jobID = self.proposalUnderReview.jobID;
                 getJobParameters();
-            }
-        }
+            }else if(rtnObj.roofCode == 2){
+                // There could be multiple matches here... get the roofID to retrieve the roof names to use in a list
+                rtnObj.roofSelectionList = [{label:"--- Select a Roof at this Property ---",jobID:-1}];
+                for (var i = 0; i < proposalsAsJob.length; i++) {
+                    if (proposalsAsJob[i].property === self.proposalUnderReview.PRIMARY_ID) {
+                        var listItem = {};
+                        listItem.jobID = proposalsAsJob[i].PRIMARY_ID;
+                        listItem.roofID = proposalsAsJob[i].roofID;
+                        listItem.label = returnBldgNameFromRoofsByRoofID(proposalsAsJob[i].roofID);
+                        rtnObj.roofSelectionList.push(listItem);
+                    };
+                };
+            };
+        };
         return rtnObj;
     };
+
+    self.selectRoof = function(jobID){
+        self.proposalUnderReview.jobID = jobID;
+        // Set flags to false
+        mergeDataFlag.config = false;
+        mergeDataFlag.materials = false;
+        getJobParameters();
+    }
 
     self.resetProposalData = function() {
         $rootScope.$broadcast('onResetProposalData');
@@ -314,7 +339,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
         });
     };
 
-    self.refreshSalesData = function(){
+    self.refreshSalesData = function() {
         getProperties();
     };
 
@@ -422,7 +447,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
             // roofNamesAndId = array with 1 element for roofID == 0, multiple elements for multi-roof properties
             var roofNamesAndId = returnBldgNameFromRoofsByPropID(self.PROPERTIES[i].PRIMARY_ID);
 
-            if (roofNamesAndId.length > 0) { 
+            if (roofNamesAndId.length > 0) {
                 if (roofCode == 0) {
                     self.PROPERTIES[i].displayName = self.PROPERTIES[i].name;
                     self.PROPERTIES[i].roofID = roofNamesAndId[0].roofID;
@@ -468,7 +493,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
                 rtnArray.push({ bldgName: self.ROOFS[i].name, roofID: self.ROOFS[i].PRIMARY_ID });
             }
         };
-        if(rtnArray.length == 0){
+        if (rtnArray.length == 0) {
             rtnArray.push({ bldgName: "Missing Roof Description", roofID: -1 });
         }
         return rtnArray;
@@ -664,7 +689,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
                 alert("Query Error - see console for details");
                 console.log("getRoofsForProperty ---- " + resultObj.data);
             } else {
-                return(resultObj.data);
+                $rootScope.$broadcast('getRoofsForProperty', resultObj.data);
             }
         }, function(error) {
             alert("Query Error - AdminSharedSrvc >> getRoofsForProperty");
@@ -738,7 +763,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
         return rtnObj;
     };
 
-    self.triggerDataCascade = function(){
+    self.triggerDataCascade = function() {
         getProperties();
     };
 

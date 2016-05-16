@@ -4,7 +4,12 @@
         <h2>Proposal Review</h2>
     </div>
     <div>
-        <select ng-model="Ctrl.selectedProposal" ng-options="c.label for c in Ctrl.selectDataProvider" ng-change="Ctrl.selectProposal()" style="width:50%" ;></select>
+        <select ng-model="Ctrl.selectedProposal" ng-options="c.label for c in Ctrl.selectDataProvider" ng-change="Ctrl.selectProposal()" style="width:48%"></select>
+    </div>
+    <add-space heightpx="10"></add-space>
+    <div ng-hide="Ctrl.roofSelectionsDP==null">
+        <select ng-model="Ctrl.selectedProposalRoof" ng-options="c.label for c in Ctrl.roofSelectionsDP" ng-change="Ctrl.selectRoof()" style="width:48%" 
+        ng-disabled="Ctrl.roofSelectionsDP==null"></select>
     </div>
     <div>
         <h2>Sales Rep: {{Ctrl.proposalData.salesRep}}</h2>
