@@ -1,6 +1,6 @@
 'use strict';
 
-app.controller('AdminProposalCtrl',['$state','AdminDataSrvc','$scope','AdminSharedSrvc','ngDialog',function ($state,AdminDataSrvc,$scope,AdminSharedSrvc,ngDialog) {
+app.controller('AdminProposalCtrl',['$rootScope','$state','AdminDataSrvc','$scope','AdminSharedSrvc','ngDialog',function ($rootScope,$state,AdminDataSrvc,$scope,AdminSharedSrvc,ngDialog) {
 	var DB =  AdminDataSrvc;
 	var ME = this;
 	var S = AdminSharedSrvc;
@@ -13,17 +13,25 @@ app.controller('AdminProposalCtrl',['$state','AdminDataSrvc','$scope','AdminShar
 	ME.proposalData = {salesRep:"-",clientID:"-",propertyID:"-",jobID:"-"};
 	
 	ME.selectProposal = function(){
-		ME.roofSelectionsDP = null;
-		ME.proposalData = S.selectProposal(ME.selectedProposal.id);
+		var objLength = Object.keys(ME.selectedProposal).length;
+		if(objLength > 0){
+			ME.proposalData = S.selectProposal(ME.selectedProposal.id);
 
-		if(ME.proposalData.roofCode == 2){
-			ME.roofSelectionsDP = ME.proposalData.roofSelectionList;
-			ME.selectedProposalRoof = ME.roofSelectionsDP[0];
-		};
+			if(ME.proposalData.roofCode == 2){
+				ME.roofSelectionsDP = ME.proposalData.roofSelectionList;
+				ME.selectedProposalRoof = ME.roofSelectionsDP[0];
+				$rootScope.$broadcast('onResetProposalData');// Clears the parameters from the Input tab
+			}else{
+				ME.roofSelectionsDP = null;
+				ME.selectedProposalRoof = null;
+			};
+		}
 	};
 
     ME.selectRoof = function(){
-		S.selectRoof(ME.selectedProposalRoof.jobID);
+    	if(ME.selectedProposalRoof != null){
+    		S.selectRoof(ME.selectedProposalRoof.jobID);
+    	}
 	};
 
 	ME.backToHome = function(){

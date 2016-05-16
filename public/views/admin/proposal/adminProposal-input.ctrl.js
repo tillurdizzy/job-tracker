@@ -18,11 +18,12 @@ app.controller('AdminPropInput',['$state','$scope','AdminSharedSrvc','AdminDataS
     	ME.propertyInputParams.FIELD = "-";
     	ME.propertyInputParams.EAVE = "-";
     	ME.propertyInputParams.RKEWALL = "-";
-        ME.propertyInputParams.LOWSLOPE = "-";
+        ME.propertyInputParams.LOWSLP = "-";
     	ME.propertyInputParams.LPIPE1 = "-";
     	ME.propertyInputParams.LPIPE2 = "-";
     	ME.propertyInputParams.LPIPE3 = "-";
     	ME.propertyInputParams.LPIPE4 = "-";
+        ME.propertyInputParams.VENT8 = "-";
     	ME.propertyInputParams.PRMITR = "-";
     	ME.propertyInputParams.PWRVNT = "-";
     	ME.propertyInputParams.RKERDG = "-";
@@ -31,6 +32,7 @@ app.controller('AdminPropInput',['$state','$scope','AdminSharedSrvc','AdminDataS
     	ME.propertyInputParams.TOPRDG = "-";
     	ME.propertyInputParams.TURBNS = "-";
     	ME.propertyInputParams.VALLEY = "-";
+        ME.specialConsiderations = "";
     };
 
 

@@ -11,7 +11,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
     self.PROPERTIES = [];
     self.JOBS = [];
     self.ROOFS = [];
-    self.SPECIAL;
+    self.SPECIAL = "";
     self.MULTIVENTS = [];
     self.MULTILEVELS = [];
    
@@ -257,6 +257,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
     };
 
     var getSpecialConsiderations = function() {
+        self.SPECIAL = "";
         var dataObj = {};
         dataObj.jobID = self.proposalUnderReview.jobID;
         DB.query("getSpecialConsiderations", dataObj).then(function(resultObj) {
