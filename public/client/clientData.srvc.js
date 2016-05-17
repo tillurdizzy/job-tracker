@@ -32,11 +32,19 @@ app.service('ClientDataSrvc', ['$http', '$q', function($http, $q) {
         var deferred = $q.defer();
         $http({ method: 'POST', url: phpPath, data: dataObj })
             .success(function(data, status) {
-                rtnObj.result = "Success";
-                rtnObj.data = data;
-                if(data.msg == "Error"){
+                if(typeof data === "string"){
+                    rtnObj.result = "Success";
+                    rtnObj.data = data;
+                    console.log(data);
                     alert("QUERY Error - see console.");
+                    
+                }else if(data.msg == "Error"){
+                    rtnObj.result = "Error";
                     console.log(data.query);
+                    alert("QUERY Error - see console.");
+                }else{
+                    rtnObj.result = "Success";
+                    rtnObj.data = data;
                 }
                 deferred.resolve(rtnObj);
             })

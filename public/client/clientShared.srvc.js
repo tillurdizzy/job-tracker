@@ -12,10 +12,11 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'JobConfigSrvc'
 
     self.materialsList = [];
     self.materialsListConfig = [];
-    self.defaultConfigSelections = [];
+    self.defaultCheckedMaterials = [];
     self.jobConfig = {};
 
     self.baseLineTotal = 0;
+    var baseLineItems = [];
     var mergeDataFlag = { params: false, config: false };
     self.jobResults = []; // Original array from DB
     self.propertyResults = []; // Original array from DB
@@ -54,8 +55,10 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'JobConfigSrvc'
 
     // Called from  self.LogIn()
     // This function starts a chain of DB calls
-    // 1.getJobsByClient()  2.getPropertiesByClient() 3.getJobParameters() 4.getMultiVents(); 5. getMultiLevels() 
-    // 6. getJobMaterials(); 7.getMaterialsList() 8. getJobConfig() 9. getPhotos()
+    // getJobsByClient() >>> getPropertiesByClient() >>> setClientJob();
+
+    // getJobParameters() >>> getRoofForProperty() >>> getMultiVents() >>> getMultiLevels() 
+    // getJobMaterials(); 7.getMaterialsList() 8. getJobConfig() 9. getPhotos()
     // Ending on buildRoofDescription() which creates a DOM dataProvider from all these different sources
     var getJobsByClient = function() {
         var dataObj = { clientID: self.clientObj.PRIMARY_ID };
@@ -101,7 +104,6 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'JobConfigSrvc'
                 break;
             }
         };
-
         if (self.jobObj == null) {
             alert("This property has no associated Job.");
         } else {
@@ -249,15 +251,17 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'JobConfigSrvc'
         getPhotoGallery();
     };
 
-    // Checks to make sure both config and materials are up to date from DB before calling formatParams();
+    // Checks to make sure both config and materials are up to date 
     var validateMergeData = function() {
         var listCopy = clone(self.materialsList);
         if (mergeDataFlag.config === true && mergeDataFlag.params === true) {
-            self.defaultConfigSelections = CONFIG.mergeConfig(self.defaultConfigSelections, self.jobParameters, false);
+            // 
+            self.defaultCheckedMaterials = CONFIG.mergeConfig(self.defaultCheckedMaterials, self.jobParameters, false);
+
             self.materialsList = CONFIG.mergeConfig(self.materialsList, self.jobParameters, false);
             self.materialsListConfig = CONFIG.mergeConfig(listCopy, self.jobParameters, true);
 
-            CONFIG.defaultConfigSelections = self.defaultConfigSelections
+            CONFIG.defaultCheckedMaterials = self.defaultCheckedMaterials
             getDefaultSelections();
 
             self.getBaseTotal();
@@ -336,13 +340,19 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'JobConfigSrvc'
 
 
     self.getBaseTotal = function() {
+        baseLineItems = [];
         var include = false;
         for (var i = 0; i < self.materialsList.length; i++) {
             include = self.materialsList[i].Checked;
             if (include === true) {
-                self.baseLineTotal += parseInt(self.materialsList[i].Total)
+                baseLineItems.push(self.materialsList[i]);
+                self.baseLineTotal += parseInt(self.materialsList[i].Total);
             }
-        }
+        };
+        // Add Labor
+        var laborCost;
+
+
         $rootScope.$broadcast("on-data-collection-complete");
     };
 
@@ -411,7 +421,7 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'JobConfigSrvc'
                 alert("Query Error - see console for details");
                 console.log("jobConfig >> getDefaultConfigMaterials ---- " + resultObj.data);
             } else {
-                self.defaultConfigSelections = resultObj.data;
+                self.defaultCheckedMaterials = resultObj.data;
                 getMaterialsList();
             }
         }, function(error) {

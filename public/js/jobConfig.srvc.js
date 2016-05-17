@@ -8,7 +8,7 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore',function jobConfigSrvc(
     self.jobConfigStr = "";
     self.jobConfigArray = [];
     self.materialsList = [];
-    self.defaultConfigSelections = [];
+    self.defaultCheckedMaterials = [];
 
     // Step 3 of events triggered by selection of a Proposal from Proposal Review
     // Converts the long string saved in DB into array of objects
@@ -35,16 +35,15 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore',function jobConfigSrvc(
     };
 
     // Step 4 of events triggered by selection of a Proposal from Proposal Review
+    // This takes a list of materials, and fills in the Qty, 
     self.mergeConfig = function(materials, params, useConfig) {
        
         for (var i = 0; i < materials.length; i++) {
 
-            var paramKey = materials[i].InputParam;
-            var customObj = returnCustomMaterial(materials[i].Code);
-            var checked = false;
-
+            // Is the current paramKey one of the default items????  Compare to this list.
             // Checked by default only matters in certain categories because there are multiple choices
             // using the same Input parameter
+            var paramKey = materials[i].InputParam;
             var defaultCheckCatList = ["FIELD","EAVE","RIDGETOTAL","VALLEY","LPIPE1","LPIPE2","LPIPE3","LPIPE4"];
             var useDefaultCheck = false;
             for (var x = 0; x < defaultCheckCatList.length; x++) {
@@ -53,11 +52,15 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore',function jobConfigSrvc(
                     break;
                }
             };
-           
+
             var isCheckedByDefault = convertToBoolean(materials[i].Checked);
 
+            // If the client has a 'Saved' customObj for this material, use that Price and Qty, otherwise use current pricing
+            // Will be null unless client has chosen upgrade
+            var customObj = returnCustomMaterial(materials[i].Code);
 
-            // If the client has a 'Saved' obj for this material, use that Price and Qty, otherwise use current pricing
+            var checked = false;
+
             if (customObj != null && customObj.Checked != undefined && useConfig===true) {
                 // There is a config and useConfig === true
                 // All values are from config
@@ -71,7 +74,9 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore',function jobConfigSrvc(
                 itemPrice = Number(customObj.Price);
                 parameterVal = Number(params[paramKey]);
                
-               // If useDefaultCheck id true, then only check the one with default... otherwise check everything that has a value > 0
+               // If useDefaultCheck is true, then only Check the one with default... otherwise check everything that has a value > 0
+               // Because... all the materials have the Qty for their PARAM... 
+               // I.E this keeps ALL the different shingle types/models/variants from being selected...
                 if(useDefaultCheck){
                     if(isCheckedByDefault && parameterVal > 0){
                         checked = true;
@@ -110,7 +115,6 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore',function jobConfigSrvc(
                 parameterVal = 0;
                 total = 0;
             } else {
-
                 var pkgQty = parameterVal / unitsPerPkg;
                 var pkgQtyRoundedUp = Math.ceil(pkgQty);
                 var pkgQtyWithOverageRoundedUp = Math.ceil(pkgQty * over);
@@ -218,10 +222,10 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore',function jobConfigSrvc(
 
     self.returnDefaultMaterial = function(cat){
         var rtnObject = {};
-        for (var i = 0; i < self.defaultConfigSelections.length; i++) {
-            var category = self.defaultConfigSelections[i].Category;
+        for (var i = 0; i < self.defaultCheckedMaterials.length; i++) {
+            var category = self.defaultCheckedMaterials[i].Category;
             if (category === cat) {
-                rtnObject = self.defaultConfigSelections[i];
+                rtnObject = self.defaultCheckedMaterials[i];
                 break;
             }
         };
