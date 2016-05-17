@@ -23,6 +23,7 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'JobConfigSrvc'
     self.clientObj = {};
     self.propertyObj = {};
     self.jobParameters = {};
+    self.roofObj = {};
     self.multiVents = {};
     self.multiLevels = {};
     self.photoGallery = [];
@@ -76,12 +77,11 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'JobConfigSrvc'
         DB.queryDB("getPropertiesByClient", dataObj).then(function(resultObj) {
             if (resultObj.result == "Error" || typeof resultObj.data === "string") {
                 alert("Query Error - see console for details");
-                console.log("getJobParameters ---- " + resultObj.data);
+                console.log("getPropertiesByClient ---- " + resultObj.data);
             } else {
                 self.propertyResults = resultObj.data;
                 $rootScope.$broadcast("on-client-properties-complete", self.propertyResults);
                 setClientJob();
-
             }
         }, function(error) {
             alert("Query Error - ClientSharedSrvc >> getPropertiesByClient");
@@ -106,30 +106,31 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'JobConfigSrvc'
             alert("This property has no associated Job.");
         } else {
             getJobParameters();
-        }
-
+        };
     };
 
     var buildRoofDescription = function() {
-        self.existingRoofDescription.levels = self.propertyObj.numLevels;
-        self.existingRoofDescription.deck = returnKeyValue("roofDeckOptions", self.propertyObj.roofDeck);
-        self.existingRoofDescription.shingles = returnKeyValue("shingleGradeOptions", self.propertyObj.shingleGrade);
-        self.existingRoofDescription.edge = returnKeyValue("edgeDetail", self.propertyObj.edgeDetail);
-        self.existingRoofDescription.valley = returnKeyValue("valleyOptions", self.propertyObj.valleyDetail);
-        self.existingRoofDescription.ridge = returnKeyValue("ridgeCapShingles", self.propertyObj.ridgeCap);
-        self.existingRoofDescription.ventilation = returnKeyValue("ventOptions", self.propertyObj.roofVents);
-        self.existingRoofDescription.pitch = returnKeyValue("pitchOptions", self.propertyObj.pitch);
-        self.existingRoofDescription.turbines = self.jobParameters.TURBNS;
-
+        self.existingRoofDescription.levels = self.roofObj.numLevels;
+        self.existingRoofDescription.deck = returnKeyValue("roofDeckOptions", self.roofObj.roofDeck);
+        self.existingRoofDescription.shingles = returnKeyValue("shingleGradeOptions", self.roofObj.shingleGrade);
+        self.existingRoofDescription.edge = returnKeyValue("edgeDetail", self.roofObj.edgeDetail);
+        self.existingRoofDescription.valley = returnKeyValue("valleyOptions", self.roofObj.valleyDetail);
+        self.existingRoofDescription.ridge = returnKeyValue("ridgeCapShingles", self.roofObj.ridgeCap);
+        self.existingRoofDescription.ventilation = returnKeyValue("ventOptions", self.roofObj.roofVents);
+        self.existingRoofDescription.pitch = returnKeyValue("pitchOptions", self.roofObj.pitch);
+        
         self.existingRoofDescription.plumbingVents =
             parseInt(validateIsNumber(self.jobParameters.LPIPE1)) +
             parseInt(validateIsNumber(self.jobParameters.LPIPE2)) +
             parseInt(validateIsNumber(self.jobParameters.LPIPE3)) +
             parseInt(validateIsNumber(self.jobParameters.LPIPE4));
 
-        self.existingRoofDescription.heaterVents = self.jobParameters.JKVNT8;
-        self.existingRoofDescription.rakeWalls = self.jobParameters.FLHSH8;
-    }
+        self.existingRoofDescription.turbines = validateIsNumber(self.jobParameters.TURBNS);
+        self.existingRoofDescription.heaterVents = validateIsNumber(self.jobParameters.VENT8);
+        self.existingRoofDescription.rakeWalls = validateIsNumber(self.jobParameters.RKEWALL);
+        self.existingRoofDescription.eave = validateIsNumber(self.jobParameters.EAVE);
+        self.existingRoofDescription.perimiter = validateIsNumber(self.jobParameters.PRMITR);
+    };
 
     self.logOut = function() {
         self.clientID = "";
@@ -147,7 +148,7 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'JobConfigSrvc'
         for (var i = 0; i < self.keyValPairs.length; i++) {
             if (self.keyValPairs[i].setName == set && self.keyValPairs[i].id == id) {
                 rtnStr = self.keyValPairs[i].val;
-                continue;
+                break;
             }
         }
         return rtnStr;
@@ -165,7 +166,7 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'JobConfigSrvc'
                     self.jobParameters = CONFIG.formatParams(resultObj.data[0]);
                     mergeDataFlag.params = true;
                     validateMergeData();
-                    getMultiVents();
+                    getRoofForProperty();
                 }else{
                     alert("Job has no parameters recorded.");
                 }
@@ -173,7 +174,22 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'JobConfigSrvc'
         }, function(error) {
             alert("Query Error - ClientSharedSrvc >> getJobParameters");
         });
-    }
+    };
+
+    var getRoofForProperty = function() {
+        var dataObj = { propID: self.propertyObj.PRIMARY_ID };
+        DB.queryDB("getRoof", dataObj).then(function(resultObj) {
+            if (resultObj.result == "Error" || typeof resultObj.data === "string") {
+                alert("Query Error - see console for details");
+                console.log("getRoofForProperty ---- " + resultObj.data);
+            } else {
+                self.roofObj = resultObj.data[0];
+                getMultiVents();
+            }
+        }, function(error) {
+            alert("Query Error - AdminSharedSrvc >> getRoofForProperty");
+        });
+    };
 
     var getMultiVents = function() {
         var dataObj = { ID: self.propertyObj.PRIMARY_ID };
@@ -213,7 +229,7 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'JobConfigSrvc'
                 alert("Query Error - see console for details");
                 console.log("getJobConfig ---- " + resultObj.data);
             } else {
-                onGetJobConfig(resultObj.data);
+                onGetConfigResult(resultObj.data);
             }
         }, function(error) {
             alert("Query Error - ClientSharedSrvc >> getJobConfig");
@@ -226,7 +242,7 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'JobConfigSrvc'
 
 
     // Converts the long string saved in DB into array of objects
-    var onGetJobConfig = function(ar) {
+    var onGetConfigResult = function(ar) {
         self.jobConfig = CONFIG.parseJobConfig(ar); // CONFIG keeps a copy!!!!  Don't really need it returned
         mergeDataFlag.config = true;
         validateMergeData();
@@ -372,7 +388,7 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'JobConfigSrvc'
             n = 0;
         }
         return n;
-    }
+    };
 
     // Init functions
     var getMaterialsList = function() {
@@ -383,7 +399,6 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'JobConfigSrvc'
                 console.log("getJobMaterials ---- " + resultObj.data);
             } else {
                 self.materialsList = resultObj.data;
-                //self.materialsList = CONFIG.parseMergeMaterials();
             }
         }, function(error) {
             alert("Query Error - ClientSharedSrvc >> getJobMaterials");
@@ -397,8 +412,6 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'JobConfigSrvc'
                 console.log("jobConfig >> getDefaultConfigMaterials ---- " + resultObj.data);
             } else {
                 self.defaultConfigSelections = resultObj.data;
-                //CONFIG.defaultConfigSelections = resultObj.data;
-                //getDefaultSelections();
                 getMaterialsList();
             }
         }, function(error) {

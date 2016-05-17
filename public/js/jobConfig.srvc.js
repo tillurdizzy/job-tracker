@@ -45,7 +45,7 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore',function jobConfigSrvc(
 
             // Checked by default only matters in certain categories because there are multiple choices
             // using the same Input parameter
-            var defaultCheckCatList = ["FIELD","EAVE","RIDGETOTAL","LPIPE1","LPIPE2","LPIPE3","LPIPE4"];
+            var defaultCheckCatList = ["FIELD","EAVE","RIDGETOTAL","VALLEY","LPIPE1","LPIPE2","LPIPE3","LPIPE4"];
             var useDefaultCheck = false;
             for (var x = 0; x < defaultCheckCatList.length; x++) {
                if(paramKey==defaultCheckCatList[x]){

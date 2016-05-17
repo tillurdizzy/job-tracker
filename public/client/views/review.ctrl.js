@@ -17,6 +17,8 @@ app.controller('ReviewCtrl',['$scope','$state','ClientSharedSrvc','ngDialog','$c
 	ME.selectedPhoto = {path:"",cap:""};
 	ME.shingleManufacturer = "GAF";
 
+
+	// These are to control the ng-show DOM elements
 	ME.UpgradeFieldNdx = "";
 	ME.UpgradeRidgeNdx = "";
 	ME.UpgradeValleyNdx = "";
@@ -25,10 +27,12 @@ app.controller('ReviewCtrl',['$scope','$state','ClientSharedSrvc','ngDialog','$c
 	ME.showUpgrades = {field:true,ridge:false,valley:false,trim:false};
 
 	ME.calculateTotal = function(){
+
 		var fieldUpgradeCost = 0;
 		var ridgeUpgradeCost = 0;
 		var valleyUpgradeCost = 0;
 		var trimUpgradeCost = 0;
+
 		for (var i = 0; i < ME.shingleUpgrades.length; i++) {
 			if(ME.shingleUpgrades[i].Code === ME.UpgradeFieldNdx){
 				fieldUpgradeCost = Number(ME.shingleUpgrades[i].upgradePrice);
@@ -97,7 +101,6 @@ app.controller('ReviewCtrl',['$scope','$state','ClientSharedSrvc','ngDialog','$c
 		ME.ridgeUpgrades = ME.C.getUpgrades("Ridge");
 		ME.valleyUpgrades = ME.C.getUpgrades("Valley");
 		ME.trimUpgrades = ME.C.getUpgrades("EdgeTrim");
-
 	};
 
 	var setSelections = function(){

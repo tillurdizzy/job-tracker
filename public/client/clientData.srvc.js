@@ -19,6 +19,7 @@ app.service('ClientDataSrvc', ['$http', '$q', function($http, $q) {
         getMultiLevel: httpPathPrefix + "getMultiLevel.php",
         getMaterialsList: httpPathPrefix + "getMaterialsShingle.php",
         getJobConfig: httpPathPrefix + "getJobConfig.php",
+        getRoof: httpPathPrefix + "getRoof.php",
         getPhotoGallery: httpPathPrefix + "getPhotos.php",
         updateConfig: httpPathPrefix + "updateConfig.php",
         getDefaultConfigMaterials: httpPathPrefix + "getDefaultConfigMaterials.php"

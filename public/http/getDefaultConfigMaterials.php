@@ -11,7 +11,7 @@ define( "DATABASE_NAME", "jobtracker");
 //connect to the database.
 $con = mysqli_connect(DATABASE_SERVER, DATABASE_USERNAME, DATABASE_PASSWORD,DATABASE_NAME) or die ('ERROR!!!');
 
-$query = sprintf("SELECT * FROM materials_shingle WHERE Checked = 'true'");
+$query = sprintf("SELECT * FROM materials_shingle WHERE Checked = 1");
 $result = mysqli_query($con,$query);
 $resultValueObjects = array();
 while ($row = mysqli_fetch_object($result)) {

@@ -1,4 +1,4 @@
-<div class="page" ng-controller="ReviewCtrl as CTRL">
+<div class="top page" ng-controller="ReviewCtrl as CTRL">
     <div class="page-title">
         <h2>Work Proposal</h2>
     </div>
@@ -34,7 +34,9 @@
             <div class="indent-block-client">
                 <h3>Description</h3>
                 <ul>
+                    <li>Levels: {{CTRL.C.existingRoofDescription.levels}}</li>
                     <li>Deck Type: {{CTRL.C.existingRoofDescription.deck}}</li>
+                    <li>Average Pitch: {{CTRL.C.existingRoofDescription.pitch}}</li>
                     <li>Shingles Type: {{CTRL.C.existingRoofDescription.shingles}}</li>
                     <li>Edge Detail: {{CTRL.C.existingRoofDescription.edge}}</li>
                     <li>Valley Detail: {{CTRL.C.existingRoofDescription.valley}}</li>
@@ -47,10 +49,10 @@
                 <ul>
                     <li>Roof Area in Squares (10ft x 10ft): {{CTRL.C.jobParameters.FIELD}}</li>
                     <li>Perimiter: {{CTRL.C.jobParameters.PRMITR}} ft.</li>
-                    <li>Average Pitch: {{CTRL.C.jobParameters.PITCH}}</li>
+                    <li>Eave: {{CTRL.C.existingRoofDescription.eave}} ft.</li>
                     <li>Top Ridge: {{CTRL.C.jobParameters.TOPRDG}} ft.</li>
                     <li>Rake Ridge: {{CTRL.C.jobParameters.RKERDG}} ft.</li>
-                    <li>Rake Wall: {{CTRL.C.jobParameters.FLHSH8}} ft.</li>
+                    <li>Rake Wall: {{CTRL.C.existingRoofDescription.rakeWalls}} ft.</li>
                     <li>Valley: {{CTRL.C.jobParameters.VALLEY}} ft.</li>
                     <li>Plumbing Vents: {{CTRL.C.existingRoofDescription.plumbingVents}}</li>
                     <li>Heater Vents: {{CTRL.C.existingRoofDescription.heaterVents}}</li>
@@ -124,7 +126,7 @@
             <div class="upgrade-item" ng-repeat="x in CTRL.shingleUpgrades">
                 <div class="check-radio-container" style="margin-bottom:10px;">
                     <input type="radio" id="{{x.Code}}" name="Grp1" value="{{x.Code}}" ng-model="CTRL.UpgradeFieldNdx" ng-change="CTRL.calculateTotal()"></input>
-                    <label for="{{x.Code}}"><span></span>{{x.Item}} (+{{x.upgradePrice | currency:$:2}})<a href="{{x.url}}" target="_blank"> More</a></label>
+                    <label for="{{x.Code}}"><span></span>{{x.Item}} ({{x.upgradePrice | currency:$:2}})<a href="{{x.url}}" target="_blank"> More</a></label>
                 </div>
             </div>
             <horiz-rule margintop="5" marginbottom="15"></horiz-rule>
@@ -147,7 +149,7 @@
             <div class="upgrade-item" ng-repeat="x in CTRL.ridgeUpgrades">
                 <div class="check-radio-container" style="margin-bottom:10px;">
                     <input type="radio" id="{{x.Code}}" name="Grp2" value="{{x.Code}}" ng-model="CTRL.UpgradeRidgeNdx" ng-change="CTRL.calculateTotal()"></input>
-                    <label for="{{x.Code}}"><span></span>{{x.Item}} (+{{x.upgradePrice | currency:$:2}})<a href="{{x.url}}" target="_blank"> More</a></label>
+                    <label for="{{x.Code}}"><span></span>{{x.Item}} ({{x.upgradePrice | currency:$:2}})<a href="{{x.url}}" target="_blank"> More</a></label>
                 </div>
             </div>
             <horiz-rule margintop="5" marginbottom="15"></horiz-rule>
@@ -169,7 +171,7 @@
            <div class="upgrade-item" ng-repeat="x in CTRL.valleyUpgrades">
                 <div class="check-radio-container" style="margin-bottom:10px;">
                     <input type="radio" id="{{x.Code}}" name="Grp3" value="{{x.Code}}" ng-model="CTRL.UpgradeValleyNdx" ng-change="CTRL.calculateTotal()"></input>
-                    <label for="{{x.Code}}"><span></span>{{x.Item}} (+{{x.upgradePrice | currency:$:2}})<a href="{{x.url}}" target="_blank"> More</a></label>
+                    <label for="{{x.Code}}"><span></span>{{x.Item}} ({{x.upgradePrice | currency:$:2}})<a href="{{x.url}}" target="_blank"> More</a></label>
                 </div>
             </div>
             <horiz-rule margintop="5" marginbottom="15"></horiz-rule>

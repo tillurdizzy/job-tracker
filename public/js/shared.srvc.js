@@ -504,6 +504,17 @@ app.service('SharedSrvc', ['$rootScope', 'ListSrvc', function sharedSrvc($rootSc
         return rtnObj;
     };
 
+    self.returnObjById = function(set, id) {
+        var rtnObj = {};
+        for (var i = 0; i < set.length; i++) {
+            if (set[i].id == id) {
+                rtnObj = set[i];
+                break;
+            }
+        }
+        return rtnObj;
+    };
+
 
 
 
