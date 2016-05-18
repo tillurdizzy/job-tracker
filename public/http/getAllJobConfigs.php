@@ -18,7 +18,8 @@ while ($row = mysqli_fetch_object($result)) {
 	$oneVO->PRIMARY_ID = $row->PRIMARY_ID;
 	$oneVO->config = $row->config;
 	$oneVO->laborCost = $row->laborCost;
-	$oneVO->materialsCost = $row->materialsCost;
+	$oneVO->baseCost = $row->baseCost;
+	$oneVO->upgradeCost = $row->upgradeCost;
 	array_push( $resultValueObjects, $oneVO );
 }
 echo json_encode($resultValueObjects);

@@ -157,14 +157,20 @@
                 <tr>
                     <th>PRIMARY_ID</th>
                     <th>jobID</th>
-                    <th>strDate</th>
+                    <th>config</th>
+                    <th>laborCost</th>
+                    <th>baseCost</th>
+                    <th>upgradeCost</th>
                 </tr>
             </thead>
             <tbody>
                 <tr ng-repeat="row in Ctrl.jobConfigData">
                     <td>{{row.PRIMARY_ID}}</td>
                     <td>{{row.jobID}}</td>
-                    <td>{{row.strDate}}</td>
+                    <td>{{row.config}}</td>
+                    <td>{{row.laborCost}}</td>
+                    <td>{{row.baseCost}}</td>
+                    <td>{{row.upgradeCost}}</td>
                 </tr>
             </tbody>
         </table>

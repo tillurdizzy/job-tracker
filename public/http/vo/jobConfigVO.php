@@ -4,6 +4,7 @@ class jobConfigVO{
 	var $jobID;
 	var $config;
 	var $laborCost;
-	var $materialsCost;
+	var $baseCost;
+	var $upgradeCost;
 }
 ?>

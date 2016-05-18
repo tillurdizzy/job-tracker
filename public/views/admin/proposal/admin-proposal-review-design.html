@@ -121,7 +121,7 @@
         <h2>Edges</h2>
     </div>
     <div>
-        <table st-table="ChildCtrl.materialPricingDP.Edge" class="table table-striped" style="width:100%;">
+        <table st-table="ChildCtrl.materialPricingDP.EdgeTrim" class="table table-striped" style="width:100%;">
             <thead>
                 <tr>
                     <th>Include</th>
@@ -134,7 +134,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="row in ChildCtrl.materialPricingDP.Edge">
+                <tr ng-repeat="row in ChildCtrl.materialPricingDP.EdgeTrim">
                     <td>
                         <div class="check-radio-container">
                             <input type="checkbox" id="{{row.Sort}}" ng-model="row.Checked" ng-change="ChildCtrl.toggleCheckBox()"></input>

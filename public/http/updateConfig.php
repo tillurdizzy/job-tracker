@@ -11,9 +11,15 @@ define( "DATABASE_NAME", "jobtracker");
 $con = mysqli_connect(DATABASE_SERVER, DATABASE_USERNAME, DATABASE_PASSWORD,DATABASE_NAME) or die ('ERROR!!!');
 $jobID = mysqli_real_escape_string($con,$data->jobID);
 $config = mysqli_real_escape_string($con,$data->config);
+$laborCost = mysqli_real_escape_string($con,$data->laborCost);
+$baseCost = mysqli_real_escape_string($con,$data->baseCost);
+$upgradeCost = mysqli_real_escape_string($con,$data->upgradeCost);
 
 $query = "UPDATE job_config SET 
 config='".$config."'
+laborCost='".$laborCost."'
+baseCost='".$baseCost."'
+upgradeCost='".$upgradeCost."'
 WHERE jobID='".$jobID."'";
 $qry_res = mysqli_query($con,$query);
 if ($qry_res) {
@@ -22,7 +28,7 @@ if ($qry_res) {
 	$jsn = json_encode($arr);
 	echo($jsn);
 } else {
-	$arr = array('msg' => "Error inserting record", 'result' => $qry_res,'params' => $jobID);
+	$arr = array('msg' => "Error", 'result' => $qry_res,'params' => $jobID);
 	$jsn = json_encode($arr);
 	echo($jsn);
 }

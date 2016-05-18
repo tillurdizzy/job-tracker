@@ -194,6 +194,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
                 self.basePrice.Edge = self.materialsDefault[i].Total;
             }
         }
+
     };
 
     // Categorizes and sorts the complete materials list into roof sections
@@ -225,7 +226,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
                 flashing.push(self.materialsList[i]);
             } else if (cat == "Valley") {
                 valley.push(self.materialsList[i]);
-            } else if (cat == "Edge") {
+            } else if (cat == "EdgeTrim") {
                 edge.push(self.materialsList[i]);
             } else if (cat == "LowSlope") {
                 flat.push(self.materialsList[i]);
@@ -286,7 +287,8 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
                 break;
             }
         }
-        self.saveJobConfig();
+        $rootScope.$broadcast('onEditMaterial');
+        //self.saveJobConfig();
     };
 
     var getSpecialConsiderations = function() {
@@ -714,8 +716,9 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
         };
 
         dataObj.config = dataStr;
-        console.log(otherItems);
-        console.log(dataStr);
+        dataObj.laborCost =   "";
+        dataObj.baseCost =  ""; 
+        dataObj.upgradeCost = "";
 
         DB.query("updateConfig", dataObj).then(function(resultObj) {
             if (resultObj.result == "Error" || typeof resultObj.data === "string") {

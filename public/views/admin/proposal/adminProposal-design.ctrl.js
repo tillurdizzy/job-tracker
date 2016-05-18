@@ -166,6 +166,10 @@ app.controller('AdminPropDesign', ['$state', '$scope', 'AdminSharedSrvc', 'Admin
         });
     });
 
+    $scope.$on('onEditMaterial', function() {
+        ME.getTotal();
+    });
+
     // Broadcast from AdminSharedSrvc >>> selectProposal (user selected prompt -1 from dropdown i.e. there is no proposal selected)
     $scope.$on('onResetProposalData', function(event, obj) {
         ME.materialPricingDP = ME.S.materialsCatergorized;

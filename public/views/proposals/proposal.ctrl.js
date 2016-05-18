@@ -62,7 +62,7 @@ app.controller('ProposalCtrl', ['$state', '$scope', 'evoDb', 'SharedSrvc', 'Shin
 
     ME.printSummary = function() {
         var dataObj = {};
-        dataObj.materialsCost = ME.materialsCost;
+       
     };
 
     ME.goClients = function() {
