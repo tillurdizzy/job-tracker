@@ -2,6 +2,8 @@
 class jobMaterialsVO{
 	var $PRIMARY_ID;
 	var $jobID;
-	var $strData;
+	var $config;
+	var $laborCost;
+	var $materialsCost;
 }
 ?>

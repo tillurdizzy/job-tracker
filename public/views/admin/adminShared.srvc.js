@@ -16,7 +16,6 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
     self.MULTILEVELS = [];
    
 
-
     //jobVO's related to jobs that are in Proposal State
     var proposalsAsJob = [];
 
@@ -35,6 +34,12 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
     // Then Merged with self.jobConfig for custom selections and pricing
     // Totals calculated
     self.materialsList = [];
+
+    // Extracted from materialsList... items that are marked as "Checked"
+    self.materialsDefault = [];
+
+    // Price to customer without any upgrades... Default selections + labor + Other Expenses
+    self.basePrice = {};
 
     // Selections and pricing specific to a job
     self.jobConfig = [];
@@ -168,8 +173,27 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
     var mergeConfig = function() {
         var aClone = DB.clone(self.MATERIALS);
         self.materialsList = CONFIG.mergeConfig(aClone, self.proposalUnderReview.propertyInputParams, true);
+        self.materialsDefault = CONFIG.mergeConfig(self.materialsDefault, self.proposalUnderReview.propertyInputParams, true);
+        calculateBasePrice();
         categorizeMaterials();
         getSpecialConsiderations();
+    };
+
+    var calculateBasePrice = function(){
+        self.basePrice = {};
+
+        for (var i = 0; i < self.materialsDefault.length; i++) {
+            var cat = self.materialsDefault[i].Category;
+            if(cat == "Field"){
+                self.basePrice.Field = self.materialsDefault[i].Total;
+            }else if(cat == "Valley"){
+                self.basePrice.Valley = self.materialsDefault[i].Total;
+            }else if(cat == "Ridge"){
+                self.basePrice.Ridge = self.materialsDefault[i].Total;
+            }else if(cat == "EdgeTrim"){
+                self.basePrice.Edge = self.materialsDefault[i].Total;
+            }
+        }
     };
 
     // Categorizes and sorts the complete materials list into roof sections
@@ -181,6 +205,8 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
         var caps = [];
         var vents = [];
         var flashing = [];
+        var valley = [];
+        var edge = [];
         var flat = [];
         var other = [];
         for (var i = 0; i < self.materialsList.length; i++) {
@@ -195,8 +221,12 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
                 caps.push(self.materialsList[i]);
             } else if (cat == "Ventilation") {
                 vents.push(self.materialsList[i]);
-            } else if (cat == "Flashing" || cat == "Valley" || cat == "Edge") {
+            } else if (cat == "Flashing") {
                 flashing.push(self.materialsList[i]);
+            } else if (cat == "Valley") {
+                valley.push(self.materialsList[i]);
+            } else if (cat == "Edge") {
+                edge.push(self.materialsList[i]);
             } else if (cat == "LowSlope") {
                 flat.push(self.materialsList[i]);
             } else if (cat == "Other") {
@@ -210,6 +240,8 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
         self.materialsCatergorized.Caps = caps;
         self.materialsCatergorized.Vents = vents;
         self.materialsCatergorized.Flashing = flashing;
+        self.materialsCatergorized.Valley = valley;
+        self.materialsCatergorized.Edge = edge;
         self.materialsCatergorized.Flat = flat;
         self.materialsCatergorized.Other = other;
 
@@ -248,8 +280,9 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
         }
         for (var i = 0; i < catArray.length; i++) {
             if (catArray[i].PRIMARY_ID == vals.ID) {
-                catArray[i].PkgPrice = vals.Price;
+                catArray[i].PkgPrice = parseInt(vals.Price);
                 catArray[i].Qty = parseInt(vals.Qty);
+                catArray[i].Total = catArray[i].PkgPrice * catArray[i].Qty;
                 break;
             }
         }
@@ -269,6 +302,17 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
         }, function(error) {
             alert("ERROR returned for  getSpecialConsiderations()");
         });
+    };
+
+    // called from getMaterialsList list... parses out default checked items in order to get a baseline price
+    // run this through mergeConfig function to insert prices and quantity
+    var extractDefaultMaterials = function(){
+        self.materialsDefault = [];
+        for (var i = 0; i < self.materialsList.length; i++) {
+            if(self.materialsList[i].Checked == "1"){
+                self.materialsDefault.push(self.materialsList[i]);
+            }
+        }
     };
 
 
@@ -298,7 +342,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
                 proposalsAsJob = resultObj.data;
             }
         }, function(error) {
-            alert("Query Error - AdminSharedSrvc >> getMaterialsList");
+            alert("Query Error - AdminSharedSrvc >> getProposalsByJob");
         });
     };
 
@@ -318,6 +362,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
                 self.MATERIALS = resultObj.data;
                 self.MATERIALS = underscore.sortBy(self.MATERIALS, 'Sort');
                 self.materialsList = DB.clone(self.MATERIALS);
+                extractDefaultMaterials();
             }
         }, function(error) {
             alert("Query Error - AdminSharedSrvc >> getMaterialsList");
@@ -658,7 +703,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
             e = self.materialsCatergorized.Caps[i].Category;
             dataStr += a + ';' + b + ';' + c + ';' + d + ';' + e + '!';
         };
-
+       
         for (i = 0; i < self.materialsCatergorized.Other.length; i++) {
             a = self.materialsCatergorized.Other[i].Code;
             b = self.materialsCatergorized.Other[i].Qty;
@@ -668,7 +713,9 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
             dataStr += a + ';' + b + ';' + c + ';' + d + ';' + e + '!';
         };
 
-        dataObj.strData = dataStr;
+        dataObj.config = dataStr;
+        console.log(otherItems);
+        console.log(dataStr);
 
         DB.query("updateConfig", dataObj).then(function(resultObj) {
             if (resultObj.result == "Error" || typeof resultObj.data === "string") {

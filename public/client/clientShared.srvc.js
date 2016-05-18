@@ -351,7 +351,7 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'JobConfigSrvc'
         };
         // Add Labor
         var laborCost;
-
+        
 
         $rootScope.$broadcast("on-data-collection-complete");
     };

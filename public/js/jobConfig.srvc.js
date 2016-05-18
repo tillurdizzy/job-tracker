@@ -16,7 +16,7 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore',function jobConfigSrvc(
     self.parseJobConfig = function(ar) {
         self.jobConfigArray = [];
         if (ar.length > 0) {
-            self.jobConfigStr = ar[0].strData;
+            self.jobConfigStr = ar[0].config;
             if (self.jobConfigStr != "") {
                 var rootArr = self.jobConfigStr.split('!');
                 for (var i = 0; i < rootArr.length; i++) {
@@ -183,7 +183,7 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore',function jobConfigSrvc(
             dataStr += a + ';' + b + ';' + c + ';' + d + ';' + e + '!';
         }
         var dataObj = {};
-        dataObj.strData = dataStr;
+        dataObj.config = dataStr;
         return dataObj;
     }
 

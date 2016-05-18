@@ -16,7 +16,9 @@ $resultValueObjects = array();
 while ($row = mysqli_fetch_object($result)) {
 	$oneVO = new jobConfigVO();
 	$oneVO->PRIMARY_ID = $row->PRIMARY_ID;
-	$oneVO->strData = $row->strData;
+	$oneVO->config = $row->config;
+	$oneVO->laborCost = $row->laborCost;
+	$oneVO->materialsCost = $row->materialsCost;
 	array_push( $resultValueObjects, $oneVO );
 }
 echo json_encode($resultValueObjects);

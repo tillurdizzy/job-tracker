@@ -10,10 +10,10 @@ define( "DATABASE_NAME", "jobtracker");
 
 $con = mysqli_connect(DATABASE_SERVER, DATABASE_USERNAME, DATABASE_PASSWORD,DATABASE_NAME) or die ('ERROR!!!');
 $jobID = mysqli_real_escape_string($con,$data->jobID);
-$strData = mysqli_real_escape_string($con,$data->strData);
+$config = mysqli_real_escape_string($con,$data->config);
 
 $query = "UPDATE job_config SET 
-strData='".$strData."'
+config='".$config."'
 WHERE jobID='".$jobID."'";
 $qry_res = mysqli_query($con,$query);
 if ($qry_res) {

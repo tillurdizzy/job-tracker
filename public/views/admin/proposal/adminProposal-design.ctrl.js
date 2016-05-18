@@ -41,7 +41,6 @@ app.controller('AdminPropDesign', ['$state', '$scope', 'AdminSharedSrvc', 'Admin
             data: passedObj
         }).then(function(value) {
             ME.S.editMaterial(value);
-            ME.getTotal();
         }, function(reason) {
 
         });
@@ -54,6 +53,8 @@ app.controller('AdminPropDesign', ['$state', '$scope', 'AdminSharedSrvc', 'Admin
         ME.ShinglesRidgeTotal = 0;
         ME.VentsTotal = 0;
         ME.FlashingTotal = 0;
+        ME.ValleyTotal = 0;
+        ME.EdgeTotal = 0;
         ME.CapsTotal = 0;
         ME.FlatTotal = 0;
         ME.OtherTotal = 0;
@@ -98,6 +99,20 @@ app.controller('AdminPropDesign', ['$state', '$scope', 'AdminSharedSrvc', 'Admin
             }
         };
 
+        for (var i = 0; i < ME.materialPricingDP.Valley.length; i++) {
+            include = ME.materialPricingDP.Valley[i].Checked;
+            if (include) {
+                ME.ValleyTotal += parseInt(ME.materialPricingDP.Valley[i].Total);
+            }
+        };
+
+        for (var i = 0; i < ME.materialPricingDP.Edge.length; i++) {
+            include = ME.materialPricingDP.Edge[i].Checked;
+            if (include) {
+                ME.EdgeTotal += parseInt(ME.materialPricingDP.Edge[i].Total);
+            }
+        };
+
         for (var i = 0; i < ME.materialPricingDP.Flat.length; i++) {
             include = ME.materialPricingDP.Flat[i].Checked;
             if (include) {
@@ -119,7 +134,9 @@ app.controller('AdminPropDesign', ['$state', '$scope', 'AdminSharedSrvc', 'Admin
             }
         };
 
-        ME.GrandTotal = ME.ShinglesFieldTotal + ME.ShinglesRidgeTotal + ME.VentsTotal + ME.FlashingTotal + ME.FlatTotal + ME.CapsTotal + ME.OtherTotal;
+        ME.baseTotal = "";
+        ME.GrandTotal = ME.ShinglesFieldTotal + ME.ShinglesRidgeTotal + ME.VentsTotal + ME.FlashingTotal + 
+        ME.EdgeTotal + ME.ValleyTotal + ME.FlatTotal + ME.CapsTotal + ME.OtherTotal;
         ME.P.setSummaryItem("materials", ME.GrandTotal);
     };
 
@@ -136,13 +153,13 @@ app.controller('AdminPropDesign', ['$state', '$scope', 'AdminSharedSrvc', 'Admin
         ME.materialPricingDP = ME.S.materialsCatergorized;
         ME.proposalSelected = true;
         configExists();
-        ME.getTotal();
     });
 
     $scope.$on('onSaveJobConfig', function() {
         ME.dataIsSaved = true;
+        ME.getTotal();
         ngDialog.open({
-            template: '<h2>Job Config saved..</h2>',
+            template: '<h2>Job Config saved.</h2>',
             className: 'ngdialog-theme-default',
             plain: true,
             overlay: false
@@ -151,7 +168,7 @@ app.controller('AdminPropDesign', ['$state', '$scope', 'AdminSharedSrvc', 'Admin
 
     // Broadcast from AdminSharedSrvc >>> selectProposal (user selected prompt -1 from dropdown i.e. there is no proposal selected)
     $scope.$on('onResetProposalData', function(event, obj) {
-        ME.materialPricingDP = [];
+        ME.materialPricingDP = ME.S.materialsCatergorized;
         ME.proposalSelected = false;
         ME.dataIsSaved = true;
         ME.getTotal();

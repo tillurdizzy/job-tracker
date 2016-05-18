@@ -13,6 +13,7 @@ app.controller('AdminProposalCtrl',['$rootScope','$state','AdminDataSrvc','$scop
 	ME.proposalData = {salesRep:"-",clientID:"-",propertyID:"-",jobID:"-"};
 	
 	ME.selectProposal = function(){
+		
 		var objLength = Object.keys(ME.selectedProposal).length;
 		if(objLength > 0){
 			ME.proposalData = S.selectProposal(ME.selectedProposal.id);
