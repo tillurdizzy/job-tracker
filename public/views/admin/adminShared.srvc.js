@@ -14,7 +14,8 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
     self.SPECIAL = "";
     self.MULTIVENTS = [];
     self.MULTILEVELS = [];
-    self.LABOR = {};
+    self.laborDefault = {};
+    self.laborConfig = {};
 
     //jobVO's related to jobs that are in Proposal State
     var proposalsAsJob = [];
@@ -38,8 +39,8 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
     // Extracted from materialsList... items that are marked as "Checked"
     self.materialsDefault = [];
 
-    // Price to customer without any upgrades... Default selections + labor + Other Expenses
-    self.basePrice = {Field:"",Valley:"",Ridge:"",Total:""};
+    // Price to customer without any upgrades... Default selections + LABORCOST + Other Expenses
+    self.basePrice = { Field: "", Valley: "", Ridge: "", Total: "" };
 
     // Selections and pricing specific to a job
     self.jobConfig = [];
@@ -52,7 +53,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
 
     // self.materialsList sorted into categories
     // Consumed by view controller as data provider for Pricing Tab
-    self.materialsCatergorized = { Field: [], Ridge: [], Starter: [], Vents: [], Flashing: [], Edge: [], Valley:[],Caps: [], Flat: [], Other: [] };
+    self.materialsCatergorized = { Field: [], Ridge: [], Starter: [], Vents: [], Flashing: [], Edge: [], Valley: [], Caps: [], Flat: [], Other: [] };
 
     // Step 1 : Select proposal/property from dropdown on AdminProposalCtrl
     // Called for both roofCodes 0 and 2, but code 2 halts before retrieving jobParameters
@@ -83,9 +84,9 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
                 };
                 rtnObj.jobID = self.proposalUnderReview.jobID;
                 getJobParameters();
-            }else if(rtnObj.roofCode == 2){
+            } else if (rtnObj.roofCode == 2) {
                 // There could be multiple matches here... get the roofID to retrieve the roof names to use in a list
-                rtnObj.roofSelectionList = [{label:"--- Select a Roof at this Property ---",jobID:-1}];
+                rtnObj.roofSelectionList = [{ label: "--- Select a Roof at this Property ---", jobID: -1 }];
                 for (var i = 0; i < proposalsAsJob.length; i++) {
                     if (proposalsAsJob[i].property === self.proposalUnderReview.PRIMARY_ID) {
                         var listItem = {};
@@ -100,7 +101,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
         return rtnObj;
     };
 
-    self.selectRoof = function(jobID){
+    self.selectRoof = function(jobID) {
         self.proposalUnderReview.jobID = jobID;
         // Set flags to false
         mergeDataFlag.config = false;
@@ -172,28 +173,39 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
     // Take the generic materialList and merge it with the job-specific config (insert qty and price)
     var mergeConfig = function() {
         var aClone = DB.clone(self.MATERIALS);
-        self.materialsList = CONFIG.mergeConfig(aClone, self.proposalUnderReview.propertyInputParams, true);
-        self.materialsDefault = CONFIG.mergeConfig(self.materialsDefault, self.proposalUnderReview.propertyInputParams, true);
+        self.materialsList = CONFIG.mergeJobConfig(aClone, self.proposalUnderReview.propertyInputParams, true);
+        self.materialsDefault = CONFIG.mergeJobConfig(self.materialsDefault, self.proposalUnderReview.propertyInputParams, true);
+
+        // If there is a saved labor config, insert the cost and qty... otherwise return the laborDefault vals
+        self.laborConfig = CONFIG.mergeLaborConfig(self.laborDefault, DB.clone(self.proposalUnderReview.propertyInputParams));
         calculateBasePrice();
+
         categorizeMaterials();
         getSpecialConsiderations();
     };
 
-    var calculateBasePrice = function(){
+    var calculateBasePrice = function() {
         self.basePrice = {};
         // These 3 categories are the ones that the Client can upgrade
         // This function records the non-upgrade prices for each to use for the Baseline Price
         for (var i = 0; i < self.materialsDefault.length; i++) {
             var cat = self.materialsDefault[i].Category;
-            if(cat == "Field"){
+            if (cat == "Field") {
                 self.basePrice.Field = self.materialsDefault[i].Total;
-            }else if(cat == "Valley"){
+            } else if (cat == "Valley") {
                 self.basePrice.Valley = self.materialsDefault[i].Total;
-            }else if(cat == "Ridge"){
+            } else if (cat == "Ridge") {
                 self.basePrice.Ridge = self.materialsDefault[i].Total;
             }
         }
     };
+
+    // Just replace the default labor with config labor if it exists
+    // Labor was updated in CONFIG in Step 3... 
+    // This will be called form labor.ctrl
+    var returnLabor = function() {
+
+    }
 
     // Categorizes and sorts the complete materials list into roof sections
     var categorizeMaterials = function() {
@@ -306,15 +318,14 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
 
     // called from getMaterialsList list... parses out default checked items in order to get a baseline price
     // run this through mergeConfig function to insert prices and quantity
-    var extractDefaultMaterials = function(){
+    var extractDefaultMaterials = function() {
         self.materialsDefault = [];
         for (var i = 0; i < self.materialsList.length; i++) {
-            if(self.materialsList[i].Checked == "1"){
+            if (self.materialsList[i].Checked == "1") {
                 self.materialsDefault.push(self.materialsList[i]);
             }
         }
     };
-
 
     //Queries the properties table based on proposal status
     // Called from init() in adminProposal.ctrl
@@ -719,7 +730,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
             e = self.materialsCatergorized.Caps[i].Category;
             dataStr += a + ';' + b + ';' + c + ';' + d + ';' + e + '!';
         };
-       
+
         for (i = 0; i < self.materialsCatergorized.Other.length; i++) {
             a = self.materialsCatergorized.Other[i].Code;
             b = self.materialsCatergorized.Other[i].Qty;
@@ -745,31 +756,31 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
         self.updateConfigCost();
     };
 
-    self.updateConfigCost = function(){
+    self.updateConfigCost = function() {
         dataObj = {};
-        dataObj.baseCost =  "Field;" + self.basePrice.Field + "!Valley;" + self.basePrice.Valley + "!Ridge;" + self.basePrice.Ridge + "!Total;" + self.basePrice.Total;
-        dataObj.upgradeCost =  "";
+        dataObj.baseCost = "Field;" + self.basePrice.Field + "!Valley;" + self.basePrice.Valley + "!Ridge;" + self.basePrice.Ridge + "!Total;" + self.basePrice.Total;
+        dataObj.upgradeCost = "";
         DB.query("updateConfigCost", dataObj).then(function(resultObj) {
             if (resultObj.result == "Error" || typeof resultObj.data === "string") {
                 alert("Query Error - see console for details");
                 console.log("updateConfig ---- " + resultObj.data);
             } else {
-               
+
             }
         }, function(error) {
             alert("Query Error - AdminSharedSrvc >> updateConfigCost");
         });
     };
 
-    self.updateConfigLabor = function(strVals){
+    self.updateConfigLabor = function(strVals) {
         dataObj = {};
-        dataObj.laborCost =  strVals;
+        dataObj.laborCost = strVals;
         DB.query("updateConfigLabor", dataObj).then(function(resultObj) {
             if (resultObj.result == "Error" || typeof resultObj.data === "string") {
                 alert("Query Error - see console for details");
                 console.log("updateConfig ---- " + resultObj.data);
             } else {
-               
+
             }
         }, function(error) {
             alert("Query Error - AdminSharedSrvc >> updateConfigLabor");
@@ -791,17 +802,30 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
         });
     };
 
-    var getLabor = function(){
-       DB.query("getLabor").then(function(resultObj) {
+    var getDefaultLabor = function() {
+        DB.query("getLabor").then(function(resultObj) {
             if (resultObj.result == "Error" || typeof resultObj.data === "string") {
                 alert("Query Error - see console for details");
                 console.log("getLabor ---- " + resultObj.data);
             } else {
-                self.LABOR = resultObj.data[0];
+                self.laborDefault = resultObj.data[0];
             }
         }, function(error) {
             alert("Query Error - AdminSharedSrvc >> getLabor");
-        }); 
+        });
+    };
+
+    var getConfigLabor = function() {
+        DB.query("getConfigLabor").then(function(resultObj) {
+            if (resultObj.result == "Error" || typeof resultObj.data === "string") {
+                alert("Query Error - see console for details");
+                console.log("getLabor ---- " + resultObj.data);
+            } else {
+                self.laborConfig = resultObj.data[0];
+            }
+        }, function(error) {
+            alert("Query Error - AdminSharedSrvc >> getLabor");
+        });
     };
 
     self.returnSalesRep = function(id) {
@@ -879,7 +903,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
     getMaterialsList();
     getSalesReps();
     getProperties();
-    getLabor();
+    getDefaultLabor();
 
     return self;
 }]);

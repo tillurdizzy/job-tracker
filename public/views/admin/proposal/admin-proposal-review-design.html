@@ -9,7 +9,7 @@
         <h2>Field Shingles</h2>
     </div>
     <div>
-        <table st-table="ChildCtrl.propertyInputParams" class="table table-striped" style="width:100%;">
+        <table st-table="ChildCtrl.materialPricingDP.Field" class="table table-striped" style="width:100%;">
             <thead>
                 <tr>
                     <th>Include</th>
@@ -46,7 +46,7 @@
         <h2>Starter Shingles</h2>
     </div>
     <div>
-        <table st-table="ChildCtrl.propertyInputParams" class="table table-striped" style="width:100%;">
+        <table st-table="ChildCtrl.materialPricingDP.Starter" class="table table-striped" style="width:100%;">
             <thead>
                 <tr>
                     <th>Include</th>
@@ -121,7 +121,7 @@
         <h2>Edges</h2>
     </div>
     <div>
-        <table st-table="ChildCtrl.materialPricingDP.EdgeTrim" class="table table-striped" style="width:100%;">
+        <table st-table="ChildCtrl.materialPricingDP.Edge" class="table table-striped" style="width:100%;">
             <thead>
                 <tr>
                     <th>Include</th>
@@ -134,7 +134,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="row in ChildCtrl.materialPricingDP.EdgeTrim">
+                <tr ng-repeat="row in ChildCtrl.materialPricingDP.Edge">
                     <td>
                         <div class="check-radio-container">
                             <input type="checkbox" id="{{row.Sort}}" ng-model="row.Checked" ng-change="ChildCtrl.toggleCheckBox()"></input>
@@ -232,7 +232,7 @@
         <h2>Total Ventilation: {{ChildCtrl.VentsTotal | currency:"$":2}}</h2>
     </div>
     <div class="section-header">
-        <h2>Edge and Flashing</h2>
+        <h2>Flashing</h2>
     </div>
     <div>
         <table st-table="ChildCtrl.propertyInputParams" class="table table-striped" style="width:100%;">

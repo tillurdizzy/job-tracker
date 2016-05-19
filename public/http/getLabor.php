@@ -20,6 +20,7 @@ while ($row = mysqli_fetch_object($result)) {
 	$oneVO->trim = $row->trim;
 	$oneVO->deck = $row->deck;
 	$oneVO->flat = $row->flat;
+	$oneVO->other = $row->other;
 	array_push( $resultValueObjects, $oneVO );
 }
 echo json_encode($resultValueObjects);

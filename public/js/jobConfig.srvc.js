@@ -42,6 +42,7 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore', function jobConfigSrvc
         };
 
         // 2. Labor config
+        self.configLabor = [];
         var laborStr = dataObj.laborCost;
         if (laborStr != "") {
             var laborArr = laborStr.split('!');
@@ -55,6 +56,7 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore', function jobConfigSrvc
             }
         };
         // 3. Base Cost config
+        self.configBaseCosts = [];
         var baseCostStr = dataObj.baseCost;
         if (baseCostStr != "") {
             var baseCostArr = baseCostStr.split('!');
@@ -71,14 +73,14 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore', function jobConfigSrvc
 
         // 4. Upgrade Cost config
         //var upgradeCostStr = dataObj.upgradeCost;
-        
+
         // Only the jobConfig is returned to Shared
         return self.jobConfigArray;
     };
 
     // Step 4 of events triggered by selection of a Proposal from Proposal Review
     // This takes a list of materials, and fills in the Qty, 
-    self.mergeConfig = function(materials, params, useConfig) {
+    self.mergeJobConfig = function(materials, params, useConfig) {
 
         for (var i = 0; i < materials.length; i++) {
 
@@ -167,10 +169,74 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore', function jobConfigSrvc
             materials[i].PkgQty = pkgQtyWithOverageRoundedUp;
             materials[i].Total = total;
             materials[i].Checked = checked;
-
         };
 
         return materials;
+    };
+
+    self.mergeLaborConfig = function(defaultLabor, params) {
+       
+        if (self.configLabor.length === 0) {
+            // there is no custom labor config
+            var P = numberize(params);
+            var linerFt = P.TOPRDG + P.RKERDG + P.PRMITR;
+            var linearToSqs = (linerFt / 35) / 3.3;
+            var totalSquares = P.FIELD + linearToSqs;
+            totalSquares = Math.ceil(totalSquares);
+            var laborField = totalSquares * parseInt(defaultLabor.square);
+            var laborDeck = totalSquares * parseInt(defaultLabor.deck);
+
+            var itemObj = {};
+            itemObj.Labor = "Field";
+            itemObj.Qty = totalSquares;
+            itemObj.Units = "Sqs";
+            itemObj.Cost = defaultLabor.square;
+            itemObj.Total = laborField;
+            self.configLabor.push(itemObj);
+
+            itemObj = {};
+            itemObj.Labor = "Re-Deck";
+            itemObj.Qty = 0;
+            itemObj.Units = "Sqs";
+            itemObj.Cost = defaultLabor.deck;
+            itemObj.Total = laborDeck;
+            self.configLabor.push(itemObj);
+
+            itemObj = {};
+            itemObj.Labor = "Low Slope / Flat";
+            itemObj.Qty = 0;
+            itemObj.Units = 0;
+            itemObj.Cost = defaultLabor.flat;
+            itemObj.Total = 0;
+            self.configLabor.push(itemObj);
+        }else{
+
+        }
+
+
+        return self.configLabor;
+    };
+
+    self.returnBaseCost = function() {
+        return self.configBaseCosts;
+    };
+
+    // Make all vals numbers
+    var numberize = function(inputObj) {
+        for (var prop in inputObj) {
+            if (!inputObj.hasOwnProperty(prop)) {
+                //The current property is not a direct property of p
+                continue;
+            }
+            var x = inputObj[prop];
+            var xInt = parseInt(x);
+            if (isNaN(x)) {
+                inputObj[prop] = 0;
+            } else {
+                inputObj[prop] = xInt;
+            }
+        }
+        return inputObj;
     };
 
     var convertToBoolean = function(input) {
@@ -276,5 +342,6 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore', function jobConfigSrvc
 
 
     console.log("jobConfig Complete");
+
     return self;
 }]);

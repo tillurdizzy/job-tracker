@@ -254,12 +254,11 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'JobConfigSrvc'
     // Checks to make sure both config and materials are up to date 
     var validateMergeData = function() {
         var listCopy = clone(self.materialsList);
-        if (mergeDataFlag.config === true && mergeDataFlag.params === true) {
-            // 
-            self.defaultCheckedMaterials = CONFIG.mergeConfig(self.defaultCheckedMaterials, self.jobParameters, false);
+        if (mergeDataFlag.config === true && mergeDataFlag.params === true) { 
+            self.defaultCheckedMaterials = CONFIG.mergeJobConfig(self.defaultCheckedMaterials, self.jobParameters, false);
 
-            self.materialsList = CONFIG.mergeConfig(self.materialsList, self.jobParameters, false);
-            self.materialsListConfig = CONFIG.mergeConfig(listCopy, self.jobParameters, true);
+            self.materialsList = CONFIG.mergeJobConfig(self.materialsList, self.jobParameters, false);
+            self.materialsListConfig = CONFIG.mergeJobConfig(listCopy, self.jobParameters, true);
 
             CONFIG.defaultCheckedMaterials = self.defaultCheckedMaterials
             getDefaultSelections();

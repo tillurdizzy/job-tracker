@@ -6,7 +6,7 @@
         <h2>Labor Total: {{ChildCtrl.LaborTotal | currency:"$":2}}</h2>
     </div>
     <div>
-        <table st-table="ChildCtrl.laborCostItems;" class="table table-striped" style="width:100%;">
+        <table st-table="ChildCtrl.laborTableDP;" class="table table-striped" style="width:100%;">
             <thead>
                 <tr>
                     <th>Labor</th>
@@ -18,12 +18,12 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="row in ChildCtrl.laborCostItems;">
-                    <td>{{row.labor}}</td>
-                    <td>{{row.qty}}</td>
-                    <td>{{row.units}}</td>
-                    <td>{{row.cost | currency:"$":2}}</td>
-                    <td>{{row.total | currency:"$":2}}</td>
+                <tr ng-repeat="row in ChildCtrl.laborTableDP;">
+                    <td>{{row.Labor}}</td>
+                    <td>{{row.Qty}}</td>
+                    <td>{{row.Units}}</td>
+                    <td>{{row.Cost | currency:"$":2}}</td>
+                    <td>{{row.Total | currency:"$":2}}</td>
                     <td><i class="fa fa-pencil" ng-click="ChildCtrl.editRowItem(row)" style="cursor:pointer;"></i></td>
                 </tr>
             </tbody>

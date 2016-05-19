@@ -5,6 +5,6 @@ class laborVO{
 	var $trim;
 	var $deck;
 	var $flat;
-	var $delivery;
+	var $other;
 }
 ?>
