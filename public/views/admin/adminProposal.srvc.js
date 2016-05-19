@@ -10,12 +10,9 @@ app.service('AdminProposalSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'un
 
     self.CostSummary = {labor:0,materials:0,supplies:0};
 
-
-
     // self.materialsList sorted into categories
     // Consumed by view controller as data provider for Pricing Tab
     self.materialsCatergorized = { Field: [], Ridge: [], Vents: [], Flashing: [], Caps: [], Flat: [], Other: [] };
-
 
     self.setSummaryItem = function(item,cost){
     	switch(item){

@@ -14,7 +14,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
     self.SPECIAL = "";
     self.MULTIVENTS = [];
     self.MULTILEVELS = [];
-   
+    self.LABOR = {};
 
     //jobVO's related to jobs that are in Proposal State
     var proposalsAsJob = [];
@@ -39,7 +39,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
     self.materialsDefault = [];
 
     // Price to customer without any upgrades... Default selections + labor + Other Expenses
-    self.basePrice = {};
+    self.basePrice = {Field:"",Valley:"",Ridge:"",Total:""};
 
     // Selections and pricing specific to a job
     self.jobConfig = [];
@@ -52,7 +52,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
 
     // self.materialsList sorted into categories
     // Consumed by view controller as data provider for Pricing Tab
-    self.materialsCatergorized = { Field: [], Ridge: [], Starter: [], Vents: [], Flashing: [], Caps: [], Flat: [], Other: [] };
+    self.materialsCatergorized = { Field: [], Ridge: [], Starter: [], Vents: [], Flashing: [], Edge: [], Valley:[],Caps: [], Flat: [], Other: [] };
 
     // Step 1 : Select proposal/property from dropdown on AdminProposalCtrl
     // Called for both roofCodes 0 and 2, but code 2 halts before retrieving jobParameters
@@ -181,7 +181,8 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
 
     var calculateBasePrice = function(){
         self.basePrice = {};
-
+        // These 3 categories are the ones that the Client can upgrade
+        // This function records the non-upgrade prices for each to use for the Baseline Price
         for (var i = 0; i < self.materialsDefault.length; i++) {
             var cat = self.materialsDefault[i].Category;
             if(cat == "Field"){
@@ -190,11 +191,8 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
                 self.basePrice.Valley = self.materialsDefault[i].Total;
             }else if(cat == "Ridge"){
                 self.basePrice.Ridge = self.materialsDefault[i].Total;
-            }else if(cat == "EdgeTrim"){
-                self.basePrice.Edge = self.materialsDefault[i].Total;
             }
         }
-
     };
 
     // Categorizes and sorts the complete materials list into roof sections
@@ -637,6 +635,22 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
         });
     };
 
+    self.saveLaborConfig = function(data) {
+        dataObj = {};
+        dataObj.strData = data;
+        dataObj.jobID = self.proposalUnderReview.jobID;
+        DB.query("updateConfigLabor", dataObj).then(function(resultObj) {
+            if (resultObj.result == "Error" || typeof resultObj.data === "string") {
+                alert("Query Error - see console for details");
+                console.log("saveLaborConfig ---- " + resultObj.data);
+            } else {
+                $rootScope.$broadcast('onSaveLaborConfig');
+            }
+        }, function(error) {
+            alert("Query Error - AdminSharedSrvc >> updateConfigConfig");
+        });
+    }
+
 
     self.saveJobConfig = function() {
         var dataObj = {};
@@ -716,11 +730,8 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
         };
 
         dataObj.config = dataStr;
-        dataObj.laborCost =   "";
-        dataObj.baseCost =  ""; 
-        dataObj.upgradeCost = "";
 
-        DB.query("updateConfig", dataObj).then(function(resultObj) {
+        DB.query("updateConfigConfig", dataObj).then(function(resultObj) {
             if (resultObj.result == "Error" || typeof resultObj.data === "string") {
                 alert("Query Error - see console for details");
                 console.log("updateConfig ---- " + resultObj.data);
@@ -728,7 +739,40 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
                 $rootScope.$broadcast('onSaveJobConfig');
             }
         }, function(error) {
-            alert("Query Error - AdminSharedSrvc >> updateConfig");
+            alert("Query Error - AdminSharedSrvc >> updateConfigConfig");
+        });
+
+        self.updateConfigCost();
+    };
+
+    self.updateConfigCost = function(){
+        dataObj = {};
+        dataObj.baseCost =  "Field;" + self.basePrice.Field + "!Valley;" + self.basePrice.Valley + "!Ridge;" + self.basePrice.Ridge + "!Total;" + self.basePrice.Total;
+        dataObj.upgradeCost =  "";
+        DB.query("updateConfigCost", dataObj).then(function(resultObj) {
+            if (resultObj.result == "Error" || typeof resultObj.data === "string") {
+                alert("Query Error - see console for details");
+                console.log("updateConfig ---- " + resultObj.data);
+            } else {
+               
+            }
+        }, function(error) {
+            alert("Query Error - AdminSharedSrvc >> updateConfigCost");
+        });
+    };
+
+    self.updateConfigLabor = function(strVals){
+        dataObj = {};
+        dataObj.laborCost =  strVals;
+        DB.query("updateConfigLabor", dataObj).then(function(resultObj) {
+            if (resultObj.result == "Error" || typeof resultObj.data === "string") {
+                alert("Query Error - see console for details");
+                console.log("updateConfig ---- " + resultObj.data);
+            } else {
+               
+            }
+        }, function(error) {
+            alert("Query Error - AdminSharedSrvc >> updateConfigLabor");
         });
     };
 
@@ -747,6 +791,19 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
         });
     };
 
+    var getLabor = function(){
+       DB.query("getLabor").then(function(resultObj) {
+            if (resultObj.result == "Error" || typeof resultObj.data === "string") {
+                alert("Query Error - see console for details");
+                console.log("getLabor ---- " + resultObj.data);
+            } else {
+                self.LABOR = resultObj.data[0];
+            }
+        }, function(error) {
+            alert("Query Error - AdminSharedSrvc >> getLabor");
+        }); 
+    };
+
     self.returnSalesRep = function(id) {
         var rtn = "";
         for (var i = 0; i < self.salesReps.length; i++) {
@@ -757,7 +814,6 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
         }
         return rtn;
     };
-
 
     self.returnClientNameByID = function(id) {
         for (var i = 0; i < self.CLIENTS.length; i++) {
@@ -818,9 +874,12 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
         getProperties();
     };
 
+
+
     getMaterialsList();
     getSalesReps();
     getProperties();
+    getLabor();
 
     return self;
 }]);

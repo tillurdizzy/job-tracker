@@ -1,56 +1,98 @@
 'use strict';
-app.service('JobConfigSrvc', ['$rootScope', 'underscore',function jobConfigSrvc($rootScope, underscore) {
+app.service('JobConfigSrvc', ['$rootScope', 'underscore', function jobConfigSrvc($rootScope, underscore) {
 
     var self = this;
     var Me = "JobConfigSrvc: ";
-    
+
     var materialsConfigured = [];
     self.jobConfigStr = "";
     self.jobConfigArray = [];
     self.materialsList = [];
     self.defaultCheckedMaterials = [];
 
+    self.configLabor = [];
+    self.configBaseCosts = [];
+
     // Step 3 of events triggered by selection of a Proposal from Proposal Review
     // Converts the long string saved in DB into array of objects
     // ar should be array with single object
     self.parseJobConfig = function(ar) {
+        // 1. Materials config - referred to as jobConfig
         self.jobConfigArray = [];
-        if (ar.length > 0) {
-            self.jobConfigStr = ar[0].config;
-            if (self.jobConfigStr != "") {
-                var rootArr = self.jobConfigStr.split('!');
-                for (var i = 0; i < rootArr.length; i++) {
-                    var thisArr = rootArr[i].split(';');
-                    var jobConfigObj = {};
-                    jobConfigObj.Code = thisArr[0];
-                    jobConfigObj.Qty = thisArr[1];
-                    jobConfigObj.Checked = thisArr[2];
-                    jobConfigObj.Price = thisArr[3];
-                    jobConfigObj.Category = thisArr[4];
-                    self.jobConfigArray.push(jobConfigObj);
-                }
+
+        if (ar.length == 0) {
+            return [];
+        } else {
+            var dataObj = ar[0];
+        };
+
+        self.jobConfigStr = dataObj.config;
+        if (self.jobConfigStr != "") {
+            var rootArr = self.jobConfigStr.split('!');
+            for (var i = 0; i < rootArr.length; i++) {
+                var thisArr = rootArr[i].split(';');
+                var jobConfigObj = {};
+                jobConfigObj.Code = thisArr[0];
+                jobConfigObj.Qty = thisArr[1];
+                jobConfigObj.Checked = thisArr[2];
+                jobConfigObj.Price = thisArr[3];
+                jobConfigObj.Category = thisArr[4];
+                self.jobConfigArray.push(jobConfigObj);
             }
-        }
+        };
+
+        // 2. Labor config
+        var laborStr = dataObj.laborCost;
+        if (laborStr != "") {
+            var laborArr = laborStr.split('!');
+            for (var i = 0; i < laborArr.length; i++) {
+                var thisItem = laborArr[i].split(';');
+                var itemObj = {};
+                itemObj.Labor = thisItem[0];
+                itemObj.Qty = thisItem[1];
+                itemObj.Cost = thisItem[2];
+                self.configLabor.push(itemObj);
+            }
+        };
+        // 3. Base Cost config
+        var baseCostStr = dataObj.baseCost;
+        if (baseCostStr != "") {
+            var baseCostArr = baseCostStr.split('!');
+            for (var i = 0; i < baseCostArr.length; i++) {
+                var thisItem = baseCostArr[i].split(';');
+                var itemObj = {};
+                itemObj.Field = thisItem[0];
+                itemObj.Valley = thisItem[1];
+                itemObj.Ridge = thisItem[2];
+                itemObj.Total = thisItem[3];
+                self.configBaseCosts.push(itemObj);
+            }
+        };
+
+        // 4. Upgrade Cost config
+        //var upgradeCostStr = dataObj.upgradeCost;
+        
+        // Only the jobConfig is returned to Shared
         return self.jobConfigArray;
     };
 
     // Step 4 of events triggered by selection of a Proposal from Proposal Review
     // This takes a list of materials, and fills in the Qty, 
     self.mergeConfig = function(materials, params, useConfig) {
-       
+
         for (var i = 0; i < materials.length; i++) {
 
             // Is the current paramKey one of the default items????  Compare to this list.
             // Checked by default only matters in certain categories because there are multiple choices
             // using the same Input parameter
             var paramKey = materials[i].InputParam;
-            var defaultCheckCatList = ["FIELD","EAVE","RIDGETOTAL","VALLEY","LPIPE1","LPIPE2","LPIPE3","LPIPE4"];
+            var defaultCheckCatList = ["FIELD", "EAVE", "RIDGETOTAL", "VALLEY", "LPIPE1", "LPIPE2", "LPIPE3", "LPIPE4"];
             var useDefaultCheck = false;
             for (var x = 0; x < defaultCheckCatList.length; x++) {
-               if(paramKey==defaultCheckCatList[x]){
+                if (paramKey == defaultCheckCatList[x]) {
                     useDefaultCheck = true;
                     break;
-               }
+                }
             };
 
             var isCheckedByDefault = convertToBoolean(materials[i].Checked);
@@ -61,44 +103,44 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore',function jobConfigSrvc(
 
             var checked = false;
 
-            if (customObj != null && customObj.Checked != undefined && useConfig===true) {
+            if (customObj != null && customObj.Checked != undefined && useConfig === true) {
                 // There is a config and useConfig === true
                 // All values are from config
                 var itemPrice = Number(customObj.Price);
                 var parameterVal = Number(customObj.Qty);
                 checked = convertToBoolean(customObj.Checked);
-            }else if (customObj != null && customObj.Checked != undefined && useConfig===false) {
+            } else if (customObj != null && customObj.Checked != undefined && useConfig === false) {
                 // There is a config and useConfig === false
                 // This will retain the Checked items from database, but uses Price from Config
                 // This is specifically to get the default selections but uses price from whenever it was saved
                 itemPrice = Number(customObj.Price);
                 parameterVal = Number(params[paramKey]);
-               
-               // If useDefaultCheck is true, then only Check the one with default... otherwise check everything that has a value > 0
-               // Because... all the materials have the Qty for their PARAM... 
-               // I.E this keeps ALL the different shingle types/models/variants from being selected...
-                if(useDefaultCheck){
-                    if(isCheckedByDefault && parameterVal > 0){
+
+                // If useDefaultCheck is true, then only Check the one with default... otherwise check everything that has a value > 0
+                // Because... all the materials have the Qty for their PARAM... 
+                // I.E this keeps ALL the different shingle types/models/variants from being selected...
+                if (useDefaultCheck) {
+                    if (isCheckedByDefault && parameterVal > 0) {
                         checked = true;
                     }
-                }else{
-                     if(parameterVal > 0){
+                } else {
+                    if (parameterVal > 0) {
                         checked = true;
                     }
                 };
-                
+
             } else {
                 // There is no config... use the current values from database
                 itemPrice = Number(materials[i].PkgPrice);
                 parameterVal = Number(params[paramKey]);
-                
+
                 // If useDefaultCheck id true, then only check the one with default... otherwise check everything that has a value > 0
-                if(useDefaultCheck){
-                    if(isCheckedByDefault && parameterVal > 0){
+                if (useDefaultCheck) {
+                    if (isCheckedByDefault && parameterVal > 0) {
                         checked = true;
                     }
-                }else{
-                     if(parameterVal > 0){
+                } else {
+                    if (parameterVal > 0) {
                         checked = true;
                     }
                 }
@@ -125,13 +167,13 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore',function jobConfigSrvc(
             materials[i].PkgQty = pkgQtyWithOverageRoundedUp;
             materials[i].Total = total;
             materials[i].Checked = checked;
-           
+
         };
-       
+
         return materials;
     };
 
-    var convertToBoolean = function(input){
+    var convertToBoolean = function(input) {
         var boolOut = false;
         if (input === "1" || input === "true" || input === "True" || input === "TRUE" || input === 1 || input === true) {
             boolOut = true;
@@ -139,7 +181,7 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore',function jobConfigSrvc(
         var num = Number(input);
         var isNum = isNaN(num);
         if (!isNum) {
-            if(num > 0){
+            if (num > 0) {
                 boolOut = true;
             }
         }
@@ -167,7 +209,7 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore',function jobConfigSrvc(
 
         var dataObj = convertConfigToString();
 
-       // Broadcast here with dataObj for DataSrvc to save....
+        // Broadcast here with dataObj for DataSrvc to save....
 
         return self.jobConfigArray;
     };
@@ -220,7 +262,7 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore',function jobConfigSrvc(
         return rtnObj;
     };
 
-    self.returnDefaultMaterial = function(cat){
+    self.returnDefaultMaterial = function(cat) {
         var rtnObject = {};
         for (var i = 0; i < self.defaultCheckedMaterials.length; i++) {
             var category = self.defaultCheckedMaterials[i].Category;
@@ -232,7 +274,7 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore',function jobConfigSrvc(
         return rtnObject;
     };
 
-   
+
     console.log("jobConfig Complete");
     return self;
 }]);

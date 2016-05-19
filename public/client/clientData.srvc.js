@@ -22,6 +22,7 @@ app.service('ClientDataSrvc', ['$http', '$q', function($http, $q) {
         getRoof: httpPathPrefix + "getRoof.php",
         getPhotoGallery: httpPathPrefix + "getPhotos.php",
         updateConfig: httpPathPrefix + "updateConfig.php",
+        updateConfigConfig:httpPathPrefix + "updateConfig_config.php",
         getDefaultConfigMaterials: httpPathPrefix + "getDefaultConfigMaterials.php"
     };
 

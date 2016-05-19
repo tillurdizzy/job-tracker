@@ -1,6 +1,6 @@
 <div class="top page" ng-controller="AdminPropLabor as ChildCtrl">
-    <div class="standardParagraph">
-        <p></p>
+    <div style="margin-top: .5rem;">
+        <button type="button" class="button radius" style="width:100%;" ng-click="ChildCtrl.saveJobConfig()" ng-disabled="ChildCtrl.dataIsSaved">Save</button>
     </div>
     <div style="margin-top: .5rem;">
         <h2>Labor Total: {{ChildCtrl.LaborTotal | currency:"$":2}}</h2>
@@ -11,19 +11,23 @@
                 <tr>
                     <th>Labor</th>
                     <th>Qty</th>
+                    <th>Unit</th>
                     <th>Cost</th>
                     <th>Total</th>
+                    <th>Edit</th>
                 </tr>
             </thead>
             <tbody>
                 <tr ng-repeat="row in ChildCtrl.laborCostItems;">
                     <td>{{row.labor}}</td>
-                    <td>{{row.qty}} </td>
+                    <td>{{row.qty}}</td>
+                    <td>{{row.units}}</td>
                     <td>{{row.cost | currency:"$":2}}</td>
                     <td>{{row.total | currency:"$":2}}</td>
+                    <td><i class="fa fa-pencil" ng-click="ChildCtrl.editRowItem(row)" style="cursor:pointer;"></i></td>
                 </tr>
             </tbody>
         </table>
     </div>
-    <horiz-rule margintop="10" marginbottom="600"></horiz-rule>
+    <add-space heightpx="600"></add-space>
 </div>

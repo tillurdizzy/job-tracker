@@ -138,6 +138,7 @@ app.controller('AdminPropDesign', ['$state', '$scope', 'AdminSharedSrvc', 'Admin
         ME.GrandTotal = ME.ShinglesFieldTotal + ME.ShinglesRidgeTotal + ME.VentsTotal + ME.FlashingTotal + 
         ME.EdgeTotal + ME.ValleyTotal + ME.FlatTotal + ME.CapsTotal + ME.OtherTotal;
         ME.P.setSummaryItem("materials", ME.GrandTotal);
+        ME.S.basePrice.Total = ME.GrandTotal;
     };
 
     var configExists = function() {
