@@ -20,6 +20,7 @@ while ($row = mysqli_fetch_object($result)) {
 	$oneVO->laborCost = $row->laborCost;
 	$oneVO->baseCost = $row->baseCost;
 	$oneVO->upgradeCost = $row->upgradeCost;
+	$oneVO->margin = $row->margin;
 	array_push( $resultValueObjects, $oneVO );
 }
 echo json_encode($resultValueObjects);

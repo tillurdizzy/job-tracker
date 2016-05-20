@@ -1,9 +1,9 @@
 <div class="top page" ng-controller="AdminPropSummary as ChildCtrl">
-    <div class="standardParagraph">
-        <p></p>
+    <div style="margin-top: .5rem;">
+        <button type="button" class="button radius" style="width:100%;" ng-click="ChildCtrl.saveMarginConfig()" ng-disabled="ChildCtrl.dataIsSaved">Save</button>
     </div>
     <div style="margin-top: .5rem;">
-        <h2>Total Cost: {{ChildCtrl.totalCost | currency:"$":2}}</h2>
+        <h2>Total Cost of Proposal: {{ChildCtrl.totalCost | currency:"$":2}}</h2>
     </div>
     <div>
         <table st-table="ChildCtrl.lsummaryItems;" class="table table-striped" style="width:100%;">
@@ -21,5 +21,10 @@
             </tbody>
         </table>
     </div>
-    <horiz-rule margintop="10" marginbottom="600"></horiz-rule>
+    <div class="flex-row-start">
+        <h2>Profit Margin</h2>
+        <input type="tel" ng-model="ChildCtrl.MARGIN" change="ChildCtrl.marginChange()">
+        <h2>%</h2>
+    </div>
+    <add-space heightpx="600"></add-space>
 </div>

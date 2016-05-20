@@ -6,5 +6,6 @@ class jobConfigVO{
 	var $laborCost;
 	var $baseCost;
 	var $upgradeCost;
+	var $margin;
 }
 ?>

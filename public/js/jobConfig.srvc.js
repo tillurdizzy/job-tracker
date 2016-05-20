@@ -184,8 +184,15 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore', function jobConfigSrvc
             var totalSquares = P.FIELD + linearToSqs;
             totalSquares = Math.ceil(totalSquares);
             var laborField = totalSquares * parseInt(defaultLabor.square);
-            var laborDeck = totalSquares * parseInt(defaultLabor.deck);
 
+            var includeRoofDeck = false;
+
+            if(includeRoofDeck){
+                var laborDeck = totalSquares * parseInt(defaultLabor.deck);
+            }else{
+                var laborDeck = 0;
+            }
+            
             var itemObj = {};
             itemObj.Labor = "Field";
             itemObj.Qty = totalSquares;
@@ -195,7 +202,7 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore', function jobConfigSrvc
             self.configLabor.push(itemObj);
 
             itemObj = {};
-            itemObj.Labor = "Re-Deck";
+            itemObj.Labor = "Deck";
             itemObj.Qty = 0;
             itemObj.Units = "Sqs";
             itemObj.Cost = defaultLabor.deck;
@@ -203,9 +210,9 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore', function jobConfigSrvc
             self.configLabor.push(itemObj);
 
             itemObj = {};
-            itemObj.Labor = "Low Slope / Flat";
+            itemObj.Labor = "Flat";
             itemObj.Qty = 0;
-            itemObj.Units = 0;
+            itemObj.Units = "Sqs";
             itemObj.Cost = defaultLabor.flat;
             itemObj.Total = 0;
             self.configLabor.push(itemObj);

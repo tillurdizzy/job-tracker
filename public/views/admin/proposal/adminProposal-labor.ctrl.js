@@ -12,37 +12,38 @@ app.controller('AdminPropLabor', ['$state', '$scope', 'AdminSharedSrvc', 'AdminP
 
         ME.dataIsSaved = true;
 
-        ME.saveJobConfig = function() {
-            ME.dataIsSaved = ME.S.saveLaborConfig();
+        ME.saveLaborConfig = function() {
+            ME.S.saveLaborConfig();
         };
 
-        var getTotal = function(){
+        var getTotal = function() {
             ME.LaborTotal = 0;
             for (var i = 0; i < ME.laborTableDP.length; i++) {
                 var x = ME.laborTableDP[i].Total;
                 ME.LaborTotal += x;
             }
-            ME.P.setSummaryItem("labor",ME.LaborTotal);
+            ME.P.setSummaryItem("labor", ME.LaborTotal);
         };
 
         ME.editRowItem = function(laborItem) {
             ME.itemBeingEdited = laborItem;
-            $scope.dialogLabel = laborItem.labor;
+            $scope.dialogLabel = laborItem.Labor;
 
-            var passedObj = { Price: laborItem.cost, Qty: laborItem.qty };
+            var passedObj = {Item:laborItem.Labor, Price: laborItem.Cost, Qty: laborItem.Qty };
 
             var dialog = ngDialog.openConfirm({
                 template: "views/admin/proposal/ngdialog-editItem-template.html",
                 scope: $scope,
                 data: passedObj
             }).then(function(value) {
-                ME.S.editMaterial(value);
+                ME.S.editLaborConfig(value);
             }, function(reason) {
 
             });
         };
 
         $scope.$on('onSaveLaborConfig', function(event, obj) {
+            ME.dataIsSaved = true;
             ngDialog.open({
                 template: '<h2>Labor Config saved.</h2>',
                 className: 'ngdialog-theme-calm',

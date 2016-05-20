@@ -236,7 +236,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
                 flashing.push(self.materialsList[i]);
             } else if (cat == "Valley") {
                 valley.push(self.materialsList[i]);
-            } else if (cat == "EdgeTrim") {
+            } else if (cat == "Edge") {
                 edge.push(self.materialsList[i]);
             } else if (cat == "LowSlope") {
                 flat.push(self.materialsList[i]);
@@ -282,6 +282,12 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
             case "Flashing":
                 catArray = self.materialsCatergorized.Flashing;
                 break;
+            case "Edge":
+                catArray = self.materialsCatergorized.Edge;
+                break;
+            case "Valley":
+                catArray = self.materialsCatergorized.Valley;
+                break;
             case "Flat":
                 catArray = self.materialsCatergorized.Flat;
                 break;
@@ -300,6 +306,10 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
         $rootScope.$broadcast('onEditMaterial');
         //self.saveJobConfig();
     };
+
+    self.editLaborConfig = function(vals){
+         var cat = vals.Category;
+    }
 
     var getSpecialConsiderations = function() {
         self.SPECIAL = "";
@@ -656,6 +666,22 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
                 console.log("saveLaborConfig ---- " + resultObj.data);
             } else {
                 $rootScope.$broadcast('onSaveLaborConfig');
+            }
+        }, function(error) {
+            alert("Query Error - AdminSharedSrvc >> updateConfigConfig");
+        });
+    }
+
+    self.saveMarginConfig = function(data) {
+        dataObj = {};
+        dataObj.margin = data;
+        dataObj.jobID = self.proposalUnderReview.jobID;
+        DB.query("updateConfigMargin", dataObj).then(function(resultObj) {
+            if (resultObj.result == "Error" || typeof resultObj.data === "string") {
+                alert("Query Error - see console for details");
+                console.log("saveLaborConfig ---- " + resultObj.data);
+            } else {
+                $rootScope.$broadcast('onSaveMarginConfig');
             }
         }, function(error) {
             alert("Query Error - AdminSharedSrvc >> updateConfigConfig");
