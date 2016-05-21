@@ -67,6 +67,7 @@ app.controller('AdminPropLabor', ['$state', '$scope', 'AdminSharedSrvc', 'AdminP
 
         $scope.$watch('$viewContentLoaded', function() {
             console.log("AdminPropLABORCtrl >>> $viewContentLoaded");
+            
             ME.laborTableDP = ME.S.laborConfig;
             getTotal();
         });

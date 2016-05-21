@@ -25,6 +25,7 @@ app.service('AdminDataSrvc',['$http','$q','SharedSrvc','LogInSrvc',function admi
 		getProperties:httpPathPrefix + "getProperties.php",
 		getAllPhotos:httpPathPrefix + "getAllPhotos.php",
 		getJobConfig:httpPathPrefix + "getJobConfig.php",
+		getConfigMargin:httpPathPrefix + "getConfigMargin.php",
 		getAllJobParameters:httpPathPrefix + "getAllJobParameters.php",
 		getAllJobConfigs:httpPathPrefix + "getAllJobConfigs.php",
 		getJobProposals:httpPathPrefix + "getJobProposals.php",

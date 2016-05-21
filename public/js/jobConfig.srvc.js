@@ -12,6 +12,7 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore', function jobConfigSrvc
 
     self.configLabor = [];
     self.configBaseCosts = [];
+    self.configMargin = 0;
 
     // Step 3 of events triggered by selection of a Proposal from Proposal Review
     // Converts the long string saved in DB into array of objects
@@ -73,6 +74,15 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore', function jobConfigSrvc
 
         // 4. Upgrade Cost config
         //var upgradeCostStr = dataObj.upgradeCost;
+
+        // 5. Margin
+        var m = parseInt(dataObj.margin);
+        if(isNaN(m)){
+            self.configMargin = .1;
+        }else{
+            self.configMargin = m/100;
+        }
+        
 
         // Only the jobConfig is returned to Shared
         return self.jobConfigArray;

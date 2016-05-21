@@ -1,23 +1,24 @@
 'use strict';
 
-app.controller('AdminPropSummary', ['$state', '$scope', 'AdminSharedSrvc', 'AdminProposalSrvc', function($state, $scope, AdminSharedSrvc, AdminProposalSrvc) {
+app.controller('AdminPropSummary', ['$state', '$scope', 'AdminSharedSrvc', 'AdminProposalSrvc','JobConfigSrvc', function($state, $scope, AdminSharedSrvc, AdminProposalSrvc,JobConfigSrvc) {
 
     var ME = this;
     ME.S = AdminSharedSrvc;
     ME.P = AdminProposalSrvc;
+    var CONFIG = JobConfigSrvc;
     var laborTotal = 0;
     var materialsTotal = 0;
     var marginTotal = 0;
     ME.totalCost = 0;
     ME.summaryItems = [];
     ME.dataIsSaved = true;
-    ME.MARGIN = ME.P.profitMargin;
+    ME.MARGIN = CONFIG.configMargin;
 
     var getTotal = function() {
         laborTotal = ME.P.CostSummary.labor;
         materialsTotal = ME.P.CostSummary.materials;
         var subtotal = laborTotal + materialsTotal;
-        marginTotal = subtotal * ME.MARGIN;
+        marginTotal = subtotal * CONFIG.configMargin;
         ME.totalCost = laborTotal + materialsTotal + marginTotal;
 
         ME.summaryItems = [];

@@ -656,6 +656,21 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
         });
     };
 
+    var getConfigMargin = function() {
+        dataObj = {};
+        dataObj.jobID = self.proposalUnderReview.jobID;
+        DB.query("getConfigMargin", dataObj).then(function(resultObj) {
+            if (resultObj.result == "Error" || typeof resultObj.data === "string") {
+                alert("Query Error - see console for details");
+                console.log("getLabor ---- " + resultObj.data);
+            } else {
+                
+            }
+        }, function(error) {
+            alert("Query Error - AdminSharedSrvc >> getLabor");
+        });
+    };
+
     self.saveLaborConfig = function(data) {
         dataObj = {};
         dataObj.strData = data;

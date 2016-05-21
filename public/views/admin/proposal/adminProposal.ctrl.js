@@ -1,10 +1,10 @@
 'use strict';
 
-app.controller('AdminProposalCtrl',['$rootScope','$state','AdminDataSrvc','$scope','AdminSharedSrvc','ngDialog',function ($rootScope,$state,AdminDataSrvc,$scope,AdminSharedSrvc,ngDialog) {
+app.controller('AdminProposalCtrl',['$rootScope','$state','AdminDataSrvc','$scope','AdminSharedSrvc','AdminProposalSrvc','ngDialog',function ($rootScope,$state,AdminDataSrvc,$scope,AdminSharedSrvc,AdminProposalSrvc,ngDialog) {
 	var DB =  AdminDataSrvc;
 	var ME = this;
 	var S = AdminSharedSrvc;
-
+	var P = AdminProposalSrvc;
 	ME.selectedProposal = {};
 	ME.selectedProposalRoof = {};
 	ME.selectDataProvider = [];
@@ -23,6 +23,7 @@ app.controller('AdminProposalCtrl',['$rootScope','$state','AdminDataSrvc','$scop
 				ME.selectedProposalRoof = ME.roofSelectionsDP[0];
 				$rootScope.$broadcast('onResetProposalData');// Clears the parameters from the Input tab
 			}else{
+				P.setJobId(ME.selectedProposal.id);
 				ME.roofSelectionsDP = null;
 				ME.selectedProposalRoof = null;
 			};
@@ -32,6 +33,7 @@ app.controller('AdminProposalCtrl',['$rootScope','$state','AdminDataSrvc','$scop
     ME.selectRoof = function(){
     	if(ME.selectedProposalRoof != null){
     		S.selectRoof(ME.selectedProposalRoof.jobID);
+    		P.setJobId(ME.selectedProposalRoof.jobID);
     	}
 	};
 
