@@ -158,23 +158,26 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore', function jobConfigSrvc
                 }
             };
 
+            // IF unitPkg and UnitCoverage are EQUAL!!! what then
+            var qtyCoverage = Number(materials[i].QtyCoverage);
             var unitsPerPkg = Number(materials[i].QtyPkg);
             var over = Number(materials[i].Margin);
             var roundUp = Number(materials[i].RoundUp);
 
-            var isNum = isNaN(parameterVal);
+            var isNum = isNaN(parameterVal); 
             var total = 0;
-
+            // If the inputParam col from materials is blank OR this param has no number then Total is 0
             if (isNum) {
                 parameterVal = 0;
                 total = 0;
             } else {
-                var pkgQty = parameterVal / unitsPerPkg;
-                var pkgQtyRoundedUp = Math.ceil(pkgQty);
-                var pkgQtyWithOverageRoundedUp = Math.ceil(pkgQty * over);
+                var numberOfPackagesToBuy = parameterVal / qtyCoverage;
+                var pkgQtyRoundedUp = Math.ceil(numberOfPackagesToBuy);
+                var pkgQtyWithOverageRoundedUp = Math.ceil(numberOfPackagesToBuy * over);
                 total = (pkgQtyWithOverageRoundedUp * itemPrice);
             };
-
+            // materials list Qty and Total come in as null and are quantified here
+            // PkgQty is a new value added into the list
             materials[i].Qty = parameterVal;
             materials[i].PkgQty = pkgQtyWithOverageRoundedUp;
             materials[i].Total = total;
@@ -201,7 +204,7 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore', function jobConfigSrvc
                 var laborDeck = totalSquares * parseInt(defaultLabor.deck);
             }else{
                 var laborDeck = 0;
-            }
+            };
             
             var itemObj = {};
             itemObj.Labor = "Field";
@@ -226,10 +229,26 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore', function jobConfigSrvc
             itemObj.Cost = defaultLabor.flat;
             itemObj.Total = 0;
             self.configLabor.push(itemObj);
-        }else{
-
-        }
-
+        }else{ // saved config
+            for (var i = 0; i < self.configLabor.length; i++) {
+                if(self.configLabor[i].Labor == "Field"){
+                    var x = parseInt(self.configLabor[i].Qty);
+                    var y = parseInt(self.configLabor[i].Cost);
+                    self.configLabor[i].Total = x * y;
+                    self.configLabor[i].Units = "Sqs";
+                }else if(self.configLabor[i].Labor == "Deck"){
+                    x = parseInt(self.configLabor[i].Qty);
+                    y = parseInt(self.configLabor[i].Cost);
+                    self.configLabor[i].Total = x * y;
+                    self.configLabor[i].Units = "Sqs";
+                }else if(self.configLabor[i].Labor == "Flat"){
+                    x = parseInt(self.configLabor[i].Qty);
+                    y = parseInt(self.configLabor[i].Cost);
+                    self.configLabor[i].Total = x * y;
+                    self.configLabor[i].Units = "Sqs";
+                }
+            }
+        };
 
         return self.configLabor;
     };

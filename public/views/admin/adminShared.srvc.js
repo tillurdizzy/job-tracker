@@ -166,7 +166,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
     var validateData = function() {
         if (mergeDataFlag.config === true && mergeDataFlag.params === true) {
             mergeConfig();
-        }
+        };
     };
 
     // Step 4
@@ -304,12 +304,9 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
             }
         }
         $rootScope.$broadcast('onEditMaterial');
-        //self.saveJobConfig();
     };
 
-    self.editLaborConfig = function(vals){
-         var cat = vals.Category;
-    }
+    
 
     var getSpecialConsiderations = function() {
         self.SPECIAL = "";
@@ -326,8 +323,8 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
         });
     };
 
-    // called from getMaterialsList list... parses out default checked items in order to get a baseline price
-    // run this through mergeConfig function to insert prices and quantity
+    // Called during init() from getMaterialsList ... parses out default checked items in order to get a baseline price
+    // Run result through mergeConfig function to insert prices and quantity
     var extractDefaultMaterials = function() {
         self.materialsDefault = [];
         for (var i = 0; i < self.materialsList.length; i++) {
@@ -672,8 +669,27 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
     };
 
     self.saveLaborConfig = function(data) {
-        dataObj = {};
-        dataObj.strData = data;
+        var Labor = data.Labor;
+        var thisItem = "";
+        var strData = "";
+        for (var i = 0; i < self.laborConfig.length; i++) {
+           if(Labor == self.laborConfig[i].Labor){
+                self.laborConfig[i].Qty = data.Qty;
+                self.laborConfig[i].Cost = data.Cost;
+                self.laborConfig[i].Total = parseInt(data.Qty) * Number(data.Cost);
+           };
+           thisItem = "";
+           if(i == 0){
+                var prefix = "";
+           }else{
+                prefix = "!";
+           };
+           thisItem = prefix + self.laborConfig[i].Labor + ";" + self.laborConfig[i].Qty + ";" + self.laborConfig[i].Cost;
+           strData += thisItem;
+        }
+
+        var dataObj = {};
+        dataObj.laborCost = strData;
         dataObj.jobID = self.proposalUnderReview.jobID;
         DB.query("updateConfigLabor", dataObj).then(function(resultObj) {
             if (resultObj.result == "Error" || typeof resultObj.data === "string") {
@@ -688,14 +704,15 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
     }
 
     self.saveMarginConfig = function(data) {
-        dataObj = {};
+        var dataObj = {};
         dataObj.margin = data;
         dataObj.jobID = self.proposalUnderReview.jobID;
         DB.query("updateConfigMargin", dataObj).then(function(resultObj) {
             if (resultObj.result == "Error" || typeof resultObj.data === "string") {
                 alert("Query Error - see console for details");
-                console.log("saveLaborConfig ---- " + resultObj.data);
+                console.log("saveMarginConfig ---- " + resultObj.data);
             } else {
+
                 $rootScope.$broadcast('onSaveMarginConfig');
             }
         }, function(error) {
@@ -798,7 +815,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
     };
 
     self.updateConfigCost = function() {
-        dataObj = {};
+        var dataObj = {};
         dataObj.baseCost = "Field;" + self.basePrice.Field + "!Valley;" + self.basePrice.Valley + "!Ridge;" + self.basePrice.Ridge + "!Total;" + self.basePrice.Total;
         dataObj.upgradeCost = "";
         DB.query("updateConfigCost", dataObj).then(function(resultObj) {
@@ -814,7 +831,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
     };
 
     self.updateConfigLabor = function(strVals) {
-        dataObj = {};
+        var dataObj = {};
         dataObj.laborCost = strVals;
         DB.query("updateConfigLabor", dataObj).then(function(resultObj) {
             if (resultObj.result == "Error" || typeof resultObj.data === "string") {

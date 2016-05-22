@@ -29,21 +29,23 @@ app.controller('AdminPropLabor', ['$state', '$scope', 'AdminSharedSrvc', 'AdminP
             ME.itemBeingEdited = laborItem;
             $scope.dialogLabel = laborItem.Labor;
 
-            var passedObj = {Item:laborItem.Labor, Price: laborItem.Cost, Qty: laborItem.Qty };
+            var passedObj = { Labor: laborItem.Labor, Cost: laborItem.Cost, Qty: laborItem.Qty };
 
             var dialog = ngDialog.openConfirm({
-                template: "views/admin/proposal/ngdialog-editItem-template.html",
+                template: "views/admin/proposal/ngdialog-editLabor-template.html",
                 scope: $scope,
                 data: passedObj
             }).then(function(value) {
-                ME.S.editLaborConfig(value);
+                ME.S.saveLaborConfig(value);
             }, function(reason) {
 
             });
         };
 
+
         $scope.$on('onSaveLaborConfig', function(event, obj) {
             ME.dataIsSaved = true;
+            getTotal();
             ngDialog.open({
                 template: '<h2>Labor Config saved.</h2>',
                 className: 'ngdialog-theme-calm',
@@ -66,8 +68,7 @@ app.controller('AdminPropLabor', ['$state', '$scope', 'AdminSharedSrvc', 'AdminP
         });
 
         $scope.$watch('$viewContentLoaded', function() {
-            console.log("AdminPropLABORCtrl >>> $viewContentLoaded");
-            
+            //console.log("AdminPropLABORCtrl >>> $viewContentLoaded");
             ME.laborTableDP = ME.S.laborConfig;
             getTotal();
         });

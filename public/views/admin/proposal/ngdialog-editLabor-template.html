@@ -1,0 +1,13 @@
+<div class="ngDialogItemEdit">
+    <h3>{{dialogLabel}}</h3>
+    <div class="inputFields">
+        <label>Quantity</label>
+        <input type="tel" ng-model="ngDialogData.Qty">
+        <label>Cost</label>
+        <input type="tel" ng-model="ngDialogData.Cost">
+    </div>
+</div>
+<div class="ngdialog-buttons">
+    <button type="button" class="ngdialog-button ngdialog-button-primary" ng-click="confirm(ngDialogData)">Confirm</button>
+    <button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click="closeThisDialog('button')">Cancel</button>
+</div>

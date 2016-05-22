@@ -1,5 +1,5 @@
 'use strict';
-app.service('AdminProposalSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'underscore', 'JobConfigSrvc', 'ngDialog', function adminShared($rootScope, AdminDataSrvc, ListSrvc, underscore, JobConfigSrvc, ngDialog) {
+app.service('AdminProposalSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'underscore', 'JobConfigSrvc', 'ngDialog', function ProposalService($rootScope, AdminDataSrvc, ListSrvc, underscore, JobConfigSrvc, ngDialog) {
 
     var self = this;
     self.ME = "AdminProposalSrvc: ";

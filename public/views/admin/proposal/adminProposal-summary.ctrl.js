@@ -1,24 +1,27 @@
 'use strict';
 
-app.controller('AdminPropSummary', ['$state', '$scope', 'AdminSharedSrvc', 'AdminProposalSrvc','JobConfigSrvc', function($state, $scope, AdminSharedSrvc, AdminProposalSrvc,JobConfigSrvc) {
+app.controller('AdminPropSummary', ['$state', '$scope', 'AdminSharedSrvc', 'AdminProposalSrvc', 'JobConfigSrvc', function($state, $scope, AdminSharedSrvc, AdminProposalSrvc, JobConfigSrvc) {
 
     var ME = this;
     ME.S = AdminSharedSrvc;
     ME.P = AdminProposalSrvc;
-    var CONFIG = JobConfigSrvc;
+    ME.CONFIG = JobConfigSrvc;
     var laborTotal = 0;
     var materialsTotal = 0;
     var marginTotal = 0;
     ME.totalCost = 0;
     ME.summaryItems = [];
     ME.dataIsSaved = true;
-    ME.MARGIN = CONFIG.configMargin;
+    var MARGIN = ME.CONFIG.configMargin; // Comes from CONFIG ready to use in calculations i.e. < 1 (.35)
+    ME.marginDisplay = MARGIN * 100; // Display as whole integer i.e. 35%
+
+    ME.invalidMarginInput = false;
 
     var getTotal = function() {
         laborTotal = ME.P.CostSummary.labor;
         materialsTotal = ME.P.CostSummary.materials;
         var subtotal = laborTotal + materialsTotal;
-        marginTotal = subtotal * CONFIG.configMargin;
+        marginTotal = subtotal * MARGIN;
         ME.totalCost = laborTotal + materialsTotal + marginTotal;
 
         ME.summaryItems = [];
@@ -30,25 +33,34 @@ app.controller('AdminPropSummary', ['$state', '$scope', 'AdminSharedSrvc', 'Admi
         ME.summaryItems.push(item);
     };
 
-    ME.marginChange = function(){
-        if(ME.MARGIN != ME.P.profitMargin){
-            ME.dataIsSaved = false;
+    ME.marginChange = function() {
+        var marginEdit = parseInt(ME.marginDisplay);
+        if (isNaN(marginEdit)) {
+            return;
         }
-        getTotal();
+        var compareMargin = MARGIN * 100;
+        if (compareMargin != marginEdit) {
+            if (marginEdit > 10 && marginEdit < 100) {
+                MARGIN = marginEdit / 100;
+                ME.dataIsSaved = false;
+                getTotal();
+            }
+        }
     };
 
     ME.saveMarginConfig = function() {
-        ME.S.saveMarginConfig(ME.MARGIN);
+        ME.S.saveMarginConfig(ME.marginDisplay);
     };
 
     $scope.$on('onSaveMarginConfig', function(event, obj) {
         ME.dataIsSaved = true;
+        ME.CONFIG.configMargin = MARGIN;
         ngDialog.open({
-                template: '<h2>Margin Config Saved.</h2>',
-                className: 'ngdialog-theme-calm',
-                plain: true,
-                overlay: false
-            });
+            template: '<h2>Margin Config Saved.</h2>',
+            className: 'ngdialog-theme-calm',
+            plain: true,
+            overlay: false
+        });
     });
 
     // Broadcast from AdminSharedSrvc >>> categorizeMaterials

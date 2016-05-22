@@ -21,10 +21,16 @@
             </tbody>
         </table>
     </div>
-    <div class="flex-row-start">
-        <h2>Profit Margin</h2>
-        <input type="tel" ng-model="ChildCtrl.MARGIN" change="ChildCtrl.marginChange()">
-        <h2>%</h2>
-    </div>
+    <ng-form name="numberForm">
+        <div class="flex-row-start">
+            <h2>Profit Margin</h2>
+            <input name="number"  type="tel" ng-model="ChildCtrl.marginDisplay" ng-pattern="/^[0-9]{1,2}$/" 
+            ng-change="ChildCtrl.marginChange()" style="width:30px;margin:0 5px;" ng-minlength="1" ng-maxlength="2">
+            <h2>%</h2>
+        </div>
+        <span ng-show="numberForm.number.$error.pattern" style="color:red">Enter only number.</span>
+        <span ng-show="numberForm.number.$error.maxlength" style="color:red">Enter less than 100.</span>
+        <span ng-show="numberForm.number.$error.minlength" style="color:red">Enter greater than 10.</span>
+    </ng-form>
     <add-space heightpx="600"></add-space>
 </div>
