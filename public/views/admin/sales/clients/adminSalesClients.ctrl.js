@@ -136,9 +136,10 @@ app.controller('AdminSalesClientsCtrl', ['$state', '$scope', 'AdminSharedSrvc', 
             if (resultObj.result == "Error" || typeof resultObj.data === "string") {
                 alert("FALSE returned for " + thisQuery + " at " + myName + " >>> " + thisFunc);
             } else {
+                var clientName = ME.inputDataObj.displayName;
                 resetInputFields();
                 ngDialog.open({
-                    template: '<h2>New client has been added!</h2>',
+                    template: '<h2>Client ' + clientName + ' has been saved!</h2>',
                     className: 'ngdialog-theme-calm',
                     plain: true,
                     overlay: false
@@ -154,9 +155,10 @@ app.controller('AdminSalesClientsCtrl', ['$state', '$scope', 'AdminSharedSrvc', 
             if (resultObj.result == "Error" || typeof resultObj.data === "string") {
                 alert("FALSE returned for " + thisQuery + " at " + myName + " >>> " + thisFunc);
             } else {
+                var clientName = ME.inputDataObj.displayName;
                 resetInputFields();
                 ngDialog.open({
-                    template: '<h2>Client has been updated.</h2>',
+                    template: '<h2>Client ' + clientName + ' has been updated!</h2>',
                     className: 'ngdialog-theme-calm',
                     plain: true,
                     overlay: false
@@ -218,6 +220,7 @@ app.controller('AdminSalesClientsCtrl', ['$state', '$scope', 'AdminSharedSrvc', 
 
         ME.salesRepsDP = DB.clone(ME.S.salesReps);
         ME.salesRepsDP.splice(0, 0, { displayName: "-- Select One --", PRIMARY_ID: "-1" });
+        ME.selectedSalesRep = ME.salesRepsDP[0];
     };
 
     $scope.$watch('$viewContentLoaded', function() {

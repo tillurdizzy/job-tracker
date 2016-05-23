@@ -5,8 +5,7 @@
     </div>
     <div id='cssmenu' ng-controller="TabbedMenuCtrl">
         <ul>
-            <li ng-class="{ active: Ctrl.EditMode
- == 'Add Client'}" ng-click="Ctrl.addItem()"><a>Add Client</a></li>
+            <li ng-class="{ active: Ctrl.EditMode == 'Add Client'}" ng-click="Ctrl.addItem()"><a>Add Client</a></li>
             <li ng-class="{ active: Ctrl.EditMode == 'Update Client'}" ng-click="Ctrl.updateItem()"><a>Update Client</a></li>
             <li ng-class="{ active: Ctrl.EditMode == 'Remove Client'}" ng-click="Ctrl.removeItem()"><a>Remove Client</a></li>
         </ul>
@@ -77,7 +76,6 @@
     </div>
 
     <button type="button" class="button radius" ng-click="Ctrl.submit()" ng-disabled="Ctrl.submitInValid" style="margin-top: 1rem; width:100%;"><h3>{{Ctrl.EditMode}}</h3></button>
-    <div class="tiny-text">Form Status: {{Ctrl.formStatus}}</div>
-    <horiz-rule margintop="15" marginbottom="15"></horiz-rule>
+    <add-space heightpx="600"></add-space>
    
 </div>
