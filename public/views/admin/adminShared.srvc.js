@@ -328,7 +328,11 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
     var extractDefaultMaterials = function() {
         self.materialsDefault = [];
         for (var i = 0; i < self.materialsList.length; i++) {
-            if (self.materialsList[i].Checked == "1") {
+            var c = parseInt(self.materialsList[i].Checked);
+            if(c == undefined || c == null || c==NaN || c > 1){
+                self.materialsList[i].Checked == "0"
+            }
+            if (c == "1") {
                 self.materialsDefault.push(self.materialsList[i]);
             }
         }
@@ -768,6 +772,24 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
             c = self.materialsCatergorized.Flashing[i].Checked;
             d = self.materialsCatergorized.Flashing[i].PkgPrice;
             e = self.materialsCatergorized.Flashing[i].Category;
+            dataStr += a + ';' + b + ';' + c + ';' + d + ';' + e + '!';
+        };
+
+        for (i = 0; i < self.materialsCatergorized.Edge.length; i++) {
+            a = self.materialsCatergorized.Edge[i].Code;
+            b = self.materialsCatergorized.Edge[i].Qty;
+            c = self.materialsCatergorized.Edge[i].Checked;
+            d = self.materialsCatergorized.Edge[i].PkgPrice;
+            e = self.materialsCatergorized.Edge[i].Category;
+            dataStr += a + ';' + b + ';' + c + ';' + d + ';' + e + '!';
+        };
+
+        for (i = 0; i < self.materialsCatergorized.Valley.length; i++) {
+            a = self.materialsCatergorized.Valley[i].Code;
+            b = self.materialsCatergorized.Valley[i].Qty;
+            c = self.materialsCatergorized.Valley[i].Checked;
+            d = self.materialsCatergorized.Valley[i].PkgPrice;
+            e = self.materialsCatergorized.Valley[i].Category;
             dataStr += a + ';' + b + ';' + c + ';' + d + ';' + e + '!';
         };
 

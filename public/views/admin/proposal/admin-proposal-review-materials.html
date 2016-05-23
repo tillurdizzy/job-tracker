@@ -1,7 +1,8 @@
 <div class="top page" ng-controller="AdminPropMaterials as ChildCtrl">
     <div class="standardParagraph">
-        <h2>Design Total: {{ChildCtrl.suppliesTotal | currency:"$":2}}</h2>
+        <h2>Material Cost: {{ChildCtrl.suppliesTotal | currency:"$":2}}</h2>
         <p>The <span class="bold">Quantities</span> are adjusted for standard overage.</p>
+        <p>Use the <span class="bold">Design</span> tab to make changes</p>
     </div>
     <div>
         <table st-table="ChildCtrl.supplies" class="table table-striped" style="width:100%;">

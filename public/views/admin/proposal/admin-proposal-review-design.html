@@ -3,7 +3,7 @@
         <button type="button" class="button radius" style="width:100%;" ng-click="ChildCtrl.saveJobConfig()" ng-disabled="ChildCtrl.dataIsSaved">Save</button>
     </div>
     <div style="margin-top: .5rem;">
-        <h2>Design Total: {{ChildCtrl.GrandTotal | currency:"$":2}}</h2>
+        <h2>Material Cost: {{ChildCtrl.GrandTotal | currency:"$":2}}</h2>
     </div>
     <div class="section-header">
         <h2>Field Shingles</h2>
@@ -306,7 +306,7 @@
         <h2>Total Roof Caps: {{ChildCtrl.CapsTotal | currency:"$":2}}</h2>
     </div>
     <div class="section-header">
-        <h2>Low Slope</h2>
+        <h2>Flat / Low Slope</h2>
     </div>
     <div>
         <table st-table="ChildCtrl.propertyInputParams" class="table table-striped" style="width:100%;">

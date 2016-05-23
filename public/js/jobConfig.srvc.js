@@ -89,20 +89,23 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore', function jobConfigSrvc
     };
 
     // Step 4 of events triggered by selection of a Proposal from Proposal Review
-    // This takes a list of materials, and fills in the Qty, 
+    // This takes the list of materials, and fills in the Qty and Price
+    // !!IMPORTANT!! For a customObj, "checked" no longer means default... it may be what was chosen instead of the default.
     self.mergeJobConfig = function(materials, params, useConfig) {
 
         for (var i = 0; i < materials.length; i++) {
-
+            var thisItem = materials[i].Item;
             // Is the current paramKey one of the default items????  Compare to this list.
             // Checked by default only matters in certain categories because there are multiple choices
             // using the same Input parameter
+            // Inclusion in this list means "only check 1 item from this category even though other items may have quantity values (derived from params)"
             var paramKey = materials[i].InputParam;
-            var defaultCheckCatList = ["FIELD", "EAVE", "RIDGETOTAL", "VALLEY", "LPIPE1", "LPIPE2", "LPIPE3", "LPIPE4"];
-            var useDefaultCheck = false;
+            // WHY?  Can't figure out why this is needed and not just use isCheckedByDefault
+            var defaultCheckCatList = ["FIELD", "EAVE","RIDGETOTAL", "VALLEY", "LPIPE1", "LPIPE2", "LPIPE3", "LPIPE4"];
+            var restrictChecksToDefaultOnly = false;
             for (var x = 0; x < defaultCheckCatList.length; x++) {
                 if (paramKey == defaultCheckCatList[x]) {
-                    useDefaultCheck = true;
+                    restrictChecksToDefaultOnly = true;
                     break;
                 }
             };
@@ -110,28 +113,30 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore', function jobConfigSrvc
             var isCheckedByDefault = convertToBoolean(materials[i].Checked);
 
             // If the client has a 'Saved' customObj for this material, use that Price and Qty, otherwise use current pricing
-            // Will be null unless client has chosen upgrade
+            // customObj will be null unless Admin has altered Design or Client has chosen upgrade
             var customObj = returnCustomMaterial(materials[i].Code);
 
             var checked = false;
 
+            // CASE 1: Normal usage when merging a custom config with materials 
             if (customObj != null && customObj.Checked != undefined && useConfig === true) {
                 // There is a config and useConfig === true
-                // All values are from config
+                // Get both the Qty and Price from config
                 var itemPrice = Number(customObj.Price);
                 var parameterVal = Number(customObj.Qty);
                 checked = convertToBoolean(customObj.Checked);
+            // CASE 2: Used by Client portal...useConfig is false...
             } else if (customObj != null && customObj.Checked != undefined && useConfig === false) {
                 // There is a config and useConfig === false
-                // This will retain the Checked items from database, but uses Price from Config
+                // This will retain the Checked items from database (i.e. Default) , but uses Price from Config
                 // This is specifically to get the default selections but uses price from whenever it was saved
                 itemPrice = Number(customObj.Price);
                 parameterVal = Number(params[paramKey]);
 
-                // If useDefaultCheck is true, then only Check the one with default... otherwise check everything that has a value > 0
+                // If restrictChecksToDefaultOnly is true, then only Check the one with default... otherwise check everything that has a value > 0
                 // Because... all the materials have the Qty for their PARAM... 
                 // I.E this keeps ALL the different shingle types/models/variants from being selected...
-                if (useDefaultCheck) {
+                if (restrictChecksToDefaultOnly) {
                     if (isCheckedByDefault && parameterVal > 0) {
                         checked = true;
                     }
@@ -146,8 +151,15 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore', function jobConfigSrvc
                 itemPrice = Number(materials[i].PkgPrice);
                 parameterVal = Number(params[paramKey]);
 
-                // If useDefaultCheck id true, then only check the one with default... otherwise check everything that has a value > 0
-                if (useDefaultCheck) {
+                // When there is no custom config saved, there will be material items that need to be "checked" on the display because they have a value in the params, 
+                // but that are not "checked" by default.  This is where we "check" those items
+
+                // However, there are also items where the param is applied, but that should NOT be checked, only the default one is checked
+                // 
+
+                // If restrictChecksToDefaultOnly is true, then only check the one(s) with default... otherwise check everything that has a value > 0
+                //
+                if (restrictChecksToDefaultOnly) {
                     if (isCheckedByDefault && parameterVal > 0) {
                         checked = true;
                     }

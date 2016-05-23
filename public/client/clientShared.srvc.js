@@ -333,7 +333,7 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'JobConfigSrvc'
     var getDefaultSelections = function() {
         basePriceConfig.Field = CONFIG.returnDefaultMaterial("Field");
         basePriceConfig.Valley = CONFIG.returnDefaultMaterial("Valley");
-        basePriceConfig.EdgeTrim = CONFIG.returnDefaultMaterial("EdgeTrim");
+        basePriceConfig.Edge = CONFIG.returnDefaultMaterial("Edge");
         basePriceConfig.Ridge = CONFIG.returnDefaultMaterial("Ridge");
     };
 

@@ -79,7 +79,7 @@ app.controller('ReviewCtrl',['$scope','$state','ClientSharedSrvc','ngDialog','$c
 			{Category:'Field',Code:ME.UpgradeFieldNdx},
 			{Category:'Ridge',Code:ME.UpgradeRidgeNdx},
 			{Category:'Valley',Code:ME.UpgradeValleyNdx},
-			{Category:'EdgeTrim',Code:ME.UpgradeTrimNdx}];
+			{Category:'Edge',Code:ME.UpgradeTrimNdx}];
         
         ME.C.saveJobConfig(dataObj);	
     };
@@ -100,7 +100,7 @@ app.controller('ReviewCtrl',['$scope','$state','ClientSharedSrvc','ngDialog','$c
 		ME.shingleUpgrades = ME.C.getUpgrades("Field");
 		ME.ridgeUpgrades = ME.C.getUpgrades("Ridge");
 		ME.valleyUpgrades = ME.C.getUpgrades("Valley");
-		ME.trimUpgrades = ME.C.getUpgrades("EdgeTrim");
+		ME.trimUpgrades = ME.C.getUpgrades("Edge");
 	};
 
 	var setSelections = function(){
