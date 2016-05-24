@@ -186,7 +186,6 @@ app.controller('NewJobCtrl', ['$scope', '$state', 'evoDb', 'SharedSrvc', 'ngDial
     };
 
    
-
     Me.submitForm = function() {
         Me.isError = false;
         var dataObj = {};

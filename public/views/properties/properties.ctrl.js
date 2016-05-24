@@ -14,6 +14,7 @@ app.controller('PropertiesCtrl', ['$scope', '$state', 'evoDb', 'SharedSrvc', 'Te
     ME.properties = S.managerProperties;
     ME.roofDescriptions = [];
 
+    ME.showHelp = false;
 
     ME.showDetails = function(ndxStr) {
         var ndx = Number(ndxStr);

@@ -11,7 +11,7 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore', function jobConfigSrvc
     self.defaultCheckedMaterials = [];
 
     self.configLabor = [];
-    self.configBaseCosts = [];
+    self.configmaterialsCosts = [];
     self.configMargin = 0;
 
     // Step 3 of events triggered by selection of a Proposal from Proposal Review
@@ -44,7 +44,7 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore', function jobConfigSrvc
 
         // 2. Labor config
         self.configLabor = [];
-        var laborStr = dataObj.laborCost;
+        var laborStr = dataObj.labor;
         if (laborStr != "") {
             var laborArr = laborStr.split('!');
             for (var i = 0; i < laborArr.length; i++) {
@@ -57,23 +57,23 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore', function jobConfigSrvc
             }
         };
         // 3. Base Cost config
-        self.configBaseCosts = [];
-        var baseCostStr = dataObj.baseCost;
-        if (baseCostStr != "") {
-            var baseCostArr = baseCostStr.split('!');
-            for (var i = 0; i < baseCostArr.length; i++) {
-                var thisItem = baseCostArr[i].split(';');
+        self.configmaterialsCosts = [];
+        var materialsCostStr = dataObj.materialsCost;
+        if (materialsCostStr != "") {
+            var materialsCostArr = materialsCostStr.split('!');
+            for (var i = 0; i < materialsCostArr.length; i++) {
+                var thisItem = materialsCostArr[i].split(';');
                 var itemObj = {};
                 itemObj.Field = thisItem[0];
                 itemObj.Valley = thisItem[1];
                 itemObj.Ridge = thisItem[2];
                 itemObj.Total = thisItem[3];
-                self.configBaseCosts.push(itemObj);
+                self.configmaterialsCosts.push(itemObj);
             }
         };
 
         // 4. Upgrade Cost config
-        //var upgradeCostStr = dataObj.upgradeCost;
+        //var profitMarginStr = dataObj.profitMargin;
 
         // 5. Margin
         var m = parseInt(dataObj.margin);
@@ -265,8 +265,8 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore', function jobConfigSrvc
         return self.configLabor;
     };
 
-    self.returnBaseCost = function() {
-        return self.configBaseCosts;
+    self.returnmaterialsCost = function() {
+        return self.configmaterialsCosts;
     };
 
     // Make all vals numbers

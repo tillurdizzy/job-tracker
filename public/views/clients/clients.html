@@ -15,7 +15,9 @@
             <div client-item id="{{e.PRIMARY_ID}}" company="{{e.displayName}}" details="Ctrl.showDetails" contact="{{e.name_first + ' ' + e.name_last}}" ng-repeat="e in Ctrl.clients">
             </div>
         </div>
-        <div class="block-section" style="margin-top:20px;">
+        <horiz-rule margintop="5" marginbottom="5"></horiz-rule>
+        <div class="help-icon"><i ng-click="Ctrl.showHelp = !Ctrl.showHelp;" class="fa fa-question-circle"></i></div>
+        <div class="block-section" style="margin-top:20px;" ng-show="Ctrl.showHelp">
             <div class="text-block-display large">
                 <p>Every Job begins with a <span class="bold">Client</span>. This may be an individual, such as a the home owner; or a company, such as a real estate developer or property manager.</p>
                 <p>Click the <span class="bold">New Client</span> button in the menu bar add a client.</p>
@@ -24,3 +26,4 @@
         </div>
     </div>
 </div>
+<add-space heightpx="600"></add-space>

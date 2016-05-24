@@ -4,21 +4,18 @@
         <button ng-click="Ctrl.goProperties()" type="button" class="button middle">PROPERTIES</button>
         <button ng-click="Ctrl.goJobs()" type="button" class="button">JOBS</button>
     </div>
-   <div ui-view>
+    <div ui-view>
         <h2>New Client</h2>
         <div class="ez-form-item">
             <h3>Type of Client</h3>
             <div class="check-radio-container" style="margin-bottom:10px;">
-                <input type="radio" id="Rad1A" name="Rad1" value="Individual" ng-model="Ctrl.ClientType"></input>
+                <input type="radio" id="Rad1A" name="Rad1" value="1" ng-model="Ctrl.ClientType"></input>
                 <label for="Rad1A"><span></span>Individual / Residential / Homeowner</label>
-
-                <input type="radio" id="Rad1B" name="Rad1" value="Business" ng-model="Ctrl.ClientType"></input>
+                <input type="radio" id="Rad1B" name="Rad1" value="2" ng-model="Ctrl.ClientType"></input>
                 <label for="Rad1B"><span></span>Business / Organization</label>
             </div>
-            
             <div class="page-nav">
                 <div class="page-nav-left">
-                    
                 </div>
                 <div ng-class="Ctrl.isError ? 'input-error' : 'input-msg'">
                     {{Ctrl.inputMsg}}
@@ -28,5 +25,5 @@
                 </div>
             </div>
         </div>
-    </div>   
+    </div>
 </div>

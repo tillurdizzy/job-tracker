@@ -10,12 +10,12 @@ define( "DATABASE_NAME", "jobtracker");
 
 $con = mysqli_connect(DATABASE_SERVER, DATABASE_USERNAME, DATABASE_PASSWORD,DATABASE_NAME) or die ('ERROR!!!');
 $jobID = mysqli_real_escape_string($con,$data->jobID);
-$baseCost = mysqli_real_escape_string($con,$data->baseCost);
-$upgradeCost = mysqli_real_escape_string($con,$data->upgradeCost);
+$materialsCost = mysqli_real_escape_string($con,$data->materialsCost);
+$profitMargin = mysqli_real_escape_string($con,$data->profitMargin);
 
 $query = "UPDATE job_config SET 
-laborCost='".$upgradeCost."'
-baseCost='".$baseCost."'
+labor='".$profitMargin."'
+materialsCost='".$materialsCost."'
 WHERE jobID='".$jobID."'";
 $qry_res = mysqli_query($con,$query);
 if ($qry_res) {

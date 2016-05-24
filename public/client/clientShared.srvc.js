@@ -349,9 +349,8 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'JobConfigSrvc'
             }
         };
         // Add Labor
-        var laborCost;
+        var labor;
         
-
         $rootScope.$broadcast("on-data-collection-complete");
     };
 
@@ -399,34 +398,7 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'JobConfigSrvc'
         return n;
     };
 
-    // Init functions
-    var getMaterialsList = function() {
-        console.log("getMaterialsList Called");
-        DB.queryDB("getMaterialsList").then(function(resultObj) {
-            if (resultObj.result == "Error" || typeof resultObj.data === "string") {
-                alert("Query Error - see console for details");
-                console.log("getJobMaterials ---- " + resultObj.data);
-            } else {
-                self.materialsList = resultObj.data;
-            }
-        }, function(error) {
-            alert("Query Error - ClientSharedSrvc >> getJobMaterials");
-        });
-    };
-
-    var getDefaultConfigSelections = function() {
-        DB.queryDB("getDefaultConfigMaterials", null).then(function(resultObj) {
-            if (resultObj.result == "Error" || typeof resultObj.data === "string") {
-                alert("Query Error - see console for details");
-                console.log("jobConfig >> getDefaultConfigMaterials ---- " + resultObj.data);
-            } else {
-                self.defaultCheckedMaterials = resultObj.data;
-                getMaterialsList();
-            }
-        }, function(error) {
-            alert("Query Error - jobConfig >> getDefaultConfigMaterials");
-        });
-    };
+    // Init functions chained
 
     var getKeyValuePairs = function() {
         var dataObj = {};
@@ -442,18 +414,39 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'JobConfigSrvc'
             alert("Query Error - ClientSharedSrvc >> getKeyValuePairs");
         });
     };
-
-    var init = function() {
-        getKeyValuePairs();
-
-        // The following 2 are chained to above
-        //getDefaultConfigSelections();
-        //getMaterialsList();
+    var getDefaultConfigSelections = function() {
+        DB.queryDB("getDefaultConfigMaterials", null).then(function(resultObj) {
+            if (resultObj.result == "Error" || typeof resultObj.data === "string") {
+                alert("Query Error - see console for details");
+                console.log("jobConfig >> getDefaultConfigMaterials ---- " + resultObj.data);
+            } else {
+                self.defaultCheckedMaterials = resultObj.data;
+                getMaterialsList();
+            }
+        }, function(error) {
+            alert("Query Error - jobConfig >> getDefaultConfigMaterials");
+        });
+    };
+    var getMaterialsList = function() {
+        console.log("getMaterialsList Called");
+        DB.queryDB("getMaterialsList").then(function(resultObj) {
+            if (resultObj.result == "Error" || typeof resultObj.data === "string") {
+                alert("Query Error - see console for details");
+                console.log("getJobMaterials ---- " + resultObj.data);
+            } else {
+                self.materialsList = resultObj.data;
+            }
+        }, function(error) {
+            alert("Query Error - ClientSharedSrvc >> getJobMaterials");
+        });
     };
 
 
+    var init = function() {
+        getKeyValuePairs();
+    };
+
     init();
-    console.log("ClientShared Complete");
 
     return self;
 }]);

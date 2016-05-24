@@ -62,7 +62,6 @@ app.controller('ProposalCtrl', ['$state', '$scope', 'evoDb', 'SharedSrvc', 'Shin
 
     ME.printSummary = function() {
         var dataObj = {};
-       
     };
 
     ME.goClients = function() {
@@ -140,7 +139,6 @@ app.controller('ProposalCtrl', ['$state', '$scope', 'evoDb', 'SharedSrvc', 'Shin
         });
     };
 
-
     var getJobParameters = function() {
         var dataObj = {};
         dataObj.ID = ME.S.selectedJobObj.PRIMARY_ID;
@@ -158,7 +156,6 @@ app.controller('ProposalCtrl', ['$state', '$scope', 'evoDb', 'SharedSrvc', 'Shin
 
     var setParams = function(dataObj) {
         ME.PARAMS = dataObj;
-        console.log(ME.PARAMS);
     };
 
     var getSpecial = function() {
@@ -193,7 +190,7 @@ app.controller('ProposalCtrl', ['$state', '$scope', 'evoDb', 'SharedSrvc', 'Shin
     var initPage = function() {
         getJobParameters();
         getSpecial();
-        console.log("INIT Proposal Ctrl");
+        //console.log("INIT Proposal Ctrl");
     };
 
     initPage();

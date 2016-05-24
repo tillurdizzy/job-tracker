@@ -15,8 +15,7 @@
         <h4>{{Ctrl.selectedPropertyObj.name}} {{Ctrl.selectedJobObj.bldgName}}</h4>
         <h3>{{Ctrl.selectedPropertyObj.street}}</h3>
         <h3>{{Ctrl.selectedPropertyObj.city + ", " + Ctrl.selectedPropertyObj.state + " " + Ctrl.selectedPropertyObj.zip}}</h3>
-        <p>Property ID: {{Ctrl.selectedPropertyObj.PRIMARY_ID}}</p>
-        <p>Job ID: {{Ctrl.selectedJobObj.PRIMARY_ID}}</p>
+        <p>Property ID: {{Ctrl.selectedPropertyObj.PRIMARY_ID}} Job ID: {{Ctrl.selectedJobObj.PRIMARY_ID}}</p>
     </div>
     
     <div id='cssmenu' ng-controller="ProposalMenuCtrl">
@@ -28,5 +27,5 @@
         </ul>
     </div>
     <div ui-view></div>
-    <!--  page -->
+    <add-space heightpx="600"></add-space>
 </div>

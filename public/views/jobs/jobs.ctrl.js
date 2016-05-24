@@ -19,6 +19,7 @@ app.controller('JobsCtrl',['$location','$state','evoDb','$scope','SharedSrvc',fu
     ME.updateContract = false;
     ME.updateActive = false;
     ME.updateComplete = false;
+    ME.showHelp = false;
 
     ME.isProposal = false;
     ME.isContract = false;

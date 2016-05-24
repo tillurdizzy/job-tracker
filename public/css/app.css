@@ -787,6 +787,14 @@ body {
     margin: 0 auto;
     max-width: 1600px; }
 
+.help-icon {
+  margin: 7px 0; }
+  .help-icon i {
+    color: #3498DB;
+    font-size: 1.5rem;
+    display: inline-block;
+    cursor: pointer; }
+
 .page {
   width: 100%; }
   .page h4 {
@@ -929,7 +937,10 @@ body {
     background-color: #34495E;
     border-right: 1px solid #7F8C8D;
     transition: background-color 0.25s ease-out; }
-  .top-bar button:hover, .top-bar button:focus, .top-bar .button:hover, .top-bar .button:focus {
+  .top-bar button:hover,
+  .top-bar button:focus,
+  .top-bar .button:hover,
+  .top-bar .button:focus {
     background-color: #2C3E50;
     transition: background-color 0.25s ease-out; }
 
@@ -1015,7 +1026,8 @@ th {
   padding-left: 0;
   padding-right: 0; }
 
-input[type="file"], textarea {
+input[type="file"],
+textarea {
   display: inline;
   padding: 2px;
   height: 28px; }

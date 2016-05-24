@@ -26,7 +26,6 @@ app.service('ClientDataSrvc', ['$http', '$q', function($http, $q) {
         getDefaultConfigMaterials: httpPathPrefix + "getDefaultConfigMaterials.php"
     };
 
-
     self.queryDB = function(query, dataObj) {
         var rtnObj = {};
         var phpPath = queryPaths[query];
@@ -63,9 +62,5 @@ app.service('ClientDataSrvc', ['$http', '$q', function($http, $q) {
         self.managerName = "";
     };
 
-
-   
-
-    console.log("ClientData Complete");
     return self;
 }]);

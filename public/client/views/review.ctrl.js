@@ -28,41 +28,41 @@ app.controller('ReviewCtrl',['$scope','$state','ClientSharedSrvc','ngDialog','$c
 
 	ME.calculateTotal = function(){
 
-		var fieldUpgradeCost = 0;
-		var ridgeUpgradeCost = 0;
-		var valleyUpgradeCost = 0;
-		var trimUpgradeCost = 0;
+		var fieldprofitMargin = 0;
+		var ridgeprofitMargin = 0;
+		var valleyprofitMargin = 0;
+		var trimprofitMargin = 0;
 
 		for (var i = 0; i < ME.shingleUpgrades.length; i++) {
 			if(ME.shingleUpgrades[i].Code === ME.UpgradeFieldNdx){
-				fieldUpgradeCost = Number(ME.shingleUpgrades[i].upgradePrice);
+				fieldprofitMargin = Number(ME.shingleUpgrades[i].upgradePrice);
 				break;
 			}
 		};
 
 		for (var i = 0; i < ME.ridgeUpgrades.length; i++) {
 			if(ME.ridgeUpgrades[i].Code === ME.UpgradeRidgeNdx){
-				ridgeUpgradeCost = Number(ME.ridgeUpgrades[i].upgradePrice);
+				ridgeprofitMargin = Number(ME.ridgeUpgrades[i].upgradePrice);
 				break;
 			}
 		};
 
 		for (var i = 0; i < ME.valleyUpgrades.length; i++) {
 			if(ME.valleyUpgrades[i].Code === ME.UpgradeValleyNdx){
-				valleyUpgradeCost = Number(ME.valleyUpgrades[i].upgradePrice);
+				valleyprofitMargin = Number(ME.valleyUpgrades[i].upgradePrice);
 				break;
 			}
 		};
 
 		for (var i = 0; i < ME.trimUpgrades.length; i++) {
 			if(ME.trimUpgrades[i].Code === ME.UpgradeTrimNdx){
-				trimUpgradeCost = Number(ME.trimUpgrades[i].upgradePrice);
+				trimprofitMargin = Number(ME.trimUpgrades[i].upgradePrice);
 				break;
 			}
 		};
 
 		var base = Number(ME.baseLineTotal);
-		ME.grandTotal = base + fieldUpgradeCost + ridgeUpgradeCost + valleyUpgradeCost + trimUpgradeCost;
+		ME.grandTotal = base + fieldprofitMargin + ridgeprofitMargin + valleyprofitMargin + trimprofitMargin;
 
 
 		// DOM vars to show Ridge Selections that match Field manufacturer

@@ -50,6 +50,7 @@ app.controller('PitchedRoofInventoryCtrl', ['$state', '$scope', 'SharedSrvc', 'A
     };
 
     ME.refreshInventoryList = function() {
+        ME.pitchedInventoryList = [];
         getInventory();
     };
 

@@ -1,12 +1,10 @@
 <div class="top page">
-    
-        <div class="page-title">
-            <h2>Sales Rep Admin Application</h2>
+    <div class="page-title">
+        <h2>Sales Rep Admin Application</h2>
+    </div>
+    <div ui-view>
+        <div class="flex-center" ng-hide="requestSuccess">
+            <google-plus-signin clientid="694848371691-06c5a0e6s0988o8e5voq09s7anml5hlt.apps.googleusercontent.com"></google-plus-signin>
         </div>
-        <div ui-view>
-            <div class="flex-center" ng-hide="requestSuccess">
-                <google-plus-signin clientid="694848371691-06c5a0e6s0988o8e5voq09s7anml5hlt.apps.googleusercontent.com"></google-plus-signin>
-            </div>
-        </div>
-  
+    </div>
 </div>

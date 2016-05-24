@@ -20,6 +20,7 @@ app.service('evoDb', ['$http', '$q', 'SharedSrvc', 'LogInSrvc', 'underscore', fu
         getJobParameters: httpPathPrefix + "getJobParameters.php",
         getSpecialConsiderations: httpPathPrefix + "getSpecialConsiderations.php",
         putPropertyAddress: httpPathPrefix + "putPropertyAddress.php",
+        getPropertiesByClient: httpPathPrefix + "getPropertiesByClient.php",
         putRoof: httpPathPrefix + "putRoof.php",
         insertRoof: httpPathPrefix + "insertRoof.php",
         insertJobParameters: httpPathPrefix + "insertJobParameters.php",

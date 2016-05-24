@@ -16,8 +16,9 @@
                 address="{{e.street + ', ' + e.city}}" ng-repeat="e in Ctrl.properties">
             </div> 
         </div>
-	    
-        <div class="block-section-width" style="margin-top:20px;">
+	    <horiz-rule margintop="5" marginbottom="5"></horiz-rule>
+        <div class="help-icon"><i ng-click="Ctrl.showHelp = !Ctrl.showHelp;" class="fa fa-question-circle"></i></div>
+        <div class="block-section-width" style="margin-top:20px;" ng-show="Ctrl.showHelp">
             <div class="text-block-display large">
                 <p>Every Job needs a <span class="bold">Property</span>. Every property must have a Client that it belongs to.</p>
                 <p>Click the <span class="bold">New Property</span> button in the menu bar add a client.</p>

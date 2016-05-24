@@ -13,7 +13,9 @@
         <div class="list-container">
             <div job-item id="{{e.PRIMARY_ID}}" status="{{e.status}}" details="Ctrl.showDetails" property="{{e.propertyName}}" bldgname="{{e.bldgName}}" ng-repeat="e in Ctrl.jobs"></div>
         </div>
-        <div class="block-section" style="margin-top:20px;">
+        <horiz-rule margintop="5" marginbottom="5"></horiz-rule>
+        <div class="help-icon"><i ng-click="Ctrl.showHelp = !Ctrl.showHelp;" class="fa fa-question-circle"></i></div>
+        <div class="block-section" style="margin-top:20px;" ng-show="Ctrl.showHelp">
             <div class="text-block-display">
                 <p>The <span class="bold">JOBS</span> page is where you create, track and update the roofing jobs you currently have in progress.</p>
                 <p>To create a new job, you first need:</p>
@@ -33,4 +35,5 @@
             </div>
         </div>
     </div>
+    <add-space heightpx="600"></add-space>
 </div>

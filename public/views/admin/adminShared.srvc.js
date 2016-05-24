@@ -39,7 +39,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
     // Extracted from materialsList... items that are marked as "Checked"
     self.materialsDefault = [];
 
-    // Price to customer without any upgrades... Default selections + LABORCOST + Other Expenses
+    // Price to customer without any upgrades... Default selections + labor + Other Expenses
     self.basePrice = { Field: "", Valley: "", Ridge: "", Total: "" };
 
     // Selections and pricing specific to a job
@@ -306,7 +306,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
         $rootScope.$broadcast('onEditMaterial');
     };
 
-    
+
 
     var getSpecialConsiderations = function() {
         self.SPECIAL = "";
@@ -329,7 +329,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
         self.materialsDefault = [];
         for (var i = 0; i < self.materialsList.length; i++) {
             var c = parseInt(self.materialsList[i].Checked);
-            if(c == undefined || c == null || c==NaN || c > 1){
+            if (c == undefined || c == null || c == NaN || c > 1) {
                 self.materialsList[i].Checked == "0"
             }
             if (c == "1") {
@@ -665,7 +665,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
                 alert("Query Error - see console for details");
                 console.log("getLabor ---- " + resultObj.data);
             } else {
-                
+
             }
         }, function(error) {
             alert("Query Error - AdminSharedSrvc >> getLabor");
@@ -677,23 +677,30 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
         var thisItem = "";
         var strData = "";
         for (var i = 0; i < self.laborConfig.length; i++) {
-           if(Labor == self.laborConfig[i].Labor){
+            if (Labor == self.laborConfig[i].Labor) {
                 self.laborConfig[i].Qty = data.Qty;
                 self.laborConfig[i].Cost = data.Cost;
                 self.laborConfig[i].Total = parseInt(data.Qty) * Number(data.Cost);
-           };
-           thisItem = "";
-           if(i == 0){
+            };
+            thisItem = "";
+            if (i == 0) {
                 var prefix = "";
-           }else{
+            } else {
                 prefix = "!";
-           };
-           thisItem = prefix + self.laborConfig[i].Labor + ";" + self.laborConfig[i].Qty + ";" + self.laborConfig[i].Cost;
-           strData += thisItem;
+            };
+            thisItem = prefix + self.laborConfig[i].Labor + ";" + self.laborConfig[i].Qty + ";" + self.laborConfig[i].Cost;
+            strData += thisItem;
+        };
+
+        var y = 0;
+        for (var i = 0; i < self.laborConfig.length; i++) {
+            var x = Number(self.laborConfig[i].Total);
+            y += x;
         }
+        strData += "!Total;" + y;
 
         var dataObj = {};
-        dataObj.laborCost = strData;
+        dataObj.labor = strData;
         dataObj.jobID = self.proposalUnderReview.jobID;
         DB.query("updateConfigLabor", dataObj).then(function(resultObj) {
             if (resultObj.result == "Error" || typeof resultObj.data === "string") {
@@ -838,8 +845,8 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
 
     self.updateConfigCost = function() {
         var dataObj = {};
-        dataObj.baseCost = "Field;" + self.basePrice.Field + "!Valley;" + self.basePrice.Valley + "!Ridge;" + self.basePrice.Ridge + "!Total;" + self.basePrice.Total;
-        dataObj.upgradeCost = "";
+        dataObj.materialsCost = "Field;" + self.basePrice.Field + "!Valley;" + self.basePrice.Valley + "!Ridge;" + self.basePrice.Ridge + "!Total;" + self.basePrice.Total;
+        dataObj.profitMargin = "";
         DB.query("updateConfigCost", dataObj).then(function(resultObj) {
             if (resultObj.result == "Error" || typeof resultObj.data === "string") {
                 alert("Query Error - see console for details");
@@ -854,7 +861,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
 
     self.updateConfigLabor = function(strVals) {
         var dataObj = {};
-        dataObj.laborCost = strVals;
+        dataObj.labor = strVals;
         DB.query("updateConfigLabor", dataObj).then(function(resultObj) {
             if (resultObj.result == "Error" || typeof resultObj.data === "string") {
                 alert("Query Error - see console for details");

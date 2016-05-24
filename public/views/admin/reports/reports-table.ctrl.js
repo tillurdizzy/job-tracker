@@ -99,7 +99,8 @@ app.controller('ReportTablesCtrl', ['$state', '$scope', 'AdminDataSrvc', functio
     };
 
 
-    ME.refreshData = function() {
+    ME.refreshCurrentTable = function() {
+        assignData([]);
         getData();
     };
 

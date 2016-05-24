@@ -91,7 +91,6 @@ app.service('SharedSrvc', ['$rootScope', 'ListSrvc', function sharedSrvc($rootSc
         self.selectedPropertyObj = obj;
     };
 
-
     self.setJobByID = function(id) {
         for (var i = 0; i < self.managerJobs.length; i++) {
             if (self.managerJobs[i].PRIMARY_ID == id) {
@@ -227,8 +226,6 @@ app.service('SharedSrvc', ['$rootScope', 'ListSrvc', function sharedSrvc($rootSc
             var propID = self.managerJobs[i].property;
             var thisProperty = returnProperty(propID);
             self.managerJobs[i].propertyName = thisProperty;
-
-
         };
 
         for (var i = 0; i < self.managerProperties.length; i++) {
@@ -236,7 +233,6 @@ app.service('SharedSrvc', ['$rootScope', 'ListSrvc', function sharedSrvc($rootSc
             self.managerProperties[i].clientName = returnDisplayNameFromClient(clientID);
         }
         self.dataRefreshed = true;
-
     };
 
     self.decodeRoofVals = function(dataObj) {

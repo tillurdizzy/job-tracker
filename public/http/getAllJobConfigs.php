@@ -16,10 +16,11 @@ $resultValueObjects = array();
 while ($row = mysqli_fetch_object($result)) {
 	$oneVO = new jobConfigVO();
 	$oneVO->PRIMARY_ID = $row->PRIMARY_ID;
+	$oneVO->jobID = $row->jobID;
 	$oneVO->config = $row->config;
-	$oneVO->laborCost = $row->laborCost;
-	$oneVO->baseCost = $row->baseCost;
-	$oneVO->upgradeCost = $row->upgradeCost;
+	$oneVO->labor = $row->labor;
+	$oneVO->materialsCost = $row->materialsCost;
+	$oneVO->profitMargin = $row->profitMargin;
 	$oneVO->margin = $row->margin;
 	array_push( $resultValueObjects, $oneVO );
 }
