@@ -79,7 +79,7 @@ app.controller('AdminProposalCtrl',['$rootScope','$state','AdminDataSrvc','$scop
 
 	
 	$scope.$watch('$viewContentLoaded', function() {
-		console.log("AdminProposalCtrl >>> $viewContentLoaded");
+		//console.log("AdminProposalCtrl >>> $viewContentLoaded");
 		init();
     });
 

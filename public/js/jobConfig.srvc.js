@@ -389,7 +389,7 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore', function jobConfigSrvc
     };
 
 
-    console.log("jobConfig Complete");
+    //console.log("jobConfig Complete");
 
     return self;
 }]);

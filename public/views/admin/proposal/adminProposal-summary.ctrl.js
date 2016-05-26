@@ -75,7 +75,7 @@ app.controller('AdminPropSummary', ['$state', '$scope', 'AdminSharedSrvc', 'Admi
     });
 
     $scope.$watch('$viewContentLoaded', function() {
-        console.log("SUMMARY Ctrl >>> $viewContentLoaded");
+        //console.log("SUMMARY Ctrl >>> $viewContentLoaded");
         getTotal();
     });
 

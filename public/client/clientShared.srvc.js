@@ -255,6 +255,7 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'JobConfigSrvc'
     var validateMergeData = function() {
         var listCopy = clone(self.materialsList);
         if (mergeDataFlag.config === true && mergeDataFlag.params === true) { 
+            //
             self.defaultCheckedMaterials = CONFIG.mergeJobConfig(self.defaultCheckedMaterials, self.jobParameters, false);
 
             self.materialsList = CONFIG.mergeJobConfig(self.materialsList, self.jobParameters, false);
@@ -341,11 +342,11 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'JobConfigSrvc'
     self.getBaseTotal = function() {
         baseLineItems = [];
         var include = false;
-        for (var i = 0; i < self.materialsList.length; i++) {
-            include = self.materialsList[i].Checked;
+        for (var i = 0; i < self.materialsListConfig.length; i++) {
+            include = self.materialsListConfig[i].Checked;
             if (include === true) {
-                baseLineItems.push(self.materialsList[i]);
-                self.baseLineTotal += parseInt(self.materialsList[i].Total);
+                baseLineItems.push(self.materialsListConfig[i]);
+                self.baseLineTotal += Number(self.materialsListConfig[i].Total);
             }
         };
         // Add Labor

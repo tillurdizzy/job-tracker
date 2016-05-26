@@ -260,7 +260,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
     };
 
     // Called from Proposal Review Design page to manually edit qty or price of material
-    self.editMaterial = function(vals) {
+    self.editDesignMaterial = function(vals) {
         var cat = vals.Category;
         var catArray = [];
         switch (cat) {
@@ -297,13 +297,25 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
         }
         for (var i = 0; i < catArray.length; i++) {
             if (catArray[i].PRIMARY_ID == vals.ID) {
-                catArray[i].PkgPrice = parseInt(vals.Price);
-                catArray[i].Qty = parseInt(vals.Qty);
-                catArray[i].Total = catArray[i].PkgPrice * catArray[i].Qty;
+                catArray[i].PkgPrice = Number(vals.Price);
+                catArray[i].Qty = Number(vals.Qty);
+                // calcs
+                var q = Number(vals.Qty);
+                var p = Number(vals.Price);
+                var over = Number(catArray[i].Margin);
+                var qtyCoverage = Number(catArray[i].QtyCoverage);
+
+                var numberOfPackagesToBuy = q / qtyCoverage;
+                var pkgQtyRoundedUp = Math.ceil(numberOfPackagesToBuy);
+                var pkgQtyWithOverageRoundedUp = Math.ceil(numberOfPackagesToBuy * over);
+                var total = (pkgQtyWithOverageRoundedUp * p);
+
+                catArray[i].PkgQty = pkgQtyWithOverageRoundedUp;
+                catArray[i].Total = total;
                 break;
             }
         }
-        $rootScope.$broadcast('onEditMaterial');
+        $rootScope.$broadcast('onEditDesignMaterial');
     };
 
 
@@ -733,10 +745,9 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
 
 
     self.saveJobConfig = function() {
-        var dataObj = {};
+        
         var dataStr = "";
-        dataObj.jobID = self.proposalUnderReview.jobID;
-
+        
         for (var i = 0; i < self.materialsCatergorized.Field.length; i++) {
             var a = self.materialsCatergorized.Field[i].Code;
             var b = self.materialsCatergorized.Field[i].Qty;
@@ -827,12 +838,14 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
             dataStr += a + ';' + b + ';' + c + ';' + d + ';' + e + '!';
         };
 
+        var dataObj = {};
         dataObj.config = dataStr;
+        dataObj.jobID = self.proposalUnderReview.jobID;
 
         DB.query("updateConfigConfig", dataObj).then(function(resultObj) {
             if (resultObj.result == "Error" || typeof resultObj.data === "string") {
                 alert("Query Error - see console for details");
-                console.log("updateConfig ---- " + resultObj.data);
+                console.log("AdminSharedSrvc >> updateConfigConfig ---- " + resultObj.data);
             } else {
                 $rootScope.$broadcast('onSaveJobConfig');
             }
@@ -847,6 +860,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
         var dataObj = {};
         dataObj.materialsCost = "Field;" + self.basePrice.Field + "!Valley;" + self.basePrice.Valley + "!Ridge;" + self.basePrice.Ridge + "!Total;" + self.basePrice.Total;
         dataObj.profitMargin = "";
+        dataObj.jobID = self.proposalUnderReview.jobID;
         DB.query("updateConfigCost", dataObj).then(function(resultObj) {
             if (resultObj.result == "Error" || typeof resultObj.data === "string") {
                 alert("Query Error - see console for details");

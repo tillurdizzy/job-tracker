@@ -82,7 +82,7 @@ app.controller('AdminPropMaterials', ['$state', '$scope', 'AdminSharedSrvc', 'Ad
     });
 
     $scope.$watch('$viewContentLoaded', function() {
-        console.log("AdminPropSUPPLIESCtrl >>> $viewContentLoaded");
+        //console.log("AdminPropSUPPLIESCtrl >>> $viewContentLoaded");
         ME.filterMaterials();
     });
 
