@@ -46,7 +46,6 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'JobConfigSrvc'
 
     //Called after successful Log In
     self.LogIn = function(name, clientObj) {
-        console.log("ClientShared LogIn " + name);
         self.displayName = name;
         self.clientObj = clientObj;
         self.loggedIn = true;
@@ -111,6 +110,7 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'JobConfigSrvc'
         };
     };
 
+    // Translates the roof description database entries to text for display
     var buildRoofDescription = function() {
         self.existingRoofDescription.levels = self.roofObj.numLevels;
         self.existingRoofDescription.deck = returnKeyValue("roofDeckOptions", self.roofObj.roofDeck);
@@ -251,17 +251,21 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'JobConfigSrvc'
         getPhotoGallery();
     };
 
-    // Checks to make sure both config and materials are up to date 
+    // Checks to make sure both config and materials are imported
     var validateMergeData = function() {
         var listCopy = clone(self.materialsList);
         if (mergeDataFlag.config === true && mergeDataFlag.params === true) { 
-            //
+            // Insert saved config Prices and Qty into the Default materials, but don't change the "Checked" value
             self.defaultCheckedMaterials = CONFIG.mergeJobConfig(self.defaultCheckedMaterials, self.jobParameters, false);
 
+            // Insert saved config Prices and Qty into the materialsList, but don't change the "Checked" value
             self.materialsList = CONFIG.mergeJobConfig(self.materialsList, self.jobParameters, false);
+
+            // Insert saved config Prices and Qty AND Checked value into the materialsListConfig
             self.materialsListConfig = CONFIG.mergeJobConfig(listCopy, self.jobParameters, true);
 
             CONFIG.defaultCheckedMaterials = self.defaultCheckedMaterials
+
             getDefaultSelections();
 
             self.getBaseTotal();
@@ -332,6 +336,9 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'JobConfigSrvc'
     };
 
     var getDefaultSelections = function() {
+        // There is only ONE material in each of these categories that is Default
+        // This is used as the "0.00" price for upgrades.
+        // All upgrades costs are compared to this cost to get the price difference for display
         basePriceConfig.Field = CONFIG.returnDefaultMaterial("Field");
         basePriceConfig.Valley = CONFIG.returnDefaultMaterial("Valley");
         basePriceConfig.Edge = CONFIG.returnDefaultMaterial("Edge");
@@ -350,18 +357,23 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'JobConfigSrvc'
             }
         };
         // Add Labor
-        var labor;
+        var labor = CONFIG.returnLaborGrandTotal();
+        self.baseLineTotal += labor;
+
+        var profitMargin = CONFIG.profitMargin;
+        self.baseLineTotal += profitMargin;
         
         $rootScope.$broadcast("on-data-collection-complete");
     };
 
     self.getUpgrades = function(cat) {
-        // The users Prices are in the Configured List, but the default selection is in the Original List
+        // The Client's Prices are in the Configured List, but the Default Selection is in the Original List
+        // So... 
         var basePrice = 0;
         var thisCategoryConfigured = [];
         var rtnArray = [];
 
-        // Step 1: Extract Field Category from Configured AND Original List
+        // Step 1: Extract all items in Category from Configured List
         for (var i = 0; i < self.materialsListConfig.length; i++) {
             var category = self.materialsListConfig[i].Category;
             if (category === cat) {

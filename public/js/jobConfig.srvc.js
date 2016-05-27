@@ -13,10 +13,11 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore', function jobConfigSrvc
     self.configLabor = [];
     self.configmaterialsCosts = [];
     self.configMargin = 0;
+    self.profitMargin = 0;
 
     // Step 3 of events triggered by selection of a Proposal from Proposal Review
     // Converts the long string saved in DB into array of objects
-    // ar should be array with single object
+    // Also called from ClientSharedSrvc during flow of events triggered by LogIn
     self.parseJobConfig = function(ar) {
         // 1. Materials config - referred to as jobConfig
         self.jobConfigArray = [];
@@ -76,15 +77,23 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore', function jobConfigSrvc
         //var profitMarginStr = dataObj.profitMargin;
 
         // 5. Margin
-        var m = parseInt(dataObj.margin);
-        if(isNaN(m)){
+        //  !!!!!!!!!!!!!!!!!!!!!!!!!!! Change to marginMultiplier
+        var m = Number(dataObj.margin);
+        if (isNaN(m)) {
             self.configMargin = .1;
-        }else{
-            self.configMargin = m/100;
-        }
-        
+        } else {
+            self.configMargin = m / 100;
+        };
 
-        // Only the jobConfig is returned to Shared
+        //6. Profit margin dollar amount
+        var m = Number(dataObj.profitMargin);
+        if (isNaN(m)) {
+            self.profitMargin = 0;
+        } else {
+            self.profitMargin = m;
+        };
+
+        // Only the jobConfig is returned
         return self.jobConfigArray;
     };
 
@@ -98,10 +107,11 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore', function jobConfigSrvc
             // Is the current paramKey one of the default items????  Compare to this list.
             // Checked by default only matters in certain categories because there are multiple choices
             // using the same Input parameter
-            // Inclusion in this list means "only check 1 item from this category even though other items may have quantity values (derived from params)"
+
             var paramKey = materials[i].InputParam;
-            // WHY?  Can't figure out why this is needed and not just use isCheckedByDefault
-            var defaultCheckCatList = ["FIELD", "EAVE","RIDGETOTAL", "VALLEY", "LPIPE1", "LPIPE2", "LPIPE3", "LPIPE4"];
+
+            // Inclusion in this list means "only check 1 item from this category even though other items may have quantity values (derived from params)"
+            var defaultCheckCatList = ["FIELD", "EAVE", "RIDGETOTAL", "VALLEY", "LPIPE1", "LPIPE2", "LPIPE3", "LPIPE4"];
             var restrictChecksToDefaultOnly = false;
             for (var x = 0; x < defaultCheckCatList.length; x++) {
                 if (paramKey == defaultCheckCatList[x]) {
@@ -125,10 +135,11 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore', function jobConfigSrvc
                 var itemPrice = Number(customObj.Price);
                 var parameterVal = Number(customObj.Qty);
                 checked = convertToBoolean(customObj.Checked);
-            // CASE 2: Used by Client portal...useConfig is false...
+
+                // CASE 2: Used by Client portal...useConfig is false...
             } else if (customObj != null && customObj.Checked != undefined && useConfig === false) {
                 // There is a config and useConfig === false
-                // This will retain the Checked items from database (i.e. Default) , but uses Price from Config
+                // This will retain the Checked items from database (i.e. Default) , but uses Price and Qty from Config
                 // This is specifically to get the default selections but uses price from whenever it was saved
                 itemPrice = Number(customObj.Price);
                 parameterVal = Number(params[paramKey]);
@@ -145,9 +156,8 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore', function jobConfigSrvc
                         checked = true;
                     }
                 };
-
+                // CASE 3: There is no config... use the current values from database
             } else {
-                // There is no config... use the current values from database
                 itemPrice = Number(materials[i].PkgPrice);
                 parameterVal = Number(params[paramKey]);
 
@@ -155,10 +165,8 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore', function jobConfigSrvc
                 // but that are not "checked" by default.  This is where we "check" those items
 
                 // However, there are also items where the param is applied, but that should NOT be checked, only the default one is checked
-                // 
 
                 // If restrictChecksToDefaultOnly is true, then only check the one(s) with default... otherwise check everything that has a value > 0
-                //
                 if (restrictChecksToDefaultOnly) {
                     if (isCheckedByDefault && parameterVal > 0) {
                         checked = true;
@@ -176,7 +184,7 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore', function jobConfigSrvc
             var over = Number(materials[i].Margin);
             var roundUp = Number(materials[i].RoundUp);
 
-            var isNum = isNaN(parameterVal); 
+            var isNum = isNaN(parameterVal);
             var total = 0;
             // If the inputParam col from materials is blank OR this param has no number then Total is 0
             if (isNum) {
@@ -199,12 +207,15 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore', function jobConfigSrvc
         return materials;
     };
 
+    // This is called from Admin
     self.mergeLaborConfig = function(defaultLabor, params) {
-       
+
         if (self.configLabor.length === 0) {
             // there is no custom labor config
+
+            // Get total Sqs from input params
             var P = numberize(params);
-            var linerFt = P.TOPRDG + P.RKERDG + P.PRMITR;
+            var linerFt = P.TOPRDG + P.RKERDG + P.EAVE;
             var linearToSqs = (linerFt / 35) / 3.3;
             var totalSquares = P.FIELD + linearToSqs;
             totalSquares = Math.ceil(totalSquares);
@@ -212,12 +223,12 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore', function jobConfigSrvc
 
             var includeRoofDeck = false;
 
-            if(includeRoofDeck){
+            if (includeRoofDeck) {
                 var laborDeck = totalSquares * parseInt(defaultLabor.deck);
-            }else{
+            } else {
                 var laborDeck = 0;
             };
-            
+
             var itemObj = {};
             itemObj.Labor = "Field";
             itemObj.Qty = totalSquares;
@@ -241,19 +252,21 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore', function jobConfigSrvc
             itemObj.Cost = defaultLabor.flat;
             itemObj.Total = 0;
             self.configLabor.push(itemObj);
-        }else{ // saved config
+
+        } else { // saved config
+            // Qty is saved with config but we still need to calculate total
             for (var i = 0; i < self.configLabor.length; i++) {
-                if(self.configLabor[i].Labor == "Field"){
+                if (self.configLabor[i].Labor == "Field") {
                     var x = parseInt(self.configLabor[i].Qty);
                     var y = parseInt(self.configLabor[i].Cost);
                     self.configLabor[i].Total = x * y;
                     self.configLabor[i].Units = "Sqs";
-                }else if(self.configLabor[i].Labor == "Deck"){
+                } else if (self.configLabor[i].Labor == "Deck") {
                     x = parseInt(self.configLabor[i].Qty);
                     y = parseInt(self.configLabor[i].Cost);
                     self.configLabor[i].Total = x * y;
                     self.configLabor[i].Units = "Sqs";
-                }else if(self.configLabor[i].Labor == "Flat"){
+                } else if (self.configLabor[i].Labor == "Flat") {
                     x = parseInt(self.configLabor[i].Qty);
                     y = parseInt(self.configLabor[i].Cost);
                     self.configLabor[i].Total = x * y;
@@ -264,6 +277,38 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore', function jobConfigSrvc
 
         return self.configLabor;
     };
+
+
+    // this is called from Client... no need to merge etc.  Everything needed by this time should be saved in config
+    self.returnLaborGrandTotal = function() {
+        var gTotal = 0;
+        for (var i = 0; i < self.configLabor.length; i++) {
+            if (self.configLabor[i].Labor == "Field") {
+                var x = parseInt(self.configLabor[i].Qty);
+                var y = parseInt(self.configLabor[i].Cost);
+                self.configLabor[i].Total = x * y;
+                self.configLabor[i].Units = "Sqs";
+                gTotal += self.configLabor[i].Total;
+            } else if (self.configLabor[i].Labor == "Deck") {
+                x = parseInt(self.configLabor[i].Qty);
+                y = parseInt(self.configLabor[i].Cost);
+                self.configLabor[i].Total = x * y;
+                self.configLabor[i].Units = "Sqs";
+                 gTotal += self.configLabor[i].Total;
+            } else if (self.configLabor[i].Labor == "Flat") {
+                x = parseInt(self.configLabor[i].Qty);
+                y = parseInt(self.configLabor[i].Cost);
+                self.configLabor[i].Total = x * y;
+                self.configLabor[i].Units = "Sqs";
+                 gTotal += self.configLabor[i].Total;
+            }
+        }
+        return gTotal;
+    }
+
+    self.returnProfitMargin = function(){
+
+    }
 
     self.returnmaterialsCost = function() {
         return self.configmaterialsCosts;

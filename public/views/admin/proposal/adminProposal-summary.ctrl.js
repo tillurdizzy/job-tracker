@@ -1,6 +1,6 @@
 'use strict';
 
-app.controller('AdminPropSummary', ['$state', '$scope', 'AdminSharedSrvc', 'AdminProposalSrvc', 'JobConfigSrvc', function($state, $scope, AdminSharedSrvc, AdminProposalSrvc, JobConfigSrvc) {
+app.controller('AdminPropSummary', ['$state', '$scope', 'AdminSharedSrvc', 'AdminProposalSrvc', 'JobConfigSrvc', 'ngDialog',function($state, $scope, AdminSharedSrvc, AdminProposalSrvc, JobConfigSrvc,ngDialog) {
 
     var ME = this;
     ME.S = AdminSharedSrvc;
@@ -48,8 +48,12 @@ app.controller('AdminPropSummary', ['$state', '$scope', 'AdminSharedSrvc', 'Admi
         }
     };
 
-    ME.saveMarginConfig = function() {
-        ME.S.saveMarginConfig(ME.marginDisplay);
+    ME.saveSummaryConfig = function() {
+        var dataObj = {};
+        dataObj.margin = ME.marginDisplay;
+        dataObj.materialsCost = materialsTotal;
+        dataObj.profitMargin = marginTotal;
+        ME.S.updateSummaryConfig(dataObj);
     };
 
     $scope.$on('onSaveMarginConfig', function(event, obj) {

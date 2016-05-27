@@ -741,7 +741,23 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
         }, function(error) {
             alert("Query Error - AdminSharedSrvc >> updateConfigConfig");
         });
-    }
+    };
+
+    self.updateSummaryConfig = function(data) {
+        var dataObj = data;
+        dataObj.jobID = self.proposalUnderReview.jobID;
+        DB.query("updateConfigSummary", dataObj).then(function(resultObj) {
+            if (resultObj.result == "Error" || typeof resultObj.data === "string") {
+                alert("Query Error - see console for details");
+                console.log("updateConfigSummary ---- " + resultObj.data);
+            } else {
+
+                $rootScope.$broadcast('onSaveMarginConfig');
+            }
+        }, function(error) {
+            alert("Query Error - AdminSharedSrvc >> updateConfigSummary");
+        });
+    };
 
 
     self.saveJobConfig = function() {

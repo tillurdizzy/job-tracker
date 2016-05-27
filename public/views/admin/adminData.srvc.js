@@ -59,6 +59,7 @@ app.service('AdminDataSrvc',['$http','$q','SharedSrvc','LogInSrvc',function admi
 		updateConfigCost:httpPathPrefix + "updateConfig_cost.php",
 		updateConfigLabor:httpPathPrefix + "updateConfig_labor.php",
 		updateConfigMargin:httpPathPrefix + "updateConfig_margin.php",
+		updateConfigSummary:httpPathPrefix + "updateConfigSummary.php",
 		updateConfigConfig:httpPathPrefix + "updateConfig_config.php",
 		updateRoof:httpPathPrefix + "updateRoof.php",
 		deleteProperty:httpPathPrefix + "deleteProperty.php",
