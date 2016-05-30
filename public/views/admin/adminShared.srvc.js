@@ -2,10 +2,13 @@
 app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'underscore', 'JobConfigSrvc', 'ngDialog', function adminShared($rootScope, AdminDataSrvc, ListSrvc, underscore, JobConfigSrvc, ngDialog) {
 
     var self = this;
-    self.ME = "AdminSharedSrvc: ";
+    var me = "AdminSharedSrvc: ";
+    var LOG = true;
+
     var DB = AdminDataSrvc;
     var L = ListSrvc;
     var CONFIG = JobConfigSrvc;
+
     self.MATERIALS = [];
     self.CLIENTS = [];
     self.PROPERTIES = [];
@@ -16,6 +19,9 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
     self.MULTILEVELS = [];
     self.laborDefault = {};
     self.laborConfig = {};
+
+    // 
+    self.tabsSubmitted = { design: false, labor: false, margin: false, base: false };
 
     //jobVO's related to jobs that are in Proposal State
     var proposalsAsJob = [];
@@ -30,6 +36,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
     // Selected item from above - i.e. one of the objects in the self.proposalsAsProperty list
     // Params are added during formatParams()
     self.proposalUnderReview = {};
+    self.proposalSelected = false;
 
     // Received from DB - default selections amd current pricing
     // Then Merged with self.jobConfig for custom selections and pricing
@@ -40,10 +47,11 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
     self.materialsDefault = [];
 
     // Price to customer without any upgrades... Default selections + labor + Other Expenses
-    self.basePrice = { Field: "", Valley: "", Ridge: "", Total: "" };
+    self.basePrice = { Field: "", Valley: "", Ridge: "", Edge: "", Total: "" };
 
     // Selections and pricing specific to a job
     self.jobConfig = [];
+    self.isConfigured = false;
 
     // Temporary (short-term ) vars
     var mergeDataFlag = {};
@@ -58,12 +66,14 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
     // Step 1 : Select proposal/property from dropdown on AdminProposalCtrl
     // Called for both roofCodes 0 and 2, but code 2 halts before retrieving jobParameters
     self.selectProposal = function(ndx) {
+        self.trace(me + "selectProposal()");
         var rtnObj = {};
         if (ndx == -1) {
+            self.proposalSelected = false;
             self.resetProposalData(); // Clear vars
         } else {
             self.proposalUnderReview = self.proposalsAsProperty[ndx];
-
+            self.proposalSelected = true;
             rtnObj.propertyID = self.proposalUnderReview.PRIMARY_ID;
             rtnObj.jobID = -1; // this will change below for roofCode 0
             rtnObj.clientID = self.proposalUnderReview.client;
@@ -102,16 +112,18 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
     };
 
     self.selectRoof = function(jobID) {
+        self.trace(me + "selectRoof()");
         self.proposalUnderReview.jobID = jobID;
         // Set flags to false
         mergeDataFlag.config = false;
         mergeDataFlag.materials = false;
         getJobParameters();
-    }
+    };
 
     self.resetProposalData = function() {
+        self.trace(me + "resetProposalData");
         $rootScope.$broadcast('onResetProposalData');
-        self.proposalUnderReview = {};
+        self.proposalUnderReview = false;
     };
 
     //Step 2
@@ -120,11 +132,13 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
     // call formatParams()
     // We'll use a flag (mergeDataFlag.params) to make sure both are updated...
     var getJobParameters = function() {
+        self.trace(me + "getJobParameters()");
         DB.getJobParameters(self.proposalUnderReview.jobID).then(function(jobData) {
             if (jobData != false) {
                 jobParams = jobData[0];
                 mergeDataFlag.params = true;
-                self.proposalUnderReview.propertyInputParams = CONFIG.formatParams(jobParams);
+                self.proposalUnderReview.propertyInputParams = CONFIG.formatParamsForTableDisplay(jobParams);
+                self.trace(me + "$rootScope.$broadcast('onRefreshParamsData', jobParams)");
                 $rootScope.$broadcast('onRefreshParamsData', jobParams);
                 validateData();
                 getJobConfig();
@@ -143,6 +157,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
 
     //Step 3
     var getJobConfig = function() {
+        self.trace(me + "getJobConfig()");
         var dataObj = { jobID: self.proposalUnderReview.jobID };
         DB.query("getJobConfig", dataObj).then(function(resultObj) {
             if (resultObj.result == "Error" || typeof resultObj.data === "string") {
@@ -156,14 +171,29 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
     };
 
     // Send results over to CONFIG
+    //self.tabsSubmitted = {design:false,labor:false,summary:false,base:false};
     var onGetJobConfig = function(ar) {
+        self.trace(me + "onGetJobConfig()");
+        var obj = ar[0];
+        if (Object.keys(obj).length > 0) {
+            self.tabsSubmitted.design = obj.config == "" ? false : true;
+            self.tabsSubmitted.labor = obj.labor == "" ? false : true;
+            self.tabsSubmitted.base = obj.upgradesBase == "" ? false : true;
+            self.tabsSubmitted.margin = obj.profitMargin == "" ? false : true;
+        }
+
+        // CONFIG parses materials, labor, upgradeCost, but only returns the materials to jobConfig here
         self.jobConfig = CONFIG.parseJobConfig(ar);
+
+        self.isConfigured = self.tabsSubmitted.design;
+
         mergeDataFlag.config = true;
         validateData();
     };
 
     // Checks to make sure both config and params are up to date from DB before calling formatParams();
     var validateData = function() {
+        self.trace(me + "validateData()");
         if (mergeDataFlag.config === true && mergeDataFlag.params === true) {
             mergeConfig();
         };
@@ -172,43 +202,76 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
     // Step 4
     // Take the generic materialList and merge it with the job-specific config (insert qty and price)
     var mergeConfig = function() {
+        self.trace(me + "mergeConfig()");
+        if (self.tabsSubmitted.design == false) {
+            // this will only happen 1X, the first time a Proposal is viewed by Admin
+            doUpgradeBase();
+        };
+
         var aClone = DB.clone(self.MATERIALS);
         self.materialsList = CONFIG.mergeJobConfig(aClone, self.proposalUnderReview.propertyInputParams, true);
-        self.materialsDefault = CONFIG.mergeJobConfig(self.materialsDefault, self.proposalUnderReview.propertyInputParams, true);
 
         // If there is a saved labor config, insert the cost and qty... otherwise return the laborDefault vals
         self.laborConfig = CONFIG.mergeLaborConfig(self.laborDefault, DB.clone(self.proposalUnderReview.propertyInputParams));
-        calculateBasePrice();
 
         categorizeMaterials();
         getSpecialConsiderations();
     };
 
-    var calculateBasePrice = function() {
+    var doUpgradeBase = function() {
+        self.trace(me + "doUpgradeBase()");
+        extractDefaultMaterials(); // creates the self.materialsDefault array
+        self.materialsDefault = CONFIG.mergeJobConfig(self.materialsDefault, self.proposalUnderReview.propertyInputParams, true);
+        calculateBaseUpgrades();
+        saveBasePrices();
+    };
+
+    var calculateBaseUpgrades = function() {
+        self.trace(me + "calculateBaseUpgrades()");
         self.basePrice = {};
-        // These 3 categories are the ones that the Client can upgrade
+        // These 4 categories are the ones that the Client can upgrade
         // This function records the non-upgrade prices for each to use for the Baseline Price
+        var runningTotal = 0;
         for (var i = 0; i < self.materialsDefault.length; i++) {
             var cat = self.materialsDefault[i].Category;
             if (cat == "Field") {
                 self.basePrice.Field = self.materialsDefault[i].Total;
+                runningTotal += self.materialsDefault[i].Total;
             } else if (cat == "Valley") {
                 self.basePrice.Valley = self.materialsDefault[i].Total;
+                runningTotal += self.materialsDefault[i].Total;
             } else if (cat == "Ridge") {
                 self.basePrice.Ridge = self.materialsDefault[i].Total;
+                runningTotal += self.materialsDefault[i].Total;
+            } else if (cat == "Edge") {
+                self.basePrice.Edge = self.materialsDefault[i].Total;
+                runningTotal += self.materialsDefault[i].Total;
             }
         }
+        self.basePrice.Total = runningTotal;
     };
 
-    // Just replace the default labor with config labor if it exists
-    // Labor was updated in CONFIG in Step 3... 
-    // This will be called form labor.ctrl
-    var returnLabor = function() {
+    var saveBasePrices = function() {
+        self.trace(me + "saveBasePrices()");
+        var dataObj = {};
+        dataObj.upgradesBase = "Field;" + self.basePrice.Field + "!Valley;" + self.basePrice.Valley + "!Ridge;" + self.basePrice.Ridge + "!Edge;" + self.basePrice.Edge + "!Total;" + self.basePrice.Total;
+        dataObj.jobID = self.proposalUnderReview.jobID;
+        DB.query("updateConfigUpgradeBase", dataObj).then(function(resultObj) {
+            if (resultObj.result == "Error" || typeof resultObj.data === "string") {
+                alert("Query Error - see console for details");
+                console.log("updateConfig ---- " + resultObj.data);
+            } else {
 
-    }
+            }
+        }, function(error) {
+            alert("Query Error - AdminSharedSrvc >> updateConfigCost");
+        });
+    };
+
 
     // Categorizes and sorts the complete materials list into roof sections
     var categorizeMaterials = function() {
+        self.trace(me + "categorizeMaterials()");
         self.materialsCatergorized = {};
         var field = [];
         var ridge = [];
@@ -261,6 +324,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
 
     // Called from Proposal Review Design page to manually edit qty or price of material
     self.editDesignMaterial = function(vals) {
+        self.trace(me + "editDesignMaterial()");
         var cat = vals.Category;
         var catArray = [];
         switch (cat) {
@@ -315,12 +379,19 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
                 break;
             }
         }
+        // update self.materialsList
+        for (var i = 0; i < self.materialsList.length; i++) {
+            if (self.materialsList[i].PRIMARY_ID == vals.ID) {
+                self.materialsList[i].PkgPrice = Number(vals.Price);
+                self.materialsList[i].Qty = Number(vals.Qty);
+                break;
+            }
+        }
         $rootScope.$broadcast('onEditDesignMaterial');
     };
 
-
-
     var getSpecialConsiderations = function() {
+        self.trace(me + "getSpecialConsiderations()");
         self.SPECIAL = "";
         var dataObj = {};
         dataObj.jobID = self.proposalUnderReview.jobID;
@@ -335,16 +406,17 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
         });
     };
 
-    // Called during init() from getMaterialsList ... parses out default checked items in order to get a baseline price
+    // Called during init() from getMaterialsList ... parses out default checked items
     // Run result through mergeConfig function to insert prices and quantity
     var extractDefaultMaterials = function() {
+        self.trace(me + "extractDefaultMaterials()");
         self.materialsDefault = [];
         for (var i = 0; i < self.materialsList.length; i++) {
-            var c = parseInt(self.materialsList[i].Checked);
+            var c = self.materialsList[i].Checked;
             if (c == undefined || c == null || c == NaN || c > 1) {
                 self.materialsList[i].Checked == "0"
             }
-            if (c == "1") {
+            if (c == "1" || c === true) {
                 self.materialsDefault.push(self.materialsList[i]);
             }
         }
@@ -353,6 +425,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
     //Queries the properties table based on proposal status
     // Called from init() in adminProposal.ctrl
     self.getProposalsByProperty = function() {
+        self.trace(me + "getProposalsByProperty()");
         DB.query('getJobProposals').then(function(resultObj) {
             if (resultObj.result == "Error" || typeof resultObj.data === "string") {
                 alert("Query Error - see console for details");
@@ -368,6 +441,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
 
     // Queries the job_list table for open proposals
     self.getProposalsByJob = function() {
+        self.trace(me + "getProposalsByJob()");
         DB.query('getJobsWithProposalStatus').then(function(resultObj) {
             if (resultObj.result == "Error" || typeof resultObj.data === "string") {
                 alert("Query Error - see console for details");
@@ -387,6 +461,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
 
     //Called on init
     var getMaterialsList = function() {
+        self.trace(me + "getMaterialsList()");
         var dataObj = {};
         DB.query("getMaterialsShingle", dataObj).then(function(resultObj) {
             if (resultObj.result == "Error" || typeof resultObj.data === "string") {
@@ -396,7 +471,6 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
                 self.MATERIALS = resultObj.data;
                 self.MATERIALS = underscore.sortBy(self.MATERIALS, 'Sort');
                 self.materialsList = DB.clone(self.MATERIALS);
-                extractDefaultMaterials();
             }
         }, function(error) {
             alert("Query Error - AdminSharedSrvc >> getMaterialsList");
@@ -405,6 +479,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
 
 
     var getSalesReps = function() {
+        self.trace(me + "getSalesReps()");
         DB.query("getSalesReps", null).then(function(resultObj) {
             if (resultObj.result == "Error") {
                 alert("Query Error - see console for details");
@@ -426,6 +501,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
 
     // SALES DATA: Properties, Clients, Roofs and Jobs -- async GETs -- followed by merge and decode
     var getProperties = function() {
+        self.trace(me + "getProperties().then...>");
         DB.query("getProperties", null).then(function(resultObj) {
             if (resultObj.result == "Error" || typeof resultObj.data === "string") {
                 alert("Query Error - see console for details");
@@ -440,6 +516,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
     };
 
     var getClients = function() {
+        self.trace(me + "<...getClients().then...>");
         DB.query("getClients", null).then(function(resultObj) {
             if (resultObj.result == "Error" || typeof resultObj.data === "string") {
                 alert("Query Error - see console for details");
@@ -459,6 +536,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
     };
 
     var getJobs = function() {
+        self.trace(me + "<...getJobs().then...>");
         DB.query("getJobs", null).then(function(resultObj) {
             if (resultObj.result == "Error" || typeof resultObj.data === "string") {
                 alert("Query Error - see console for details");
@@ -473,6 +551,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
     };
 
     var getRoofs = function() {
+        self.trace(me + "<...getRoofs().end");
         DB.query("getRoofTable", null).then(function(resultObj) {
             if (resultObj.result == "Error" || typeof resultObj.data === "string") {
                 alert("Query Error - see console for details");
@@ -488,6 +567,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
     };
 
     var doJobsMerge = function() {
+        self.trace(me + "doJobsMerge()");
         // Translate related Client and Property ID #'s from Jobs into Names
         for (var i = 0; i < self.JOBS.length; i++) {
             var clientID = self.JOBS[i].client;
@@ -514,6 +594,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
     };
 
     var doPropertiesMerge = function() {
+        self.trace(me + "doPropertiesMerge()");
         var tempProperties = [];
         for (var i = 0; i < self.PROPERTIES.length; i++) {
             var clientID = self.PROPERTIES[i].client;
@@ -553,7 +634,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
         };
 
         self.PROPERTIES = underscore.sortBy(self.PROPERTIES, 'displayName');
-
+        self.trace(me + "$rootScope.$broadcast('onSalesDataRefreshed')");
         $rootScope.$broadcast('onSalesDataRefreshed');
     };
 
@@ -607,6 +688,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
     };
 
     var decodeRoofVals = function(dataObj) {
+        self.trace(me + "decodeRoofVals()");
         var returnVO = {};
 
         returnVO.name = dataObj.name;
@@ -645,6 +727,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
     };
 
     self.getMultiVents = function() {
+        self.trace(me + "getMultiVents()");
         DB.query("getMultiVents", null).then(function(resultObj) {
             if (resultObj.result == "Error" || typeof resultObj.data === "string") {
                 alert("Query Error - see console for details");
@@ -656,7 +739,9 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
             alert("Query Error - AdminSharedSrvc >> getMultiVents");
         });
     };
+
     self.getMultiLevels = function() {
+        self.trace(me + "getMultiLevels()");
         DB.query("getMultiLevels", null).then(function(resultObj) {
             if (resultObj.result == "Error" || typeof resultObj.data === "string") {
                 alert("Query Error - see console for details");
@@ -670,6 +755,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
     };
 
     var getConfigMargin = function() {
+        self.trace(me + "getConfigMargin()");
         dataObj = {};
         dataObj.jobID = self.proposalUnderReview.jobID;
         DB.query("getConfigMargin", dataObj).then(function(resultObj) {
@@ -685,6 +771,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
     };
 
     self.saveLaborConfig = function(data) {
+        self.trace(me + "saveLaborConfig()");
         var Labor = data.Labor;
         var thisItem = "";
         var strData = "";
@@ -709,7 +796,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
             var x = Number(self.laborConfig[i].Total);
             y += x;
         }
-        strData += "!Total;" + y;
+        strData += "!Total;0;" + y;
 
         var dataObj = {};
         dataObj.labor = strData;
@@ -719,6 +806,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
                 alert("Query Error - see console for details");
                 console.log("saveLaborConfig ---- " + resultObj.data);
             } else {
+                self.tabsSubmitted.labor = true;
                 $rootScope.$broadcast('onSaveLaborConfig');
             }
         }, function(error) {
@@ -727,6 +815,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
     }
 
     self.saveMarginConfig = function(data) {
+        self.trace(me + "saveMarginConfig()");
         var dataObj = {};
         dataObj.margin = data;
         dataObj.jobID = self.proposalUnderReview.jobID;
@@ -735,7 +824,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
                 alert("Query Error - see console for details");
                 console.log("saveMarginConfig ---- " + resultObj.data);
             } else {
-
+                self.trace(me + "$rootScope.$broadcast('onSaveMarginConfig')");
                 $rootScope.$broadcast('onSaveMarginConfig');
             }
         }, function(error) {
@@ -743,15 +832,16 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
         });
     };
 
-    self.updateSummaryConfig = function(data) {
+    self.updateMarginConfig = function(data) {
+        self.trace(me + "updateMarginConfig()");
         var dataObj = data;
         dataObj.jobID = self.proposalUnderReview.jobID;
-        DB.query("updateConfigSummary", dataObj).then(function(resultObj) {
+        DB.query("updateConfigMargin", dataObj).then(function(resultObj) {
             if (resultObj.result == "Error" || typeof resultObj.data === "string") {
                 alert("Query Error - see console for details");
                 console.log("updateConfigSummary ---- " + resultObj.data);
             } else {
-
+                self.tabsSubmitted.margin = true;
                 $rootScope.$broadcast('onSaveMarginConfig');
             }
         }, function(error) {
@@ -759,11 +849,28 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
         });
     };
 
+    self.updateConfigMaterials = function(data) {
+        self.trace(me + "updateSummaryConfig()");
+        var dataObj = data;
+        dataObj.jobID = self.proposalUnderReview.jobID;
+        DB.query("updateConfigMaterials", dataObj).then(function(resultObj) {
+            if (resultObj.result == "Error" || typeof resultObj.data === "string") {
+                alert("Query Error - see console for details");
+                console.log("updateConfigMaterials ---- " + resultObj.data);
+            } else {
+                $rootScope.$broadcast('onSaveMarginConfig');
+            }
+        }, function(error) {
+            alert("Query Error - AdminSharedSrvc >> updateConfigMaterials");
+        });
+    };
+
 
     self.saveJobConfig = function() {
-        
+        self.trace(me + "saveJobConfig()");
+
         var dataStr = "";
-        
+
         for (var i = 0; i < self.materialsCatergorized.Field.length; i++) {
             var a = self.materialsCatergorized.Field[i].Code;
             var b = self.materialsCatergorized.Field[i].Qty;
@@ -863,33 +970,18 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
                 alert("Query Error - see console for details");
                 console.log("AdminSharedSrvc >> updateConfigConfig ---- " + resultObj.data);
             } else {
+                self.trace(me + "$rootScope.$broadcast(updateConfigConfig)");
+                self.tabsSubmitted.design = true;
                 $rootScope.$broadcast('onSaveJobConfig');
+                doUpgradeBase();
             }
         }, function(error) {
             alert("Query Error - AdminSharedSrvc >> updateConfigConfig");
         });
-
-        self.updateConfigCost();
-    };
-
-    self.updateConfigCost = function() {
-        var dataObj = {};
-        dataObj.materialsCost = "Field;" + self.basePrice.Field + "!Valley;" + self.basePrice.Valley + "!Ridge;" + self.basePrice.Ridge + "!Total;" + self.basePrice.Total;
-        dataObj.profitMargin = "";
-        dataObj.jobID = self.proposalUnderReview.jobID;
-        DB.query("updateConfigCost", dataObj).then(function(resultObj) {
-            if (resultObj.result == "Error" || typeof resultObj.data === "string") {
-                alert("Query Error - see console for details");
-                console.log("updateConfig ---- " + resultObj.data);
-            } else {
-
-            }
-        }, function(error) {
-            alert("Query Error - AdminSharedSrvc >> updateConfigCost");
-        });
     };
 
     self.updateConfigLabor = function(strVals) {
+        self.trace(me + "updateConfigLabor()");
         var dataObj = {};
         dataObj.labor = strVals;
         DB.query("updateConfigLabor", dataObj).then(function(resultObj) {
@@ -897,7 +989,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
                 alert("Query Error - see console for details");
                 console.log("updateConfig ---- " + resultObj.data);
             } else {
-
+                self.tabsSubmitted.labor = true;
             }
         }, function(error) {
             alert("Query Error - AdminSharedSrvc >> updateConfigLabor");
@@ -905,6 +997,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
     };
 
     self.getRoofsForProperty = function(propID) {
+        self.trace(me + "getRoofsForProperty()");
         var dataObj = {};
         dataObj.propID = propID;
         DB.query("getRoof", dataObj).then(function(resultObj) {
@@ -920,6 +1013,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
     };
 
     var getDefaultLabor = function() {
+        self.trace(me + "getDefaultLabor() >> END INIT");
         DB.query("getLabor").then(function(resultObj) {
             if (resultObj.result == "Error" || typeof resultObj.data === "string") {
                 alert("Query Error - see console for details");
@@ -933,6 +1027,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
     };
 
     var getConfigLabor = function() {
+        self.trace(me + "getConfigLabor()");
         DB.query("getConfigLabor").then(function(resultObj) {
             if (resultObj.result == "Error" || typeof resultObj.data === "string") {
                 alert("Query Error - see console for details");
@@ -1012,15 +1107,25 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
     };
 
     self.triggerDataCascade = function() {
+        self.trace(me + "triggerDataCascade");
         getProperties();
     };
 
+    self.trace = function(message) {
+        if (LOG) {
+            console.log(message);
+        }
+    };
 
+    var init = function() {
+        self.trace(me + "BEGIN INIT");
+        getMaterialsList();
+        getSalesReps();
+        getProperties();
+        getDefaultLabor();
+    }
 
-    getMaterialsList();
-    getSalesReps();
-    getProperties();
-    getDefaultLabor();
+    init();
 
     return self;
 }]);

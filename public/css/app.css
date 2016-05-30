@@ -1535,8 +1535,7 @@ div.upload input {
 button:focus {
   outline: none; }
 
-button,
-.button {
+button, .button {
   display: inline-block;
   text-align: center;
   line-height: 1;
@@ -1578,6 +1577,19 @@ button.small, .button.small {
 button.tiny, .button.tiny {
   padding: 0.625rem 1.25rem 0.6875rem 1.25rem;
   font-size: 0.6875rem; }
+
+button.alert, .button.alert {
+  background-color: #E74C3C; }
+
+button.alert:disabled, .button.alert:disabled {
+  background-color: #BDC3C7;
+  transition: none; }
+
+button.alert:hover, .button.alert:hover {
+  background-color: #dc2d1b; }
+
+button.alert:disabled:hover, .button.alert:disabled:hover {
+  background-color: #BDC3C7; }
 
 .nav-btn {
   transition: #1ABC9C 0.25s ease-out, color 0.25s ease-out;

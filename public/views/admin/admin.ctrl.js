@@ -4,17 +4,29 @@ app.controller('AdminCtrl',['$location','$state','$scope','SharedSrvc',function 
 	var DB =  evoDb;
 	var ME = this;
 	var S = SharedSrvc;
+	var me = "AdminCtrl >>> ";
+	var LOG = true;
+
+	var trace = function(message) {
+        if (LOG) {
+            console.log(message);
+        }
+    };
 	
 	ME.managerAdd = function(){
+		trace(me + "GO >>> admin.managerAdd");
 		$state.transitionTo("admin.managerAdd");
 	};
 	ME.managerUpdate = function(){
+		trace(me + "GO >>> admin.managerUpdate");
 		$state.transitionTo("admin.managerUpdate");
 	};
 	ME.inventoryAdd = function(){
+		trace(me + "GO >>> admin.inventoryAdd");
 		$state.transitionTo("admin.inventoryAdd");
 	};
 	ME.pitchedInventory = function(){
+		trace(me + "GO >>> admin.pitchedInventory");
 		$state.transitionTo("admin.pitchedInventory");
 	};
 	ME.inventoryUpdate = function(){
@@ -27,6 +39,7 @@ app.controller('AdminCtrl',['$location','$state','$scope','SharedSrvc',function 
 		$state.transitionTo("admin.prospectsReview");
 	};
 	ME.proposalsReview = function(){
+		trace(me + "GO >>> admin.proposalsReview.input");
 		$state.transitionTo("admin.proposalsReview.input");
 	};
 	ME.contractsReview = function(){

@@ -3,16 +3,21 @@ app.service('AdminDataSrvc',['$http','$q','SharedSrvc','LogInSrvc',function admi
 	// This service provides DB interaction for a Shingle Job Proposal
 
 	var self = this;
-	self.ME = "AdminDataSrvc: ";
+	var me = "AdminDataSrvc: ";
+	var LOG = true;
+
 	var S = SharedSrvc;
 	var L = LogInSrvc;
-	
-	self.UserID = "";
-	self.UserName = "";
 	
 	var localPathPrefix="views/admin/http/";
 	var globalPathPrefix="js/php/";
 	var httpPathPrefix = "http/";
+
+	var trace = function(message){
+        if(LOG){
+            console.log(message);
+        }
+    };
 
 	var queryPaths = {
 		getMaterialsShingle:httpPathPrefix + "getMaterialsShingle.php",
@@ -59,8 +64,9 @@ app.service('AdminDataSrvc',['$http','$q','SharedSrvc','LogInSrvc',function admi
 		updateConfigCost:httpPathPrefix + "updateConfig_cost.php",
 		updateConfigLabor:httpPathPrefix + "updateConfig_labor.php",
 		updateConfigMargin:httpPathPrefix + "updateConfig_margin.php",
-		updateConfigSummary:httpPathPrefix + "updateConfigSummary.php",
+		updateConfigMaterials:httpPathPrefix + "updateConfig_materials.php",
 		updateConfigConfig:httpPathPrefix + "updateConfig_config.php",
+		updateConfigUpgradeBase:httpPathPrefix + "updateConfig_upgrades.php",
 		updateRoof:httpPathPrefix + "updateRoof.php",
 		deleteProperty:httpPathPrefix + "deleteProperty.php",
 		deleteClient:httpPathPrefix + "deleteClient.php",
@@ -72,6 +78,7 @@ app.service('AdminDataSrvc',['$http','$q','SharedSrvc','LogInSrvc',function admi
 	};
 
 	self.query = function(query,dataObj){
+		trace(me + "query = " + query);
 		var rtnObj = {};
 		var phpPath = queryPaths[query];
 		var deferred = $q.defer();
@@ -93,47 +100,9 @@ app.service('AdminDataSrvc',['$http','$q','SharedSrvc','LogInSrvc',function admi
 	    return deferred.promise;
 	};
 
-
-// Phases this one out in favor of above
-	self.queryDB = function(phpFile){
-		var deferred = $q.defer();
-		$http({method: 'POST', url:phpFile}).
-		success(function(data, status) {
-			if(typeof data != 'string'){
-     			deferred.resolve(data);
-     		}else{
-     			console.log(data);
-				deferred.resolve(false);
-     		}
-	    }).
-		error(function(data, status, headers, config) {
-			deferred.reject(false);
-	    });
-
-	    return deferred.promise;
-	}
-
-	self.queryDBWithObj = function(phpFile,dataObj){
-		var deferred = $q.defer();
-		$http({method: 'POST', url:phpFile,data:dataObj}).success(function(data, status) {
-			if(typeof data != 'string' && data.result != false){
-     			deferred.resolve(data);
-     		}else{
-				deferred.resolve(false);
-     		}
-	    }).error(function(data, status, headers, config) {
-			deferred.reject(false);
-	    });
-	    return deferred.promise;
-	};
-
-	self.logOut = function(){
-		self.managerID = "";
-		self.managerName = "";
-	};
-
 	
 	self.getJobConfig = function(dataObj){
+		trace(me + "!!! getJobConfig");
 		var deferred = $q.defer();
 		$http({method: 'POST', url: 'http/getJobConfig.php',data:dataObj}).
 		success(function(data, status) {
@@ -151,6 +120,7 @@ app.service('AdminDataSrvc',['$http','$q','SharedSrvc','LogInSrvc',function admi
 	
 
 	var getShingleIntputFields = function(){
+		trace(me + "!!! getShingleIntputFields");
 		var deferred = $q.defer();
 		$http({method: 'POST', url: 'http/getShingleFields.php'}).
 		success(function(data, status) {
@@ -168,6 +138,7 @@ app.service('AdminDataSrvc',['$http','$q','SharedSrvc','LogInSrvc',function admi
 
 	
 	self.getJobParameters = function(id){
+		trace(me + "!!! getJobParameters");
 		var dataObj = {};
 		dataObj.ID = id;
 		var deferred = $q.defer();
@@ -187,6 +158,7 @@ app.service('AdminDataSrvc',['$http','$q','SharedSrvc','LogInSrvc',function admi
 
 	
 	self.submitParams = function(dataObj){
+		trace(me + "!!! submitParams");
 		var deferred = $q.defer();
 		$http({method: 'POST', url: 'http/updateJobParameters.php',data:dataObj}).
 		success(function(data, status) {
@@ -203,6 +175,7 @@ app.service('AdminDataSrvc',['$http','$q','SharedSrvc','LogInSrvc',function admi
 	}
 	
 	self.insertJobItem = function(dataObj){
+		trace(me + "!!! insertJobItem");
 		var deferred = $q.defer();
 		$http({method: 'POST', url: 'http/insertJobParameter.php',data:dataObj}).
 		success(function(data, status) {
@@ -219,12 +192,12 @@ app.service('AdminDataSrvc',['$http','$q','SharedSrvc','LogInSrvc',function admi
 	}
 
 	self.queryLogInGoogle = function(dataObj){
+		trace(me + "queryLogInGoogle");
 		var deferred = $q.defer();
 		$http({method: 'POST', url: 'http/getGoogleUser.php',data:dataObj}).
 		success(function(data, status) {
 			if(typeof data != 'string' && data.length > 0){
-     			self.UserID = data[0].PRIMARY_ID;
-     			self.UserName = data[0].name_first + " " + data[0].name_last;
+     			
      			S.setUser(data[0]);
      			L.setUser(data[0]);
      			deferred.resolve(data);
@@ -242,6 +215,7 @@ app.service('AdminDataSrvc',['$http','$q','SharedSrvc','LogInSrvc',function admi
 	};
 
 	self.getIdValues = function(){
+		trace(me + "!!! getIdValues");
 		var deferred = $q.defer();
 		$http({method: 'POST', url: 'http/getIdVals.php'}).
 		success(function(data, status, headers, config) {
@@ -302,8 +276,6 @@ app.service('AdminDataSrvc',['$http','$q','SharedSrvc','LogInSrvc',function admi
 
         throw new Error("Unable to copy obj! Its type isn't supported.");
     };
-
-
 
 	return self;
 }]);

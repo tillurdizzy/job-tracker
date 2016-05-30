@@ -12,13 +12,13 @@ $con = mysqli_connect(DATABASE_SERVER, DATABASE_USERNAME, DATABASE_PASSWORD,DATA
 $jobID = mysqli_real_escape_string($con,$data->jobID);
 $config = mysqli_real_escape_string($con,$data->config);
 $labor = mysqli_real_escape_string($con,$data->labor);
-$materialsCost = mysqli_real_escape_string($con,$data->materialsCost);
+$upgradesBase = mysqli_real_escape_string($con,$data->upgradesBase);
 $profitMargin = mysqli_real_escape_string($con,$data->profitMargin);
 
 $query = "UPDATE job_config SET 
 config='".$config."'
 labor='".$labor."'
-materialsCost='".$materialsCost."'
+upgradesBase='".$upgradesBase."'
 profitMargin='".$profitMargin."'
 WHERE jobID='".$jobID."'";
 $qry_res = mysqli_query($con,$query);

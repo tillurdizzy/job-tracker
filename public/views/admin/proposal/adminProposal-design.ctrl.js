@@ -6,6 +6,7 @@ app.controller('AdminPropDesign', ['$state', '$scope', 'AdminSharedSrvc', 'Admin
     ME.S = AdminSharedSrvc;
     ME.P = AdminProposalSrvc;
     ME.GrandTotal = 0;
+    ME.FixedTotal = 0;
     ME.ShinglesFieldTotal = 0;
     ME.ShinglesRidgeTotal = 0;
     ME.ShinglesStarterTotal = 0;
@@ -19,6 +20,7 @@ app.controller('AdminPropDesign', ['$state', '$scope', 'AdminSharedSrvc', 'Admin
     ME.dataIsSaved = true;
     ME.proposalSelected = false;
     ME.itemBeingEdited = {};
+    var me = "AdminPropDesign: ";
 
     ME.materialPricingDP = ME.S.materialsCatergorized;
 
@@ -28,7 +30,12 @@ app.controller('AdminPropDesign', ['$state', '$scope', 'AdminSharedSrvc', 'Admin
     };
 
     ME.saveJobConfig = function() {
+        ME.S.trace(me + "saveJobConfig()");
         ME.dataIsSaved = ME.S.saveJobConfig();
+        var dataObj = {};
+        dataObj.materialsTotal = ME.GrandTotal;
+        dataObj.materialsFixed = ME.FixedTotal
+        ME.S.updateConfigMaterials(dataObj);
     };
 
     ME.editRowItem = function(materialObj, cat) {
@@ -42,6 +49,7 @@ app.controller('AdminPropDesign', ['$state', '$scope', 'AdminSharedSrvc', 'Admin
             scope: $scope,
             data: passedObj
         }).then(function(value) {
+            ME.S.trace(me + "editRowItem()");
             ME.S.editDesignMaterial(value);
         }, function(reason) {
 
@@ -50,6 +58,8 @@ app.controller('AdminPropDesign', ['$state', '$scope', 'AdminSharedSrvc', 'Admin
 
     // ME.getTotal() called every time a checkbox is changed on pricing tab view
     ME.getTotal = function() {
+        ME.S.trace(me + "getTotal()");
+
         ME.ShinglesFieldTotal = 0;
         ME.ShinglesStarterTotal = 0;
         ME.ShinglesRidgeTotal = 0;
@@ -60,12 +70,14 @@ app.controller('AdminPropDesign', ['$state', '$scope', 'AdminSharedSrvc', 'Admin
         ME.CapsTotal = 0;
         ME.FlatTotal = 0;
         ME.OtherTotal = 0;
+
         ME.GrandTotal = 0;
+        ME.FixedTotal = 0; // total less categories that can be upgraded
 
         var include = false;
 
-        // Find the "included" selected material for each category (which in most cases is just one item...)
-        //
+        // Find the "checked" selected material for each category (which in most cases is just one item...)
+        
         for (var i = 0; i < ME.materialPricingDP.Field.length; i++) {
             include = ME.materialPricingDP.Field[i].Checked;
             if (include) {
@@ -146,30 +158,27 @@ app.controller('AdminPropDesign', ['$state', '$scope', 'AdminSharedSrvc', 'Admin
         };
         ME.GrandTotal +=  ME.OtherTotal;
 
-        //ME.baseTotal = "";
+        ME.FixedTotal = ME.ShinglesStarterTotal+ME.VentsTotal+ME.FlashingTotal+ME.FlatTotal+ME.CapsTotal+ME.OtherTotal;
         
-        ME.P.setSummaryItem("materials", ME.GrandTotal);
-        //ME.S.basePrice.Total = ME.GrandTotal;
+        ME.P.setSummaryItem("materials-total", ME.GrandTotal);
+        ME.P.setSummaryItem("materials-fixed", ME.FixedTotal);
+
     };
 
+    // Called from $scope.$on 'onRefreshMaterialsData'
     var configExists = function() {
         ME.dataIsSaved = true;
-        if (ME.S.jobConfig.length == 0 && ME.proposalSelected == true) {
+        if (ME.S.tabsSubmitted.design == false && ME.proposalSelected == true) {
             ME.dataIsSaved = false;
         }
+        ME.S.trace(me + "configExists()" + "ME.proposalSelected="+ME.proposalSelected + "  tabsSubmitted.design=" + ME.S.tabsSubmitted.design);
     };
 
-    // Broadcast from AdminSharedSrvc >>> categorizeMaterials
-    // This happens each time a proposal is selected
-    $scope.$on('onRefreshMaterialsData', function(event, obj) {
-        ME.materialPricingDP = ME.S.materialsCatergorized;
-        ME.proposalSelected = true;
-        configExists();
-    });
-
+    
     $scope.$on('onSaveJobConfig', function() {
+        ME.S.trace(me + "$scope.$on(onSaveJobConfig)");
         ME.dataIsSaved = true;
-        ME.getTotal();
+        //ME.getTotal();
         ngDialog.open({
             template: '<h2>Job Config saved.</h2>',
             className: 'ngdialog-theme-default',
@@ -179,14 +188,23 @@ app.controller('AdminPropDesign', ['$state', '$scope', 'AdminSharedSrvc', 'Admin
     });
 
     // Broadcast from Shared after materialsCatergorized has been updated with change in Qty or Price from ME.editRowItem()
-    //
     $scope.$on('onEditDesignMaterial', function() {
+        ME.S.trace(me + "$scope.$on(onEditDesignMaterial)");
         ME.dataIsSaved = false;
         ME.getTotal();
     });
 
+    // Broadcast from AdminSharedSrvc >>> categorizeMaterials each time a proposal is selected
+    $scope.$on('onRefreshMaterialsData', function(event, obj) {
+        ME.S.trace(me + "$scope.$on('onRefreshMaterialsData'");
+        ME.materialPricingDP = ME.S.materialsCatergorized;
+        ME.proposalSelected = ME.S.proposalSelected;
+        configExists();
+    });
+
     // Broadcast from AdminSharedSrvc >>> selectProposal (user selected prompt -1 from dropdown i.e. there is no proposal selected)
     $scope.$on('onResetProposalData', function(event, obj) {
+        ME.S.trace(me + "$scope.$on('onResetProposalData'");
         ME.materialPricingDP = ME.S.materialsCatergorized;
         ME.proposalSelected = false;
         ME.dataIsSaved = true;
@@ -194,9 +212,10 @@ app.controller('AdminPropDesign', ['$state', '$scope', 'AdminSharedSrvc', 'Admin
     });
 
     $scope.$watch('$viewContentLoaded', function() {
+        ME.S.trace(me + "$scope.$watch('viewContentLoaded'");
         ME.materialPricingDP = ME.S.materialsCatergorized;
-        ME.proposalSelected = false;
-        ME.dataIsSaved = true;
+        ME.proposalSelected = ME.S.proposalSelected;
+        configExists();
         ME.getTotal();
     });
 

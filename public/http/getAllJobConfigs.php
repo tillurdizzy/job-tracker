@@ -19,7 +19,7 @@ while ($row = mysqli_fetch_object($result)) {
 	$oneVO->jobID = $row->jobID;
 	$oneVO->config = $row->config;
 	$oneVO->labor = $row->labor;
-	$oneVO->materialsCost = $row->materialsCost;
+	$oneVO->upgradesBase = $row->upgradesBase;
 	$oneVO->profitMargin = $row->profitMargin;
 	$oneVO->margin = $row->margin;
 	array_push( $resultValueObjects, $oneVO );

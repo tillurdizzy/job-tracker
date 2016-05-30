@@ -8,6 +8,7 @@ app.controller('AdminLoginCtrl',['$scope','$state','AdminDataSrvc','AdminSharedS
     var L = LogInSrvc;
     var A = serviceAWS;
     var J = JobDataSrvc;
+    var me = "AdminLoginCtrl >>> ";
 
     $scope.displayName="";
     $scope.loginObj={};

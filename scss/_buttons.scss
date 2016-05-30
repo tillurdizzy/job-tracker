@@ -39,8 +39,7 @@ $button-sizes: (
 $button-opacity-disabled: 0.25 !default;
 
 
-button, 
-.button{
+button, .button{
 	display: inline-block;
 	text-align: center;
 	line-height: 1;
@@ -85,6 +84,23 @@ button.small, .button.small {
 button.tiny, .button.tiny {
     padding: 0.625rem 1.25rem 0.6875rem 1.25rem;
     font-size: 0.6875rem; }
+
+button.alert, .button.alert {
+    background-color: $tertiary-color;
+}
+
+button.alert:disabled, .button.alert:disabled {
+    background-color: $silver-grey;
+    transition: none;
+}
+
+button.alert:hover, .button.alert:hover {
+    background-color:scale-color($tertiary-color, $lightness: -25%)
+}
+
+button.alert:disabled:hover, .button.alert:disabled:hover {
+    background-color: $silver-grey;
+}
 
 .nav-btn{
 	transition: $secondary-color 0.25s ease-out, color 0.25s ease-out;

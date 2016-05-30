@@ -2,7 +2,8 @@
 app.service('JobConfigSrvc', ['$rootScope', 'underscore', function jobConfigSrvc($rootScope, underscore) {
 
     var self = this;
-    var Me = "JobConfigSrvc: ";
+    var me = "JobConfigSrvc: ";
+    var LOG = true;
 
     var materialsConfigured = [];
     self.jobConfigStr = "";
@@ -11,14 +12,22 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore', function jobConfigSrvc
     self.defaultCheckedMaterials = [];
 
     self.configLabor = [];
-    self.configmaterialsCosts = [];
+    self.upgradeItemsBasePrice = [];
+    self.materialCosts = {totalMaterials:0,fixedMaterials:0};
     self.configMargin = 0;
     self.profitMargin = 0;
+
+    var trace = function(message){
+        if(LOG){
+            console.log(message);
+        }
+    };
 
     // Step 3 of events triggered by selection of a Proposal from Proposal Review
     // Converts the long string saved in DB into array of objects
     // Also called from ClientSharedSrvc during flow of events triggered by LogIn
     self.parseJobConfig = function(ar) {
+        trace(me + "parseJobConfig");
         // 1. Materials config - referred to as jobConfig
         self.jobConfigArray = [];
 
@@ -58,23 +67,25 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore', function jobConfigSrvc
             }
         };
         // 3. Base Cost config
-        self.configmaterialsCosts = [];
-        var materialsCostStr = dataObj.materialsCost;
-        if (materialsCostStr != "") {
-            var materialsCostArr = materialsCostStr.split('!');
-            for (var i = 0; i < materialsCostArr.length; i++) {
-                var thisItem = materialsCostArr[i].split(';');
+        self.upgradeItemsBasePrice = [];
+        var upgradesBaseStr = dataObj.upgradesBase;
+        if (upgradesBaseStr != "") {
+            var upgradesBaseArr = upgradesBaseStr.split('!');
+            for (var i = 0; i < upgradesBaseArr.length; i++) {
+                var thisItem = upgradesBaseArr[i].split(';');
                 var itemObj = {};
                 itemObj.Field = thisItem[0];
                 itemObj.Valley = thisItem[1];
                 itemObj.Ridge = thisItem[2];
-                itemObj.Total = thisItem[3];
-                self.configmaterialsCosts.push(itemObj);
+                itemObj.Edge = thisItem[3];
+                itemObj.Total = thisItem[4];
+                self.upgradeItemsBasePrice.push(itemObj);
             }
         };
 
-        // 4. Upgrade Cost config
-        //var profitMarginStr = dataObj.profitMargin;
+        // 4. Material Costs
+        self.materialCosts.materialsTotal = dataObj.materialsTotal;
+        self.materialCosts.materialsFixed = dataObj.materialsFixed;
 
         // 5. Margin
         //  !!!!!!!!!!!!!!!!!!!!!!!!!!! Change to marginMultiplier
@@ -101,7 +112,7 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore', function jobConfigSrvc
     // This takes the list of materials, and fills in the Qty and Price
     // !!IMPORTANT!! For a customObj, "checked" no longer means default... it may be what was chosen instead of the default.
     self.mergeJobConfig = function(materials, params, useConfig) {
-
+        trace(me + "mergeJobConfig");
         for (var i = 0; i < materials.length; i++) {
             var thisItem = materials[i].Item;
             // Is the current paramKey one of the default items????  Compare to this list.
@@ -178,7 +189,7 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore', function jobConfigSrvc
                 }
             };
 
-            // IF unitPkg and UnitCoverage are EQUAL!!! what then
+            // Idea for future changes>>>IF unitPkg and UnitCoverage are EQUAL!!! what then
             var qtyCoverage = Number(materials[i].QtyCoverage);
             var unitsPerPkg = Number(materials[i].QtyPkg);
             var over = Number(materials[i].Margin);
@@ -199,6 +210,7 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore', function jobConfigSrvc
             // materials list Qty and Total come in as null and are quantified here
             // PkgQty is a new value added into the list
             materials[i].Qty = parameterVal;
+            materials[i].PkgPrice = itemPrice;
             materials[i].PkgQty = pkgQtyWithOverageRoundedUp;
             materials[i].Total = total;
             materials[i].Checked = checked;
@@ -209,7 +221,7 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore', function jobConfigSrvc
 
     // This is called from Admin
     self.mergeLaborConfig = function(defaultLabor, params) {
-
+        trace(me + "mergeLaborConfig");
         if (self.configLabor.length === 0) {
             // there is no custom labor config
 
@@ -281,6 +293,7 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore', function jobConfigSrvc
 
     // this is called from Client... no need to merge etc.  Everything needed by this time should be saved in config
     self.returnLaborGrandTotal = function() {
+        trace(me + "returnLaborGrandTotal");
         var gTotal = 0;
         for (var i = 0; i < self.configLabor.length; i++) {
             if (self.configLabor[i].Labor == "Field") {
@@ -294,25 +307,25 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore', function jobConfigSrvc
                 y = parseInt(self.configLabor[i].Cost);
                 self.configLabor[i].Total = x * y;
                 self.configLabor[i].Units = "Sqs";
-                 gTotal += self.configLabor[i].Total;
+                gTotal += self.configLabor[i].Total;
             } else if (self.configLabor[i].Labor == "Flat") {
                 x = parseInt(self.configLabor[i].Qty);
                 y = parseInt(self.configLabor[i].Cost);
                 self.configLabor[i].Total = x * y;
                 self.configLabor[i].Units = "Sqs";
-                 gTotal += self.configLabor[i].Total;
+                gTotal += self.configLabor[i].Total;
             }
         }
         return gTotal;
     }
 
-    self.returnProfitMargin = function(){
+    self.returnProfitMargin = function() {
 
     }
 
-    self.returnmaterialsCost = function() {
-        return self.configmaterialsCosts;
-    };
+    /*self.returnupgradesBase = function() {
+        return self.upgradeItemsBasePrice;
+    };*/
 
     // Make all vals numbers
     var numberize = function(inputObj) {
@@ -351,6 +364,7 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore', function jobConfigSrvc
     // Sets Checked=false to every Item within the Category 
     // Sets Checked=true on the item matching the Code
     self.updateCheckedItemInCategory = function(catCodeArrObj) {
+        trace(me + "updateCheckedItemInCategory");
         for (var i = 0; i < catCodeArrObj.length; i++) {
             var cat = catCodeArrObj[i].Category;
             var code = catCodeArrObj[i].Code;
@@ -365,30 +379,28 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore', function jobConfigSrvc
                 }
             }
         };
-
-        var dataObj = convertConfigToString();
-
-        // Broadcast here with dataObj for DataSrvc to save....
-
         return self.jobConfigArray;
     };
 
     self.convertConfigToString = function() {
+        trace(me + "convertConfigToString");
+        var dataStr = "";
         for (var i = 0; i < self.jobConfigArray.length; i++) {
             var thisObj = self.jobConfigArray[i];
             var a = thisObj.Code;
             var b = thisObj.Qty;
             var c = thisObj.Checked;
-            var d = thisObj.PkgPrice;
+            var d = thisObj.Price;
             var e = thisObj.Category;
             dataStr += a + ';' + b + ';' + c + ';' + d + ';' + e + '!';
         }
         var dataObj = {};
         dataObj.config = dataStr;
         return dataObj;
-    }
+    };
 
-    self.formatParams = function(jobParams) {
+    self.formatParamsForTableDisplay = function(jobParams) {
+        trace(me + "formatParamsForTableDisplay");
         // If the field is empty, set a dash "-" for display purposes
         underscore.each(jobParams, function(value, key, obj) {
             if (value == "" || value == null || value == "0") {
@@ -422,6 +434,7 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore', function jobConfigSrvc
     };
 
     self.returnDefaultMaterial = function(cat) {
+        trace(me + "returnDefaultMaterial");
         var rtnObject = {};
         for (var i = 0; i < self.defaultCheckedMaterials.length; i++) {
             var category = self.defaultCheckedMaterials[i].Category;
@@ -432,9 +445,6 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore', function jobConfigSrvc
         };
         return rtnObject;
     };
-
-
-    //console.log("jobConfig Complete");
 
     return self;
 }]);

@@ -6,11 +6,10 @@ app.controller('AdminPropSummary', ['$state', '$scope', 'AdminSharedSrvc', 'Admi
     ME.S = AdminSharedSrvc;
     ME.P = AdminProposalSrvc;
     ME.CONFIG = JobConfigSrvc;
-    var laborTotal = 0;
-    var materialsTotal = 0;
-    var marginTotal = 0;
-    ME.totalCost = 0;
+    var me = "AdminPropSummary";
+   
     ME.summaryItems = [];
+    ME.proposalSelected = false;
     ME.dataIsSaved = true;
     var MARGIN = ME.CONFIG.configMargin; // Comes from CONFIG ready to use in calculations i.e. < 1 (.35)
     ME.marginDisplay = MARGIN * 100; // Display as whole integer i.e. 35%
@@ -18,18 +17,31 @@ app.controller('AdminPropSummary', ['$state', '$scope', 'AdminSharedSrvc', 'Admi
     ME.invalidMarginInput = false;
 
     var getTotal = function() {
-        laborTotal = ME.P.CostSummary.labor;
-        materialsTotal = ME.P.CostSummary.materials;
+        MARGIN = ME.CONFIG.configMargin;
+        ME.marginDisplay = MARGIN * 100;
+
+        var laborTotal = ME.P.CostSummary.labor;
+        var materialsTotal = ME.P.CostSummary.materialsTotal;
         var subtotal = laborTotal + materialsTotal;
-        marginTotal = subtotal * MARGIN;
+        var marginTotal = ME.CONFIG.profitMargin;
+        var clientPrice = 
         ME.totalCost = laborTotal + materialsTotal + marginTotal;
 
         ME.summaryItems = [];
+        
         var item = { item: "Materials", amount: materialsTotal };
         ME.summaryItems.push(item);
+
         item = { item: "Labor", amount: laborTotal };
         ME.summaryItems.push(item);
+
         item = { item: "Margin", amount: marginTotal };
+        ME.summaryItems.push(item);
+        
+        item = { item: "Base Price", amount: ME.CONFIG.upgradeItemsBasePrice.Total };
+        ME.summaryItems.push(item);
+
+        item = { item: "Client Price", amount: clientPrice };
         ME.summaryItems.push(item);
     };
 
@@ -48,12 +60,19 @@ app.controller('AdminPropSummary', ['$state', '$scope', 'AdminSharedSrvc', 'Admi
         }
     };
 
-    ME.saveSummaryConfig = function() {
+    ME.saveMyConfig = function() {
         var dataObj = {};
         dataObj.margin = ME.marginDisplay;
-        dataObj.materialsCost = materialsTotal;
         dataObj.profitMargin = marginTotal;
-        ME.S.updateSummaryConfig(dataObj);
+        ME.S.updateMarginConfig(dataObj);
+    };
+
+    var configExists = function() {
+        ME.dataIsSaved = true;
+        if (ME.S.tabsSubmitted.margin == false && ME.proposalSelected == true) {
+            ME.dataIsSaved = false;
+        }
+        ME.S.trace(me + "configExists()" + "ME.proposalSelected="+ME.proposalSelected + "  tabsSubmitted.summary=" + ME.S.tabsSubmitted.margin);
     };
 
     $scope.$on('onSaveMarginConfig', function(event, obj) {
@@ -67,19 +86,23 @@ app.controller('AdminPropSummary', ['$state', '$scope', 'AdminSharedSrvc', 'Admi
         });
     });
 
-    // Broadcast from AdminSharedSrvc >>> categorizeMaterials
-    // This happens each time a proposal is selected
+    // Broadcast from AdminSharedSrvc >>> categorizeMaterials each time a proposal is selected
     $scope.$on('onRefreshMaterialsData', function(event, obj) {
+        ME.proposalSelected = ME.S.proposalSelected;
+        configExists();
         getTotal();
     });
 
     // Broadcast from AdminSharedSrvc >>> selectProposal (user selected prompt -1 from dropdown i.e. there is no proposal selected)
     $scope.$on('onResetProposalData', function(event, obj) {
+        ME.dataIsSaved = true;
+        ME.proposalSelected = false;
         getTotal();
     });
 
     $scope.$watch('$viewContentLoaded', function() {
-        //console.log("SUMMARY Ctrl >>> $viewContentLoaded");
+        ME.proposalSelected = ME.S.proposalSelected;
+        configExists();
         getTotal();
     });
 

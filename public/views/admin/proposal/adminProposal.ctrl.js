@@ -5,15 +5,17 @@ app.controller('AdminProposalCtrl',['$rootScope','$state','AdminDataSrvc','$scop
 	var ME = this;
 	var S = AdminSharedSrvc;
 	var P = AdminProposalSrvc;
+	var me = "AdminProposalCtrl >>> ";
 	ME.selectedProposal = {};
 	ME.selectedProposalRoof = {};
 	ME.selectDataProvider = [];
 	ME.roofSelectionsDP = null;// Second selection dropdown if multi-unit property
 	ME.specialText = "";
 	ME.proposalData = {salesRep:"-",clientID:"-",propertyID:"-",jobID:"-"};
+
 	
 	ME.selectProposal = function(){
-		
+		S.trace(me + "selectProposal");
 		var objLength = Object.keys(ME.selectedProposal).length;
 		if(objLength > 0){
 			ME.proposalData = S.selectProposal(ME.selectedProposal.id);
@@ -31,10 +33,11 @@ app.controller('AdminProposalCtrl',['$rootScope','$state','AdminDataSrvc','$scop
 	};
 
     ME.selectRoof = function(){
+    	S.trace(me + "selectRoof");
     	if(ME.selectedProposalRoof != null){
     		S.selectRoof(ME.selectedProposalRoof.jobID);
     		P.setJobId(ME.selectedProposalRoof.jobID);
-    	}
+    	};
 	};
 
 	ME.backToHome = function(){
@@ -42,19 +45,19 @@ app.controller('AdminProposalCtrl',['$rootScope','$state','AdminDataSrvc','$scop
 	};
 
 	var init = function(){
+		S.trace(me + "INIT()");
 		if(S.proposalsAsProperty.length === 0){
-			//getJobsWithProposalStatus...Queries the job_list table for open proposals
+			// getJobsWithProposalStatus...Queries the job_list table for open proposals
 			S.getProposalsByJob();
 
-			//getProposalsByProperty...Queries the properties table based on proposal status
-			// braodcasts "getProposalsByProperty" on completion watched for below triggering parseProposals()
+			// getProposalsByProperty...Queries the properties table based on proposal status
+			// broadcasts "getProposalsByProperty" on completion watched for below triggering parseProposals()
 			S.getProposalsByProperty();	
 		}else{
 			S.resetProposalData();
 			parseProposals();
-		}
+		};
 	};
-
 
 	var parseProposals = function(){
 		ME.selectDataProvider = [{label:"-- Select a Property --",id:-1}];
@@ -72,14 +75,13 @@ app.controller('AdminProposalCtrl',['$rootScope','$state','AdminDataSrvc','$scop
 	};
 
 	
-
 	$scope.$on('getProposalsByProperty', function() {
 		parseProposals();
     });
 
 	
 	$scope.$watch('$viewContentLoaded', function() {
-		//console.log("AdminProposalCtrl >>> $viewContentLoaded");
+		S.trace(me + "$viewContentLoaded");
 		init();
     });
 

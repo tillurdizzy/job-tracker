@@ -238,8 +238,21 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'JobConfigSrvc'
         });
     };
 
-    self.saveJobConfig = function(dataObj) {
+    self.saveClientUpgrades = function(dataObj) {
         self.jobConfig = CONFIG.updateCheckedItemInCategory(dataObj);
+        var dataObj = CONFIG.convertConfigToString();
+        dataObj.jobID = self.jobObj.PRIMARY_ID;
+
+        DB.queryDB("updateConfigConfig", dataObj).then(function(resultObj) {
+            if (resultObj.result == "Error" || typeof resultObj.data === "string") {
+                alert("Query Error - see console for details");
+                console.log("ClientSharedSrvc >> saveClientUpgrades ---- " + resultObj.data);
+            } else {
+                $rootScope.$broadcast("client-upgrades-saved");
+            }
+        }, function(error) {
+            alert("Query Error - ClientSharedSrvc >> saveClientUpgrades");
+        });
     };
 
 

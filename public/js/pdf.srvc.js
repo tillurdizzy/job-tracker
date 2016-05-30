@@ -24,7 +24,7 @@ app.service('PdfSrvc',['SharedSrvc',function createPDF(SharedSrvc){
 		doc.text(20, 180, S.selectedPropertyObj.city + "," + S.selectedPropertyObj.state + " " + S.selectedPropertyObj.zip);
 
 		doc.setFontSize(14);
-		doc.text(20, 250, "Materials: $" + dataObj.materialsCost);
+		doc.text(20, 250, "Materials: $" + dataObj.upgradesBase);
 
 		doc.save(S.selectedClientObj.name_last + '.pdf');
 	}
