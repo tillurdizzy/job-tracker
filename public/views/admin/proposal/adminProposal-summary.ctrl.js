@@ -6,26 +6,25 @@ app.controller('AdminPropSummary', ['$state', '$scope', 'AdminSharedSrvc', 'Admi
     ME.S = AdminSharedSrvc;
     ME.P = AdminProposalSrvc;
     ME.CONFIG = JobConfigSrvc;
-    var me = "AdminPropSummary";
+    var me = "AdminPropSummary: ";
    
     ME.summaryItems = [];
     ME.proposalSelected = false;
     ME.dataIsSaved = true;
     var MARGIN = ME.CONFIG.configMargin; // Comes from CONFIG ready to use in calculations i.e. < 1 (.35)
     ME.marginDisplay = MARGIN * 100; // Display as whole integer i.e. 35%
-
+    ME.profitTotal = 0;
     ME.invalidMarginInput = false;
 
     var getTotal = function() {
-        MARGIN = ME.CONFIG.configMargin;
-        ME.marginDisplay = MARGIN * 100;
 
         var laborTotal = ME.P.CostSummary.labor;
         var materialsTotal = ME.P.CostSummary.materialsTotal;
-        var subtotal = laborTotal + materialsTotal;
-        var marginTotal = ME.CONFIG.profitMargin;
-        var clientPrice = 
-        ME.totalCost = laborTotal + materialsTotal + marginTotal;
+        var basePrice = ME.CONFIG.upgradeItemsBasePrice.Total + ME.P.CostSummary.materialsFixed + laborTotal;
+        ME.profitTotal = MARGIN * basePrice;
+        var clientPrice = basePrice + ME.profitTotal;
+
+        ME.totalCost = laborTotal + materialsTotal; // Actual out-of-pocket expenditures
 
         ME.summaryItems = [];
         
@@ -35,17 +34,20 @@ app.controller('AdminPropSummary', ['$state', '$scope', 'AdminSharedSrvc', 'Admi
         item = { item: "Labor", amount: laborTotal };
         ME.summaryItems.push(item);
 
-        item = { item: "Margin", amount: marginTotal };
-        ME.summaryItems.push(item);
-        
-        item = { item: "Base Price", amount: ME.CONFIG.upgradeItemsBasePrice.Total };
+        item = { item: "Margin", amount: basePrice };
         ME.summaryItems.push(item);
 
+        item = { item: "Profit", amount: ME.profitTotal };
+        ME.summaryItems.push(item);
+        
         item = { item: "Client Price", amount: clientPrice };
         ME.summaryItems.push(item);
+
+        ME.S.trace(me + "getTotal " + ME.summaryItems);
     };
 
     ME.marginChange = function() {
+        ME.S.trace(me + "marginChange()");
         var marginEdit = parseInt(ME.marginDisplay);
         if (isNaN(marginEdit)) {
             return;
@@ -63,7 +65,7 @@ app.controller('AdminPropSummary', ['$state', '$scope', 'AdminSharedSrvc', 'Admi
     ME.saveMyConfig = function() {
         var dataObj = {};
         dataObj.margin = ME.marginDisplay;
-        dataObj.profitMargin = marginTotal;
+        dataObj.profitMargin = ME.profitTotal;
         ME.S.updateMarginConfig(dataObj);
     };
 
@@ -101,6 +103,7 @@ app.controller('AdminPropSummary', ['$state', '$scope', 'AdminSharedSrvc', 'Admi
     });
 
     $scope.$watch('$viewContentLoaded', function() {
+        ME.S.trace(me + "$viewContentLoaded");
         ME.proposalSelected = ME.S.proposalSelected;
         configExists();
         getTotal();

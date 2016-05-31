@@ -8,19 +8,24 @@ app.controller('AdminPropLabor', ['$state', '$scope', 'AdminSharedSrvc', 'AdminP
     ME.P = AdminProposalSrvc;
     ME.proposalSelected = false;
     ME.laborTableDP = [];
-    var me = "AdminPropLabor";
+    var me = "AdminPropLabor: ";
 
     ME.dataIsSaved = true;
 
-    /*ME.saveMyConfig = function() {
-        ME.S.saveLaborConfig();
-    };*/
+
+    // If there is no labor config saved, it gets created by CONFIG through mergeLaborConfig 
+    // When proposal is selected
+    ME.saveMyConfig = function() {
+        ME.S.saveLaborConfig(null);
+    };
 
     var getTotal = function() {
         ME.LaborTotal = 0;
         for (var i = 0; i < ME.laborTableDP.length; i++) {
-            var x = ME.laborTableDP[i].Total;
-            ME.LaborTotal += x;
+            var x = ME.laborTableDP[i].Labor;
+            if(x == "Total"){
+                 ME.LaborTotal = Number(ME.laborTableDP[i].Cost);
+            }
         }
         ME.P.setSummaryItem("labor", ME.LaborTotal);
     };

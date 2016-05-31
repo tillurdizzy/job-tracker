@@ -772,18 +772,25 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
 
     self.saveLaborConfig = function(data) {
         self.trace(me + "saveLaborConfig()");
-        var Labor = data.Labor;
+        // If data is null then save the laborConfig as is... otherwise update it first
+        if(data != null){
+            var Labor = data.Labor;
+            for (var i = 0; i < self.laborConfig.length; i++) {
+                if (Labor == self.laborConfig[i].Labor) {
+                    self.laborConfig[i].Qty = data.Qty;
+                    self.laborConfig[i].Cost = data.Cost;
+                    self.laborConfig[i].Total = parseInt(data.Qty) * Number(data.Cost);
+                };
+            };
+        };
+       
         var thisItem = "";
         var strData = "";
-        for (var i = 0; i < self.laborConfig.length; i++) {
-            if (Labor == self.laborConfig[i].Labor) {
-                self.laborConfig[i].Qty = data.Qty;
-                self.laborConfig[i].Cost = data.Cost;
-                self.laborConfig[i].Total = parseInt(data.Qty) * Number(data.Cost);
-            };
+        var prefix = "";
+        for (i = 0; i < self.laborConfig.length; i++) {
             thisItem = "";
             if (i == 0) {
-                var prefix = "";
+                prefix = "";
             } else {
                 prefix = "!";
             };
@@ -792,10 +799,10 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
         };
 
         var y = 0;
-        for (var i = 0; i < self.laborConfig.length; i++) {
+        for (i = 0; i < self.laborConfig.length; i++) {
             var x = Number(self.laborConfig[i].Total);
             y += x;
-        }
+        };
         strData += "!Total;0;" + y;
 
         var dataObj = {};

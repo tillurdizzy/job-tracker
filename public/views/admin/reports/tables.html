@@ -152,12 +152,12 @@
             </tbody>
         </table>
 
-        <table st-table="Ctrl.jobConfigData" class="table table-striped" style="width:100%;" ng-show="Ctrl.tableSelected.request=='getAllJobConfigs'">
+        <table st-table="Ctrl.jobConfigData" class="table table-striped" style="width:100%;table-layout: fixed;" ng-show="Ctrl.tableSelected.request=='getAllJobConfigs'">
             <thead>
                 <tr>
                     <th>PRIMARY_ID</th>
                     <th>jobID</th>
-                    <th>config</th>
+                    <th style="width:300px;">config</th>
                     <th>labor</th>
                     <th>upgradesBase</th>
                     <th>profitMargin</th>
@@ -168,7 +168,7 @@
                 <tr ng-repeat="row in Ctrl.jobConfigData">
                     <td>{{row.PRIMARY_ID}}</td>
                     <td>{{row.jobID}}</td>
-                    <td>{{row.config}}</td>
+                    <td style="width:300px;overflow: hidden;">{{row.config}}</td>
                     <td>{{row.labor}}</td>
                     <td>{{row.upgradesBase}}</td>
                     <td>{{row.profitMargin}}</td>

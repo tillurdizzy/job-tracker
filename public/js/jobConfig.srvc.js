@@ -23,6 +23,15 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore', function jobConfigSrvc
         }
     };
 
+    var validateNumber = function(x){
+        var n = Number(x);
+        if (isNaN(n)) {
+            return 0;
+        } else {
+           return n;
+        };
+    };
+
     // Step 3 of events triggered by selection of a Proposal from Proposal Review
     // Converts the long string saved in DB into array of objects
     // Also called from ClientSharedSrvc during flow of events triggered by LogIn
@@ -44,16 +53,16 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore', function jobConfigSrvc
                 var thisArr = rootArr[i].split(';');
                 var jobConfigObj = {};
                 jobConfigObj.Code = thisArr[0];
-                jobConfigObj.Qty = thisArr[1];
+                jobConfigObj.Qty = validateNumber(thisArr[1]);
                 jobConfigObj.Checked = thisArr[2];
-                jobConfigObj.Price = thisArr[3];
+                jobConfigObj.Price = validateNumber(thisArr[3]);
                 jobConfigObj.Category = thisArr[4];
                 self.jobConfigArray.push(jobConfigObj);
             }
         };
 
         // 2. Labor config
-        self.configLabor = [];
+         self.configLabor = [];
         var laborStr = dataObj.labor;
         if (laborStr != "") {
             var laborArr = laborStr.split('!');
@@ -66,42 +75,36 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore', function jobConfigSrvc
                 self.configLabor.push(itemObj);
             }
         };
+
         // 3. Base Cost config
-        self.upgradeItemsBasePrice = [];
+        self.upgradeItemsBasePrice = {};
         var upgradesBaseStr = dataObj.upgradesBase;
         if (upgradesBaseStr != "") {
             var upgradesBaseArr = upgradesBaseStr.split('!');
             for (var i = 0; i < upgradesBaseArr.length; i++) {
                 var thisItem = upgradesBaseArr[i].split(';');
-                var itemObj = {};
-                itemObj.Field = thisItem[0];
-                itemObj.Valley = thisItem[1];
-                itemObj.Ridge = thisItem[2];
-                itemObj.Edge = thisItem[3];
-                itemObj.Total = thisItem[4];
-                self.upgradeItemsBasePrice.push(itemObj);
+                self.upgradeItemsBasePrice[thisItem[0]] = validateNumber(thisItem[1]);
             }
         };
 
         // 4. Material Costs
-        self.materialCosts.materialsTotal = dataObj.materialsTotal;
-        self.materialCosts.materialsFixed = dataObj.materialsFixed;
+        self.materialCosts.materialsTotal = validateNumber(dataObj.materialsTotal);
+        self.materialCosts.materialsFixed = validateNumber(dataObj.materialsFixed);
 
-        // 5. Margin
-        //  !!!!!!!!!!!!!!!!!!!!!!!!!!! Change to marginMultiplier
-        var m = Number(dataObj.margin);
-        if (isNaN(m)) {
+        // 5. Margin multiplier
+        var NUM = Number(dataObj.margin);
+        if (isNaN(NUM)) {
             self.configMargin = .1;
         } else {
-            self.configMargin = m / 100;
+            self.configMargin = NUM / 100;
         };
 
-        //6. Profit margin dollar amount
-        var m = Number(dataObj.profitMargin);
-        if (isNaN(m)) {
+        // 6. Profit margin dollar amount - Only for client App
+        NUM = Number(dataObj.profitMargin);
+        if (isNaN(NUM)) {
             self.profitMargin = 0;
         } else {
-            self.profitMargin = m;
+            self.profitMargin = NUM;
         };
 
         // Only the jobConfig is returned
@@ -219,7 +222,7 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore', function jobConfigSrvc
         return materials;
     };
 
-    // This is called from Admin
+    // This is called from AdminShared
     self.mergeLaborConfig = function(defaultLabor, params) {
         trace(me + "mergeLaborConfig");
         if (self.configLabor.length === 0) {
@@ -323,10 +326,7 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore', function jobConfigSrvc
 
     }
 
-    /*self.returnupgradesBase = function() {
-        return self.upgradeItemsBasePrice;
-    };*/
-
+   
     // Make all vals numbers
     var numberize = function(inputObj) {
         for (var prop in inputObj) {
