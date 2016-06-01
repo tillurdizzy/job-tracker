@@ -52,6 +52,7 @@ app.service('AdminDataSrvc',['$http','$q','SharedSrvc','LogInSrvc',function admi
 		putMultiLevels:httpPathPrefix + "putMultiLevels.php",
 		putMultiVents:httpPathPrefix + "putMultiVents.php",
 		updateProperty:httpPathPrefix + "updateProperty.php",
+		updateMaterialsShingle:httpPathPrefix + "updateMaterialsShingle.php",
 		updateMultiLevels:httpPathPrefix + "updateMultiLevels.php",
 		updateMultiVents:httpPathPrefix + "updateMultiVents.php",
 		updateClient:httpPathPrefix + "updateClient.php",

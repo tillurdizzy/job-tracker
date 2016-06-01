@@ -3,6 +3,8 @@
 app.service('ListSrvc',[function sharedLists(){
 	var self = this;
 
+	self.upgradeCategories = ["Field","Ridge","Valley","Edge"];
+
 	self.jobStatusOptions = [
 		{label:"Prospect",id:1},
 		{label:"Proposal",id:2},

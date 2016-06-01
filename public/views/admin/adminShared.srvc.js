@@ -204,7 +204,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
     var mergeConfig = function() {
         self.trace(me + "mergeConfig()");
         if (self.tabsSubmitted.design == false) {
-            // this will only happen 1X, the first time a Proposal is viewed by Admin
+            // This will only happen 1X from here, the first time a Proposal is viewed by Admin
             doUpgradeBase();
         };
 
@@ -228,9 +228,10 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
 
     var calculateBaseUpgrades = function() {
         self.trace(me + "calculateBaseUpgrades()");
+        self.trace(me + "Field;" + self.basePrice.Field + "!Valley;" + self.basePrice.Valley + "!Ridge;" + self.basePrice.Ridge + "!Edge;" + self.basePrice.Edge + "!Total;" + self.basePrice.Total);
         self.basePrice = {};
         // These 4 categories are the ones that the Client can upgrade
-        // This function records the non-upgrade prices for each to use for the Baseline Price
+        // This function records the Standard (non-upgrade) price of the Default material in ech category to use for the Baseline Price in Client App
         var runningTotal = 0;
         for (var i = 0; i < self.materialsDefault.length; i++) {
             var cat = self.materialsDefault[i].Category;
@@ -255,6 +256,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
         self.trace(me + "saveBasePrices()");
         var dataObj = {};
         dataObj.upgradesBase = "Field;" + self.basePrice.Field + "!Valley;" + self.basePrice.Valley + "!Ridge;" + self.basePrice.Ridge + "!Edge;" + self.basePrice.Edge + "!Total;" + self.basePrice.Total;
+        self.trace(me + dataObj.upgradesBase);
         dataObj.jobID = self.proposalUnderReview.jobID;
         DB.query("updateConfigUpgradeBase", dataObj).then(function(resultObj) {
             if (resultObj.result == "Error" || typeof resultObj.data === "string") {
@@ -273,6 +275,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
     var categorizeMaterials = function() {
         self.trace(me + "categorizeMaterials()");
         self.materialsCatergorized = {};
+        var cloneList = DB.clone(self.materialsList);
         var field = [];
         var ridge = [];
         var starter = [];
@@ -283,28 +286,28 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
         var edge = [];
         var flat = [];
         var other = [];
-        for (var i = 0; i < self.materialsList.length; i++) {
-            var cat = self.materialsList[i].Category;
+        for (var i = 0; i < cloneList.length; i++) {
+            var cat = cloneList[i].Category;
             if (cat == "Field") {
-                field.push(self.materialsList[i]);
+                field.push(cloneList[i]);
             } else if (cat == "Ridge") {
-                ridge.push(self.materialsList[i]);
+                ridge.push(cloneList[i]);
             } else if (cat == "Starter") {
-                starter.push(self.materialsList[i]);
+                starter.push(cloneList[i]);
             } else if (cat == "Caps") {
-                caps.push(self.materialsList[i]);
+                caps.push(cloneList[i]);
             } else if (cat == "Ventilation") {
-                vents.push(self.materialsList[i]);
+                vents.push(cloneList[i]);
             } else if (cat == "Flashing") {
-                flashing.push(self.materialsList[i]);
+                flashing.push(cloneList[i]);
             } else if (cat == "Valley") {
-                valley.push(self.materialsList[i]);
+                valley.push(cloneList[i]);
             } else if (cat == "Edge") {
-                edge.push(self.materialsList[i]);
+                edge.push(cloneList[i]);
             } else if (cat == "LowSlope") {
-                flat.push(self.materialsList[i]);
+                flat.push(cloneList[i]);
             } else if (cat == "Other") {
-                other.push(self.materialsList[i]);
+                other.push(cloneList[i]);
             }
         };
 
@@ -359,8 +362,39 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
                 catArray = self.materialsCatergorized.Other;
                 break;
         }
-        for (var i = 0; i < catArray.length; i++) {
-            if (catArray[i].PRIMARY_ID == vals.ID) {
+
+        // If the category is an upgrade category, we need to change the Qty on ALL items
+        var isUpgrade = underscore.indexOf(L.upgradeCategories, cat);
+
+        if (isUpgrade === -1) {
+            isUpgrade = false;
+        } else {
+            isUpgrade = false;
+        }
+
+        if (isUpgrade) {
+            for (var i = 0; i < catArray.length; i++) {
+                if (catArray[i].PRIMARY_ID == vals.ID) {
+                    catArray[i].PkgPrice = Number(vals.Price);
+                    catArray[i].Qty = Number(vals.Qty);
+                    // calcs
+                    var q = Number(vals.Qty);
+                    var p = Number(vals.Price);
+                    var over = Number(catArray[i].Margin);
+                    var qtyCoverage = Number(catArray[i].QtyCoverage);
+
+                    var numberOfPackagesToBuy = q / qtyCoverage;
+                    var pkgQtyRoundedUp = Math.ceil(numberOfPackagesToBuy);
+                    var pkgQtyWithOverageRoundedUp = Math.ceil(numberOfPackagesToBuy * over);
+                    var total = (pkgQtyWithOverageRoundedUp * p);
+
+                    catArray[i].PkgQty = pkgQtyWithOverageRoundedUp;
+                    catArray[i].Total = total;
+                    break;
+                }
+            }
+        } else {
+            for (var i = 0; i < catArray.length; i++) {
                 catArray[i].PkgPrice = Number(vals.Price);
                 catArray[i].Qty = Number(vals.Qty);
                 // calcs
@@ -376,17 +410,25 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
 
                 catArray[i].PkgQty = pkgQtyWithOverageRoundedUp;
                 catArray[i].Total = total;
-                break;
             }
-        }
+        };
+
         // update self.materialsList
         for (var i = 0; i < self.materialsList.length; i++) {
-            if (self.materialsList[i].PRIMARY_ID == vals.ID) {
-                self.materialsList[i].PkgPrice = Number(vals.Price);
-                self.materialsList[i].Qty = Number(vals.Qty);
-                break;
+            if (isUpgrade) {
+                if (self.materialsList[i].Category == cat) {
+                    self.materialsList[i].PkgPrice = Number(vals.Price);
+                    self.materialsList[i].Qty = Number(vals.Qty);
+                }
+            } else {
+                if (self.materialsList[i].PRIMARY_ID == vals.ID) {
+                    self.materialsList[i].PkgPrice = Number(vals.Price);
+                    self.materialsList[i].Qty = Number(vals.Qty);
+                    break;
+                }
             }
-        }
+        };
+        self.trace(me + "$rootScope.$broadcast(onEditDesignMaterial)");
         $rootScope.$broadcast('onEditDesignMaterial');
     };
 
@@ -411,13 +453,14 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
     var extractDefaultMaterials = function() {
         self.trace(me + "extractDefaultMaterials()");
         self.materialsDefault = [];
-        for (var i = 0; i < self.materialsList.length; i++) {
-            var c = self.materialsList[i].Checked;
+        var cloneList = DB.clone(self.materialsList);
+        for (var i = 0; i < cloneList.length; i++) {
+            var c = cloneList[i].Checked;
             if (c == undefined || c == null || c == NaN || c > 1) {
-                self.materialsList[i].Checked == "0"
+                cloneList[i].Checked == "0"
             }
             if (c == "1" || c === true) {
-                self.materialsDefault.push(self.materialsList[i]);
+                self.materialsDefault.push(cloneList[i]);
             }
         }
     };
@@ -773,7 +816,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
     self.saveLaborConfig = function(data) {
         self.trace(me + "saveLaborConfig()");
         // If data is null then save the laborConfig as is... otherwise update it first
-        if(data != null){
+        if (data != null) {
             var Labor = data.Labor;
             for (var i = 0; i < self.laborConfig.length; i++) {
                 if (Labor == self.laborConfig[i].Labor) {
@@ -783,7 +826,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
                 };
             };
         };
-       
+
         var thisItem = "";
         var strData = "";
         var prefix = "";
@@ -977,7 +1020,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
                 alert("Query Error - see console for details");
                 console.log("AdminSharedSrvc >> updateConfigConfig ---- " + resultObj.data);
             } else {
-                self.trace(me + "$rootScope.$broadcast(updateConfigConfig)");
+                self.trace(me + "$rootScope.$broadcast(onSaveJobConfig)");
                 self.tabsSubmitted.design = true;
                 $rootScope.$broadcast('onSaveJobConfig');
                 doUpgradeBase();
@@ -1116,6 +1159,21 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
     self.triggerDataCascade = function() {
         self.trace(me + "triggerDataCascade");
         getProperties();
+    };
+
+    var convertToBoolean = function(input) {
+        var boolOut = false;
+        if (input === "1" || input === "true" || input === "True" || input === "TRUE" || input === 1 || input === true) {
+            boolOut = true;
+        }
+        var num = Number(input);
+        var isNum = isNaN(num);
+        if (!isNum) {
+            if (num > 0) {
+                boolOut = true;
+            }
+        }
+        return boolOut;
     };
 
     self.trace = function(message) {

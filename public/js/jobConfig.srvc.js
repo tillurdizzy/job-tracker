@@ -12,7 +12,7 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore', function jobConfigSrvc
     self.defaultCheckedMaterials = [];
 
     self.configLabor = [];
-    self.upgradeItemsBasePrice = [];
+    self.upgradeItemsBasePrice = {};
     self.materialCosts = {totalMaterials:0,fixedMaterials:0};
     self.configMargin = 0;
     self.profitMargin = 0;
@@ -433,7 +433,7 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore', function jobConfigSrvc
         return rtnObj;
     };
 
-    self.returnDefaultMaterial = function(cat) {
+    /*self.returnDefaultMaterial = function(cat) {
         trace(me + "returnDefaultMaterial");
         var rtnObject = {};
         for (var i = 0; i < self.defaultCheckedMaterials.length; i++) {
@@ -444,7 +444,7 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore', function jobConfigSrvc
             }
         };
         return rtnObject;
-    };
+    };*/
 
     return self;
 }]);

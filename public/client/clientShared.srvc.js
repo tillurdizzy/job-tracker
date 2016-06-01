@@ -2,14 +2,14 @@
 app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'JobConfigSrvc', 'underscore', function($rootScope, ClientDataSrvc, JobConfigSrvc, underscore) {
 
     var self = this;
-    self.ME = "ClientSharedSrvc: ";
+    var me = "ClientSharedSrvc: ";
     var DB = ClientDataSrvc;
     var CONFIG = JobConfigSrvc;
+    var LOG = true;
 
     self.displayName = "";
     self.loggedIn = false;
     self.jobID = 0;
-
     self.materialsList = [];
     self.materialsListConfig = [];
     self.defaultCheckedMaterials = [];
@@ -46,10 +46,17 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'JobConfigSrvc'
 
     //Called after successful Log In
     self.LogIn = function(name, clientObj) {
+        self.trace(me + "LogIn()");
         self.displayName = name;
         self.clientObj = clientObj;
         self.loggedIn = true;
         getJobsByClient();
+    };
+
+    self.trace = function(message) {
+        if (LOG) {
+            console.log(message);
+        }
     };
 
     // Called from  self.LogIn()
@@ -60,6 +67,7 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'JobConfigSrvc'
     // getJobMaterials(); 7.getMaterialsList() 8. getJobConfig() 9. getPhotos()
     // Ending on buildRoofDescription() which creates a DOM dataProvider from all these different sources
     var getJobsByClient = function() {
+        self.trace(me + "getJobsByClient()");
         var dataObj = { clientID: self.clientObj.PRIMARY_ID };
         DB.queryDB("getJobsByClient", dataObj).then(function(resultObj) {
             if (resultObj.result == "Error") {
@@ -75,6 +83,7 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'JobConfigSrvc'
     };
 
     var getPropertiesByClient = function() {
+        self.trace(me + "getPropertiesByClient()");
         var dataObj = { clientID: self.clientObj.PRIMARY_ID };
         DB.queryDB("getPropertiesByClient", dataObj).then(function(resultObj) {
             if (resultObj.result == "Error" || typeof resultObj.data === "string") {
@@ -94,6 +103,7 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'JobConfigSrvc'
     // For now set to the first object in array
     // Make sure Property is assigned to a Job and the Job has Parameters recorded
     var setClientJob = function() {
+        self.trace(me + "setClientJob()");
         self.propertyObj = self.propertyResults[0];
         self.jobObj = null;
         var propID = self.propertyObj.PRIMARY_ID;
@@ -112,6 +122,7 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'JobConfigSrvc'
 
     // Translates the roof description database entries to text for display
     var buildRoofDescription = function() {
+        self.trace(me + "buildRoofDescription()");
         self.existingRoofDescription.levels = self.roofObj.numLevels;
         self.existingRoofDescription.deck = returnKeyValue("roofDeckOptions", self.roofObj.roofDeck);
         self.existingRoofDescription.shingles = returnKeyValue("shingleGradeOptions", self.roofObj.shingleGrade);
@@ -135,6 +146,7 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'JobConfigSrvc'
     };
 
     self.logOut = function() {
+        self.trace(me + "LogIn()");
         self.clientID = "";
         self.displayName = "";
         self.loggedIn = false;
@@ -157,6 +169,7 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'JobConfigSrvc'
     };
 
     var getJobParameters = function() {
+        self.trace(me + "getJobParameters()");
         var dataObj = { ID: self.jobObj.PRIMARY_ID };
         DB.queryDB("getJobParameters", dataObj).then(function(resultObj) {
             if (resultObj.result == "Error" || typeof resultObj.data === "string") {
@@ -165,7 +178,7 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'JobConfigSrvc'
             } else {
                 var arr = resultObj.data;
                 if (arr.length > 0) {
-                    self.jobParameters = CONFIG.formatParams(resultObj.data[0]);
+                    self.jobParameters = CONFIG.formatParamsForTableDisplay(resultObj.data[0]);
                     mergeDataFlag.params = true;
                     validateMergeData();
                     getRoofForProperty();
@@ -179,6 +192,7 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'JobConfigSrvc'
     };
 
     var getRoofForProperty = function() {
+        self.trace(me + "getRoofForProperty()");
         var dataObj = { propID: self.propertyObj.PRIMARY_ID };
         DB.queryDB("getRoof", dataObj).then(function(resultObj) {
             if (resultObj.result == "Error" || typeof resultObj.data === "string") {
@@ -194,6 +208,7 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'JobConfigSrvc'
     };
 
     var getMultiVents = function() {
+        self.trace(me + "getMultiVents()");
         var dataObj = { ID: self.propertyObj.PRIMARY_ID };
         DB.queryDB("getMultiVents", dataObj).then(function(resultObj) {
             if (resultObj.result == "Error" || typeof resultObj.data === "string") {
@@ -209,6 +224,7 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'JobConfigSrvc'
     }
 
     var getMultiLevels = function() {
+        self.trace(me + "getMultiLevels()");
         var dataObj = { ID: self.propertyObj.PRIMARY_ID };
         DB.queryDB("getMultiVents", dataObj).then(function(resultObj) {
             if (resultObj.result == "Error" || typeof resultObj.data === "string") {
@@ -225,6 +241,7 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'JobConfigSrvc'
     }
 
     var getJobConfig = function() {
+        self.trace(me + "getJobConfig()");
         var dataObj = { jobID: self.jobObj.PRIMARY_ID };
         DB.queryDB("getJobConfig", dataObj).then(function(resultObj) {
             if (resultObj.result === "Error" || typeof resultObj.data === "string") {
@@ -239,6 +256,7 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'JobConfigSrvc'
     };
 
     self.saveClientUpgrades = function(dataObj) {
+        self.trace(me + "saveClientUpgrades()");
         self.jobConfig = CONFIG.updateCheckedItemInCategory(dataObj);
         var dataObj = CONFIG.convertConfigToString();
         dataObj.jobID = self.jobObj.PRIMARY_ID;
@@ -258,6 +276,7 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'JobConfigSrvc'
 
     // Converts the long string saved in DB into array of objects
     var onGetConfigResult = function(ar) {
+        self.trace(me + "onGetConfigResult()");
         self.jobConfig = CONFIG.parseJobConfig(ar); // CONFIG keeps a copy!!!!  Don't really need it returned
         mergeDataFlag.config = true;
         validateMergeData();
@@ -266,6 +285,7 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'JobConfigSrvc'
 
     // Checks to make sure both config and materials are imported
     var validateMergeData = function() {
+        self.trace(me + "validateMergeData()");
         var listCopy = clone(self.materialsList);
         if (mergeDataFlag.config === true && mergeDataFlag.params === true) { 
             // Insert saved config Prices and Qty into the Default materials, but don't change the "Checked" value
@@ -279,7 +299,7 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'JobConfigSrvc'
 
             CONFIG.defaultCheckedMaterials = self.defaultCheckedMaterials
 
-            getDefaultSelections();
+           // getDefaultSelections();
 
             self.getBaseTotal();
         }
@@ -321,6 +341,7 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'JobConfigSrvc'
 
 
     var getPhotoGallery = function() {
+        self.trace(me + "getPhotoGallery()");
         var dataObj = { ID: self.jobObj.PRIMARY_ID };
         DB.queryDB("getPhotoGallery", dataObj).then(function(resultObj) {
             if (resultObj.result == "Error" || typeof resultObj.data === "string") {
@@ -335,6 +356,7 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'JobConfigSrvc'
     };
 
     var parseGalleryResult = function(result) {
+        self.trace(me + "parseGalleryResult()");
         var clientDirectory = self.clientObj.name_last.toLowerCase();
         photoGalleryPath = "client/img/" + clientDirectory + "/";
         self.photoGallery = [];
@@ -348,7 +370,8 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'JobConfigSrvc'
         }
     };
 
-    var getDefaultSelections = function() {
+    /*var getDefaultSelections = function() {
+        self.trace(me + "getDefaultSelections()");
         // There is only ONE material in each of these categories that is Default
         // This is used as the "0.00" price for upgrades.
         // All upgrades costs are compared to this cost to get the price difference for display
@@ -356,10 +379,11 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'JobConfigSrvc'
         basePriceConfig.Valley = CONFIG.returnDefaultMaterial("Valley");
         basePriceConfig.Edge = CONFIG.returnDefaultMaterial("Edge");
         basePriceConfig.Ridge = CONFIG.returnDefaultMaterial("Ridge");
-    };
+    };*/
 
 
     self.getBaseTotal = function() {
+        self.trace(me + "getBaseTotal()");
         baseLineItems = [];
         var include = false;
         for (var i = 0; i < self.materialsListConfig.length; i++) {
@@ -379,9 +403,11 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'JobConfigSrvc'
         $rootScope.$broadcast("on-data-collection-complete");
     };
 
+    // Called from Crtl:  Creates list of items to show for upgrade options in each category (Field,Valley,Ridge,Edge)
     self.getUpgrades = function(cat) {
+
+        self.trace(me + "getUpgrades() - " + cat);
         // The Client's Prices are in the Configured List, but the Default Selection is in the Original List
-        // So... 
         var basePrice = 0;
         var thisCategoryConfigured = [];
         var rtnArray = [];
@@ -395,18 +421,11 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'JobConfigSrvc'
         };
 
         // Step 2: Find Base Price
-        var defaultItemCode = basePriceConfig[cat].Code;
-        for (i = 0; i < self.materialsList.length; i++) {
-            var itemCode = self.materialsList[i].Code;
-            if (itemCode === defaultItemCode) {
-                basePrice = parseInt(self.materialsList[i].Total);
-                break;
-            }
-        };
-
+        basePrice = CONFIG.upgradeItemsBasePrice[cat];
+        
         // Step 3: Calculate upgrade price and insert into list as new property
         for (i = 0; i < thisCategoryConfigured.length; i++) {
-            var t = parseInt(thisCategoryConfigured[i].Total);
+            var t = Number(thisCategoryConfigured[i].Total);
             var upgradePrice = t - basePrice;
             thisCategoryConfigured[i].upgradePrice = upgradePrice;
         };
@@ -427,6 +446,7 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'JobConfigSrvc'
     // Init functions chained
 
     var getKeyValuePairs = function() {
+        self.trace(me + "getKeyValuePairs()");
         var dataObj = {};
         DB.queryDB("getKeyValuePairs", dataObj).then(function(resultObj) {
             if (resultObj.result == "Error" || typeof resultObj.data === "string") {
@@ -441,6 +461,8 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'JobConfigSrvc'
         });
     };
     var getDefaultConfigSelections = function() {
+        self.trace(me + "getDefaultConfigSelections()");
+        // SELECT * FROM materials_shingle WHERE Checked = 1
         DB.queryDB("getDefaultConfigMaterials", null).then(function(resultObj) {
             if (resultObj.result == "Error" || typeof resultObj.data === "string") {
                 alert("Query Error - see console for details");
@@ -454,7 +476,7 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'JobConfigSrvc'
         });
     };
     var getMaterialsList = function() {
-        console.log("getMaterialsList Called");
+        self.trace(me + "getMaterialsList()");
         DB.queryDB("getMaterialsList").then(function(resultObj) {
             if (resultObj.result == "Error" || typeof resultObj.data === "string") {
                 alert("Query Error - see console for details");

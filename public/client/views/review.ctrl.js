@@ -3,11 +3,13 @@
 app.controller('ReviewCtrl', ['$scope', '$state', 'ClientSharedSrvc', 'ngDialog', '$controller', 'JobConfigSrvc', function($scope, $state, ClientSharedSrvc, ngDialog, $controller, JobConfigSrvc) {
 
     var ME = this;
-    var CONFIG = JobConfigSrvc;
+    
+    var me = "ClientCtrl: ";
     // Selections and pricing specific to a job
     ME.jobConfig = [];
     var jobParams = {};
 
+    ME.CONFIG = JobConfigSrvc;
     ME.C = ClientSharedSrvc;
     ME.UpgradeRidgeCaps = {};
     ME.UpgradeDripEdge = {};
@@ -27,7 +29,7 @@ app.controller('ReviewCtrl', ['$scope', '$state', 'ClientSharedSrvc', 'ngDialog'
     ME.showUpgrades = { field: true, ridge: false, valley: false, trim: false };
 
     ME.calculateTotal = function() {
-
+        ME.C.trace(me + "calculateTotal()");
         var fieldprofitMargin = 0;
         var ridgeprofitMargin = 0;
         var valleyprofitMargin = 0;
@@ -98,6 +100,7 @@ app.controller('ReviewCtrl', ['$scope', '$state', 'ClientSharedSrvc', 'ngDialog'
     };
 
     var getUpgradeOptions = function() {
+        ME.C.trace(me + "getUpgradeOptions()");
         ME.shingleUpgrades = ME.C.getUpgrades("Field");
         ME.ridgeUpgrades = ME.C.getUpgrades("Ridge");
         ME.valleyUpgrades = ME.C.getUpgrades("Valley");
@@ -105,6 +108,7 @@ app.controller('ReviewCtrl', ['$scope', '$state', 'ClientSharedSrvc', 'ngDialog'
     };
 
     var setSelections = function() {
+        ME.C.trace(me + "setSelections()");
         for (var i = 0; i < ME.shingleUpgrades.length; i++) {
             if (ME.shingleUpgrades[i].Checked === true) {
                 ME.UpgradeFieldNdx = ME.shingleUpgrades[i].Code;
@@ -135,6 +139,7 @@ app.controller('ReviewCtrl', ['$scope', '$state', 'ClientSharedSrvc', 'ngDialog'
     };
 
     $scope.$watch('$viewContentLoaded', function() {
+        ME.C.trace(me + "$viewContentLoaded()");
         var loggedIn = ME.C.loggedIn;
         if (!loggedIn) {
             $state.transitionTo('login');
