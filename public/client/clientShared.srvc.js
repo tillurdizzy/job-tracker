@@ -297,9 +297,7 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'JobConfigSrvc'
             // Insert saved config Prices and Qty AND Checked value into the materialsListConfig
             self.materialsListConfig = CONFIG.mergeJobConfig(listCopy, self.jobParameters, true);
 
-            CONFIG.defaultCheckedMaterials = self.defaultCheckedMaterials
-
-           // getDefaultSelections();
+            CONFIG.defaultCheckedMaterials = self.defaultCheckedMaterials;
 
             self.getBaseTotal();
         }
@@ -369,18 +367,6 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'JobConfigSrvc'
             self.photoGallery.push(obj);
         }
     };
-
-    /*var getDefaultSelections = function() {
-        self.trace(me + "getDefaultSelections()");
-        // There is only ONE material in each of these categories that is Default
-        // This is used as the "0.00" price for upgrades.
-        // All upgrades costs are compared to this cost to get the price difference for display
-        basePriceConfig.Field = CONFIG.returnDefaultMaterial("Field");
-        basePriceConfig.Valley = CONFIG.returnDefaultMaterial("Valley");
-        basePriceConfig.Edge = CONFIG.returnDefaultMaterial("Edge");
-        basePriceConfig.Ridge = CONFIG.returnDefaultMaterial("Ridge");
-    };*/
-
 
     self.getBaseTotal = function() {
         self.trace(me + "getBaseTotal()");
@@ -461,7 +447,8 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'JobConfigSrvc'
         });
     };
     var getDefaultConfigSelections = function() {
-        self.trace(me + "getDefaultConfigSelections()");
+        //SELECT * FROM materials_shingle WHERE Checked = 1
+        self.trace(me + "getDefaultConfigMaterials()...checked = 1");
         // SELECT * FROM materials_shingle WHERE Checked = 1
         DB.queryDB("getDefaultConfigMaterials", null).then(function(resultObj) {
             if (resultObj.result == "Error" || typeof resultObj.data === "string") {

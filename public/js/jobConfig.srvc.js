@@ -62,7 +62,7 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore', function jobConfigSrvc
         };
 
         // 2. Labor config
-         self.configLabor = [];
+        self.configLabor = [];
         var laborStr = dataObj.labor;
         if (laborStr != "") {
             var laborArr = laborStr.split('!');
@@ -70,9 +70,11 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore', function jobConfigSrvc
                 var thisItem = laborArr[i].split(';');
                 var itemObj = {};
                 itemObj.Labor = thisItem[0];
-                itemObj.Qty = thisItem[1];
-                itemObj.Cost = thisItem[2];
-                self.configLabor.push(itemObj);
+                    itemObj.Qty = thisItem[1];
+                    itemObj.Cost = thisItem[2];
+                if(thisItem[0] != "Total"){
+                    self.configLabor.push(itemObj);
+                }
             }
         };
 
@@ -294,7 +296,7 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore', function jobConfigSrvc
     };
 
 
-    // this is called from Client... no need to merge etc.  Everything needed by this time should be saved in config
+    // Called from Client... no need to merge etc.  Everything needed by this time should be saved in config
     self.returnLaborGrandTotal = function() {
         trace(me + "returnLaborGrandTotal");
         var gTotal = 0;
@@ -319,6 +321,7 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore', function jobConfigSrvc
                 gTotal += self.configLabor[i].Total;
             }
         }
+
         return gTotal;
     }
 

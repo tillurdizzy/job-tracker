@@ -178,9 +178,10 @@ app.controller('AdminPropDesign', ['$state', '$scope', 'AdminSharedSrvc', 'Admin
     $scope.$on('onSaveJobConfig', function() {
         ME.S.trace(me + "$scope.$on(onSaveJobConfig)");
         ME.dataIsSaved = true;
+        ME.S.summarySaveNeeded = true;
         ngDialog.open({
-            template: '<h2>Design change has been saved.</h2>',
-            className: 'ngdialog-theme-default',
+            template: '<h2>Design configuration has been saved.</h2>',
+            className: 'ngdialog-theme-calm',
             plain: true,
             overlay: false
         });

@@ -20,13 +20,7 @@ app.controller('AdminPropLabor', ['$state', '$scope', 'AdminSharedSrvc', 'AdminP
     };
 
     var getTotal = function() {
-        ME.LaborTotal = 0;
-        for (var i = 0; i < ME.laborTableDP.length; i++) {
-            var x = ME.laborTableDP[i].Labor;
-            if(x == "Total"){
-                 ME.LaborTotal = Number(ME.laborTableDP[i].Cost);
-            }
-        }
+        ME.LaborTotal = ME.S.laborTotal;
         ME.P.setSummaryItem("labor", ME.LaborTotal);
     };
 
@@ -58,9 +52,10 @@ app.controller('AdminPropLabor', ['$state', '$scope', 'AdminSharedSrvc', 'AdminP
 
     $scope.$on('onSaveLaborConfig', function(event, obj) {
         ME.dataIsSaved = true;
+        ME.S.summarySaveNeeded = true;
         getTotal();
         ngDialog.open({
-            template: '<h2>Labor config saved.</h2>',
+            template: '<h2>Labor costs have been saved.</h2>',
             className: 'ngdialog-theme-calm',
             plain: true,
             overlay: false

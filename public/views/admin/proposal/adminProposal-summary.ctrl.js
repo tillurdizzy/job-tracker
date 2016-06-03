@@ -1,13 +1,13 @@
 'use strict';
 
-app.controller('AdminPropSummary', ['$state', '$scope', 'AdminSharedSrvc', 'AdminProposalSrvc', 'JobConfigSrvc', 'ngDialog',function($state, $scope, AdminSharedSrvc, AdminProposalSrvc, JobConfigSrvc,ngDialog) {
+app.controller('AdminPropSummary', ['$state', '$scope', 'AdminSharedSrvc', 'AdminProposalSrvc', 'JobConfigSrvc', 'ngDialog', function($state, $scope, AdminSharedSrvc, AdminProposalSrvc, JobConfigSrvc, ngDialog) {
 
     var ME = this;
     ME.S = AdminSharedSrvc;
     ME.P = AdminProposalSrvc;
     ME.CONFIG = JobConfigSrvc;
     var me = "AdminPropSummary: ";
-   
+
     ME.summaryItems = [];
     ME.proposalSelected = false;
     ME.dataIsSaved = true;
@@ -27,7 +27,7 @@ app.controller('AdminPropSummary', ['$state', '$scope', 'AdminSharedSrvc', 'Admi
         ME.totalCost = laborTotal + materialsTotal; // Actual out-of-pocket expenditures
 
         ME.summaryItems = [];
-        
+
         var item = { item: "Materials", amount: materialsTotal };
         ME.summaryItems.push(item);
 
@@ -39,7 +39,7 @@ app.controller('AdminPropSummary', ['$state', '$scope', 'AdminSharedSrvc', 'Admi
 
         item = { item: "Profit", amount: ME.profitTotal };
         ME.summaryItems.push(item);
-        
+
         item = { item: "Client Price", amount: clientPrice };
         ME.summaryItems.push(item);
 
@@ -70,16 +70,17 @@ app.controller('AdminPropSummary', ['$state', '$scope', 'AdminSharedSrvc', 'Admi
     };
 
     var configExists = function() {
-        ME.dataIsSaved = true;
+        ME.dataIsSaved = !ME.S.summarySaveNeeded;
         if (ME.S.tabsSubmitted.margin == false && ME.proposalSelected == true) {
             ME.dataIsSaved = false;
         }
-        ME.S.trace(me + "configExists()" + "ME.proposalSelected="+ME.proposalSelected + "  tabsSubmitted.summary=" + ME.S.tabsSubmitted.margin);
+        ME.S.trace(me + "configExists()" + "ME.proposalSelected=" + ME.proposalSelected + "  tabsSubmitted.summary=" + ME.S.tabsSubmitted.margin);
     };
 
     $scope.$on('onSaveMarginConfig', function(event, obj) {
         ME.dataIsSaved = true;
         ME.CONFIG.configMargin = MARGIN;
+        ME.S.summarySaveNeeded = false;
         ngDialog.open({
             template: '<h2>Margin Config Saved.</h2>',
             className: 'ngdialog-theme-calm',

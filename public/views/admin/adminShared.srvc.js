@@ -19,9 +19,12 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
     self.MULTILEVELS = [];
     self.laborDefault = {};
     self.laborConfig = {};
+    self.laborTotal = 0;
 
     // 
     self.tabsSubmitted = { design: false, labor: false, margin: false, base: false };
+
+    self.summarySaveNeeded = false;
 
     //jobVO's related to jobs that are in Proposal State
     var proposalsAsJob = [];
@@ -213,7 +216,11 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
 
         // If there is a saved labor config, insert the cost and qty... otherwise return the laborDefault vals
         self.laborConfig = CONFIG.mergeLaborConfig(self.laborDefault, DB.clone(self.proposalUnderReview.propertyInputParams));
-
+         // Get total labor 
+        self.laborTotal = 0;
+        for (var i = 0; i < self.laborConfig.length; i++) {
+            self.laborTotal += Number(self.laborConfig[i].Total);
+        }
         categorizeMaterials();
         getSpecialConsiderations();
     };
@@ -815,18 +822,22 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
 
     self.saveLaborConfig = function(data) {
         self.trace(me + "saveLaborConfig()");
+        self.laborTotal = 0;
         // If data is null then save the laborConfig as is... otherwise update it first
         if (data != null) {
             var Labor = data.Labor;
             for (var i = 0; i < self.laborConfig.length; i++) {
+
                 if (Labor == self.laborConfig[i].Labor) {
                     self.laborConfig[i].Qty = data.Qty;
                     self.laborConfig[i].Cost = data.Cost;
                     self.laborConfig[i].Total = parseInt(data.Qty) * Number(data.Cost);
                 };
+                self.laborTotal += Number(self.laborConfig[i].Total);
             };
         };
 
+        // Configure the String to save in DB
         var thisItem = "";
         var strData = "";
         var prefix = "";
@@ -841,12 +852,12 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
             strData += thisItem;
         };
 
-        var y = 0;
+        /*var y = 0;
         for (i = 0; i < self.laborConfig.length; i++) {
             var x = Number(self.laborConfig[i].Total);
             y += x;
-        };
-        strData += "!Total;0;" + y;
+        };*/
+        strData += "!Total;0;" + self.laborTotal;
 
         var dataObj = {};
         dataObj.labor = strData;
