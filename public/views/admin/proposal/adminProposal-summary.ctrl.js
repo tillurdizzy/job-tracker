@@ -16,11 +16,12 @@ app.controller('AdminPropSummary', ['$state', '$scope', 'AdminSharedSrvc', 'Admi
     ME.profitTotal = 0;
     ME.invalidMarginInput = false;
 
+
     var getTotal = function() {
 
         var laborTotal = ME.P.CostSummary.labor;
         var materialsTotal = ME.P.CostSummary.materialsTotal;
-        var basePrice = ME.CONFIG.upgradeItemsBasePrice.Total + ME.P.CostSummary.materialsFixed + laborTotal;
+        var basePrice = ME.S.basePrice.Total + ME.P.CostSummary.materialsFixed + laborTotal;
         ME.profitTotal = MARGIN * basePrice;
         var clientPrice = basePrice + ME.profitTotal;
 
@@ -43,6 +44,9 @@ app.controller('AdminPropSummary', ['$state', '$scope', 'AdminSharedSrvc', 'Admi
         item = { item: "Client Price", amount: clientPrice };
         ME.summaryItems.push(item);
 
+        var item = { item: "Base", amount: basePrice };
+        ME.summaryItems.push(item);
+        
         ME.S.trace(me + "getTotal " + ME.summaryItems);
     };
 

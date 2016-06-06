@@ -183,6 +183,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
             self.tabsSubmitted.labor = obj.labor == "" ? false : true;
             self.tabsSubmitted.base = obj.upgradesBase == "" ? false : true;
             self.tabsSubmitted.margin = obj.profitMargin == "" ? false : true;
+            self.tabsSubmitted.materials = obj.materialsTotal == "" ? false : true;
         }
 
         // CONFIG parses materials, labor, upgradeCost, but only returns the materials to jobConfig here
@@ -206,21 +207,24 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
     // Take the generic materialList and merge it with the job-specific config (insert qty and price)
     var mergeConfig = function() {
         self.trace(me + "mergeConfig()");
+
+        var aClone = DB.clone(self.MATERIALS);
+        self.materialsList = CONFIG.mergeJobConfig(aClone, self.proposalUnderReview.propertyInputParams, true);
+        self.basePrice = CONFIG.upgradeItemsBasePrice;
+        // If there is a saved labor config, insert the cost and qty... otherwise return the laborDefault vals
+        self.laborConfig = CONFIG.mergeLaborConfig(self.laborDefault, DB.clone(self.proposalUnderReview.propertyInputParams));
+         // Get total labor 
+        self.laborTotal = 0;
+
+        for (var i = 0; i < self.laborConfig.length; i++) {
+            self.laborTotal += Number(self.laborConfig[i].Total);
+        }
+
         if (self.tabsSubmitted.design == false) {
             // This will only happen 1X from here, the first time a Proposal is viewed by Admin
             doUpgradeBase();
         };
 
-        var aClone = DB.clone(self.MATERIALS);
-        self.materialsList = CONFIG.mergeJobConfig(aClone, self.proposalUnderReview.propertyInputParams, true);
-
-        // If there is a saved labor config, insert the cost and qty... otherwise return the laborDefault vals
-        self.laborConfig = CONFIG.mergeLaborConfig(self.laborDefault, DB.clone(self.proposalUnderReview.propertyInputParams));
-         // Get total labor 
-        self.laborTotal = 0;
-        for (var i = 0; i < self.laborConfig.length; i++) {
-            self.laborTotal += Number(self.laborConfig[i].Total);
-        }
         categorizeMaterials();
         getSpecialConsiderations();
     };
@@ -822,12 +826,10 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
 
     self.saveLaborConfig = function(data) {
         self.trace(me + "saveLaborConfig()");
-        self.laborTotal = 0;
-        // If data is null then save the laborConfig as is... otherwise update it first
+        // If data == null, then save the laborConfig as is... otherwise update it first
         if (data != null) {
             var Labor = data.Labor;
             for (var i = 0; i < self.laborConfig.length; i++) {
-
                 if (Labor == self.laborConfig[i].Labor) {
                     self.laborConfig[i].Qty = data.Qty;
                     self.laborConfig[i].Cost = data.Cost;
@@ -852,11 +854,6 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
             strData += thisItem;
         };
 
-        /*var y = 0;
-        for (i = 0; i < self.laborConfig.length; i++) {
-            var x = Number(self.laborConfig[i].Total);
-            y += x;
-        };*/
         strData += "!Total;0;" + self.laborTotal;
 
         var dataObj = {};

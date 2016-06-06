@@ -12,7 +12,6 @@ app.controller('AdminPropLabor', ['$state', '$scope', 'AdminSharedSrvc', 'AdminP
 
     ME.dataIsSaved = true;
 
-
     // If there is no labor config saved, it gets created by CONFIG through mergeLaborConfig 
     // When proposal is selected
     ME.saveMyConfig = function() {
@@ -41,7 +40,7 @@ app.controller('AdminPropLabor', ['$state', '$scope', 'AdminSharedSrvc', 'AdminP
         });
     };
 
-    // Called from $scope.$on 'onRefreshMaterialsData'
+    // Called from below
     var configExists = function() {
         ME.dataIsSaved = true;
         if (ME.S.tabsSubmitted.labor == false && ME.proposalSelected == true) {
