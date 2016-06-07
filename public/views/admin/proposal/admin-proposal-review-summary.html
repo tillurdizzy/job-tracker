@@ -24,7 +24,7 @@
     </div>
     <ng-form name="numberForm">
         <div class="flex-row-start">
-            <h2>Profit Margin</h2>
+            <h2>Markup</h2>
             <input name="number"  type="tel" ng-model="ChildCtrl.marginDisplay" ng-pattern="/^[0-9]{1,2}$/" 
             ng-change="ChildCtrl.marginChange()" style="width:30px;margin:0 5px;" ng-minlength="1" ng-maxlength="2">
             <h2>%</h2>
@@ -33,5 +33,14 @@
         <span ng-show="numberForm.number.$error.maxlength" style="color:red">Enter less than 100.</span>
         <span ng-show="numberForm.number.$error.minlength" style="color:red">Enter greater than 10.</span>
     </ng-form>
+    <horiz-rule margintop="10" marginbottom="10"></horiz-rule>
+    <p>Fx - Fixed (non-upgradable) materials</p>
+    <p>Base - Total cost of default selections for upgradable materials</p>
+    <p>Sel - Total cost of selected upgrades</p>
+    <p>Lbr - Labor cost</p>
+    <p>Pm - Profit Margin (FxBaseLbr)</p>
+    <p>Mu - Markup (Percent Pm)</p>
+    <p>clientBase - FxBaseLbrMu</p>
+    <p>clientTotal - FxSelLbrMu</p>
     <add-space heightpx="600"></add-space>
 </div>

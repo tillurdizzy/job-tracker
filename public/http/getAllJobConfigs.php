@@ -20,9 +20,11 @@ while ($row = mysqli_fetch_object($result)) {
 	$oneVO->config = $row->config;
 	$oneVO->labor = $row->labor;
 	$oneVO->upgradesBase = $row->upgradesBase;
+	$oneVO->upgradesSelected = $row->upgradesSelected;
 	$oneVO->materialsTotal = $row->materialsTotal;
 	$oneVO->materialsFixed = $row->materialsFixed;
 	$oneVO->profitMargin = $row->profitMargin;
+	$oneVO->clientBase = $row->clientBase;
 	$oneVO->margin = $row->margin;
 	array_push( $resultValueObjects, $oneVO );
 }

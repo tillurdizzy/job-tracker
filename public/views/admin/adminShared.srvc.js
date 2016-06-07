@@ -49,7 +49,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
     // Extracted from materialsList... items that are marked as "Checked"
     self.materialsDefault = [];
 
-    // Price to customer without any upgrades... Default selections + labor + Other Expenses
+    // Materials without any upgrades... Default selections
     self.basePrice = { Field: "", Valley: "", Ridge: "", Edge: "", Total: "" };
 
     // Selections and pricing specific to a job
@@ -180,10 +180,10 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
         var obj = ar[0];
         if (Object.keys(obj).length > 0) {
             self.tabsSubmitted.design = obj.config == "" ? false : true;
-            self.tabsSubmitted.labor = obj.labor == "" ? false : true;
+            self.tabsSubmitted.labor = obj.Lbr == "" ? false : true;
+            self.tabsSubmitted.summary = obj.clientBase == "" ? false : true;
+            // not a tab but used below
             self.tabsSubmitted.base = obj.upgradesBase == "" ? false : true;
-            self.tabsSubmitted.margin = obj.profitMargin == "" ? false : true;
-            self.tabsSubmitted.materials = obj.materialsTotal == "" ? false : true;
         }
 
         // CONFIG parses materials, labor, upgradeCost, but only returns the materials to jobConfig here
@@ -242,7 +242,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
         self.trace(me + "Field;" + self.basePrice.Field + "!Valley;" + self.basePrice.Valley + "!Ridge;" + self.basePrice.Ridge + "!Edge;" + self.basePrice.Edge + "!Total;" + self.basePrice.Total);
         self.basePrice = {};
         // These 4 categories are the ones that the Client can upgrade
-        // This function records the Standard (non-upgrade) price of the Default material in ech category to use for the Baseline Price in Client App
+        // This function records the Standard (non-upgrade) price of the Default material in each category
         var runningTotal = 0;
         for (var i = 0; i < self.materialsDefault.length; i++) {
             var cat = self.materialsDefault[i].Category;

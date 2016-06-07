@@ -1,4 +1,5 @@
 <?php
+//Just makes an entry into the jobs_details table using the ID auto-created from the jobs_list table.
 ini_set('display_errors', 'On');
 error_reporting(E_ALL | E_STRICT);
 $data = json_decode(file_get_contents("php://input"));
@@ -9,17 +10,12 @@ define( "DATABASE_NAME", "jobtracker");
 
 $con = mysqli_connect(DATABASE_SERVER, DATABASE_USERNAME, DATABASE_PASSWORD,DATABASE_NAME) or die ('ERROR!!!');
 $jobID = mysqli_real_escape_string($con,$data->jobID);
-$materialsTotal = mysqli_real_escape_string($con,$data->materialsTotal);
-$materialsFixed = mysqli_real_escape_string($con,$data->materialsFixed);
+$upgradesSelected = mysqli_real_escape_string($con,$data->upgradesSelected);
 
-$query = "UPDATE job_config SET 
-materialsTotal='".$materialsTotal."', 
-materialsFixed='".$materialsFixed."'
-WHERE jobID='".$jobID."'";
+$query = "UPDATE job_config SET upgradesSelected='".$upgradesSelected."' WHERE jobID='".$jobID."'";
 $qry_res = mysqli_query($con,$query);
 if ($qry_res) {
-	$last_id = mysqli_insert_id($con);
-	$arr = array('msg' => "Success", 'result' => $qry_res, 'insertID' => $last_id);
+	$arr = array('msg' => "Success", 'result' => $qry_res, 'jobID' => $jobID);
 	$jsn = json_encode($arr);
 	echo($jsn);
 } else {

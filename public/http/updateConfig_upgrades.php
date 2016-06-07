@@ -15,12 +15,11 @@ $upgradesBase = mysqli_real_escape_string($con,$data->upgradesBase);
 $query = "UPDATE job_config SET upgradesBase='".$upgradesBase."' WHERE jobID='".$jobID."'";
 $qry_res = mysqli_query($con,$query);
 if ($qry_res) {
-	$last_id = mysqli_insert_id($con);
-	$arr = array('msg' => "Success", 'result' => $qry_res, 'insertID' => $last_id);
+	$arr = array('msg' => "Success");
 	$jsn = json_encode($arr);
 	echo($jsn);
 } else {
-	$arr = array('msg' => "Error", 'result' => $qry_res,'params' => $jobID);
+	$arr = array('msg' => "Error");
 	$jsn = json_encode($arr);
 	echo($jsn);
 }

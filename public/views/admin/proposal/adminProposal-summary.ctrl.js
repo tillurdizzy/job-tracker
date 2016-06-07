@@ -13,41 +13,60 @@ app.controller('AdminPropSummary', ['$state', '$scope', 'AdminSharedSrvc', 'Admi
     ME.dataIsSaved = true;
     var MARGIN = ME.CONFIG.configMargin; // Comes from CONFIG ready to use in calculations i.e. < 1 (.35)
     ME.marginDisplay = MARGIN * 100; // Display as whole integer i.e. 35%
-    ME.profitTotal = 0;
+    ME.dataObj = {};
     ME.invalidMarginInput = false;
 
 
     var getTotal = function() {
 
-        var laborTotal = ME.P.CostSummary.labor;
-        var materialsTotal = ME.P.CostSummary.materialsTotal;
-        var basePrice = ME.S.basePrice.Total + ME.P.CostSummary.materialsFixed + laborTotal;
-        ME.profitTotal = MARGIN * basePrice;
-        var clientPrice = basePrice + ME.profitTotal;
+        var Fx = ME.P.CostSummary.Fx;
+        var Base = ME.S.basePrice.Total;
+        var Sel = ME.P.CostSummary.Sel;
+        var Lbr = ME.P.CostSummary.Lbr;
 
-        ME.totalCost = laborTotal + materialsTotal; // Actual out-of-pocket expenditures
+        var Pm = Fx + Base + Lbr;
+        var Mu = MARGIN * Pm;
+
+        var clientBase = Fx + Base + Mu + Lbr;
+
+        var clientTotal = Fx + Sel + Mu + Lbr;
+
+        ME.dataObj.Fx = Fx;
+        ME.dataObj.Base = Base;
+        ME.dataObj.Sel = Sel;
+        ME.dataObj.Lbr = Lbr;
+        ME.dataObj.Mu = Mu;
+        ME.dataObj.Pm = Pm;
+        ME.dataObj.clientBase = clientBase;
+        ME.dataObj.clientTotal = clientTotal;
 
         ME.summaryItems = [];
 
-        var item = { item: "Materials", amount: materialsTotal };
+        var item = { item: "Materials - Fx", amount: Fx };
         ME.summaryItems.push(item);
 
-        item = { item: "Labor", amount: laborTotal };
+        var item = { item: "Materials - Base", amount: Base };
         ME.summaryItems.push(item);
 
-        item = { item: "Margin", amount: basePrice };
+        var item = { item: "Materials - Sel", amount: Sel };
         ME.summaryItems.push(item);
 
-        item = { item: "Profit", amount: ME.profitTotal };
+        item = { item: "Labor", amount: Lbr };
         ME.summaryItems.push(item);
 
-        item = { item: "Client Price", amount: clientPrice };
+        item = { item: "Profit Margin (Pm)", amount: Pm };
         ME.summaryItems.push(item);
 
-        var item = { item: "Base", amount: basePrice };
+        item = { item: "Markup (% Markup * Pm)", amount: Mu };
         ME.summaryItems.push(item);
-        
-        ME.S.trace(me + "getTotal " + ME.summaryItems);
+
+        item = { item: "Client Base (before upgrades)", amount: clientBase };
+        ME.summaryItems.push(item);
+
+        item = { item: "Client Total (after upgrades)", amount: clientTotal };
+        ME.summaryItems.push(item);
+
+        ME.S.trace(me + "getTotal");
     };
 
     ME.marginChange = function() {
@@ -67,10 +86,8 @@ app.controller('AdminPropSummary', ['$state', '$scope', 'AdminSharedSrvc', 'Admi
     };
 
     ME.saveMyConfig = function() {
-        var dataObj = {};
-        dataObj.margin = ME.marginDisplay;
-        dataObj.profitMargin = ME.profitTotal;
-        ME.S.updateMarginConfig(dataObj);
+        dataObj.muPercent = ME.marginDisplay;
+        ME.S.updateConfigSummary(dataObj);
     };
 
     var configExists = function() {

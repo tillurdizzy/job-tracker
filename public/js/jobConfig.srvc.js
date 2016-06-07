@@ -63,7 +63,7 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore', function jobConfigSrvc
 
         // 2. Labor config
         self.configLabor = [];
-        var laborStr = dataObj.labor;
+        var laborStr = dataObj.Lbr;
         if (laborStr != "") {
             var laborArr = laborStr.split('!');
             for (var i = 0; i < laborArr.length; i++) {
@@ -90,11 +90,12 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore', function jobConfigSrvc
         };
 
         // 4. Material Costs
-        self.materialCosts.materialsTotal = validateNumber(dataObj.materialsTotal);
-        self.materialCosts.materialsFixed = validateNumber(dataObj.materialsFixed);
+        self.materialCosts.Fx = validateNumber(dataObj.Fx);
+        self.materialCosts.Base = validateNumber(dataObj.Base);
+        self.materialCosts.Sel = validateNumber(dataObj.Sel);
 
-        // 5. Margin multiplier
-        var NUM = Number(dataObj.margin);
+        // 5. Markup
+        var NUM = Number(dataObj.muPercent);
         if (isNaN(NUM)) {
             self.configMargin = .1;
         } else {

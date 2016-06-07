@@ -32,10 +32,10 @@ app.controller('AdminPropDesign', ['$state', '$scope', 'AdminSharedSrvc', 'Admin
     ME.saveJobConfig = function() {
         ME.S.trace(me + "saveJobConfig()");
         ME.dataIsSaved = ME.S.saveJobConfig();
-        var dataObj = {};
+        /*var dataObj = {};
         dataObj.materialsTotal = ME.GrandTotal;
         dataObj.materialsFixed = ME.FixedTotal
-        ME.S.updateConfigMaterials(dataObj);
+        ME.S.updateConfigMaterials(dataObj);*/
     };
 
     ME.editRowItem = function(materialObj, cat) {
@@ -160,8 +160,9 @@ app.controller('AdminPropDesign', ['$state', '$scope', 'AdminSharedSrvc', 'Admin
 
         ME.FixedTotal = ME.ShinglesStarterTotal+ME.VentsTotal+ME.FlashingTotal+ME.FlatTotal+ME.CapsTotal+ME.OtherTotal;
         
-        ME.P.setSummaryItem("materials-total", ME.GrandTotal);
-        ME.P.setSummaryItem("materials-fixed", ME.FixedTotal);
+        var totalLessFixed = ME.GrandTotal - ME.FixedTotal;// Upgrade Selections Only
+        ME.P.setSummaryItem("Sel", totalLessFixed);
+        ME.P.setSummaryItem("Fx", ME.FixedTotal);
 
     };
 

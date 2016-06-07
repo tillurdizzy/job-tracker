@@ -10,14 +10,26 @@ define( "DATABASE_NAME", "jobtracker");
 
 $con = mysqli_connect(DATABASE_SERVER, DATABASE_USERNAME, DATABASE_PASSWORD,DATABASE_NAME) or die ('ERROR!!!');
 $jobID = mysqli_real_escape_string($con,$data->jobID);
-$margin = mysqli_real_escape_string($con,$data->margin);
-$profitMargin = mysqli_real_escape_string($con,$data->profitMargin);
-$upgradesBase = mysqli_real_escape_string($con,$data->upgradesBase);
+$Fx = mysqli_real_escape_string($con,$data->Fx);
+$Base = mysqli_real_escape_string($con,$data->Base);
+$Sel = mysqli_real_escape_string($con,$data->Sel);
+$Lbr = mysqli_real_escape_string($con,$data->Lbr);
+$Mu = mysqli_real_escape_string($con,$data->Mu);
+$Pm = mysqli_real_escape_string($con,$data->Pm);
+$muPercent = mysqli_real_escape_string($con,$data->muPercent);
+$clientBase = mysqli_real_escape_string($con,$data->clientBase);
+$clientTotal = mysqli_real_escape_string($con,$data->clientTotal);
 
 $query = "UPDATE job_config SET 
-margin='".$margin."',
-profitMargin='".$profitMargin."',
-upgradesBase='".$upgradesBase."'
+Fx='".$Fx."',
+Base='".$Base."',
+Sel='".$Sel."',
+Lbr='".$Lbr."',
+Mu='".$Mu."',
+Pm='".$Pm."',
+muPercent='".$muPercent."',
+clientBase='".$clientBase."',
+clientTotal='".$clientTotal."'
 WHERE jobID='".$jobID."'";
 $qry_res = mysqli_query($con,$query);
 if ($qry_res) {

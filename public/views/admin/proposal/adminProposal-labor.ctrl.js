@@ -20,7 +20,7 @@ app.controller('AdminPropLabor', ['$state', '$scope', 'AdminSharedSrvc', 'AdminP
 
     var getTotal = function() {
         ME.LaborTotal = ME.S.laborTotal;
-        ME.P.setSummaryItem("labor", ME.LaborTotal);
+        ME.P.setSummaryItem("Lbr", ME.LaborTotal);
     };
 
     ME.editRowItem = function(laborItem) {
