@@ -13,7 +13,7 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore', function jobConfigSrvc
 
     self.configLabor = [];
     self.upgradeItemsBasePrice = {};
-    self.materialCosts = {totalMaterials:0,fixedMaterials:0};
+    self.costSummary = {Fx:0,Base:0,Sel:0,Pm:0,Mu:0,muPercent:0,clientBase:0,clientTotal:0};
     self.configMargin = 0;
     self.profitMargin = 0;
 
@@ -63,7 +63,7 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore', function jobConfigSrvc
 
         // 2. Labor config
         self.configLabor = [];
-        var laborStr = dataObj.Lbr;
+        var laborStr = dataObj.labor;
         if (laborStr != "") {
             var laborArr = laborStr.split('!');
             for (var i = 0; i < laborArr.length; i++) {
@@ -89,10 +89,15 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore', function jobConfigSrvc
             }
         };
 
-        // 4. Material Costs
-        self.materialCosts.Fx = validateNumber(dataObj.Fx);
-        self.materialCosts.Base = validateNumber(dataObj.Base);
-        self.materialCosts.Sel = validateNumber(dataObj.Sel);
+        // 4. Cost Summaries
+        self.costSummary.Fx = validateNumber(dataObj.Fx);
+        self.costSummary.Base = validateNumber(dataObj.Base);
+        self.costSummary.Sel = validateNumber(dataObj.Sel);
+        self.costSummary.Pm = validateNumber(dataObj.Pm);
+        self.costSummary.Mu = validateNumber(dataObj.Mu);
+        self.costSummary.muPercent = validateNumber(dataObj.muPercent);
+        self.costSummary.clientBase = validateNumber(dataObj.clientBase);
+        self.costSummary.clientTotal = validateNumber(dataObj.clientTotal);
 
         // 5. Markup
         var NUM = Number(dataObj.muPercent);
@@ -103,7 +108,7 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore', function jobConfigSrvc
         };
 
         // 6. Profit margin dollar amount - Only for client App
-        NUM = Number(dataObj.profitMargin);
+        NUM = Number(dataObj.Base);
         if (isNaN(NUM)) {
             self.profitMargin = 0;
         } else {

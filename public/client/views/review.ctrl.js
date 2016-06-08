@@ -8,13 +8,15 @@ app.controller('ReviewCtrl', ['$scope', '$state', 'ClientSharedSrvc', 'ngDialog'
     // Selections and pricing specific to a job
     ME.jobConfig = [];
     var jobParams = {};
+    ME.dataObj = {};
 
     ME.CONFIG = JobConfigSrvc;
     ME.C = ClientSharedSrvc;
     ME.UpgradeRidgeCaps = {};
     ME.UpgradeDripEdge = {};
-    ME.baseLineTotal = ME.C.baseLineTotal;
-    ME.grandTotal = ME.baseLineTotal;
+    ME.costSummary = ME.CONFIG.costSummary;
+    ME.baseLineTotal = ME.CONFIG.costSummary.clientBase;
+    ME.grandTotal = ME.CONFIG.costSummary.clientTotal;
     ME.imagePath = "client/img/";
     ME.selectedPhoto = { path: "", cap: "" };
     ME.shingleManufacturer = "GAF";
@@ -28,6 +30,7 @@ app.controller('ReviewCtrl', ['$scope', '$state', 'ClientSharedSrvc', 'ngDialog'
     ME.showUpgrades = { field: true, ridge: false, valley: false, trim: false };
 
     ME.calculateTotal = function() {
+        ME.dataObj = {};
         ME.C.trace(me + "calculateTotal()");
         var fieldCost = 0;
         var ridgeCost = 0;
@@ -62,8 +65,12 @@ app.controller('ReviewCtrl', ['$scope', '$state', 'ClientSharedSrvc', 'ngDialog'
             }
         };
 
-        var base = Number(ME.baseLineTotal);
+        var base = ME.CONFIG.costSummary.clientBase;
         ME.grandTotal = base + fieldCost + ridgeCost + valleyCost + trimCost;
+
+        ME.dataObj.Sel = fieldCost + ridgeCost + valleyCost + trimCost;
+        ME.dataObj.clientTotal = ME.grandTotal;
+        ME.dataObj.upgradesSelected ="Field;" + fieldCost + "!Valley;" + valleyCost + "!Ridge;" + ridgeCost + "!Edge;" + trimCost + "!Total;" + ME.dataObj.Sel;
 
         // DOM vars to show Ridge Selections that match Field manufacturer
         var firstChar = ME.UpgradeFieldNdx[0];
@@ -75,14 +82,16 @@ app.controller('ReviewCtrl', ['$scope', '$state', 'ClientSharedSrvc', 'ngDialog'
     };
 
     ME.saveJobConfig = function() {
-        var dataObj = [
+        var items = [
             { Category: 'Field', Code: ME.UpgradeFieldNdx },
             { Category: 'Ridge', Code: ME.UpgradeRidgeNdx },
             { Category: 'Valley', Code: ME.UpgradeValleyNdx },
             { Category: 'Edge', Code: ME.UpgradeTrimNdx }
         ];
 
-        ME.C.saveClientUpgrades(dataObj);
+        ME.dataObj.configUpdates = items;
+        
+        ME.C.saveClientUpgrades(ME.dataObj);
     };
 
 
@@ -148,7 +157,7 @@ app.controller('ReviewCtrl', ['$scope', '$state', 'ClientSharedSrvc', 'ngDialog'
     $scope.$on('client-upgrades-saved', function() {
         ngDialog.open({
             template: '<h2>Your upgrades have been saved!</h2>',
-            className: 'ngdialog-theme-default',
+            className: 'ngdialog-theme-calm',
             plain: true,
             overlay: true
         });

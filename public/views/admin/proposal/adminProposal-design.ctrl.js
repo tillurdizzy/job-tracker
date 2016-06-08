@@ -3,6 +3,7 @@
 app.controller('AdminPropDesign', ['$state', '$scope', 'AdminSharedSrvc', 'AdminProposalSrvc', 'ngDialog', function($state, $scope, AdminSharedSrvc, AdminProposalSrvc, ngDialog) {
 
     var ME = this;
+    var me = "AdminPropDesign: ";
     ME.S = AdminSharedSrvc;
     ME.P = AdminProposalSrvc;
     ME.GrandTotal = 0;
@@ -20,7 +21,8 @@ app.controller('AdminPropDesign', ['$state', '$scope', 'AdminSharedSrvc', 'Admin
     ME.dataIsSaved = true;
     ME.proposalSelected = false;
     ME.itemBeingEdited = {};
-    var me = "AdminPropDesign: ";
+    
+    ME.upgradesSelected = "";
 
     ME.materialPricingDP = ME.S.materialsCatergorized;
 
@@ -32,10 +34,9 @@ app.controller('AdminPropDesign', ['$state', '$scope', 'AdminSharedSrvc', 'Admin
     ME.saveJobConfig = function() {
         ME.S.trace(me + "saveJobConfig()");
         ME.dataIsSaved = ME.S.saveJobConfig();
-        /*var dataObj = {};
-        dataObj.materialsTotal = ME.GrandTotal;
-        dataObj.materialsFixed = ME.FixedTotal
-        ME.S.updateConfigMaterials(dataObj);*/
+        var dataObj = {};
+        dataObj.upgradesSelected = ME.upgradesSelected;
+        ME.S.saveUpgradePrices(dataObj);
     };
 
     ME.editRowItem = function(materialObj, cat) {
@@ -163,7 +164,8 @@ app.controller('AdminPropDesign', ['$state', '$scope', 'AdminSharedSrvc', 'Admin
         var totalLessFixed = ME.GrandTotal - ME.FixedTotal;// Upgrade Selections Only
         ME.P.setSummaryItem("Sel", totalLessFixed);
         ME.P.setSummaryItem("Fx", ME.FixedTotal);
-
+        var upgradesTotal = ME.ShinglesFieldTotal + ME.ValleyTotal + ME.ShinglesRidgeTotal + ME.EdgeTotal;
+        ME.upgradesSelected = "Field;"+ME.ShinglesFieldTotal+"!Valley;"+ME.ValleyTotal+"!Ridge;"+ME.ShinglesRidgeTotal+"!Edge;"+ME.EdgeTotal+"!Total;"+upgradesTotal;
     };
 
     // Called from $scope.$on 'onRefreshMaterialsData'

@@ -10,23 +10,15 @@ define( "DATABASE_NAME", "jobtracker");
 
 $con = mysqli_connect(DATABASE_SERVER, DATABASE_USERNAME, DATABASE_PASSWORD,DATABASE_NAME) or die ('ERROR!!!');
 $jobID = mysqli_real_escape_string($con,$data->jobID);
-$Fx = mysqli_real_escape_string($con,$data->Fx);
-$Base = mysqli_real_escape_string($con,$data->Base);
+$upgradesSelected = mysqli_real_escape_string($con,$data->upgradesSelected);
+$config = mysqli_real_escape_string($con,$data->config);
 $Sel = mysqli_real_escape_string($con,$data->Sel);
-$Mu = mysqli_real_escape_string($con,$data->Mu);
-$Pm = mysqli_real_escape_string($con,$data->Pm);
-$muPercent = mysqli_real_escape_string($con,$data->muPercent);
-$clientBase = mysqli_real_escape_string($con,$data->clientBase);
 $clientTotal = mysqli_real_escape_string($con,$data->clientTotal);
 
 $query = "UPDATE job_config SET 
-Fx='".$Fx."',
-Base='".$Base."',
+upgradesSelected='".$upgradesSelected."',
+config='".$config."',
 Sel='".$Sel."',
-Mu='".$Mu."',
-Pm='".$Pm."',
-muPercent='".$muPercent."',
-clientBase='".$clientBase."',
 clientTotal='".$clientTotal."'
 WHERE jobID='".$jobID."'";
 $qry_res = mysqli_query($con,$query);

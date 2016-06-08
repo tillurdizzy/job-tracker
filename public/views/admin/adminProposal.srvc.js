@@ -24,6 +24,10 @@ app.service('AdminProposalSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'un
             case "Mu":self.CostSummary.Mu = cost;break;
     	}
     };
+
+    self.resetSummary = function(){
+        self.CostSummary = {Lbr:0,Base:0,Sel:0,Fx:0,Mu:0};
+    }
     
     /*var saveConfigMargin = function() {
         DB.query("updateConfigMargin").then(function(resultObj) {

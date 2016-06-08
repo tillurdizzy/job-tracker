@@ -3,7 +3,7 @@ class jobConfigVO{
 	var $PRIMARY_ID;
 	var $jobID;
 	var $config;
-	var $Lbr;
+	var $labor;
 	var $upgradesBase;
 	var $upgradesSelected;
 	var $Fx;

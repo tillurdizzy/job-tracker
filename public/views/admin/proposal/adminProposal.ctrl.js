@@ -16,6 +16,7 @@ app.controller('AdminProposalCtrl',['$rootScope','$state','AdminDataSrvc','$scop
 	
 	ME.selectProposal = function(){
 		S.trace(me + "selectProposal");
+		P.resetSummary();
 		var objLength = Object.keys(ME.selectedProposal).length;
 		if(objLength > 0){
 			ME.proposalData = S.selectProposal(ME.selectedProposal.id);

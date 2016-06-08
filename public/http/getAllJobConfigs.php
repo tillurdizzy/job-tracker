@@ -21,11 +21,14 @@ while ($row = mysqli_fetch_object($result)) {
 	$oneVO->labor = $row->labor;
 	$oneVO->upgradesBase = $row->upgradesBase;
 	$oneVO->upgradesSelected = $row->upgradesSelected;
-	$oneVO->materialsTotal = $row->materialsTotal;
-	$oneVO->materialsFixed = $row->materialsFixed;
-	$oneVO->profitMargin = $row->profitMargin;
+	$oneVO->Fx = $row->Fx;
+	$oneVO->Base = $row->Base;
+	$oneVO->Sel = $row->Sel;
+	$oneVO->Mu = $row->Mu;
+	$oneVO->Pm = $row->Pm;
+	$oneVO->muPercent = $row->muPercent;
 	$oneVO->clientBase = $row->clientBase;
-	$oneVO->margin = $row->margin;
+	$oneVO->clientTotal = $row->clientTotal;
 	array_push( $resultValueObjects, $oneVO );
 }
 echo json_encode($resultValueObjects);

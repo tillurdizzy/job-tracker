@@ -15,6 +15,8 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'JobConfigSrvc'
     self.defaultCheckedMaterials = [];
     self.jobConfig = {};
 
+
+
     self.baseLineTotal = 0;
     var baseLineItems = [];
     var mergeDataFlag = { params: false, config: false };
@@ -257,11 +259,12 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'JobConfigSrvc'
 
     self.saveClientUpgrades = function(dataObj) {
         self.trace(me + "saveClientUpgrades()");
-        self.jobConfig = CONFIG.updateCheckedItemInCategory(dataObj);
-        var dataObj = CONFIG.convertConfigToString();
+        self.jobConfig = CONFIG.updateCheckedItemInCategory(dataObj.configUpdates);
+        var configObj = CONFIG.convertConfigToString();
+        dataObj.config = configObj.config;
         dataObj.jobID = self.jobObj.PRIMARY_ID;
 
-        DB.queryDB("updateConfigConfig", dataObj).then(function(resultObj) {
+        DB.queryDB("updateConfigClient", dataObj).then(function(resultObj) {
             if (resultObj.result == "Error" || typeof resultObj.data === "string") {
                 alert("Query Error - see console for details");
                 console.log("ClientSharedSrvc >> saveClientUpgrades ---- " + resultObj.data);
@@ -376,15 +379,17 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'JobConfigSrvc'
             include = self.materialsListConfig[i].Checked;
             if (include === true) {
                 baseLineItems.push(self.materialsListConfig[i]);
-                self.baseLineTotal += Number(self.materialsListConfig[i].Total);
+                //self.baseLineTotal += Number(self.materialsListConfig[i].Total);
             }
         };
+
+
         // Add Labor
         var labor = CONFIG.returnLaborGrandTotal();
-        self.baseLineTotal += labor;
+       
 
         var profitMargin = CONFIG.profitMargin;
-        self.baseLineTotal += profitMargin;
+        self.baseLineTotal = CONFIG.costSummary.Base;
         
         $rootScope.$broadcast("on-data-collection-complete");
     };

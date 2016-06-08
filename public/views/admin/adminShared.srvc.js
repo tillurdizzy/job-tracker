@@ -180,7 +180,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
         var obj = ar[0];
         if (Object.keys(obj).length > 0) {
             self.tabsSubmitted.design = obj.config == "" ? false : true;
-            self.tabsSubmitted.labor = obj.Lbr == "" ? false : true;
+            self.tabsSubmitted.labor = obj.labor == "" ? false : true;
             self.tabsSubmitted.summary = obj.clientBase == "" ? false : true;
             // not a tab but used below
             self.tabsSubmitted.base = obj.upgradesBase == "" ? false : true;
@@ -277,7 +277,23 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
 
             }
         }, function(error) {
-            alert("Query Error - AdminSharedSrvc >> updateConfigCost");
+            alert("Query Error - AdminSharedSrvc >> updateConfigUpgradeBase");
+        });
+    };
+
+    self.saveUpgradePrices = function(dataObj) {
+        self.trace(me + "saveUpgradePrices()");
+        self.trace(me + dataObj.upgradesSelected);
+        dataObj.jobID = self.proposalUnderReview.jobID;
+        DB.query("updateConfigUpgradesSelected", dataObj).then(function(resultObj) {
+            if (resultObj.result == "Error" || typeof resultObj.data === "string") {
+                alert("Query Error - see console for details");
+                console.log("updateConfig ---- " + resultObj.data);
+            } else {
+
+            }
+        }, function(error) {
+            alert("Query Error - AdminSharedSrvc >> updateConfig_upgradesSelected");
         });
     };
 
@@ -907,19 +923,18 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
         });
     };
 
-    self.updateConfigMaterials = function(data) {
+    self.updateConfigSummary = function(dataObj) {
         self.trace(me + "updateSummaryConfig()");
-        var dataObj = data;
         dataObj.jobID = self.proposalUnderReview.jobID;
-        DB.query("updateConfigMaterials", dataObj).then(function(resultObj) {
+        DB.query("updateConfigSummary", dataObj).then(function(resultObj) {
             if (resultObj.result == "Error" || typeof resultObj.data === "string") {
                 alert("Query Error - see console for details");
-                console.log("updateConfigMaterials ---- " + resultObj.data);
+                console.log("updateConfigSummary ---- " + resultObj.data);
             } else {
-                $rootScope.$broadcast('onSaveMarginConfig');
+                $rootScope.$broadcast('onSaveSummaryConfig');
             }
         }, function(error) {
-            alert("Query Error - AdminSharedSrvc >> updateConfigMaterials");
+            alert("Query Error - AdminSharedSrvc >> updateConfigSummary");
         });
     };
 

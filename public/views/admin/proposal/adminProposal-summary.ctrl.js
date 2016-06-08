@@ -86,24 +86,24 @@ app.controller('AdminPropSummary', ['$state', '$scope', 'AdminSharedSrvc', 'Admi
     };
 
     ME.saveMyConfig = function() {
-        dataObj.muPercent = ME.marginDisplay;
-        ME.S.updateConfigSummary(dataObj);
+        ME.dataObj.muPercent = ME.marginDisplay;
+        ME.S.updateConfigSummary(ME.dataObj);
     };
 
     var configExists = function() {
         ME.dataIsSaved = !ME.S.summarySaveNeeded;
-        if (ME.S.tabsSubmitted.margin == false && ME.proposalSelected == true) {
+        if (ME.S.tabsSubmitted.summary == false && ME.proposalSelected == true) {
             ME.dataIsSaved = false;
         }
-        ME.S.trace(me + "configExists()" + "ME.proposalSelected=" + ME.proposalSelected + "  tabsSubmitted.summary=" + ME.S.tabsSubmitted.margin);
+        ME.S.trace(me + "configExists()" + "ME.proposalSelected=" + ME.proposalSelected + "  tabsSubmitted.summary=" + ME.S.tabsSubmitted.summary);
     };
 
-    $scope.$on('onSaveMarginConfig', function(event, obj) {
+    $scope.$on('onSaveSummaryConfig', function(event, obj) {
         ME.dataIsSaved = true;
         ME.CONFIG.configMargin = MARGIN;
         ME.S.summarySaveNeeded = false;
         ngDialog.open({
-            template: '<h2>Margin Config Saved.</h2>',
+            template: '<h2>Summary has been saved. Thank you!</h2>',
             className: 'ngdialog-theme-calm',
             plain: true,
             overlay: false
