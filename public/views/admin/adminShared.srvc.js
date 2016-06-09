@@ -22,7 +22,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
     self.laborTotal = 0;
 
     // 
-    self.tabsSubmitted = { design: false, labor: false, margin: false, base: false };
+    self.tabsSubmitted = { design: false, labor: false, summary: false, base: false };
 
     self.summarySaveNeeded = false;
 
@@ -396,10 +396,10 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
         if (isUpgrade === -1) {
             isUpgrade = false;
         } else {
-            isUpgrade = false;
-        }
+            isUpgrade = true;
+        };
 
-        if (isUpgrade) {
+        if (!isUpgrade) {
             for (var i = 0; i < catArray.length; i++) {
                 if (catArray[i].PRIMARY_ID == vals.ID) {
                     catArray[i].PkgPrice = Number(vals.Price);
@@ -422,7 +422,9 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
             }
         } else {
             for (var i = 0; i < catArray.length; i++) {
-                catArray[i].PkgPrice = Number(vals.Price);
+                if (catArray[i].PRIMARY_ID == vals.ID) {
+                    catArray[i].PkgPrice = Number(vals.Price);
+                }
                 catArray[i].Qty = Number(vals.Qty);
                 // calcs
                 var q = Number(vals.Qty);
@@ -1046,7 +1048,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
                 self.trace(me + "$rootScope.$broadcast(onSaveJobConfig)");
                 self.tabsSubmitted.design = true;
                 $rootScope.$broadcast('onSaveJobConfig');
-                doUpgradeBase();
+                doUpgradeBase();// Base changes only if Qty of input changes
             }
         }, function(error) {
             alert("Query Error - AdminSharedSrvc >> updateConfigConfig");

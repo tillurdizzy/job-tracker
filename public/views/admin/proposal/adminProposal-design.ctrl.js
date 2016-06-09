@@ -168,7 +168,7 @@ app.controller('AdminPropDesign', ['$state', '$scope', 'AdminSharedSrvc', 'Admin
         ME.upgradesSelected = "Field;"+ME.ShinglesFieldTotal+"!Valley;"+ME.ValleyTotal+"!Ridge;"+ME.ShinglesRidgeTotal+"!Edge;"+ME.EdgeTotal+"!Total;"+upgradesTotal;
     };
 
-    // Called from $scope.$on 'onRefreshMaterialsData'
+    
     var configExists = function() {
         ME.dataIsSaved = true;
         if (ME.S.tabsSubmitted.design == false && ME.proposalSelected == true) {

@@ -1586,7 +1586,7 @@ button.alert:disabled, .button.alert:disabled {
   transition: none; }
 
 button.alert:hover, .button.alert:hover {
-  background-color: #dc2d1b; }
+  background-color: #c22818; }
 
 button.alert:disabled:hover, .button.alert:disabled:hover {
   background-color: #BDC3C7; }
@@ -2136,7 +2136,9 @@ table {
   margin: 1rem 0 .5rem 0;
   height: 1.7rem;
   background-color: #1ABC9C;
-  color: #FFF; }
+  color: #FFF;
+  display: flex;
+  align-items: center; }
   .section-header-client h2 {
     font-family: 'Open Sans', sans-serif;
     font-size: 1rem;
@@ -2145,11 +2147,13 @@ table {
     vertical-align: middle;
     margin: 0 .3rem;
     display: inline-block; }
-  .section-header-client i {
-    color: #1ABC9C;
-    font-size: 1.5rem;
-    display: inline-block;
-    cursor: pointer; }
+  .section-header-client .toggle-view-icon {
+    height: 1.7rem; }
+    .section-header-client .toggle-view-icon i {
+      color: #FFF;
+      font-size: 1.3rem;
+      cursor: pointer;
+      vertical-align: middle; }
 
 .upgrade-level {
   height: 2.25rem;

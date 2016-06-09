@@ -387,7 +387,6 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'JobConfigSrvc'
         // Add Labor
         var labor = CONFIG.returnLaborGrandTotal();
        
-
         var profitMargin = CONFIG.profitMargin;
         self.baseLineTotal = CONFIG.costSummary.Base;
         
@@ -395,7 +394,7 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'JobConfigSrvc'
     };
 
     // Called from Crtl:  Creates list of items to show for upgrade options in each category (Field,Valley,Ridge,Edge)
-    self.getUpgrades = function(cat) {
+    self.getUpgrades = function(cat,manufacturer) {
 
         self.trace(me + "getUpgrades() - " + cat);
         // The Client's Prices are in the Configured List, but the Default Selection is in the Original List
@@ -407,7 +406,14 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'JobConfigSrvc'
         for (var i = 0; i < self.materialsListConfig.length; i++) {
             var category = self.materialsListConfig[i].Category;
             if (category === cat) {
-                thisCategoryConfigured.push(self.materialsListConfig[i]);
+                if(manufacturer == undefined){
+                    thisCategoryConfigured.push(self.materialsListConfig[i]);
+                }else{
+                    var m = self.materialsListConfig[i].Manufacturer;
+                    if(m == manufacturer || m == "VARIABLE"){
+                        thisCategoryConfigured.push(self.materialsListConfig[i]);
+                    }
+                }
             }
         };
 

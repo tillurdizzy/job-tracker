@@ -3,7 +3,7 @@
 app.controller('ReviewCtrl', ['$scope', '$state', 'ClientSharedSrvc', 'ngDialog', '$controller', 'JobConfigSrvc', function($scope, $state, ClientSharedSrvc, ngDialog, $controller, JobConfigSrvc) {
 
     var ME = this;
-    
+
     var me = "ClientCtrl: ";
     // Selections and pricing specific to a job
     ME.jobConfig = [];
@@ -19,7 +19,7 @@ app.controller('ReviewCtrl', ['$scope', '$state', 'ClientSharedSrvc', 'ngDialog'
     ME.grandTotal = ME.CONFIG.costSummary.clientTotal;
     ME.imagePath = "client/img/";
     ME.selectedPhoto = { path: "", cap: "" };
-    ME.shingleManufacturer = "GAF";
+    ME.shingleManufacturer = null;
 
     // These are to control the ng-show DOM elements
     ME.UpgradeFieldNdx = "";
@@ -28,10 +28,13 @@ app.controller('ReviewCtrl', ['$scope', '$state', 'ClientSharedSrvc', 'ngDialog'
     ME.UpgradeTrimNdx = "";
 
     ME.showUpgrades = { field: true, ridge: false, valley: false, trim: false };
+    ME.showSections = { assembly: true, photos: false, scope: false, options: false, next: false };
 
     ME.calculateTotal = function() {
-        ME.dataObj = {};
         ME.C.trace(me + "calculateTotal()");
+        // Did manufacturer change?
+        validateManufacturer();
+        ME.dataObj = {};
         var fieldCost = 0;
         var ridgeCost = 0;
         var valleyCost = 0;
@@ -70,15 +73,9 @@ app.controller('ReviewCtrl', ['$scope', '$state', 'ClientSharedSrvc', 'ngDialog'
 
         ME.dataObj.Sel = fieldCost + ridgeCost + valleyCost + trimCost;
         ME.dataObj.clientTotal = ME.grandTotal;
-        ME.dataObj.upgradesSelected ="Field;" + fieldCost + "!Valley;" + valleyCost + "!Ridge;" + ridgeCost + "!Edge;" + trimCost + "!Total;" + ME.dataObj.Sel;
+        ME.dataObj.upgradesSelected = "Field;" + fieldCost + "!Valley;" + valleyCost + "!Ridge;" + ridgeCost + "!Edge;" + trimCost + "!Total;" + ME.dataObj.Sel;
 
-        // DOM vars to show Ridge Selections that match Field manufacturer
-        var firstChar = ME.UpgradeFieldNdx[0];
-        if (firstChar === "G") {
-            ME.shingleManufacturer = "GAF";
-        } else {
-            ME.shingleManufacturer = "OC";
-        }
+
     };
 
     ME.saveJobConfig = function() {
@@ -90,7 +87,7 @@ app.controller('ReviewCtrl', ['$scope', '$state', 'ClientSharedSrvc', 'ngDialog'
         ];
 
         ME.dataObj.configUpdates = items;
-        
+
         ME.C.saveClientUpgrades(ME.dataObj);
     };
 
@@ -143,6 +140,31 @@ app.controller('ReviewCtrl', ['$scope', '$state', 'ClientSharedSrvc', 'ngDialog'
                 break;
             }
         };
+        setManufacturer();
+    };
+
+    var validateManufacturer = function(){
+        var firstChar = ME.UpgradeFieldNdx[0];
+        if (firstChar === "G" || firstChar === "S") {
+            var selection = "GAF";
+        } else {
+            selection = "OC";
+        };
+
+        if (ME.shingleManufacturer != selection) {
+            ME.UpgradeRidgeNdx = "STDRDG";
+            ME.shingleManufacturer = selection;
+            ME.ridgeUpgrades = ME.C.getUpgrades("Ridge", ME.shingleManufacturer);
+        };
+    };
+
+    var setManufacturer = function() {
+        var firstChar = ME.UpgradeFieldNdx[0];
+        if (firstChar === "G" || firstChar === "S") {
+            ME.shingleManufacturer = "GAF";
+        } else {
+            ME.shingleManufacturer = "OC";
+        };
     };
 
     $scope.$watch('$viewContentLoaded', function() {
@@ -166,6 +188,5 @@ app.controller('ReviewCtrl', ['$scope', '$state', 'ClientSharedSrvc', 'ngDialog'
     getUpgradeOptions();
     setSelections();
     ME.calculateTotal();
-
 
 }]);

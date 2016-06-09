@@ -27,8 +27,12 @@
     </div>
     <div class="section-header-client">
         <h2>B. Existing Roof Assembly</h2>
+        <div class="toggle-view-icon">
+            <i class="fa fa-arrow-circle-down" ng-click="CTRL.showSections.assembly=true" ng-hide="CTRL.showSections.assembly"></i>
+            <i class="fa fa-arrow-circle-up hilite" ng-click="CTRL.showSections.assembly=false" ng-show="CTRL.showSections.assembly"></i>
+        </div>
     </div>
-    <div class="block-section-width text-block-display">
+    <div class="block-section-width text-block-display" ng-show="CTRL.showSections.assembly">
         <p>A strictly visual inspection of the existing roof assembly on the above referenced property was made on {{CTRL.C.propertyObj.createdDate | date:'fullDate'}}. To the best of our knowledge the following statements represent as accurate a description as possible from the limited observations.</p>
         <div class="flex-space-between">
             <div class="indent-block-client">
@@ -63,14 +67,22 @@
     </div>
     <div class="section-header-client">
         <h2>C. Photo Gallery</h2>
+        <div class="toggle-view-icon">
+            <i class="fa fa-arrow-circle-down" ng-click="CTRL.showSections.photos=true" ng-hide="CTRL.showSections.photos"></i>
+            <i class="fa fa-arrow-circle-up hilite" ng-click="CTRL.showSections.photos=false" ng-show="CTRL.showSections.photos"></i>
+        </div>
     </div>
-    <div class="photo-gallery">
+    <div class="photo-gallery" ng-show="CTRL.showSections.photos">
         <thumb ng-repeat="img in CTRL.C.photoGallery" ndx={{$index}} path="{{img.thumb}}" click="CTRL.thumbClick"></thumb>
     </div>
     <div class="section-header-client">
         <h2>D. Baseline Proposal and Scope of Work</h2>
+        <div class="toggle-view-icon">
+            <i class="fa fa-arrow-circle-down" ng-click="CTRL.showSections.scope=true" ng-hide="CTRL.showSections.scope"></i>
+            <i class="fa fa-arrow-circle-up hilite" ng-click="CTRL.showSections.scope=false" ng-show="CTRL.showSections.scope"></i>
+        </div>
     </div>
-    <div class="block-section-width text-block-display">
+    <div class="block-section-width text-block-display" ng-show="CTRL.showSections.scope">
         <p>The following installation represents a <span class="bold">baseline</span> roof assembly, which meets or exceeds all applicable building codes. However, these are the minimum standards. Evolution Roofing highly recommends upgrading several of these components in the following <span class="bold">Premium Upgrade Options</span> section.</p>
         <div class="indent-block-client">
             <h3 class="first-item">1. Pre-install</h3>
@@ -100,7 +112,6 @@
             <h3>9. Ridge Shingles</h3>
             <p>Economy-grade shingles along hips and ridges and over the ventilation system.</p>
             <p class="hilite">Premium upgrade available below for this product.</p>
-
             <h3>10. Pipes and Vents</h3>
             <p>Install new plumbing pipes and vent stacks as needed, and paint to match roof color as close as possible</p>
             <total-bar price="{{CTRL.costSummary.clientBase}}" label="Baseline Total"></total-bar>
@@ -108,8 +119,12 @@
     </div>
     <div class="section-header-client">
         <h2>E. Choose Upgrade Options</h2>
+        <div class="toggle-view-icon">
+            <i class="fa fa-arrow-circle-down" ng-click="CTRL.showSections.options=true" ng-hide="CTRL.showSections.options"></i>
+            <i class="fa fa-arrow-circle-up hilite" ng-click="CTRL.showSections.options=false" ng-show="CTRL.showSections.options"></i>
+        </div>
     </div>
-    <div class="block-section-width text-block-display">
+    <div class="block-section-width text-block-display" ng-show="CTRL.showSections.options">
         <!-- -->
         <!-- Field -->
         <div class="upgrade-level">
@@ -119,7 +134,7 @@
             </div>
             <div class="upgrade-label">
                 <h2>Premium Field Shingles</h2>
-                <i class="fa fa-check-square" ng-show="CTRL.UpgradeFieldNdx!='GAFROYSOV'"></i>
+                <i class="fa fa-check-square" ng-show="CTRL.UpgradeFieldNdx!='STDFIELD'"></i>
             </div>
         </div>
         <div class="upgrade-selections" ng-show="CTRL.showUpgrades.field">
@@ -131,7 +146,6 @@
             </div>
             <horiz-rule margintop="5" marginbottom="15"></horiz-rule>
         </div>
-
         <!-- -->
         <!-- Ridge -->
         <div class="upgrade-level">
@@ -141,10 +155,9 @@
             </div>
             <div class="upgrade-label">
                 <h2>Enhanced Ridge Shingles</h2>
-                <i class="fa fa-check-square" ng-show="CTRL.UpgradeRidgeNdx!='GAFRDG'"></i>
+                <i class="fa fa-check-square" ng-show="CTRL.UpgradeRidgeNdx!='STDRDG'"></i>
             </div>
         </div>
-        
         <div class="upgrade-selections" ng-show="CTRL.showUpgrades.ridge">
             <div class="upgrade-item" ng-repeat="x in CTRL.ridgeUpgrades">
                 <div class="check-radio-container" style="margin-bottom:10px;">
@@ -154,7 +167,6 @@
             </div>
             <horiz-rule margintop="5" marginbottom="15"></horiz-rule>
         </div>
-
         <!-- -->
         <!-- Valley -->
         <div class="upgrade-level">
@@ -168,7 +180,7 @@
             </div>
         </div>
         <div class="upgrade-selections" ng-show="CTRL.showUpgrades.valley">
-           <div class="upgrade-item" ng-repeat="x in CTRL.valleyUpgrades">
+            <div class="upgrade-item" ng-repeat="x in CTRL.valleyUpgrades">
                 <div class="check-radio-container" style="margin-bottom:10px;">
                     <input type="radio" id="{{x.Code}}" name="Grp3" value="{{x.Code}}" ng-model="CTRL.UpgradeValleyNdx" ng-change="CTRL.calculateTotal()"></input>
                     <label for="{{x.Code}}"><span></span>{{x.Item}} ({{x.upgradePrice | currency:$:2}})<a href="{{x.url}}" target="_blank"> More</a></label>
@@ -176,7 +188,6 @@
             </div>
             <horiz-rule margintop="5" marginbottom="15"></horiz-rule>
         </div>
-
         <!-- -->
         <!-- Trim -->
         <div class="upgrade-level">
@@ -201,12 +212,15 @@
         <total-bar price="{{CTRL.grandTotal}}" label="Total With Upgrades"></total-bar>
         <button type="button" style="width:100%;" ng-click="CTRL.saveJobConfig();">Save Upgrade Options</button>
     </div>
-   
     <div class="section-header-client">
         <h2>F. What Next</h2>
+        <div class="toggle-view-icon">
+            <i class="fa fa-arrow-circle-down" ng-click="CTRL.showSections.next=true" ng-hide="CTRL.showSections.next"></i>
+            <i class="fa fa-arrow-circle-up hilite" ng-click="CTRL.showSections.next=false" ng-show="CTRL.showSections.next"></i>
+        </div>
     </div>
-   
+    <div class="block-section-width text-block-display" ng-show="CTRL.showSections.next">
+    </div>
 </div>
-<div style="margin-bottom:5rem;">
-</div>
+<add-space heightpx="500"></add-space>
 </div>

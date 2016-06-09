@@ -11,6 +11,8 @@
     height: 1.7rem;
     background-color: $turquois-green;
     color: #FFF;
+    display: flex;
+    align-items: center;
     h2 {
         font-family: 'Open Sans', sans-serif;
         font-size: 1rem;
@@ -20,11 +22,15 @@
         margin: 0 .3rem;
         display: inline-block;
     }
-    i {
-        color: $turquois-green;
-        font-size: 1.5rem;
-        display: inline-block;
-        cursor: pointer;
+    
+    .toggle-view-icon{
+        height: 1.7rem;
+        i {
+            color: #FFF;
+            font-size: 1.3rem;
+            cursor: pointer;
+            vertical-align: middle;
+        }
     }
 }
 
