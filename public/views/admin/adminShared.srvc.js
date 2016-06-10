@@ -399,7 +399,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
             isUpgrade = true;
         };
 
-        if (!isUpgrade) {
+        if (!isUpgrade) { // If NOT and upgrade item, only change Qty/Price for that single item
             for (var i = 0; i < catArray.length; i++) {
                 if (catArray[i].PRIMARY_ID == vals.ID) {
                     catArray[i].PkgPrice = Number(vals.Price);
@@ -420,7 +420,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
                     break;
                 }
             }
-        } else {
+        } else { // If it IS and upgrade item, change the Price for ONLY that item, but the Qty for all items in category
             for (var i = 0; i < catArray.length; i++) {
                 if (catArray[i].PRIMARY_ID == vals.ID) {
                     catArray[i].PkgPrice = Number(vals.Price);

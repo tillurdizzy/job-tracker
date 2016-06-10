@@ -419,11 +419,11 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'JobConfigSrvc'
 
         // Step 2: Find Base Price
         basePrice = CONFIG.upgradeItemsBasePrice[cat];
-        
+        var mu = CONFIG.configMargin + 1;
         // Step 3: Calculate upgrade price and insert into list as new property
         for (i = 0; i < thisCategoryConfigured.length; i++) {
             var t = Number(thisCategoryConfigured[i].Total);
-            var upgradePrice = t - basePrice;
+            var upgradePrice = (t - basePrice) * mu;
             thisCategoryConfigured[i].upgradePrice = upgradePrice;
         };
         return thisCategoryConfigured;

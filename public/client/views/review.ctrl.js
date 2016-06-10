@@ -40,41 +40,50 @@ app.controller('ReviewCtrl', ['$scope', '$state', 'ClientSharedSrvc', 'ngDialog'
         var valleyCost = 0;
         var trimCost = 0;
 
+        var fieldUpgrade = 0;
+        var ridgeUpgrade = 0;
+        var valleyUpgrade = 0;
+        var trimUpgrade = 0;
+
         for (var i = 0; i < ME.shingleUpgrades.length; i++) {
             if (ME.shingleUpgrades[i].Code === ME.UpgradeFieldNdx) {
-                fieldCost = Number(ME.shingleUpgrades[i].upgradePrice);
+                fieldUpgrade = Number(ME.shingleUpgrades[i].upgradePrice);
+                fieldCost = Number(ME.shingleUpgrades[i].Total);
                 break;
             }
         };
 
         for (var i = 0; i < ME.ridgeUpgrades.length; i++) {
             if (ME.ridgeUpgrades[i].Code === ME.UpgradeRidgeNdx) {
-                ridgeCost = Number(ME.ridgeUpgrades[i].upgradePrice);
+                ridgeUpgrade = Number(ME.ridgeUpgrades[i].upgradePrice);
+                ridgeCost = Number(ME.ridgeUpgrades[i].Total);
                 break;
             }
         };
 
         for (var i = 0; i < ME.valleyUpgrades.length; i++) {
             if (ME.valleyUpgrades[i].Code === ME.UpgradeValleyNdx) {
-                valleyCost = Number(ME.valleyUpgrades[i].upgradePrice);
+                valleyUpgrade = Number(ME.valleyUpgrades[i].upgradePrice);
+                valleyCost = Number(ME.valleyUpgrades[i].Total);
                 break;
             }
         };
 
         for (var i = 0; i < ME.trimUpgrades.length; i++) {
             if (ME.trimUpgrades[i].Code === ME.UpgradeTrimNdx) {
-                trimCost = Number(ME.trimUpgrades[i].upgradePrice);
+                trimUpgrade = Number(ME.trimUpgrades[i].upgradePrice);
+                trimCost = Number(ME.trimUpgrades[i].Total);
                 break;
             }
         };
 
         var base = ME.CONFIG.costSummary.clientBase;
-        ME.grandTotal = base + fieldCost + ridgeCost + valleyCost + trimCost;
+        ME.grandTotal = base + fieldUpgrade + ridgeUpgrade + valleyUpgrade + trimUpgrade;
 
         ME.dataObj.Sel = fieldCost + ridgeCost + valleyCost + trimCost;
         ME.dataObj.clientTotal = ME.grandTotal;
-        ME.dataObj.upgradesSelected = "Field;" + fieldCost + "!Valley;" + valleyCost + "!Ridge;" + ridgeCost + "!Edge;" + trimCost + "!Total;" + ME.dataObj.Sel;
 
+        ME.dataObj.upgradesSelected = "Field;" + fieldCost + "!Valley;" + valleyCost + "!Ridge;" + ridgeCost + "!Edge;" + trimCost + "!Total;" + ME.dataObj.Sel;
 
     };
 

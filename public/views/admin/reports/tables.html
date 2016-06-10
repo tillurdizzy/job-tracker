@@ -152,7 +152,7 @@
             </tbody>
         </table>
 
-        <table st-table="Ctrl.jobConfigData" class="table table-striped" style="width:100%;table-layout: fixed;" ng-show="Ctrl.tableSelected.request=='getAllJobConfigs'">
+        <!-- <table st-table="Ctrl.jobConfigData" class="table table-striped" style="width:100%;table-layout: fixed;" ng-show="Ctrl.tableSelected.request=='getAllJobConfigs'">
             <thead>
                 <tr>
                     <th style="width:80px;">PRIMARY_ID</th>
@@ -185,6 +185,35 @@
                     <td>{{row.Mu}}</td>
                     <td>{{row.Pm}}</td>
                     <td>{{row.muPercent}}</td>
+                    <td>{{row.clientBase}}</td>
+                    <td>{{row.clientTotal}}</td>
+                </tr>
+            </tbody>
+        </table> -->
+
+         <table st-table="Ctrl.jobConfigData" class="table table-striped" style="width:100%;table-layout: fixed;" ng-show="Ctrl.tableSelected.request=='getAllJobConfigs'">
+            <thead>
+                <tr>
+                    <th style="width:80px;">PRIMARY_ID</th>
+                    <th style="width:70px;">jobID</th>
+                    <th style="width:400px;">upgradesBase</th>
+                    <th style="width:400px;">upgradesSelected</th>
+                    <th style="width:70px;">Fx</th>
+                    <th style="width:70px;">Base</th>
+                    <th style="width:70px;">Sel</th>
+                    <th style="width:70;">clientBase</th>
+                    <th style="width:70;">clientTotal</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="row in Ctrl.jobConfigData">
+                    <td>{{row.PRIMARY_ID}}</td>
+                    <td>{{row.jobID}}</td>
+                    <td>{{row.upgradesBase}}</td>
+                    <td>{{row.upgradesSelected}}</td>
+                    <td>{{row.Fx}}</td>
+                    <td>{{row.Base}}</td>
+                    <td>{{row.Sel}}</td>
                     <td>{{row.clientBase}}</td>
                     <td>{{row.clientTotal}}</td>
                 </tr>
