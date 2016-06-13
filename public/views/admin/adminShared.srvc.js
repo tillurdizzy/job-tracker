@@ -1201,6 +1201,12 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
         return boolOut;
     };
 
+    self.decimalPrecisionTwo = function(data){
+        var num = Number(data);
+        var result=Math.round(num*100)/100
+        return result;
+    }
+
     self.trace = function(message) {
         if (LOG) {
             console.log(message);

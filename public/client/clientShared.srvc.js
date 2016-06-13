@@ -421,6 +421,7 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'JobConfigSrvc'
         basePrice = CONFIG.upgradeItemsBasePrice[cat];
         var mu = CONFIG.configMargin + 1;
         // Step 3: Calculate upgrade price and insert into list as new property
+        // Price shown to Client includes % Markup
         for (i = 0; i < thisCategoryConfigured.length; i++) {
             var t = Number(thisCategoryConfigured[i].Total);
             var upgradePrice = (t - basePrice) * mu;
@@ -486,6 +487,12 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'JobConfigSrvc'
             alert("Query Error - ClientSharedSrvc >> getJobMaterials");
         });
     };
+
+    self.decimalPrecisionTwo = function(data){
+        var num = Number(data);
+        var result=Math.round(num*100)/100
+        return result;
+    }
 
 
     var init = function() {

@@ -21,49 +21,60 @@ app.controller('AdminPropSummary', ['$state', '$scope', 'AdminSharedSrvc', 'Admi
 
         var Fx = ME.P.CostSummary.Fx;
         var Base = ME.S.basePrice.Total;
-        var Sel = ME.P.CostSummary.Sel;
+        var Upgrade = ME.P.CostSummary.Upgrade;
         var Lbr = ME.P.CostSummary.Lbr;
 
-        var Pm = Fx + Base + Lbr;
-        var Mu = MARGIN * Pm;
+        var Bc = Fx + Base + Lbr;// Base Cost
+        var MuB = MARGIN * Bc; // Markup Base
 
-        var clientBase = Fx + Base + Mu + Lbr;
+        var Uc = Fx + Upgrade + Lbr;// Upgrade Cost
+        var MuU = MARGIN * Uc;// Markup Upgrade
 
-        var clientTotal = Fx + Sel + Mu + Lbr;
+        var clientBase = Fx + Base + MuB + Lbr;
 
-        ME.dataObj.Fx = Fx;
-        ME.dataObj.Base = Base;
-        ME.dataObj.Sel = Sel;
-        ME.dataObj.Lbr = Lbr;
-        ME.dataObj.Mu = Mu;
-        ME.dataObj.Pm = Pm;
-        ME.dataObj.clientBase = clientBase;
-        ME.dataObj.clientTotal = clientTotal;
+        var clientTotal = Fx + Upgrade + MuU + Lbr;
+
+        ME.dataObj.Fx = ME.S.decimalPrecisionTwo(Fx);
+        ME.dataObj.Base = ME.S.decimalPrecisionTwo(Base);
+        ME.dataObj.Upgrade = ME.S.decimalPrecisionTwo(Upgrade);
+        ME.dataObj.Lbr = ME.S.decimalPrecisionTwo(Lbr);
+        ME.dataObj.MuB = ME.S.decimalPrecisionTwo(MuB);
+        ME.dataObj.MuU = ME.S.decimalPrecisionTwo(MuU);
+        ME.dataObj.Bc = ME.S.decimalPrecisionTwo(Bc);
+        ME.dataObj.Uc = ME.S.decimalPrecisionTwo(Uc);
+        ME.dataObj.clientBase = ME.S.decimalPrecisionTwo(clientBase);
+        ME.dataObj.clientTotal = ME.S.decimalPrecisionTwo(clientTotal);
 
         ME.summaryItems = [];
 
-        var item = { item: "Materials - Fx", amount: Fx };
+        var item = { item: "Materials Fixed - Fx", amount: Fx };
         ME.summaryItems.push(item);
 
         var item = { item: "Materials - Base", amount: Base };
         ME.summaryItems.push(item);
 
-        var item = { item: "Materials - Sel", amount: Sel };
+        var item = { item: "Materials - Upgrd", amount: Upgrade };
         ME.summaryItems.push(item);
 
         item = { item: "Labor", amount: Lbr };
         ME.summaryItems.push(item);
 
-        item = { item: "Profit Margin (Pm)", amount: Pm };
+        item = { item: "Total Cost Base", amount: Bc };
         ME.summaryItems.push(item);
 
-        item = { item: "Markup (% Markup * Pm)", amount: Mu };
+        item = { item: "Markup Base (MuB)", amount: MuB };
         ME.summaryItems.push(item);
 
-        item = { item: "Client Base (before upgrades)", amount: clientBase };
+        item = { item: "Client Base Total (before upgrades)", amount: clientBase };
         ME.summaryItems.push(item);
 
-        item = { item: "Client Total (after upgrades)", amount: clientTotal };
+        item = { item: "Total Cost Upgrades", amount: Uc };
+        ME.summaryItems.push(item);
+
+        item = { item: "Markup Upgrades (MuC)", amount: MuB };
+        ME.summaryItems.push(item);
+
+        item = { item: "Client Upgraded Total (after upgrades)", amount: clientTotal };
         ME.summaryItems.push(item);
 
         ME.S.trace(me + "getTotal");

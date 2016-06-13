@@ -47,42 +47,51 @@ app.controller('ReviewCtrl', ['$scope', '$state', 'ClientSharedSrvc', 'ngDialog'
 
         for (var i = 0; i < ME.shingleUpgrades.length; i++) {
             if (ME.shingleUpgrades[i].Code === ME.UpgradeFieldNdx) {
-                fieldUpgrade = Number(ME.shingleUpgrades[i].upgradePrice);
-                fieldCost = Number(ME.shingleUpgrades[i].Total);
+                fieldUpgrade = ME.C.decimalPrecisionTwo(Number(ME.shingleUpgrades[i].upgradePrice));
+                fieldCost = ME.C.decimalPrecisionTwo(Number(ME.shingleUpgrades[i].Total));
                 break;
             }
         };
 
         for (var i = 0; i < ME.ridgeUpgrades.length; i++) {
             if (ME.ridgeUpgrades[i].Code === ME.UpgradeRidgeNdx) {
-                ridgeUpgrade = Number(ME.ridgeUpgrades[i].upgradePrice);
-                ridgeCost = Number(ME.ridgeUpgrades[i].Total);
+                ridgeUpgrade = ME.C.decimalPrecisionTwo(Number(ME.ridgeUpgrades[i].upgradePrice));
+                ridgeCost = ME.C.decimalPrecisionTwo(Number(ME.ridgeUpgrades[i].Total));
                 break;
             }
         };
 
         for (var i = 0; i < ME.valleyUpgrades.length; i++) {
             if (ME.valleyUpgrades[i].Code === ME.UpgradeValleyNdx) {
-                valleyUpgrade = Number(ME.valleyUpgrades[i].upgradePrice);
-                valleyCost = Number(ME.valleyUpgrades[i].Total);
+                valleyUpgrade = ME.C.decimalPrecisionTwo(Number(ME.valleyUpgrades[i].upgradePrice));
+                valleyCost = ME.C.decimalPrecisionTwo(Number(ME.valleyUpgrades[i].Total));
                 break;
             }
         };
 
         for (var i = 0; i < ME.trimUpgrades.length; i++) {
             if (ME.trimUpgrades[i].Code === ME.UpgradeTrimNdx) {
-                trimUpgrade = Number(ME.trimUpgrades[i].upgradePrice);
-                trimCost = Number(ME.trimUpgrades[i].Total);
+                trimUpgrade = ME.C.decimalPrecisionTwo(Number(ME.trimUpgrades[i].upgradePrice));
+                trimCost = ME.C.decimalPrecisionTwo(Number(ME.trimUpgrades[i].Total));
                 break;
             }
         };
-
+        
         var base = ME.CONFIG.costSummary.clientBase;
-        ME.grandTotal = base + fieldUpgrade + ridgeUpgrade + valleyUpgrade + trimUpgrade;
 
-        ME.dataObj.Sel = fieldCost + ridgeCost + valleyCost + trimCost;
+        // View Display Total with upgrades
+        ME.grandTotal = ME.C.decimalPrecisionTwo(base + fieldUpgrade + ridgeUpgrade + valleyUpgrade + trimUpgrade);
+
+        // Below this point is configuring dataObj for a Save
+        ME.dataObj.Upgrade = ME.C.decimalPrecisionTwo(fieldCost + ridgeCost + valleyCost + trimCost);
         ME.dataObj.clientTotal = ME.grandTotal;
 
+        // Calculate Grand total the same way Admin does it and see if they match
+        var lbr = ME.CONFIG.laborTotal;
+        var Uc = lbr + ME.CONFIG.costSummary.Fx + ME.dataObj.Upgrade;
+        var mu = ME.CONFIG.configMargin;
+        ME.dataObj.MuU = ME.C.decimalPrecisionTwo(Uc * mu);
+        ME.dataObj.clientTotal = Uc + ME.dataObj.MuU;
         ME.dataObj.upgradesSelected = "Field;" + fieldCost + "!Valley;" + valleyCost + "!Ridge;" + ridgeCost + "!Edge;" + trimCost + "!Total;" + ME.dataObj.Sel;
 
     };

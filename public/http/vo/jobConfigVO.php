@@ -8,9 +8,11 @@ class jobConfigVO{
 	var $upgradesSelected;
 	var $Fx;
 	var $Base;
-	var $Sel;
-	var $Mu;
-	var $Pm;
+	var $Upgrade;
+	var $MuB;
+	var $MuU;
+	var $Bc;
+	var $Uc;
 	var $muPercent;
 	var $clientBase;
 	var $clientTotal;

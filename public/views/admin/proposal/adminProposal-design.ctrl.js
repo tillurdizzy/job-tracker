@@ -162,7 +162,7 @@ app.controller('AdminPropDesign', ['$state', '$scope', 'AdminSharedSrvc', 'Admin
         ME.FixedTotal = ME.ShinglesStarterTotal+ME.VentsTotal+ME.FlashingTotal+ME.FlatTotal+ME.CapsTotal+ME.OtherTotal;
         
         var totalLessFixed = ME.GrandTotal - ME.FixedTotal;// Upgrade Selections Only
-        ME.P.setSummaryItem("Sel", totalLessFixed);
+        ME.P.setSummaryItem("Upgrade", totalLessFixed);
         ME.P.setSummaryItem("Fx", ME.FixedTotal);
         var upgradesTotal = ME.ShinglesFieldTotal + ME.ValleyTotal + ME.ShinglesRidgeTotal + ME.EdgeTotal;
         ME.upgradesSelected = "Field;"+ME.ShinglesFieldTotal+"!Valley;"+ME.ValleyTotal+"!Ridge;"+ME.ShinglesRidgeTotal+"!Edge;"+ME.EdgeTotal+"!Total;"+upgradesTotal;

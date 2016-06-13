@@ -12,13 +12,15 @@ $con = mysqli_connect(DATABASE_SERVER, DATABASE_USERNAME, DATABASE_PASSWORD,DATA
 $jobID = mysqli_real_escape_string($con,$data->jobID);
 $upgradesSelected = mysqli_real_escape_string($con,$data->upgradesSelected);
 $config = mysqli_real_escape_string($con,$data->config);
-$Sel = mysqli_real_escape_string($con,$data->Sel);
+$Upgrade = mysqli_real_escape_string($con,$data->Upgrade);
+$MuU = mysqli_real_escape_string($con,$data->MuU);
 $clientTotal = mysqli_real_escape_string($con,$data->clientTotal);
 
 $query = "UPDATE job_config SET 
 upgradesSelected='".$upgradesSelected."',
 config='".$config."',
-Sel='".$Sel."',
+Upgrade='".$Upgrade."',
+MuU='".$MuU."',
 clientTotal='".$clientTotal."'
 WHERE jobID='".$jobID."'";
 $qry_res = mysqli_query($con,$query);

@@ -12,23 +12,24 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore', function jobConfigSrvc
     self.defaultCheckedMaterials = [];
 
     self.configLabor = [];
+    self.laborTotal = [];
     self.upgradeItemsBasePrice = {};
-    self.costSummary = {Fx:0,Base:0,Sel:0,Pm:0,Mu:0,muPercent:0,clientBase:0,clientTotal:0};
+    self.costSummary = { Fx: 0, Base: 0, Sel: 0, Pm: 0, Mu: 0, muPercent: 0, clientBase: 0, clientTotal: 0 };
     self.configMargin = 0;
     self.profitMargin = 0;
 
-    var trace = function(message){
-        if(LOG){
+    var trace = function(message) {
+        if (LOG) {
             console.log(message);
         }
     };
 
-    var validateNumber = function(x){
+    var validateNumber = function(x) {
         var n = Number(x);
         if (isNaN(n)) {
             return 0;
         } else {
-           return n;
+            return n;
         };
     };
 
@@ -70,10 +71,12 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore', function jobConfigSrvc
                 var thisItem = laborArr[i].split(';');
                 var itemObj = {};
                 itemObj.Labor = thisItem[0];
-                    itemObj.Qty = thisItem[1];
-                    itemObj.Cost = thisItem[2];
-                if(thisItem[0] != "Total"){
+                itemObj.Qty = thisItem[1];
+                itemObj.Cost = thisItem[2];
+                if (thisItem[0] != "Total") {
                     self.configLabor.push(itemObj);
+                }else{
+                    self.laborTotal = Number(thisItem[2]);
                 }
             }
         };
@@ -92,9 +95,11 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore', function jobConfigSrvc
         // 4. Cost Summaries
         self.costSummary.Fx = validateNumber(dataObj.Fx);
         self.costSummary.Base = validateNumber(dataObj.Base);
-        self.costSummary.Sel = validateNumber(dataObj.Sel);
-        self.costSummary.Pm = validateNumber(dataObj.Pm);
-        self.costSummary.Mu = validateNumber(dataObj.Mu);
+        self.costSummary.Upgrade = validateNumber(dataObj.Upgrade);
+        self.costSummary.Bc = validateNumber(dataObj.Bc);
+        self.costSummary.MuB = validateNumber(dataObj.MuB);
+        self.costSummary.Uc = validateNumber(dataObj.Uc);
+        self.costSummary.MuU = validateNumber(dataObj.MuU);
         self.costSummary.muPercent = validateNumber(dataObj.muPercent);
         self.costSummary.clientBase = validateNumber(dataObj.clientBase);
         self.costSummary.clientTotal = validateNumber(dataObj.clientTotal);
@@ -335,7 +340,7 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore', function jobConfigSrvc
 
     }
 
-   
+
     // Make all vals numbers
     var numberize = function(inputObj) {
         for (var prop in inputObj) {

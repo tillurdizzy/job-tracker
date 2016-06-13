@@ -9,7 +9,7 @@ app.service('AdminProposalSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'un
     var currentJobId = 0;
 
     self.profitMargin = 30;
-    self.CostSummary = {Lbr:0,Base:0,Sel:0,Fx:0,Mu:0};
+    self.CostSummary = {Lbr:0,Base:0,Upgrade:0,Fx:0,MuB:0,MuU:0};
 
     self.setJobId = function(id){
         currentJobId = id;
@@ -19,9 +19,10 @@ app.service('AdminProposalSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'un
     	switch(item){
     		case "Lbr":self.CostSummary.Lbr = cost;break;
             case "Fx":self.CostSummary.Fx = cost;break;
-    		case "Sel":self.CostSummary.Sel = cost;break;
+    		case "Upgrade":self.CostSummary.Upgrade = cost;break;
             case "Base":self.CostSummary.Base = cost;break;
-            case "Mu":self.CostSummary.Mu = cost;break;
+            case "MuB":self.CostSummary.MuB = cost;break;
+            case "MuU":self.CostSummary.MuU = cost;break;
     	}
     };
 
@@ -29,18 +30,5 @@ app.service('AdminProposalSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'un
         self.CostSummary = {Lbr:0,Base:0,Sel:0,Fx:0,Mu:0};
     }
     
-    /*var saveConfigMargin = function() {
-        DB.query("updateConfigMargin").then(function(resultObj) {
-            if (resultObj.result == "Error" || typeof resultObj.data === "string") {
-                alert("Query Error - see console for details");
-                console.log(me + "updateConfigMargin ---- " + resultObj.data);
-            } else {
-                $rootScope.$broadcast('onSaveMarginConfig');
-            }
-        }, function(error) {
-            alert("Query Error - AdminProposalSrvc >> saveConfigMargin");
-        });
-    };*/
-   
     return self;
 }]);
