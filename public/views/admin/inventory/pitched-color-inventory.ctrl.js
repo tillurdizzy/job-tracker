@@ -1,12 +1,13 @@
 'use strict';
 
-app.controller('PitchedRoofInventoryCtrl', ['$state', '$scope', 'SharedSrvc', 'AdminDataSrvc', 'ngDialog', function($state, $scope, SharedSrvc, AdminDataSrvc, ngDialog) {
+app.controller('PitchedRoofColorCtrl', ['$state', '$scope', 'SharedSrvc','ListSrvc', 'AdminDataSrvc', 'ngDialog', function($state, $scope, SharedSrvc, AdminDataSrvc, ngDialog) {
 
     var ME = this;
     ME.S = SharedSrvc;
     var DB = AdminDataSrvc;
+    ME.L = ListSrvc;
 
-    ME.pitchedInventoryList = [];
+    ME.colorList = [];
     ME.EditMode = "Add Item";
     ME.modePrompt = "Add New Item: Fill in the form and submit.";
     ME.inputDataObj = {};
@@ -23,7 +24,7 @@ app.controller('PitchedRoofInventoryCtrl', ['$state', '$scope', 'SharedSrvc', 'A
     ME.addItem = function() {
         ME.EditMode = "Add Item";
         ME.modePrompt = "Add New Item: Fill in the form and submit.";
-        //resetInputFields();
+        resetInputFields();
     };
     ME.updateItem = function() {
         ME.EditMode = "Update Item";
@@ -50,17 +51,17 @@ app.controller('PitchedRoofInventoryCtrl', ['$state', '$scope', 'SharedSrvc', 'A
     };
 
     ME.refreshInventoryList = function() {
-        ME.pitchedInventoryList = [];
+        ME.colorList = [];
         getInventory();
     };
 
     ME.configSelectedItemObj = function(code) {
         ME.updateItem();
         ME.inputDataObj = {};
-        for (var i = 0; i < ME.pitchedInventoryList.length; i++) {
-            if (ME.pitchedInventoryList[i].Code == code) {
-                ME.inputDataObj = ME.pitchedInventoryList[i];
-                ME.itemSelected = ME.pitchedInventoryList[i];
+        for (var i = 0; i < ME.colorList.length; i++) {
+            if (ME.colorList[i].Code == code) {
+                ME.inputDataObj = ME.colorList[i];
+                ME.itemSelected = ME.colorList[i];
             }
         };
         // For SELECT components, get the options object that matches the data 
@@ -153,8 +154,8 @@ app.controller('PitchedRoofInventoryCtrl', ['$state', '$scope', 'SharedSrvc', 'A
     };
 
     var resetForm = function() {
-        //ME.formStatus = "Pristine";
-        //resetInputFields();
+        ME.formStatus = "Pristine";
+        resetInputFields();
         if (ME.EditMode == "Add Item") {
             var sortNum = parseInt(ME.inputDataObj.Sort);
             sortNum += 1;
@@ -168,7 +169,7 @@ app.controller('PitchedRoofInventoryCtrl', ['$state', '$scope', 'SharedSrvc', 'A
                 alert("Query Error - see console for details");
                 console.log("getProposalsByJob ---- " + resultObj.data);
             } else {
-                ME.pitchedInventoryList = resultObj.data;
+                ME.colorList = resultObj.data;
             }
         }, function(error) {
             alert("Query Error - AdminSharedSrvc >> getMaterialsList");

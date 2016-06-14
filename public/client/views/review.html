@@ -118,14 +118,13 @@
         </div>
     </div>
     <div class="section-header-client">
-        <h2>E. Choose Upgrade Options</h2>
+        <h2>E. Select Options</h2>
         <div class="toggle-view-icon">
             <i class="fa fa-arrow-circle-down" ng-click="CTRL.showSections.options=true" ng-hide="CTRL.showSections.options"></i>
             <i class="fa fa-arrow-circle-up hilite" ng-click="CTRL.showSections.options=false" ng-show="CTRL.showSections.options"></i>
         </div>
     </div>
     <div class="block-section-width text-block-display" ng-show="CTRL.showSections.options">
-        <!-- -->
         <!-- Field -->
         <div class="upgrade-level">
             <div class="upgrade-icon">
@@ -146,7 +145,28 @@
             </div>
             <horiz-rule margintop="5" marginbottom="15"></horiz-rule>
         </div>
-        <!-- -->
+
+        <!-- Color-->
+        <div class="upgrade-level">
+            <div class="upgrade-icon">
+                <i class="fa fa-arrow-circle-down" ng-click="CTRL.showUpgrades.color=true" ng-hide="CTRL.showUpgrades.color"></i>
+                <i class="fa fa-arrow-circle-up hilite" ng-click="CTRL.showUpgrades.color=false" ng-show="CTRL.showUpgrades.color"></i>
+            </div>
+            <div class="upgrade-label">
+                <h2>Shingle Color</h2>
+                <i class="fa fa-check-square" ng-show="CTRL.UpgradeColorNdx!='NONE'"></i>
+            </div>
+        </div>
+        <div class="upgrade-selections" ng-show="CTRL.showUpgrades.color">
+            <div class="upgrade-item" ng-repeat="x in CTRL.shingleColors">
+                <div class="check-radio-container" style="margin-bottom:10px;">
+                    <input type="radio" id="{{x.Code}}" name="Grp5" value="{{x.Code}}" ng-model="CTRL.UpgradeColorNdx" ng-change="CTRL.calculateTotal()"></input>
+                    <label for="{{x.Code}}"><span></span>{{x.Item}} ({{x.upgradePrice | currency:$:2}})<a href="{{x.url}}" target="_blank"> More</a></label>
+                </div>
+            </div>
+            <horiz-rule margintop="5" marginbottom="15"></horiz-rule>
+        </div>
+
         <!-- Ridge -->
         <div class="upgrade-level">
             <div class="upgrade-icon">

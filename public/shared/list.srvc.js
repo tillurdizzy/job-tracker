@@ -3,6 +3,11 @@
 app.service('ListSrvc',[function sharedLists(){
 	var self = this;
 
+	self.shingleManufacturers = [
+		{label:"GAF",id:1,Code:"GAF"},
+		{label:"Owens Corning",id:2,Code:"OC"}];
+
+
 	self.upgradeCategories = ["Field","Ridge","Valley","Edge"];
 
 	self.jobStatusOptions = [

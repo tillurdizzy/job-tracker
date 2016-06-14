@@ -12,6 +12,7 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'JobConfigSrvc'
     self.jobID = 0;
     self.materialsList = [];
     self.materialsListConfig = [];
+    self.shingleColorsList = [];
     self.defaultCheckedMaterials = [];
     self.jobConfig = {};
 
@@ -482,9 +483,24 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'JobConfigSrvc'
                 console.log("getJobMaterials ---- " + resultObj.data);
             } else {
                 self.materialsList = resultObj.data;
+                getShingleColors();
             }
         }, function(error) {
             alert("Query Error - ClientSharedSrvc >> getJobMaterials");
+        });
+    };
+
+    var getShingleColors = function() {
+        self.trace(me + "getShingleColors()");
+        DB.queryDB("getShingleColors").then(function(resultObj) {
+            if (resultObj.result == "Error" || typeof resultObj.data === "string") {
+                alert("Query Error - see console for details");
+                console.log("getShingleColors ---- " + resultObj.data);
+            } else {
+                self.shingleColorsList = resultObj.data;
+            }
+        }, function(error) {
+            alert("Query Error - ClientSharedSrvc >> getShingleColors");
         });
     };
 

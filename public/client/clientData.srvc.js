@@ -13,6 +13,7 @@ app.service('ClientDataSrvc', ['$http', '$q', function($http, $q) {
         getJobsByClient: httpPathPrefix + "getJobsByClient.php",
         getPropertiesByClient: httpPathPrefix + "getPropertiesByClient.php",
         getClientByLogIn: httpPathPrefix + "getClientByLogIn.php",
+        getShingleColors: httpPathPrefix + "getShingleColors.php",
         getJobParameters: httpPathPrefix + "getJobParameters.php",
         getKeyValuePairs: httpPathPrefix + "getIdVals.php",
         getMultiVents: httpPathPrefix + "getMultiVents.php",

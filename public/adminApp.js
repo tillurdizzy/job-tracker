@@ -56,6 +56,10 @@ app.config(function($stateProvider, $urlRouterProvider,$provide) {
 			url: "/pitched-inventory",
 			templateUrl:"views/admin/inventory/pitched-roof-materials.html"
 		})
+		.state('admin.colorInventory', {
+			url: "/pitched-inventory",
+			templateUrl:"views/admin/inventory/pitched-roof-colors.html"
+		})
 		
 		.state('admin.reportJobsActive', {
 			url: "/reportJobsActive",

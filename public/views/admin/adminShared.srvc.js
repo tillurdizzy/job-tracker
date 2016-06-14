@@ -20,7 +20,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
     self.laborDefault = {};
     self.laborConfig = {};
     self.laborTotal = 0;
-
+    self.shingleColorsList = [];
     // 
     self.tabsSubmitted = { design: false, labor: false, summary: false, base: false };
 
@@ -213,7 +213,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
         self.basePrice = CONFIG.upgradeItemsBasePrice;
         // If there is a saved labor config, insert the cost and qty... otherwise return the laborDefault vals
         self.laborConfig = CONFIG.mergeLaborConfig(self.laborDefault, DB.clone(self.proposalUnderReview.propertyInputParams));
-         // Get total labor 
+        // Get total labor 
         self.laborTotal = 0;
 
         for (var i = 0; i < self.laborConfig.length; i++) {
@@ -1048,7 +1048,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
                 self.trace(me + "$rootScope.$broadcast(onSaveJobConfig)");
                 self.tabsSubmitted.design = true;
                 $rootScope.$broadcast('onSaveJobConfig');
-                doUpgradeBase();// Base changes only if Qty of input changes
+                doUpgradeBase(); // Base changes only if Qty of input changes
             }
         }, function(error) {
             alert("Query Error - AdminSharedSrvc >> updateConfigConfig");
@@ -1112,6 +1112,20 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
             }
         }, function(error) {
             alert("Query Error - AdminSharedSrvc >> getLabor");
+        });
+    };
+
+    var getShingleColors = function() {
+        self.trace(me + "getShingleColors()");
+        DB.queryDB("getShingleColors").then(function(resultObj) {
+            if (resultObj.result == "Error" || typeof resultObj.data === "string") {
+                alert("Query Error - see console for details");
+                console.log("getShingleColors ---- " + resultObj.data);
+            } else {
+                self.shingleColorsList = resultObj.data;
+            }
+        }, function(error) {
+            alert("Query Error - ClientSharedSrvc >> getShingleColors");
         });
     };
 
@@ -1201,9 +1215,9 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
         return boolOut;
     };
 
-    self.decimalPrecisionTwo = function(data){
+    self.decimalPrecisionTwo = function(data) {
         var num = Number(data);
-        var result=Math.round(num*100)/100
+        var result = Math.round(num * 100) / 100
         return result;
     }
 
@@ -1219,6 +1233,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
         getSalesReps();
         getProperties();
         getDefaultLabor();
+        getShingleColors();
     }
 
     init();
