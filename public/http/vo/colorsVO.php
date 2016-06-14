@@ -1,5 +1,5 @@
 <?php
-class colorVO{
+class colorsVO{
 	var $PRIMARY_ID;
 	var $Manufacturer;
 	var $Style;
