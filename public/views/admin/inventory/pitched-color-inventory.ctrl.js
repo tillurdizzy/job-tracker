@@ -143,8 +143,6 @@ app.controller('PitchedRoofColorCtrl', ['$state', '$scope', 'SharedSrvc','ListSr
         });
     };
 
-
-
     var parseSelectionProviders = function() {
         ME.inputDataObj.Package = ME.selectDataObj_dp.Package.label;
         ME.inputDataObj.UnitPkg = ME.selectDataObj_dp.UnitPkg.label;

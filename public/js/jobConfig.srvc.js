@@ -17,6 +17,7 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore', function jobConfigSrvc
     self.costSummary = { Fx: 0, Base: 0, Sel: 0, Pm: 0, Mu: 0, muPercent: 0, clientBase: 0, clientTotal: 0 };
     self.configMargin = 0;
     self.profitMargin = 0;
+    self.shingleColor = 0;
 
     var trace = function(message) {
         if (LOG) {
@@ -120,6 +121,9 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore', function jobConfigSrvc
             self.profitMargin = NUM;
         };
 
+        // 7. Shingle Color
+        self.shingleColor = dataObj.Clr;
+        
         // Only the jobConfig is returned
         return self.jobConfigArray;
     };

@@ -149,7 +149,7 @@ app.controller('PitchedRoofInventoryCtrl', ['$state', '$scope', 'SharedSrvc', 'A
         ME.inputDataObj.UnitPkg = ME.selectDataObj_dp.UnitPkg.label;
         ME.inputDataObj.UnitCoverage = ME.selectDataObj_dp.UnitCoverage.label;
         ME.inputDataObj.InputParam = ME.selectDataObj_dp.InputParam.label;
-        ME.inputDataObj.Checked = ME.selectDataObj_dp.InputParam.id;
+        ME.inputDataObj.Checked = ME.selectDataObj_dp.Checked.id;
     };
 
     var resetForm = function() {

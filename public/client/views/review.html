@@ -139,7 +139,7 @@
         <div class="upgrade-selections" ng-show="CTRL.showUpgrades.field">
             <div class="upgrade-item" ng-repeat="x in CTRL.shingleUpgrades">
                 <div class="check-radio-container" style="margin-bottom:10px;">
-                    <input type="radio" id="{{x.Code}}" name="Grp1" value="{{x.Code}}" ng-model="CTRL.UpgradeFieldNdx" ng-change="CTRL.calculateTotal()"></input>
+                    <input type="radio" id="{{x.Code}}" name="Grp1" value="{{x.Code}}" ng-model="CTRL.UpgradeFieldNdx" ng-change="CTRL.changeFieldShingle()"></input>
                     <label for="{{x.Code}}"><span></span>{{x.Item}} ({{x.upgradePrice | currency:$:2}})<a href="{{x.url}}" target="_blank"> More</a></label>
                 </div>
             </div>
@@ -154,14 +154,14 @@
             </div>
             <div class="upgrade-label">
                 <h2>Shingle Color</h2>
-                <i class="fa fa-check-square" ng-show="CTRL.UpgradeColorNdx!='NONE'"></i>
+                <i class="fa fa-check-square" ng-show="CTRL.ColorID!='0'"></i>
             </div>
         </div>
         <div class="upgrade-selections" ng-show="CTRL.showUpgrades.color">
             <div class="upgrade-item" ng-repeat="x in CTRL.shingleColors">
                 <div class="check-radio-container" style="margin-bottom:10px;">
-                    <input type="radio" id="{{x.Code}}" name="Grp5" value="{{x.Code}}" ng-model="CTRL.UpgradeColorNdx" ng-change="CTRL.calculateTotal()"></input>
-                    <label for="{{x.Code}}"><span></span>{{x.Item}} ({{x.upgradePrice | currency:$:2}})<a href="{{x.url}}" target="_blank"> More</a></label>
+                    <input type="radio" id="{{x.PRIMARY_ID}}" name="Grp5" value="{{x.PRIMARY_ID}}" ng-model="CTRL.ColorID" ng-change="CTRL.calculateTotal()"></input>
+                    <label for="{{x.PRIMARY_ID}}"><span></span>{{x.Name}}<a href="{{x.url}}" target="_blank"> More</a></label>
                 </div>
             </div>
             <horiz-rule margintop="5" marginbottom="15"></horiz-rule>

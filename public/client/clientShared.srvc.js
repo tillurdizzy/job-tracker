@@ -277,6 +277,22 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'JobConfigSrvc'
         });
     };
 
+    self.saveShingleColor = function(dataObj){
+        self.trace(me + "saveShingleColor()");
+        dataObj.jobID = self.jobObj.PRIMARY_ID;
+
+        DB.queryDB("updateConfigClient", dataObj).then(function(resultObj) {
+            if (resultObj.result == "Error" || typeof resultObj.data === "string") {
+                alert("Query Error - see console for details");
+                console.log("ClientSharedSrvc >> saveClientUpgrades ---- " + resultObj.data);
+            } else {
+                $rootScope.$broadcast("client-upgrades-saved");
+            }
+        }, function(error) {
+            alert("Query Error - ClientSharedSrvc >> saveClientUpgrades");
+        });
+    }
+
 
     // Converts the long string saved in DB into array of objects
     var onGetConfigResult = function(ar) {
@@ -380,14 +396,10 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'JobConfigSrvc'
             include = self.materialsListConfig[i].Checked;
             if (include === true) {
                 baseLineItems.push(self.materialsListConfig[i]);
-                //self.baseLineTotal += Number(self.materialsListConfig[i].Total);
             }
         };
 
-
-        // Add Labor
         var labor = CONFIG.returnLaborGrandTotal();
-       
         var profitMargin = CONFIG.profitMargin;
         self.baseLineTotal = CONFIG.costSummary.Base;
         

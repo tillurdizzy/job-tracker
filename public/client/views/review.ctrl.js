@@ -21,34 +21,36 @@ app.controller('ReviewCtrl', ['$scope', '$state', 'ClientSharedSrvc', 'ngDialog'
     ME.selectedPhoto = { path: "", cap: "" };
     ME.shingleManufacturer = null;
 
-    ME.colorUpgrades = [];
+    ME.shingleColors = []; // DP to choose from
 
-    // These are to control the ng-show DOM elements
+    // Holds user selection and controls the ng-show DOM elements
     ME.UpgradeFieldNdx = "";
     ME.UpgradeRidgeNdx = "";
     ME.UpgradeValleyNdx = "";
     ME.UpgradeTrimNdx = "";
-    ME.UpgradeColorNdx = "NONE";
 
-    ME.showUpgrades = { color:false, field: true, ridge: false, valley: false, trim: false };
+    // Shingle Color
+    ME.ColorID = "";
+
+    ME.showUpgrades = { color: false, field: true, ridge: false, valley: false, trim: false };
     ME.showSections = { assembly: true, photos: false, scope: false, options: false, next: false };
 
+
+    // Triggered on every 'ng-change' under Select Options
     ME.calculateTotal = function() {
         ME.C.trace(me + "calculateTotal()");
-        // Did manufacturer change?
-        validateManufacturer();
+
         ME.dataObj = {};
         var fieldCost = 0;
         var ridgeCost = 0;
         var valleyCost = 0;
         var trimCost = 0;
-        var colorCost = 0;
 
         var fieldUpgrade = 0;
         var ridgeUpgrade = 0;
         var valleyUpgrade = 0;
         var trimUpgrade = 0;
-        var colorUpgrade = 0;
+
 
         for (var i = 0; i < ME.shingleUpgrades.length; i++) {
             if (ME.shingleUpgrades[i].Code === ME.UpgradeFieldNdx) {
@@ -82,30 +84,22 @@ app.controller('ReviewCtrl', ['$scope', '$state', 'ClientSharedSrvc', 'ngDialog'
             }
         };
 
-        for (var i = 0; i < ME.colorUpgrades.length; i++) {
-            if (ME.colorUpgrades[i].Code === ME.UpgradeColorNdx) {
-                colorUpgrade = ME.C.decimalPrecisionTwo(Number(ME.colorUpgrades[i].upgradePrice));
-                colorCost = ME.C.decimalPrecisionTwo(Number(ME.colorUpgrades[i].Total));
-                break;
-            }
-        };
-        
         var base = ME.CONFIG.costSummary.clientBase;
 
         // View Display Total with upgrades
-        ME.grandTotal = ME.C.decimalPrecisionTwo(base + fieldUpgrade + ridgeUpgrade + valleyUpgrade + trimUpgrade + colorUpgrade);
+        ME.grandTotal = ME.C.decimalPrecisionTwo(base + fieldUpgrade + ridgeUpgrade + valleyUpgrade + trimUpgrade);
 
         // Below this point is configuring dataObj for a Save
-        ME.dataObj.Upgrade = ME.C.decimalPrecisionTwo(fieldCost + ridgeCost + valleyCost + trimCost + colorCost);
+        ME.dataObj.Upgrade = ME.C.decimalPrecisionTwo(fieldCost + ridgeCost + valleyCost + trimCost);
         ME.dataObj.clientTotal = ME.grandTotal;
-        ME.dataObj.Clr = ME.UpgradeColorNdx;
+        ME.dataObj.Clr = ME.ColorID;
         // Calculate Grand total the same way Admin does it and see if they match
         var lbr = ME.CONFIG.laborTotal;
         var Uc = lbr + ME.CONFIG.costSummary.Fx + ME.dataObj.Upgrade;
         var mu = ME.CONFIG.configMargin;
         ME.dataObj.MuU = ME.C.decimalPrecisionTwo(Uc * mu);
         ME.dataObj.clientTotal = Uc + ME.dataObj.MuU;
-        ME.dataObj.upgradesSelected = "Field;" + fieldCost + "!Valley;" + valleyCost + "!Ridge;" + ridgeCost + "!Edge;" + trimCost + "!Color;" + colorCost + "!Total;" + ME.dataObj.Sel;
+        ME.dataObj.upgradesSelected = "Field;" + fieldCost + "!Valley;" + valleyCost + "!Ridge;" + ridgeCost + "!Edge;" + trimCost + "!Total;" + ME.dataObj.Upgrade;
 
     };
 
@@ -118,8 +112,8 @@ app.controller('ReviewCtrl', ['$scope', '$state', 'ClientSharedSrvc', 'ngDialog'
         ];
 
         ME.dataObj.configUpdates = items;
-
         ME.C.saveClientUpgrades(ME.dataObj);
+
     };
 
 
@@ -140,7 +134,13 @@ app.controller('ReviewCtrl', ['$scope', '$state', 'ClientSharedSrvc', 'ngDialog'
         ME.ridgeUpgrades = ME.C.getUpgrades("Ridge");
         ME.valleyUpgrades = ME.C.getUpgrades("Valley");
         ME.trimUpgrades = ME.C.getUpgrades("Edge");
-        //ME.colorUpgrades = ME.C.getUpgrades("Edge");
+
+        // Take out the Designer GAF - 
+        for (var i = ME.shingleUpgrades.length - 1; i >= 0; i--) {
+            if (ME.shingleUpgrades[i].Sort > 107 && ME.shingleUpgrades[i].Sort < 121) {
+                ME.shingleUpgrades.splice(i, 1);
+            }
+        };
     };
 
     var setSelections = function() {
@@ -172,22 +172,40 @@ app.controller('ReviewCtrl', ['$scope', '$state', 'ClientSharedSrvc', 'ngDialog'
                 break;
             }
         };
+
+        ME.ColorID = ME.CONFIG.shingleColor;
+        setColorChoices();
         setManufacturer();
     };
 
-    var validateManufacturer = function(){
+
+    self.changeFieldShingle = function() {
+        // Field Shingle selection is also used to switch manufacturer
         var firstChar = ME.UpgradeFieldNdx[0];
-        if (firstChar === "G" || firstChar === "S") {
+        if (firstChar === "G" || firstChar === "S") { // S is for "STD***" used for Default Field and Ridge
             var selection = "GAF";
         } else {
             selection = "OC";
         };
 
+        // If the manufacturer changes, reset the Ridge Selections
         if (ME.shingleManufacturer != selection) {
             ME.UpgradeRidgeNdx = "STDRDG";
             ME.shingleManufacturer = selection;
             ME.ridgeUpgrades = ME.C.getUpgrades("Ridge", ME.shingleManufacturer);
         };
+
+        setColorChoices();
+    };
+
+    var setColorChoices = function() {
+        ME.ColorID = "0";
+        ME.shingleColors = [];
+        for (var i = 0; i < ME.C.shingleColorsList.length; i++) {
+            if (ME.C.shingleColorsList[i].Style == ME.UpgradeFieldNdx) {
+                ME.shingleColors.push(ME.C.shingleColorsList[i]);
+            }
+        }
     };
 
     var setManufacturer = function() {

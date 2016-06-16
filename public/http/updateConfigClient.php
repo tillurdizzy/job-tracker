@@ -14,6 +14,7 @@ $upgradesSelected = mysqli_real_escape_string($con,$data->upgradesSelected);
 $config = mysqli_real_escape_string($con,$data->config);
 $Upgrade = mysqli_real_escape_string($con,$data->Upgrade);
 $MuU = mysqli_real_escape_string($con,$data->MuU);
+$Clr = mysqli_real_escape_string($con,$data->Clr);
 $clientTotal = mysqli_real_escape_string($con,$data->clientTotal);
 
 $query = "UPDATE job_config SET 
@@ -21,6 +22,7 @@ upgradesSelected='".$upgradesSelected."',
 config='".$config."',
 Upgrade='".$Upgrade."',
 MuU='".$MuU."',
+Clr='".$Clr."',
 clientTotal='".$clientTotal."'
 WHERE jobID='".$jobID."'";
 $qry_res = mysqli_query($con,$query);

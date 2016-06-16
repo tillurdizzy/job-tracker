@@ -2,7 +2,7 @@
 
 app.controller('AddPropertyCtrl', ['$state', '$scope', 'PropertiesSrvc', 'AdminDataSrvc', 'ListSrvc', 'ngDialog', function($state, $scope, PropertiesSrvc, AdminDataSrvc, ListSrvc, ngDialog) {
     var ME = this;
-    var myName = "AddPropertyCtrl";
+    var me = "AddPropertyCtrl: ";
     ME.P = PropertiesSrvc;
     var DB = AdminDataSrvc;
     ME.L = ListSrvc;
@@ -33,6 +33,7 @@ app.controller('AddPropertyCtrl', ['$state', '$scope', 'PropertiesSrvc', 'AdminD
     };
 
     ME.submit = function() {
+        ME.P.trace(me + "submit");
         if (ME.formVisibility.stepOne === true) {
             createPropertyDataObj();
         } else if (ME.formVisibility.stepTwo === true) {
@@ -41,6 +42,7 @@ app.controller('AddPropertyCtrl', ['$state', '$scope', 'PropertiesSrvc', 'AdminD
     };
 
     ME.formChange = function() {
+        ME.P.trace(me + "formChange");
         ME.submitInValid = true;
         if (ME.inputDataObj.client.PRIMARY_ID > -1 && ME.inputDataObj.name != "" && ME.inputDataObj.roofCode.id > -1) {
             ME.submitInValid = false;
@@ -48,6 +50,7 @@ app.controller('AddPropertyCtrl', ['$state', '$scope', 'PropertiesSrvc', 'AdminD
     };
 
     ME.selectClient = function() {
+        ME.P.trace(me + "selectClient");
         var clientType = parseInt(ME.inputDataObj.client.type);
         if (clientType == 1) {
             var name = ME.inputDataObj.client.name_last;
@@ -67,6 +70,7 @@ app.controller('AddPropertyCtrl', ['$state', '$scope', 'PropertiesSrvc', 'AdminD
     };
 
     ME.selectProperty = function() {
+        ME.P.trace(me + "selectProperty");
         ME.configPropObj(ME.propertySelector.PRIMARY_ID);
         ME.formChange();
     };
@@ -77,6 +81,7 @@ app.controller('AddPropertyCtrl', ['$state', '$scope', 'PropertiesSrvc', 'AdminD
     // Insert Roof when Propety ID is returned
     // Insert Multi's when Roof ID is returnmed
     var createPropertyDataObj = function() {
+        ME.P.trace(me + "createPropertyDataObj");
         var outputDataObj = {};
         outputDataObj.manager = ME.inputDataObj.client.manager;
         outputDataObj.client = ME.inputDataObj.client.PRIMARY_ID;
@@ -96,6 +101,7 @@ app.controller('AddPropertyCtrl', ['$state', '$scope', 'PropertiesSrvc', 'AdminD
 
     // Step Two of Add New Property
     var createRoofDataObj = function() {
+        ME.P.trace(me + "createRoofDataObj");
         var outputDataObj = {};
 
         // Multi-Levels
@@ -155,6 +161,7 @@ app.controller('AddPropertyCtrl', ['$state', '$scope', 'PropertiesSrvc', 'AdminD
     };
 
     ME.selectVentilation = function() {
+        ME.P.trace(me + "selectVentilation");
         if (ME.inputDataObj.roofVents.label == "Various Other") {
             ME.isMultiVented = true;
         } else {
@@ -170,6 +177,7 @@ app.controller('AddPropertyCtrl', ['$state', '$scope', 'PropertiesSrvc', 'AdminD
     };
 
     ME.selectPitch = function() {
+        ME.P.trace(me + "selectPitch");
         if (ME.inputDataObj.roofPitch.label == "Multi-level") {
             ME.isMultiLevel = true;
         } else {
@@ -197,6 +205,7 @@ app.controller('AddPropertyCtrl', ['$state', '$scope', 'PropertiesSrvc', 'AdminD
     };
 
     var putProperty = function(dataObj) {
+        ME.P.trace(me + "putProperty");
         ME.newPropertyVars.propertyID = 0;
         DB.query("putProperty", dataObj).then(function(resultObj) {
             if (resultObj.result == "Error" || typeof resultObj.data === "string") {
@@ -208,10 +217,9 @@ app.controller('AddPropertyCtrl', ['$state', '$scope', 'PropertiesSrvc', 'AdminD
                     ME.formVisibility = { stepOne: false, stepTwo: true };
                     ME.SubmitBtnLabel = "Add Roof";
                     insertRoof();
-                    P.refreshSalesData();
                     ngDialog.open({
                         template: '<h2>Property with single pitched roof has been added. Continue with Roof Assembly.</h2>' +
-                            '<div class="ngdialog-buttons"><button type="button" class="ngdialog-button ngdialog-button-primary" ng-click="closeThisDialog()">Close Me</button></div>',
+                            '<div class="ngdialog-buttons"><button type="button" class="ngdialog-button ngdialog-button-primary" ng-click="closeThisDialog()">Continue</button></div>',
                         className: 'ngdialog-theme-calm',
                         plain: true,
                         overlay: false
@@ -235,11 +243,12 @@ app.controller('AddPropertyCtrl', ['$state', '$scope', 'PropertiesSrvc', 'AdminD
     // Inserts a default Roof row then triggers insertion of 
     // MultiLevel and MultiVents once lastID is returned.
     var insertRoof = function() {
+        ME.P.trace(me + "insertRoof");
         var dataObj = {};
         dataObj.propertyID = ME.newPropertyVars.propertyID
         DB.query("insertRoof", dataObj).then(function(resultObj) {
             if (resultObj.result == "Error" || typeof resultObj.data === "string") {
-                alert("FALSE returned for DB.MultiLevels() at " + myName + " >>> MultiLevels()");
+                alert("FALSE returned for DB.insertRoof() at " + myName + " >>> insertRoof()");
                 console.log(resultObj.data);
             } else {
                 ME.newPropertyVars.roofID = resultObj.data.id;
@@ -250,11 +259,12 @@ app.controller('AddPropertyCtrl', ['$state', '$scope', 'PropertiesSrvc', 'AdminD
                 insertMultiVents(dataObj);
             }
         }, function(error) {
-            alert("ERROR returned for DB.MultiLevels() at " + myName + " >>> MultiLevels()");
+            alert("ERROR returned for DB.insertRoof() at " + myName + " >>> insertRoof()");
         });
     };
 
     var insertMultiVents = function(dataObj) {
+        ME.P.trace(me + "insertMultiVents");
         DB.query("insertMultiVents", dataObj).then(function(resultObj) {
             if (resultObj.result == "Error" || typeof resultObj.data === "string") {
                 alert("FALSE returned for DB.insertMultiVents() at " + myName + " >>> insertMultiVents()");
@@ -268,6 +278,7 @@ app.controller('AddPropertyCtrl', ['$state', '$scope', 'PropertiesSrvc', 'AdminD
     };
 
     var insertMultiLevels = function(dataObj) {
+        ME.P.trace(me + "insertMultiLevels");
         DB.query("insertMultiLevels", dataObj).then(function(resultObj) {
             if (resultObj.result == "Error" || typeof resultObj.data === "string") {
                 alert("FALSE returned for DB.insertMultiLevels() at " + myName + " >>> insertMultiLevels()");
@@ -285,12 +296,13 @@ app.controller('AddPropertyCtrl', ['$state', '$scope', 'PropertiesSrvc', 'AdminD
     //////////////////////////////////// BEGIN UPDATES \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     // Needed for Part Two - Default inserts for Step One, Updates for Step Two
     var updateRoof = function(dataObj) {
+        ME.P.trace(me + "updateRoof");
         DB.query("updateRoof", dataObj).then(function(resultObj) {
             if (resultObj.result == "Error" || typeof resultObj.data === "string") {
                 alert("FALSE returned for DB.updateRoof() at " + myName + " >>> updateRoof()");
                 console.log(resultObj.data);
             } else {
-                resetInputFields();
+                ME.P.refreshSalesData();// Triggers the Sales Data Cascade beginning with getProperties() in Adminshared
                 ngDialog.open({
                     template: '<h2>Roof Description accepted.  The next step would be to create a job for this property.</h2>',
                     className: 'ngdialog-theme-calm',
@@ -304,6 +316,7 @@ app.controller('AddPropertyCtrl', ['$state', '$scope', 'PropertiesSrvc', 'AdminD
     };
 
     var updateMultiLevels = function() {
+        ME.P.trace(me + "updateMultiLevels");
         ME.multiLevelObj.propertyID = ME.newPropertyVars.propertyID;
         ME.multiLevelObj.roofID = ME.newPropertyVars.roofID;
         DB.query("updateMultiLevels", ME.multiLevelObj).then(function(resultObj) {
@@ -319,6 +332,7 @@ app.controller('AddPropertyCtrl', ['$state', '$scope', 'PropertiesSrvc', 'AdminD
     };
 
     var updateMultiVents = function() {
+        ME.P.trace(me + "updateMultiVents");
         ME.multiVentObj.propertyID = ME.newPropertyVars.propertyID;
         ME.multiVentObj.roofID = ME.newPropertyVars.roofID;
         DB.query("updateMultiVents", ME.multiVentObj).then(function(resultObj) {
@@ -337,6 +351,7 @@ app.controller('AddPropertyCtrl', ['$state', '$scope', 'PropertiesSrvc', 'AdminD
 
 
     var resetInputFields = function() {
+        ME.P.trace(me + "resetInputFields");
         ME.formVisibility = { stepOne: true, stepTwo: false };
         ME.SubmitBtnLabel = "Add Property";
         ME.submitInValid = true;
@@ -388,7 +403,7 @@ app.controller('AddPropertyCtrl', ['$state', '$scope', 'PropertiesSrvc', 'AdminD
     };
 
     var createDP = function() {
-        //console.log("AddPropertyCtrl >>> createDP()");
+        ME.P.trace(me + "createDP");
         ME.PROPERTIES = DB.clone(ME.P.PROPERTIES);
         ME.CLIENTS = DB.clone(ME.P.CLIENTS);
         resetInputFields();

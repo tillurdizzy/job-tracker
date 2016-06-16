@@ -9,8 +9,10 @@ app.service('PropertiesSrvc', ['AdminSharedSrvc', 'AdminDataSrvc', function prop
     self.MULTIVENTS = S.MULTIVENTS;
     self.MULTILEVELS = S.MULTILEVELS;
 
+    var LOG = true;
+
     var createDP = function() {
-        console.log("PropertiesSrvc >>> createDP()");
+        self.trace("PropertiesSrvc >>> createDP()");
         self.PROPERTIES = DB.clone(S.PROPERTIES);
         self.PROPERTIES.unshift({ displayName: "-- Select --", PRIMARY_ID: -1 });
 
@@ -77,6 +79,12 @@ app.service('PropertiesSrvc', ['AdminSharedSrvc', 'AdminDataSrvc', function prop
             };
         };
         return rtnObj;
+    };
+
+    self.trace = function(message) {
+        if (LOG) {
+            console.log(message);
+        }
     };
 
     createDP();

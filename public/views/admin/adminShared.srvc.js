@@ -283,7 +283,6 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
 
     self.saveUpgradePrices = function(dataObj) {
         self.trace(me + "saveUpgradePrices()");
-        self.trace(me + dataObj.upgradesSelected);
         dataObj.jobID = self.proposalUnderReview.jobID;
         DB.query("updateConfigUpgradesSelected", dataObj).then(function(resultObj) {
             if (resultObj.result == "Error" || typeof resultObj.data === "string") {
@@ -1117,7 +1116,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
 
     var getShingleColors = function() {
         self.trace(me + "getShingleColors()");
-        DB.queryDB("getShingleColors").then(function(resultObj) {
+        DB.query("getShingleColors").then(function(resultObj) {
             if (resultObj.result == "Error" || typeof resultObj.data === "string") {
                 alert("Query Error - see console for details");
                 console.log("getShingleColors ---- " + resultObj.data);
