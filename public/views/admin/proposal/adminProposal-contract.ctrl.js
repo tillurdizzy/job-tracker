@@ -24,16 +24,17 @@ app.controller('AdminPropContract', ['$state', '$scope', 'AdminSharedSrvc', 'Adm
         attic_ridge_vents:true,
         ridge_shingles:true,
         ridge_shingles_upgrade:false,
-        pipes_vents:true
+        pipes_vents:true,
+        commdeck:false
     };
 
     ME.materialsList = [
-        {item:"Field Shingles",description:"",
-        {item:"Ridge Shingles",description:"",
-        {item:"Starter Shingles",description:"",
-        {item:"Drip Edge",description:"",
-        {item:"Valleys",description:"",
-        {item:"Ventilation System",description:"",
+        {item:"Field Shingles",description:""},
+        {item:"Ridge Shingles",description:""},
+        {item:"Starter Shingles",description:""},
+        {item:"Drip Edge",description:""},
+        {item:"Valleys",description:""},
+        {item:"Ventilation System",description:""}
     ];
 
     ME.ownerUpgrades = {field:"",ridge:""}
