@@ -20,6 +20,7 @@ while ($row = mysqli_fetch_object($result)) {
 	$oneVO->labor = $row->labor;
 	$oneVO->upgradesBase = $row->upgradesBase;
 	$oneVO->upgradesSelected = $row->upgradesSelected;
+	$oneVO->Clr = $row->Clr;
 	$oneVO->Fx = $row->Fx;
 	$oneVO->Base = $row->Base;
 	$oneVO->Upgrade = $row->Upgrade;

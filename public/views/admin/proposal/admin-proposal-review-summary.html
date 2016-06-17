@@ -3,11 +3,9 @@
         <button type="button" class="button alert radius" style="width:100%;" ng-click="ChildCtrl.saveMyConfig()" 
         ng-disabled="ChildCtrl.dataIsSaved">SAVE</button>
     </div>
-    <div style="margin-top: .5rem;">
-        <h2>Total Cost of Proposal: {{ChildCtrl.totalCost | currency:"$":2}}</h2>
-    </div>
+    
     <div>
-        <table st-table="ChildCtrl.lsummaryItems;" class="table table-striped" style="width:100%;">
+        <table st-table="ChildCtrl.summaryItems;" class="table table-striped" style="width:100%;">
             <thead>
                 <tr>
                     <th>Cost Item</th>

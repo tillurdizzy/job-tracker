@@ -6,6 +6,7 @@ class jobConfigVO{
 	var $labor;
 	var $upgradesBase;
 	var $upgradesSelected;
+	var $Clr;
 	var $Fx;
 	var $Base;
 	var $Upgrade;

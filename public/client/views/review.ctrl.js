@@ -20,6 +20,7 @@ app.controller('ReviewCtrl', ['$scope', '$state', 'ClientSharedSrvc', 'ngDialog'
     ME.imagePath = "client/img/";
     ME.selectedPhoto = { path: "", cap: "" };
     ME.shingleManufacturer = null;
+    ME.dataIsSaved = true;
 
     ME.shingleColors = []; // DP to choose from
 
@@ -30,7 +31,7 @@ app.controller('ReviewCtrl', ['$scope', '$state', 'ClientSharedSrvc', 'ngDialog'
     ME.UpgradeTrimNdx = "";
 
     // Shingle Color
-    ME.ColorID = "";
+    ME.ColorID = "0";
 
     ME.showUpgrades = { color: false, field: true, ridge: false, valley: false, trim: false };
     ME.showSections = { assembly: true, photos: false, scope: false, options: false, next: false };
@@ -39,7 +40,7 @@ app.controller('ReviewCtrl', ['$scope', '$state', 'ClientSharedSrvc', 'ngDialog'
     // Triggered on every 'ng-change' under Select Options
     ME.calculateTotal = function() {
         ME.C.trace(me + "calculateTotal()");
-
+        ME.dataIsSaved = false;
         ME.dataObj = {};
         var fieldCost = 0;
         var ridgeCost = 0;
@@ -173,14 +174,15 @@ app.controller('ReviewCtrl', ['$scope', '$state', 'ClientSharedSrvc', 'ngDialog'
             }
         };
 
-        ME.ColorID = ME.CONFIG.shingleColor;
         setColorChoices();
+        ME.ColorID = ME.CONFIG.shingleColor;
         setManufacturer();
     };
 
 
-    self.changeFieldShingle = function() {
+    ME.changeFieldShingle = function() {
         // Field Shingle selection is also used to switch manufacturer
+        ME.dataIsSaved = false;
         var firstChar = ME.UpgradeFieldNdx[0];
         if (firstChar === "G" || firstChar === "S") { // S is for "STD***" used for Default Field and Ridge
             var selection = "GAF";
@@ -219,14 +221,15 @@ app.controller('ReviewCtrl', ['$scope', '$state', 'ClientSharedSrvc', 'ngDialog'
 
     $scope.$watch('$viewContentLoaded', function() {
         ME.C.trace(me + "$viewContentLoaded()");
+        ME.dataIsSaved = true;
         var loggedIn = ME.C.loggedIn;
         if (!loggedIn) {
             $state.transitionTo('login');
         };
     });
 
-
     $scope.$on('client-upgrades-saved', function() {
+        ME.dataIsSaved = true;
         ngDialog.open({
             template: '<h2>Your upgrades have been saved!</h2>',
             className: 'ngdialog-theme-calm',
@@ -238,5 +241,5 @@ app.controller('ReviewCtrl', ['$scope', '$state', 'ClientSharedSrvc', 'ngDialog'
     getUpgradeOptions();
     setSelections();
     ME.calculateTotal();
-
+    
 }]);

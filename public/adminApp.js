@@ -118,6 +118,10 @@ app.config(function($stateProvider, $urlRouterProvider,$provide) {
 			url: "/summary",
 			templateUrl:"views/admin/proposal/admin-proposal-review-summary.html"
 		})
+		.state('admin.proposalsReview.contract', {
+			url: "/contract",
+			templateUrl:"views/admin/proposal/admin-proposal-review-contract.html"
+		})
 		//  <<<<<<<<<< End Jobs Review >> Proposal >>>>>>>>>>>>>
 
 		// <<<<<<<<<<< Jobs Review >> Other than Proposal>> 

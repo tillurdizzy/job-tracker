@@ -139,7 +139,7 @@
         <div class="upgrade-selections" ng-show="CTRL.showUpgrades.field">
             <div class="upgrade-item" ng-repeat="x in CTRL.shingleUpgrades">
                 <div class="check-radio-container" style="margin-bottom:10px;">
-                    <input type="radio" id="{{x.Code}}" name="Grp1" value="{{x.Code}}" ng-model="CTRL.UpgradeFieldNdx" ng-change="CTRL.changeFieldShingle()"></input>
+                    <input type="radio" id="{{x.Code}}" name="Grp1" value="{{x.Code}}" ng-model="CTRL.UpgradeFieldNdx" ng-change="CTRL.changeFieldShingle();"></input>
                     <label for="{{x.Code}}"><span></span>{{x.Item}} ({{x.upgradePrice | currency:$:2}})<a href="{{x.url}}" target="_blank"> More</a></label>
                 </div>
             </div>
@@ -161,7 +161,7 @@
             <div class="upgrade-item" ng-repeat="x in CTRL.shingleColors">
                 <div class="check-radio-container" style="margin-bottom:10px;">
                     <input type="radio" id="{{x.PRIMARY_ID}}" name="Grp5" value="{{x.PRIMARY_ID}}" ng-model="CTRL.ColorID" ng-change="CTRL.calculateTotal()"></input>
-                    <label for="{{x.PRIMARY_ID}}"><span></span>{{x.Name}}<a href="{{x.url}}" target="_blank"> More</a></label>
+                    <label for="{{x.PRIMARY_ID}}"><span></span>{{x.Name}}<a href="{{x.url}}" target="_blank"></a></label>
                 </div>
             </div>
             <horiz-rule margintop="5" marginbottom="15"></horiz-rule>
@@ -230,16 +230,17 @@
             </div>
         </div>
         <total-bar price="{{CTRL.grandTotal}}" label="Total With Upgrades"></total-bar>
-        <button type="button" style="width:100%;" ng-click="CTRL.saveJobConfig();">Save Upgrade Options</button>
+       
+        <button type="button" class="button alert radius" style="width:100%;" ng-click="CTRL.saveJobConfig();" 
+        ng-disabled="CTRL.dataIsSaved">Save Upgrade Options</button>
     </div>
     <div class="section-header-client">
-        <h2>F. What Next</h2>
-        <div class="toggle-view-icon">
-            <i class="fa fa-arrow-circle-down" ng-click="CTRL.showSections.next=true" ng-hide="CTRL.showSections.next"></i>
-            <i class="fa fa-arrow-circle-up hilite" ng-click="CTRL.showSections.next=false" ng-show="CTRL.showSections.next"></i>
-        </div>
+        <h2>F. Summary</h2>
     </div>
-    <div class="block-section-width text-block-display" ng-show="CTRL.showSections.next">
+    <div class="block-section-width text-block-display">
+        <total-bar price="{{CTRL.costSummary.clientBase}}" label="Baseline Total"></total-bar>
+        <total-bar price="{{CTRL.grandTotal}}" label="Total With Upgrades"></total-bar>
+
     </div>
 </div>
 <add-space heightpx="500"></add-space>

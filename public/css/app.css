@@ -1636,6 +1636,14 @@ input[type="radio"]:checked + label span {
   .check-radio-container label {
     margin-right: 15px; }
 
+.check-radio-contract {
+  margin: 5px 0; }
+  .check-radio-contract label {
+    margin-right: 15px;
+    font-weight: bold; }
+  .check-radio-contract p {
+    margin: 5px 0 15px 30px; }
+
 a:visited {
   color: #C0392B; }
 
@@ -2215,7 +2223,7 @@ table {
 .total-bar {
   margin: 1rem .5rem .5rem 0;
   height: 1.8rem;
-  background-color: #C0392B;
+  background-color: #2C3E50;
   color: #FFF; }
   .total-bar .left {
     float: left;
