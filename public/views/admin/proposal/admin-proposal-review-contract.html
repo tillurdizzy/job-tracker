@@ -1,97 +1,97 @@
 <div class="top page" ng-controller="AdminPropContract as ChildCtrl">
     <div style="margin-top: .5rem;">
-        <button type="button" class="button alert radius" style="width:100%;" ng-click="ChildCtrl.saveMyConfig()" ng-disabled="ChildCtrl.dataIsSaved">SAVE</button>
+        <button type="button" class="button alert radius" style="width:100%;" ng-click="ChildCtrl.updateConfigContract()" ng-disabled="ChildCtrl.dataIsSaved">SAVE</button>
     </div>
     <div style="margin: .5rem 0;">
         <h2>Contract Agreement</h2>
     </div>
     <div>
         <div class="check-radio-contract">
-            <input type="checkbox" id="remove_old" ng-model="ChildCtrl.ScopeOfWork.remove_old"></input>
+            <input type="checkbox" id="remove_old" ng-model="ChildCtrl.ScopeOfWork.remove_old" ng-change="ChildCtrl.contractChange('remove_old')"></input>
             <label for="remove_old"><span></span>Remove Old Roofing</label>
             <p>Remove existing roof system from the roof deck and haul from the site. Prepare the roof deck by nailing all raised nails and clearing debris from the roof surface left from the previous application.</p>
         </div>
 
         <div class="check-radio-contract">
-            <input type="checkbox" id="deck_replace" ng-model="ChildCtrl.ScopeOfWork.deck_replace"></input>
+            <input type="checkbox" id="deck_replace" ng-model="ChildCtrl.ScopeOfWork.deck_replace" ng-change="ChildCtrl.contractChange('deck_replace')"></input>
             <label for="deck_replace"><span></span>Remove / Replace Decking</label>
             <p>Remove existing roof deck...</p>
         </div>
 
         <div class="check-radio-contract">
-            <input type="checkbox" id="felt_underlayment" ng-model="ChildCtrl.ScopeOfWork.felt_underlayment"></input>
+            <input type="checkbox" id="felt_underlayment" ng-model="ChildCtrl.ScopeOfWork.felt_underlayment" ng-change="ChildCtrl.contractChange('felt_underlayment')"></input>
             <label for="felt_underlayment"><span></span>Felt Underlayment</label>
             <p>Install new #15 Asphalt Saturated Organic Felt underlayment over entire roof deck.</p>
         </div>
 
         <div class="check-radio-contract">
-            <input type="checkbox" id="drip_edge_extender" ng-model="ChildCtrl.ScopeOfWork.drip_edge_extender"></input>
+            <input type="checkbox" id="drip_edge_extender" ng-model="ChildCtrl.ScopeOfWork.drip_edge_extender" ng-change="ChildCtrl.contractChange('drip_edge_extender')"></input>
             <label for="drip_edge_extender"><span></span>Drip Edge Extender</label>
             <p>Install a 1” x 2” board behind the drip edge, effectivley extending the edge further out from the building. This will prevent all water from coming into contact with the fascia board, greatly extending the life of the paint on the building.</p>
         </div>
 
         <div class="check-radio-contract">
-            <input type="checkbox" id="drip_edge" ng-model="ChildCtrl.ScopeOfWork.drip_edge"></input>
+            <input type="checkbox" id="drip_edge" ng-model="ChildCtrl.ScopeOfWork.drip_edge" ng-change="ChildCtrl.contractChange('drip_edge')"></input>
             <label for="drip_edge"><span></span>Drip Edge</label>
             <p>Install new drip edge, 2" x 2" face, pre-painted and color-matched to the fascia or the roof color as chosen by owner (minimum IBC Building Code Standard).</p>
         </div>
 
         <div class="check-radio-contract">
-            <input type="checkbox" id="valley_flashing" ng-model="ChildCtrl.ScopeOfWork.valley_flashing"></input>
+            <input type="checkbox" id="valley_flashing" ng-model="ChildCtrl.ScopeOfWork.valley_flashing" ng-change="ChildCtrl.contractChange('valley_flashing')"></input>
             <label for="valley_flashing"><span></span>Valley Flashing</label>
             <p>Install 36" wide valley underlayment covered with laced shingles; tail ends extending a minimum of 1" past the fascia board intersection.</p>
         </div>
 
         <div class="check-radio-contract">
-            <input type="checkbox" id="valley_flashing_w" ng-model="ChildCtrl.ScopeOfWork.valley_flashing_w"></input>
+            <input type="checkbox" id="valley_flashing_w" ng-model="ChildCtrl.ScopeOfWork.valley_flashing_w" ng-change="ChildCtrl.contractChange('valley_flashing_w')"></input>
             <label for="valley_flashing_w"><span></span>W-Style Valley Flashing</label>
             <p>---</p>
         </div>
 
         <div class="check-radio-contract">
-            <input type="checkbox" id="starter_shingles" ng-model="ChildCtrl.ScopeOfWork.starter_shingles"></input>
+            <input type="checkbox" id="starter_shingles" ng-model="ChildCtrl.ScopeOfWork.starter_shingles" ng-change="ChildCtrl.contractChange('')"></input>
             <label for="starter_shingles"><span></span>Starter Shingles</label>
             <p>Install standard pre-cut starter strips around perimeter of roof.</p>
         </div>
 
         <div class="check-radio-contract">
-            <input type="checkbox" id="field_shingles" ng-model="ChildCtrl.ScopeOfWork.field_shingles"></input>
+            <input type="checkbox" id="field_shingles" ng-model="ChildCtrl.ScopeOfWork.field_shingles" ng-change="ChildCtrl.contractChange('field_shingles')"></input>
             <label for="field_shingles"><span></span>Field Shingles</label>
             <p>Install standard three-tab economy field shingles using four (4) nails per shingle. High wind or steep pitch application shall receive six (6) nails per shingle in accordance with manufacturers specifications when applicable.</p>
         </div>
 
         <div class="check-radio-contract">
-            <input type="checkbox" id="field_shingles_upgrade" ng-model="ChildCtrl.ScopeOfWork.field_shingles_upgrade"></input>
+            <input type="checkbox" id="field_shingles_upgrade" ng-model="ChildCtrl.ScopeOfWork.field_shingles_upgrade" ng-change="ChildCtrl.contractChange('field_shingles_upgrade')"></input>
             <label for="field_shingles_upgrade"><span></span>Upgraded Field Shingles</label>
             <p>Install owner-selected upgraded field shingles using four (4) nails per shingle. High wind or steep pitch application shall receive six (6) nails per shingle in accordance with manufacturers specifications when applicable.</p>
         </div>
 
         <div class="check-radio-contract">
-            <input type="checkbox" id="attic_ridge_vents" ng-model="ChildCtrl.ScopeOfWork.attic_ridge_vents"></input>
+            <input type="checkbox" id="attic_ridge_vents" ng-model="ChildCtrl.ScopeOfWork.attic_ridge_vents" ng-change="ChildCtrl.contractChange('')"></input>
             <label for="attic_ridge_vents"><span></span>Attic Ventilation - Ridge Vent System</label>
             <p>Install ridge vent attic ventilation system in accordance with the manufacturer's recommendations.</p>
         </div>
 
         <div class="check-radio-contract">
-            <input type="checkbox" id="ridge_shingles" ng-model="ChildCtrl.ScopeOfWork.ridge_shingles"></input>
+            <input type="checkbox" id="ridge_shingles" ng-model="ChildCtrl.ScopeOfWork.ridge_shingles" ng-change="ChildCtrl.contractChange('ridge_shingles')"></input>
             <label for="ridge_shingles"><span></span>Ridge Shingles</label>
             <p>Economy-grade shingles along hips and ridges and over the ventilation system.</p>
         </div>
 
         <div class="check-radio-contract">
-            <input type="checkbox" id="ridge_shingles_upgrade" ng-model="ChildCtrl.ScopeOfWork.ridge_shingles_upgrade"></input>
+            <input type="checkbox" id="ridge_shingles_upgrade" ng-model="ChildCtrl.ScopeOfWork.ridge_shingles_upgrade" ng-change="ChildCtrl.contractChange('ridge_shingles_upgrade')"></input>
             <label for="ridge_shingles_upgrade"><span></span>Upgraded Ridge Shingles</label>
             <p>Install owner-selected upgraded ridge shingles along hips and ridges and over the ventilation system.</p>
         </div>
 
         <div class="check-radio-contract">
-            <input type="checkbox" id="pipes_vents" ng-model="ChildCtrl.ScopeOfWork.pipes_vents"></input>
+            <input type="checkbox" id="pipes_vents" ng-model="ChildCtrl.ScopeOfWork.pipes_vents" ng-change="ChildCtrl.contractChange('')"></input>
             <label for="pipes_vents"><span></span>Pipes and Vents</label>
             <p>Install new plumbing pipes and vent stacks as needed, and paint to match roof color as close as possible.</p>
         </div>
 
         <div class="check-radio-contract">
-            <input type="checkbox" id="commdeck" ng-model="ChildCtrl.ScopeOfWork.commdeck"></input>
+            <input type="checkbox" id="commdeck" ng-model="ChildCtrl.ScopeOfWork.commdeck" ng-change="ChildCtrl.contractChange('')"></input>
             <label for="commdeck"><span></span>Satellite Plate</label>
             <p>Install new Commdeck Satellite Plate.</p>
         </div>

@@ -13,6 +13,7 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore', function jobConfigSrvc
 
     self.configLabor = [];
     self.laborTotal = [];
+    self.configContract = [];
     self.upgradeItemsBasePrice = {};
     self.costSummary = { Fx: 0, Base: 0, Sel: 0, Pm: 0, Mu: 0, muPercent: 0, clientBase: 0, clientTotal: 0 };
     self.configMargin = 0;
@@ -123,7 +124,20 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore', function jobConfigSrvc
 
         // 7. Shingle Color
         self.shingleColor = dataObj.Clr;
-        
+
+        //8. Contract config
+        self.configContract = [];
+        var contractStr = dataObj.contract;
+        if (contractStr != "") {
+            var contractArr = contractStr.split('!');
+            for (var i = 0; i < contractArr.length; i++) {
+                thisItem = contractArr[i].split(';');
+                itemObj = {};
+                itemObj.item = thisItem[0];
+                itemObj.state = convertToBoolean(thisItem[1]);
+            }
+        };
+
         // Only the jobConfig is returned
         return self.jobConfigArray;
     };

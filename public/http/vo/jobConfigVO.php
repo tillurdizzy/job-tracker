@@ -17,5 +17,6 @@ class jobConfigVO{
 	var $muPercent;
 	var $clientBase;
 	var $clientTotal;
+	var $contract;
 }
 ?>

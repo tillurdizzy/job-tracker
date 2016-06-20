@@ -31,6 +31,7 @@ while ($row = mysqli_fetch_object($result)) {
 	$oneVO->muPercent = $row->muPercent;
 	$oneVO->clientBase = $row->clientBase;
 	$oneVO->clientTotal = $row->clientTotal;
+	$oneVO->contract = $row->contract;
 	array_push( $resultValueObjects, $oneVO );
 }
 echo json_encode($resultValueObjects);

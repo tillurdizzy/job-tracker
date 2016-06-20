@@ -181,6 +181,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
         if (Object.keys(obj).length > 0) {
             self.tabsSubmitted.design = obj.config == "" ? false : true;
             self.tabsSubmitted.labor = obj.labor == "" ? false : true;
+            self.tabsSubmitted.contract = obj.contract == "" ? false : true;
             self.tabsSubmitted.summary = obj.clientBase == "" ? false : true;
             // not a tab but used below
             self.tabsSubmitted.base = obj.upgradesBase == "" ? false : true;
@@ -188,7 +189,6 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
 
         // CONFIG parses materials, labor, upgradeCost, but only returns the materials to jobConfig here
         self.jobConfig = CONFIG.parseJobConfig(ar);
-
         self.isConfigured = self.tabsSubmitted.design;
 
         mergeDataFlag.config = true;
