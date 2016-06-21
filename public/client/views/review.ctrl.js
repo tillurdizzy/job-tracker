@@ -32,9 +32,29 @@ app.controller('ReviewCtrl', ['$scope', '$state', 'ClientSharedSrvc', 'ngDialog'
 
     // Shingle Color
     ME.ColorID = "0";
+    ME.todayDate = new Date();
+    ME.inspectionDate = new Date();
 
     ME.showUpgrades = { color: false, field: true, ridge: false, valley: false, trim: false };
     ME.showSections = { assembly: true, photos: false, scope: false, options: false, next: false };
+
+    ME.ScopeOfWork = {
+        remove_old: true,
+        felt_underlayment: true,
+        deck_replace: false,
+        drip_edge_extender: false,
+        drip_edge: true,
+        valley_flashing: true,
+        valley_flashing_w: false,
+        starter_shingles: true,
+        field_shingles: true,
+        field_shingles_upgrade: false,
+        attic_ridge_vents: true,
+        ridge_shingles: true,
+        ridge_shingles_upgrade: false,
+        pipes_vents: true,
+        commdeck: false
+    };
 
 
     // Triggered on every 'ng-change' under Select Options
@@ -219,6 +239,37 @@ app.controller('ReviewCtrl', ['$scope', '$state', 'ClientSharedSrvc', 'ngDialog'
         };
     };
 
+    ME.printContract = function() {
+
+        var printContents = document.getElementById("printDiv").innerHTML;
+        var originalContents = document.body.innerHTML;
+
+        if (navigator.userAgent.toLowerCase().indexOf('chrome') > -1) {
+            var popupWin = window.open('', '_blank', 'width=600,height=600,scrollbars=no,menubar=no,toolbar=no,location=no,status=no,titlebar=no');
+            popupWin.window.focus();
+            popupWin.document.write('<!DOCTYPE html><html><head>' +
+                '<link rel="stylesheet" type="text/css" href="print.css" />' +
+                '</head><body onload="window.print()"><div class="reward-body">' + printContents + '</div></html>');
+            popupWin.onbeforeunload = function(event) {
+                popupWin.close();
+                return '.\n';
+            };
+            popupWin.onabort = function(event) {
+                popupWin.document.close();
+                popupWin.close();
+            }
+        } else {
+            var popupWin = window.open('', '_blank', 'width=800,height=600');
+            popupWin.document.open();
+            popupWin.document.write('<html><head><link rel="stylesheet" type="text/css" href="print.css" /></head><body onload="window.print()">' + printContents + '</html>');
+            popupWin.document.close();
+        }
+        popupWin.document.close();
+
+        return true;
+    }
+
+
     $scope.$watch('$viewContentLoaded', function() {
         ME.C.trace(me + "$viewContentLoaded()");
         ME.dataIsSaved = true;
@@ -241,5 +292,6 @@ app.controller('ReviewCtrl', ['$scope', '$state', 'ClientSharedSrvc', 'ngDialog'
     getUpgradeOptions();
     setSelections();
     ME.calculateTotal();
-    
+
+
 }]);

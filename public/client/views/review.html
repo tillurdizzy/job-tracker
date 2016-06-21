@@ -114,7 +114,7 @@
             <p class="hilite">Premium upgrade available below for this product.</p>
             <h3>10. Pipes and Vents</h3>
             <p>Install new plumbing pipes and vent stacks as needed, and paint to match roof color as close as possible</p>
-            <total-bar price="{{CTRL.costSummary.clientBase}}" label="Baseline Total"></total-bar>
+            <total-bar price="{{CTRL.costSummary.clientBase}}" h2="Baseline Total"></total-bar>
         </div>
     </div>
     <div class="section-header-client">
@@ -145,7 +145,6 @@
             </div>
             <horiz-rule margintop="5" marginbottom="15"></horiz-rule>
         </div>
-
         <!-- Color-->
         <div class="upgrade-level">
             <div class="upgrade-icon">
@@ -161,12 +160,13 @@
             <div class="upgrade-item" ng-repeat="x in CTRL.shingleColors">
                 <div class="check-radio-container" style="margin-bottom:10px;">
                     <input type="radio" id="{{x.PRIMARY_ID}}" name="Grp5" value="{{x.PRIMARY_ID}}" ng-model="CTRL.ColorID" ng-change="CTRL.calculateTotal()"></input>
-                    <label for="{{x.PRIMARY_ID}}"><span></span>{{x.Name}}<a href="{{x.url}}" target="_blank"></a></label>
+                    <label for="{{x.PRIMARY_ID}}"><span></span>{{x.Name}}
+                        <a href="{{x.url}}" target="_blank"></a>
+                    </label>
                 </div>
             </div>
             <horiz-rule margintop="5" marginbottom="15"></horiz-rule>
         </div>
-
         <!-- Ridge -->
         <div class="upgrade-level">
             <div class="upgrade-icon">
@@ -229,10 +229,8 @@
                 </div>
             </div>
         </div>
-        <total-bar price="{{CTRL.grandTotal}}" label="Total With Upgrades"></total-bar>
-       
-        <button type="button" class="button alert radius" style="width:100%;" ng-click="CTRL.saveJobConfig();" 
-        ng-disabled="CTRL.dataIsSaved">Save Upgrade Options</button>
+        <total-bar price="{{CTRL.grandTotal}}" h2="Total With Upgrades"></total-bar>
+        <button type="button" class="button alert radius" style="width:100%;" ng-click="CTRL.saveJobConfig();" ng-disabled="CTRL.dataIsSaved">Save Upgrade Options</button>
     </div>
     <div class="section-header-client">
         <h2>F. Summary</h2>
@@ -240,8 +238,118 @@
     <div class="block-section-width text-block-display">
         <total-bar price="{{CTRL.costSummary.clientBase}}" label="Baseline Total"></total-bar>
         <total-bar price="{{CTRL.grandTotal}}" label="Total With Upgrades"></total-bar>
-
     </div>
+    <div class="section-header-client">
+        <h2>G. Contract</h2>
+    </div>
+    <button type="button" class="button alert radius" style="width:100%;" ng-print print-element-id="printDiv"><i class="fa fa-print"></i>  Print Contract</button>
+    <div class="print" id="printDiv">
+        <div class="new-paragraph">
+            <img src="img/evo-logo-black.png" alt="">
+        </div>
+        <div>
+            <h1>Construction and Consulting Services</h1>
+            <h2>13003 Murphy Rd., Bldg. G-1</h2>
+            <h2>Stafford, TX 77477</h2>
+            <h2>281-804-9669</h2>
+        </div>
+        <div class="new-paragraph">
+            <h2>{{ CTRL.todayDate | date : "fullDate" }}</h2>
+        </div>
+        <div class="new-paragraph">
+            <h2>Client/Owner</h2>
+            <h3>{{CTRL.C.clientObj.displayName}}</h3>
+            <h3>{{CTRL.C.clientObj.street}}</h3>
+            <h3>{{CTRL.C.clientObj.city + ", " + CTRL.C.clientObj.state + " " + CTRL.C.clientObj.zip}}</h3>
+            <h3>{{CTRL.C.clientObj.phone_cell}}</h3>
+            <h3>{{CTRL.C.clientObj.email}}</h3>
+        </div>
+        
+        <div class="new-paragraph">
+            <h2>Property</h2>
+            <h3>{{CTRL.C.propertyObj.name}}</h3>
+            <h3>{{CTRL.C.propertyObj.street}}</h3>
+            <h3>{{CTRL.C.propertyObj.city + ", " + CTRL.C.propertyObj.state + " " + CTRL.C.propertyObj.zip}}</h3>
+        </div>
+
+        <p class="new-paragraph">An inspection of the property above was made on {{CTRL.inspectionDate | date:"mediumDate"}}. The following information was calculated by the inspector...</p>
+
+        <h1 class="new-paragraph">Installation Procedure</h1>
+        <div class="new-paragraph" ng-show = CTRL.ScopeOfWork.remove_old>
+            <h2>Remove Old Roofing</h2>
+            <p>Remove existing roof system from the roof deck and haul from the site. Prepare the roof deck by nailing all raised nails and clearing debris from the roof surface left from the previous application.</p>
+        </div>
+
+        <div class="new-paragraph" ng-show = CTRL.ScopeOfWork.deck_replace>
+            <h2>Remove / Replace Decking</h2>
+            <p>Remove existing roof deck...</p>
+        </div>
+
+        <div class="new-paragraph" ng-show = CTRL.ScopeOfWork.felt_underlayment>
+            <h2>Felt Underlayment</h2>
+            <p>Install new #15 Asphalt Saturated Organic Felt underlayment over entire roof deck.</p>
+        </div>
+
+        <div class="new-paragraph" ng-show = CTRL.ScopeOfWork.drip_edge_extender>
+            <h2>Drip Edge Extender</h2>
+            <p>Install a 1” x 2” board behind the drip edge, effectivley extending the edge further out from the building. This will prevent all water from coming into contact with the fascia board, greatly extending the life of the paint on the building.</p>
+        </div>
+
+        <div class="new-paragraph" ng-show = CTRL.ScopeOfWork.drip_edge>
+            <h2>Drip Edge</h2>
+            <p>Install new drip edge, 2" x 2" face, pre-painted and color-matched to the fascia or the roof color as chosen by owner (minimum IBC Building Code Standard).</p>
+        </div>
+
+        <div class="new-paragraph" ng-show = CTRL.ScopeOfWork.valley_flashing>
+            <h2>Valley Flashing</h2>
+            <p>Install 36" wide valley underlayment covered with laced shingles; tail ends extending a minimum of 1" past the fascia board intersection.</p>
+        </div>
+
+        <div class="new-paragraph" ng-show = CTRL.ScopeOfWork.valley_flashing_w>
+            <h2>W-Style Valley Flashing</h2>
+            <p>---</p>
+        </div>
+
+        <div class="new-paragraph" ng-show = CTRL.ScopeOfWork.starter_shingles>
+            <h2>Starter Shingles</h2>
+            <p>Install standard pre-cut starter strips around perimeter of roof.</p>
+        </div>
+
+        <div class="new-paragraph" ng-show = CTRL.ScopeOfWork.field_shingles>
+            <h2>Field Shingles</h2>
+            <p>Install standard three-tab economy field shingles using four (4) nails per shingle. High wind or steep pitch application shall receive six (6) nails per shingle in accordance with manufacturers specifications when applicable.</p>
+        </div>
+
+        <div class="new-paragraph" ng-show = CTRL.ScopeOfWork.field_shingles_upgrade>
+            <h2></span>Upgraded Field Shingles</h2>
+            <p>Install owner-selected upgraded field shingles using four (4) nails per shingle. High wind or steep pitch application shall receive six (6) nails per shingle in accordance with manufacturers specifications when applicable.</p>
+        </div>
+
+        <div class="new-paragraph" ng-show = CTRL.ScopeOfWork.attic_ridge_vents>
+            <h2>Attic Ventilation - Ridge Vent System</h2>
+            <p>Install ridge vent attic ventilation system in accordance with the manufacturer's recommendations.</p>
+        </div>
+
+        <div class="new-paragraph" ng-show = CTRL.ScopeOfWork.ridge_shingles>
+            <h2>Ridge Shingles</h2>
+            <p>Economy-grade shingles along hips and ridges and over the ventilation system.</p>
+        </div>
+
+        <div class="new-paragraph" ng-show = CTRL.ScopeOfWork.ridge_shingles_upgrade>
+            <h2>Upgraded Ridge Shingles</h2>
+            <p>Install owner-selected upgraded ridge shingles along hips and ridges and over the ventilation system.</p>
+        </div>
+
+        <div class="new-paragraph" ng-show = CTRL.ScopeOfWork.pipes_vents>
+            <h2>Pipes and Vents</h2>
+            <p>Install new plumbing pipes and vent stacks as needed, and paint to match roof color as close as possible.</p>
+        </div>
+
+        <div class="new-paragraph" ng-show = CTRL.ScopeOfWork.commdeck>
+            <h2>Satellite Plate</h2>
+            <p>Install new Commdeck Satellite Plate.</p>
+        </div>
+    </div>
+    <add-space heightpx="600"></add-space>
 </div>
-<add-space heightpx="500"></add-space>
 </div>
