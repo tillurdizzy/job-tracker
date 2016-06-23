@@ -1,42 +1,286 @@
 <div class="top page" ng-controller="ReviewCtrl as CTRL">
-    <div class="page-title">
-        <h2>Work Proposal</h2>
+    <div class="noprint">
+        <div class="page-title">
+            <h2>Work Proposal</h2>
+        </div>
+        <div class="section-header-client">
+            <h2>A. Proposal For:</h2>
+        </div>
+        <div class="block-section-width text-block-display" style="padding-right: 2rem;">
+            <div class="flex-space-between">
+                <div>
+                    <h4>Client/Owner</h4>
+                    <h3>{{CTRL.C.clientObj.displayName}}</h3>
+                    <h3>{{CTRL.C.clientObj.street}}</h3>
+                    <h3>{{CTRL.C.clientObj.city + ", " + CTRL.C.clientObj.state + " " + CTRL.C.clientObj.zip}}</h3>
+                    <h3>{{CTRL.C.clientObj.phone_cell}}</h3>
+                    <h3>{{CTRL.C.clientObj.email}}</h3>
+                </div>
+                <div>
+                </div>
+                <div>
+                    <h4>Property</h4>
+                    <h3>{{CTRL.C.propertyObj.name}}</h3>
+                    <h3>{{CTRL.C.propertyObj.street}}</h3>
+                    <h3>{{CTRL.C.propertyObj.city + ", " + CTRL.C.propertyObj.state + " " + CTRL.C.propertyObj.zip}}</h3>
+                </div>
+            </div>
+        </div>
+        <div class="section-header-client">
+            <h2>B. Existing Roof Assembly</h2>
+            <div class="toggle-view-icon">
+                <i class="fa fa-arrow-circle-down" ng-click="CTRL.showSections.assembly=true" ng-hide="CTRL.showSections.assembly"></i>
+                <i class="fa fa-arrow-circle-up hilite" ng-click="CTRL.showSections.assembly=false" ng-show="CTRL.showSections.assembly"></i>
+            </div>
+        </div>
+        <div class="block-section-width text-block-display" ng-show="CTRL.showSections.assembly">
+            <p>A strictly visual inspection of the existing roof assembly on the above referenced property was made on {{CTRL.C.propertyObj.createdDate | date:'fullDate'}}. To the best of our knowledge the following statements represent as accurate a description as possible from the limited observations.</p>
+            <div class="flex-space-between">
+                <div class="indent-block-client">
+                    <h3>Description</h3>
+                    <ul>
+                        <li>Levels: {{CTRL.C.existingRoofDescription.levels}}</li>
+                        <li>Deck Type: {{CTRL.C.existingRoofDescription.deck}}</li>
+                        <li>Average Pitch: {{CTRL.C.existingRoofDescription.pitch}}</li>
+                        <li>Shingles Type: {{CTRL.C.existingRoofDescription.shingles}}</li>
+                        <li>Edge Detail: {{CTRL.C.existingRoofDescription.edge}}</li>
+                        <li>Valley Detail: {{CTRL.C.existingRoofDescription.valley}}</li>
+                        <li>Ridge Detail: {{CTRL.C.existingRoofDescription.ridge}}</li>
+                        <li>Ventilation: {{CTRL.C.existingRoofDescription.ventilation}}</li>
+                    </ul>
+                </div>
+                <div class="indent-block-client" style="padding-right:3rem;">
+                    <h3>Measurements and Counts</h3>
+                    <ul>
+                        <li>Roof Area in Squares (10ft x 10ft): {{CTRL.C.jobParameters.FIELD}}</li>
+                        <li>Perimiter: {{CTRL.C.jobParameters.PRMITR}} ft.</li>
+                        <li>Eave: {{CTRL.C.existingRoofDescription.eave}} ft.</li>
+                        <li>Top Ridge: {{CTRL.C.jobParameters.TOPRDG}} ft.</li>
+                        <li>Rake Ridge: {{CTRL.C.jobParameters.RKERDG}} ft.</li>
+                        <li>Rake Wall: {{CTRL.C.existingRoofDescription.rakeWalls}} ft.</li>
+                        <li>Valley: {{CTRL.C.jobParameters.VALLEY}} ft.</li>
+                        <li>Plumbing Vents: {{CTRL.C.existingRoofDescription.plumbingVents}}</li>
+                        <li>Heater Vents: {{CTRL.C.existingRoofDescription.heaterVents}}</li>
+                        <li>Turbine Vents: {{CTRL.C.existingRoofDescription.turbines}}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="section-header-client">
+            <h2>C. Photo Gallery</h2>
+            <div class="toggle-view-icon">
+                <i class="fa fa-arrow-circle-down" ng-click="CTRL.showSections.photos=true" ng-hide="CTRL.showSections.photos"></i>
+                <i class="fa fa-arrow-circle-up hilite" ng-click="CTRL.showSections.photos=false" ng-show="CTRL.showSections.photos"></i>
+            </div>
+        </div>
+        <div class="photo-gallery" ng-show="CTRL.showSections.photos">
+            <thumb ng-repeat="img in CTRL.C.photoGallery" ndx="{{$index}}" path="{{img.thumb}}" click="CTRL.thumbClick"></thumb>
+        </div>
+        <div class="section-header-client">
+            <h2>D. Baseline Proposal and Scope of Work</h2>
+            <div class="toggle-view-icon">
+                <i class="fa fa-arrow-circle-down" ng-click="CTRL.showSections.scope=true" ng-hide="CTRL.showSections.scope"></i>
+                <i class="fa fa-arrow-circle-up hilite" ng-click="CTRL.showSections.scope=false" ng-show="CTRL.showSections.scope"></i>
+            </div>
+        </div>
+        <div class="block-section-width text-block-display" ng-show="CTRL.showSections.scope">
+            <p>The following installation represents a <span class="bold">baseline</span> roof assembly, which meets or exceeds all applicable building codes. However, these are the minimum standards. Evolution Roofing highly recommends upgrading several of these components in the following <span class="bold">Premium Upgrade Options</span> section.</p>
+            <div class="indent-block-client">
+                <h3 class="first-item">1. Pre-install</h3>
+                <p>Remove existing roof system from the roof deck and haul from the site. Prepare the roof deck by nailing all raised nails and clearing debris from the roof surface left from the previous application.</p>
+                <h3>2. Felt Underlayment</h3>
+                <p>Install new #15 Asphalt Saturated Organic Felt underlayment over entire roof deck.</p>
+                <a href="http://evolutionroofingsystems.com/#/pitched/underlayments" target="_blank">Learn More</a>
+                <h3>3. Drip Edge Extender (if selected)</h3>
+                <p class="hilite">See below to select this Premium Upgrade.</p>
+                <h3>4. New Drip Edge</h3>
+                <p>Install 2" x 2" pre-painted to match the fascia or the roof color as chosen by owner (minimum IBC Building Code Standard).</p>
+                <a href="http://evolutionroofingsystems.com/#/pitched/edge" target="_blank">Learn More</a>
+                <h3>5. Valley Flashing</h3>
+                <p>Install 36" wide valley underlayment covered with laced shingles; tail ends extending a minimum of 1" past the fascia board intersection.</p>
+                <p class="hilite">Premium upgrade available below for this product.</p>
+                <a href="http://evolutionroofingsystems.com/#/pitched/valley" target="_blank">Learn More</a>
+                <h3>6. Starter Shingles</h3>
+                <p>Install Pre-cut starter strips.</p>
+                <a href="http://www.gaf.com/Roofing/Residential/Products/Starter_Strip_Shingles/ProStart" target="_blank">Learn More</a>
+                <h3>7. Field Shingles</h3>
+                <p>Install standard three-tab economy field shingles using four (4) nails per shingle. High wind or steep pitch application shall receive six (6) nails per shingle in accordance with manufacturers specifications when applicable.</p>
+                <p class="hilite">Premium upgrade available below for this product.</p>
+                <a href="http://evolutionroofingsystems.com/#/pitched/compositionshingles" target="_blank">Learn More</a>
+                <h3>8. Attic Ventilation</h3>
+                <p>Install ridge vent attic ventilation system in accordance with the manufacturer's recommendations.</p>
+                <a href="http://evolutionroofingsystems.com/#/pitched/ventilation" target="_blank">Learn More</a>
+                <h3>9. Ridge Shingles</h3>
+                <p>Economy-grade shingles along hips and ridges and over the ventilation system.</p>
+                <p class="hilite">Premium upgrade available below for this product.</p>
+                <h3>10. Pipes and Vents</h3>
+                <p>Install new plumbing pipes and vent stacks as needed, and paint to match roof color as close as possible</p>
+                <total-bar price="{{CTRL.costSummary.clientBase}}" h2="Baseline Total"></total-bar>
+            </div>
+        </div>
+        <div class="section-header-client">
+            <h2>E. Select Options</h2>
+            <div class="toggle-view-icon">
+                <i class="fa fa-arrow-circle-down" ng-click="CTRL.showSections.options=true" ng-hide="CTRL.showSections.options"></i>
+                <i class="fa fa-arrow-circle-up hilite" ng-click="CTRL.showSections.options=false" ng-show="CTRL.showSections.options"></i>
+            </div>
+        </div>
+        <div class="block-section-width text-block-display" ng-show="CTRL.showSections.options">
+            <!-- Field -->
+            <div class="upgrade-level">
+                <div class="upgrade-icon">
+                    <i class="fa fa-arrow-circle-down" ng-click="CTRL.showUpgrades.field=true" ng-hide="CTRL.showUpgrades.field"></i>
+                    <i class="fa fa-arrow-circle-up hilite" ng-click="CTRL.showUpgrades.field=false" ng-show="CTRL.showUpgrades.field"></i>
+                </div>
+                <div class="upgrade-label">
+                    <h2>Premium Field Shingles</h2>
+                    <i class="fa fa-check-square" ng-show="CTRL.UpgradeFieldNdx!='STDFIELD'"></i>
+                </div>
+            </div>
+            <div class="upgrade-selections" ng-show="CTRL.showUpgrades.field">
+                <div class="upgrade-item" ng-repeat="x in CTRL.shingleUpgrades">
+                    <div class="check-radio-container" style="margin-bottom:10px;">
+                        <input type="radio" id="{{x.Code}}" name="Grp1" value="{{x.Code}}" ng-model="CTRL.UpgradeFieldNdx" ng-change="CTRL.changeFieldShingle();">
+                        <label for="{{x.Code}}"><span></span>{{x.Item}} ({{x.upgradePrice | currency:$:2}})<a href="{{x.url}}" target="_blank"> More</a></label>
+                    </div>
+                </div>
+                <horiz-rule margintop="5" marginbottom="15"></horiz-rule>
+            </div>
+            <!-- Color-->
+            <div class="upgrade-level">
+                <div class="upgrade-icon">
+                    <i class="fa fa-arrow-circle-down" ng-click="CTRL.showUpgrades.color=true" ng-hide="CTRL.showUpgrades.color"></i>
+                    <i class="fa fa-arrow-circle-up hilite" ng-click="CTRL.showUpgrades.color=false" ng-show="CTRL.showUpgrades.color"></i>
+                </div>
+                <div class="upgrade-label">
+                    <h2>Shingle Color</h2>
+                    <i class="fa fa-check-square" ng-show="CTRL.ColorID!='0'"></i>
+                </div>
+            </div>
+            <div class="upgrade-selections" ng-show="CTRL.showUpgrades.color">
+                <div class="upgrade-item" ng-repeat="x in CTRL.shingleColors">
+                    <div class="check-radio-container" style="margin-bottom:10px;">
+                        <input type="radio" id="{{x.PRIMARY_ID}}" name="Grp5" value="{{x.PRIMARY_ID}}" ng-model="CTRL.ColorID" ng-change="CTRL.calculateTotal()">
+                        <label for="{{x.PRIMARY_ID}}"><span></span>{{x.Name}}
+                            <a href="{{x.url}}" target="_blank"></a>
+                        </label>
+                    </div>
+                </div>
+                <horiz-rule margintop="5" marginbottom="15"></horiz-rule>
+            </div>
+            <!-- Ridge -->
+            <div class="upgrade-level">
+                <div class="upgrade-icon">
+                    <i class="fa fa-arrow-circle-down" ng-click="CTRL.showUpgrades.ridge=true" ng-hide="CTRL.showUpgrades.ridge"></i>
+                    <i class="fa fa-arrow-circle-up hilite" ng-click="CTRL.showUpgrades.ridge=false" ng-show="CTRL.showUpgrades.ridge"></i>
+                </div>
+                <div class="upgrade-label">
+                    <h2>Enhanced Ridge Shingles</h2>
+                    <i class="fa fa-check-square" ng-show="CTRL.UpgradeRidgeNdx!='STDRDG'"></i>
+                </div>
+            </div>
+            <div class="upgrade-selections" ng-show="CTRL.showUpgrades.ridge">
+                <div class="upgrade-item" ng-repeat="x in CTRL.ridgeUpgrades">
+                    <div class="check-radio-container" style="margin-bottom:10px;">
+                        <input type="radio" id="{{x.Code}}" name="Grp2" value="{{x.Code}}" ng-model="CTRL.UpgradeRidgeNdx" ng-change="CTRL.calculateTotal()">
+                        <label for="{{x.Code}}"><span></span>{{x.Item}} ({{x.upgradePrice | currency:$:2}})<a href="{{x.url}}" target="_blank"> More</a></label>
+                    </div>
+                </div>
+                <horiz-rule margintop="5" marginbottom="15"></horiz-rule>
+            </div>
+            <!-- -->
+            <!-- Valley -->
+            <div class="upgrade-level">
+                <div class="upgrade-icon">
+                    <i class="fa fa-arrow-circle-down" ng-click="CTRL.showUpgrades.valley=true" ng-hide="CTRL.showUpgrades.valley"></i>
+                    <i class="fa fa-arrow-circle-up hilite" ng-click="CTRL.showUpgrades.valley=false" ng-show="CTRL.showUpgrades.valley"></i>
+                </div>
+                <div class="upgrade-label">
+                    <h2>Premium Valley Flashing</h2>
+                    <i class="fa fa-check-square" ng-show="CTRL.UpgradeValleyNdx!='GLVVAL'"></i>
+                </div>
+            </div>
+            <div class="upgrade-selections" ng-show="CTRL.showUpgrades.valley">
+                <div class="upgrade-item" ng-repeat="x in CTRL.valleyUpgrades">
+                    <div class="check-radio-container" style="margin-bottom:10px;">
+                        <input type="radio" id="{{x.Code}}" name="Grp3" value="{{x.Code}}" ng-model="CTRL.UpgradeValleyNdx" ng-change="CTRL.calculateTotal()">
+                        <label for="{{x.Code}}"><span></span>{{x.Item}} ({{x.upgradePrice | currency:$:2}})<a href="{{x.url}}" target="_blank"> More</a></label>
+                    </div>
+                </div>
+                <horiz-rule margintop="5" marginbottom="15"></horiz-rule>
+            </div>
+            <!-- -->
+            <!-- Trim -->
+            <div class="upgrade-level">
+                <div class="upgrade-icon">
+                    <i class="fa fa-arrow-circle-down" ng-click="CTRL.showUpgrades.trim=true" ng-hide="CTRL.showUpgrades.trim"></i>
+                    <i class="fa fa-arrow-circle-up hilite" ng-click="CTRL.showUpgrades.trim=false" ng-show="CTRL.showUpgrades.trim"></i>
+                </div>
+                <div class="upgrade-label">
+                    <h2>Drip Edge Extender</h2>
+                    <i class="fa fa-check-square" ng-show="CTRL.UpgradeTrimNdx!='NOTRIM'"></i>
+                </div>
+            </div>
+            <p>This upgrade consists of placing a 1” x 2” board behind the drip edge, effectivley extending the edge further out from the building. This will prevent all water from coming into contact with the fascia board, greatly extending the life of the paint on the building.</p>
+            <div class="upgrade-selections" ng-show="CTRL.showUpgrades.trim">
+                <div class="upgrade-item" ng-repeat="x in CTRL.trimUpgrades">
+                    <div class="check-radio-container" style="margin-bottom:10px;">
+                        <input type="radio" id="{{x.Code}}" name="Grp4" value="{{x.Code}}" ng-model="CTRL.UpgradeTrimNdx" ng-change="CTRL.calculateTotal()">
+                        <label for="{{x.Code}}"><span></span>{{x.Item}} (+{{x.upgradePrice | currency:$:2}})<a href="{{x.url}}" target="_blank"> More</a></label>
+                    </div>
+                </div>
+            </div>
+            <total-bar price="{{CTRL.grandTotal}}" h2="Total With Upgrades"></total-bar>
+            <button type="button" class="button alert radius" style="width:100%;" ng-click="CTRL.saveJobConfig();" ng-disabled="CTRL.dataIsSaved">Save Upgrade Options</button>
+        </div>
+        <div class="section-header-client">
+            <h2>F. Summary</h2>
+        </div>
+        <div class="block-section-width text-block-display">
+            <total-bar price="{{CTRL.costSummary.clientBase}}" label="Baseline Total"></total-bar>
+            <total-bar price="{{CTRL.grandTotal}}" label="Total With Upgrades"></total-bar>
+        </div>
+        <div class="section-header-client">
+            <h2>G. Contract</h2>
+        </div>
+        <button type="button" class="button alert radius" style="width:100%;" onClick="window.print()"><i class="fa fa-print"></i> Print Contract</button>
     </div>
-    <div class="section-header-client">
-        <h2>A. Proposal For:</h2>
-    </div>
-    <div class="block-section-width text-block-display" style="padding-right: 2rem;">
+    <div class="print" id="printDiv">
+        <div class="evo-logo">
+            <img ng-src="img/evo-logo-black.png" alt="">
+        </div>
+        <div style="margin-top:10px;">
+            <h1>Construction and Consulting Services</h1>
+            <h2>13003 Murphy Rd., Bldg. G-1</h2>
+            <h2>Stafford, TX 77477</h2>
+            <h2>281-804-9669</h2>
+        </div>
+        <div class="new-paragraph">
+            <h1>{{ CTRL.todayDate | date : "fullDate" }}</h1>
+        </div>
+        <horiz-rule margintop="10" marginbottom="10"></horiz-rule>
         <div class="flex-space-between">
             <div>
-                <h4>Client/Owner</h4>
+                <h1>Client/Owner</h1>
                 <h3>{{CTRL.C.clientObj.displayName}}</h3>
                 <h3>{{CTRL.C.clientObj.street}}</h3>
                 <h3>{{CTRL.C.clientObj.city + ", " + CTRL.C.clientObj.state + " " + CTRL.C.clientObj.zip}}</h3>
                 <h3>{{CTRL.C.clientObj.phone_cell}}</h3>
                 <h3>{{CTRL.C.clientObj.email}}</h3>
             </div>
-            <div>
-            </div>
-            <div>
-                <h4>Property</h4>
+            <div style="margin-right:50px;">
+                <h1>Property</h1>
                 <h3>{{CTRL.C.propertyObj.name}}</h3>
                 <h3>{{CTRL.C.propertyObj.street}}</h3>
                 <h3>{{CTRL.C.propertyObj.city + ", " + CTRL.C.propertyObj.state + " " + CTRL.C.propertyObj.zip}}</h3>
             </div>
         </div>
-    </div>
-    <div class="section-header-client">
-        <h2>B. Existing Roof Assembly</h2>
-        <div class="toggle-view-icon">
-            <i class="fa fa-arrow-circle-down" ng-click="CTRL.showSections.assembly=true" ng-hide="CTRL.showSections.assembly"></i>
-            <i class="fa fa-arrow-circle-up hilite" ng-click="CTRL.showSections.assembly=false" ng-show="CTRL.showSections.assembly"></i>
-        </div>
-    </div>
-    <div class="block-section-width text-block-display" ng-show="CTRL.showSections.assembly">
+        <horiz-rule margintop="10" marginbottom="6"></horiz-rule>
+        <h1>Inspection</h1>
         <p>A strictly visual inspection of the existing roof assembly on the above referenced property was made on {{CTRL.C.propertyObj.createdDate | date:'fullDate'}}. To the best of our knowledge the following statements represent as accurate a description as possible from the limited observations.</p>
-        <div class="flex-space-between">
-            <div class="indent-block-client">
-                <h3>Description</h3>
+        <div class="flex-space-between" style="margin-top:6px;">
+            <div class="indent-block">
+                <h2>Description</h2>
                 <ul>
                     <li>Levels: {{CTRL.C.existingRoofDescription.levels}}</li>
                     <li>Deck Type: {{CTRL.C.existingRoofDescription.deck}}</li>
@@ -48,8 +292,8 @@
                     <li>Ventilation: {{CTRL.C.existingRoofDescription.ventilation}}</li>
                 </ul>
             </div>
-            <div class="indent-block-client" style="padding-right:3rem;">
-                <h3>Measurements and Counts</h3>
+            <div style="padding-right:50px;">
+                <h2>Measurements and Counts</h2>
                 <ul>
                     <li>Roof Area in Squares (10ft x 10ft): {{CTRL.C.jobParameters.FIELD}}</li>
                     <li>Perimiter: {{CTRL.C.jobParameters.PRMITR}} ft.</li>
@@ -64,292 +308,111 @@
                 </ul>
             </div>
         </div>
-    </div>
-    <div class="section-header-client">
-        <h2>C. Photo Gallery</h2>
-        <div class="toggle-view-icon">
-            <i class="fa fa-arrow-circle-down" ng-click="CTRL.showSections.photos=true" ng-hide="CTRL.showSections.photos"></i>
-            <i class="fa fa-arrow-circle-up hilite" ng-click="CTRL.showSections.photos=false" ng-show="CTRL.showSections.photos"></i>
-        </div>
-    </div>
-    <div class="photo-gallery" ng-show="CTRL.showSections.photos">
-        <thumb ng-repeat="img in CTRL.C.photoGallery" ndx={{$index}} path="{{img.thumb}}" click="CTRL.thumbClick"></thumb>
-    </div>
-    <div class="section-header-client">
-        <h2>D. Baseline Proposal and Scope of Work</h2>
-        <div class="toggle-view-icon">
-            <i class="fa fa-arrow-circle-down" ng-click="CTRL.showSections.scope=true" ng-hide="CTRL.showSections.scope"></i>
-            <i class="fa fa-arrow-circle-up hilite" ng-click="CTRL.showSections.scope=false" ng-show="CTRL.showSections.scope"></i>
-        </div>
-    </div>
-    <div class="block-section-width text-block-display" ng-show="CTRL.showSections.scope">
-        <p>The following installation represents a <span class="bold">baseline</span> roof assembly, which meets or exceeds all applicable building codes. However, these are the minimum standards. Evolution Roofing highly recommends upgrading several of these components in the following <span class="bold">Premium Upgrade Options</span> section.</p>
-        <div class="indent-block-client">
-            <h3 class="first-item">1. Pre-install</h3>
-            <p>Remove existing roof system from the roof deck and haul from the site. Prepare the roof deck by nailing all raised nails and clearing debris from the roof surface left from the previous application.</p>
-            <h3>2. Felt Underlayment</h3>
-            <p>Install new #15 Asphalt Saturated Organic Felt underlayment over entire roof deck.</p>
-            <a href="http://evolutionroofingsystems.com/#/pitched/underlayments" target="_blank">Learn More</a>
-            <h3>3. Drip Edge Extender (if selected)</h3>
-            <p class="hilite">See below to select this Premium Upgrade.</p>
-            <h3>4. New Drip Edge</h3>
-            <p>Install 2" x 2" pre-painted to match the fascia or the roof color as chosen by owner (minimum IBC Building Code Standard).</p>
-            <a href="http://evolutionroofingsystems.com/#/pitched/edge" target="_blank">Learn More</a>
-            <h3>5. Valley Flashing</h3>
-            <p>Install 36" wide valley underlayment covered with laced shingles; tail ends extending a minimum of 1" past the fascia board intersection.</p>
-            <p class="hilite">Premium upgrade available below for this product.</p>
-            <a href="http://evolutionroofingsystems.com/#/pitched/valley" target="_blank">Learn More</a>
-            <h3>6. Starter Shingles</h3>
-            <p>Install Pre-cut starter strips.</p>
-            <a href="http://www.gaf.com/Roofing/Residential/Products/Starter_Strip_Shingles/ProStart" target="_blank">Learn More</a>
-            <h3>7. Field Shingles</h3>
-            <p>Install standard three-tab economy field shingles using four (4) nails per shingle. High wind or steep pitch application shall receive six (6) nails per shingle in accordance with manufacturers specifications when applicable.</p>
-            <p class="hilite">Premium upgrade available below for this product.</p>
-            <a href="http://evolutionroofingsystems.com/#/pitched/compositionshingles" target="_blank">Learn More</a>
-            <h3>8. Attic Ventilation</h3>
-            <p>Install ridge vent attic ventilation system in accordance with the manufacturer's recommendations.</p>
-            <a href="http://evolutionroofingsystems.com/#/pitched/ventilation" target="_blank">Learn More</a>
-            <h3>9. Ridge Shingles</h3>
-            <p>Economy-grade shingles along hips and ridges and over the ventilation system.</p>
-            <p class="hilite">Premium upgrade available below for this product.</p>
-            <h3>10. Pipes and Vents</h3>
-            <p>Install new plumbing pipes and vent stacks as needed, and paint to match roof color as close as possible</p>
-            <total-bar price="{{CTRL.costSummary.clientBase}}" h2="Baseline Total"></total-bar>
-        </div>
-    </div>
-    <div class="section-header-client">
-        <h2>E. Select Options</h2>
-        <div class="toggle-view-icon">
-            <i class="fa fa-arrow-circle-down" ng-click="CTRL.showSections.options=true" ng-hide="CTRL.showSections.options"></i>
-            <i class="fa fa-arrow-circle-up hilite" ng-click="CTRL.showSections.options=false" ng-show="CTRL.showSections.options"></i>
-        </div>
-    </div>
-    <div class="block-section-width text-block-display" ng-show="CTRL.showSections.options">
-        <!-- Field -->
-        <div class="upgrade-level">
-            <div class="upgrade-icon">
-                <i class="fa fa-arrow-circle-down" ng-click="CTRL.showUpgrades.field=true" ng-hide="CTRL.showUpgrades.field"></i>
-                <i class="fa fa-arrow-circle-up hilite" ng-click="CTRL.showUpgrades.field=false" ng-show="CTRL.showUpgrades.field"></i>
-            </div>
-            <div class="upgrade-label">
-                <h2>Premium Field Shingles</h2>
-                <i class="fa fa-check-square" ng-show="CTRL.UpgradeFieldNdx!='STDFIELD'"></i>
-            </div>
-        </div>
-        <div class="upgrade-selections" ng-show="CTRL.showUpgrades.field">
-            <div class="upgrade-item" ng-repeat="x in CTRL.shingleUpgrades">
-                <div class="check-radio-container" style="margin-bottom:10px;">
-                    <input type="radio" id="{{x.Code}}" name="Grp1" value="{{x.Code}}" ng-model="CTRL.UpgradeFieldNdx" ng-change="CTRL.changeFieldShingle();"></input>
-                    <label for="{{x.Code}}"><span></span>{{x.Item}} ({{x.upgradePrice | currency:$:2}})<a href="{{x.url}}" target="_blank"> More</a></label>
-                </div>
-            </div>
-            <horiz-rule margintop="5" marginbottom="15"></horiz-rule>
-        </div>
-        <!-- Color-->
-        <div class="upgrade-level">
-            <div class="upgrade-icon">
-                <i class="fa fa-arrow-circle-down" ng-click="CTRL.showUpgrades.color=true" ng-hide="CTRL.showUpgrades.color"></i>
-                <i class="fa fa-arrow-circle-up hilite" ng-click="CTRL.showUpgrades.color=false" ng-show="CTRL.showUpgrades.color"></i>
-            </div>
-            <div class="upgrade-label">
-                <h2>Shingle Color</h2>
-                <i class="fa fa-check-square" ng-show="CTRL.ColorID!='0'"></i>
-            </div>
-        </div>
-        <div class="upgrade-selections" ng-show="CTRL.showUpgrades.color">
-            <div class="upgrade-item" ng-repeat="x in CTRL.shingleColors">
-                <div class="check-radio-container" style="margin-bottom:10px;">
-                    <input type="radio" id="{{x.PRIMARY_ID}}" name="Grp5" value="{{x.PRIMARY_ID}}" ng-model="CTRL.ColorID" ng-change="CTRL.calculateTotal()"></input>
-                    <label for="{{x.PRIMARY_ID}}"><span></span>{{x.Name}}
-                        <a href="{{x.url}}" target="_blank"></a>
-                    </label>
-                </div>
-            </div>
-            <horiz-rule margintop="5" marginbottom="15"></horiz-rule>
-        </div>
-        <!-- Ridge -->
-        <div class="upgrade-level">
-            <div class="upgrade-icon">
-                <i class="fa fa-arrow-circle-down" ng-click="CTRL.showUpgrades.ridge=true" ng-hide="CTRL.showUpgrades.ridge"></i>
-                <i class="fa fa-arrow-circle-up hilite" ng-click="CTRL.showUpgrades.ridge=false" ng-show="CTRL.showUpgrades.ridge"></i>
-            </div>
-            <div class="upgrade-label">
-                <h2>Enhanced Ridge Shingles</h2>
-                <i class="fa fa-check-square" ng-show="CTRL.UpgradeRidgeNdx!='STDRDG'"></i>
-            </div>
-        </div>
-        <div class="upgrade-selections" ng-show="CTRL.showUpgrades.ridge">
-            <div class="upgrade-item" ng-repeat="x in CTRL.ridgeUpgrades">
-                <div class="check-radio-container" style="margin-bottom:10px;">
-                    <input type="radio" id="{{x.Code}}" name="Grp2" value="{{x.Code}}" ng-model="CTRL.UpgradeRidgeNdx" ng-change="CTRL.calculateTotal()"></input>
-                    <label for="{{x.Code}}"><span></span>{{x.Item}} ({{x.upgradePrice | currency:$:2}})<a href="{{x.url}}" target="_blank"> More</a></label>
-                </div>
-            </div>
-            <horiz-rule margintop="5" marginbottom="15"></horiz-rule>
-        </div>
-        <!-- -->
-        <!-- Valley -->
-        <div class="upgrade-level">
-            <div class="upgrade-icon">
-                <i class="fa fa-arrow-circle-down" ng-click="CTRL.showUpgrades.valley=true" ng-hide="CTRL.showUpgrades.valley"></i>
-                <i class="fa fa-arrow-circle-up hilite" ng-click="CTRL.showUpgrades.valley=false" ng-show="CTRL.showUpgrades.valley"></i>
-            </div>
-            <div class="upgrade-label">
-                <h2>Premium Valley Flashing</h2>
-                <i class="fa fa-check-square" ng-show="CTRL.UpgradeValleyNdx!='GLVVAL'"></i>
-            </div>
-        </div>
-        <div class="upgrade-selections" ng-show="CTRL.showUpgrades.valley">
-            <div class="upgrade-item" ng-repeat="x in CTRL.valleyUpgrades">
-                <div class="check-radio-container" style="margin-bottom:10px;">
-                    <input type="radio" id="{{x.Code}}" name="Grp3" value="{{x.Code}}" ng-model="CTRL.UpgradeValleyNdx" ng-change="CTRL.calculateTotal()"></input>
-                    <label for="{{x.Code}}"><span></span>{{x.Item}} ({{x.upgradePrice | currency:$:2}})<a href="{{x.url}}" target="_blank"> More</a></label>
-                </div>
-            </div>
-            <horiz-rule margintop="5" marginbottom="15"></horiz-rule>
-        </div>
-        <!-- -->
-        <!-- Trim -->
-        <div class="upgrade-level">
-            <div class="upgrade-icon">
-                <i class="fa fa-arrow-circle-down" ng-click="CTRL.showUpgrades.trim=true" ng-hide="CTRL.showUpgrades.trim"></i>
-                <i class="fa fa-arrow-circle-up hilite" ng-click="CTRL.showUpgrades.trim=false" ng-show="CTRL.showUpgrades.trim"></i>
-            </div>
-            <div class="upgrade-label">
-                <h2>Drip Edge Extender</h2>
-                <i class="fa fa-check-square" ng-show="CTRL.UpgradeTrimNdx!='NOTRIM'"></i>
-            </div>
-        </div>
-        <p>This upgrade consists of placing a 1” x 2” board behind the drip edge, effectivley extending the edge further out from the building. This will prevent all water from coming into contact with the fascia board, greatly extending the life of the paint on the building.</p>
-        <div class="upgrade-selections" ng-show="CTRL.showUpgrades.trim">
-            <div class="upgrade-item" ng-repeat="x in CTRL.trimUpgrades">
-                <div class="check-radio-container" style="margin-bottom:10px;">
-                    <input type="radio" id="{{x.Code}}" name="Grp4" value="{{x.Code}}" ng-model="CTRL.UpgradeTrimNdx" ng-change="CTRL.calculateTotal()"></input>
-                    <label for="{{x.Code}}"><span></span>{{x.Item}} (+{{x.upgradePrice | currency:$:2}})<a href="{{x.url}}" target="_blank"> More</a></label>
-                </div>
-            </div>
-        </div>
-        <total-bar price="{{CTRL.grandTotal}}" h2="Total With Upgrades"></total-bar>
-        <button type="button" class="button alert radius" style="width:100%;" ng-click="CTRL.saveJobConfig();" ng-disabled="CTRL.dataIsSaved">Save Upgrade Options</button>
-    </div>
-    <div class="section-header-client">
-        <h2>F. Summary</h2>
-    </div>
-    <div class="block-section-width text-block-display">
-        <total-bar price="{{CTRL.costSummary.clientBase}}" label="Baseline Total"></total-bar>
-        <total-bar price="{{CTRL.grandTotal}}" label="Total With Upgrades"></total-bar>
-    </div>
-    <div class="section-header-client">
-        <h2>G. Contract</h2>
-    </div>
-    <button type="button" class="button alert radius" style="width:100%;" ng-print print-element-id="printDiv"><i class="fa fa-print"></i>  Print Contract</button>
-    <div class="print" id="printDiv">
-        <div class="new-paragraph">
-            <img src="img/evo-logo-black.png" alt="">
-        </div>
-        <div>
-            <h1>Construction and Consulting Services</h1>
-            <h2>13003 Murphy Rd., Bldg. G-1</h2>
-            <h2>Stafford, TX 77477</h2>
-            <h2>281-804-9669</h2>
-        </div>
-        <div class="new-paragraph">
-            <h2>{{ CTRL.todayDate | date : "fullDate" }}</h2>
-        </div>
-        <div class="new-paragraph">
-            <h2>Client/Owner</h2>
-            <h3>{{CTRL.C.clientObj.displayName}}</h3>
-            <h3>{{CTRL.C.clientObj.street}}</h3>
-            <h3>{{CTRL.C.clientObj.city + ", " + CTRL.C.clientObj.state + " " + CTRL.C.clientObj.zip}}</h3>
-            <h3>{{CTRL.C.clientObj.phone_cell}}</h3>
-            <h3>{{CTRL.C.clientObj.email}}</h3>
-        </div>
-        
-        <div class="new-paragraph">
-            <h2>Property</h2>
-            <h3>{{CTRL.C.propertyObj.name}}</h3>
-            <h3>{{CTRL.C.propertyObj.street}}</h3>
-            <h3>{{CTRL.C.propertyObj.city + ", " + CTRL.C.propertyObj.state + " " + CTRL.C.propertyObj.zip}}</h3>
-        </div>
-
-        <p class="new-paragraph">An inspection of the property above was made on {{CTRL.inspectionDate | date:"mediumDate"}}. The following information was calculated by the inspector...</p>
-
+        <horiz-rule margintop="2" marginbottom="2"></horiz-rule>
         <h1 class="new-paragraph">Installation Procedure</h1>
-        <div class="new-paragraph" ng-show = CTRL.ScopeOfWork.remove_old>
-            <h2>Remove Old Roofing</h2>
+        <div class="new-paragraph" ng-show="CTRL.ScopeOfWork.remove_old">
+            <h2>Demolition</h2>
             <p>Remove existing roof system from the roof deck and haul from the site. Prepare the roof deck by nailing all raised nails and clearing debris from the roof surface left from the previous application.</p>
         </div>
-
-        <div class="new-paragraph" ng-show = CTRL.ScopeOfWork.deck_replace>
+        <div class="new-paragraph" ng-show="CTRL.ScopeOfWork.deck_replace">
             <h2>Remove / Replace Decking</h2>
             <p>Remove existing roof deck...</p>
         </div>
-
-        <div class="new-paragraph" ng-show = CTRL.ScopeOfWork.felt_underlayment>
+        <div class="new-paragraph" ng-show="CTRL.ScopeOfWork.felt_underlayment">
             <h2>Felt Underlayment</h2>
             <p>Install new #15 Asphalt Saturated Organic Felt underlayment over entire roof deck.</p>
         </div>
-
-        <div class="new-paragraph" ng-show = CTRL.ScopeOfWork.drip_edge_extender>
+        <div class="new-paragraph" ng-show="CTRL.ScopeOfWork.drip_edge_extender">
             <h2>Drip Edge Extender</h2>
             <p>Install a 1” x 2” board behind the drip edge, effectivley extending the edge further out from the building. This will prevent all water from coming into contact with the fascia board, greatly extending the life of the paint on the building.</p>
         </div>
-
-        <div class="new-paragraph" ng-show = CTRL.ScopeOfWork.drip_edge>
+        <div class="new-paragraph" ng-show="CTRL.ScopeOfWork.drip_edge">
             <h2>Drip Edge</h2>
             <p>Install new drip edge, 2" x 2" face, pre-painted and color-matched to the fascia or the roof color as chosen by owner (minimum IBC Building Code Standard).</p>
         </div>
-
-        <div class="new-paragraph" ng-show = CTRL.ScopeOfWork.valley_flashing>
+        <div class="new-paragraph" ng-show="CTRL.ScopeOfWork.valley_flashing">
             <h2>Valley Flashing</h2>
             <p>Install 36" wide valley underlayment covered with laced shingles; tail ends extending a minimum of 1" past the fascia board intersection.</p>
         </div>
-
-        <div class="new-paragraph" ng-show = CTRL.ScopeOfWork.valley_flashing_w>
+        <div class="new-paragraph" ng-show="CTRL.ScopeOfWork.valley_flashing_w">
             <h2>W-Style Valley Flashing</h2>
             <p>---</p>
         </div>
-
-        <div class="new-paragraph" ng-show = CTRL.ScopeOfWork.starter_shingles>
+        <div class="new-paragraph" ng-show="CTRL.ScopeOfWork.starter_shingles">
             <h2>Starter Shingles</h2>
             <p>Install standard pre-cut starter strips around perimeter of roof.</p>
         </div>
-
-        <div class="new-paragraph" ng-show = CTRL.ScopeOfWork.field_shingles>
+        <div class="new-paragraph" ng-show="CTRL.ScopeOfWork.field_shingles">
             <h2>Field Shingles</h2>
             <p>Install standard three-tab economy field shingles using four (4) nails per shingle. High wind or steep pitch application shall receive six (6) nails per shingle in accordance with manufacturers specifications when applicable.</p>
         </div>
-
-        <div class="new-paragraph" ng-show = CTRL.ScopeOfWork.field_shingles_upgrade>
-            <h2></span>Upgraded Field Shingles</h2>
+        <div class="new-paragraph" ng-show="CTRL.ScopeOfWork.field_shingles_upgrade">
+            <h2>Upgraded Field Shingles</h2>
             <p>Install owner-selected upgraded field shingles using four (4) nails per shingle. High wind or steep pitch application shall receive six (6) nails per shingle in accordance with manufacturers specifications when applicable.</p>
         </div>
-
-        <div class="new-paragraph" ng-show = CTRL.ScopeOfWork.attic_ridge_vents>
+        <div class="new-paragraph" ng-show="CTRL.ScopeOfWork.attic_ridge_vents">
             <h2>Attic Ventilation - Ridge Vent System</h2>
             <p>Install ridge vent attic ventilation system in accordance with the manufacturer's recommendations.</p>
         </div>
-
-        <div class="new-paragraph" ng-show = CTRL.ScopeOfWork.ridge_shingles>
+        <div class="new-paragraph" ng-show="CTRL.ScopeOfWork.ridge_shingles">
             <h2>Ridge Shingles</h2>
             <p>Economy-grade shingles along hips and ridges and over the ventilation system.</p>
         </div>
-
-        <div class="new-paragraph" ng-show = CTRL.ScopeOfWork.ridge_shingles_upgrade>
+        <div class="new-paragraph" ng-show="CTRL.ScopeOfWork.ridge_shingles_upgrade">
             <h2>Upgraded Ridge Shingles</h2>
             <p>Install owner-selected upgraded ridge shingles along hips and ridges and over the ventilation system.</p>
         </div>
-
-        <div class="new-paragraph" ng-show = CTRL.ScopeOfWork.pipes_vents>
+        <div class="new-paragraph" ng-show="CTRL.ScopeOfWork.pipes_vents">
             <h2>Pipes and Vents</h2>
             <p>Install new plumbing pipes and vent stacks as needed, and paint to match roof color as close as possible.</p>
         </div>
-
-        <div class="new-paragraph" ng-show = CTRL.ScopeOfWork.commdeck>
+        <div class="new-paragraph" ng-show="CTRL.ScopeOfWork.commdeck">
             <h2>Satellite Plate</h2>
             <p>Install new Commdeck Satellite Plate.</p>
         </div>
     </div>
-    <add-space heightpx="600"></add-space>
-</div>
+    <horiz-rule margintop="2" marginbottom="2"></horiz-rule>
+    <h1 class="new-paragraph">Acceptance of Contract Agreement</h1>
+    <div class="small-font-paragraph">
+        <p><span class="bold">Entire Agreement: </span>This instrument constitutes the entire agreement between the parties. No prior written or contemporaneous oral promises or representations shall be binding. This contract shall not be amended, changed or extended except by written instrument signed by both parties.</p>
+    </div>
+    <div class="small-font-paragraph">
+        <p><span class="bold">Delays: </span>Professional and reasonable efforts will be made to complete the job in the proscribed period of time subject to “excusable delays” which are defined as shortage of labor or materials, or acts of God and other conditions beyond the control of Evolution Roofing, Inc.</p>
+    </div>
+
+    <div class="small-font-paragraph">
+        <p><span class="bold">Inspections: </span>Those buildings/homes in regions requiring Windstorm Certification will be installed according to Texas Windstorm Guidelines. The cost for windstorm inspection will be paid by the owner. Information will be provided to the customer so that inspections may be scheduled by the owner. Local building inspections to be paid for at an additional cost to the owner, as/if requested, and is not an element of this contract, when required. City Permits are not part of this contract and all fees associated are in addition to these prices, when required, unless specifically stated in the contract. </p>
+    </div>
+
+    <div class="small-font-paragraph">
+        <p><span class="bold">Deck Repairs: </span>If "Condition of structure" is such that it would require more than $1,500 in repairs, the installation of the membrane shall stop to allow owners to review contractor's quote for such repairs and the membrane installation shall resume once both parties have agreed to the deck repairs and contractor has completed same.</p>
+    </div>
+
+    <div class="small-font-paragraph">
+        <p><span class="bold">Limited Warranty:</span>Evolution Roofing, Inc. will warrant the completed roof for a period of _10-YEARS__ from the date of final payment/completion unless otherwise stated.  The materials of roofing system are backed by the manufacturers and are not part of the warranty from Evolution Roofing, Inc.   Evolution Roofing, Inc. will repair roofing systems during the warranty period for installation defects that result in water penetrating to the interior of the building.  Evolution Roofing, Inc. is to be notified within 24 hours from the time that a leak is detected.  Evolution Roofing, Inc. will not be held liable for consequential damages beyond the materials installed by Evolution Roofing, Inc. after completion of the roofing system.  Settlement of the building foundation or repairs could void your warranty.  Customers having foundation repairs shall notify Evolution Roofing, Inc. for an inspection of roofing system within 2 weeks of said repairs for continued roof warranty coverage.  Any deviations to the building after completion without notifying Evolution Roofing, Inc. will void the water tightness warranty of the roof system if notice is not sent to Evolution Roofing to ensure water tightness.  Evolution Roofing will provide repairs to the roofing system for a minimum trip charge of $125.00 for all non-warranty claims as a minimum, with repairs exceeding a (1) hour repair, if needed, to be billed at the owner’s expense to bring the building into warrantable condition.</p>
+    </div>
+    <h1 class="new-paragraph">Payment Terms</h1>
+    <div class="small-font-paragraph">
+        <p>Upon acceptance of this proposal by the Owner or Owners agent of above said property and by Evolution Roofing, Inc. this proposal shall become hereby referred to as the "Contract/Proposal".  Evolution Roofing, Inc. will schedule the application as stated above in accordance with the Owners representative as to the start date and times of application.   Evolution Roofing, Inc. shall be issued within 72 hours (Upon substantial completion), a statement of additional work requested hereby known as a “Punch List” to be completed by Evolution Roofing, Inc. If no “Punch List” is supplied to Evolution Roofing, Inc. either by Facsimile or by US Postal Service, Evolution Roofing, Inc. shall consider that the work has been completed as outlined on the submitted invoice. Evolution Roofing shall notify the owners of substantial completion by submission of this invoice to the owner’s representative.  Because of scheduling issues, Evolution Roofing does not assume any responsibility for this job until the customer has received a signed acceptance by a duly authorized representative of Evolution Roofing, Inc. </p>
+    </div>
+    <h1 class="new-paragraph">INSURANCE CLAIM / CONTRACTS OVER $5,000</h1>
+    <div class="small-font-paragraph">
+        <p>All contracts over $5,000 will require credit approval from Evolution Roofing and any and all funding from insurance companies to be turned over to Evolution Roofing upon acceptance of contract and deductible payments at that time, with 10% retainage held by owners until any punch list is completed. </p>
+    </div>
+    <h1 class="new-paragraph">CUSTOM ORDERED MATERIALS</h1>
+    <div class="small-font-paragraph">
+        <p>Custom ordered or custom made material or systems will require a 50% deposit of the contract.  Billings for work completed will be due upon installation of the specific outlined installations known as progression payments. Other payment terms can be negotiated with owners paying material suppliers direct and balance of contract to Evolution Roofing is available and encouraged.</p>
+    </div>
+    <div class="small-font-paragraph">
+        <p>All work guaranteed to be as specified. Payments shall be made payable to Evolution Roofing, Inc., 13003 Murphy Road Suite G-1 Stafford Texas 77477 by US Postal Service, or by delivery to an agent of Evolution Roofing, Inc. within 48 hours of completion, unless agreed upon in writing and signed by both parties.  Evolution Roofing, Inc. and its entity’s hereby notify the owners of said property that if payment is not received within 72 hours of completion, after the 72 hour grace period the property will be assessed a late fee equal to 20% of the balance due. After 30 days an additional rate of 12%, per anum until the final payment is received.</p>
+    </div>
+
+    <p>Agreed and accepted,</p>
+    <p>As Agent for Owner(s), the Agent accepts responsibility as in that he is fully authorized to make such financial obligations for the owner(s) and that by signing this contract he affirms that their signature is the only signature required for this contract to be binding.  By signing this contractual document, the agent confirms that no other signature is required under penalty of perjury.  _______Accepted As agent Evolution Roofing, Inc.</p>
+
+    As agent for Owner(s)
+
+___________________Date_____________          ________________________Date____________        
+
+    <add-space heightpx="20"></add-space>
 </div>

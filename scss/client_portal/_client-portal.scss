@@ -2,8 +2,8 @@
     width: 685px;
 }
 
-.ngdialog.ngdialog-theme-default .ngdialog-content{
-    width:685px;
+.ngdialog.ngdialog-theme-default .ngdialog-content {
+    width: 685px;
 }
 
 .section-header-client {
@@ -22,8 +22,7 @@
         margin: 0 .3rem;
         display: inline-block;
     }
-    
-    .toggle-view-icon{
+    .toggle-view-icon {
         height: 1.7rem;
         i {
             color: #FFF;
@@ -50,12 +49,12 @@ $upgrade-level-height:2.25rem;
         }
     }
     .upgrade-label {
-      display: flex;
+        display: flex;
         i {
-            align-self:center;
+            align-self: center;
             font-size: 1.5rem;
             color: $wisteria-purple;
-            margin-left:1rem;
+            margin-left: 1rem;
         }
     }
     .hilite {
@@ -66,18 +65,17 @@ $upgrade-level-height:2.25rem;
 .upgrade-selections {
     margin-left: 2.2rem;
     .upgrade-item {
-        a{
+        a {
             font-weight: normal;
             line-height: 16px;
-            text-decoration:none;
+            text-decoration: none;
         }
         a:link {
-            color:$peterRiver-blue;
+            color: $peterRiver-blue;
         }
-        a:visited{
-            color:$belizeHole-blue;
+        a:visited {
+            color: $belizeHole-blue;
         }
-
         .check-radio-container {
             label {
                 font-size: 1.1rem;
@@ -103,15 +101,15 @@ $upgrade-level-height:2.25rem;
     ul {
         margin-left: 1rem;
     }
-    a{
+    a {
         font-weight: normal;
         line-height: 16px;
     }
     a:link {
-        color:$peterRiver-blue;
+        color: $peterRiver-blue;
     }
-    a:visited{
-        color:$belizeHole-blue;
+    a:visited {
+        color: $belizeHole-blue;
     }
     h5 {
         font-weight: normal;
@@ -132,25 +130,25 @@ $upgrade-level-height:2.25rem;
         margin-right: 1rem;
     }
     h2 {
-      line-height: 1.8rem;
-      vertical-align: middle;
+        line-height: 1.8rem;
+        vertical-align: middle;
     }
 }
 
-.photo-gallery{
-    width:100%;
-    display:flex;
-    flex-wrap:wrap;
-    justify-content:space-between;
+.photo-gallery {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
     align-content: flex-start;
 }
 
-.thumb{
-    height:100px;
-    margin:0 5px 15px 5px;
-    cursor:pointer;
-    img{
-        height:100px;
+.thumb {
+    height: 100px;
+    margin: 0 5px 15px 5px;
+    cursor: pointer;
+    img {
+        height: 100px;
     }
 }
 
@@ -168,32 +166,57 @@ $upgrade-level-height:2.25rem;
         font-family: Arial, Helvetica, sans-serif;
         font-weight: bold;
         font-size: 12px;
-        margin: 0;
+        margin: 2px 0;
         line-height: 1;
     }
     h3 {
         font-family: Arial, Helvetica, sans-serif;
         font-weight: normal;
         font-size: 12px;
-        margin: 0;
+        margin: 2px 0;
         line-height: 1;
     }
     p {
         font-family: Arial, Helvetica, sans-serif;
         font-size: 12px;
-        margin: 10px 0 0 0;
+        margin: 5px 0 0 0px;
         line-height: 1;
     }
 
-    .new-paragraph{
-        margin-top:14px;
+    ul{
+        font-size: 12px;
+        margin-left:0;
+        padding-left:10px;
     }
 
-    .short-space{
-        margin-top:10px;
+    .indent-block{
+         margin-left: 10px;
     }
 
-    .tall-space{
-        margin-top:18px;
+    .underlined{
+        text-decoration: underline;
+    }
+
+    .small-font-paragraph{
+        font-size: 10px;
+        margin-top:6px;
+        p{
+            font-size: 10px;
+        }
+    }
+
+    .evo-logo {
+        margin:10px 0 0 -5px;
+        height:70px;
+        width:161px;
+    }
+    .new-paragraph {
+        margin-top: 14px;
+    }
+    .short-space {
+        margin-top: 10px;
+    }
+    .tall-space {
+        margin-top: 18px;
     }
 }
