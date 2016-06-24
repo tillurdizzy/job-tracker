@@ -23,7 +23,8 @@ app.service('ClientDataSrvc', ['$http', '$q', function($http, $q) {
         getRoof: httpPathPrefix + "getRoof.php",
         getPhotoGallery: httpPathPrefix + "getPhotos.php",
         updateConfigClient:httpPathPrefix + "updateConfigClient.php",
-        getDefaultConfigMaterials: httpPathPrefix + "getDefaultConfigMaterials.php"
+        getDefaultConfigMaterials: httpPathPrefix + "getDefaultConfigMaterials.php",
+        getSalesRepByID: httpPathPrefix + "getSalesRepByID.php"
     };
 
     self.queryDB = function(query, dataObj) {

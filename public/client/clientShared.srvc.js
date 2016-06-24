@@ -16,16 +16,17 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'JobConfigSrvc'
     self.defaultCheckedMaterials = [];
     self.jobConfig = {};
 
-
-
     self.baseLineTotal = 0;
     var baseLineItems = [];
     var mergeDataFlag = { params: false, config: false };
     self.jobResults = []; // Original array from DB
     self.propertyResults = []; // Original array from DB
+
     self.jobObj = {};
     self.clientObj = {};
     self.propertyObj = {};
+    self.salesRepObj = {};
+
     self.jobParameters = {};
     self.roofObj = {};
     self.multiVents = {};
@@ -53,6 +54,7 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'JobConfigSrvc'
         self.displayName = name;
         self.clientObj = clientObj;
         self.loggedIn = true;
+        getClientSalesRep()
         getJobsByClient();
     };
 
@@ -60,6 +62,21 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'JobConfigSrvc'
         if (LOG) {
             console.log(message);
         }
+    };
+
+    var getClientSalesRep = function(){
+        var dataObj = {};
+        dataObj.ID = self.clientObj.manager;
+        DB.queryDB("getSalesRepByID", dataObj).then(function(resultObj) {
+            if (resultObj.result == "Error") {
+                alert("Query Error - see console for details");
+                console.log("getClientSalesRep ---- " + resultObj.data);
+            } else {
+                self.salesRepObj = resultObj.data[0];
+            }
+        }, function(error) {
+            alert("Query Error - ClientSharedSrvc >> getClientSalesRep");
+        });
     };
 
     // Called from  self.LogIn()

@@ -249,11 +249,19 @@
         <div class="evo-logo">
             <img ng-src="img/evo-logo-black.png" alt="">
         </div>
-        <div style="margin-top:10px;">
-            <h1>Construction and Consulting Services</h1>
-            <h2>13003 Murphy Rd., Bldg. G-1</h2>
-            <h2>Stafford, TX 77477</h2>
-            <h2>281-804-9669</h2>
+        <div class="flex-space-between">
+            <div style="margin-top:10px;">
+                <h1>Construction and Consulting Services</h1>
+                <h2>13003 Murphy Rd., Bldg. G-1</h2>
+                <h2>Stafford, TX 77477</h2>
+                <h2>281-804-9669</h2>
+            </div>
+            <div style="margin-top:10px;">
+                <h1>Sales Rep</h1>
+                <h2>{{CTRL.C.salesRepObj.name_first + " " + CTRL.C.salesRepObj.name_last}}</h2>
+                <h2>{{CTRL.C.salesRepObj.phone}}</h2>
+                <h2>{{CTRL.C.salesRepObj.email}}</h2>
+            </div>
         </div>
         <div class="new-paragraph">
             <h1>{{ CTRL.todayDate | date : "fullDate" }}</h1>
@@ -370,8 +378,8 @@
             <h2>Satellite Plate</h2>
             <p>Install new Commdeck Satellite Plate.</p>
         </div>
-    </div>
-    <horiz-rule margintop="2" marginbottom="2"></horiz-rule>
+   
+    <horiz-rule margintop="10" marginbottom="2"></horiz-rule>
     <h1 class="new-paragraph">Acceptance of Contract Agreement</h1>
     <div class="small-font-paragraph">
         <p><span class="bold">Entire Agreement: </span>This instrument constitutes the entire agreement between the parties. No prior written or contemporaneous oral promises or representations shall be binding. This contract shall not be amended, changed or extended except by written instrument signed by both parties.</p>
@@ -389,22 +397,20 @@
     </div>
 
     <div class="small-font-paragraph">
-        <p><span class="bold">Limited Warranty:</span>Evolution Roofing, Inc. will warrant the completed roof for a period of _10-YEARS__ from the date of final payment/completion unless otherwise stated.  The materials of roofing system are backed by the manufacturers and are not part of the warranty from Evolution Roofing, Inc.   Evolution Roofing, Inc. will repair roofing systems during the warranty period for installation defects that result in water penetrating to the interior of the building.  Evolution Roofing, Inc. is to be notified within 24 hours from the time that a leak is detected.  Evolution Roofing, Inc. will not be held liable for consequential damages beyond the materials installed by Evolution Roofing, Inc. after completion of the roofing system.  Settlement of the building foundation or repairs could void your warranty.  Customers having foundation repairs shall notify Evolution Roofing, Inc. for an inspection of roofing system within 2 weeks of said repairs for continued roof warranty coverage.  Any deviations to the building after completion without notifying Evolution Roofing, Inc. will void the water tightness warranty of the roof system if notice is not sent to Evolution Roofing to ensure water tightness.  Evolution Roofing will provide repairs to the roofing system for a minimum trip charge of $125.00 for all non-warranty claims as a minimum, with repairs exceeding a (1) hour repair, if needed, to be billed at the owner’s expense to bring the building into warrantable condition.</p>
+        <p><span class="bold">Limited Warranty: </span>Evolution Roofing, Inc. will warrant the completed roof for a period of _10-YEARS__ from the date of final payment/completion unless otherwise stated.  The materials of roofing system are backed by the manufacturers and are not part of the warranty from Evolution Roofing, Inc.   Evolution Roofing, Inc. will repair roofing systems during the warranty period for installation defects that result in water penetrating to the interior of the building.  Evolution Roofing, Inc. is to be notified within 24 hours from the time that a leak is detected.  Evolution Roofing, Inc. will not be held liable for consequential damages beyond the materials installed by Evolution Roofing, Inc. after completion of the roofing system.  Settlement of the building foundation or repairs could void your warranty.  Customers having foundation repairs shall notify Evolution Roofing, Inc. for an inspection of roofing system within 2 weeks of said repairs for continued roof warranty coverage.  Any deviations to the building after completion without notifying Evolution Roofing, Inc. will void the water tightness warranty of the roof system if notice is not sent to Evolution Roofing to ensure water tightness.  Evolution Roofing will provide repairs to the roofing system for a minimum trip charge of $125.00 for all non-warranty claims as a minimum, with repairs exceeding a (1) hour repair, if needed, to be billed at the owner’s expense to bring the building into warrantable condition.</p>
     </div>
-    <h1 class="new-paragraph">Payment Terms</h1>
+   
     <div class="small-font-paragraph">
-        <p>Upon acceptance of this proposal by the Owner or Owners agent of above said property and by Evolution Roofing, Inc. this proposal shall become hereby referred to as the "Contract/Proposal".  Evolution Roofing, Inc. will schedule the application as stated above in accordance with the Owners representative as to the start date and times of application.   Evolution Roofing, Inc. shall be issued within 72 hours (Upon substantial completion), a statement of additional work requested hereby known as a “Punch List” to be completed by Evolution Roofing, Inc. If no “Punch List” is supplied to Evolution Roofing, Inc. either by Facsimile or by US Postal Service, Evolution Roofing, Inc. shall consider that the work has been completed as outlined on the submitted invoice. Evolution Roofing shall notify the owners of substantial completion by submission of this invoice to the owner’s representative.  Because of scheduling issues, Evolution Roofing does not assume any responsibility for this job until the customer has received a signed acceptance by a duly authorized representative of Evolution Roofing, Inc. </p>
+        <p><span class="bold">Payment Terms: </span>Upon acceptance of this proposal by the Owner or Owners agent of above said property and by Evolution Roofing, Inc. this proposal shall become hereby referred to as the "Contract/Proposal".  Evolution Roofing, Inc. will schedule the application as stated above in accordance with the Owners representative as to the start date and times of application.   Evolution Roofing, Inc. shall be issued within 72 hours (Upon substantial completion), a statement of additional work requested hereby known as a “Punch List” to be completed by Evolution Roofing, Inc. If no “Punch List” is supplied to Evolution Roofing, Inc. either by Facsimile or by US Postal Service, Evolution Roofing, Inc. shall consider that the work has been completed as outlined on the submitted invoice. Evolution Roofing shall notify the owners of substantial completion by submission of this invoice to the owner’s representative.  Because of scheduling issues, Evolution Roofing does not assume any responsibility for this job until the customer has received a signed acceptance by a duly authorized representative of Evolution Roofing, Inc. </p>
+        <p>Payments shall be made payable to: <span class="bold">Evolution Roofing, Inc., 13003 Murphy Road Suite G-1, Stafford Texas 77477</span> by US Postal Service, or by delivery to an agent of Evolution Roofing, Inc. within 48 hours of completion, unless agreed upon in writing and signed by both parties.  Evolution Roofing, Inc. and its entity’s hereby notify the owners of said property that if payment is not received within 72 hours of completion, after the 72 hour grace period the property will be assessed a late fee equal to 20% of the balance due. After 30 days an additional rate of 12%, per anum until the final payment is received.</p>
     </div>
-    <h1 class="new-paragraph">INSURANCE CLAIM / CONTRACTS OVER $5,000</h1>
+   
     <div class="small-font-paragraph">
-        <p>All contracts over $5,000 will require credit approval from Evolution Roofing and any and all funding from insurance companies to be turned over to Evolution Roofing upon acceptance of contract and deductible payments at that time, with 10% retainage held by owners until any punch list is completed. </p>
+        <p><span class="bold">Insurance Claim / Contracts Over $5,000: </span>All contracts over $5,000 will require credit approval from Evolution Roofing and any and all funding from insurance companies to be turned over to Evolution Roofing upon acceptance of contract and deductible payments at that time, with 10% retainage held by owners until any punch list is completed. </p>
     </div>
-    <h1 class="new-paragraph">CUSTOM ORDERED MATERIALS</h1>
+    
     <div class="small-font-paragraph">
-        <p>Custom ordered or custom made material or systems will require a 50% deposit of the contract.  Billings for work completed will be due upon installation of the specific outlined installations known as progression payments. Other payment terms can be negotiated with owners paying material suppliers direct and balance of contract to Evolution Roofing is available and encouraged.</p>
-    </div>
-    <div class="small-font-paragraph">
-        <p>All work guaranteed to be as specified. Payments shall be made payable to Evolution Roofing, Inc., 13003 Murphy Road Suite G-1 Stafford Texas 77477 by US Postal Service, or by delivery to an agent of Evolution Roofing, Inc. within 48 hours of completion, unless agreed upon in writing and signed by both parties.  Evolution Roofing, Inc. and its entity’s hereby notify the owners of said property that if payment is not received within 72 hours of completion, after the 72 hour grace period the property will be assessed a late fee equal to 20% of the balance due. After 30 days an additional rate of 12%, per anum until the final payment is received.</p>
+        <p><span class="bold">Custom Ordered Materials: </span>Custom ordered or custom made material or systems will require a 50% deposit of the contract.  Billings for work completed will be due upon installation of the specific outlined installations known as progression payments. Other payment terms can be negotiated with owners paying material suppliers direct and balance of contract to Evolution Roofing is available and encouraged.</p>
     </div>
 
     <p>Agreed and accepted,</p>
@@ -413,6 +419,6 @@
     As agent for Owner(s)
 
 ___________________Date_____________          ________________________Date____________        
-
+ </div>
     <add-space heightpx="20"></add-space>
 </div>
