@@ -9,6 +9,7 @@ app.service('ListSrvc',[function sharedLists(){
 
 
 	self.upgradeCategories = ["Field","Ridge","Valley","Edge"];
+	self.upgradeDefaultSelection = {Field:"STDFIELD",Ridge:"STDRDG",Valley:"GLVVAL",Edge:"NOTRIM"};
 
 	self.jobStatusOptions = [
 		{label:"Prospect",id:1},

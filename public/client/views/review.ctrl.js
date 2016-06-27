@@ -1,6 +1,6 @@
 'use strict';
 
-app.controller('ReviewCtrl', ['$scope', '$window','$state', 'ClientSharedSrvc', 'ngDialog', '$controller', 'JobConfigSrvc', function($scope,$window, $state, ClientSharedSrvc, ngDialog, $controller, JobConfigSrvc) {
+app.controller('ReviewCtrl', ['$scope', '$window','$state', 'ClientSharedSrvc', 'ngDialog', '$controller', 'JobConfigSrvc','ListSrvc', function($scope,$window, $state, ClientSharedSrvc, ngDialog, $controller, JobConfigSrvc,ListSrvc) {
 
     var ME = this;
 
@@ -12,6 +12,7 @@ app.controller('ReviewCtrl', ['$scope', '$window','$state', 'ClientSharedSrvc', 
 
     ME.CONFIG = JobConfigSrvc;
     ME.C = ClientSharedSrvc;
+    ME.L = ListSrvc;
     ME.UpgradeRidgeCaps = {};
     ME.UpgradeDripEdge = {};
     ME.costSummary = ME.CONFIG.costSummary;
@@ -24,11 +25,16 @@ app.controller('ReviewCtrl', ['$scope', '$window','$state', 'ClientSharedSrvc', 
 
     ME.shingleColors = []; // DP to choose from
 
+    ME.shingleUpgrades = [];
+    ME.ridgeUpgrades =  [];
+    ME.valleyUpgrades =  [];
+    ME.trimUpgrades =  [];
+
     // Holds user selection and controls the ng-show DOM elements
-    ME.UpgradeFieldNdx = "";
-    ME.UpgradeRidgeNdx = "";
-    ME.UpgradeValleyNdx = "";
-    ME.UpgradeTrimNdx = "";
+    ME.UpgradeFieldNdx = {Code:"",Item:""};
+    ME.UpgradeRidgeNdx = {Code:"",Item:""};
+    ME.UpgradeValleyNdx = {Code:"",Item:""};
+    ME.UpgradeTrimNdx = {Code:"",Item:""};
 
     // Shingle Color
     ME.ColorID = "0";
@@ -74,33 +80,37 @@ app.controller('ReviewCtrl', ['$scope', '$window','$state', 'ClientSharedSrvc', 
 
 
         for (var i = 0; i < ME.shingleUpgrades.length; i++) {
-            if (ME.shingleUpgrades[i].Code === ME.UpgradeFieldNdx) {
+            if (ME.shingleUpgrades[i].Code === ME.UpgradeFieldNdx.Code) {
                 fieldUpgrade = ME.C.decimalPrecisionTwo(Number(ME.shingleUpgrades[i].upgradePrice));
                 fieldCost = ME.C.decimalPrecisionTwo(Number(ME.shingleUpgrades[i].Total));
+                ME.UpgradeFieldNdx.Item = ME.shingleUpgrades[i].Item;
                 break;
             }
         };
 
         for (var i = 0; i < ME.ridgeUpgrades.length; i++) {
-            if (ME.ridgeUpgrades[i].Code === ME.UpgradeRidgeNdx) {
+            if (ME.ridgeUpgrades[i].Code === ME.UpgradeRidgeNdx.Code) {
                 ridgeUpgrade = ME.C.decimalPrecisionTwo(Number(ME.ridgeUpgrades[i].upgradePrice));
                 ridgeCost = ME.C.decimalPrecisionTwo(Number(ME.ridgeUpgrades[i].Total));
+                ME.UpgradeRidgeNdx.Item = ME.ridgeUpgrades[i].Item;
                 break;
             }
         };
 
         for (var i = 0; i < ME.valleyUpgrades.length; i++) {
-            if (ME.valleyUpgrades[i].Code === ME.UpgradeValleyNdx) {
+            if (ME.valleyUpgrades[i].Code === ME.UpgradeValleyNdx.Code) {
                 valleyUpgrade = ME.C.decimalPrecisionTwo(Number(ME.valleyUpgrades[i].upgradePrice));
                 valleyCost = ME.C.decimalPrecisionTwo(Number(ME.valleyUpgrades[i].Total));
+                ME.UpgradeValleyNdx.Item = ME.valleyUpgrades[i].Item;
                 break;
             }
         };
 
         for (var i = 0; i < ME.trimUpgrades.length; i++) {
-            if (ME.trimUpgrades[i].Code === ME.UpgradeTrimNdx) {
+            if (ME.trimUpgrades[i].Code === ME.UpgradeTrimNdx.Code) {
                 trimUpgrade = ME.C.decimalPrecisionTwo(Number(ME.trimUpgrades[i].upgradePrice));
                 trimCost = ME.C.decimalPrecisionTwo(Number(ME.trimUpgrades[i].Total));
+                ME.UpgradeTrimNdx.Item = ME.trimUpgrades[i].Item;
                 break;
             }
         };
@@ -122,14 +132,47 @@ app.controller('ReviewCtrl', ['$scope', '$window','$state', 'ClientSharedSrvc', 
         ME.dataObj.clientTotal = Uc + ME.dataObj.MuU;
         ME.dataObj.upgradesSelected = "Field;" + fieldCost + "!Valley;" + valleyCost + "!Ridge;" + ridgeCost + "!Edge;" + trimCost + "!Total;" + ME.dataObj.Upgrade;
 
+
+        // Contract Upgrades
+        if(ME.UpgradeFieldNdx.Code==ME.L.upgradeDefaultSelection.Field){
+            ME.ScopeOfWork.field_shingles = true;
+            ME.ScopeOfWork.field_shingles_upgrade = false;
+        }else{
+             ME.ScopeOfWork.field_shingles = false;
+            ME.ScopeOfWork.field_shingles_upgrade = true;
+        }
+
+        if(ME.UpgradeRidgeNdx.Code==ME.L.upgradeDefaultSelection.Ridge){
+            ME.ScopeOfWork.ridge_shingles = true;
+            ME.ScopeOfWork.ridge_shingles_upgrade = false;
+        }else{
+            ME.ScopeOfWork.ridge_shingles = false;
+            ME.ScopeOfWork.ridge_shingles_upgrade = true;
+        }
+
+         if(ME.UpgradeValleyNdx.Code==ME.L.upgradeDefaultSelection.Valley){
+            ME.ScopeOfWork.valley_flashing = true;
+            ME.ScopeOfWork.valley_flashing_w = false;
+        }else{
+            ME.ScopeOfWork.valley_flashing = false;
+            ME.ScopeOfWork.valley_flashing_w = true;
+        }
+
+        if(ME.UpgradeTrimNdx.Code==ME.L.upgradeDefaultSelection.Edge){
+            ME.ScopeOfWork.drip_edge = true;
+            ME.ScopeOfWork.drip_edge_extender = false;
+        }else{
+            ME.ScopeOfWork.drip_edge = false;
+            ME.ScopeOfWork.drip_edge_extender = true;
+        }
     };
 
     ME.saveJobConfig = function() {
         var items = [
-            { Category: 'Field', Code: ME.UpgradeFieldNdx },
-            { Category: 'Ridge', Code: ME.UpgradeRidgeNdx },
-            { Category: 'Valley', Code: ME.UpgradeValleyNdx },
-            { Category: 'Edge', Code: ME.UpgradeTrimNdx }
+            { Category: 'Field', Code: ME.UpgradeFieldNdx.Code },
+            { Category: 'Ridge', Code: ME.UpgradeRidgeNdx.Code },
+            { Category: 'Valley', Code: ME.UpgradeValleyNdx.Code },
+            { Category: 'Edge', Code: ME.UpgradeTrimNdx.Code }
         ];
 
         ME.dataObj.configUpdates = items;
@@ -168,28 +211,28 @@ app.controller('ReviewCtrl', ['$scope', '$window','$state', 'ClientSharedSrvc', 
         ME.C.trace(me + "setSelections()");
         for (var i = 0; i < ME.shingleUpgrades.length; i++) {
             if (ME.shingleUpgrades[i].Checked === true) {
-                ME.UpgradeFieldNdx = ME.shingleUpgrades[i].Code;
+                ME.UpgradeFieldNdx.Code = ME.shingleUpgrades[i].Code;
                 break;
             }
         };
 
         for (i = 0; i < ME.ridgeUpgrades.length; i++) {
             if (ME.ridgeUpgrades[i].Checked === true) {
-                ME.UpgradeRidgeNdx = ME.ridgeUpgrades[i].Code;
+                ME.UpgradeRidgeNdx.Code = ME.ridgeUpgrades[i].Code;
                 break;
             }
         };
 
         for (i = 0; i < ME.valleyUpgrades.length; i++) {
             if (ME.valleyUpgrades[i].Checked === true) {
-                ME.UpgradeValleyNdx = ME.valleyUpgrades[i].Code;
+                ME.UpgradeValleyNdx.Code = ME.valleyUpgrades[i].Code;
                 break;
             }
         };
 
         for (i = 0; i < ME.trimUpgrades.length; i++) {
             if (ME.trimUpgrades[i].Checked === true) {
-                ME.UpgradeTrimNdx = ME.trimUpgrades[i].Code;
+                ME.UpgradeTrimNdx.Code = ME.trimUpgrades[i].Code;
                 break;
             }
         };
@@ -203,7 +246,7 @@ app.controller('ReviewCtrl', ['$scope', '$window','$state', 'ClientSharedSrvc', 
     ME.changeFieldShingle = function() {
         // Field Shingle selection is also used to switch manufacturer
         ME.dataIsSaved = false;
-        var firstChar = ME.UpgradeFieldNdx[0];
+        var firstChar = ME.UpgradeFieldNdx.Code[0];
         if (firstChar === "G" || firstChar === "S") { // S is for "STD***" used for Default Field and Ridge
             var selection = "GAF";
         } else {
@@ -212,26 +255,27 @@ app.controller('ReviewCtrl', ['$scope', '$window','$state', 'ClientSharedSrvc', 
 
         // If the manufacturer changes, reset the Ridge Selections
         if (ME.shingleManufacturer != selection) {
-            ME.UpgradeRidgeNdx = "STDRDG";
+            ME.UpgradeRidgeNdx.Code = ME.L.upgradeDefaultSelection.Ridge;
             ME.shingleManufacturer = selection;
             ME.ridgeUpgrades = ME.C.getUpgrades("Ridge", ME.shingleManufacturer);
         };
 
         setColorChoices();
+        ME.calculateTotal();
     };
 
     var setColorChoices = function() {
         ME.ColorID = "0";
         ME.shingleColors = [];
         for (var i = 0; i < ME.C.shingleColorsList.length; i++) {
-            if (ME.C.shingleColorsList[i].Style == ME.UpgradeFieldNdx) {
+            if (ME.C.shingleColorsList[i].Style == ME.UpgradeFieldNdx.Code) {
                 ME.shingleColors.push(ME.C.shingleColorsList[i]);
             }
         }
     };
 
     var setManufacturer = function() {
-        var firstChar = ME.UpgradeFieldNdx[0];
+        var firstChar = ME.UpgradeFieldNdx.Code[0];
         if (firstChar === "G" || firstChar === "S") {
             ME.shingleManufacturer = "GAF";
         } else {

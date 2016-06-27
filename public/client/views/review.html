@@ -26,6 +26,8 @@
                 </div>
             </div>
         </div>
+
+        <!-- /////////////////////////////////////////// ROOF \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
         <div class="section-header-client">
             <h2>B. Existing Roof Assembly</h2>
             <div class="toggle-view-icon">
@@ -66,6 +68,8 @@
                 </div>
             </div>
         </div>
+
+        <!-- /////////////////////////////////////////// GALLERY \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
         <div class="section-header-client">
             <h2>C. Photo Gallery</h2>
             <div class="toggle-view-icon">
@@ -76,6 +80,9 @@
         <div class="photo-gallery" ng-show="CTRL.showSections.photos">
             <thumb ng-repeat="img in CTRL.C.photoGallery" ndx="{{$index}}" path="{{img.thumb}}" click="CTRL.thumbClick"></thumb>
         </div>
+
+
+        <!-- /////////////////////////////////////////// SCOPE \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
         <div class="section-header-client">
             <h2>D. Baseline Proposal and Scope of Work</h2>
             <div class="toggle-view-icon">
@@ -118,6 +125,10 @@
                 <total-bar price="{{CTRL.costSummary.clientBase}}" h2="Baseline Total"></total-bar>
             </div>
         </div>
+
+
+
+        <!-- /////////////////////////////////////////// OPTIONS \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
         <div class="section-header-client">
             <h2>E. Select Options</h2>
             <div class="toggle-view-icon">
@@ -134,13 +145,13 @@
                 </div>
                 <div class="upgrade-label">
                     <h2>Premium Field Shingles</h2>
-                    <i class="fa fa-check-square" ng-show="CTRL.UpgradeFieldNdx!='STDFIELD'"></i>
+                    <i class="fa fa-check-square" ng-show="CTRL.UpgradeFieldNdx.Code!=CTRL.L.upgradeDefaultSelection.Field"></i>
                 </div>
             </div>
             <div class="upgrade-selections" ng-show="CTRL.showUpgrades.field">
                 <div class="upgrade-item" ng-repeat="x in CTRL.shingleUpgrades">
                     <div class="check-radio-container" style="margin-bottom:10px;">
-                        <input type="radio" id="{{x.Code}}" name="Grp1" value="{{x.Code}}" ng-model="CTRL.UpgradeFieldNdx" ng-change="CTRL.changeFieldShingle();">
+                        <input type="radio" id="{{x.Code}}" name="Grp1" value="{{x.Code}}" ng-model="CTRL.UpgradeFieldNdx.Code" ng-change="CTRL.changeFieldShingle();">
                         <label for="{{x.Code}}"><span></span>{{x.Item}} ({{x.upgradePrice | currency:$:2}})<a href="{{x.url}}" target="_blank"> More</a></label>
                     </div>
                 </div>
@@ -176,13 +187,13 @@
                 </div>
                 <div class="upgrade-label">
                     <h2>Enhanced Ridge Shingles</h2>
-                    <i class="fa fa-check-square" ng-show="CTRL.UpgradeRidgeNdx!='STDRDG'"></i>
+                    <i class="fa fa-check-square" ng-show="CTRL.UpgradeRidgeNdx.Code!=CTRL.L.upgradeDefaultSelection.Ridge"></i>
                 </div>
             </div>
             <div class="upgrade-selections" ng-show="CTRL.showUpgrades.ridge">
                 <div class="upgrade-item" ng-repeat="x in CTRL.ridgeUpgrades">
                     <div class="check-radio-container" style="margin-bottom:10px;">
-                        <input type="radio" id="{{x.Code}}" name="Grp2" value="{{x.Code}}" ng-model="CTRL.UpgradeRidgeNdx" ng-change="CTRL.calculateTotal()">
+                        <input type="radio" id="{{x.Code}}" name="Grp2" value="{{x.Code}}" ng-model="CTRL.UpgradeRidgeNdx.Code" ng-change="CTRL.calculateTotal()">
                         <label for="{{x.Code}}"><span></span>{{x.Item}} ({{x.upgradePrice | currency:$:2}})<a href="{{x.url}}" target="_blank"> More</a></label>
                     </div>
                 </div>
@@ -197,13 +208,13 @@
                 </div>
                 <div class="upgrade-label">
                     <h2>Premium Valley Flashing</h2>
-                    <i class="fa fa-check-square" ng-show="CTRL.UpgradeValleyNdx!='GLVVAL'"></i>
+                    <i class="fa fa-check-square" ng-show="CTRL.UpgradeValleyNdx.Code!=CTRL.L.upgradeDefaultSelection.Valley"></i>
                 </div>
             </div>
             <div class="upgrade-selections" ng-show="CTRL.showUpgrades.valley">
                 <div class="upgrade-item" ng-repeat="x in CTRL.valleyUpgrades">
                     <div class="check-radio-container" style="margin-bottom:10px;">
-                        <input type="radio" id="{{x.Code}}" name="Grp3" value="{{x.Code}}" ng-model="CTRL.UpgradeValleyNdx" ng-change="CTRL.calculateTotal()">
+                        <input type="radio" id="{{x.Code}}" name="Grp3" value="{{x.Code}}" ng-model="CTRL.UpgradeValleyNdx.Code" ng-change="CTRL.calculateTotal()">
                         <label for="{{x.Code}}"><span></span>{{x.Item}} ({{x.upgradePrice | currency:$:2}})<a href="{{x.url}}" target="_blank"> More</a></label>
                     </div>
                 </div>
@@ -218,14 +229,14 @@
                 </div>
                 <div class="upgrade-label">
                     <h2>Drip Edge Extender</h2>
-                    <i class="fa fa-check-square" ng-show="CTRL.UpgradeTrimNdx!='NOTRIM'"></i>
+                    <i class="fa fa-check-square" ng-show="CTRL.UpgradeTrimNdx.Code!=CTRL.L.upgradeDefaultSelection.Edge"></i>
                 </div>
             </div>
             <p>This upgrade consists of placing a 1” x 2” board behind the drip edge, effectivley extending the edge further out from the building. This will prevent all water from coming into contact with the fascia board, greatly extending the life of the paint on the building.</p>
             <div class="upgrade-selections" ng-show="CTRL.showUpgrades.trim">
                 <div class="upgrade-item" ng-repeat="x in CTRL.trimUpgrades">
                     <div class="check-radio-container" style="margin-bottom:10px;">
-                        <input type="radio" id="{{x.Code}}" name="Grp4" value="{{x.Code}}" ng-model="CTRL.UpgradeTrimNdx" ng-change="CTRL.calculateTotal()">
+                        <input type="radio" id="{{x.Code}}" name="Grp4" value="{{x.Code}}" ng-model="CTRL.UpgradeTrimNdx.Code" ng-change="CTRL.calculateTotal()">
                         <label for="{{x.Code}}"><span></span>{{x.Item}} (+{{x.upgradePrice | currency:$:2}})<a href="{{x.url}}" target="_blank"> More</a></label>
                     </div>
                 </div>
@@ -233,6 +244,8 @@
             <total-bar price="{{CTRL.grandTotal}}" h2="Total With Upgrades"></total-bar>
             <button type="button" class="button alert radius" style="width:100%;" ng-click="CTRL.saveJobConfig();" ng-disabled="CTRL.dataIsSaved">Save Upgrade Options</button>
         </div>
+
+        <!-- /////////////////////////////////////////// SUMMARY \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
         <div class="section-header-client">
             <h2>F. Summary</h2>
         </div>
@@ -240,6 +253,10 @@
             <total-bar price="{{CTRL.costSummary.clientBase}}" label="Baseline Total"></total-bar>
             <total-bar price="{{CTRL.grandTotal}}" label="Total With Upgrades"></total-bar>
         </div>
+
+
+
+         <!-- /////////////////////////////////////////// CONTRACT \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
         <div class="section-header-client">
             <h2>G. Contract</h2>
         </div>
@@ -317,7 +334,7 @@
             </div>
         </div>
         <horiz-rule margintop="2" marginbottom="2"></horiz-rule>
-        <h1 class="new-paragraph">Installation Procedure</h1>
+        <h1 class="new-paragraph">Installation and Materials</h1>
         <div class="new-paragraph" ng-show="CTRL.ScopeOfWork.remove_old">
             <h2>Demolition</h2>
             <p>Remove existing roof system from the roof deck and haul from the site. Prepare the roof deck by nailing all raised nails and clearing debris from the roof surface left from the previous application.</p>
@@ -328,7 +345,7 @@
         </div>
         <div class="new-paragraph" ng-show="CTRL.ScopeOfWork.felt_underlayment">
             <h2>Felt Underlayment</h2>
-            <p>Install new #15 Asphalt Saturated Organic Felt underlayment over entire roof deck.</p>
+            <p>Install new <span class="bold">#15 Asphalt Saturated Organic Felt</span> underlayment over entire roof deck.</p>
         </div>
         <div class="new-paragraph" ng-show="CTRL.ScopeOfWork.drip_edge_extender">
             <h2>Drip Edge Extender</h2>
@@ -340,7 +357,7 @@
         </div>
         <div class="new-paragraph" ng-show="CTRL.ScopeOfWork.valley_flashing">
             <h2>Valley Flashing</h2>
-            <p>Install 36" wide valley underlayment covered with laced shingles; tail ends extending a minimum of 1" past the fascia board intersection.</p>
+            <p>Install <span class="bold">36" Wide Valley Underlayment covered with Laced Shingles</span>; tail ends extending a minimum of 1" past the fascia board intersection.</p>
         </div>
         <div class="new-paragraph" ng-show="CTRL.ScopeOfWork.valley_flashing_w">
             <h2>W-Style Valley Flashing</h2>
@@ -352,23 +369,23 @@
         </div>
         <div class="new-paragraph" ng-show="CTRL.ScopeOfWork.field_shingles">
             <h2>Field Shingles</h2>
-            <p>Install standard three-tab economy field shingles using four (4) nails per shingle. High wind or steep pitch application shall receive six (6) nails per shingle in accordance with manufacturers specifications when applicable.</p>
+            <p>Install <span class="bold">Standard 3-Tab Economy field shingles using four (4) nails per shingle. High wind or steep pitch application shall receive six (6) nails per shingle in accordance with manufacturers specifications when applicable.</p>
         </div>
         <div class="new-paragraph" ng-show="CTRL.ScopeOfWork.field_shingles_upgrade">
             <h2>Upgraded Field Shingles</h2>
-            <p>Install owner-selected upgraded field shingles using four (4) nails per shingle. High wind or steep pitch application shall receive six (6) nails per shingle in accordance with manufacturers specifications when applicable.</p>
+            <p>Install owner-selected upgraded field shingles <span class="bold">({{CTRL.UpgradeFieldNdx.Item}})</span> using four (4) nails per shingle. High wind or steep pitch application shall receive six (6) nails per shingle in accordance with manufacturers specifications when applicable.</p>
         </div>
         <div class="new-paragraph" ng-show="CTRL.ScopeOfWork.attic_ridge_vents">
             <h2>Attic Ventilation - Ridge Vent System</h2>
-            <p>Install ridge vent attic ventilation system in accordance with the manufacturer's recommendations.</p>
+            <p>Install <span class="bold">Ridge Vent Attic Ventilation System</span> in accordance with the manufacturer's recommendations.</p>
         </div>
         <div class="new-paragraph" ng-show="CTRL.ScopeOfWork.ridge_shingles">
             <h2>Ridge Shingles</h2>
-            <p>Economy-grade shingles along hips and ridges and over the ventilation system.</p>
+            <p>Install standard <span class="bold">Economy-grade 3-Tab Shingles</span> along hips and ridges and over the ventilation system.</p>
         </div>
         <div class="new-paragraph" ng-show="CTRL.ScopeOfWork.ridge_shingles_upgrade">
             <h2>Upgraded Ridge Shingles</h2>
-            <p>Install owner-selected upgraded ridge shingles along hips and ridges and over the ventilation system.</p>
+            <p>Install owner-selected upgraded ridge shingles <span class="bold">({{CTRL.UpgradeFieldNdx.Item}})</span> along hips and ridges and over the ventilation system.</p>
         </div>
         <div class="new-paragraph" ng-show="CTRL.ScopeOfWork.pipes_vents">
             <h2>Pipes and Vents</h2>
@@ -378,6 +395,8 @@
             <h2>Satellite Plate</h2>
             <p>Install new Commdeck Satellite Plate.</p>
         </div>
+    <horiz-rule margintop="10" marginbottom="2"></horiz-rule>
+    <h1 class="new-paragraph">Price</h1>
    
     <horiz-rule margintop="10" marginbottom="2"></horiz-rule>
     <h1 class="new-paragraph">Acceptance of Contract Agreement</h1>
