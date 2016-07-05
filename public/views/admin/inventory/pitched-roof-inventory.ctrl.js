@@ -31,6 +31,12 @@ app.controller('PitchedRoofInventoryCtrl', ['$state', '$scope', 'SharedSrvc', 'A
         resetInputFields();
     };
 
+     ME.updatePrice = function() {
+        ME.EditMode = "Update Price";
+        ME.modePrompt = "Update Price: Select item from list or table below.";
+        resetInputFields();
+    };
+
     ME.removeItem = function() {
         ME.EditMode = "Remove Item";
         ME.modePrompt = "Remove Item: Select item from list or table below.";

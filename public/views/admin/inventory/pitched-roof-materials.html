@@ -8,20 +8,25 @@
             <ul>
                 <li ng-class="{ active: Invt.EditMode == 'Add Item'}" ng-click="Invt.addItem()"><a>Add Item</a></li>
                 <li ng-class="{ active: Invt.EditMode == 'Update Item'}" ng-click="Invt.updateItem()"><a>Update Item</a></li>
+                <li ng-class="{ active: Invt.EditMode == 'Update Price'}" ng-click="Invt.updatePrice()"><a>Update Price</a></li>
                 <li ng-class="{ active: Invt.EditMode == 'Remove Item'}" ng-click="Invt.removeItem()"><a>Remove Item</a></li>
             </ul>
         </div>
+
         <horiz-rule margintop="5" marginbottom="5"></horiz-rule>
+
         <div class="text-input-form-item-min">
             <h2>{{Invt.modePrompt}}</h2>
             <select ng-model="Invt.itemSelected" ng-options="c.Item for c in Invt.pitchedInventoryList" ng-change="Invt.selectItem();" ng-hide="Invt.EditMode=='Add Item'"></select>
         </div>
+
         <horiz-rule margintop="5" marginbottom="5"></horiz-rule>
         
         <div class="text-input-form-item" style="margin-top:2rem;">
             <label>Item</label>
             <input type="text" ng-model="Invt.inputDataObj.Item" style="width:600px" ng-change="Invt.formChange();">
         </div>
+
         <div class="flex-row">
             <div style="width:50%">
                 <div class="text-input-form-item">
@@ -88,9 +93,11 @@
             <label>url</label>
             <input type="text" ng-model="Invt.inputDataObj.url" style="width:600px" ng-change="Invt.formChange();">
         </div>
+
         <button type="button" class="button radius" ng-click="Invt.submit()" style="margin-top: 1rem; width:100%;">{{Invt.EditMode}}</button>
-        
+
     </div>
+
     <div class="bottom">
     <horiz-rule margintop="15" marginbottom="5"></horiz-rule>
     <button type="button" class="button radius" ng-click="Invt.refreshInventoryList();" style="margin-bottom: 5px;">Refresh Inventory List</button>

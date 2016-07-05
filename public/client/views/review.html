@@ -385,7 +385,7 @@
         </div>
         <div class="new-paragraph" ng-show="CTRL.ScopeOfWork.ridge_shingles_upgrade">
             <h2>Upgraded Ridge Shingles</h2>
-            <p>Install owner-selected upgraded ridge shingles <span class="bold">({{CTRL.UpgradeFieldNdx.Item}})</span> along hips and ridges and over the ventilation system.</p>
+            <p>Install owner-selected upgraded ridge shingles <span class="bold">({{CTRL.UpgradeRidgeNdx.Item}})</span> along hips and ridges and over the ventilation system.</p>
         </div>
         <div class="new-paragraph" ng-show="CTRL.ScopeOfWork.pipes_vents">
             <h2>Pipes and Vents</h2>
@@ -395,8 +395,12 @@
             <h2>Satellite Plate</h2>
             <p>Install new Commdeck Satellite Plate.</p>
         </div>
-    <horiz-rule margintop="10" marginbottom="2"></horiz-rule>
-    <h1 class="new-paragraph">Price</h1>
+    <horiz-rule margintop="10" marginbottom="10"></horiz-rule>
+    <div class="flex-space-between">
+        <h1>Contract Amount</h1>
+        <div></div>
+        <h1>{{CTRL.grandTotal}}</h1>
+    </div>
    
     <horiz-rule margintop="10" marginbottom="2"></horiz-rule>
     <h1 class="new-paragraph">Acceptance of Contract Agreement</h1>
@@ -431,13 +435,22 @@
     <div class="small-font-paragraph">
         <p><span class="bold">Custom Ordered Materials: </span>Custom ordered or custom made material or systems will require a 50% deposit of the contract.  Billings for work completed will be due upon installation of the specific outlined installations known as progression payments. Other payment terms can be negotiated with owners paying material suppliers direct and balance of contract to Evolution Roofing is available and encouraged.</p>
     </div>
+    <horiz-rule margintop="10" marginbottom="2"></horiz-rule>
+    <p><span class="bold">Agreed and accepted,</span></p>
+    <add-space heightpx="20"></add-space>
+    <p>As agent Evolution Roofing, Inc.</p>
+    <add-space heightpx="40"></add-space>
+    <p>________________________________ Date _________________</p>
+    <add-space heightpx="20"></add-space>
 
-    <p>Agreed and accepted,</p>
-    <p>As Agent for Owner(s), the Agent accepts responsibility as in that he is fully authorized to make such financial obligations for the owner(s) and that by signing this contract he affirms that their signature is the only signature required for this contract to be binding.  By signing this contractual document, the agent confirms that no other signature is required under penalty of perjury.  _______Accepted As agent Evolution Roofing, Inc.</p>
+    <p>As agent for Owner(s)</p>
+    <add-space heightpx="40"></add-space>
+    <p>________________________________ Date _________________</p>
 
-    As agent for Owner(s)
-
-___________________Date_____________          ________________________Date____________        
+   <add-space heightpx="10"></add-space>
+    <div class="small-font-paragraph">
+        <p>As Agent for Owner(s),the Agent accepts responsibility as in that he is fully authorized to make such financial obligations for the owner(s) and that by signing this contract he affirms that their signature is the only signature required for this contract to be binding.  By signing this contractual document, the agent confirms that no other signature is required under penalty of perjury.</p>
+    </div>     
  </div>
     <add-space heightpx="20"></add-space>
 </div>
