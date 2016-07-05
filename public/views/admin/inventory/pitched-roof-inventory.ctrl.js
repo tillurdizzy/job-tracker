@@ -8,7 +8,7 @@ app.controller('PitchedRoofInventoryCtrl', ['$state', '$scope', 'SharedSrvc', 'A
 
     ME.pitchedInventoryList = [];
     ME.EditMode = "Add Item";
-    ME.modePrompt = "Add New Item: Fill in the form and submit.";
+    ME.modePrompt = "Add New Item: Choose an item for example if needed.";
     ME.inputDataObj = {};
     ME.formStatus = "Pristine";
     ME.itemSelected = {};
@@ -20,26 +20,32 @@ app.controller('PitchedRoofInventoryCtrl', ['$state', '$scope', 'SharedSrvc', 'A
         Checked: ME.S.trueFalse[0]
     };
 
+    ME.sampleDataObj = {};
+
     ME.addItem = function() {
         ME.EditMode = "Add Item";
-        ME.modePrompt = "Add New Item: Fill in the form and submit.";
+        ME.modePrompt = "Add New Item: Choose an item for example if needed.";
+        $state.transitionTo("admin.pitchedInventory.addItem");
         //resetInputFields();
     };
     ME.updateItem = function() {
         ME.EditMode = "Update Item";
         ME.modePrompt = "Update Item: Select item from list or table below.";
+        $state.transitionTo("admin.pitchedInventory.updateItem");
         resetInputFields();
     };
 
      ME.updatePrice = function() {
         ME.EditMode = "Update Price";
         ME.modePrompt = "Update Price: Select item from list or table below.";
+        $state.transitionTo("admin.pitchedInventory.updatePrice");
         resetInputFields();
     };
 
     ME.removeItem = function() {
         ME.EditMode = "Remove Item";
         ME.modePrompt = "Remove Item: Select item from list or table below.";
+        $state.transitionTo("admin.pitchedInventory.removeItem");
         resetInputFields();
     };
 
@@ -52,7 +58,11 @@ app.controller('PitchedRoofInventoryCtrl', ['$state', '$scope', 'SharedSrvc', 'A
     };
 
     ME.selectItem = function() {
-        ME.configSelectedItemObj(ME.itemSelected.Code);
+        if(ME.EditMode == "Update Item"){
+            ME.configSelectedItemObj(ME.itemSelected.Code);
+        }else if(ME.EditMode == "Add Item"){
+            ME.configSampleItemObj(ME.itemSelected.Code);
+        } 
     };
 
     ME.refreshInventoryList = function() {
@@ -61,7 +71,6 @@ app.controller('PitchedRoofInventoryCtrl', ['$state', '$scope', 'SharedSrvc', 'A
     };
 
     ME.configSelectedItemObj = function(code) {
-        ME.updateItem();
         ME.inputDataObj = {};
         for (var i = 0; i < ME.pitchedInventoryList.length; i++) {
             if (ME.pitchedInventoryList[i].Code == code) {
@@ -74,6 +83,32 @@ app.controller('PitchedRoofInventoryCtrl', ['$state', '$scope', 'SharedSrvc', 'A
         ME.selectDataObj_dp.UnitPkg = ME.S.returnObjByLabel(ME.S.unitOptions, ME.inputDataObj.UnitPkg);
         ME.selectDataObj_dp.UnitCoverage = ME.S.returnObjByLabel(ME.S.unitOptions, ME.inputDataObj.UnitCoverage);
         ME.selectDataObj_dp.InputParam = ME.S.returnObjByLabel(ME.S.propertyParams, ME.inputDataObj.InputParam);
+        ME.selectDataObj_dp.Checked = ME.S.returnObjById(ME.S.trueFalse, ME.inputDataObj.Checked);
+    };
+
+    ME.configSampleItemObj = function(code) {
+        ME.sampleDataObj = {};
+        for (var i = 0; i < ME.pitchedInventoryList.length; i++) {
+            if (ME.pitchedInventoryList[i].Code == code) {
+                ME.sampleDataObj = ME.pitchedInventoryList[i];
+            }
+        };
+        // Fill in select 
+        ME.inputDataObj.Category = ME.sampleDataObj.Category;
+        ME.inputDataObj.Package = ME.sampleDataObj.Package;
+        ME.selectDataObj_dp.Package = ME.S.returnObjByLabel(ME.S.packageOptions, ME.inputDataObj.Package);
+        ME.inputDataObj.QtyPkg = ME.sampleDataObj.QtyPkg;
+        ME.inputDataObj.UnitPkg = ME.sampleDataObj.UnitPkg;
+        ME.selectDataObj_dp.UnitPkg = ME.S.returnObjByLabel(ME.S.unitOptions, ME.inputDataObj.UnitPkg);
+        ME.inputDataObj.PkgPrice = ME.sampleDataObj.PkgPrice;
+        ME.inputDataObj.QtyCoverage = ME.sampleDataObj.QtyCoverage;
+        ME.inputDataObj.UnitCoverage = ME.sampleDataObj.UnitCoverage;
+        ME.selectDataObj_dp.UnitCoverage = ME.S.returnObjByLabel(ME.S.unitOptions, ME.inputDataObj.UnitCoverage);
+        ME.inputDataObj.RoundUp = ME.sampleDataObj.UnitCoverage;
+        ME.inputDataObj.Margin = ME.sampleDataObj.UnitCoverage;
+        ME.inputDataObj.InputParam = ME.sampleDataObj.InputParam;
+        ME.selectDataObj_dp.InputParam = ME.S.returnObjByLabel(ME.S.propertyParams, ME.inputDataObj.InputParam);
+        ME.inputDataObj.Checked = ME.sampleDataObj.Checked;
         ME.selectDataObj_dp.Checked = ME.S.returnObjById(ME.S.trueFalse, ME.inputDataObj.Checked);
     };
 
@@ -92,7 +127,7 @@ app.controller('PitchedRoofInventoryCtrl', ['$state', '$scope', 'SharedSrvc', 'A
         }
     };
 
-    var add_Item = function() {
+    var submitAddItem = function() {
         parseSelectionProviders();
         DB.query("putPitchedInvtItem", ME.inputDataObj).then(function(resultObj) {
             if (resultObj.result == "Error" || typeof resultObj.data === "string") {

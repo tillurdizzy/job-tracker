@@ -9,7 +9,7 @@ app.controller('PitchedRoofColorCtrl', ['$state', '$scope', 'SharedSrvc','ListSr
 
     ME.colorList = [];
     ME.EditMode = "Add Item";
-    ME.modePrompt = "Add New Item: Fill in the form and submit.";
+    ME.modePrompt = "Add New Item: Choose an item for example if needed.";
     ME.inputDataObj = {};
     ME.formStatus = "Pristine";
     ME.itemSelected = {};
@@ -23,7 +23,7 @@ app.controller('PitchedRoofColorCtrl', ['$state', '$scope', 'SharedSrvc','ListSr
 
     ME.addItem = function() {
         ME.EditMode = "Add Item";
-        ME.modePrompt = "Add New Item: Fill in the form and submit.";
+        ME.modePrompt = "Add New Item: Choose an item for example if needed.";
         resetInputFields();
     };
     ME.updateItem = function() {

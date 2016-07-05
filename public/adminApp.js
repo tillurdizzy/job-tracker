@@ -52,10 +52,18 @@ app.config(function($stateProvider, $urlRouterProvider,$provide) {
 			url: "/managerUpdate",
 			templateUrl:"views/admin/reps/manager-update.html"
 		})
+
+		//////////////////////////////////////////////////////////// Inventory
 		.state('admin.pitchedInventory', {
 			url: "/pitched-inventory",
 			templateUrl:"views/admin/inventory/pitched-roof-materials.html"
 		})
+
+		.state('admin.pitchedInventory.addItem', {
+			url: "/add-item",
+			templateUrl:"views/admin/inventory/pitched-roof-add-item.html"
+		})
+
 		.state('admin.colorInventory', {
 			url: "/pitched-inventory",
 			templateUrl:"views/admin/inventory/pitched-roof-colors.html"

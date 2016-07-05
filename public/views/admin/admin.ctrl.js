@@ -27,7 +27,7 @@ app.controller('AdminCtrl',['$location','$state','$scope','SharedSrvc',function 
 	};
 	ME.pitchedInventory = function(){
 		trace(me + "GO >>> admin.pitchedInventory");
-		$state.transitionTo("admin.pitchedInventory");
+		$state.transitionTo("admin.pitchedInventory.addItem");
 	};
 	ME.colorInventory = function(){
 		trace(me + "GO >>> admin.colorInventory");

@@ -13,92 +13,16 @@
             </ul>
         </div>
 
-        <horiz-rule margintop="5" marginbottom="5"></horiz-rule>
+       
 
-        <div class="text-input-form-item-min">
-            <h2>{{Invt.modePrompt}}</h2>
-            <select ng-model="Invt.itemSelected" ng-options="c.Item for c in Invt.pitchedInventoryList" ng-change="Invt.selectItem();" ng-hide="Invt.EditMode=='Add Item'"></select>
-        </div>
-
-        <horiz-rule margintop="5" marginbottom="5"></horiz-rule>
+        <div ui-view></div>
         
-        <div class="text-input-form-item" style="margin-top:2rem;">
-            <label>Item</label>
-            <input type="text" ng-model="Invt.inputDataObj.Item" style="width:600px" ng-change="Invt.formChange();">
-        </div>
-
-        <div class="flex-row">
-            <div style="width:50%">
-                <div class="text-input-form-item">
-                    <label>Sort</label>
-                    <input type="text" ng-model="Invt.inputDataObj.Sort" ng-change="Invt.formChange();">
-                </div>
-                <div class="text-input-form-item">
-                    <label>Category</label>
-                    <input type="text" ng-model="Invt.inputDataObj.Category" ng-change="Invt.formChange();">
-                </div>
-                <div class="text-input-form-item">
-                    <label>Supplier</label>
-                    <input type="text" ng-model="Invt.inputDataObj.Manufacturer" ng-change="Invt.formChange();">
-                </div>
-                <div class="text-input-form-item">
-                    <label>Code</label>
-                    <input type="text" ng-model="Invt.inputDataObj.Code" ng-change="Invt.formChange();">
-                </div>
-                <div class="text-input-form-item">
-                    <label>Package</label>
-                    <select ng-model="Invt.selectDataObj_dp.Package" ng-options="c.label for c in Invt.S.packageOptions" ng-change="Invt.formChange();"></select>
-                </div>
-                <div class="text-input-form-item">
-                    <label>QtyPkg</label>
-                    <input type="text" ng-model="Invt.inputDataObj.QtyPkg">
-                </div>
-                <div class="text-input-form-item">
-                    <label>UnitPkg</label>
-                    <select ng-model="Invt.selectDataObj_dp.UnitPkg" ng-options="c.label for c in Invt.S.unitOptions" ng-change="Invt.formChange();"></select>
-                </div>
-            </div>
-            <div style="width:50%">
-                <div class="text-input-form-item">
-                    <label>PkgPrice</label>
-                    <input type="text" ng-model="Invt.inputDataObj.PkgPrice" ng-change="Invt.formChange();">
-                </div>
-                <div class="text-input-form-item">
-                    <label>QtyCoverage</label>
-                    <input type="text" ng-model="Invt.inputDataObj.QtyCoverage" ng-change="Invt.formChange();">
-                </div>
-                <div class="text-input-form-item">
-                    <label>UnitCoverage</label>
-                    <select ng-model="Invt.selectDataObj_dp.UnitCoverage" ng-options="c.label for c in Invt.S.unitOptions" ng-change="Invt.formChange();"></select>
-                </div>
-                <div class="text-input-form-item">
-                    <label>RoundUp</label>
-                    <input type="text" ng-model="Invt.inputDataObj.RoundUp" ng-change="Invt.formChange();">
-                </div>
-                <div class="text-input-form-item">
-                    <label>Margin</label>
-                    <input type="text" ng-model="Invt.inputDataObj.Margin" ng-change="Invt.formChange();">
-                </div>
-                <div class="text-input-form-item">
-                    <label>InputParam</label>
-                    <select ng-model="Invt.selectDataObj_dp.InputParam" ng-options="c.label for c in Invt.S.propertyParams" ng-change="Invt.formChange();"></select>
-                </div>
-                <div class="text-input-form-item">
-                    <label>Checked</label>
-                    <select ng-model="Invt.selectDataObj_dp.Checked" ng-options="c.label for c in Invt.S.trueFalse" ng-change="Invt.formChange();"></select>
-                </div>
-            </div>
-        </div>
-        <div class="text-input-form-item">
-            <label>url</label>
-            <input type="text" ng-model="Invt.inputDataObj.url" style="width:600px" ng-change="Invt.formChange();">
-        </div>
 
         <button type="button" class="button radius" ng-click="Invt.submit()" style="margin-top: 1rem; width:100%;">{{Invt.EditMode}}</button>
 
     </div>
 
-    <div class="bottom">
+    <!-- <div class="bottom">
     <horiz-rule margintop="15" marginbottom="5"></horiz-rule>
     <button type="button" class="button radius" ng-click="Invt.refreshInventoryList();" style="margin-bottom: 5px;">Refresh Inventory List</button>
         <table st-table="Invt.pitchedInventoryList" class="table table-striped" style="width:100%;">
@@ -135,6 +59,6 @@
                 </tr>
             </tbody>
         </table>
-    </div>
+    </div> -->
     <add-space margintop="1" marginbottom="1" heightpx="50"></add-space>
 </div>
