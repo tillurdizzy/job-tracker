@@ -97,10 +97,11 @@
     }
     input[type="text"] {
         line-height: 1rem;
-        width: 200px;
+        flex-basis: 200px;
         font-size: 1rem;
         display: inline-block;
         box-sizing: content-box;
+        flex-grow: 1;
     }
     select {
         width: 200px;

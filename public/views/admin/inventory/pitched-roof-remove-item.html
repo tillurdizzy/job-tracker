@@ -1,0 +1,84 @@
+<div>
+    <horiz-rule margintop="5" marginbottom="5"></horiz-rule>
+    <div class="text-input-form-item-min">
+        <h2>{{Invt.modePrompt}}</h2>
+        <select ng-model="Invt.itemSelected" ng-options="c.Item for c in Invt.pitchedInventoryList" ng-change="Invt.selectItem();"></select>
+    </div>
+    <horiz-rule margintop="5" marginbottom="5"></horiz-rule>
+    <div class="flex-row">
+        <div style="width:50%; background-color: #EEEEEE;">
+            <div style="padding: 0 10px;">
+               <button type="button" class="button radius" ng-click="Invt.submitRemoveItem()" ng-disabled="Invt.submitDisabled" style="margin-top: 1rem; width:100%;">Remove Item</button>
+            </div>
+        </div>
+        <div style="width:50%; background-color: #DDDDDD;">
+            <div style="padding: 0 10px;">
+                <h2>Item to Remove</h2>
+                <div class="text-input-form-item">
+                    <label>Item</label>
+                    <input type="text" ng-model="Invt.sampleDataObj.Item" ng-disabled = true;>
+                </div>
+                <div class="text-input-form-item">
+                    <label>PkgPrice</label>
+                    <input type="text" ng-model="Invt.sampleDataObj.PkgPrice" ng-disabled = true;>
+                </div>
+                <div class="text-input-form-item">
+                    <label>Sort</label>
+                    <input type="text" ng-model="Invt.sampleDataObj.Sort" ng-disabled = true;>
+                </div>
+                <div class="text-input-form-item">
+                    <label>Category</label>
+                    <input type="text" ng-model="Invt.sampleDataObj.Category" ng-disabled = true;>
+                </div>
+                <div class="text-input-form-item">
+                    <label>Supplier</label>
+                    <input type="text" ng-model="Invt.sampleDataObj.Manufacturer" ng-disabled = true;>
+                </div>
+                <div class="text-input-form-item">
+                    <label>Code</label>
+                    <input type="text" ng-model="Invt.sampleDataObj.Code" ng-disabled = true;>
+                </div>
+                <div class="text-input-form-item">
+                    <label>Package</label>
+                    <input type="text" ng-model="Invt.sampleDataObj.Package" ng-disabled = true;>
+                </div>
+                <div class="text-input-form-item">
+                    <label>QtyPkg</label>
+                    <input type="text" ng-model="Invt.sampleDataObj.QtyPkg" ng-disabled = true;>
+                </div>
+                <div class="text-input-form-item">
+                    <label>UnitPkg</label>
+                    <input type="text" ng-model="Invt.sampleDataObj.UnitPkg" ng-disabled = true;>
+                </div>
+                
+                <div class="text-input-form-item">
+                    <label>QtyCoverage</label>
+                    <input type="text" ng-model="Invt.sampleDataObj.QtyCoverage" ng-disabled = true;>
+                </div>
+                <div class="text-input-form-item">
+                    <label>UnitCoverage</label>
+                    <input type="text" ng-model="Invt.sampleDataObj.UnitCoverage" ng-disabled = true;>
+                </div>
+                <div class="text-input-form-item">
+                    <label>RoundUp</label>
+                    <input type="text" ng-model="Invt.sampleDataObj.RoundUp" ng-disabled = true;>
+                </div>
+                <div class="text-input-form-item">
+                    <label>Margin</label>
+                    <input type="text" ng-model="Invt.sampleDataObj.Margin" ng-disabled = true;>
+                </div>
+                <div class="text-input-form-item">
+                    <label>InputParam</label>
+                    <input type="text" ng-model="Invt.sampleDataObj.InputParam" ng-disabled = true;>
+                </div>
+                <div class="text-input-form-item">
+                    <label>Checked</label>
+                    <input type="text" ng-model="Invt.sampleDataObj.Checked" ng-disabled = true;>
+                </div>
+            </div>
+        </div>
+    </div>
+    <add-space heightpx="100"></add-space>
+    
+    
+</div>

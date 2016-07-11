@@ -63,6 +63,18 @@ app.config(function($stateProvider, $urlRouterProvider,$provide) {
 			url: "/add-item",
 			templateUrl:"views/admin/inventory/pitched-roof-add-item.html"
 		})
+		.state('admin.pitchedInventory.updateItem', {
+			url: "/update-item",
+			templateUrl:"views/admin/inventory/pitched-roof-update-item.html"
+		})
+		.state('admin.pitchedInventory.updatePrice', {
+			url: "/update-price",
+			templateUrl:"views/admin/inventory/pitched-roof-update-price.html"
+		})
+		.state('admin.pitchedInventory.removeItem', {
+			url: "/remove-item",
+			templateUrl:"views/admin/inventory/pitched-roof-remove-item.html"
+		})
 
 		.state('admin.colorInventory', {
 			url: "/pitched-inventory",

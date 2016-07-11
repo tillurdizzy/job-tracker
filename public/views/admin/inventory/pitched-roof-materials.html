@@ -12,53 +12,6 @@
                 <li ng-class="{ active: Invt.EditMode == 'Remove Item'}" ng-click="Invt.removeItem()"><a>Remove Item</a></li>
             </ul>
         </div>
-
-       
-
         <div ui-view></div>
-        
-
-        <button type="button" class="button radius" ng-click="Invt.submit()" style="margin-top: 1rem; width:100%;">{{Invt.EditMode}}</button>
-
     </div>
-
-    <!-- <div class="bottom">
-    <horiz-rule margintop="15" marginbottom="5"></horiz-rule>
-    <button type="button" class="button radius" ng-click="Invt.refreshInventoryList();" style="margin-bottom: 5px;">Refresh Inventory List</button>
-        <table st-table="Invt.pitchedInventoryList" class="table table-striped" style="width:100%;">
-            <thead>
-                <tr>
-                    <th style="width:300px;">Item</th>
-                    <th>Sort</th>
-                    <th>Code</th>
-                    <th>Pkg</th>
-                    <th>Qty</th>
-                    <th>Unit</th>
-                    <th>Price</th>
-                    <th>QtyCov</th>
-                    <th>UnitCov</th>
-                    <th>Param</th>
-                    <th>Edit</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="row in Invt.pitchedInventoryList">
-                    <td style="overflow: hidden;">{{row.Item}}</td>
-                    <td>{{row.Sort}}</td>
-                    <td>{{row.Code}}</td>
-                    <td>{{row.Package}}</td>
-                    <td>{{row.QtyPkg}}</td>
-                    <td>{{row.UnitPkg}}</td>
-                    <td>{{row.PkgPrice}}</td>
-                    <td>{{row.QtyCoverage}}</td>
-                    <td>{{row.QtyPkg}}</td>
-                    <td>{{row.InputParam}}</td>
-                    <td>
-                        <i class="fa fa-pencil" ng-click="Invt.configSelectedItemObj(row.Code)" style="cursor:pointer;"></i>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div> -->
-    <add-space margintop="1" marginbottom="1" heightpx="50"></add-space>
 </div>

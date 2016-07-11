@@ -8,9 +8,9 @@ app.controller('PitchedRoofInventoryCtrl', ['$state', '$scope', 'SharedSrvc', 'A
 
     ME.pitchedInventoryList = [];
     ME.EditMode = "Add Item";
-    ME.modePrompt = "Add New Item: Choose an item for example if needed.";
+    ME.modePrompt = "Add New Item: Select an item for example if needed.";
     ME.inputDataObj = {};
-    ME.formStatus = "Pristine";
+    ME.submitDisabled = true;
     ME.itemSelected = {};
     ME.selectDataObj_dp = {
         Package: ME.S.packageOptions[0],
@@ -24,20 +24,20 @@ app.controller('PitchedRoofInventoryCtrl', ['$state', '$scope', 'SharedSrvc', 'A
 
     ME.addItem = function() {
         ME.EditMode = "Add Item";
-        ME.modePrompt = "Add New Item: Choose an item for example if needed.";
+        ME.modePrompt = "Add New Item: Select an item for example if needed.";
         $state.transitionTo("admin.pitchedInventory.addItem");
-        //resetInputFields();
+        resetInputFields();
     };
     ME.updateItem = function() {
         ME.EditMode = "Update Item";
-        ME.modePrompt = "Update Item: Select item from list or table below.";
+        ME.modePrompt = "Update Item: Select item to update.";
         $state.transitionTo("admin.pitchedInventory.updateItem");
         resetInputFields();
     };
 
-     ME.updatePrice = function() {
+    ME.updatePrice = function() {
         ME.EditMode = "Update Price";
-        ME.modePrompt = "Update Price: Select item from list or table below.";
+        ME.modePrompt = "Update Price: Select item to update price.";
         $state.transitionTo("admin.pitchedInventory.updatePrice");
         resetInputFields();
     };
@@ -49,20 +49,23 @@ app.controller('PitchedRoofInventoryCtrl', ['$state', '$scope', 'SharedSrvc', 'A
         resetInputFields();
     };
 
-    ME.formChange = function() {
-        ME.formStatus = "Dirty";
-    };
-
+  
     ME.backToHome = function() {
         $state.transitionTo('admin');
     };
 
     ME.selectItem = function() {
-        if(ME.EditMode == "Update Item"){
-            ME.configSelectedItemObj(ME.itemSelected.Code);
-        }else if(ME.EditMode == "Add Item"){
-            ME.configSampleItemObj(ME.itemSelected.Code);
-        } 
+        configSampleDataObj(ME.itemSelected.Code);
+        if (ME.EditMode == "Update Item") {
+            configInputDataObj(ME.itemSelected.Code);
+            ME.submitDisabled = false;
+        } else if (ME.EditMode == "Add Item") {
+            configPartialInputDataObj(ME.itemSelected.Code);
+        }else if (ME.EditMode == "Remove Item") {
+           ME.submitDisabled = false;
+        }else if (ME.EditMode == "Update Price") {
+            configInputDataObj(ME.itemSelected.Code);
+        }
     };
 
     ME.refreshInventoryList = function() {
@@ -70,12 +73,17 @@ app.controller('PitchedRoofInventoryCtrl', ['$state', '$scope', 'SharedSrvc', 'A
         getInventory();
     };
 
-    ME.configSelectedItemObj = function(code) {
+    // Enables Submit button
+    ME.formChange = function(){
+        ME.submitDisabled = false;
+    }
+
+    var configInputDataObj = function(code) {
         ME.inputDataObj = {};
         for (var i = 0; i < ME.pitchedInventoryList.length; i++) {
             if (ME.pitchedInventoryList[i].Code == code) {
                 ME.inputDataObj = ME.pitchedInventoryList[i];
-                ME.itemSelected = ME.pitchedInventoryList[i];
+                //ME.itemSelected = ME.pitchedInventoryList[i];
             }
         };
         // For SELECT components, get the options object that matches the data 
@@ -86,14 +94,16 @@ app.controller('PitchedRoofInventoryCtrl', ['$state', '$scope', 'SharedSrvc', 'A
         ME.selectDataObj_dp.Checked = ME.S.returnObjById(ME.S.trueFalse, ME.inputDataObj.Checked);
     };
 
-    ME.configSampleItemObj = function(code) {
+    var configSampleDataObj = function(code) {
         ME.sampleDataObj = {};
         for (var i = 0; i < ME.pitchedInventoryList.length; i++) {
             if (ME.pitchedInventoryList[i].Code == code) {
                 ME.sampleDataObj = ME.pitchedInventoryList[i];
             }
         };
-        // Fill in select 
+    };
+
+    var configPartialInputDataObj = function() {
         ME.inputDataObj.Category = ME.sampleDataObj.Category;
         ME.inputDataObj.Package = ME.sampleDataObj.Package;
         ME.selectDataObj_dp.Package = ME.S.returnObjByLabel(ME.S.packageOptions, ME.inputDataObj.Package);
@@ -104,8 +114,8 @@ app.controller('PitchedRoofInventoryCtrl', ['$state', '$scope', 'SharedSrvc', 'A
         ME.inputDataObj.QtyCoverage = ME.sampleDataObj.QtyCoverage;
         ME.inputDataObj.UnitCoverage = ME.sampleDataObj.UnitCoverage;
         ME.selectDataObj_dp.UnitCoverage = ME.S.returnObjByLabel(ME.S.unitOptions, ME.inputDataObj.UnitCoverage);
-        ME.inputDataObj.RoundUp = ME.sampleDataObj.UnitCoverage;
-        ME.inputDataObj.Margin = ME.sampleDataObj.UnitCoverage;
+        ME.inputDataObj.RoundUp = ME.sampleDataObj.RoundUp;
+        ME.inputDataObj.Margin = ME.sampleDataObj.Margin;
         ME.inputDataObj.InputParam = ME.sampleDataObj.InputParam;
         ME.selectDataObj_dp.InputParam = ME.S.returnObjByLabel(ME.S.propertyParams, ME.inputDataObj.InputParam);
         ME.inputDataObj.Checked = ME.sampleDataObj.Checked;
@@ -113,27 +123,13 @@ app.controller('PitchedRoofInventoryCtrl', ['$state', '$scope', 'SharedSrvc', 'A
     };
 
 
-    ME.submit = function() {
-        switch (ME.EditMode) {
-            case "Add Item":
-                add_Item();
-                break;
-            case "Update Item":
-                update_Item();
-                break;
-            case "Remove Item":
-                remove_Item();
-                break;
-        }
-    };
-
-    var submitAddItem = function() {
+    ME.submitAddItem = function() {
         parseSelectionProviders();
         DB.query("putPitchedInvtItem", ME.inputDataObj).then(function(resultObj) {
             if (resultObj.result == "Error" || typeof resultObj.data === "string") {
                 alert("FALSE returned from DB at PitchedRoofInventoryCtrl >>> add_Item()");
             } else {
-                resetForm();
+                resetInputFields();
                 ngDialog.open({
                     template: '<h2>Item added successfully.</h2>',
                     className: 'ngdialog-theme-default',
@@ -146,13 +142,14 @@ app.controller('PitchedRoofInventoryCtrl', ['$state', '$scope', 'SharedSrvc', 'A
         });
     };
 
-    var update_Item = function() {
+    ME.submitUpdateItem = function() {
         parseSelectionProviders();
+
         DB.query("updateMaterialsShingle", ME.inputDataObj).then(function(resultObj) {
             if (resultObj.result == "Error" || typeof resultObj.data === "string") {
                 alert("FALSE returned from DB at PitchedRoofInventoryCtrl >>> update_Item()");
             } else {
-                resetForm();
+                resetInputFields();
                 ngDialog.open({
                     template: '<h2>Item updated successfully.</h2>',
                     className: 'ngdialog-theme-default',
@@ -165,12 +162,12 @@ app.controller('PitchedRoofInventoryCtrl', ['$state', '$scope', 'SharedSrvc', 'A
         });
     };
 
-    var remove_Item = function() {
+    ME.submitRemoveItem = function() {
         DB.query("deletePitchedInvtItem", ME.itemSelected.PRIMARY_ID).then(function(resultObj) {
             if (resultObj.result == "Error") {
                 alert("FALSE returned from DB at PitchedRoofInventoryCtrl >>> remove_Item()");
             } else {
-                resetForm();
+                resetInputFields();
                 ngDialog.open({
                     template: '<h2>Item deleted successfully.</h2>',
                     className: 'ngdialog-theme-default',
@@ -180,6 +177,27 @@ app.controller('PitchedRoofInventoryCtrl', ['$state', '$scope', 'SharedSrvc', 'A
             }
         }, function(error) {
             alert("ERROR returned returned from DB at PitchedRoofInventoryCtrl >>> remove_Item()");
+        });
+    };
+
+    ME.submitUpdatePrice = function() {
+        var dataObj = {};
+        dataObj.ID = ME.itemSelected.PRIMARY_ID;
+        dataObj.PkgPrice = ME.inputDataObj.PkgPrice;
+        DB.query("updatePitchedItemPrice", dataObj).then(function(resultObj) {
+            if (resultObj.result == "Error") {
+                alert("FALSE returned from DB at PitchedRoofInventoryCtrl >>> updatePrice()");
+            } else {
+                resetInputFields();
+                ngDialog.open({
+                    template: '<h2>Price updated successfully.</h2>',
+                    className: 'ngdialog-theme-default',
+                    plain: true,
+                    overlay: false
+                });
+            }
+        }, function(error) {
+            alert("ERROR returned returned from DB at PitchedRoofInventoryCtrl >>> updatePrice()");
         });
     };
 
@@ -193,16 +211,7 @@ app.controller('PitchedRoofInventoryCtrl', ['$state', '$scope', 'SharedSrvc', 'A
         ME.inputDataObj.Checked = ME.selectDataObj_dp.Checked.id;
     };
 
-    var resetForm = function() {
-        //ME.formStatus = "Pristine";
-        //resetInputFields();
-        if (ME.EditMode == "Add Item") {
-            var sortNum = parseInt(ME.inputDataObj.Sort);
-            sortNum += 1;
-            ME.inputDataObj.Sort = sortNum;
-        }
-    };
-
+   
     var getInventory = function() {
         DB.query("getMaterialsShingle").then(function(resultObj) {
             if (resultObj.result == "Error" || typeof resultObj.data === "string") {
@@ -236,6 +245,25 @@ app.controller('PitchedRoofInventoryCtrl', ['$state', '$scope', 'SharedSrvc', 'A
             Notes: "",
             url: ""
         };
+        ME.sampleDataObj = {
+            Sort: "",
+            Category: "",
+            Manufacturer: "",
+            Item: "",
+            Code: "",
+            Package: "",
+            QtyPkg: "",
+            UnitPkg: "",
+            PkgPrice: "",
+            QtyCoverage: "",
+            UnitCoverage: "",
+            RoundUp: "",
+            Margin: "",
+            InputParam: "",
+            Checked: "",
+            Notes: "",
+            url: ""
+        };
         ME.selectDataObj_dp = {
             Package: ME.S.packageOptions[0],
             UnitPkg: ME.S.unitOptions[0],
@@ -244,6 +272,7 @@ app.controller('PitchedRoofInventoryCtrl', ['$state', '$scope', 'SharedSrvc', 'A
             Checked: ME.S.trueFalse[0]
         };
         ME.itemSelected = {};
+        ME.submitDisabled = true;
     };
 
 

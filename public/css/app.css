@@ -2029,10 +2029,11 @@ table {
     text-align: left; }
   .text-input-form-item input[type="text"] {
     line-height: 1rem;
-    width: 200px;
+    flex-basis: 200px;
     font-size: 1rem;
     display: inline-block;
-    box-sizing: content-box; }
+    box-sizing: content-box;
+    flex-grow: 1; }
   .text-input-form-item select {
     width: 200px; }
   .text-input-form-item h2 {
