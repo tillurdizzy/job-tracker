@@ -49,13 +49,13 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'JobConfigSrvc'
     var keyValPairs = [];
 
     //Called after successful Log In
-    self.LogIn = function(name, clientObj) {
+    self.LogIn = function(name, clientObj,jobID) {
         self.trace(me + "LogIn()");
         self.displayName = name;
         self.clientObj = clientObj;
         self.loggedIn = true;
         getClientSalesRep()
-        getJobsByClient();
+        getJob(jobID);
     };
 
     self.trace = function(message) {
@@ -86,6 +86,8 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'JobConfigSrvc'
     // getJobParameters() >>> getRoofForProperty() >>> getMultiVents() >>> getMultiLevels() 
     // getJobMaterials(); 7.getMaterialsList() 8. getJobConfig() 9. getPhotos()
     // Ending on buildRoofDescription() which creates a DOM dataProvider from all these different sources
+
+    //  !!!!!!!!!!! NOT USING THIS... June 12, 2016
     var getJobsByClient = function() {
         self.trace(me + "getJobsByClient()");
         var dataObj = { clientID: self.clientObj.PRIMARY_ID };
@@ -102,6 +104,23 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'JobConfigSrvc'
         });
     };
 
+    var getJob = function(id) {
+        self.trace(me + "getJob()");
+        var dataObj = { ID: id };
+        DB.queryDB("getJobByID", dataObj).then(function(resultObj) {
+            if (resultObj.result == "Error") {
+                alert("Query Error - see console for details");
+                console.log("getJob ---- " + resultObj.data);
+            } else {
+                self.jobResults = resultObj.data;
+                getPropertyByID();
+            }
+        }, function(error) {
+            alert("Query Error - ClientSharedSrvc >> getJob");
+        });
+    };
+
+    //  !!!!!!!!!!! NOT USING THIS... June 12, 2016
     var getPropertiesByClient = function() {
         self.trace(me + "getPropertiesByClient()");
         var dataObj = { clientID: self.clientObj.PRIMARY_ID };
@@ -116,6 +135,23 @@ app.service('ClientSharedSrvc', ['$rootScope', 'ClientDataSrvc', 'JobConfigSrvc'
             }
         }, function(error) {
             alert("Query Error - ClientSharedSrvc >> getPropertiesByClient");
+        });
+    };
+
+    var getPropertyByID = function() {
+        self.trace(me + "getPropertyByID()");
+        var dataObj = { ID: self.jobResults[0].property };
+        DB.queryDB("getPropertyByID", dataObj).then(function(resultObj) {
+            if (resultObj.result == "Error" || typeof resultObj.data === "string") {
+                alert("Query Error - see console for details");
+                console.log("getPropertyByID ---- " + resultObj.data);
+            } else {
+                self.propertyResults = resultObj.data;
+                $rootScope.$broadcast("on-client-properties-complete", self.propertyResults);
+                setClientJob();
+            }
+        }, function(error) {
+            alert("Query Error - ClientSharedSrvc >> getPropertyByID");
         });
     };
 

@@ -100,12 +100,7 @@ app.controller('PropertiesCtrl', ['$scope', '$state', 'evoDb', 'SharedSrvc', 'Te
         console.log(loc + " : " + error);
     };
 
-    /*$scope.$watch(function() {
-        return S.managerProperties;
-    }, function(jobs) {
-        ME.properties = S.managerProperties;
-    });*/
-
+   
     $scope.$watch('$viewContentLoaded', function() {
         var loggedIn = S.loggedIn;
         if (!loggedIn) {

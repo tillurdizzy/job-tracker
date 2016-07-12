@@ -64,7 +64,7 @@ app.controller('NewJobCtrl', ['$scope', '$state', 'evoDb', 'SharedSrvc', 'ngDial
             numFields = 3;
             Me.inputField = "S3";
         } else {
-            var isDupe = Me.S.jobExists(Me.S2.PRIMARY_ID,false);
+            var isDupe = Me.S.jobExists(Me.S2.PRIMARY_ID, false);
             if (isDupe) {
                 Me.isError = true;
                 Me.inputMsg = "This Job already exists.";
@@ -82,7 +82,7 @@ app.controller('NewJobCtrl', ['$scope', '$state', 'evoDb', 'SharedSrvc', 'ngDial
     Me.submitS3 = function() {
         Me.inputMsg = "";
         Me.isError = false;
-        var isDupe = Me.S.jobExists(Me.S3.PRIMARY_ID,true);
+        var isDupe = Me.S.jobExists(Me.S3.PRIMARY_ID, true);
 
         if (isDupe) {
             Me.isError = true;
@@ -153,12 +153,16 @@ app.controller('NewJobCtrl', ['$scope', '$state', 'evoDb', 'SharedSrvc', 'ngDial
             }
         };
         if (Me.propertyOptions.length == 0) {
-            ngDialog.open({
-                template: '<h2>This client has no properties listed.</h2>',
-                className: 'ngdialog-theme-default',
-                plain: true,
-                overlay: false
+            var dialog = ngDialog.open({
+                template: '<p>This client has no properties listed.</p>' +
+                    '<div class="ngdialog-buttons"><button type="button" class="ngdialog-button ngdialog-button-primary" ng-click="closeThisDialog(1)">Close</button></div>',
+                plain: true
             });
+            dialog.closePromise.then(function(data) {
+                console.log('ngDialog closed' + (data.value === 1 ? ' using the button' : '') + ' and notified by promise: ' + data.id);
+                $state.transitionTo("addNewProperty");
+            });
+
         } else {
             Me.S2 = Me.propertyOptions[0];
             if (Me.returnMultiUnit()) {
@@ -185,7 +189,7 @@ app.controller('NewJobCtrl', ['$scope', '$state', 'evoDb', 'SharedSrvc', 'ngDial
         Me.inputField = "S1";
     };
 
-   
+
     Me.submitForm = function() {
         Me.isError = false;
         var dataObj = {};
@@ -204,9 +208,9 @@ app.controller('NewJobCtrl', ['$scope', '$state', 'evoDb', 'SharedSrvc', 'ngDial
                 alert("FALSE returned for putJob >>> job-new.ctrl.js");
             } else {
                 var jobID = resultObj.data.id;
-                if(Me.isMultiUnit){
+                if (Me.isMultiUnit) {
                     Me.inputField = "SUCCESS-MultiUnit";
-                }else{
+                } else {
                     Me.inputField = "SUCCESS";
                 }
             }

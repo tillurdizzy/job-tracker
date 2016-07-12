@@ -11,10 +11,9 @@ define( "DATABASE_NAME", "jobtracker");
 
 //connect to the database.
 $con = mysqli_connect(DATABASE_SERVER, DATABASE_USERNAME, DATABASE_PASSWORD,DATABASE_NAME) or die ('ERROR!!!');
-$username = mysqli_real_escape_string($con,$data->username);
-$PIN = mysqli_real_escape_string($con,$data->PIN);
+$ID = mysqli_real_escape_string($con,$data->clientID);
 
-$query = sprintf("SELECT * FROM clients WHERE username = '".$username."' AND PIN = '".$PIN."'");
+$query = sprintf("SELECT * FROM clients WHERE PRIMARY_ID = '".$ID."'");
 $result = mysqli_query($con,$query);
 $resultValueObjects = array();
 while ($row = mysqli_fetch_object($result)) {

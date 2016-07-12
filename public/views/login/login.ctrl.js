@@ -18,7 +18,6 @@ app.controller('LoginCtrl',['$scope','$state','evoDb','SharedSrvc','LogInSrvc','
     $scope.googleReturnEvent = {};
     $scope.googlePerson = {};
     
-
     var serverAvailable = true;
     $scope.dataRefreshed = false;
 
@@ -27,6 +26,7 @@ app.controller('LoginCtrl',['$scope','$state','evoDb','SharedSrvc','LogInSrvc','
         $scope.googleReturnEvent = event;
         makeApiCall();
     });
+
     $scope.$on('event:google-plus-signin-failure', function (event, authResult) {
           // User has not authorized the G+ App!
           console.log('Not signed into Google Plus.');
@@ -84,7 +84,7 @@ app.controller('LoginCtrl',['$scope','$state','evoDb','SharedSrvc','LogInSrvc','
         });
     }
 
-    // Depracated log in form before google - still use during production
+    // Depracated log in form before google
     $scope.submitLoginForm = function(){
     	$scope.loginSuccess = null;
         $scope.requestSuccess = false;
@@ -93,9 +93,6 @@ app.controller('LoginCtrl',['$scope','$state','evoDb','SharedSrvc','LogInSrvc','
         var dataObj = new Object();
         dataObj.name_user = this._username;
         dataObj.pin = this._pin;
-
-        //dataObj.name_user = "ssmith";
-        //dataObj.pin = "1234";
 
         dataObj.name_user = "smartin";
         dataObj.pin = "7663";
@@ -129,54 +126,7 @@ app.controller('LoginCtrl',['$scope','$state','evoDb','SharedSrvc','LogInSrvc','
         A.initAWS($scope.googleAuthResult.id_token);
     };
 
-   /* $scope.getClientJob = function(jobID){
-        var dataObj = {ID:jobID}
-        var result = DB.getJobByID(dataObj)
-        .then(function(result){// result could be and empty array OR boolean false OR array with data
-            if(typeof result != "boolean"){
-                C.setData(result[0],"job");
-                $scope.getClientProperty(result[0].property);
-                $scope.getClientID(result[0].client);
-                console.log("Successful getting CLIENT JOB! data");
-            }else{
-                $scope.dataError("LoginCtrl-getClientJob()-1",result); 
-            }
-        },function(error){
-            $scope.dataError("LoginCtrl-getClientJob()-2",result);
-        });
-    };
-
-    $scope.getClientProperty = function(propID){
-        var dataObj = {ID:propID};
-        var result = DB.getPropertyByID(dataObj)
-        .then(function(result){
-            if(typeof result != "boolean"){
-                C.setData(result[0],"property");
-                console.log("Successful getting CLIENT Property! data");
-            }else{
-                $scope.dataError("LoginCtrl-getClientProperty()-1",result); 
-            }
-        },function(error){
-            $scope.dataError("LoginCtrl-getClientProperty()-2",result);
-        });
-    };
-
-    $scope.getClientID = function(clientID){
-        var dataObj = {ID:clientID};
-        var result = DB.getClientByID(dataObj)
-        .then(function(result){
-            if(typeof result != "boolean"){
-                $scope.dataRefreshed = true;
-                C.setData(result[0],"id");
-                console.log("Successful getting CLIENT ID data");
-            }else{
-                $scope.dataError("LoginCtrl-getClientID()-1",result); 
-            }
-        },function(error){
-            $scope.dataError("LoginCtrl-getClientID()-2",result);
-        });
-    };*/
-
+  
     $scope.getManagerJobs = function(){
         var result = DB.getManagerJobs()
         .then(function(result){// result could be and empty array OR boolean false OR array with data

@@ -11,7 +11,8 @@ app.service('ClientDataSrvc', ['$http', '$q', function($http, $q) {
 
     var queryPaths = {
         getJobsByClient: httpPathPrefix + "getJobsByClient.php",
-        getPropertiesByClient: httpPathPrefix + "getPropertiesByClient.php",
+        getJobByID: httpPathPrefix + "getJobByID.php",
+        getPropertyByID: httpPathPrefix + "getPropertyByID.php",
         getClientByLogIn: httpPathPrefix + "getClientByLogIn.php",
         getShingleColors: httpPathPrefix + "getShingleColors.php",
         getJobParameters: httpPathPrefix + "getJobParameters.php",

@@ -10,7 +10,8 @@ app.controller('ClientLoginCtrl', ['$scope', '$state', 'ClientSharedSrvc', 'Clie
         $scope.clientObj = {};
         $scope.continueFlag = false;
         $scope.isError = false;
-
+        $scope.jobID = "";
+        $scope.clientID = "";
         $scope.continueBtn = function() {
             $state.transitionTo("review");
         };
@@ -26,11 +27,8 @@ app.controller('ClientLoginCtrl', ['$scope', '$state', 'ClientSharedSrvc', 'Clie
 
             $scope.isError = false;
             var dataObj = new Object();
-            dataObj.username = this._username;
-            dataObj.PIN = this._pin;
-
-            dataObj.username = "rode";
-            dataObj.PIN = "1234";
+            dataObj.clientID = this.clientID;
+            $scope.jobID = this.jobID;
 
             DB.queryDB("getClientByLogIn",dataObj).then(function(resultObj) {
                 if (resultObj.result == "Error" || typeof resultObj.data === "string") {
@@ -58,7 +56,7 @@ app.controller('ClientLoginCtrl', ['$scope', '$state', 'ClientSharedSrvc', 'Clie
             // C.LogIn also triggers pulling the Client's job(s)
             // Which will in turn pull the associated Property VO's
             // When complete broadcasts "on-client-properties-complete"
-            C.LogIn($scope.displayName, $scope.clientObj);
+            C.LogIn($scope.displayName, $scope.clientObj,$scope.jobID);
         };
 
         var onLogInFail = function() {

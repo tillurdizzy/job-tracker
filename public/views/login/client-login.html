@@ -8,12 +8,12 @@
                 <div class="login-form">
                     <form name="loginForm" data-ng-submit="submitLoginForm()" novalidate>
                         <div>
-                            <label>User Name</label>
-                            <input name="username" type="text" placeholder="User Name" ng-model="_username" required>
+                            <label>Client PIN</label>
+                            <input style="width:4rem;" name="_clientID" type="text" placeholder="####" ng-model="clientID" required>
                         </div>
                         <div>
-                            <label>Pin #</label>
-                            <input style="width:4rem;" name="pin" type="text" placeholder="PIN" ng-model="_pin" required>
+                            <label>Job PIN</label>
+                            <input style="width:4rem;" name="_jobID" type="text" placeholder="####" ng-model="jobID" required>
                         </div>
                         <div>
                             <button type="submit" class="button">Submit</button>
