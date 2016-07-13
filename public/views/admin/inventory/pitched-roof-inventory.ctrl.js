@@ -12,6 +12,9 @@ app.controller('PitchedRoofInventoryCtrl', ['$state', '$scope', 'SharedSrvc', 'A
     ME.inputDataObj = {};
     ME.submitDisabled = true;
     ME.itemSelected = {};
+    ME.selectedCategory = "";
+    ME.selectedCategoryList = [];
+
     ME.selectDataObj_dp = {
         Package: ME.S.packageOptions[0],
         UnitPkg: ME.S.unitOptions[0],
@@ -49,24 +52,37 @@ app.controller('PitchedRoofInventoryCtrl', ['$state', '$scope', 'SharedSrvc', 'A
         resetInputFields();
     };
 
-  
+
     ME.backToHome = function() {
         $state.transitionTo('admin');
     };
 
     ME.selectItem = function() {
         configSampleDataObj(ME.itemSelected.Code);
+        filterForSelectedCategory();
+        parseInputMode();
+    };
+
+    ME.editRowItem = function(editItem) {
+        ME.itemSelected = editItem;
+        configSampleDataObj(ME.itemSelected.Code);
+        parseInputMode();
+    };
+
+    var parseInputMode = function() {
         if (ME.EditMode == "Update Item") {
             configInputDataObj(ME.itemSelected.Code);
             ME.submitDisabled = false;
         } else if (ME.EditMode == "Add Item") {
             configPartialInputDataObj(ME.itemSelected.Code);
-        }else if (ME.EditMode == "Remove Item") {
-           ME.submitDisabled = false;
-        }else if (ME.EditMode == "Update Price") {
+        } else if (ME.EditMode == "Remove Item") {
+            ME.submitDisabled = false;
+        } else if (ME.EditMode == "Update Price") {
             configInputDataObj(ME.itemSelected.Code);
         }
     };
+
+
 
     ME.refreshInventoryList = function() {
         ME.pitchedInventoryList = [];
@@ -74,7 +90,7 @@ app.controller('PitchedRoofInventoryCtrl', ['$state', '$scope', 'SharedSrvc', 'A
     };
 
     // Enables Submit button
-    ME.formChange = function(){
+    ME.formChange = function() {
         ME.submitDisabled = false;
     }
 
@@ -96,11 +112,24 @@ app.controller('PitchedRoofInventoryCtrl', ['$state', '$scope', 'SharedSrvc', 'A
 
     var configSampleDataObj = function(code) {
         ME.sampleDataObj = {};
+        ME.selectedCategory = "";
         for (var i = 0; i < ME.pitchedInventoryList.length; i++) {
             if (ME.pitchedInventoryList[i].Code == code) {
                 ME.sampleDataObj = ME.pitchedInventoryList[i];
+                ME.selectedCategory = ME.pitchedInventoryList[i].Category;
             }
         };
+    };
+
+    var filterForSelectedCategory = function() {
+        ME.selectedCategoryList = [];
+        if (ME.selectedCategory != "") {
+            for (var i = 0; i < ME.pitchedInventoryList.length; i++) {
+                if (ME.pitchedInventoryList[i].Category == ME.selectedCategory) {
+                    ME.selectedCategoryList.push(ME.pitchedInventoryList[i]);
+                }
+            }
+        }
     };
 
     var configPartialInputDataObj = function() {
@@ -130,11 +159,17 @@ app.controller('PitchedRoofInventoryCtrl', ['$state', '$scope', 'SharedSrvc', 'A
                 alert("FALSE returned from DB at PitchedRoofInventoryCtrl >>> add_Item()");
             } else {
                 resetInputFields();
-                ngDialog.open({
-                    template: '<h2>Item added successfully.</h2>',
+                ME.refreshInventoryList();
+
+                var dialog = ngDialog.open({
+                    template: '<h2>Item added successfully.</h2>' +
+                        '<div class="ngdialog-buttons"><button type="button" class="ngdialog-button ngdialog-button-primary" ng-click="closeThisDialog(1)">OK</button></div>',
                     className: 'ngdialog-theme-default',
-                    plain: true,
-                    overlay: false
+                    plain: true
+                });
+
+                dialog.closePromise.then(function(data) {
+                    //console.log('ngDialog closed' + (data.value === 1 ? ' using the button' : '') + ' and notified by promise: ' + data.id);
                 });
             }
         }, function(error) {
@@ -150,11 +185,16 @@ app.controller('PitchedRoofInventoryCtrl', ['$state', '$scope', 'SharedSrvc', 'A
                 alert("FALSE returned from DB at PitchedRoofInventoryCtrl >>> update_Item()");
             } else {
                 resetInputFields();
-                ngDialog.open({
-                    template: '<h2>Item updated successfully.</h2>',
+                ME.refreshInventoryList();
+               var dialog = ngDialog.open({
+                    template: '<h2>Item updated successfully.</h2>' +
+                        '<div class="ngdialog-buttons"><button type="button" class="ngdialog-button ngdialog-button-primary" ng-click="closeThisDialog(1)">OK</button></div>',
                     className: 'ngdialog-theme-default',
-                    plain: true,
-                    overlay: false
+                    plain: true
+                });
+
+                dialog.closePromise.then(function(data) {
+                    //console.log('ngDialog closed' + (data.value === 1 ? ' using the button' : '') + ' and notified by promise: ' + data.id);
                 });
             }
         }, function(error) {
@@ -168,11 +208,16 @@ app.controller('PitchedRoofInventoryCtrl', ['$state', '$scope', 'SharedSrvc', 'A
                 alert("FALSE returned from DB at PitchedRoofInventoryCtrl >>> remove_Item()");
             } else {
                 resetInputFields();
-                ngDialog.open({
-                    template: '<h2>Item deleted successfully.</h2>',
+                ME.refreshInventoryList();
+                var dialog = ngDialog.open({
+                    template: '<h2>Item deleted successfully.</h2>' +
+                        '<div class="ngdialog-buttons"><button type="button" class="ngdialog-button ngdialog-button-primary" ng-click="closeThisDialog(1)">OK</button></div>',
                     className: 'ngdialog-theme-default',
-                    plain: true,
-                    overlay: false
+                    plain: true
+                });
+
+                dialog.closePromise.then(function(data) {
+                    //console.log('ngDialog closed' + (data.value === 1 ? ' using the button' : '') + ' and notified by promise: ' + data.id);
                 });
             }
         }, function(error) {
@@ -189,19 +234,22 @@ app.controller('PitchedRoofInventoryCtrl', ['$state', '$scope', 'SharedSrvc', 'A
                 alert("FALSE returned from DB at PitchedRoofInventoryCtrl >>> updatePrice()");
             } else {
                 resetInputFields();
-                ngDialog.open({
-                    template: '<h2>Price updated successfully.</h2>',
+                ME.refreshInventoryList();
+               var dialog = ngDialog.open({
+                    template: '<h2>Price updated successfully.</h2>' +
+                        '<div class="ngdialog-buttons"><button type="button" class="ngdialog-button ngdialog-button-primary" ng-click="closeThisDialog(1)">OK</button></div>',
                     className: 'ngdialog-theme-default',
-                    plain: true,
-                    overlay: false
+                    plain: true
+                });
+
+                dialog.closePromise.then(function(data) {
+                    //console.log('ngDialog closed' + (data.value === 1 ? ' using the button' : '') + ' and notified by promise: ' + data.id);
                 });
             }
         }, function(error) {
             alert("ERROR returned returned from DB at PitchedRoofInventoryCtrl >>> updatePrice()");
         });
     };
-
-
 
     var parseSelectionProviders = function() {
         ME.inputDataObj.Package = ME.selectDataObj_dp.Package.label;
@@ -211,7 +259,9 @@ app.controller('PitchedRoofInventoryCtrl', ['$state', '$scope', 'SharedSrvc', 'A
         ME.inputDataObj.Checked = ME.selectDataObj_dp.Checked.id;
     };
 
-   
+
+
+
     var getInventory = function() {
         DB.query("getMaterialsShingle").then(function(resultObj) {
             if (resultObj.result == "Error" || typeof resultObj.data === "string") {
@@ -219,6 +269,7 @@ app.controller('PitchedRoofInventoryCtrl', ['$state', '$scope', 'SharedSrvc', 'A
                 console.log("getProposalsByJob ---- " + resultObj.data);
             } else {
                 ME.pitchedInventoryList = resultObj.data;
+                filterForSelectedCategory();
             }
         }, function(error) {
             alert("Query Error - AdminSharedSrvc >> getMaterialsList");

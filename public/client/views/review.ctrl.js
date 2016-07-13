@@ -201,7 +201,7 @@ app.controller('ReviewCtrl', ['$scope', '$window','$state', 'ClientSharedSrvc', 
 
         // Take out the Designer GAF - 
         for (var i = ME.shingleUpgrades.length - 1; i >= 0; i--) {
-            if (ME.shingleUpgrades[i].Sort > 107 && ME.shingleUpgrades[i].Sort < 121) {
+            if (ME.shingleUpgrades[i].Sort > 1010 && ME.shingleUpgrades[i].Sort < 1040) {
                 ME.shingleUpgrades.splice(i, 1);
             }
         };

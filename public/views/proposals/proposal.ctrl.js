@@ -84,11 +84,15 @@ app.controller('ProposalCtrl', ['$state', '$scope', 'evoDb', 'SharedSrvc', 'Shin
         var status = "Proposal";
         DB.updateJobStatus(ME.selectedJobObj.PRIMARY_ID, status, v).then(function(result) {
             if (result != false) {
-                ngDialog.open({
-                    template: '<h2>Job Status has been updated.</h2>',
+                var dialog = ngDialog.open({
+                    template: '<h2>Job Status has been updated.</h2>' +
+                        '<div class="ngdialog-buttons"><button type="button" class="ngdialog-button ngdialog-button-primary" ng-click="closeThisDialog(1)">OK</button></div>',
                     className: 'ngdialog-theme-default',
-                    plain: true,
-                    overlay: true
+                    plain: true
+                });
+
+                dialog.closePromise.then(function(data) {
+                    console.log('ngDialog closed' + (data.value === 1 ? ' using the button' : '') + ' and notified by promise: ' + data.id);
                 });
             } else {
 
@@ -103,36 +107,45 @@ app.controller('ProposalCtrl', ['$state', '$scope', 'evoDb', 'SharedSrvc', 'Shin
         dataObj.jobID = ME.S.selectedJobObj.PRIMARY_ID;
         dataObj.body = ME.specialText;
         dataObj.cost = "0";
-        DB.query("updateSpecialConsiderations",dataObj).then(function(resultObj) {
+        DB.query("updateSpecialConsiderations", dataObj).then(function(resultObj) {
             if (resultObj.result == "Error" || typeof resultObj.data === "string") {
                 alert("ERROR returned for updateSpecialConsiderations at " + myName);
                 console.log(resultObj.data);
             } else {
-                ngDialog.open({
-                    template: '<h2>Special Considerations have been saved.</h2>',
+                var dialog = ngDialog.open({
+                    template: '<h2>Special Considerations have been saved.</h2>' +
+                        '<div class="ngdialog-buttons"><button type="button" class="ngdialog-button ngdialog-button-primary" ng-click="closeThisDialog(1)">OK</button></div>',
                     className: 'ngdialog-theme-default',
-                    plain: true,
-                    overlay: true
+                    plain: true
                 });
+
+                dialog.closePromise.then(function(data) {
+                    console.log('ngDialog closed' + (data.value === 1 ? ' using the button' : '') + ' and notified by promise: ' + data.id);
+                });
+
             }
         }, function(error) {
             alert("FALSE returned for updateSpecialConsiderations at " + myName);
         });
     };
 
-    
     ME.submitParams = function() {
-        DB.query("updateJobParameters",ME.PARAMS).then(function(resultObj) {
+        DB.query("updateJobParameters", ME.PARAMS).then(function(resultObj) {
             if (resultObj.result == "Error" || typeof resultObj.data === "string") {
                 alert("ERROR returned for updateJobParameters at " + myName);
                 console.log(resultObj.data);
             } else {
-                ngDialog.open({
-                    template: '<h2>Roof Parameters have been saved.</h2>',
+                var dialog = ngDialog.open({
+                    template: '<h2>Roof Parameters have been saved.</h2>' +
+                        '<div class="ngdialog-buttons"><button type="button" class="ngdialog-button ngdialog-button-primary" ng-click="closeThisDialog(1)">OK</button></div>',
                     className: 'ngdialog-theme-default',
-                    plain: true,
-                    overlay: true
+                    plain: true
                 });
+
+                dialog.closePromise.then(function(data) {
+                    console.log('ngDialog closed' + (data.value === 1 ? ' using the button' : '') + ' and notified by promise: ' + data.id);
+                });
+
             }
         }, function(error) {
             alert("FALSE returned for updateJobParameters at " + myName);
@@ -142,7 +155,7 @@ app.controller('ProposalCtrl', ['$state', '$scope', 'evoDb', 'SharedSrvc', 'Shin
     var getJobParameters = function() {
         var dataObj = {};
         dataObj.ID = ME.S.selectedJobObj.PRIMARY_ID;
-        DB.query("getJobParameters",dataObj).then(function(resultObj) {
+        DB.query("getJobParameters", dataObj).then(function(resultObj) {
             if (resultObj.result == "Error" || typeof resultObj.data === "string") {
                 alert("ERROR returned for getJobParameters at " + myName);
                 console.log(resultObj.data);
@@ -165,9 +178,9 @@ app.controller('ProposalCtrl', ['$state', '$scope', 'evoDb', 'SharedSrvc', 'Shin
             if (resultObj.result == "Error" || typeof resultObj.data === "string") {
                 alert("ERROR returned for getSpecialConsiderations at " + myName);
             } else {
-                if(resultObj.data.length > 0){
+                if (resultObj.data.length > 0) {
                     ME.specialText = resultObj.data[0].body;
-                }else{
+                } else {
                     ME.specialText = "";
                 }
             }

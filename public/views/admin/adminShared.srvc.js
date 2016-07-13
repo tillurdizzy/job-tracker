@@ -97,6 +97,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
                 };
                 rtnObj.jobID = self.proposalUnderReview.jobID;
                 getJobParameters();
+                getSpecialConsiderations();
             } else if (rtnObj.roofCode == 2) {
                 // There could be multiple matches here... get the roofID to retrieve the roof names to use in a list
                 rtnObj.roofSelectionList = [{ label: "--- Select a Roof at this Property ---", jobID: -1 }];
@@ -226,7 +227,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
         };
 
         categorizeMaterials();
-        getSpecialConsiderations();
+       
     };
 
     var doUpgradeBase = function() {
@@ -470,6 +471,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
                 alert("FALSE returned for getSpecialConsiderations()");
             } else {
                 self.SPECIAL = resultObj.data[0].body;
+                $rootScope.$broadcast('onGetSpecialConsiderations');
             }
         }, function(error) {
             alert("ERROR returned for  getSpecialConsiderations()");

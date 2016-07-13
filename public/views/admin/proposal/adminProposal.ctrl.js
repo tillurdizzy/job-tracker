@@ -13,18 +13,18 @@ app.controller('AdminProposalCtrl',['$rootScope','$state','AdminDataSrvc','$scop
 	ME.specialText = "";
 	ME.proposalData = {salesRep:"-",clientID:"-",propertyID:"-",jobID:"-"};
 
-	
 	ME.selectProposal = function(){
 		S.trace(me + "selectProposal");
 		P.resetSummary();
-		var objLength = Object.keys(ME.selectedProposal).length;
+		var objLength = Object.keys(ME.selectedProposal).length;		// Validate it is not empty
 		if(objLength > 0){
-			ME.proposalData = S.selectProposal(ME.selectedProposal.id);
+
+			ME.proposalData = S.selectProposal(ME.selectedProposal.id);	// !! Send to AdminSharedSrvc for processing !!
 
 			if(ME.proposalData.roofCode == 2){
 				ME.roofSelectionsDP = ME.proposalData.roofSelectionList;
 				ME.selectedProposalRoof = ME.roofSelectionsDP[0];
-				$rootScope.$broadcast('onResetProposalData');// Clears the parameters from the Input tab
+				$rootScope.$broadcast('onResetProposalData');			// Clears the parameters from the Input tab
 			}else{
 				P.setJobId(ME.selectedProposal.id);
 				ME.roofSelectionsDP = null;

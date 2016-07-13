@@ -144,7 +144,7 @@ app.controller('NewClientIndCtrl',['$state','evoDb','SharedSrvc',function ($stat
         var dataObj = {};
 
         dataObj.manager = ME.S.manager;
-        dataObj.type = "Individual";
+        dataObj.type = "1";
         dataObj.name_first = ME.T1;
         dataObj.name_last = ME.T2;
         dataObj.displayName = ME.T1 + " " + ME.T2;

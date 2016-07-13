@@ -456,7 +456,8 @@ app.service('SharedSrvc', ['$rootScope', 'ListSrvc', function sharedSrvc($rootSc
         { label: "Bdls", id: 1 },
         { label: "Box", id: 2 },
         { label: "Roll", id: 3 },
-        { label: "Pail", id: 4 }
+        { label: "Pail", id: 4 },
+        { label: "Section", id: 5 }
     ];
 
     self.unitOptions = [
