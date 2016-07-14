@@ -148,10 +148,11 @@ app.service('ListSrvc',[function sharedLists(){
 
 	self.packageOptions = [
 		{label:"Each",id:0},
-		{label:"Bdls",id:1},
+		{label:"Bdl",id:1},
 		{label:"Box",id:2},
 		{label:"Roll",id:3},
-		{label:"Pail",id:4}];
+		{label:"Pail",id:4},
+		{ label: "Section", id: 5 }];
 
 	self.unitOptions = [
 		{label:"Each",id:0},

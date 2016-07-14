@@ -316,7 +316,11 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
         for (var i = 0; i < cloneList.length; i++) {
             var cat = cloneList[i].Category;
             if (cat == "Field") {
-                field.push(cloneList[i]);
+                var doNotShow = [1010,1012,1014,1016,1018,1020,1022,1024,1026,1028,1030];
+                var thisSort = parseInt(cloneList[i].Sort);
+                if(underscore.indexOf(doNotShow,thisSort) == -1){
+                    field.push(cloneList[i]);
+                } 
             } else if (cat == "Ridge") {
                 ridge.push(cloneList[i]);
             } else if (cat == "Starter") {
@@ -370,6 +374,9 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
             case "Caps":
                 catArray = self.materialsCatergorized.Caps;
                 break;
+            case "Ventilation":
+                catArray = self.materialsCatergorized.Vents;
+                break;
             case "Vents":
                 catArray = self.materialsCatergorized.Vents;
                 break;
@@ -407,15 +414,16 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
                     // calcs
                     var q = Number(vals.Qty);
                     var p = Number(vals.Price);
+                    var QtyPkg = Number(catArray[i].QtyPkg);
                     var over = Number(catArray[i].Margin);
                     var qtyCoverage = Number(catArray[i].QtyCoverage);
 
-                    var numberOfPackagesToBuy = q / qtyCoverage;
-                    var pkgQtyRoundedUp = Math.ceil(numberOfPackagesToBuy);
-                    var pkgQtyWithOverageRoundedUp = Math.ceil(numberOfPackagesToBuy * over);
-                    var total = (pkgQtyWithOverageRoundedUp * p);
+                    var numberOfPackagesToBuy = (q / qtyCoverage) * QtyPkg;
+                    var pkgQtyWithOverageRoundedUp = numberOfPackagesToBuy * over;
+                    var pkgQtyRoundedUp = Math.ceil(pkgQtyWithOverageRoundedUp);
+                    var total = (pkgQtyRoundedUp * p);
 
-                    catArray[i].PkgQty = pkgQtyWithOverageRoundedUp;
+                    catArray[i].PkgQty = pkgQtyRoundedUp;
                     catArray[i].Total = total;
                     break;
                 }
@@ -429,13 +437,14 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
                 // calcs
                 var q = Number(vals.Qty);
                 var p = Number(vals.Price);
+                var QtyPkg = Number(catArray[i].QtyPkg);
                 var over = Number(catArray[i].Margin);
                 var qtyCoverage = Number(catArray[i].QtyCoverage);
 
-                var numberOfPackagesToBuy = q / qtyCoverage;
-                var pkgQtyRoundedUp = Math.ceil(numberOfPackagesToBuy);
-                var pkgQtyWithOverageRoundedUp = Math.ceil(numberOfPackagesToBuy * over);
-                var total = (pkgQtyWithOverageRoundedUp * p);
+                var numberOfPackagesToBuy = (q / qtyCoverage) * QtyPkg;
+                var pkgQtyWithOverageRoundedUp = numberOfPackagesToBuy * over;
+                var pkgQtyRoundedUp = Math.ceil(pkgQtyWithOverageRoundedUp);  
+                var total = (pkgQtyRoundedUp * p);
 
                 catArray[i].PkgQty = pkgQtyWithOverageRoundedUp;
                 catArray[i].Total = total;

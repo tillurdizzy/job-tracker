@@ -1,9 +1,10 @@
 'use strict';
 
-app.controller('PitchedRoofInventoryCtrl', ['$state', '$scope', 'SharedSrvc', 'AdminDataSrvc', 'ngDialog', function($state, $scope, SharedSrvc, AdminDataSrvc, ngDialog) {
+app.controller('PitchedRoofInventoryCtrl', ['$state', '$scope', 'SharedSrvc', 'AdminDataSrvc', 'ngDialog','ListSrvc', function($state, $scope, SharedSrvc, AdminDataSrvc, ngDialog,ListSrvc) {
 
     var ME = this;
     ME.S = SharedSrvc;
+    ME.L = ListSrvc;
     var DB = AdminDataSrvc;
 
     ME.pitchedInventoryList = [];
@@ -16,11 +17,11 @@ app.controller('PitchedRoofInventoryCtrl', ['$state', '$scope', 'SharedSrvc', 'A
     ME.selectedCategoryList = [];
 
     ME.selectDataObj_dp = {
-        Package: ME.S.packageOptions[0],
-        UnitPkg: ME.S.unitOptions[0],
-        UnitCoverage: ME.S.unitOptions[0],
-        InputParam: ME.S.propertyParams[0],
-        Checked: ME.S.trueFalse[0]
+        Package: ME.L.packageOptions[0],
+        UnitPkg: ME.L.unitOptions[0],
+        UnitCoverage: ME.L.unitOptions[0],
+        InputParam: ME.L.propertyParams[0],
+        Checked: ME.L.trueFalse[0]
     };
 
     ME.sampleDataObj = {};
@@ -99,15 +100,14 @@ app.controller('PitchedRoofInventoryCtrl', ['$state', '$scope', 'SharedSrvc', 'A
         for (var i = 0; i < ME.pitchedInventoryList.length; i++) {
             if (ME.pitchedInventoryList[i].Code == code) {
                 ME.inputDataObj = ME.pitchedInventoryList[i];
-                //ME.itemSelected = ME.pitchedInventoryList[i];
             }
         };
         // For SELECT components, get the options object that matches the data 
-        ME.selectDataObj_dp.Package = ME.S.returnObjByLabel(ME.S.packageOptions, ME.inputDataObj.Package);
-        ME.selectDataObj_dp.UnitPkg = ME.S.returnObjByLabel(ME.S.unitOptions, ME.inputDataObj.UnitPkg);
-        ME.selectDataObj_dp.UnitCoverage = ME.S.returnObjByLabel(ME.S.unitOptions, ME.inputDataObj.UnitCoverage);
-        ME.selectDataObj_dp.InputParam = ME.S.returnObjByLabel(ME.S.propertyParams, ME.inputDataObj.InputParam);
-        ME.selectDataObj_dp.Checked = ME.S.returnObjById(ME.S.trueFalse, ME.inputDataObj.Checked);
+        ME.selectDataObj_dp.Package = ME.L.returnObjByLabel(ME.L.packageOptions, ME.inputDataObj.Package);
+        ME.selectDataObj_dp.UnitPkg = ME.L.returnObjByLabel(ME.L.unitOptions, ME.inputDataObj.UnitPkg);
+        ME.selectDataObj_dp.UnitCoverage = ME.L.returnObjByLabel(ME.L.unitOptions, ME.inputDataObj.UnitCoverage);
+        ME.selectDataObj_dp.InputParam = ME.L.returnObjByLabel(ME.L.propertyParams, ME.inputDataObj.InputParam);
+        ME.selectDataObj_dp.Checked = ME.L.returnObjById(ME.L.trueFalse, ME.inputDataObj.Checked);
     };
 
     var configSampleDataObj = function(code) {
@@ -115,7 +115,7 @@ app.controller('PitchedRoofInventoryCtrl', ['$state', '$scope', 'SharedSrvc', 'A
         ME.selectedCategory = "";
         for (var i = 0; i < ME.pitchedInventoryList.length; i++) {
             if (ME.pitchedInventoryList[i].Code == code) {
-                ME.sampleDataObj = ME.pitchedInventoryList[i];
+                ME.sampleDataObj = DB.clone(ME.pitchedInventoryList[i]);
                 ME.selectedCategory = ME.pitchedInventoryList[i].Category;
             }
         };
@@ -135,20 +135,20 @@ app.controller('PitchedRoofInventoryCtrl', ['$state', '$scope', 'SharedSrvc', 'A
     var configPartialInputDataObj = function() {
         ME.inputDataObj.Category = ME.sampleDataObj.Category;
         ME.inputDataObj.Package = ME.sampleDataObj.Package;
-        ME.selectDataObj_dp.Package = ME.S.returnObjByLabel(ME.S.packageOptions, ME.inputDataObj.Package);
+        ME.selectDataObj_dp.Package = ME.L.returnObjByLabel(ME.L.packageOptions, ME.inputDataObj.Package);
         ME.inputDataObj.QtyPkg = ME.sampleDataObj.QtyPkg;
         ME.inputDataObj.UnitPkg = ME.sampleDataObj.UnitPkg;
-        ME.selectDataObj_dp.UnitPkg = ME.S.returnObjByLabel(ME.S.unitOptions, ME.inputDataObj.UnitPkg);
+        ME.selectDataObj_dp.UnitPkg = ME.L.returnObjByLabel(ME.L.unitOptions, ME.inputDataObj.UnitPkg);
         ME.inputDataObj.PkgPrice = ME.sampleDataObj.PkgPrice;
         ME.inputDataObj.QtyCoverage = ME.sampleDataObj.QtyCoverage;
         ME.inputDataObj.UnitCoverage = ME.sampleDataObj.UnitCoverage;
-        ME.selectDataObj_dp.UnitCoverage = ME.S.returnObjByLabel(ME.S.unitOptions, ME.inputDataObj.UnitCoverage);
+        ME.selectDataObj_dp.UnitCoverage = ME.L.returnObjByLabel(ME.L.unitOptions, ME.inputDataObj.UnitCoverage);
         ME.inputDataObj.RoundUp = ME.sampleDataObj.RoundUp;
         ME.inputDataObj.Margin = ME.sampleDataObj.Margin;
         ME.inputDataObj.InputParam = ME.sampleDataObj.InputParam;
-        ME.selectDataObj_dp.InputParam = ME.S.returnObjByLabel(ME.S.propertyParams, ME.inputDataObj.InputParam);
+        ME.selectDataObj_dp.InputParam = ME.L.returnObjByLabel(ME.L.propertyParams, ME.inputDataObj.InputParam);
         ME.inputDataObj.Checked = ME.sampleDataObj.Checked;
-        ME.selectDataObj_dp.Checked = ME.S.returnObjById(ME.S.trueFalse, ME.inputDataObj.Checked);
+        ME.selectDataObj_dp.Checked = ME.L.returnObjById(ME.L.trueFalse, ME.inputDataObj.Checked);
     };
 
 
@@ -194,7 +194,6 @@ app.controller('PitchedRoofInventoryCtrl', ['$state', '$scope', 'SharedSrvc', 'A
                 });
 
                 dialog.closePromise.then(function(data) {
-                    //console.log('ngDialog closed' + (data.value === 1 ? ' using the button' : '') + ' and notified by promise: ' + data.id);
                 });
             }
         }, function(error) {
@@ -203,9 +202,11 @@ app.controller('PitchedRoofInventoryCtrl', ['$state', '$scope', 'SharedSrvc', 'A
     };
 
     ME.submitRemoveItem = function() {
-        DB.query("deletePitchedInvtItem", ME.itemSelected.PRIMARY_ID).then(function(resultObj) {
-            if (resultObj.result == "Error") {
-                alert("FALSE returned from DB at PitchedRoofInventoryCtrl >>> remove_Item()");
+        var dataObj = {};
+        dataObj.ID = ME.itemSelected.PRIMARY_ID;
+        DB.query("deletePitchedInvtItem", dataObj).then(function(resultObj) {
+            if (resultObj.result != "Success" || resultObj.data != "true") {
+                alert("ERROR returned from DB at PitchedRoofInventoryCtrl >>> remove_Item()");
             } else {
                 resetInputFields();
                 ME.refreshInventoryList();
@@ -230,7 +231,7 @@ app.controller('PitchedRoofInventoryCtrl', ['$state', '$scope', 'SharedSrvc', 'A
         dataObj.ID = ME.itemSelected.PRIMARY_ID;
         dataObj.PkgPrice = ME.inputDataObj.PkgPrice;
         DB.query("updatePitchedItemPrice", dataObj).then(function(resultObj) {
-            if (resultObj.result == "Error") {
+            if (resultObj.result == "Error" || typeof resultObj.data === "string") {
                 alert("FALSE returned from DB at PitchedRoofInventoryCtrl >>> updatePrice()");
             } else {
                 resetInputFields();
@@ -316,11 +317,11 @@ app.controller('PitchedRoofInventoryCtrl', ['$state', '$scope', 'SharedSrvc', 'A
             url: ""
         };
         ME.selectDataObj_dp = {
-            Package: ME.S.packageOptions[0],
-            UnitPkg: ME.S.unitOptions[0],
-            UnitCoverage: ME.S.unitOptions[0],
-            InputParam: ME.S.propertyParams[0],
-            Checked: ME.S.trueFalse[0]
+            Package: ME.L.packageOptions[0],
+            UnitPkg: ME.L.unitOptions[0],
+            UnitCoverage: ME.L.unitOptions[0],
+            InputParam: ME.L.propertyParams[0],
+            Checked: ME.L.trueFalse[0]
         };
         ME.itemSelected = {};
         ME.submitDisabled = true;

@@ -453,7 +453,7 @@ app.service('SharedSrvc', ['$rootScope', 'ListSrvc', function sharedSrvc($rootSc
 
     self.packageOptions = [
         { label: "Each", id: 0 },
-        { label: "Bdls", id: 1 },
+        { label: "Bdl", id: 1 },
         { label: "Box", id: 2 },
         { label: "Roll", id: 3 },
         { label: "Pail", id: 4 },

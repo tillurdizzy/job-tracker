@@ -223,10 +223,9 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore', function jobConfigSrvc
                 }
             };
 
-            // Idea for future changes>>>IF unitPkg and UnitCoverage are EQUAL!!! what then
             var qtyCoverage = Number(materials[i].QtyCoverage);
-            var unitsPerPkg = Number(materials[i].QtyPkg);
-            var over = Number(materials[i].Margin);
+            var QtyPkg = Number(materials[i].QtyPkg);
+            var Margin = Number(materials[i].Margin);
             var roundUp = Number(materials[i].RoundUp);
 
             var isNum = isNaN(parameterVal);
@@ -236,16 +235,16 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore', function jobConfigSrvc
                 parameterVal = 0;
                 total = 0;
             } else {
-                var numberOfPackagesToBuy = parameterVal / qtyCoverage;
-                var pkgQtyRoundedUp = Math.ceil(numberOfPackagesToBuy);
-                var pkgQtyWithOverageRoundedUp = Math.ceil(numberOfPackagesToBuy * over);
-                total = (pkgQtyWithOverageRoundedUp * itemPrice);
+                var numPkgs = (parameterVal / qtyCoverage) * QtyPkg;
+                var withOverage = (numPkgs * Margin);
+                var roundedUp = Math.ceil(withOverage);
+                total = (roundedUp * itemPrice);
             };
             // materials list Qty and Total come in as null and are quantified here
             // PkgQty is a new value added into the list
             materials[i].Qty = parameterVal;
             materials[i].PkgPrice = itemPrice;
-            materials[i].PkgQty = pkgQtyWithOverageRoundedUp;
+            materials[i].PkgQty = roundedUp;
             materials[i].Total = total;
             materials[i].Checked = checked;
         };
