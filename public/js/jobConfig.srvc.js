@@ -149,17 +149,27 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore', function jobConfigSrvc
         trace(me + "mergeJobConfig");
         for (var i = 0; i < materials.length; i++) {
             var thisItem = materials[i].Item;
+             
             // Is the current paramKey one of the default items????  Compare to this list.
             // Checked by default only matters in certain categories because there are multiple choices
             // using the same Input parameter
 
+            var thisCat = materials[i].Category;
             var paramKey = materials[i].InputParam;
-
-            // Inclusion in this list means "only check 1 item from this category even though other items may have quantity values (derived from params)"
-            var defaultCheckCatList = ["FIELD", "EAVE", "RIDGETOTAL", "VALLEY", "LPIPE1", "LPIPE2", "LPIPE3", "LPIPE4"];
+            // Inclusion in either of these lists means "only check 1 item from this category even though other items may have quantity values (derived from params)"
+            var defaultCheckCatList = ["Field", "Starter","Edge", "Valley"];
+            var defaultCheckParamList = ["LPIPE1", "LPIPE2", "LPIPE3", "LPIPE4"];
             var restrictChecksToDefaultOnly = false;
+            // For categories
+            for (var x = 0; x < defaultCheckParamList.length; x++) {
+                if (paramKey == defaultCheckParamList[x]) {
+                    restrictChecksToDefaultOnly = true;
+                    break;
+                }
+            };
+            // For params
             for (var x = 0; x < defaultCheckCatList.length; x++) {
-                if (paramKey == defaultCheckCatList[x]) {
+                if (thisCat == defaultCheckCatList[x]) {
                     restrictChecksToDefaultOnly = true;
                     break;
                 }

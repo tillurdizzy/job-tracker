@@ -15,59 +15,57 @@
                 </div>
                 <div class="text-input-form-item">
                     <label>Sort</label>
-                    <input type="text" ng-model="Invt.inputDataObj.Sort">
+                    <input type="text" ng-model="Invt.inputDataObj.Sort" ng-change="Invt.formChange();"autosave="">
                 </div>
                 <div class="text-input-form-item">
                     <label>Category</label>
-                    <input type="text" ng-model="Invt.inputDataObj.Category">
+                    <input type="text" ng-model="Invt.inputDataObj.Category" ng-change="Invt.formChange();"disabled="">
                 </div>
                 <div class="text-input-form-item">
                     <label>Supplier</label>
-                    <input type="text" ng-model="Invt.inputDataObj.Manufacturer">
+                    <input type="text" ng-model="Invt.inputDataObj.Manufacturer" ng-change="Invt.formChange();">
                 </div>
                 <div class="text-input-form-item">
                     <label>Code</label>
-                    <input type="text" ng-model="Invt.inputDataObj.Code">
+                    <input type="text" ng-model="Invt.inputDataObj.Code" ng-change="Invt.formChange();">
+                </div>
+                
+                <div class="text-input-form-item">
+                    <label>QtyPkg</label>
+                    <input type="text" ng-model="Invt.inputDataObj.QtyPkg" ng-change="Invt.formChange();">
                 </div>
                 <div class="text-input-form-item">
                     <label>Package</label>
-                    <select ng-model="Invt.selectDataObj_dp.Package" ng-options="c.label for c in Invt.S.packageOptions"></select>
-                </div>
-                <div class="text-input-form-item">
-                    <label>QtyPkg</label>
-                    <input type="text" ng-model="Invt.inputDataObj.QtyPkg">
-                </div>
-                <div class="text-input-form-item">
-                    <label>UnitPkg</label>
-                    <select ng-model="Invt.selectDataObj_dp.UnitPkg" ng-options="c.label for c in Invt.S.unitOptions"></select>
+                    <select ng-model="Invt.selectDataObj_dp.Package" ng-options="c.label for c in Invt.S.packageOptions" ng-change="Invt.selectorChange();"></select>
                 </div>
                 <div class="text-input-form-item">
                     <label>PkgPrice</label>
-                    <input type="text" ng-model="Invt.inputDataObj.PkgPrice">
+                    <input type="text" ng-model="Invt.inputDataObj.PkgPrice" ng-change="Invt.formChange();">
                 </div>
                 <div class="text-input-form-item">
                     <label>QtyCoverage</label>
-                    <input type="text" ng-model="Invt.inputDataObj.QtyCoverage">
+                    <input type="text" ng-model="Invt.inputDataObj.QtyCoverage" ng-change="Invt.formChange();">
                 </div>
                 <div class="text-input-form-item">
                     <label>UnitCoverage</label>
-                    <select ng-model="Invt.selectDataObj_dp.UnitCoverage" ng-options="c.label for c in Invt.S.unitOptions"></select>
+                    <select ng-model="Invt.selectDataObj_dp.UnitCoverage" ng-options="c.label for c in Invt.S.unitOptions" ng-change="Invt.selectorChange();"></select>
+                </div>
+                 <div class="text-input-form-item">
+                    <label>InputParam</label>
+                    <select ng-model="Invt.selectDataObj_dp.InputParam" ng-options="c.label for c in Invt.S.propertyParams" ng-change="Invt.selectorChange();"></select>
                 </div>
                 <div class="text-input-form-item">
                     <label>RoundUp</label>
-                    <input type="text" ng-model="Invt.inputDataObj.RoundUp">
+                    <input type="text" ng-model="Invt.inputDataObj.RoundUp" ng-change="Invt.formChange();">
                 </div>
                 <div class="text-input-form-item">
                     <label>Margin</label>
-                    <input type="text" ng-model="Invt.inputDataObj.Margin">
+                    <input type="text" ng-model="Invt.inputDataObj.Margin" ng-change="Invt.formChange();">
                 </div>
-                <div class="text-input-form-item">
-                    <label>InputParam</label>
-                    <select ng-model="Invt.selectDataObj_dp.InputParam" ng-options="c.label for c in Invt.S.propertyParams"></select>
-                </div>
+               
                 <div class="text-input-form-item">
                     <label>Checked</label>
-                    <select ng-model="Invt.selectDataObj_dp.Checked" ng-options="c.label for c in Invt.S.trueFalse"></select>
+                    <select ng-model="Invt.selectDataObj_dp.Checked" ng-options="c.label for c in Invt.S.trueFalse" ng-change="Invt.selectorChange();"></select>
                 </div>
             </div>
         </div>
@@ -94,17 +92,14 @@
                     <label>Code</label>
                     <input type="text" ng-model="Invt.sampleDataObj.Code" ng-disabled = true;>
                 </div>
-                <div class="text-input-form-item">
-                    <label>Package</label>
-                    <input type="text" ng-model="Invt.sampleDataObj.Package" ng-disabled = true;>
-                </div>
+               
                 <div class="text-input-form-item">
                     <label>QtyPkg</label>
                     <input type="text" ng-model="Invt.sampleDataObj.QtyPkg" ng-disabled = true;>
                 </div>
-                <div class="text-input-form-item">
-                    <label>UnitPkg</label>
-                    <input type="text" ng-model="Invt.sampleDataObj.UnitPkg" ng-disabled = true;>
+                 <div class="text-input-form-item">
+                    <label>Package</label>
+                    <input type="text" ng-model="Invt.sampleDataObj.Package" ng-disabled = true;>
                 </div>
                 <div class="text-input-form-item">
                     <label>PkgPrice</label>
@@ -119,6 +114,10 @@
                     <input type="text" ng-model="Invt.sampleDataObj.UnitCoverage" ng-disabled = true;>
                 </div>
                 <div class="text-input-form-item">
+                    <label>InputParam</label>
+                    <input type="text" ng-model="Invt.sampleDataObj.InputParam" ng-disabled = true;>
+                </div>
+                <div class="text-input-form-item">
                     <label>RoundUp</label>
                     <input type="text" ng-model="Invt.sampleDataObj.RoundUp" ng-disabled = true;>
                 </div>
@@ -126,10 +125,7 @@
                     <label>Margin</label>
                     <input type="text" ng-model="Invt.sampleDataObj.Margin" ng-disabled = true;>
                 </div>
-                <div class="text-input-form-item">
-                    <label>InputParam</label>
-                    <input type="text" ng-model="Invt.sampleDataObj.InputParam" ng-disabled = true;>
-                </div>
+                
                 <div class="text-input-form-item">
                     <label>Checked</label>
                     <input type="text" ng-model="Invt.sampleDataObj.Checked" ng-disabled = true;>

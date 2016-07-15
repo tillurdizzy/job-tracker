@@ -15,7 +15,6 @@ $Item = mysqli_real_escape_string($con,$data->Item);
 $Code = mysqli_real_escape_string($con,$data->Code);
 $Package = mysqli_real_escape_string($con,$data->Package);
 $QtyPkg = mysqli_real_escape_string($con,$data->QtyPkg);
-$UnitPkg = mysqli_real_escape_string($con,$data->UnitPkg);
 $PkgPrice = mysqli_real_escape_string($con,$data->PkgPrice);
 $QtyCoverage = mysqli_real_escape_string($con,$data->QtyCoverage);
 $UnitCoverage = mysqli_real_escape_string($con,$data->UnitCoverage);
@@ -25,7 +24,7 @@ $InputParam = mysqli_real_escape_string($con,$data->InputParam);
 $Checked = mysqli_real_escape_string($con,$data->Checked);
 $url = mysqli_real_escape_string($con,$data->url);
 
-$query = "INSERT INTO materials_shingle(Sort,Category,Manufacturer,Item,Code,Package,QtyPkg,UnitPkg,PkgPrice,QtyCoverage,UnitCoverage,RoundUp,Margin,InputParam,Checked,url)
+$query = "INSERT INTO materials_shingle(Sort,Category,Manufacturer,Item,Code,Package,QtyPkg,PkgPrice,QtyCoverage,UnitCoverage,RoundUp,Margin,InputParam,Checked,url)
 VALUES(
 '" . $Sort . "', " .
 "'" . $Category . "', " .
@@ -34,7 +33,6 @@ VALUES(
 "'" . $Code . "', " .
 "'" . $Package . "', " .
 "'" . $QtyPkg . "', " .
-"'" . $UnitPkg . "', " .
 "'" . $PkgPrice . "', " .
 "'" . $QtyCoverage . "', " .
 "'" . $UnitCoverage . "', " .

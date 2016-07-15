@@ -14,18 +14,19 @@
         </div>
         <div ui-view></div>
         <h2>Category: {{Invt.selectedCategory}}</h2>
-        <p>{QtyPkg} {UnitPkg} {Package} of {Item} covers {QtyCoverage} {UnitCoverage} of {InputParam}</p>
-        <p>{{Invt.itemSelected.QtyPkg}}  {{Invt.itemSelected.UnitPkg}} {{Invt.itemSelected.Package}} of {{Invt.itemSelected.Item}} covers {{Invt.itemSelected.QtyCoverage}} {{Invt.itemSelected.UnitCoverage}} of {{Invt.itemSelected.InputParam}}</p>
+        <p>{QtyPkg} {Package} of {Item} covers {QtyCoverage} {UnitCoverage} of {InputParam}</p>
+        <p>{{Invt.itemSelected.QtyPkg}}  {{Invt.itemSelected.Package}} of {{Invt.itemSelected.Item}} costs {{Invt.itemSelected.PkgPrice | currency:"$":2}} and covers {{Invt.itemSelected.QtyCoverage}} {{Invt.itemSelected.UnitCoverage}} of {{Invt.itemSelected.InputParam}}</p>
         <table st-table="Invt.selectedCategoryList" class="table table-striped">
             <thead>
                 <tr>
                     <th>Item</th>
                     <th>Sort</th>
-                    <th>Package</th>
                     <th>QtyPkg</th>
-                    <th>UnitPkg</th>
+                    <th>Package</th>
                     <th>PkgPrice</th>
                     <th>QtyCoverage</th>
+                    <th>UnitCoverage</th>
+                    <th>InputParam</th>
                     <th>Edit</th>
                 </tr>
             </thead>
@@ -33,11 +34,12 @@
                 <tr ng-repeat="row in Invt.selectedCategoryList">
                     <td>{{row.Item}}</td>
                     <td>{{row.Sort}}</td>
-                    <td>{{row.Package}}</td>
                     <td>{{row.QtyPkg}}</td>
-                    <td>{{row.UnitPkg}}</td>
+                    <td>{{row.Package}}</td>
                     <td>{{row.PkgPrice}}</td>
                     <td>{{row.QtyCoverage}}</td>
+                    <td>{{row.UnitCoverage}}</td>
+                    <td>{{row.InputParam}}</td>
                     <td><i class="fa fa-pencil" ng-click="Invt.editRowItem(row)" style="cursor:pointer;"></i></td>
                 </tr>
             </tbody>

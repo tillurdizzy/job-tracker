@@ -83,7 +83,14 @@ app.controller('PitchedRoofInventoryCtrl', ['$state', '$scope', 'SharedSrvc', 'A
         }
     };
 
-
+    ME.selectorChange = function(){
+        ME.submitDisabled = false;
+        ME.itemSelected.Package = ME.selectDataObj_dp.Package.label;
+        ME.itemSelected.UnitPkg = ME.selectDataObj_dp.UnitPkg.label;
+        ME.itemSelected.UnitCoverage = ME.selectDataObj_dp.UnitCoverage.label;
+        ME.itemSelected.InputParam = ME.selectDataObj_dp.InputParam.label;
+        ME.itemSelected.Checked = ME.selectDataObj_dp.Checked.label;
+    }
 
     ME.refreshInventoryList = function() {
         ME.pitchedInventoryList = [];
@@ -259,9 +266,6 @@ app.controller('PitchedRoofInventoryCtrl', ['$state', '$scope', 'SharedSrvc', 'A
         ME.inputDataObj.InputParam = ME.selectDataObj_dp.InputParam.label;
         ME.inputDataObj.Checked = ME.selectDataObj_dp.Checked.id;
     };
-
-
-
 
     var getInventory = function() {
         DB.query("getMaterialsShingle").then(function(resultObj) {

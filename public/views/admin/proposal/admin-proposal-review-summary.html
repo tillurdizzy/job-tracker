@@ -3,23 +3,27 @@
         <button type="button" class="button alert radius" style="width:100%;" ng-click="ChildCtrl.saveMyConfig()" 
         ng-disabled="ChildCtrl.dataIsSaved">SAVE</button>
     </div>
-    
+    <h2>Base Design</h2>
     <div>
-        <table st-table="ChildCtrl.summaryItems;" class="table table-striped" style="width:100%;">
+        <table st-table="ChildCtrl.summary_dp;" class="table table-striped" style="width:100%;">
             <thead>
                 <tr>
                     <th>Cost Item</th>
-                    <th>Amount</th>
+                    <th>Base</th>
+                    <th>Upgrades</th>
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="row in ChildCtrl.summaryItems;">
+                <tr ng-repeat="row in ChildCtrl.summary_dp;">
                     <td>{{row.item}}</td>
-                    <td>{{row.amount | currency:"$":2}}</td>
+                    <td>{{row.base | currency:"$":2}}</td>
+                    <td>{{row.upgrade | currency:"$":2}}</td>
                 </tr>
             </tbody>
         </table>
     </div>
+
+   
     <ng-form name="numberForm">
         <div class="flex-row-start">
             <h2>Markup</h2>
@@ -32,12 +36,6 @@
         <span ng-show="numberForm.number.$error.minlength" style="color:red">Enter greater than 10.</span>
     </ng-form>
     <horiz-rule margintop="10" marginbottom="10"></horiz-rule>
-    <p>Fx - Fixed (non-upgradable) materials</p>
-    <p>Base - Total cost of default selections for upgradable materials</p>
-    <p>Upgrd - Total cost of selected upgrades</p>
-    <p>Lbr - Labor cost</p>
-    <p>Mu - Markup (Percent Pm)</p>
-    <p>clientBase - FxBaseLbrMuB</p>
-    <p>clientTotal - FxSelLbrMuC</p>
+    
     <add-space heightpx="600"></add-space>
 </div>

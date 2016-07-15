@@ -9,6 +9,8 @@ app.controller('AdminPropSummary', ['$state', '$scope', 'AdminSharedSrvc', 'Admi
     var me = "AdminPropSummary: ";
 
     ME.summaryItems = [];
+    ME.summary_dp = [];
+   
     ME.proposalSelected = false;
     ME.dataIsSaved = true;
     var MARGIN = ME.CONFIG.configMargin; // Comes from CONFIG ready to use in calculations i.e. < 1 (.35)
@@ -24,11 +26,11 @@ app.controller('AdminPropSummary', ['$state', '$scope', 'AdminSharedSrvc', 'Admi
         var Upgrade = ME.P.CostSummary.Upgrade;
         var Lbr = ME.P.CostSummary.Lbr;
 
-        var Bc = Fx + Base + Lbr;// Base Cost
+        var Bc = Fx + Base + Lbr; // Base Cost
         var MuB = MARGIN * Bc; // Markup Base
 
-        var Uc = Fx + Upgrade + Lbr;// Upgrade Cost
-        var MuU = MARGIN * Uc;// Markup Upgrade
+        var Uc = Fx + Upgrade + Lbr; // Upgrade Cost
+        var MuU = MARGIN * Uc; // Markup Upgrade
 
         var clientBase = Fx + Base + MuB + Lbr;
 
@@ -50,10 +52,10 @@ app.controller('AdminPropSummary', ['$state', '$scope', 'AdminSharedSrvc', 'Admi
         var item = { item: "Materials Fixed - Fx", amount: Fx };
         ME.summaryItems.push(item);
 
-        var item = { item: "Materials - Base", amount: Base };
+        item = { item: "Materials - Base", amount: Base };
         ME.summaryItems.push(item);
 
-        var item = { item: "Materials - Upgrd", amount: Upgrade };
+        item = { item: "Materials - Upgrd", amount: Upgrade };
         ME.summaryItems.push(item);
 
         item = { item: "Labor", amount: Lbr };
@@ -71,13 +73,31 @@ app.controller('AdminPropSummary', ['$state', '$scope', 'AdminSharedSrvc', 'Admi
         item = { item: "Total Cost Upgrades", amount: Uc };
         ME.summaryItems.push(item);
 
-        item = { item: "Markup Upgrades (MuC)", amount: MuB };
+        item = { item: "Markup Upgrades (MuC)", amount: MuU };
         ME.summaryItems.push(item);
 
         item = { item: "Client Upgraded Total (after upgrades)", amount: clientTotal };
         ME.summaryItems.push(item);
 
+        //  Not using summaryItems in display... below instead
+        ME.summary_dp = [];
+        item = { item: "Materials", base: Base + Fx, upgrade:Upgrade + Fx};
+        ME.summary_dp.push(item);
+        item = { item: "Labor", base: Lbr, upgrade: Lbr};
+        ME.summary_dp.push(item);
+        item = { item: "Out of Pocket", base: Base + Fx + Lbr, upgrade: Uc};
+        ME.summary_dp.push(item);
+        item = { item: "Markup", base: MuB, upgrade: MuU};
+        ME.summary_dp.push(item);
+        item = { item: "Invoice", base: clientBase, upgrade: clientTotal};
+        ME.summary_dp.push(item);
+
+       
+
+
         ME.S.trace(me + "getTotal");
+
+
     };
 
     ME.marginChange = function() {

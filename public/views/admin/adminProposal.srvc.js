@@ -1,28 +1,25 @@
 'use strict';
-app.service('AdminProposalSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'underscore', 'JobConfigSrvc', 'ngDialog', function ProposalService($rootScope, AdminDataSrvc, ListSrvc, underscore, JobConfigSrvc, ngDialog) {
+app.service('AdminProposalSrvc', ['$rootScope', 'AdminDataSrvc', function ProposalService($rootScope, AdminDataSrvc) {
 
     var self = this;
     var me = "AdminProposalSrvc: ";
     var DB = AdminDataSrvc;
-    var L = ListSrvc;
-    self.CONFIG = JobConfigSrvc;
+   
     var currentJobId = 0;
 
     self.profitMargin = 30;
-    self.CostSummary = {Lbr:0,Base:0,Upgrade:0,Fx:0,MuB:0,MuU:0};
+    self.CostSummary = { Lbr: 0, Base: 0, Upgrade: 0, Fx: 0, MuB: 0, MuU: 0 };
 
     var LOG = true;
-    var trace = function(message){
-        if(LOG){
+    var trace = function(message) {
+        if (LOG) {
             console.log(message);
         }
     };
 
-    self.setJobId = function(id){
+    self.setJobId = function(id) {
         currentJobId = id;
     };
-
-
 
     self.updateConfigContract = function(dataObj) {
         trace(me + "updateConfigContract()");
@@ -38,19 +35,33 @@ app.service('AdminProposalSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'un
         });
     };
 
-    self.setSummaryItem = function(item,cost){
-    	switch(item){
-    		case "Lbr":self.CostSummary.Lbr = cost;break;
-            case "Fx":self.CostSummary.Fx = cost;break;
-    		case "Upgrade":self.CostSummary.Upgrade = cost;break;
-            case "Base":self.CostSummary.Base = cost;break;
-            case "MuB":self.CostSummary.MuB = cost;break;
-            case "MuU":self.CostSummary.MuU = cost;break;
-    	}
+    self.setSummaryItem = function(item, cost) {
+        trace(me + "setSummaryItem() " + item);
+        switch (item) {
+            case "Lbr":
+                self.CostSummary.Lbr = cost;
+                break;
+            case "Fx":
+                self.CostSummary.Fx = cost;
+                break;
+            case "Upgrade":
+                self.CostSummary.Upgrade = cost;
+                break;
+            case "Base":
+                self.CostSummary.Base = cost;
+                break;
+            case "MuB":
+                self.CostSummary.MuB = cost;
+                break;
+            case "MuU":
+                self.CostSummary.MuU = cost;
+                break;
+        }
     };
 
-    self.resetSummary = function(){
-        self.CostSummary = {Lbr:0,Base:0,Sel:0,Fx:0,Mu:0};
+    self.resetSummary = function() {
+        trace(me + "resetSummary() ");
+        self.CostSummary = { Lbr: 0, Base: 0, Sel: 0, Fx: 0, Mu: 0 };
     }
 
     self.clone = function(obj) {
@@ -86,6 +97,6 @@ app.service('AdminProposalSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'un
 
         throw new Error("Unable to copy obj! Its type isn't supported.");
     };
-    
+
     return self;
 }]);
