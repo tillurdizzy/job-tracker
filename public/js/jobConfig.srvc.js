@@ -13,7 +13,7 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore', function jobConfigSrvc
 
     self.configLabor = [];
     self.laborTotal = [];
-    self.configContract = [];
+    self.configContract = {};
     self.upgradeItemsBasePrice = {};
     self.costSummary = { Fx: 0, Base: 0, Sel: 0, Pm: 0, Mu: 0, muPercent: 0, clientBase: 0, clientTotal: 0 };
     self.configMargin = 0;
@@ -62,6 +62,8 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore', function jobConfigSrvc
                 jobConfigObj.Category = thisArr[4];
                 self.jobConfigArray.push(jobConfigObj);
             }
+        } else {
+            alert("Missing Config!");
         };
 
         // 2. Labor config
@@ -77,12 +79,13 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore', function jobConfigSrvc
                 itemObj.Cost = thisItem[2];
                 if (thisItem[0] != "Total") {
                     self.configLabor.push(itemObj);
-                }else{
+                } else {
                     self.laborTotal = Number(thisItem[2]);
                 }
             }
+        } else {
+            alert("Missing Labor!");
         };
-
         // 3. Base Cost config
         self.upgradeItemsBasePrice = {};
         var upgradesBaseStr = dataObj.upgradesBase;
@@ -92,6 +95,8 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore', function jobConfigSrvc
                 var thisItem = upgradesBaseArr[i].split(';');
                 self.upgradeItemsBasePrice[thisItem[0]] = validateNumber(thisItem[1]);
             }
+        } else {
+            alert("Missing upgradesBaseStr!");
         };
 
         // 4. Cost Summaries
@@ -125,18 +130,28 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore', function jobConfigSrvc
         // 7. Shingle Color
         self.shingleColor = dataObj.Clr;
 
-        //8. Contract config
-        self.configContract = [];
-        var contractStr = dataObj.contract;
-        if (contractStr != "") {
-            var contractArr = contractStr.split('!');
-            for (var i = 0; i < contractArr.length; i++) {
-                thisItem = contractArr[i].split(';');
-                itemObj = {};
-                itemObj.item = thisItem[0];
-                itemObj.state = convertToBoolean(thisItem[1]);
-            }
-        };
+        // 8. Contract config
+        if (dataObj.contract != "") {
+            try {
+                self.configContract = JSON.parse(dataObj.contract);
+            } catch (e) {
+               self.configContract = {};
+            } 
+        }
+
+        /* var contractStr = dataObj.contract;
+         if (contractStr != "") {
+             var contractArr = contractStr.split('!');
+             for (var i = 0; i < contractArr.length; i++) {
+                 thisItem = contractArr[i].split(';');
+                 itemObj = {};
+                 var key = thisItem[0];
+                 itemObj[key] = convertToBoolean(thisItem[1]);
+                 //itemObj.item = thisItem[0];
+                 //itemObj.state = convertToBoolean(thisItem[1]);
+                 self.configContract.push(itemObj);
+             }
+         };*/
 
         // Only the jobConfig is returned
         return self.jobConfigArray;
@@ -149,7 +164,7 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore', function jobConfigSrvc
         trace(me + "mergeJobConfig");
         for (var i = 0; i < materials.length; i++) {
             var thisItem = materials[i].Item;
-             
+
             // Is the current paramKey one of the default items????  Compare to this list.
             // Checked by default only matters in certain categories because there are multiple choices
             // using the same Input parameter
@@ -157,7 +172,7 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore', function jobConfigSrvc
             var thisCat = materials[i].Category;
             var paramKey = materials[i].InputParam;
             // Inclusion in either of these lists means "only check 1 item from this category even though other items may have quantity values (derived from params)"
-            var defaultCheckCatList = ["Field", "Starter","Edge", "Valley"];
+            var defaultCheckCatList = ["Field", "Starter", "Edge", "Valley"];
             var defaultCheckParamList = ["LPIPE1", "LPIPE2", "LPIPE3", "LPIPE4"];
             var restrictChecksToDefaultOnly = false;
             // For categories

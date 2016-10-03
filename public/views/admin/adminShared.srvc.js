@@ -22,7 +22,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
     self.laborTotal = 0;
     self.shingleColorsList = [];
     // 
-    self.tabsSubmitted = { design: false, labor: false, summary: false, base: false };
+    self.tabsSubmitted = { design: false, labor: false, summary: false, base: false, contract:false};
 
     self.summarySaveNeeded = false;
 
@@ -160,6 +160,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
     };
 
     //Step 3
+    // Gets all columns from the job_config table (config, labor, upgradesbase,... etc)
     var getJobConfig = function() {
         self.trace(me + "getJobConfig()");
         var dataObj = { jobID: self.proposalUnderReview.jobID };
@@ -175,7 +176,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
     };
 
     // Send results over to CONFIG
-    //self.tabsSubmitted = {design:false,labor:false,summary:false,base:false};
+    // self.tabsSubmitted = {design:false,labor:false,summary:false,base:false,contract:false};
     var onGetJobConfig = function(ar) {
         self.trace(me + "onGetJobConfig()");
         var obj = ar[0];

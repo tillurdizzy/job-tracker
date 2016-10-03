@@ -48,6 +48,7 @@ app.controller('AdminPropContract', ['$state', '$scope', 'AdminSharedSrvc', 'Adm
     ME.contractChange = function(itemChanged) {
         ME.dataIsSaved = underscore.isEqual(ME.ScopeOfWork, scopeCompareCopy);
 
+        /// !!! These are the toggles when only 1 of a pair can be selected !!!
         switch(itemChanged){
             case "valley_flashing":ME.ScopeOfWork.valley_flashing_w = !ME.ScopeOfWork.valley_flashing;break;
             case "valley_flashing_w":ME.ScopeOfWork.valley_flashing = !ME.ScopeOfWork.valley_flashing_w;break;
@@ -59,31 +60,20 @@ app.controller('AdminPropContract', ['$state', '$scope', 'AdminSharedSrvc', 'Adm
     };
 
 
-    // Called from below
+    // Called from viewContentLoaded
     var configExists = function() {
+        ME.S.trace(me + "configExists():" + " ME.proposalSelected=" + ME.proposalSelected + "  tabsSubmitted.contract=" + ME.S.tabsSubmitted.contract);
         ME.dataIsSaved = true;
         if (ME.S.tabsSubmitted.contract == false && ME.proposalSelected == true) {
             ME.dataIsSaved = false;
         }else if(ME.S.tabsSubmitted.contract == true && ME.proposalSelected == true){
             ME.ScopeOfWork = ME.P.CONFIG.configContract;
         }
-        ME.S.trace(me + "configExists()" + "ME.proposalSelected=" + ME.proposalSelected + "  tabsSubmitted.contract=" + ME.S.tabsSubmitted.contract);
     };
 
     ME.updateConfigContract = function() {
-        var clone = ME.P.clone(ME.ScopeOfWork);
-        var pairs = underscore.pairs(clone);
-
         var dataObj = {};
-        var dataStr = "";
-
-        for (var i = 0; i < pairs.length; i++) {
-            var str1 = pairs[i][0];
-            var str2 = pairs[i][1];
-            dataStr += str1 + ";" + str2 + "!"
-        };
-
-        dataObj.contract = dataStr;
+        dataObj.contract = JSON.stringify(ME.ScopeOfWork);
         dataObj.jobID = ME.S.proposalUnderReview.jobID;
         ME.P.updateConfigContract(dataObj);
     };
@@ -101,7 +91,6 @@ app.controller('AdminPropContract', ['$state', '$scope', 'AdminSharedSrvc', 'Adm
 
 
     $scope.$watch('$viewContentLoaded', function() {
-
         ME.proposalSelected = ME.S.proposalSelected;
         configExists();
     });

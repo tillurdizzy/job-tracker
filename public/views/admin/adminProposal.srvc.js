@@ -1,9 +1,10 @@
 'use strict';
-app.service('AdminProposalSrvc', ['$rootScope', 'AdminDataSrvc', function ProposalService($rootScope, AdminDataSrvc) {
+app.service('AdminProposalSrvc', ['$rootScope', 'AdminDataSrvc','JobConfigSrvc', function ProposalService($rootScope, AdminDataSrvc,JobConfigSrvc) {
 
     var self = this;
     var me = "AdminProposalSrvc: ";
     var DB = AdminDataSrvc;
+    self.CONFIG = JobConfigSrvc;
    
     var currentJobId = 0;
 

@@ -14,7 +14,7 @@
         </div>
         <div ui-view></div>
         <h2>Category: {{Invt.selectedCategory}}</h2>
-        <p>{QtyPkg} {Package} of {Item} covers {QtyCoverage} {UnitCoverage} of {InputParam}</p>
+        <p>{QtyPkg} {Package} of {Item} costs {PkgPrice} and covers {QtyCoverage} {UnitCoverage} of {InputParam}</p>
         <p>{{Invt.itemSelected.QtyPkg}}  {{Invt.itemSelected.Package}} of {{Invt.itemSelected.Item}} costs {{Invt.itemSelected.PkgPrice | currency:"$":2}} and covers {{Invt.itemSelected.QtyCoverage}} {{Invt.itemSelected.UnitCoverage}} of {{Invt.itemSelected.InputParam}}</p>
         <table st-table="Invt.selectedCategoryList" class="table table-striped">
             <thead>

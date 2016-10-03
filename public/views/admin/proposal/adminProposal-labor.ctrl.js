@@ -40,14 +40,16 @@ app.controller('AdminPropLabor', ['$state', '$scope', 'AdminSharedSrvc', 'AdminP
         });
     };
 
-    // Called from below
+    // Called from $viewContentLoaded
+    // Labor, Summary and Contract tabs are different because they can be edited and saved
     var configExists = function() {
         ME.dataIsSaved = true;
         if (ME.S.tabsSubmitted.labor == false && ME.proposalSelected == true) {
             ME.dataIsSaved = false;
         }
-        ME.S.trace(me + "configExists()" + "ME.proposalSelected="+ME.proposalSelected + "  tabsSubmitted.labor=" + ME.S.tabsSubmitted.labor);
+        ME.S.trace(me + "configExists(): " + "ME.proposalSelected="+ME.proposalSelected + "  tabsSubmitted.labor=" + ME.S.tabsSubmitted.labor);
     };
+
 
     $scope.$on('onSaveLaborConfig', function(event, obj) {
         ME.dataIsSaved = true;
