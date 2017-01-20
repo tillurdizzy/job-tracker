@@ -1,5 +1,6 @@
 'use strict';
-app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'underscore', 'JobConfigSrvc', 'ngDialog', function adminShared($rootScope, AdminDataSrvc, ListSrvc, underscore, JobConfigSrvc, ngDialog) {
+app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'underscore', 'JobConfigSrvc', 'ngDialog', 
+    function adminShared($rootScope, AdminDataSrvc, ListSrvc, underscore, JobConfigSrvc, ngDialog) {
 
     var self = this;
     var me = "AdminSharedSrvc: ";
@@ -390,7 +391,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
             case "Valley":
                 catArray = self.materialsCatergorized.Valley;
                 break;
-            case "Flat":
+            case "LowSlope":
                 catArray = self.materialsCatergorized.Flat;
                 break;
             case "Other":
@@ -857,6 +858,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
         self.trace(me + "saveLaborConfig()");
         // If data == null, then save the laborConfig as is... otherwise update it first
         if (data != null) {
+            self.laborTotal = 0;
             var Labor = data.Labor;
             for (var i = 0; i < self.laborConfig.length; i++) {
                 if (Labor == self.laborConfig[i].Labor) {
@@ -1112,7 +1114,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
         });
     };
 
-    var getConfigLabor = function() {
+    /*var getConfigLabor = function() {
         self.trace(me + "getConfigLabor()");
         DB.query("getConfigLabor").then(function(resultObj) {
             if (resultObj.result == "Error" || typeof resultObj.data === "string") {
@@ -1124,7 +1126,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
         }, function(error) {
             alert("Query Error - AdminSharedSrvc >> getLabor");
         });
-    };
+    };*/
 
     var getShingleColors = function() {
         self.trace(me + "getShingleColors()");
@@ -1230,7 +1232,7 @@ app.service('AdminSharedSrvc', ['$rootScope', 'AdminDataSrvc', 'ListSrvc', 'unde
         var num = Number(data);
         var result = Math.round(num * 100) / 100
         return result;
-    }
+    };
 
     self.trace = function(message) {
         if (LOG) {

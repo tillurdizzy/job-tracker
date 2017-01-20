@@ -1,6 +1,7 @@
 'use strict';
 
-app.controller('AdminPropDesign', ['$state', '$scope', 'AdminSharedSrvc', 'AdminProposalSrvc', 'ngDialog', function($state, $scope, AdminSharedSrvc, AdminProposalSrvc, ngDialog) {
+app.controller('AdminPropDesign', ['$state', '$scope', 'AdminSharedSrvc', 'AdminProposalSrvc', 'ngDialog', 
+    function($state, $scope, AdminSharedSrvc, AdminProposalSrvc, ngDialog) {
 
     var ME = this;
     var me = "AdminPropDesign: ";

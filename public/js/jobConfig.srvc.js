@@ -35,6 +35,12 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore', function jobConfigSrvc
         };
     };
 
+    var decimalPrecisionTwo = function(data) {
+        var num = Number(data);
+        var result = Math.round(num * 100) / 100
+        return result;
+    };
+
     // Step 3 of events triggered by selection of a Proposal from Proposal Review
     // Converts the long string saved in DB into array of objects
     // Also called from ClientSharedSrvc during flow of events triggered by LogIn
@@ -315,11 +321,28 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore', function jobConfigSrvc
             itemObj.Total = laborDeck;
             self.configLabor.push(itemObj);
 
+            // Additional labor to install low slope underlayment
             itemObj = {};
-            itemObj.Labor = "Flat";
+            itemObj.Labor = "Low Slope";
             itemObj.Qty = 0;
             itemObj.Units = "Sqs";
             itemObj.Cost = defaultLabor.flat;
+            itemObj.Total = 0;
+            self.configLabor.push(itemObj);
+
+            itemObj = {};
+            itemObj.Labor = "Trim";
+            itemObj.Qty = 0;
+            itemObj.Units = "Feet";
+            itemObj.Cost = defaultLabor.trim;
+            itemObj.Total = 0;
+            self.configLabor.push(itemObj);
+
+            itemObj = {};
+            itemObj.Labor = "Other";
+            itemObj.Qty = 0;
+            itemObj.Units = "Each";
+            itemObj.Cost = defaultLabor.other;
             itemObj.Total = 0;
             self.configLabor.push(itemObj);
 
@@ -329,18 +352,28 @@ app.service('JobConfigSrvc', ['$rootScope', 'underscore', function jobConfigSrvc
                 if (self.configLabor[i].Labor == "Field") {
                     var x = parseInt(self.configLabor[i].Qty);
                     var y = parseInt(self.configLabor[i].Cost);
-                    self.configLabor[i].Total = x * y;
+                    self.configLabor[i].Total = decimalPrecisionTwo(x * y);
                     self.configLabor[i].Units = "Sqs";
                 } else if (self.configLabor[i].Labor == "Deck") {
                     x = parseInt(self.configLabor[i].Qty);
                     y = parseInt(self.configLabor[i].Cost);
-                    self.configLabor[i].Total = x * y;
+                    self.configLabor[i].Total = decimalPrecisionTwo(x * y);
                     self.configLabor[i].Units = "Sqs";
-                } else if (self.configLabor[i].Labor == "Flat") {
+                } else if (self.configLabor[i].Labor == "Low Slope") {
                     x = parseInt(self.configLabor[i].Qty);
                     y = parseInt(self.configLabor[i].Cost);
-                    self.configLabor[i].Total = x * y;
+                    self.configLabor[i].Total = decimalPrecisionTwo(x * y);
                     self.configLabor[i].Units = "Sqs";
+                }else if (self.configLabor[i].Labor == "Trim") {
+                    x = parseInt(self.configLabor[i].Qty);
+                    y = parseInt(self.configLabor[i].Cost);
+                    self.configLabor[i].Total = decimalPrecisionTwo(x * y);
+                    self.configLabor[i].Units = "Feet";
+                }else if (self.configLabor[i].Labor == "Other") {
+                    x = parseInt(self.configLabor[i].Qty);
+                    y = parseInt(self.configLabor[i].Cost);
+                    self.configLabor[i].Total = decimalPrecisionTwo(x * y);
+                    self.configLabor[i].Units = "Each";
                 }
             }
         };

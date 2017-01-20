@@ -95,9 +95,17 @@
             <div class="indent-block-client">
                 <h3 class="first-item">1. Pre-install</h3>
                 <p>Remove existing roof system from the roof deck and haul from the site. Prepare the roof deck by nailing all raised nails and clearing debris from the roof surface left from the previous application.</p>
-                <h3>2. Felt Underlayment</h3>
-                <p>Install new #15 Asphalt Saturated Organic Felt underlayment over entire roof deck.</p>
-                <a href="http://evolutionroofingsystems.com/#/pitched/underlayments" target="_blank">Learn More</a>
+                <div ng-show=false>
+                    <h3>2. Felt Underlayment</h3>
+                    <p>Install new #15 Asphalt Saturated Organic Felt underlayment over entire roof deck.</p>
+                    <a href="http://evolutionroofingsystems.com/#/pitched/underlayments" target="_blank">Learn More</a>
+                </div>
+                <div ng-show=true>
+                    <h3>2. Low Slope Underlayment</h3>
+                    <p>Install Ice and Water Shield for low slope roofs.</p>
+                    <a href="http://evolutionroofingsystems.com/#/pitched/underlayments" target="_blank">Learn More</a>
+                </div>
+               
                 <h3>3. Drip Edge Extender (if selected)</h3>
                 <p class="hilite">See below to select this Premium Upgrade.</p>
                 <h3>4. New Drip Edge</h3>
@@ -343,9 +351,13 @@
             <h2>Remove / Replace Decking</h2>
             <p>Remove existing roof deck...</p>
         </div>
-        <div class="new-paragraph" ng-show="CTRL.ScopeOfWork.felt_underlayment">
+        <div class="new-paragraph" ng-show=false>
             <h2>Felt Underlayment</h2>
             <p>Install new <span class="bold">#15 Asphalt Saturated Organic Felt</span> underlayment over entire roof deck.</p>
+        </div>
+        <div class="new-paragraph" ng-show=true>
+            <h2>Low Slope Underlayment</h2>
+            <p>Install ice and water shield for low slope roof.</p>
         </div>
         <div class="new-paragraph" ng-show="CTRL.ScopeOfWork.drip_edge_extender">
             <h2>Drip Edge Extender</h2>

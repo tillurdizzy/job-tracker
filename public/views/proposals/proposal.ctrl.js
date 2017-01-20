@@ -133,7 +133,7 @@ app.controller('ProposalCtrl', ['$state', '$scope', 'evoDb', 'SharedSrvc', 'Shin
         DB.query("updateJobParameters", ME.PARAMS).then(function(resultObj) {
             if (resultObj.result == "Error" || typeof resultObj.data === "string") {
                 alert("ERROR returned for updateJobParameters at " + myName);
-                console.log(resultObj.data);
+                //console.log(resultObj.data);
             } else {
                 var dialog = ngDialog.open({
                     template: '<h2>Roof Parameters have been saved.</h2>' +

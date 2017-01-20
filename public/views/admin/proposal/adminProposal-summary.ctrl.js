@@ -108,11 +108,14 @@ app.controller('AdminPropSummary', ['$state', '$scope', 'AdminSharedSrvc', 'Admi
         }
         var compareMargin = MARGIN * 100;
         if (compareMargin != marginEdit) {
-            if (marginEdit > 10 && marginEdit < 100) {
-                MARGIN = marginEdit / 100;
-                ME.dataIsSaved = false;
-                getTotal();
+            if(marginEdit == 0){
+                MARGIN = 0;
             }
+            else {
+                MARGIN = marginEdit / 100; 
+            }
+            ME.dataIsSaved = false;
+            getTotal();
         }
     };
 
